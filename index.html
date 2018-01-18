@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<head>
+  <title>GTR Crawler</title>
+
+
+  <!-- JQuery 3 -->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+  <!-- D3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+  <!-- Google fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400' rel='stylesheet' type='text/css'>
+
+
+  <!-- DataTable -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.css"/>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.js"></script>
+  <script type="text/javascript" src="assets/js/dataTables.scrollResize.js"></script>
+
+  <!-- Material bootstrap -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.0.0-beta.4/dist/css/bootstrap-material-design.min.css" integrity="sha384-R80DC0KVBO4GSTw+wZ5x2zn2pu4POSErBkf8/fSFhPXHxvHJydT0CSgAP2Yo2r4I" crossorigin="anonymous">
+  <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap-material-design@4.0.0-beta.4/dist/js/bootstrap-material-design.js" integrity="sha384-3xciOSDAlaXneEmyOo0ME/2grfpqzhhTcM4cE32Ce9+8DW/04AGoTACzQpphYGYe" crossorigin="anonymous"></script>
+
+  <!-- Alertify -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/alertify.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/alertify.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.11.0/build/css/themes/bootstrap.min.css"/>
+
+  <!-- Typeahead -->
+  <script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
+
+
+
+  <!-- Selectize -->
+
+<!--
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.css" />
+
+-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.bootstrap3.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+
+
+  <!-- XML to JSON -->
+  <script type="text/javascript" src="assets/js/xml2json.min.js"></script>
+
+  <!-- Copy to clipboard -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
+
+
+  <!-- Site stylesheet -->
+  <link rel="stylesheet" id="site-stylesheet" href="assets/css/site.css" />
+
+
+
+  <!--  App -->
+  <script type="text/javascript" src="app/histogramChart.js"></script>
+  <script type="text/javascript" src="app/horizontalBarChart.js"></script>
+  <script type="text/javascript" src="app/model.js"></script>
+  <script type="text/javascript" src="app/globals.js"></script>
+  <script type="text/javascript" src="app/constants.js"></script>
+  <script type="text/javascript" src="app/app.js"></script>
+
+
+</head>
+
+<body>
+
+<!--Navbar-->
+<nav class="navbar navbar-dark  justify-content-between" style=>
+    <a class="navbar-brand">gene panel.iobio</a>
+    <div id="nav-input-search-box" >
+        <input id="input-search-term" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-raised btn-success btn-sm"  autofocus active onclick="performSearch()" type="submit">Search</button>
+        <img id="loading-search" src="assets/images/loading1.gif" class="hide">
+    </div>
+</nav>
+
+<div id="container">
+    <div style="display:flex" >
+
+      <div class="left-section" >
+
+        <!-- Med Gen -->
+        <div class="card card-body hide " id="diseases-box" >
+          <div>
+            <h5 class="name">MedGen Diseases/Syndromes</h5>
+            <span id="disease-count" class="alert-primary counter"></span>
+          </div>
+          <table id="disease-table" class="display"></table>
+        </div>
+
+
+        <!-- genes panel -->
+        <div class="card card-body  hide"  id="gene-panels-box" >
+          <div>
+            <h5 class="name" style="vertical-align:top;">Gene Panels</h5>
+            <span id="gene-panel-count" class="alert-primary counter" style="vertical-align:top;"></span>
+
+            <div id="select-vendor-box">
+              <select id="select-vendor" class="form-control selectized"  multiple="" placeholder="SELECT VENDORS...">
+              </select>
+            </div>
+
+            <div id="gene-panel-filter-box" >
+
+              <button class="dt-button btn btn-raised btn-default" tabindex="0" aria-controls="gene-panel-table" onclick=selectGenePanels()><span>Select all</span></button>
+              <button class="dt-button btn btn-raised btn-default" tabindex="0" aria-controls="gene-panel-table" onclick="selectGenePanels({maxGeneCount: 200})"><span>Select with genes &lt; 200</span></button>
+
+              <button class="dt-button btn btn-raised btn-default" tabindex="0" aria-controls="gene-panel-table" onclick="deselectGenePanels()"><span>De-select all</span></button>
+            </div>
+          </div>
+          <table id="gene-panel-table" class="display"></table>
+        </div>
+
+
+          <!-- show genes and histogram  -->
+        <div class="card card-body hide"  id="genes-box"  >
+          <div>
+            <h5 class="name">Genes</h5>
+
+            <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"
+            style="padding: 2px 2px 0px 2px !important;line-height: 1;margin-bottom: 0px;margin-top:-4px;">
+                <i class="material-icons" style="font-size:16px" onclick="$('#gene-bar-chart-box').addClass('hide');$('#gene-histogram-box').removeClass('hide')">insert_chart</i>
+            </button>
+            <button type="button" class="btn btn-default" data-toggle="button" aria-pressed="false" autocomplete="off"
+            style="padding: 2px 2px 0px 2px !important;line-height: 1;margin-bottom: 0px;margin-top:-4px;" onclick="$('#gene-bar-chart-box').removeClass('hide');$('#gene-histogram-box').addClass('hide')">
+                <i class="material-icons" style="transform:rotate(90deg);font-size:16px">insert_chart</i>
+            </button>
+            <span id="gene-count" class="alert-primary counter"></span>
+
+          </div>
+          <div  style="display:flex;height:100%">
+
+            <div id="gene-histogram-box" >
+              <svg id="gene-histogram-chart"></svg>
+            </div>
+
+            <div  id="gene-bar-chart-box" class="hide" >
+              <div id="gene-bar-chart"></div>
+            </div>
+            <div id="gene-table-box" >
+              <table id="gene-table" class="display"></table>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+<div class="tooltip" style="opacity:0"></div>
+
+</body>
+
+</html>
