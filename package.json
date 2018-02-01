@@ -10,6 +10,8 @@
   "dependencies": {
     "axios": "^0.17.1",
     "d3": "^3.5.17",
+    "datatables.net": "^1.10.16",
+    "datatables.net-dt": "^1.10.16",
     "debug": "^2.6.8",
     "express": "^4.15.3",
     "jquery": "^3.2.1",

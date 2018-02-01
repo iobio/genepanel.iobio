@@ -11,6 +11,7 @@
   </div>
 </template>
 
+
 <script>
 import { bus } from '../../routes';
 
@@ -29,7 +30,7 @@ var model = new Model();
     methods:{
       performSearch: function(){
         var searchTerm = this.search;
-        
+
         model.promiseGetDiseases(searchTerm)
         .then(function(data){
           console.log("data got from promise : " , data)
