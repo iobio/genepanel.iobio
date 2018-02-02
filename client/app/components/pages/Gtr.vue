@@ -1,35 +1,89 @@
 <template>
   <div>
     <h1>GTR!</h1>
-    <input type="text" v-model="search" placeholder="Search term" />
+    <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
+    <br>
+    <label for="input">States of America:</label>
+    <input id="input" class="form-control" type="text" placeholder="Type to search...">
+    <typeahead match-start v-model="search"  target="#input" :data="conditions" item-key="FIELD1"/>
+    <br/>
     <button v-on:click.prevent="performSearch"> Go </button>
-    {{ search }}
     <hr>
     <ul>
       <li v-for="d in diseaseData">{{ d.Title }}</li>
     </ul>
+
+    <!-- <v-form >
+          <v-text-field id="search-gene-name1" label="Conditions">
+          </v-text-field>
+          <typeahead v-model="selectedCondition" force-select match-start  target="#search-gene-name" :data="conditionsData" item-key="FIELD1"/>
+    </v-form>
+
+    <v-form >
+          <v-text-field id="search-gene-name" label="Gene">
+          </v-text-field>
+          <typeahead v-model="selectedGene" force-select match-start  target="#search-gene-name" :data="allGenes" item-key="gene_name"/>
+    </v-form> -->
+
   </div>
 </template>
 
 
 <script>
+
+import { Typeahead } from 'uiv';
+import conditions from '../../../data/conditions.json';
+import geneData from '../../../data/genes.json';
+
 import { bus } from '../../routes';
+import jQuery from 'jquery';
+global.jQuery = jQuery;
+global.$ = jQuery;
+//import typeahead from 'jquery-typeahead'
 
 import Model from './Model';
 var model = new Model();
 
   export default {
+    components: {
+      Typeahead
+    },
     data(){
       return {
         search: "",
-        diseaseData : []
+        diseaseData : [],
+        selectedCondition: {},
+        conditions: conditions.data,
+        selectedGene: {},
+        allGenes: geneData
       }
     },
+    // watch: {
+    //   selectedCondition: function(a, b) {
+    //     if (this.selectedCondition) {
+    //       console.log("this.selectedCondition", this.selectedCondition.FIELD1);
+    //       this.search = this.selectedCondition.FIELD1;
+    //       //this.performSearch();
+    //     }
+    //   }
+    // },
     created() {
+      console.log("condition data", this.conditionsData[1].FIELD1)
+    },
+    mounted: function() {
+       $("#search-gene-name").attr('autocomplete', 'off');
+       $("#search-gene-name1").attr('autocomplete', 'off');
     },
     methods:{
       performSearch: function(){
-        var searchTerm = this.search;
+        var searchTerm =""
+        if(this.search.FIELD1!==undefined){
+          searchTerm = this.search.FIELD1;
+        }
+        else if(this.search.FIELD1===undefined) {
+          searchTerm = this.search;
+        }
+
 
         model.promiseGetDiseases(searchTerm)
         .then(function(data){

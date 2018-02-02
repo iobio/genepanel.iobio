@@ -4,3 +4,5 @@ npm-debug.log
 client/dist
 .tmp
 .idea
+.typeahead-example.vue
+.states.json

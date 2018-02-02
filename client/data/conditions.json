@@ -1,0 +1,64 @@
+{
+  "data": [
+   {
+     "FIELD1": "object_name"
+   },
+   {
+     "FIELD1": "Fragile X syndrome"
+   },
+   {
+     "FIELD1": "FMR1:fragile X mental retardation 1"
+   },
+   {
+     "FIELD1": "Fragile X tremor/ataxia syndrome"
+   },
+   {
+     "FIELD1": "Premature ovarian failure 1"
+   },
+   {
+     "FIELD1": "Cystic fibrosis"
+   },
+   {
+     "FIELD1": "CFTR:cystic fibrosis transmembrane conductance regulator"
+   },
+   {
+     "FIELD1": "chronic recurrent pancreatitis"
+   },
+   {
+     "FIELD1": "Acute recurrent pancreatitis"
+   },
+   {
+     "FIELD1": "Disseminated bronchiectasis"
+   },
+   {
+     "FIELD1": "Congenital bilateral absence of the vas deferens"
+   },
+   {
+     "FIELD1": "Ehlers-Danlos syndrome, type 4"
+   },
+   {
+     "FIELD1": "COL3A1:collagen type III alpha 1 chain"
+   },
+   {
+     "FIELD1": "Hereditary factor IX deficiency disease"
+   },
+   {
+     "FIELD1": "F9:coagulation factor IX"
+   },
+   {
+     "FIELD1": "Juvenile onset Huntington's disease"
+   },
+   {
+     "FIELD1": "Huntington's chorea"
+   },
+   {
+     "FIELD1": "HTT:huntingtin"
+   },
+   {
+     "FIELD1": "Bulbo-spinal"
+   },
+   {
+     "FIELD1": "Treacher collins"
+   }
+  ]
+}
