@@ -12,18 +12,23 @@
     <!-- <div>
       <p v-for="d in DiseasePanel">{{d.Title }}</p>
     </div> -->
+    <div class="control-group">
+			<label for="select-vendors">Vendors:</label>
+			<select id="select-vendors" placeholder="Select Vendors..."></select>
+		</div>
     <div>
       <p v-for="(g, index) in mergedGene">{{ index+1 }} --
          {{ g.testname }} -- {{ g._diseaseNames}} --
         {{ g._diseaseCount }} -- {{ g._conditionNames }} -- {{ g.offerer}}
      </p>
     </div>
+
     <div>
       <show-gene-panel
         v-bind:GeneData="mergedGene">
       </show-gene-panel>
-
     </div>
+
   </div>
 </template>
 
@@ -31,6 +36,10 @@
 <script>
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
+
+import jQuery from 'jquery';
+global.jQuery = jQuery;
+global.$ = jQuery;
 
 import Model from './Model';
 var model = new Model();
@@ -47,11 +56,32 @@ import ShowGenePanel from './ShowGenePanel.vue';
         Genes: [],
         DiseasePanel: [],
         demo: "this is demo",
-        mergedGene : []
+        mergedGene : [],
+        vendorList: []
       }
     },
     mounted(){
-      console.log("GenePanel: I am mounted now!")
+      console.log("GenePanel: I am mounted now!");
+      // $('#select-vendors').selectize({
+			// 		maxItems: null,
+			// 		valueField: 'id',
+			// 		labelField: 'title',
+			// 		searchField: 'title',
+			// 		options: [
+			// 			{id: 1, title: 'Spectrometer', url: 'http://en.wikipedia.org/wiki/Spectrometers'},
+			// 			{id: 2, title: 'Star Chart', url: 'http://en.wikipedia.org/wiki/Star_chart'},
+			// 			{id: 3, title: 'Electrical Tape', url: 'http://en.wikipedia.org/wiki/Electrical_tape'}
+			// 		],
+			// 		create: false
+			// 	});
+      $('#select-vendors').selectize({
+        create: true,
+        valueField: 'value',
+        labelField: 'value',
+        searchField: ['value'],
+        maxItems: null,
+        allowEmptyOption: true
+        });
     },
     updated(){
       console.log("GenePanel: I am updated now!")
@@ -70,11 +100,6 @@ import ShowGenePanel from './ShowGenePanel.vue';
       //   var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(diseases);
       //   this.mergedGene = mergedGenePanels;
       //   console.log("this merged Gens ", this.mergedGene)
-      //   console.log("this merged Gens ", this.mergedGene[0].offerer)
-      //   console.log("this merged Gens ", this.mergedGene[0].genecount)
-      //   console.log("this merged Gens ", this.mergedGene[0].testname)
-      //   console.log("this merged Gens ", this.mergedGene[0]._conditionNames)
-      //   console.log("this merged Gens ", this.mergedGene[0]._diseaseCount)
       // },
       AddGenePanelData: function(){
         this.DiseasePanel = this.DiseasePanelData
@@ -82,7 +107,16 @@ import ShowGenePanel from './ShowGenePanel.vue';
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
         console.log("mergedGenePanels", mergedGenePanels)
         this.mergedGene = mergedGenePanels
-        console.log("this.mergedGenes", this.mergedGene)
+        console.log("this.mergedGenes", this.mergedGene);
+
+        let vendors = model.getGenePanelVendors(mergedGenePanels);
+        console.log("vendor list", vendors);
+
+        $('#select-vendors')[0].selectize.clearOptions();
+        vendors.forEach(function(vendor) {
+          $('#select-vendors')[0].selectize.addOption({value: vendor});
+        })
+
       },
       addGenes: function(d){
         d.genePanels.map(x=>{

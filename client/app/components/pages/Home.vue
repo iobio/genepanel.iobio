@@ -14,7 +14,7 @@
 
     <hr>
     <!-- <typeaheadExample></typeaheadExample> -->
-    <datatableExample></datatableExample>
+    <!-- <datatableExample></datatableExample> -->
   </div>
 </template>
 
