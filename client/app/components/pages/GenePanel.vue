@@ -1,7 +1,7 @@
 <template>
   <div>
     Hello from Gene Panel!
-    <button v-on:click.prevent="AddGenePanelData">Show Gene panel</button>
+    <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn>
     <!-- <ul>
       <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="addGenes(disease)">
         {{ disease.Title }}
@@ -30,6 +30,8 @@
 
 <script>
 import { bus } from '../../routes';
+import { Typeahead, Btn } from 'uiv';
+
 import Model from './Model';
 var model = new Model();
 

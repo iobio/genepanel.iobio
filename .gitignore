@@ -6,3 +6,4 @@ client/dist
 .idea
 .typeahead-example.vue
 .states.json
+.datatable-example.vue

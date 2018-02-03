@@ -3,11 +3,11 @@
     <h1>GTR!</h1>
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
     <br>
-    <label for="input">States of America:</label>
+    <label for="input">Search to find genes :</label>
     <input id="input" class="form-control" type="text" placeholder="Type to search...">
     <typeahead match-start v-model="search"  target="#input" :data="conditions" item-key="FIELD1"/>
     <br/>
-    <button v-on:click.prevent="performSearch"> Go </button>
+    <btn type="primary" v-on:click.prevent="performSearch"> Go </btn>
     <hr>
     <ul>
       <li v-for="d in diseaseData">{{ d.Title }}</li>
@@ -31,7 +31,7 @@
 
 <script>
 
-import { Typeahead } from 'uiv';
+import { Typeahead, Btn } from 'uiv';
 import conditions from '../../../data/conditions.json';
 import geneData from '../../../data/genes.json';
 
@@ -67,9 +67,7 @@ var model = new Model();
     //     }
     //   }
     // },
-    created() {
-      console.log("condition data", this.conditionsData[1].FIELD1)
-    },
+
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');

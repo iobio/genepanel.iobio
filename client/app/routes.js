@@ -16,17 +16,24 @@ import * as uiv from 'uiv'
 
 Vue.use(uiv)
 
+import Vuetify from 'vuetify'
+// import 'vuetify/dist/vuetify.css'
+// import '../assets/css/siteVuetify.css'
+// import 'vuetify/dist/vuetify.css'
+// index.js or main.js
+require('../../node_modules/vuetify/dist/vuetify.min.css') // Ensure you are using css-loader
+require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/css/siteVuetify.css')
 
+//Use vuetify
+Vue.use(Vuetify)
 
-import Vuetify from 'vuetify';
 
 
 //Use typeahead
 Vue.use(Typeahead)
 
 
-// index.js or main.js
-// require('../../node_modules/vuetify/dist/vuetify.min.css') // Ensure you are using css-loader
+
 
 //Use router
 Vue.use(VueRouter);
@@ -38,8 +45,6 @@ Vue.use(VueResource);
 Vue.use(axios);
 
 
-//Use vuetify
-Vue.use(Vuetify)
 
 
 //Route

@@ -4,7 +4,7 @@
 
     Hello from Show Gene Panel !
     <br>
-    <button v-on:click.prevent="AddGeneData">Show Genes</button>
+    <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
     <br><br>
 
     <ul>
@@ -20,9 +20,10 @@
 
 <script>
 import { bus } from '../../routes';
+import { Typeahead, Btn } from 'uiv';
+
 import Model from './Model';
 var model = new Model();
-
   export default {
     props: ['GeneData'],
     data(){
