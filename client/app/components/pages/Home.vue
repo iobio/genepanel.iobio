@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <datatableExample></datatableExample> -->
+
+
     <app-gtr
       v-on:showDiseases="addDiseases($event)">
     </app-gtr>
@@ -14,8 +17,7 @@
 
     <hr>
     <!-- <typeaheadExample></typeaheadExample> -->
-    <!-- <datatableExample></datatableExample> -->
-  </div>
+</div>
 </template>
 
 <script>

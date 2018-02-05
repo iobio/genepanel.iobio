@@ -24,7 +24,12 @@ import Vuetify from 'vuetify'
 require('../../node_modules/vuetify/dist/vuetify.min.css') // Ensure you are using css-loader
 require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/css/siteVuetify.css');
 
+//Selectize
 require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/js/selectize.js')
+
+//Datatables
+require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/js/dataTables.scrollResize.js')
+
 
 //Use vuetify
 Vue.use(Vuetify)

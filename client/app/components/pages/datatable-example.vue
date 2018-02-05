@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-
+    {{ selected }}
     <v-data-table
         v-model="selected"
         v-bind:headers="headers"
@@ -10,7 +10,7 @@
         item-key="name"
         class="elevation-1"
       >
-      <template slot="headers" slot-scope="props">
+      <!-- <template slot="headers" slot-scope="props">
         <tr>
           <th>
             <v-checkbox
@@ -29,7 +29,7 @@
             {{ header.text }}
           </th>
         </tr>
-      </template>
+      </template> -->
       <template slot="items" slot-scope="props">
         <tr :active="props.selected" @click="props.selected = !props.selected">
           <td>

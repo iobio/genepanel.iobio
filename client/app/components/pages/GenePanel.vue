@@ -2,26 +2,23 @@
   <div>
     Hello from Gene Panel!
     <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn>
-    <!-- <ul>
-      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="addGenes(disease)">
-        {{ disease.Title }}
-      </li>
-    </ul> -->
     <br><br>
-    <!-- <button v-on:click.prevent="checkProps">check props</button> -->
-    <!-- <div>
-      <p v-for="d in DiseasePanel">{{d.Title }}</p>
-    </div> -->
     <div class="control-group">
 			<label for="select-vendors">Vendors:</label>
 			<select id="select-vendors" placeholder="Select Vendors..."></select>
 		</div>
+    <h2> Table Data </h2>
+    <table id="gene-panel-table" class="display"></table>
+    <!-- <h2> Raw Data </h2> -->
     <div>
-      <p v-for="(g, index) in mergedGene">{{ index+1 }} --
+      <!-- <p v-for="(g, index) in mergedGene">{{ index+1 }} --
          {{ g.testname }} -- {{ g._diseaseNames}} --
         {{ g._diseaseCount }} -- {{ g._conditionNames }} -- {{ g.offerer}}
-     </p>
+     </p> -->
     </div>
+
+    <!-- Gene- panel- table  -->
+
 
     <div>
       <show-gene-panel
@@ -62,18 +59,9 @@ import ShowGenePanel from './ShowGenePanel.vue';
     },
     mounted(){
       console.log("GenePanel: I am mounted now!");
-      // $('#select-vendors').selectize({
-			// 		maxItems: null,
-			// 		valueField: 'id',
-			// 		labelField: 'title',
-			// 		searchField: 'title',
-			// 		options: [
-			// 			{id: 1, title: 'Spectrometer', url: 'http://en.wikipedia.org/wiki/Spectrometers'},
-			// 			{id: 2, title: 'Star Chart', url: 'http://en.wikipedia.org/wiki/Star_chart'},
-			// 			{id: 3, title: 'Electrical Tape', url: 'http://en.wikipedia.org/wiki/Electrical_tape'}
-			// 		],
-			// 		create: false
-			// 	});
+      console.log("this.mergedGene from mounted() : ", this.mergedGene)
+
+
       $('#select-vendors').selectize({
         create: true,
         valueField: 'value',
@@ -82,9 +70,46 @@ import ShowGenePanel from './ShowGenePanel.vue';
         maxItems: null,
         allowEmptyOption: true
         });
+
     },
     updated(){
-      console.log("GenePanel: I am updated now!")
+      console.log("GenePanel: I am updated now!");
+      console.log("this.mergedGene from updated() : ", this.mergedGene)
+
+      var data = [
+        {
+            "name":       "Tiger Nixon",
+            "position":   "System Architect",
+            "salary":     "$3,120",
+            "start_date": "2011/04/25",
+            "office":     "Edinburgh",
+            "extn":       "5421"
+        },
+        {
+            "name":       "Garrett Winters",
+            "position":   "Director",
+            "salary":     "$5,300",
+            "start_date": "2011/07/25",
+            "office":     "Edinburgh",
+            "extn":       "8422"
+        }
+    ]
+
+    console.log("data from updated()", data)
+
+      var genePanelTable = $('#gene-panel-table').DataTable({
+        data:this.mergedGene,
+            columns: [
+          { title: "No. ", data: '_rowNumber' },
+          { title: "Genes", data: 'genecount' },
+          { title: "Vendor", data: 'offerer' },
+          { title: "Name", data: 'testname' },
+          { title: "Conditions", data: '_conditionNames' },
+          { title: "Selected diseases", data: '_diseaseCount' },
+      ],
+      "order": [[ 1, "desc" ], [ 2, "asc" ]],
+      });
+
     },
     // updated(){
     //     this.DiseasePanel = this.DiseasePanelData;
