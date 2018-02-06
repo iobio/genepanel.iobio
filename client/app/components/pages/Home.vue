@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- <datatableExample></datatableExample> -->
+    <!-- <multiSelectExample></multiSelectExample> -->
 
 
     <app-gtr
@@ -26,6 +27,8 @@ import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
 import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
+import multiSelectExample from './MultiSelectExample.vue';
+
 
 export default {
   components: { //Registering locally for nesting!
@@ -33,7 +36,8 @@ export default {
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
     'typeaheadExample':typeaheadExample,
-    'datatableExample':datatableExample
+    'datatableExample':datatableExample,
+    'multiSelectExample':multiSelectExample
   },
   name: 'home',
   props: [],

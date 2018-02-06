@@ -3,13 +3,98 @@
     Hello from Gene Panel!
     <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn>
     <br><br>
-    <div class="control-group">
+    <!-- <div class="control-group">
 			<label for="select-vendors">Vendors:</label>
 			<select id="select-vendors" placeholder="Select Vendors..."></select>
-		</div>
+		</div> -->
+
+    <br>
+    <br>
+
+    <!-- Selecting vendor using multi select  -->
+    <v-card color="secondary" flat>
+      <v-card-text>
+        <v-container fluid>
+          <v-layout>
+            <v-flex>
+              <v-select
+                label="Select Vendors"
+                autocomplete
+                :loading="loading"
+                dark
+                multiple
+                cache-items
+                chips
+                required
+                :items="multiSelectItems"
+                :rules="[() => select.length > 0 || 'You must choose at least one']"
+                :search-input.sync="search"
+                v-model="select"
+              ></v-select>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-text>
+    </v-card>
+    <br>
+
+
     <h2> Table Data </h2>
-    <table id="gene-panel-table" class="display"></table>
+    <!-- <table id="gene-panel-table" class="display"></table> -->
     <!-- <h2> Raw Data </h2> -->
+
+    <v-app id="inspire">
+      <!-- {{ selected }} -->
+      <v-data-table
+          v-model="selected"
+          v-bind:headers="headers"
+          v-bind:items="items"
+          select-all
+          v-bind:pagination.sync="pagination"
+          item-key="testname"
+          class="elevation-1"
+        >
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                primary
+                hide-details
+                @click.native="toggleAll"
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+              ></v-checkbox>
+            </th>
+            <th v-for="header in props.headers" :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              <v-icon>arrow_upward</v-icon>
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
+        <template slot="items" slot-scope="props">
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                primary
+                hide-details
+                :input-value="props.selected"
+              ></v-checkbox>
+            </td>
+              <!-- <td></td> -->
+              <td>{{ props.item.genecount }}</td>
+              <td>{{ props.item.offerer }}</td>
+              <td>{{ props.item.testname }}</td>
+              <td>{{ props.item._conditionNames }}</td>
+              <td>{{ props.item._diseaseCount }}</td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-app>
+
+
     <div>
       <!-- <p v-for="(g, index) in mergedGene">{{ index+1 }} --
          {{ g.testname }} -- {{ g._diseaseNames}} --
@@ -50,65 +135,67 @@ import ShowGenePanel from './ShowGenePanel.vue';
     props: ['DiseasePanelData'],
     data(){
       return {
-        Genes: [],
+        loading: false, //multiselect
+        multiSelectItems: [],   //multiselect
+        search: null,  //multiselect
+        select: [],  //multiselect
+        Genes: [],  //multiselect
         DiseasePanel: [],
         demo: "this is demo",
         mergedGene : [],
-        vendorList: []
+        vendorList: [],
+        pagination: {     //Data tables
+          sortBy: 'testname'
+        },
+        selected: [],    //Data tables
+        headers: [    //Data tables
+          {
+            text: 'genecount',
+            align: 'left',
+            value: 'genecount'
+          },
+          { text: 'Vendor', align: 'left', value: 'offerer' },
+          { text: 'Name', value: 'testname' },
+          { text: 'Conditions', value: '_conditionNames' },
+          { text: 'Selected diseases', value: '_diseaseCount' },
+        ],
+        items: []   //Data tables
+      }
+    },
+    watch: {
+      search (val) {
+        val && this.querySelections(val)
       }
     },
     mounted(){
       console.log("GenePanel: I am mounted now!");
       console.log("this.mergedGene from mounted() : ", this.mergedGene)
 
-
-      $('#select-vendors').selectize({
-        create: true,
-        valueField: 'value',
-        labelField: 'value',
-        searchField: ['value'],
-        maxItems: null,
-        allowEmptyOption: true
-        });
+      //
+      // $('#select-vendors').selectize({
+      //   create: true,
+      //   valueField: 'value',
+      //   labelField: 'value',
+      //   searchField: ['value'],
+      //   maxItems: null,
+      //   allowEmptyOption: true
+      //   });
 
     },
     updated(){
-      console.log("GenePanel: I am updated now!");
-      console.log("this.mergedGene from updated() : ", this.mergedGene)
 
-      var data = [
-        {
-            "name":       "Tiger Nixon",
-            "position":   "System Architect",
-            "salary":     "$3,120",
-            "start_date": "2011/04/25",
-            "office":     "Edinburgh",
-            "extn":       "5421"
-        },
-        {
-            "name":       "Garrett Winters",
-            "position":   "Director",
-            "salary":     "$5,300",
-            "start_date": "2011/07/25",
-            "office":     "Edinburgh",
-            "extn":       "8422"
-        }
-    ]
-
-    console.log("data from updated()", data)
-
-      var genePanelTable = $('#gene-panel-table').DataTable({
-        data:this.mergedGene,
-            columns: [
-          { title: "No. ", data: '_rowNumber' },
-          { title: "Genes", data: 'genecount' },
-          { title: "Vendor", data: 'offerer' },
-          { title: "Name", data: 'testname' },
-          { title: "Conditions", data: '_conditionNames' },
-          { title: "Selected diseases", data: '_diseaseCount' },
-      ],
-      "order": [[ 1, "desc" ], [ 2, "asc" ]],
-      });
+      // var genePanelTable = $('#gene-panel-table').DataTable({
+      //   data:this.mergedGene,
+      //       columns: [
+      //     { title: "No. ", data: '_rowNumber' },
+      //     { title: "Genes", data: 'genecount' },
+      //     { title: "Vendor", data: 'offerer' },
+      //     { title: "Name", data: 'testname' },
+      //     { title: "Conditions", data: '_conditionNames' },
+      //     { title: "Selected diseases", data: '_diseaseCount' },
+      // ],
+      // "order": [[ 1, "desc" ], [ 2, "asc" ]],
+      // });
 
     },
     // updated(){
@@ -134,13 +221,19 @@ import ShowGenePanel from './ShowGenePanel.vue';
         this.mergedGene = mergedGenePanels
         console.log("this.mergedGenes", this.mergedGene);
 
+        this.items = mergedGenePanels;
+        console.log("this.items : ", this.items)
+
         let vendors = model.getGenePanelVendors(mergedGenePanels);
         console.log("vendor list", vendors);
 
-        $('#select-vendors')[0].selectize.clearOptions();
-        vendors.forEach(function(vendor) {
-          $('#select-vendors')[0].selectize.addOption({value: vendor});
-        })
+        this.vendorList = vendors;
+        console.log("this.vendorList", this.vendorList);
+
+        // $('#select-vendors')[0].selectize.clearOptions();
+        // vendors.forEach(function(vendor) {
+        //   $('#select-vendors')[0].selectize.addOption({value: vendor});
+        // })
 
       },
       addGenes: function(d){
@@ -155,7 +248,29 @@ import ShowGenePanel from './ShowGenePanel.vue';
         console.log("props", this.DiseasePanelData);
         this.DiseasePanel = this.DiseasePanelData
         console.log(this.DiseasePanel)
-      }
+      },
+      querySelections (v) { //for multi select
+        this.loading = true
+        // Simulated ajax query
+        setTimeout(() => {
+          this.multiSelectItems = this.vendorList.filter(e => {
+            return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+          })
+          this.loading = false
+        }, 500)
+      },
+      toggleAll () { //for vuetify tables
+        if (this.selected.length) this.selected = []
+        else this.selected = this.items.slice()
+      },
+      changeSort (column) {
+        if (this.pagination.sortBy === column) {
+          this.pagination.descending = !this.pagination.descending
+        } else {
+          this.pagination.sortBy = column
+          this.pagination.descending = false
+        }
+      },
     }
   }
 </script>
