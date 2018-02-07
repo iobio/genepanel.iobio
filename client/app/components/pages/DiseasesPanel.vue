@@ -11,6 +11,17 @@
     <h2> Table data </h2>
     {{ selected.Title }}
     <v-app id="inspire">
+      <v-card-title>
+        Disease Table
+        <v-spacer></v-spacer>
+        <v-text-field
+          append-icon="search"
+          label="Search"
+          single-line
+          hide-details
+          v-model="search"
+        ></v-text-field>
+      </v-card-title>
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
@@ -19,6 +30,7 @@
           v-bind:pagination.sync="pagination"
           item-key="Title"
           class="elevation-1"
+          v-bind:search="search"
         >
         <template slot="headers" slot-scope="props">
           <tr>
@@ -78,6 +90,8 @@ global.$ = jQuery
     data(){
         return {
           propsData : [],
+          tmp: '',
+          search: '',
           pagination: {
             sortBy: 'Title'
           },
@@ -131,6 +145,7 @@ global.$ = jQuery
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
+      this.showDiseasesData()
       // if(this.propsData.length<1){
       //   this.propsData = this.DiseasePanelData
       //   console.log("propsData from DiseasePanel: ", this.propsData)
