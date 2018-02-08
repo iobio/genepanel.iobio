@@ -12,7 +12,10 @@ import Home from './components/pages/Home.vue';
 
 import { Typeahead } from 'uiv';
 
-import * as uiv from 'uiv'
+import * as uiv from 'uiv';
+
+import Clipboard from 'v-clipboard'
+
 
 Vue.use(uiv)
 
@@ -51,6 +54,10 @@ Vue.use(VueResource);
 //Use Axios
 Vue.use(axios);
 
+
+//Use copy to clipboard
+//Link: https://github.com/euvl/v-clipboard
+Vue.use(Clipboard)
 
 
 

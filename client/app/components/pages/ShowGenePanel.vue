@@ -5,6 +5,12 @@
     <hr>
 
 
+      <v-alert color="info" icon="info" dismissible v-model="alert">
+        {{ alertText }}
+      </v-alert>
+
+
+
     Hello from Show Gene Panel !
     <br>
     <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
@@ -17,6 +23,9 @@
 
     <v-app id="inspire">
       <v-card-title>
+        <btn @click="copy">
+          Copy to clipboard
+        </btn>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -511,6 +520,8 @@ var model = new Model();
     props: ['GeneData'],
     data(){
       return {
+        alert:false,
+        alertText: "",
         geneHistogramChart: {},
         GetGeneData : [],
         GenesToDisplay: [],
@@ -541,6 +552,13 @@ var model = new Model();
     mounted(){
       this.draw();
     },
+    updated(){
+      console.log("this.selected from Show Genes ", this.selected.map(gene=> {
+         var x =  gene.name;
+         //.toString().replace(/,/gi , ' ')
+         return x.toString() ;
+      }) )
+    },
     methods:{
       draw(){
         this.geneHistogramChart = HistogramChart()
@@ -551,6 +569,16 @@ var model = new Model();
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
             .yAxisLabel( "log(Genes)" )
             .xAxisLabel( "Gene Panels" )
+      },
+      copy () { //Copy to clipboard
+        var geneNames = this.selected.map(gene => {
+          return gene.name
+        })
+        var geneNamesToString = geneNames.toString()
+        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
+        this.$clipboard(genesToCopy);
+        this.alert = true;
+        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . "
       },
       toggleAll () {
         if (this.selected.length) this.selected = []
@@ -575,6 +603,11 @@ var model = new Model();
         console.log("GenesToDisplay",this.GenesToDisplay);
 
         this.items = mergedGenes;
+
+        //Select All rows
+        if (this.selected.length) this.selected = []
+        else this.selected = this.items.slice()
+        console.log("this.selected from Show Genes ", this.selected )
 
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});

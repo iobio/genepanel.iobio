@@ -144,6 +144,7 @@ global.$ = jQuery
           console.log("this.selected from showDiseases ", this.selected )
           //this.toggleAll();
         },
+
         // getDiseaseData: function(){
         //   return this.propsData;
         // }
@@ -153,6 +154,8 @@ global.$ = jQuery
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
+      console.log("this.selected from showDiseases updated", this.selected )
+
       //this.showDiseasesData() //To update the table on clicking the go button
       // if(this.propsData.length<1){
       //   this.propsData = this.DiseasePanelData
