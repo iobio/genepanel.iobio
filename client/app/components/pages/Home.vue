@@ -2,7 +2,7 @@
   <div>
     <!-- <datatableExample></datatableExample> -->
     <!-- <multiSelectExample></multiSelectExample> -->
-
+    <!-- <d3Example></d3Example> -->
 
     <app-gtr
       v-on:showDiseases="addDiseases($event)">
@@ -28,6 +28,7 @@ import GenePanel from './GenePanel.vue';
 import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
 import multiSelectExample from './MultiSelectExample.vue';
+import d3Example from './d3Example.vue';
 
 
 export default {
@@ -37,7 +38,8 @@ export default {
     'gene-panel': GenePanel,
     'typeaheadExample':typeaheadExample,
     'datatableExample':datatableExample,
-    'multiSelectExample':multiSelectExample
+    'multiSelectExample':multiSelectExample,
+    'd3Example':d3Example
   },
   name: 'home',
   props: [],

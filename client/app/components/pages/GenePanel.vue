@@ -53,6 +53,7 @@
           v-bind:pagination.sync="pagination"
           item-key="testname"
           class="elevation-1"
+          no-data-text="No Panels Available Currently"
         >
         <template slot="headers" slot-scope="props">
           <tr>
@@ -170,32 +171,8 @@ import ShowGenePanel from './ShowGenePanel.vue';
     mounted(){
       console.log("GenePanel: I am mounted now!");
       console.log("this.mergedGene from mounted() : ", this.mergedGene)
-
-      //
-      // $('#select-vendors').selectize({
-      //   create: true,
-      //   valueField: 'value',
-      //   labelField: 'value',
-      //   searchField: ['value'],
-      //   maxItems: null,
-      //   allowEmptyOption: true
-      //   });
-
     },
     updated(){
-
-      // var genePanelTable = $('#gene-panel-table').DataTable({
-      //   data:this.mergedGene,
-      //       columns: [
-      //     { title: "No. ", data: '_rowNumber' },
-      //     { title: "Genes", data: 'genecount' },
-      //     { title: "Vendor", data: 'offerer' },
-      //     { title: "Name", data: 'testname' },
-      //     { title: "Conditions", data: '_conditionNames' },
-      //     { title: "Selected diseases", data: '_diseaseCount' },
-      // ],
-      // "order": [[ 1, "desc" ], [ 2, "asc" ]],
-      // });
 
     },
     // updated(){

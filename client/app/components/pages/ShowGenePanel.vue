@@ -10,6 +10,10 @@
     <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
     <br><br>
 
+    <div id="gene-histogram-box" >
+      <svg id="gene-histogram-chart"></svg>
+    </div>
+
 
     <v-app id="inspire">
       <v-card-title>
@@ -31,6 +35,7 @@
           item-key="name"
           class="elevation-1"
           v-bind:search="search"
+          no-data-text="No Genes Available Currently"
         >
         <template slot="headers" slot-scope="props">
           <tr>
@@ -71,9 +76,7 @@
         </template>
       </v-data-table>
     </v-app>
-    <div id="gene-histogram-box" >
-      <svg id="gene-histogram-chart"></svg>
-    </div>
+
     <!-- <ul>
       <li v-for="(gene, index) in GenesToDisplay"> {{ gene._rowNumber}}--
         {{ gene.name}} -- {{ gene._genePanelCount }} -- {{ gene._diseaseCount}}
@@ -91,21 +94,21 @@ import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3'
 
 
-var geneHistogramChart = HistogramChart()
-.width(390)
-.height(150)
-.widthPercent("100%")
-.heightPercent("100%")
-.margin( {left: 45, right: 15, top: 10, bottom: 30})
-.yAxisLabel( "log(Genes)" )
-.xAxisLabel( "Gene Panels" )
-.onSelected(function(selectedGenes) {
-  model.selectedGeneNames = selectedGenes.map(function(gene) {
-    return gene.name;
-  })
-  selectGenes({selected: model.selectedGeneNames})
-  $("#gene-count").text(model.selectedGeneNames.length + " of " + model.mergedGenes.length);
-});
+// var geneHistogramChart = HistogramChart()
+// .width(390)
+// .height(150)
+// .widthPercent("100%")
+// .heightPercent("100%")
+// .margin( {left: 45, right: 15, top: 10, bottom: 30})
+// .yAxisLabel( "log(Genes)" )
+// .xAxisLabel( "Gene Panels" )
+// .onSelected(function(selectedGenes) {
+//   model.selectedGeneNames = selectedGenes.map(function(gene) {
+//     return gene.name;
+//   })
+//   selectGenes({selected: model.selectedGeneNames})
+//   $("#gene-count").text(model.selectedGeneNames.length + " of " + model.mergedGenes.length);
+// });
 
 
 function HistogramChart() {
@@ -508,6 +511,7 @@ var model = new Model();
     props: ['GeneData'],
     data(){
       return {
+        geneHistogramChart: {},
         GetGeneData : [],
         GenesToDisplay: [],
         pagination: {
@@ -535,16 +539,19 @@ var model = new Model();
       }
     },
     mounted(){
-      // this.geneHistogramChart()
-
-
+      this.draw();
     },
-    // updated(){
-    //   // var selection = d3.select('#gene-histogram-chart').datum(model.this.GenesToDisplay);
-    //   // this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
-    //
-    // },
     methods:{
+      draw(){
+        this.geneHistogramChart = HistogramChart()
+            .width(390)
+            .height(150)
+            .widthPercent("47%")
+            .heightPercent("47%")
+            .margin( {left: 45, right: 15, top: 10, bottom: 30})
+            .yAxisLabel( "log(Genes)" )
+            .xAxisLabel( "Gene Panels" )
+      },
       toggleAll () {
         if (this.selected.length) this.selected = []
         else this.selected = this.items.slice()
@@ -570,7 +577,7 @@ var model = new Model();
         this.items = mergedGenes;
 
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
-        geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
+        this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
       },
 
@@ -579,4 +586,93 @@ var model = new Model();
 </script>
 
 <style>
+
+#gene-histogram-chart .bar rect {
+    fill:   #7dc2e5;
+    stroke: #1f5d7a;
+    stroke-width: .5;
+}
+
+#gene-histogram-chart .bar.selected rect {
+    fill: #2d8fc1;
+}
+
+#gene-histogram-chart .bar text {
+    font-size: 10px;
+}
+
+#gene-histogram-chart .x.axis {
+  font-size: 10px;
+}
+#gene-histogram-chart .y.axis {
+  font-size: 10px !important;
+}
+#gene-histogram-chart .axis .label {
+  font-size: 12px !important;
+}
+
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  z-index:20;
+  color:white;
+  padding: 4px 6px 4px 6px;
+  font: 11px arial;
+  background: rgb(80,80,80);
+  border: 0px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/*                           */
+/* Gene horizontal barchart  */
+/*                           */
+#gene-bar-chart #title {
+  font-size: 20px;
+  padding-bottom: 10px;
+  padding-top: 20px;
+  font-weight: 300;
+}
+
+
+
+/*                      */
+/*  Any svg chart       */
+/*                      */
+.y.axis line {
+  fill: none;
+  stroke: #e0e0e0;
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  fill: none;
+  stroke: #e0e0e0;
+  shape-rendering: crispEdges;
+}
+
+.axis path {
+  fill: none;
+  stroke: #848383;
+  shape-rendering: crispEdges;
+}
+
+.axis .label {
+  font-size: 12px;
+}
+
+.brush .extent {
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+.resize {
+  display: inline !important; /* show when empty */
+  fill: #7A7A7A;
+  fill-opacity: 1;
+  stroke: #7A7A7A;
+  stroke-width: 2px;
+}
+
 </style>

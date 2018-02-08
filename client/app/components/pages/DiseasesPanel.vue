@@ -1,15 +1,6 @@
 <template>
   <div>
-    Hello from DiseasesPanel!
-    <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn>
 
-    <ul>
-      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
-    </ul>
-    <br><br>
-
-    <h2> Table data </h2>
-    {{ selected.Title }}
     <v-app id="inspire">
       <v-card-title>
         Disease Table
@@ -31,6 +22,7 @@
           item-key="Title"
           class="elevation-1"
           v-bind:search="search"
+          no-data-text="No Disorders Available Currently"
         >
         <template slot="headers" slot-scope="props">
           <tr>
@@ -71,6 +63,17 @@
         </template>
       </v-data-table>
     </v-app>
+    Hello from DiseasesPanel!
+    <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn>
+
+    <ul>
+      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
+    </ul>
+    <br><br>
+
+    <h2> Table data </h2>
+    <!-- {{ selected.Title }} -->
+
 
   </div>
 </template>
@@ -158,4 +161,7 @@ global.$ = jQuery
 </script>
 
 <style>
+ #inspire {
+   height: 400px;
+ }
 </style>
