@@ -1,9 +1,15 @@
 <template>
   <div>
+    Hello from DiseasesPanel!
+    <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn>
 
+    <ul>
+      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
+    </ul>
     <v-app id="inspire">
       <v-card-title>
         Disease Table
+        <!-- <btn>Select All</btn> -->
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -63,12 +69,7 @@
         </template>
       </v-data-table>
     </v-app>
-    Hello from DiseasesPanel!
-    <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn>
 
-    <ul>
-      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
-    </ul>
     <br><br>
 
     <h2> Table data </h2>
@@ -137,7 +138,11 @@ global.$ = jQuery
         showDiseasesData: function(){
           console.log("propsData from showDiseasesData: ", this.propsData);
           this.items = this.DiseasePanelData;
-          console.log("this.items  : ", this.items)
+          console.log("this.items  : ", this.items);
+          if (this.selected.length) this.selected = []
+          else this.selected = this.items.slice()
+          console.log("this.selected from showDiseases ", this.selected )
+          //this.toggleAll();
         },
         // getDiseaseData: function(){
         //   return this.propsData;
@@ -148,20 +153,19 @@ global.$ = jQuery
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
-      this.showDiseasesData()
+      //this.showDiseasesData() //To update the table on clicking the go button
       // if(this.propsData.length<1){
       //   this.propsData = this.DiseasePanelData
       //   console.log("propsData from DiseasePanel: ", this.propsData)
       // }
-
 
     },
 
   }
 </script>
 
-<style>
+<style scoped>
  #inspire {
-   height: 400px;
+   height: 500px;
  }
 </style>

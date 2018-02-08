@@ -25,10 +25,10 @@ require('../../node_modules/vuetify/dist/vuetify.min.css') // Ensure you are usi
 // require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/css/siteVuetify.css');
 
 //Selectize
-require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/js/selectize.js')
+require('../app/components/assets/js/selectize.js')
 
 //Datatables
-require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/js/dataTables.scrollResize.js')
+// require('/Users/adityaekawade/Desktop/genepanel/client/app/components/assets/js/dataTables.scrollResize.js')
 
 
 //Use vuetify
