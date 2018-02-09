@@ -1,15 +1,7 @@
 <template>
   <div>
     <hr>
-
     <hr>
-
-
-      <v-alert color="info" icon="info" dismissible v-model="alert">
-        {{ alertText }}
-      </v-alert>
-
-
 
     Hello from Show Gene Panel !
     <br>
@@ -19,9 +11,13 @@
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart"></svg>
     </div>
+    <v-alert color="info" icon="info" dismissible v-model="alert">
+      {{ alertText }}
+    </v-alert>
 
 
-    <v-app id="inspire">
+
+    <!-- <v-app id="inspire"> -->
       <v-card-title>
         <btn @click="copy">
           Copy to clipboard
@@ -84,7 +80,7 @@
           </tr>
         </template>
       </v-data-table>
-    </v-app>
+    <!-- </v-app> -->
 
     <!-- <ul>
       <li v-for="(gene, index) in GenesToDisplay"> {{ gene._rowNumber}}--

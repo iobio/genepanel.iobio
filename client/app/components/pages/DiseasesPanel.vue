@@ -6,10 +6,11 @@
     <ul>
       <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
     </ul>
-    <v-app id="inspire">
+    <!-- <v-app id="inspire"> -->
       <v-card-title>
         Disease Table
-        <!-- <btn>Select All</btn> -->
+        <btn type="primary" v-on:click.prevent="selectAllDisorders">Select All</btn>
+        <btn type="primary" v-on:click.prevent="deSelectAllDisorders">De Select All</btn>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -68,11 +69,10 @@
           </tr>
         </template>
       </v-data-table>
-    </v-app>
+    <!-- </v-app> -->
 
     <br><br>
 
-    <h2> Table data </h2>
     <!-- {{ selected.Title }} -->
 
 
@@ -144,6 +144,12 @@ global.$ = jQuery
           console.log("this.selected from showDiseases ", this.selected )
           //this.toggleAll();
         },
+        selectAllDisorders: function(){
+          this.selected = this.items.slice()
+        },
+        deSelectAllDisorders: function(){
+          this.selected = []
+        },
 
         // getDiseaseData: function(){
         //   return this.propsData;
@@ -154,7 +160,10 @@ global.$ = jQuery
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
-      console.log("this.selected from showDiseases updated", this.selected )
+      console.log("this.selected from showDiseases updated", this.selected );
+
+      //Emit the this.selected array back to the home.vue so it can be passed as props
+      this.$emit('selectedDiseases', this.selected);
 
       //this.showDiseasesData() //To update the table on clicking the go button
       // if(this.propsData.length<1){
@@ -168,7 +177,7 @@ global.$ = jQuery
 </script>
 
 <style scoped>
- #inspire {
+ /* #inspire {
    height: 500px;
- }
+ } */
 </style>

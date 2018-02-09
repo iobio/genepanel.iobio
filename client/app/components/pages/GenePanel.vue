@@ -191,6 +191,10 @@ import ShowGenePanel from './ShowGenePanel.vue';
       //   console.log("this merged Gens ", this.mergedGene)
       // },
       AddGenePanelData: function(){
+        // var x = [];
+        // x.push(this.DiseasePanelData[0]);
+        // this.DiseasePanel= x;
+
         this.DiseasePanel = this.DiseasePanelData
         console.log(this.DiseasePanel)
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
@@ -252,5 +256,8 @@ import ShowGenePanel from './ShowGenePanel.vue';
   }
 </script>
 
-<style>
+<style scoped>
+  #inspire {
+    height: 600px;
+  }
 </style>

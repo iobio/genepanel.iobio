@@ -9,11 +9,12 @@
     </app-gtr>
     <hr>
     <disease-panel
-      v-bind:DiseasePanelData="diseases">
+      v-bind:DiseasePanelData="diseases"
+      v-on:selectedDiseases="selectDiseases($event)">
     </disease-panel>
     <hr>
     <gene-panel
-      v-bind:DiseasePanelData="diseases">
+      v-bind:DiseasePanelData="diseasesProps">
     </gene-panel>
 
     <hr>
@@ -45,12 +46,18 @@ export default {
   props: [],
   data() {
     return {
-      diseases: []
+      diseases: [],
+      diseasesProps: []
     }
   },
   methods: {
     addDiseases: function(e){
+      console.log("e is from home: addDiseases ", e)
       this.diseases = e;
+    },
+    selectDiseases: function(e){
+      console.log("e is from home: ", e)
+      this.diseasesProps = e;
     }
   }
 }
