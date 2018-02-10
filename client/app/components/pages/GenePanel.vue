@@ -54,6 +54,7 @@
           item-key="testname"
           class="elevation-1"
           no-data-text="No Panels Available Currently"
+          :custom-filter="customFilter"
         >
         <template slot="headers" slot-scope="props">
           <tr>
@@ -96,19 +97,12 @@
       </v-app>
 
 
-    <div>
-      <!-- <p v-for="(g, index) in mergedGene">{{ index+1 }} --
-         {{ g.testname }} -- {{ g._diseaseNames}} --
-        {{ g._diseaseCount }} -- {{ g._conditionNames }} -- {{ g.offerer}}
-     </p> -->
-    </div>
-
     <!-- Gene- panel- table  -->
 
 
     <div>
       <show-gene-panel
-        v-bind:GeneData="mergedGene">
+        v-bind:GeneData="selected">
       </show-gene-panel>
     </div>
 
@@ -127,6 +121,8 @@ global.$ = jQuery;
 import Model from './Model';
 var model = new Model();
 
+// var tempArr = [];
+
 import ShowGenePanel from './ShowGenePanel.vue';
 
   export default {
@@ -142,6 +138,7 @@ import ShowGenePanel from './ShowGenePanel.vue';
         select: [],  //multiselect
         Genes: [],  //multiselect
         DiseasePanel: [],
+        tempArr: [],
         demo: "this is demo",
         mergedGene : [],
         vendorList: [],
@@ -165,7 +162,9 @@ import ShowGenePanel from './ShowGenePanel.vue';
     },
     watch: {
       search (val) {
-        val && this.querySelections(val)
+        val && this.querySelections(val);
+        console.log("val : ", val );
+
       }
     },
     mounted(){
@@ -173,23 +172,36 @@ import ShowGenePanel from './ShowGenePanel.vue';
       console.log("this.mergedGene from mounted() : ", this.mergedGene)
     },
     updated(){
+      console.log("Hello I am gene panel and I am updated!");
+        console.log("selected from multiselect watch is : ", this.select);
+        // if(this.items.length>0 && this.select.length>0)this.items = this.items.filter(f => this.select.includes(f));
+        // console.log(this.items)
+
+
+        //
+        // if(this.select.length>0 && this.items.length>0){
+        //   for(var i=0; i<this.select.length; i++){
+        //     for(var j=0; j<this.items.length; j++){
+        //       if(this.select[i]===this.items[j].offerer){
+        //         this.tempArr.push(this.items[j]);
+        //       }
+        //     }
+        //   }
+        //
+        //
+        //   //this.items = tempArr;
+        // }
+        // console.log("temp array is : " , this.tempArr);
+
+
 
     },
-    // updated(){
-    //     this.DiseasePanel = this.DiseasePanelData;
-    //     console.log("this . diseaspanel", this.DiseasePanel);
-    //     this.MergeGenes(this.DiseasePanel)
-    //     // var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-    //     // console.log("mergedGenePanels", mergedGenePanels);
-    //     // this.mergedGene = mergedGenePanels;
-    //     // console.log("this merged Gens ", this.mergedGene)
-    // },
+
     methods:{
-      // MergeGenes(diseases){
-      //   var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(diseases);
-      //   this.mergedGene = mergedGenePanels;
-      //   console.log("this merged Gens ", this.mergedGene)
-      // },
+
+      customFilter(items, search, filter){
+        console.log("custom filter items : ", items)
+      },
       AddGenePanelData: function(){
         // var x = [];
         // x.push(this.DiseasePanelData[0]);
@@ -210,6 +222,8 @@ import ShowGenePanel from './ShowGenePanel.vue';
 
         this.vendorList = vendors;
         console.log("this.vendorList", this.vendorList);
+
+        this.selected = this.items.slice()
 
         // $('#select-vendors')[0].selectize.clearOptions();
         // vendors.forEach(function(vendor) {

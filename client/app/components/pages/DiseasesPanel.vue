@@ -9,8 +9,8 @@
     <!-- <v-app id="inspire"> -->
       <v-card-title>
         Disease Table
-        <btn type="primary" v-on:click.prevent="selectAllDisorders">Select All</btn>
-        <btn type="primary" v-on:click.prevent="deSelectAllDisorders">De Select All</btn>
+        <btn v-on:click.prevent="selectAllDisorders">Select All</btn>
+        <btn v-on:click.prevent="deSelectAllDisorders">De Select All</btn>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"

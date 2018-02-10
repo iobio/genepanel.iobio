@@ -22,6 +22,8 @@
         <btn @click="copy">
           Copy to clipboard
         </btn>
+        <btn v-on:click.prevent="selectAllGenes">Select All</btn>
+        <btn v-on:click.prevent="deSelectAllGenes">De Select All</btn>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -601,13 +603,18 @@ var model = new Model();
         this.items = mergedGenes;
 
         //Select All rows
-        if (this.selected.length) this.selected = []
-        else this.selected = this.items.slice()
+        this.selected = this.items.slice()
         console.log("this.selected from Show Genes ", this.selected )
 
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
+      },
+      selectAllGenes: function(){
+        this.selected = this.items.slice()
+      },
+      deSelectAllGenes: function(){
+        this.selected = []
       },
 
     }
