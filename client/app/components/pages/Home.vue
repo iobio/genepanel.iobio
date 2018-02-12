@@ -1,21 +1,25 @@
 <template>
   <div>
+    <!-- <datatableExample></datatableExample> -->
+    <!-- <multiSelectExample></multiSelectExample> -->
+    <!-- <d3Example></d3Example> -->
+
     <app-gtr
       v-on:showDiseases="addDiseases($event)">
     </app-gtr>
     <hr>
     <disease-panel
-      v-bind:DiseasePanelData="diseases">
+      v-bind:DiseasePanelData="diseases"
+      v-on:selectedDiseases="selectDiseases($event)">
     </disease-panel>
     <hr>
     <gene-panel
-      v-bind:DiseasePanelData="diseases">
+      v-bind:DiseasePanelData="diseasesProps">
     </gene-panel>
 
     <hr>
     <!-- <typeaheadExample></typeaheadExample> -->
-    <datatableExample></datatableExample>
-  </div>
+</div>
 </template>
 
 <script>
@@ -24,6 +28,9 @@ import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
 import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
+import multiSelectExample from './MultiSelectExample.vue';
+import d3Example from './d3Example.vue';
+
 
 export default {
   components: { //Registering locally for nesting!
@@ -31,18 +38,26 @@ export default {
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
     'typeaheadExample':typeaheadExample,
-    'datatableExample':datatableExample
+    'datatableExample':datatableExample,
+    'multiSelectExample':multiSelectExample,
+    'd3Example':d3Example
   },
   name: 'home',
   props: [],
   data() {
     return {
-      diseases: []
+      diseases: [],
+      diseasesProps: []
     }
   },
   methods: {
     addDiseases: function(e){
+      console.log("e is from home: addDiseases ", e)
       this.diseases = e;
+    },
+    selectDiseases: function(e){
+      console.log("e is from home: ", e)
+      this.diseasesProps = e;
     }
   }
 }
