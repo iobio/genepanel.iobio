@@ -1,3 +1,5 @@
+<!-- https://repl.it/@adityaekawade/HeartfeltScientificRooster  for filter multi select-->
+
 <template>
   <div>
     Hello from Gene Panel!
@@ -11,44 +13,42 @@
     <br>
     <br>
 
-    <!-- Selecting vendor using multi select  -->
-    <v-card color="secondary" flat>
-      <v-card-text>
-        <v-container fluid>
-          <v-layout>
-            <v-flex>
-              <v-select
-                label="Select Vendors"
-                autocomplete
-                :loading="loading"
-                dark
-                multiple
-                cache-items
-                chips
-                required
-                :items="multiSelectItems"
-                :rules="[() => select.length > 0 || 'You must choose at least one']"
-                :search-input.sync="search"
-                v-model="select"
-              ></v-select>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-card-text>
-    </v-card>
-    <br>
-
 
     <h2> Table Data </h2>
-    <!-- <table id="gene-panel-table" class="display"></table> -->
-    <!-- <h2> Raw Data </h2> -->
 
     <v-app id="inspire">
+      <!-- placeholder for the multi select -->
+      <v-card color="secondary" flat>
+        <v-card-text>
+          <v-container fluid>
+            <v-layout>
+              <v-flex>
+                <v-select
+                  label="Select Vendors"
+                  autocomplete
+                  :loading="loading"
+                  dark
+                  multiple
+                  cache-items
+                  chips
+                  required
+                  :items="multiSelectItems"
+                  :rules="[() => select.length > 0 || 'You must choose at least one']"
+                  :search-input.sync="search"
+                  v-model="select"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+      </v-card>
+      <br>
       <!-- {{ selected }} -->
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
           v-bind:items="items"
+          :search="search"
           select-all
           v-bind:pagination.sync="pagination"
           item-key="testname"
@@ -173,39 +173,31 @@ import ShowGenePanel from './ShowGenePanel.vue';
     },
     updated(){
       console.log("Hello I am gene panel and I am updated!");
-        console.log("selected from multiselect watch is : ", this.select);
-        // if(this.items.length>0 && this.select.length>0)this.items = this.items.filter(f => this.select.includes(f));
-        // console.log(this.items)
-
-
-        //
-        // if(this.select.length>0 && this.items.length>0){
-        //   for(var i=0; i<this.select.length; i++){
-        //     for(var j=0; j<this.items.length; j++){
-        //       if(this.select[i]===this.items[j].offerer){
-        //         this.tempArr.push(this.items[j]);
-        //       }
-        //     }
-        //   }
-        //
-        //
-        //   //this.items = tempArr;
-        // }
-        // console.log("temp array is : " , this.tempArr);
-
-
-
     },
 
     methods:{
+      customFilter: function(items, search, filter){
+        var tempArr = [];
 
-      customFilter(items, search, filter){
-        console.log("custom filter items : ", items)
+        if(this.select.length>0){
+            console.log("true")
+            for(var i=0; i<this.select.length; i++){
+              for(var j=0; j<items.length; j++){
+                if( this.select[i] === items[j].offerer ){
+                  tempArr.push(items[j]);
+
+                }
+              }
+            }
+
+            items = tempArr;
+            return items;
+          }
+          else {
+            return items;
+          }
       },
       AddGenePanelData: function(){
-        // var x = [];
-        // x.push(this.DiseasePanelData[0]);
-        // this.DiseasePanel= x;
 
         this.DiseasePanel = this.DiseasePanelData
         console.log(this.DiseasePanel)
