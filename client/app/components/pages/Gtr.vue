@@ -1,17 +1,21 @@
 <template>
   <div>
-    <h1>GTR!</h1>
+    <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <br>
-    <label for="input">Search to find genes :</label>
-    <input id="input" class="form-control" type="text" placeholder="Type to search...">
+    <label for="input">Disorders :</label>
+    <input style="width:65%" id="input" class="form-control" type="text" placeholder="Search Term...">
     <typeahead match-start v-model="search"  target="#input" :data="conditions" item-key="FIELD1"/>
     <br/>
-    <btn type="primary" v-on:click.prevent="performSearch"> Go </btn>
-    <hr>
-    <ul>
+    <v-btn
+        color="blue darken-1"
+        class="btnColor"
+        v-on:click.prevent="performSearch">
+      Go
+    </v-btn>
+    <!-- <hr> -->
+    <!-- <ul>
       <li v-for="d in diseaseData">{{ d.Title }}</li>
-    </ul>
+    </ul> -->
 
     <!-- <v-form >
           <v-text-field id="search-gene-name1" label="Conditions">
@@ -165,5 +169,8 @@ var model = new Model();
   }
 </script>
 
-<style>
+<style scoped>
+ .btnColor{
+   color: white;
+ }
 </style>

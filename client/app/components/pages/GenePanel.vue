@@ -2,19 +2,19 @@
 
 <template>
   <div>
-    Hello from Gene Panel!
+    <!-- Hello from Gene Panel! -->
     <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn>
-    <br><br>
+    <!-- <br><br> -->
     <!-- <div class="control-group">
 			<label for="select-vendors">Vendors:</label>
 			<select id="select-vendors" placeholder="Select Vendors..."></select>
 		</div> -->
-
+<!-- 
     <br>
     <br>
 
 
-    <h2> Table Data </h2>
+    <h2> Panels </h2> -->
 
     <v-app id="inspire">
       <!-- placeholder for the multi select -->
@@ -101,9 +101,10 @@
 
 
     <div>
-      <show-gene-panel
+      <!-- <show-gene-panel
+        v-if="selected.length"
         v-bind:GeneData="selected">
-      </show-gene-panel>
+      </show-gene-panel> -->
     </div>
 
   </div>
@@ -123,12 +124,12 @@ var model = new Model();
 
 // var tempArr = [];
 
-import ShowGenePanel from './ShowGenePanel.vue';
+// import ShowGenePanel from './ShowGenePanel.vue';
 
   export default {
-    components: {
-      'show-gene-panel': ShowGenePanel
-    },
+    // components: {
+    //   'show-gene-panel': ShowGenePanel
+    // },
     props: ['DiseasePanelData'],
     data(){
       return {
@@ -170,9 +171,13 @@ import ShowGenePanel from './ShowGenePanel.vue';
     mounted(){
       console.log("GenePanel: I am mounted now!");
       console.log("this.mergedGene from mounted() : ", this.mergedGene)
+      this.AddGenePanelData();
     },
     updated(){
       console.log("Hello I am gene panel and I am updated!");
+
+      //Emit the this.selected array back to the home.vue so it can be passed as props
+      this.$emit('selectedPanels', this.selected);
     },
 
     methods:{

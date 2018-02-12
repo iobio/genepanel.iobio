@@ -1,16 +1,16 @@
 <template>
   <div>
-    Hello from DiseasesPanel!
-    <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn>
+    <!-- Hello from DiseasesPanel! -->
+    <!-- <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn> -->
 
-    <ul>
+    <!-- <ul>
       <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
-    </ul>
+    </ul> -->
     <!-- <v-app id="inspire"> -->
       <v-card-title>
         Disease Table
-        <btn v-on:click.prevent="selectAllDisorders">Select All</btn>
-        <btn v-on:click.prevent="deSelectAllDisorders">De Select All</btn>
+        <!-- <btn v-on:click.prevent="selectAllDisorders">Select All</btn> -->
+        <!-- <btn v-on:click.prevent="deSelectAllDisorders">De Select All</btn> -->
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -85,7 +85,7 @@ import { bus } from '../../routes';
 import dt from 'datatables.net';
 import jQuery from 'jquery'
 global.jQuery = jQuery
-global.$ = jQuery
+global.$ = jQuery;
 
 
 
@@ -156,7 +156,8 @@ global.$ = jQuery
         // }
     },
     mounted(){
-      console.log("DiseasePanel: I am mounted!")
+      console.log("DiseasePanel: I am mounted!");
+      this.showDiseasesData()
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
@@ -164,6 +165,14 @@ global.$ = jQuery
 
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedDiseases', this.selected);
+
+      bus.$on('deSelectAllDisordersBus', ()=>{
+        this.deSelectAllDisorders();
+      });
+
+      bus.$on('SelectAllDisordersBus', ()=>{
+        this.selectAllDisorders();
+      })
 
       //this.showDiseasesData() //To update the table on clicking the go button
       // if(this.propsData.length<1){
