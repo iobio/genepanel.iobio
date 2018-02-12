@@ -101,10 +101,10 @@
 
 
     <div>
-      <show-gene-panel
+      <!-- <show-gene-panel
         v-if="selected.length"
         v-bind:GeneData="selected">
-      </show-gene-panel>
+      </show-gene-panel> -->
     </div>
 
   </div>
@@ -124,12 +124,12 @@ var model = new Model();
 
 // var tempArr = [];
 
-import ShowGenePanel from './ShowGenePanel.vue';
+// import ShowGenePanel from './ShowGenePanel.vue';
 
   export default {
-    components: {
-      'show-gene-panel': ShowGenePanel
-    },
+    // components: {
+    //   'show-gene-panel': ShowGenePanel
+    // },
     props: ['DiseasePanelData'],
     data(){
       return {
@@ -175,6 +175,9 @@ import ShowGenePanel from './ShowGenePanel.vue';
     },
     updated(){
       console.log("Hello I am gene panel and I am updated!");
+
+      //Emit the this.selected array back to the home.vue so it can be passed as props
+      this.$emit('selectedPanels', this.selected);
     },
 
     methods:{

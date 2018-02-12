@@ -4,6 +4,7 @@
     <hr>
 
     Hello from Show Gene Panel !
+    <h3> summary </h3>
     <br>
     <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
     <br><br>

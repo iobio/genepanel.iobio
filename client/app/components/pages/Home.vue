@@ -3,10 +3,10 @@
     <!-- <datatableExample></datatableExample> -->
     <!-- <multiSelectExample></multiSelectExample> -->
     <!-- <d3Example></d3Example> -->
-
     <app-gtr
       v-on:showDiseases="addDiseases($event)">
     </app-gtr>
+
     <hr>
     <disease-panel
       v-if="diseases.length"
@@ -16,10 +16,16 @@
     <hr>
     <gene-panel
       v-if="diseasesProps.length"
-      v-bind:DiseasePanelData="diseasesProps">
+      v-bind:DiseasePanelData="diseasesProps"
+      v-on:selectedPanels="selectPanels($event)">
     </gene-panel>
 
     <hr>
+    <show-gene-panel
+      v-if="geneProps.length"
+      v-bind:GeneData="geneProps">
+    </show-gene-panel>
+
     <!-- <typeaheadExample></typeaheadExample> -->
 </div>
 </template>
@@ -28,6 +34,7 @@
 import Gtr from './Gtr.vue';
 import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
+import ShowGenePanel from './ShowGenePanel.vue';
 import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
 import multiSelectExample from './MultiSelectExample.vue';
@@ -39,6 +46,7 @@ export default {
     'app-gtr': Gtr,
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
+    'show-gene-panel': ShowGenePanel,
     'typeaheadExample':typeaheadExample,
     'datatableExample':datatableExample,
     'multiSelectExample':multiSelectExample,
@@ -49,7 +57,8 @@ export default {
   data() {
     return {
       diseases: [],
-      diseasesProps: []
+      diseasesProps: [],
+      geneProps: []
     }
   },
   methods: {
@@ -60,6 +69,10 @@ export default {
     selectDiseases: function(e){
       console.log("e is from home: ", e)
       this.diseasesProps = e;
+    },
+    selectPanels: function(e){
+      console.log("e is from home for selected panels: ", e)
+      this.geneProps = e;
     }
   }
 }
