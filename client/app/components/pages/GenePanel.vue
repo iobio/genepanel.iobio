@@ -2,19 +2,19 @@
 
 <template>
   <div>
-    Hello from Gene Panel!
+    <!-- Hello from Gene Panel! -->
     <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn>
-    <br><br>
+    <!-- <br><br> -->
     <!-- <div class="control-group">
 			<label for="select-vendors">Vendors:</label>
 			<select id="select-vendors" placeholder="Select Vendors..."></select>
 		</div> -->
-
+<!-- 
     <br>
     <br>
 
 
-    <h2> Panels </h2>
+    <h2> Panels </h2> -->
 
     <v-app id="inspire">
       <!-- placeholder for the multi select -->

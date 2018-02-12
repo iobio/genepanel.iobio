@@ -1,11 +1,11 @@
 <template>
   <div>
-    <hr>
+    <!-- <hr>
     <hr>
 
     Hello from Show Gene Panel !
     <h3> summary </h3>
-    <br>
+    <br> -->
     <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
     <br><br>
 
@@ -21,10 +21,10 @@
     <!-- <v-app id="inspire"> -->
       <v-card-title>
         <btn @click="copy">
-          Copy to clipboard
+            <i class="material-icons">content_copy</i> Copy to clipboard
         </btn>
-        <btn v-on:click.prevent="selectAllGenes">Select All</btn>
-        <btn v-on:click.prevent="deSelectAllGenes">De Select All</btn>
+        <!-- <btn v-on:click.prevent="selectAllGenes">Select All</btn>
+        <btn v-on:click.prevent="deSelectAllGenes">De Select All</btn> -->
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -558,7 +558,15 @@ var model = new Model();
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
          return x.toString() ;
-      }) )
+      }) );
+
+      bus.$on('deSelectAllGenesBus', ()=>{
+        this.deSelectAllGenes();
+      });
+
+      bus.$on('SelectAllGenesBus', ()=>{
+        this.selectAllGenes();
+      })
     },
     methods:{
       draw(){
