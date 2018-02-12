@@ -14,7 +14,7 @@
     <br>
 
 
-    <h2> Table Data </h2>
+    <h2> Panels </h2>
 
     <v-app id="inspire">
       <!-- placeholder for the multi select -->
@@ -102,6 +102,7 @@
 
     <div>
       <show-gene-panel
+        v-if="selected.length"
         v-bind:GeneData="selected">
       </show-gene-panel>
     </div>
@@ -170,6 +171,7 @@ import ShowGenePanel from './ShowGenePanel.vue';
     mounted(){
       console.log("GenePanel: I am mounted now!");
       console.log("this.mergedGene from mounted() : ", this.mergedGene)
+      this.AddGenePanelData();
     },
     updated(){
       console.log("Hello I am gene panel and I am updated!");

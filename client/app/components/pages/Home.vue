@@ -9,11 +9,13 @@
     </app-gtr>
     <hr>
     <disease-panel
+      v-if="diseases.length"
       v-bind:DiseasePanelData="diseases"
       v-on:selectedDiseases="selectDiseases($event)">
     </disease-panel>
     <hr>
     <gene-panel
+      v-if="diseasesProps.length"
       v-bind:DiseasePanelData="diseasesProps">
     </gene-panel>
 

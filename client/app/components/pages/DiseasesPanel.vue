@@ -1,11 +1,11 @@
 <template>
   <div>
     Hello from DiseasesPanel!
-    <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn>
+    <!-- <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn> -->
 
-    <ul>
+    <!-- <ul>
       <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
-    </ul>
+    </ul> -->
     <!-- <v-app id="inspire"> -->
       <v-card-title>
         Disease Table
@@ -156,7 +156,8 @@ global.$ = jQuery
         // }
     },
     mounted(){
-      console.log("DiseasePanel: I am mounted!")
+      console.log("DiseasePanel: I am mounted!");
+      this.showDiseasesData()
     },
     updated(){
       console.log("DiseasePanel: I am updated!");

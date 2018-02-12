@@ -549,6 +549,8 @@ var model = new Model();
     },
     mounted(){
       this.draw();
+      this.AddGeneData();
+
     },
     updated(){
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
