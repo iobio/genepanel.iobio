@@ -68,10 +68,17 @@
             <td>{{ props.item._geneCount }}</td>
           </tr>
         </template>
+        <template slot="footer">
+        <td colspan="100%">
+          <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+        </td>
+      </template>
       </v-data-table>
     <!-- </v-app> -->
 
-    <br><br>
+    <br>
+    skhshsk
+    <br>
 
     <!-- {{ selected.Title }} -->
 
