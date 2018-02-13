@@ -9,7 +9,7 @@
 			<label for="select-vendors">Vendors:</label>
 			<select id="select-vendors" placeholder="Select Vendors..."></select>
 		</div> -->
-<!-- 
+<!--
     <br>
     <br>
 
@@ -86,13 +86,19 @@
               ></v-checkbox>
             </td>
               <!-- <td></td> -->
+              <td>{{ props.item.testname }}</td>
               <td>{{ props.item.genecount }}</td>
               <td>{{ props.item.offerer }}</td>
-              <td>{{ props.item.testname }}</td>
+
               <td>{{ props.item._conditionNames }}</td>
               <td>{{ props.item._diseaseCount }}</td>
             </tr>
           </template>
+          <template slot="footer">
+          <td colspan="100%">
+            <strong>{{ selected.length}} of {{ items.length }} panels selected</strong>
+          </td>
+        </template>
         </v-data-table>
       </v-app>
 
@@ -148,13 +154,14 @@ var model = new Model();
         },
         selected: [],    //Data tables
         headers: [    //Data tables
+          { text: 'Name', align:'left', value: 'testname' },
           {
             text: 'genecount',
             align: 'left',
             value: 'genecount'
           },
           { text: 'Vendor', align: 'left', value: 'offerer' },
-          { text: 'Name', value: 'testname' },
+          // { text: 'Name', value: 'testname' },
           { text: 'Conditions', value: '_conditionNames' },
           { text: 'Selected diseases', value: '_diseaseCount' },
         ],
@@ -165,8 +172,12 @@ var model = new Model();
       search (val) {
         val && this.querySelections(val);
         console.log("val : ", val );
-
+      },
+      DiseasePanelData: function(){
+        //console.log("watch items", this.DiseasePanelData)
+        this.AddGenePanelData();
       }
+
     },
     mounted(){
       console.log("GenePanel: I am mounted now!");

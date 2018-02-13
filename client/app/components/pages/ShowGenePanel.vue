@@ -82,6 +82,11 @@
             <!-- <td>{{ props.item._geneCount }}</td> -->
           </tr>
         </template>
+        <template slot="footer">
+        <td colspan="100%">
+          <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
+        </td>
+      </template>
       </v-data-table>
     <!-- </v-app> -->
 
@@ -567,6 +572,12 @@ var model = new Model();
       bus.$on('SelectAllGenesBus', ()=>{
         this.selectAllGenes();
       })
+    },
+    watch: {
+      GeneData: function(){
+        console.log("watch genes : " , this.GeneData)
+        this.AddGeneData();
+      }
     },
     methods:{
       draw(){

@@ -68,10 +68,16 @@
             <td>{{ props.item._geneCount }}</td>
           </tr>
         </template>
+        <template slot="footer">
+        <td colspan="100%">
+          <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+        </td>
+      </template>
       </v-data-table>
     <!-- </v-app> -->
 
-    <br><br>
+    <br>
+    <br>
 
     <!-- {{ selected.Title }} -->
 
@@ -150,10 +156,6 @@ global.$ = jQuery;
         deSelectAllDisorders: function(){
           this.selected = []
         },
-
-        // getDiseaseData: function(){
-        //   return this.propsData;
-        // }
     },
     mounted(){
       console.log("DiseasePanel: I am mounted!");
@@ -173,12 +175,6 @@ global.$ = jQuery;
       bus.$on('SelectAllDisordersBus', ()=>{
         this.selectAllDisorders();
       })
-
-      //this.showDiseasesData() //To update the table on clicking the go button
-      // if(this.propsData.length<1){
-      //   this.propsData = this.DiseasePanelData
-      //   console.log("propsData from DiseasePanel: ", this.propsData)
-      // }
 
     },
 
