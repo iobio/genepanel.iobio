@@ -18,6 +18,10 @@
     <input type="radio" name="disorderSelection" value="selectAllDisorders" v-on:click="SelectAllDisorders">&nbsp; Select All Disorders &nbsp;&nbsp;
     <input type="radio" name="disorderSelection" value="deSelectAllDisorders" v-on:click="deSelectAllDisorders">&nbsp; Deselect All Disorders
 
+
+    <h4>Panels </h4>
+    <button v-on:click="selectNumberOfGenePanels">select with less than 25</button>
+
   </div>
 </template>
 
@@ -39,6 +43,9 @@ import { bus } from '../../routes';
       SelectAllGenes: function(){
         bus.$emit('SelectAllGenesBus');
       },
+      selectNumberOfGenePanels: function(){
+        bus.$emit('SelectNumberOfPanel', 25)
+      }
     }
   }
 </script>

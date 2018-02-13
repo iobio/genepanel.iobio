@@ -189,9 +189,20 @@ var model = new Model();
 
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
+
+      bus.$on('SelectNumberOfPanel', (data)=> {
+        this.filterGenePanelsOnSelectedNumber(data);
+        this.selected = [];
+      })
     },
 
     methods:{
+      filterGenePanelsOnSelectedNumber: function(data){
+        console.log("filterGenePanelsOnSelectedNumber", this.items)
+        this.items  = this.items.filter(item => {
+          return item.genecount < data;
+        })
+      },
       customFilter: function(items, search, filter){
         var tempArr = [];
 
@@ -233,10 +244,6 @@ var model = new Model();
 
         this.selected = this.items.slice()
 
-        // $('#select-vendors')[0].selectize.clearOptions();
-        // vendors.forEach(function(vendor) {
-        //   $('#select-vendors')[0].selectize.addOption({value: vendor});
-        // })
 
       },
       addGenes: function(d){
