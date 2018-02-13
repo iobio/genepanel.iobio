@@ -573,6 +573,12 @@ var model = new Model();
         this.selectAllGenes();
       })
     },
+    watch: {
+      GeneData: function(){
+        console.log("watch genes : " , this.GeneData)
+        this.AddGeneData();
+      }
+    },
     methods:{
       draw(){
         this.geneHistogramChart = HistogramChart()

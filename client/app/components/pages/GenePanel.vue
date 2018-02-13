@@ -172,8 +172,12 @@ var model = new Model();
       search (val) {
         val && this.querySelections(val);
         console.log("val : ", val );
-
+      },
+      DiseasePanelData: function(){
+        //console.log("watch items", this.DiseasePanelData)
+        this.AddGenePanelData();
       }
+
     },
     mounted(){
       console.log("GenePanel: I am mounted now!");

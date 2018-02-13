@@ -77,7 +77,6 @@
     <!-- </v-app> -->
 
     <br>
-    skhshsk
     <br>
 
     <!-- {{ selected.Title }} -->
@@ -157,10 +156,6 @@ global.$ = jQuery;
         deSelectAllDisorders: function(){
           this.selected = []
         },
-
-        // getDiseaseData: function(){
-        //   return this.propsData;
-        // }
     },
     mounted(){
       console.log("DiseasePanel: I am mounted!");
@@ -180,12 +175,6 @@ global.$ = jQuery;
       bus.$on('SelectAllDisordersBus', ()=>{
         this.selectAllDisorders();
       })
-
-      //this.showDiseasesData() //To update the table on clicking the go button
-      // if(this.propsData.length<1){
-      //   this.propsData = this.DiseasePanelData
-      //   console.log("propsData from DiseasePanel: ", this.propsData)
-      // }
 
     },
 
