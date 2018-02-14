@@ -7,11 +7,11 @@
       <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
     </ul> -->
     <!-- <v-app id="inspire"> -->
-      <v-card-title>
-        Disease Table
+      <!-- <v-card-title>
+        Disease Table -->
         <!-- <btn v-on:click.prevent="selectAllDisorders">Select All</btn> -->
         <!-- <btn v-on:click.prevent="deSelectAllDisorders">De Select All</btn> -->
-        <v-spacer></v-spacer>
+        <!-- <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
           label="Search"
@@ -19,7 +19,7 @@
           hide-details
           v-model="search"
         ></v-text-field>
-      </v-card-title>
+      </v-card-title> -->
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"

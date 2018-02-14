@@ -6,8 +6,8 @@
     Hello from Show Gene Panel !
     <h3> summary </h3>
     <br> -->
-    <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
-    <br><br>
+    <!-- <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
+    <br><br> -->
 
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart"></svg>
