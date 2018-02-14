@@ -33,7 +33,10 @@
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
                 <v-card-text>
-                  <FilterPanel></FilterPanel>
+                  <FilterPanel
+                    v-bind:vendorsData="vendorList"
+                    v-on:setSelectedVendors="updateSelectedVendors($event)">
+                  </FilterPanel>
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -87,7 +90,9 @@
                           <gene-panel
                             v-if="diseasesProps.length"
                             v-bind:DiseasePanelData="diseasesProps"
-                            v-on:selectedPanels="selectPanels($event)">
+                            v-on:selectedPanels="selectPanels($event)"
+                            v-on:setVendorList="updateVendorList($event)"
+                            v-bind:selectedVendorsProps="selectedVendorsList">
                           </gene-panel>
                         </v-card-text>
                       </v-card>
@@ -105,27 +110,6 @@
       </v-app>
     </div>
 
-
-    <hr>
-    <!-- <disease-panel
-      v-if="diseases.length"
-      v-bind:DiseasePanelData="diseases"
-      v-on:selectedDiseases="selectDiseases($event)">
-    </disease-panel> -->
-    <hr>
-    <!-- <gene-panel
-      v-if="diseasesProps.length"
-      v-bind:DiseasePanelData="diseasesProps"
-      v-on:selectedPanels="selectPanels($event)">
-    </gene-panel> -->
-
-    <hr>
-    <!-- <show-gene-panel
-      v-if="geneProps.length"
-      v-bind:GeneData="geneProps">
-    </show-gene-panel> -->
-
-    <!-- <typeaheadExample></typeaheadExample> -->
 </div>
 </template>
 
@@ -161,22 +145,32 @@ export default {
     return {
       diseases: [],
       diseasesProps: [],
-      geneProps: []
+      geneProps: [],
+      vendorList: [],
+      selectedVendorsList: []
     }
   },
   methods: {
     addDiseases: function(e){
-      console.log("e is from home: addDiseases ", e)
+      //console.log("e is from home: addDiseases ", e)
       this.diseases = e;
     },
     selectDiseases: function(e){
-      console.log("e is from home: ", e)
+    //  console.log("e is from home: ", e)
       this.diseasesProps = e;
     },
     selectPanels: function(e){
-      console.log("e is from home for selected panels: ", e)
+    //  console.log("e is from home for selected panels: ", e)
       this.geneProps = e;
     },
+    updateVendorList: function(e){
+      console.log("vendor list as callback to home", e);
+      this.vendorList = e;
+    },
+    updateSelectedVendors: function(e){
+      console.log("selected vendors from callback to home", e);
+      this.selectedVendorsList = e;
+    }
 
   }
 }

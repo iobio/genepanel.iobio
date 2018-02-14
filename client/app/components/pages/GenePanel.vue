@@ -18,7 +18,7 @@
 
     <v-app id="inspire">
       <!-- placeholder for the multi select -->
-      <v-card color="secondary" flat>
+      <!-- <v-card color="secondary" flat>
         <v-card-text>
           <v-container fluid>
             <v-layout>
@@ -41,7 +41,7 @@
             </v-layout>
           </v-container>
         </v-card-text>
-      </v-card>
+      </v-card> -->
       <br>
       <!-- {{ selected }} -->
       <v-data-table
@@ -136,7 +136,15 @@ var model = new Model();
     // components: {
     //   'show-gene-panel': ShowGenePanel
     // },
-    props: ['DiseasePanelData'],
+    // props: ['DiseasePanelData'],
+    props: {
+      DiseasePanelData:{
+        type: Array
+      },
+      selectedVendorsProps: {
+        type: Array
+      }
+    },
     data(){
       return {
         loading: false, //multiselect
@@ -165,17 +173,22 @@ var model = new Model();
           { text: 'Conditions', value: '_conditionNames' },
           { text: 'Selected diseases', value: '_diseaseCount' },
         ],
+        selectedVendorsFromFilterPanel: [],
+        tempItems: [],
         items: []   //Data tables
       }
     },
     watch: {
       search (val) {
         val && this.querySelections(val);
-        console.log("val : ", val );
       },
       DiseasePanelData: function(){
-        //console.log("watch items", this.DiseasePanelData)
         this.AddGenePanelData();
+      },
+      selectedVendorsProps: function(){
+        console.log("selectedVendorsProps in genepanel ", this.selectedVendorsProps);
+        this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
+        this.updatePanelsOnSelectedVendors();
       }
 
     },
@@ -197,6 +210,31 @@ var model = new Model();
     },
 
     methods:{
+      updatePanelsOnSelectedVendors: function(){
+        var tempArr = [];
+        this.items = this.tempItems;
+        console.log("items in updatePanelsOnSelectedVendors", this.items)
+        if(this.selectedVendorsFromFilterPanel.length>0){
+          this.selected = [];
+          for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
+            for(var j=0; j<this.items.length; j++){
+              if( this.selectedVendorsFromFilterPanel[i] === this.items[j].offerer ){
+                tempArr.push(this.items[j]);
+
+              }
+            }
+          }
+          console.log("tempArr in gene panel ", tempArr)
+          this.items = tempArr;
+          this.selected = this.items.slice()
+          return this.items;
+        }
+        else {
+          this.selected = this.tempItems.slice();
+          this.items = this.tempItems
+          return this.items
+        }
+      },
       filterGenePanelsOnSelectedNumber: function(data){
         console.log("filterGenePanelsOnSelectedNumber", this.items)
         this.items  = this.items.filter(item => {
@@ -234,13 +272,15 @@ var model = new Model();
         console.log("this.mergedGenes", this.mergedGene);
 
         this.items = mergedGenePanels;
+        this.tempItems = mergedGenePanels
         console.log("this.items : ", this.items)
 
         let vendors = model.getGenePanelVendors(mergedGenePanels);
-        console.log("vendor list", vendors);
 
         this.vendorList = vendors;
         console.log("this.vendorList", this.vendorList);
+
+        this.$emit('setVendorList', this.vendorList)
 
         this.selected = this.items.slice()
 
