@@ -3,7 +3,7 @@
 <template>
   <div>
     <!-- Hello from Gene Panel! -->
-    <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn>
+    <!-- <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn> -->
     <!-- <br><br> -->
     <!-- <div class="control-group">
 			<label for="select-vendors">Vendors:</label>
@@ -16,7 +16,7 @@
 
     <h2> Panels </h2> -->
 
-    <v-app id="inspire">
+    <!-- <v-app id="inspire"> -->
       <!-- placeholder for the multi select -->
       <!-- <v-card color="secondary" flat>
         <v-card-text>
@@ -42,7 +42,7 @@
           </v-container>
         </v-card-text>
       </v-card> -->
-      <br>
+      <!-- <br> -->
       <!-- {{ selected }} -->
       <v-data-table
           v-model="selected"
@@ -100,18 +100,18 @@
           </td>
         </template>
         </v-data-table>
-      </v-app>
+      <!-- </v-app> -->
 
 
     <!-- Gene- panel- table  -->
 
 
-    <div>
+    <!-- <div> -->
       <!-- <show-gene-panel
         v-if="selected.length"
         v-bind:GeneData="selected">
       </show-gene-panel> -->
-    </div>
+    <!-- </div> -->
 
   </div>
 </template>
