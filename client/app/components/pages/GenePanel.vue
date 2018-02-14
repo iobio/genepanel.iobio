@@ -205,7 +205,7 @@ var model = new Model();
 
       bus.$on('SelectNumberOfPanel', (data)=> {
         this.filterGenePanelsOnSelectedNumber(data);
-        this.selected = [];
+        //this.selected = [];
       })
     },
 
@@ -240,6 +240,7 @@ var model = new Model();
         this.items  = this.items.filter(item => {
           return item.genecount < data;
         })
+        this.selected = this.items.slice();
       },
       customFilter: function(items, search, filter){
         var tempArr = [];
