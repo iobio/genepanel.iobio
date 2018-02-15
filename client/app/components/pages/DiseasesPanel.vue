@@ -177,6 +177,11 @@ global.$ = jQuery;
       })
 
     },
+    watch: {
+      DiseasePanelData: function(){
+        this.showDiseasesData();
+      }
+    }
 
   }
 </script>

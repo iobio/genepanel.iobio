@@ -1,10 +1,16 @@
 <template>
   <div>
 
-    <div id="phenotype-input" style="display:inline-block;width:260px">
-      <v-text-field id="phenotype-term" hide-details v-model="phenotypeTermEntered"
+    <div id="phenotype-input" style="display:inline-block;">
+      <!-- <v-text-field id="phenotype-term" hide-details v-model="phenotypeTermEntered"
       label="enter phenotype">
-      </v-text-field>
+      </v-text-field> -->
+      <input
+        id="phenotype-term"
+        class="form-control"
+        type="text"
+        placeholder="Search Term..."
+        v-model="phenotypeTermEntered">
       <typeahead
        v-model="phenotypeTerm"
       hide-details="false"
@@ -12,8 +18,22 @@
       target="#phenotype-term"
       async-src="http://nv-blue.iobio.io/hpo/hot/lookup/?term=" item-key="value"/>
     </div>
-
     <btn v-on:click="onSearchPhenolyzerGenes">go</btn>
+
+    <div v-if="phenotypeTermEntered.length>0">
+      Search term: {{ phenotypeTermEntered }}
+    </div>
+    <div v-if="phenolyzerStatus!==null">
+      {{ phenolyzerStatus }}
+    </div>
+    <br>
+    <strong>Genes </strong>
+    <ul v-if="geneList.length>0">
+      <li v-for="gene in geneList">
+        {{gene.rank}} -- {{gene.geneName}} -- {{gene.score}}
+      </li>
+    </ul>
+
   </div>
 </template>
 
@@ -38,7 +58,8 @@ var geneModel = new GeneModel();
         phenotypeTerm: "",
         phenotypeTermEntered: "",
         allPhenotypeTerms: [],
-        phenolyzerStatus: null
+        phenolyzerStatus: null,
+        geneList: [],
       }
     },
     methods: {
@@ -60,6 +81,7 @@ var geneModel = new GeneModel();
               }).length;
               self.genesToApply = geneModel.phenolyzerGenes
               .filter(function(gene) {
+                console.log(gene)
                 return gene.selected;
               })
               .map( function(gene) {
@@ -72,9 +94,15 @@ var geneModel = new GeneModel();
                 return gene.selected;
               })
               .map( function(gene) {
-                return gene.geneName;
+                return gene;
               })
-              console.log(x);
+
+              //console.log(x);
+              var tempArr = [];
+
+              tempArr.push(x);
+              self.geneList = tempArr[0]
+              console.log("genelist", self.geneList)
 
               self.phenolyzerStatus = geneCount + " genes shown.";
               console.log(self.phenolyzerStatus)
