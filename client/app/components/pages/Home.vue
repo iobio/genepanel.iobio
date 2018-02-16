@@ -3,28 +3,8 @@
     <!-- <datatableExample></datatableExample> -->
     <!-- <multiSelectExample></multiSelectExample> -->
     <!-- <d3Example></d3Example> -->
-  <!-- Navbar  -->
-    <div style="position: relative; overflow: hidden;">
-      <v-toolbar
-        absolute
-        color="blue-grey darken-4"
-        dark
-        scroll-off-screen
-        scroll-target="#scrolling-techniques"
-      >
-        <v-toolbar-title>geneLists.iobio</v-toolbar-title>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-      <div
-        style="max-height: 600px; color:red"
-        class="scroll-y"
-        id="scrolling-techniques"
-      >
-        <v-container style="height: 100px;"></v-container>
-      </div>
-    </div>
 
-
+    <NavigationBar></NavigationBar>
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
@@ -122,6 +102,7 @@ import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
 import multiSelectExample from './MultiSelectExample.vue';
 import FilterPanel from './FilterPanel.vue';
+import NavigationBar from './NavigationBar.vue';
 
 import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
@@ -137,7 +118,8 @@ export default {
     'datatableExample':datatableExample,
     'multiSelectExample':multiSelectExample,
     'd3Example':d3Example,
-    'FilterPanel':FilterPanel
+    'FilterPanel':FilterPanel,
+    'NavigationBar': NavigationBar
   },
   name: 'home',
   props: [],

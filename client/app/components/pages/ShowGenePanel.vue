@@ -573,6 +573,7 @@ var model = new Model();
       bus.$on('SelectAllGenesBus', ()=>{
         this.selectAllGenes();
       })
+
     },
     watch: {
       GeneData: function(){
@@ -599,7 +600,7 @@ var model = new Model();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
         this.alert = true;
-        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . "
+        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . ";
       },
       toggleAll () {
         if (this.selected.length) this.selected = []

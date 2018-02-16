@@ -2,10 +2,21 @@
   <div>
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <label for="input">Disorders :</label>
-    <input style="width:65%" id="input" class="form-control" type="text" placeholder="Search Term...">
-    <typeahead match-start v-model="search"  target="#input" :data="conditions" item-key="FIELD1"/>
-    <br/>
+    <div style="display:inline-block;">
+      <label>Disorders :</label>
+      <input
+        style="width:650px"
+        id="input"
+        class="form-control"
+        type="text"
+        placeholder="Search Term...">
+      <typeahead
+        match-start
+        v-model="search"
+        target="#input"
+        :data="conditions"
+        item-key="FIELD1"/>
+    </div>
     <v-btn
         color="blue darken-1"
         class="btnColor"
