@@ -61,7 +61,7 @@
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
                           <show-gene-panel
-                            v-if="geneProps.length"
+                            v-if="geneProps.length && diseasesProps.length"
                             v-bind:GeneData="geneProps">
                           </show-gene-panel>
                         </v-card-text>

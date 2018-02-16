@@ -559,6 +559,7 @@ var model = new Model();
 
     },
     updated(){
+      console.log("Hello I am ShowGenePanel and I am updated")
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
