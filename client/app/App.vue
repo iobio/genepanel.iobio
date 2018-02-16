@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    {{ greet }}
-    
+    <!-- {{ greet }}
+     -->
     <!-- <iobio></iobio>-->
     <!-- <vcf></vcf> -->
 

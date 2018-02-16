@@ -145,8 +145,8 @@ global.$ = jQuery;
           console.log("propsData from showDiseasesData: ", this.propsData);
           this.items = this.DiseasePanelData;
           console.log("this.items  : ", this.items);
-          if (this.selected.length) this.selected = []
-          else this.selected = this.items.slice()
+          //if (this.selected.length) this.selected = []
+           this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
           //this.toggleAll();
         },

@@ -187,12 +187,13 @@ var geneModel = new GeneModel();
               self.phenolyzerStatus = "no genes found."
               self.genesToApply = "";
             } else {
+              console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes)
               var geneCount = geneModel.phenolyzerGenes.filter(function(gene) {
                 return gene.selected;
               }).length;
               self.genesToApply = geneModel.phenolyzerGenes
               .filter(function(gene) {
-                console.log(gene)
+              //  console.log(gene)
                 return gene.selected;
               })
               .map( function(gene) {

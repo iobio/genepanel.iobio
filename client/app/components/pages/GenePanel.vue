@@ -183,6 +183,7 @@ var model = new Model();
         val && this.querySelections(val);
       },
       DiseasePanelData: function(){
+        console.log("DiseasePanelData from props - Genepanel")
         this.AddGenePanelData();
       },
       selectedVendorsProps: function(){
@@ -199,6 +200,7 @@ var model = new Model();
     },
     updated(){
       console.log("Hello I am gene panel and I am updated!");
+      
 
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
