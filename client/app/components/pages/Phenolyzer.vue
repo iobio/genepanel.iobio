@@ -1,6 +1,28 @@
 <template>
   <div>
 
+    <!-- url: https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/?term=lacticacidosis@treacher_collins -->
+    <!-- Navbar -->
+    <div style="position: relative; overflow: hidden;">
+      <v-toolbar
+        absolute
+        color="blue-grey darken-4"
+        dark
+        scroll-off-screen
+        scroll-target="#scrolling-techniques"
+      >
+        <v-toolbar-title>geneLists.iobio</v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <div
+        style="max-height: 600px; color:red"
+        class="scroll-y"
+        id="scrolling-techniques"
+      >
+        <v-container style="height: 100px;"></v-container>
+      </div>
+    </div>
+
     <div id="phenotype-input" style="display:inline-block;">
       <!-- <v-text-field id="phenotype-term" hide-details v-model="phenotypeTermEntered"
       label="enter phenotype">
@@ -9,6 +31,7 @@
         id="phenotype-term"
         class="form-control"
         type="text"
+        style="width: 650px"
         placeholder="Search Term..."
         v-model="phenotypeTermEntered">
       <typeahead
@@ -27,6 +50,59 @@
       {{ phenolyzerStatus }}
     </div>
     <br>
+    <v-app>
+      <v-data-table
+          v-model="selected"
+          v-bind:headers="headers"
+          v-bind:items="items"
+          select-all
+          v-bind:pagination.sync="pagination"
+          item-key="geneName"
+          class="elevation-1"
+          no-data-text="No Disorders Available Currently"
+        >
+        <template slot="headers" slot-scope="props">
+          <tr>
+            <th>
+              <v-checkbox
+                primary
+                hide-details
+                @click.native="toggleAll"
+                :input-value="props.all"
+                :indeterminate="props.indeterminate"
+              ></v-checkbox>
+            </th>
+            <th v-for="header in props.headers" :key="header.text"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              @click="changeSort(header.value)"
+            >
+              <v-icon>arrow_upward</v-icon>
+              {{ header.text }}
+            </th>
+          </tr>
+        </template>
+        <template slot="items" slot-scope="props">
+          <tr :active="props.selected" @click="props.selected = !props.selected">
+            <td>
+              <v-checkbox
+                primary
+                hide-details
+                :input-value="props.selected"
+              ></v-checkbox>
+            </td>
+            <!-- <td></td> -->
+            <td>{{ props.item.rank }}</td>
+            <td>{{ props.item.geneName }}</td>
+            <td>{{ props.item.score }}</td>
+          </tr>
+        </template>
+        <template slot="footer">
+        <td colspan="100%">
+          <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+        </td>
+      </template>
+      </v-data-table>
+    </v-app>
     <strong>Genes </strong>
     <ul v-if="geneList.length>0">
       <li v-for="gene in geneList">
@@ -60,9 +136,44 @@ var geneModel = new GeneModel();
         allPhenotypeTerms: [],
         phenolyzerStatus: null,
         geneList: [],
+        //DataTable
+        pagination: {
+          sortBy: 'rank'
+        },
+        selected: [],
+        headers: [
+          {
+            text: 'Rank',
+            align: 'left',
+            value: 'rank'
+          },
+          {
+            text: 'Gene',
+            align: 'left',
+            value: 'geneName'
+          },
+           {
+             text: 'Score',
+             align: 'left',
+             value: 'score'
+            },
+        ],
+        items: []
       }
     },
     methods: {
+      toggleAll () { //Data Table
+        if (this.selected.length) this.selected = []
+        else this.selected = this.items.slice()
+      },
+      changeSort (column) { //Data Table
+        if (this.pagination.sortBy === column) {
+          this.pagination.descending = !this.pagination.descending
+        } else {
+          this.pagination.sortBy = column
+          this.pagination.descending = false
+        }
+      },
       onSearchPhenolyzerGenes: function() {
         let self = this;
         self.phenolyzerStatus = null;
@@ -97,6 +208,14 @@ var geneModel = new GeneModel();
                 return gene;
               })
 
+              self.items = geneModel.phenolyzerGenes
+              .filter(function(gene) {
+                return gene.selected;
+              })
+              .map( function(gene) {
+                return gene;
+              })
+
               //console.log(x);
               var tempArr = [];
 
@@ -115,3 +234,11 @@ var geneModel = new GeneModel();
     }
   }
 </script>
+
+
+
+<style scoped>
+  .toolbar__title{
+    color: #66D4ED;
+  }
+</style>

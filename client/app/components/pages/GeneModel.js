@@ -639,6 +639,7 @@ export default class GeneModel {
     var me = this;
     var phenolyzerServer = "https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/";
     var url = phenolyzerServer + '?term=' + phenotypeTerm;
+    console.log("url is ", url)
     var status = null;
 
     $.ajax({
