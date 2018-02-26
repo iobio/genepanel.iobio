@@ -346,7 +346,13 @@ mergeGenesAcrossPanels(genePanels) {
     })
 
     return sortedGenes.map(function(gene, idx) {
-      return {key: idx, name: gene.name, value: +gene._genePanelCount};
+      return {
+            key: idx,
+            name: gene.name,
+            value: +gene._genePanelCount,
+            diseases: gene._diseaseCount,
+            conditions: gene._diseaseNames
+          };
     });
   }
 

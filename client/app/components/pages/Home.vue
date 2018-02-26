@@ -40,10 +40,10 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
-                          <show-gene-panel
+                          <show-gene-panel1
                             v-if="geneProps.length && diseasesProps.length"
                             v-bind:GeneData="geneProps">
-                          </show-gene-panel>
+                          </show-gene-panel1>
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -97,7 +97,7 @@
 import Gtr from './Gtr.vue';
 import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
-import ShowGenePanel from './ShowGenePanel.vue';
+import ShowGenePanel1 from './ShowGenePanel1.vue';
 import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
 import multiSelectExample from './MultiSelectExample.vue';
@@ -113,7 +113,7 @@ export default {
     'app-gtr': Gtr,
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
-    'show-gene-panel': ShowGenePanel,
+    'show-gene-panel1': ShowGenePanel1,
     'typeaheadExample':typeaheadExample,
     'datatableExample':datatableExample,
     'multiSelectExample':multiSelectExample,

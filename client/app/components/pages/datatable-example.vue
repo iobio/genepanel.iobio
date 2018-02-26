@@ -147,17 +147,24 @@
 //  }
   export default {
     methods: {
-      doSomething(){
-        var x = d3.select(".abcd")
+      drawSimpleViz: function(){
+        var arr = [40, 70, 30, 25, 102];
+        var x = 40;
+        var max = Math.max(...arr);
+        console.log(max);
+        var no = Math.round(x*500/max);
+        console.log(no)
+
+
+        var y = d3.select(".abcd")
             .append('svg')
             .attr("heigth", 500)
             .attr("width", 500)
           .append('rect')
-              .attr('width', 100)
+              .attr('width', no)
               .attr('height', 30)
               .style('fill', "red");
-
-        return x;
+        return y      
       }
     },
     data () {
@@ -185,7 +192,7 @@
           {
             value: false,
             name: 'Frozen Yogurt',
-            calories: '<strong>sbdhsdb</strong>',
+            calories: this.drawSimpleViz(),
             fat: 6.0,
             carbs: 24,
             protein: 4.0,

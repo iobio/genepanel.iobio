@@ -1,10 +1,6 @@
 <template>
-  <div id="foo">
-     <span id='childB'>test</span>
+  <div>
     {{ greeting }}
-    {{ doSomething }}
-    <span class="count">{{ count }}</span>
-     <button @click="increment">Increment</button>
   </div>
 </template>
 
@@ -16,8 +12,7 @@ export default {
   data() {
     return {
       greeting: 'hello world!',
-      doSomething: 'sing a song',
-       count: 0
+      count: 0
     }
   },
   methods: {

@@ -3,6 +3,8 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var inProduction = process.env.NODE_ENV === 'production';
+var inTest = process.env.NODE_ENV === 'test';
+
 
 module.exports = {
   entry: {
@@ -71,6 +73,10 @@ module.exports = {
   devtool: 'cheap-module-inline-source-map'
 }
 
+if (inTest) {
+  module.exports.plugins = [];
+}
+
 if (inProduction) {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
@@ -91,12 +97,4 @@ if (inProduction) {
       minimize: true
     })
   ])
-}
-
-
-if (process.env.NODE_ENV === 'test') {
-  // exclude NPM deps from test bundle
-  module.exports.externals = [require('webpack-node-externals')()]
-  // use inline source map so that it works with mocha-webpack
-  module.exports.devtool = 'inline-cheap-module-source-map'
 }
