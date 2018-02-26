@@ -111,7 +111,9 @@ var model = new Model();
         GenesToDisplay: [],
         pagination: {
           sortBy: 'value',
-          // isDescending: false
+          descending: true, //Sorts the column in descending order
+          rowsPerPage: 10 //Sets the number of rows per page
+
         },
         tmp: '',   //For searching the rows in data table
         search: '',  //For searching the rows in data table
@@ -216,20 +218,20 @@ var model = new Model();
         console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
       copy () { //Copy to clipboard
-        // var geneNames = this.selected.map(gene => {
-        //   return gene.name
-        // })
-        // var geneNamesToString = geneNames.toString();
+        var geneNames = this.selected.map(gene => {
+          return gene.name
+        })
+        var geneNamesToString = geneNames.toString();
+        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
+        // console.log("this.GenesFromD3Bars from copy", this.GenesFromD3Bars)
+        //  var geneNames = this.GenesFromD3Bars;
+        //  var geneNamesToString = geneNames.toString();
+        //  console.log("geneNamesToString", geneNamesToString)
         // var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
-        console.log("this.GenesFromD3Bars from copy", this.GenesFromD3Bars)
-         var geneNames = this.GenesFromD3Bars;
-         var geneNamesToString = geneNames.toString();
-         console.log("geneNamesToString", geneNamesToString)
-        // var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
-        this.$clipboard(geneNamesToString);
+        this.$clipboard(genesToCopy);
         this.alert = true;
-        //this.alertText = " Number of Genes Selected : " + this.selected.length + "  . ";
-         this.alertText = " Number of Genes Selected : " + this.GenesFromD3Bars.length + "  . ";
+        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . ";
+        // this.alertText = " Number of Genes Selected : " + this.GenesFromD3Bars.length + "  . ";
       },
       toggleAll () {
         if (this.selected.length) this.selected = []
@@ -256,8 +258,8 @@ var model = new Model();
         //this.items = mergedGenes;
 
         //Select All rows
-        this.selected = this.items.slice()
-        console.log("this.selected from Show Genes ", this.selected )
+      //  this.selected = this.items.slice()
+        //console.log("this.selected from Show Genes ", this.selected )
 
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
@@ -265,7 +267,9 @@ var model = new Model();
         let data = model.getGeneBarChartData(mergedGenes);
         console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
         // console.log("bar char", this.geneBarChart)
-        this.items = data.slice(0,10);
+        this.items = data;
+        this.selected = data.slice(0,50)
+        console.log("this.selected from Show Genes ", this.selected )
       //  this.geneBarChart(d3.select('#gene-bar-chart'), data);
         // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);

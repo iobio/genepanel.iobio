@@ -352,7 +352,7 @@ mergeGenesAcrossPanels(genePanels) {
             value: +gene._genePanelCount,
             diseases: gene._diseaseCount,
             conditions: gene._diseaseNames,
-            htmlData: `<svg height="20"><rect width="${gene._genePanelCount * 10}" height="20" style="fill:rgb(35, 169, 220);" /></svg>`
+            htmlData: `<svg style="padding-top: 10px" height="30"><rect width="${gene._genePanelCount * 7}" height="30" style="fill:rgb(35, 169, 220);" /></svg>`
           };
     });
   }
