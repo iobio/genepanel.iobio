@@ -1,5 +1,12 @@
 <template>
   <div>
+    <!-- <div v-if="dataForTables.length">
+      <ul>
+        <li class="abcde" v-for="(data, index) in dataForTables">
+          <span v-html="data.htmlData"></span></p>
+        </li>
+      </ul>
+    </div> -->
     <div id="gene-histogram-box" class="hide" >
       <svg id="gene-histogram-chart"></svg>
     </div>
@@ -68,9 +75,9 @@
             </td>
             <!-- <td></td> -->
             <td>{{ props.item.name }}</td>
-            <td>{{ props.item._genePanelCount }}</td>
-            <td>{{ props.item._diseaseCount }}</td>
-            <td>{{ props.item._conditionNames }}</td>
+            <td>{{ props.item.value }}</td>
+            <td><span v-html="props.item.htmlData"></span></td>
+            <!-- <td>{{ props.item._conditionNames }}</td> -->
             <!-- <td>{{ props.item._geneCount }}</td> -->
           </tr>
         </template>
@@ -103,7 +110,8 @@ var model = new Model();
         GetGeneData : [],
         GenesToDisplay: [],
         pagination: {
-          sortBy: 'name'
+          sortBy: 'value',
+          // isDescending: false
         },
         tmp: '',   //For searching the rows in data table
         search: '',  //For searching the rows in data table
@@ -117,14 +125,15 @@ var model = new Model();
           {
             text: 'Panels',
             align: 'left',
-            value: '_genePanelCount'
+            value: 'value'
            },
-          { text: 'Diseases', align: 'left', value: '_diseaseCount' },
-          { text: 'Conditions', align: 'left', value: '_conditionNames' },
+          { text: 'Diseases', align: 'left', value: 'htmlData' },
+        //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
         ],
         items: [],
         GenesFromD3Bars: [],
+        dataForTables:[]
 
       }
     },
@@ -188,7 +197,8 @@ var model = new Model();
             .yAxisLabel( "log(Genes)" )
             .xAxisLabel( "Gene Panels" );
 
-        console.log("bar chart before mounting", this.geneBarChart)
+        //Drawing horizontal bar chart
+        // console.log("bar chart before mounting", this.geneBarChart)
         this.geneBarChart = HorizontalBarChart()
             .width(650)
             .height(1000)
@@ -243,7 +253,7 @@ var model = new Model();
         this.GenesToDisplay = mergedGenes;
         console.log("GenesToDisplay",this.GenesToDisplay);
 
-        this.items = mergedGenes;
+        //this.items = mergedGenes;
 
         //Select All rows
         this.selected = this.items.slice()
@@ -254,9 +264,12 @@ var model = new Model();
 
         let data = model.getGeneBarChartData(mergedGenes);
         console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
-        console.log("bar char", this.geneBarChart)
-        this.geneBarChart(d3.select('#gene-bar-chart'), data);
-        console.log("bar chart1", this.geneBarChart)
+        // console.log("bar char", this.geneBarChart)
+        this.items = data.slice(0,10);
+      //  this.geneBarChart(d3.select('#gene-bar-chart'), data);
+        // console.log("bar chart1", this.geneBarChart)
+        this.dataForTables = data.slice(0,10);
+        console.log("dataForTables: ", this.dataForTables)
 
       },
       selectAllGenes: function(){
@@ -731,7 +744,8 @@ function HorizontalBarChart() {
     // var myData = [100,125, 320, 440, 250]
     var myChart = container.append('svg')
                     .attr("width", widthChart + margin.left + margin.right + widthSmallChart + marginSmall.left + marginSmall.right)
-                    .attr("height", heightChart + margin.top + margin.bottom);
+                    .attr("height", heightChart + margin.top + margin.bottom)
+                    .append("g");
 
 
                   myChart.selectAll('rect')

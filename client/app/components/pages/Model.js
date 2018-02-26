@@ -351,9 +351,15 @@ mergeGenesAcrossPanels(genePanels) {
             name: gene.name,
             value: +gene._genePanelCount,
             diseases: gene._diseaseCount,
-            conditions: gene._diseaseNames
+            conditions: gene._diseaseNames,
+            htmlData: `<svg height="20"><rect width="${gene._genePanelCount * 10}" height="20" style="fill:rgb(35, 169, 220);" /></svg>`
           };
     });
+  }
+
+
+  drawSvg(){
+    return "<strong>svgggg</strong>"
   }
 
   getGeneHistogramData(genes) {
