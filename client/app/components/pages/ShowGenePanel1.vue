@@ -73,24 +73,23 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td></td> -->
             <td>
-              {{ props.item.name }}
-              <div class="text-xs-center d-flex align-center">
-                <v-tooltip bottom>
-                   <v-btn dark color="primary" slot="activator">Button</v-btn>
-                  <span>{{props.item.conditions}}</span>
-                </v-tooltip>
+              <div id="app">
+                <div>
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:14px; margin-top:5px" slot="activator"><strong>{{ props.item.name }}</strong></p>
+                      <v-card>
+                        <v-card-title>
+                            <div><strong>Conditions: </strong></div>
+                        </v-card-title>
+                        <v-card-text style="margin-top:-25px">{{props.item.conditions}}</v-card-text>
+                      </v-card>
+                  </v-menu>
+                </div>
               </div>
             </td>
             <td>{{ props.item.value }}</td>
             <td><span v-html="props.item.htmlData"></span></td>
-            <!-- <td><div class="text-xs-center d-flex align-center">
-      <v-tooltip bottom>
-         <v-btn dark color="primary" slot="activator">Button</v-btn>
-        <span>{{props.item.conditions}}</span>
-      </v-tooltip>
-    </div></td> -->
             <!-- <td>{{ props.item._conditionNames }}</td> -->
             <!-- <td>{{ props.item._geneCount }}</td> -->
           </tr>
@@ -144,7 +143,6 @@ var model = new Model();
             value: 'value'
            },
           { text: 'Gene Panels', align: 'left', value: 'htmlData' },
-          // { text: 'Info', align: 'left' },
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
         ],
