@@ -7,7 +7,12 @@
     <btn v-on:click="deSelectAllGenes"> De Select All Genes</btn> -->
     <input type="radio" name="genesSelection" value="selectAllGenes" v-on:click="SelectAllGenes">&nbsp; Select All Genes &nbsp;&nbsp;
     <input type="radio" name="genesSelection" value="deSelectAllGenes" v-on:click="deSelectAllGenes">&nbsp; Deselect All Genes
+    <br>
+    <span><input type="radio" id="geneSelection" name="geneSelection" value="deSelectTopGenes" v-on:click="selectNumberOfTopGenes">&nbsp;
+    Select top &nbsp; <input type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes</span>
 
+
+   <!-- <input type="radio" name="topGeneSelection" id="topGeneSelection" v-on:click="selectNumberOfTopGenes"> &nbsp; Select Top Genes -->
 
     <br><br>
 
@@ -22,7 +27,7 @@
     <br><br>
     <h4>Panels </h4>
     <!-- <button v-on:click="selectNumberOfGenePanels">select with less than 25</button> -->
-    <span><input type="radio" id="disorderSelection" name="disorderSelection" value="deSelectAllDisorders" v-on:click="selectNumberOfGenePanels">&nbsp;
+    <span><input type="radio" id="disorderSelection" name="disorderSelection" value="selectGenePanelsValue" v-on:click="selectNumberOfGenePanels">&nbsp;
     Select Panels with less than &nbsp; <input type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfGenePanels"> genes</span>
 
     <br>
@@ -63,6 +68,7 @@ import { bus } from '../../routes';
     data() {
       return {
         NumberOfGenePanels: 25,
+        NumberOfTopGenes: 50,
         vendorList: [],
         loading: false, //multiselect
         multiSelectItems: [],   //multiselect
@@ -113,6 +119,14 @@ import { bus } from '../../routes';
         }
         else if (this.NumberOfGenePanels<0) {
           document.getElementById("disorderSelection").reset();
+        }
+      },
+      selectNumberOfTopGenes: function(){
+        if(this.NumberOfTopGenes>0){
+          bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes)
+        }
+        else if (this.NumberOfTopGenes<0) {
+          document.getElementById("geneSelection").reset();
         }
       }
     }

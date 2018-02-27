@@ -160,6 +160,13 @@ var model = new Model();
 
       bus.$on('SelectAllGenesBus', ()=>{
         this.selectAllGenes();
+      });
+
+
+      bus.$on('SelectNumberOfGenes', (data)=> {
+        //this.filterGenePanelsOnSelectedNumber(data);
+        this.filterGenesOnSelectedNumber(data);
+
       })
 
     },
@@ -212,6 +219,9 @@ var model = new Model();
          var addSelectedGeneFunction=(selectedGeneNames)=>{
           this.addSelectedGenesFromD3(selectedGeneNames);
         }
+      },
+      filterGenesOnSelectedNumber(data){
+        this.selected = this.items.slice(0, data)
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;

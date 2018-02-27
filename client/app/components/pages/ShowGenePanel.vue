@@ -164,7 +164,8 @@ var model = new Model();
 
       bus.$on('SelectAllGenesBus', ()=>{
         this.selectAllGenes();
-      })
+      });
+
 
     },
     watch: {

@@ -352,7 +352,17 @@ mergeGenesAcrossPanels(genePanels) {
             value: +gene._genePanelCount,
             diseases: gene._diseaseCount,
             conditions: gene._diseaseNames,
-            htmlData: `<svg style="padding-top: 10px" height="30"><rect width="${gene._genePanelCount * 7}" height="30" style="fill:rgb(35, 169, 220);" /></svg>`
+            htmlData: `<svg width="120" height="30" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="MyGradient">
+            <stop offset="5%"  stop-color="#36D1DC"/>
+            <stop offset="95%" stop-color="#5B86E5"/>
+        </linearGradient>
+    </defs>
+
+    <rect fill="url(#MyGradient)"
+          x="10" y="10" width="${gene._genePanelCount * 7}" height="30"/>
+</svg>`
           };
     });
   }
