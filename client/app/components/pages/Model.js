@@ -352,7 +352,7 @@ mergeGenesAcrossPanels(genePanels) {
             value: +gene._genePanelCount,
             diseases: gene._diseaseCount,
             conditions: gene._diseaseNames,
-            htmlData: `<svg width="120" height="30" xmlns="http://www.w3.org/2000/svg">
+            htmlData: `<svg width="${gene._genePanelCount * 10}" height="30" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="MyGradient">
             <stop offset="5%"  stop-color="#36D1DC"/>
@@ -361,7 +361,7 @@ mergeGenesAcrossPanels(genePanels) {
     </defs>
 
     <rect fill="url(#MyGradient)"
-          x="10" y="10" width="${gene._genePanelCount * 7}" height="30"/>
+          x="10" y="10" width="${gene._genePanelCount * 10}" height="30"/>
 </svg>`
           };
     });
