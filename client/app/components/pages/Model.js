@@ -346,8 +346,30 @@ mergeGenesAcrossPanels(genePanels) {
     })
 
     return sortedGenes.map(function(gene, idx) {
-      return {key: idx, name: gene.name, value: +gene._genePanelCount};
+      return {
+            key: idx,
+            name: gene.name,
+            value: +gene._genePanelCount,
+            diseases: gene._diseaseCount,
+            conditions: gene._diseaseNames,
+            htmlData: `<svg width="120" height="30" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="MyGradient">
+            <stop offset="5%"  stop-color="#36D1DC"/>
+            <stop offset="95%" stop-color="#5B86E5"/>
+        </linearGradient>
+    </defs>
+
+    <rect fill="url(#MyGradient)"
+          x="10" y="10" width="${gene._genePanelCount * 7}" height="30"/>
+</svg>`
+          };
     });
+  }
+
+
+  drawSvg(){
+    return "<strong>svgggg</strong>"
   }
 
   getGeneHistogramData(genes) {

@@ -8,3 +8,4 @@ client/dist
 .states.json
 .datatable-example.vue
 .MultiSelectExample.vue
+.HomeTest.vue

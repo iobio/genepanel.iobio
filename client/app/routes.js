@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import App from './App.vue'
 import Home from './components/pages/Home.vue';
+import HomeTest from './components/pages/HomeTest.vue';
 import phenolyzer from './components/pages/Phenolyzer.vue'
 
 import { Typeahead } from 'uiv';

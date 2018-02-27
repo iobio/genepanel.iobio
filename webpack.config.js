@@ -3,6 +3,8 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var inProduction = process.env.NODE_ENV === 'production';
+var inTest = process.env.NODE_ENV === 'test';
+
 
 module.exports = {
   entry: {
@@ -69,6 +71,10 @@ module.exports = {
     hints: false
   },
   devtool: 'cheap-module-inline-source-map'
+}
+
+if (inTest) {
+  module.exports.plugins = [];
 }
 
 if (inProduction) {
