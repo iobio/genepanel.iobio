@@ -362,6 +362,7 @@ mergeGenesAcrossPanels(genePanels) {
 
     <rect fill="url(#MyGradient)"
           x="10" y="10" width="${gene._genePanelCount * 10}" height="30"/>
+    <text x="${gene._genePanelCount * 4.5}" y="25" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>      
 </svg>`
           };
     });

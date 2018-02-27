@@ -129,7 +129,7 @@ var model = new Model();
             align: 'left',
             value: 'value'
            },
-          { text: 'Diseases', align: 'left', value: 'htmlData' },
+          { text: 'Gene Panels', align: 'left', value: 'htmlData' },
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
         ],
@@ -240,7 +240,7 @@ var model = new Model();
         // var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
         this.alert = true;
-        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . ";
+        this.alertText = " Number of Genes Selected : " + this.selected.length + " ";
         // this.alertText = " Number of Genes Selected : " + this.GenesFromD3Bars.length + "  . ";
       },
       toggleAll () {
