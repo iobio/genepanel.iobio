@@ -13,7 +13,7 @@
     <div  id="gene-bar-chart-box"  >
               <div id="gene-bar-chart"></div>
             </div>
-    <v-alert color="info" icon="info" dismissible v-model="alert">
+    <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
 
@@ -254,6 +254,9 @@ var model = new Model();
         this.$clipboard(genesToCopy);
         this.alert = true;
         this.alertText = " Number of Genes Selected : " + this.selected.length + " ";
+        setTimeout(()=>{
+          this.alert = false;
+        }, 3500);
         // this.alertText = " Number of Genes Selected : " + this.GenesFromD3Bars.length + "  . ";
       },
       toggleAll () {
