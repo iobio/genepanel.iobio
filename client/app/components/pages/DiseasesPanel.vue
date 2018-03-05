@@ -20,6 +20,11 @@
           v-model="search"
         ></v-text-field>
       </v-card-title> -->
+      <!-- <ul>
+        <li v-for="item in items "> {{item._modeOfInheritance}}
+        </li>
+      </ul> -->
+      <svg id="pie-chart-box"></svg>
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
@@ -93,6 +98,8 @@ import jQuery from 'jquery'
 global.jQuery = jQuery
 global.$ = jQuery;
 
+import Model from './Model';
+var model = new Model();
 
 
   export default {
@@ -121,7 +128,9 @@ global.$ = jQuery;
             { text: 'Gene Panels', align: 'left', value: '_genePanelCount' },
             { text: 'Genes', align: 'left', value: '_geneCount' },
           ],
-          items: []
+          items: [],
+          modeOfInheritanceData: [],
+          piechart : {}
         }
       },
     methods:{
@@ -145,6 +154,8 @@ global.$ = jQuery;
           console.log("propsData from showDiseasesData: ", this.propsData);
           this.items = this.DiseasePanelData;
           console.log("this.items  : ", this.items);
+          this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
+          console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData)
           //if (this.selected.length) this.selected = []
            this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
@@ -156,8 +167,10 @@ global.$ = jQuery;
         deSelectAllDisorders: function(){
           this.selected = []
         },
+
     },
     mounted(){
+      //this.draw();
       console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
     },
