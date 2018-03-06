@@ -37,7 +37,7 @@ export default class Model {
     var tempArr = [];
     items.map(x=> {
       if(x._modeOfInheritance===""){
-        arr.push({_modeOfInheritance:"not provided", _geneCount: x._geneCount})
+        arr.push({_modeOfInheritance:"Not provided", _geneCount: x._geneCount})
       }
       else if(x._modeOfInheritance.includes(",")) {
          tempArr = x._modeOfInheritance.split(", ");

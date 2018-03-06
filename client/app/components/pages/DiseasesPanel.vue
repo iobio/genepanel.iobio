@@ -24,7 +24,7 @@
         <li v-for="item in items "> {{item._modeOfInheritance}}
         </li>
       </ul> -->
-      <svg id="pie-chart-box"></svg>
+      <div id="pie-chart-box"></div>
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
@@ -155,7 +155,8 @@ var model = new Model();
           this.items = this.DiseasePanelData;
           console.log("this.items  : ", this.items);
           this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-          console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData)
+          console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
+          this.draw(this.modeOfInheritanceData)
           //if (this.selected.length) this.selected = []
            this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
@@ -167,6 +168,101 @@ var model = new Model();
         deSelectAllDisorders: function(){
           this.selected = []
         },
+        draw(dataForModeOfInheritance){
+
+          var data = dataForModeOfInheritance
+
+          var width = 400,
+            height = 220,
+            radius = Math.min(width, height) / 2;
+
+          var color = d3.scale.ordinal()
+            .range(["#b3d4fc", "#fcc7b3", "#bae39c", "#a0b0df"]);
+
+          var arc = d3.svg.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(radius - 110);
+
+            var arcOver = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
+
+
+
+          var pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) {
+              return d._geneCount;
+            });
+
+            var svg = d3.select("#pie-chart-box").append("svg")
+              .attr("width", width)
+              .attr("height", height)
+              .append("g")
+              .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+            var g = svg.selectAll(".arc")
+              .data(pie(data))
+              .enter().append("g")
+              .attr("class", "arc");
+
+            var path = g.append("path")
+              .attr("d", arc)
+              .attr("stroke", "black")
+              .attr("stroke-width", 1)
+              .style("fill", function(d) {
+                return color(d.data._modeOfInheritance);
+              });
+
+              path.on("mouseenter", function (d) {
+                d3.select(this)
+                    .attr("stroke", "black")
+                    .transition()
+                    .duration(200)
+                    .attr("d", arcOver)
+                    .attr("stroke-width", 1);
+                })
+
+                path.on("mouseleave", function (d) {
+                  d3.select(this).transition()
+                       .duration(200)
+                       .attr("d", arc)
+                       .attr("stroke", "black")
+                       .attr("stroke-width", 1);
+                     })
+
+                path.on("click", function(d){
+                  pieChartSomething(d.data._modeOfInheritance)
+                })
+
+            g.append("text")
+              .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
+              })
+              .attr("dy", ".35em")
+              .style("text-anchor", "middle")
+              .text(function(d) {
+                return d.data._modeOfInheritance;
+              })
+              .on('click', function(d){
+                pieChartSomething(d.data._modeOfInheritance)
+              })
+            var pieChartSomething =(modeOfInheritance)=>{
+              this.updateFromPieChart(modeOfInheritance)
+            }
+        },
+        updateFromPieChart(modeOfInheritance){
+          alert(modeOfInheritance);
+          console.log("from updateFromPieChart and the items are : ", this.items);
+          var tempArr = [];
+          for(var i=0; i<this.items.length; i++){
+            if(modeOfInheritance!==this.items[i]._modeOfInheritance){
+              tempArr.push(this.items[i])
+            }
+          }
+          console.log("temp Arr is ", tempArr);
+          this.items = tempArr;
+          this.selected = this.items.slice();
+        }
+
 
     },
     mounted(){
