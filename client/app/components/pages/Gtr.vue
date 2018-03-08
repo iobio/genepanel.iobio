@@ -15,7 +15,7 @@
         v-model="search"
         target="#input"
         :data="conditions"
-        item-key="FIELD1"/>
+        item-key="DiseaseName"/>
     </div>
     <v-btn
         color="blue darken-1"
@@ -31,7 +31,7 @@
     <!-- <v-form >
           <v-text-field id="search-gene-name1" label="Conditions">
           </v-text-field>
-          <typeahead v-model="selectedCondition" force-select match-start  target="#search-gene-name" :data="conditionsData" item-key="FIELD1"/>
+          <typeahead v-model="selectedCondition" force-select match-start  target="#search-gene-name" :data="conditionsData" item-key="DiseaseName"/>
     </v-form>
 
     <v-form >
@@ -76,8 +76,8 @@ var model = new Model();
     // watch: {
     //   selectedCondition: function(a, b) {
     //     if (this.selectedCondition) {
-    //       console.log("this.selectedCondition", this.selectedCondition.FIELD1);
-    //       this.search = this.selectedCondition.FIELD1;
+    //       console.log("this.selectedCondition", this.selectedCondition.DiseaseName);
+    //       this.search = this.selectedCondition.DiseaseName;
     //       //this.performSearch();
     //     }
     //   }
@@ -90,10 +90,10 @@ var model = new Model();
     methods:{
       performSearch: function(){
         var searchTerm =""
-        if(this.search.FIELD1!==undefined){
-          searchTerm = this.search.FIELD1;
+        if(this.search.DiseaseName!==undefined){
+          searchTerm = this.search.DiseaseName;
         }
-        else if(this.search.FIELD1===undefined) {
+        else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
         }
 

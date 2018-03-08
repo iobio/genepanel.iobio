@@ -104,11 +104,11 @@ import { bus } from '../../routes';
       },
       vendorsData: function(){
         this.vendorList = this.vendorsData;
-        console.log("vendor list in filter", this.vendorList);
+        //console.log("vendor list in filter", this.vendorList);
       }
     },
     updated(){
-      console.log("select from filterpanel: ", this.select);
+      //console.log("select from filterpanel: ", this.select);
       this.$emit('setSelectedVendors', this.select);
     },
     methods: {

@@ -7,6 +7,7 @@
         </li>
       </ul>
     </div> -->
+    <PieChartSelector></PieChartSelector>
     <div id="gene-histogram-box" class="hide" >
       <svg id="gene-histogram-chart"></svg>
     </div>
@@ -108,12 +109,25 @@
 <script>
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
-import d3 from 'd3'
+import d3 from 'd3';
+import PieChartSelector from './PieChartSelector.vue'
 import Model from './Model';
 var model = new Model();
 
   export default {
-    props: ['GeneData'],
+    components: {
+      'PieChartSelector': PieChartSelector
+    },
+    //props: ['GeneData'],
+    props: {
+      modeOfInheritanceData: {
+        type: Array
+      },
+      GeneData: {
+        type: Array
+      },
+
+    },
     data(){
       return {
         alert:false,
@@ -148,7 +162,8 @@ var model = new Model();
         ],
         items: [],
         GenesFromD3Bars: [],
-        dataForTables:[]
+        dataForTables:[],
+        modeOfInheritanceList: []
 
       }
     },
@@ -157,6 +172,7 @@ var model = new Model();
       this.draw();
       this.AddGeneData();
       // this.drawSimpleViz();
+
 
     },
     updated(){
@@ -185,8 +201,11 @@ var model = new Model();
     },
     watch: {
       GeneData: function(){
-        console.log("watch genes : " , this.GeneData)
+        console.log("watch genes : " , this.GeneData);
         this.AddGeneData();
+      },
+      modeOfInheritanceData: function(){
+        console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
       }
     },
     methods:{
@@ -275,6 +294,8 @@ var model = new Model();
         this.GetGeneData = this.GeneData;
         console.log("this.GetGeneData", this.GetGeneData);
 
+        this.modeOfInheritanceList = this.modeOfInheritanceData;
+
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
         console.log("mergedGenes", mergedGenes);
 
@@ -291,7 +312,7 @@ var model = new Model();
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
-        console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
+        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
         // console.log("bar char", this.geneBarChart)
         this.items = data;
         this.selected = data.slice(0,50)

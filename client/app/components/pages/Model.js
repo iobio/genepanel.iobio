@@ -24,7 +24,8 @@ export default class Model {
       newArr.push(
         {
           _modeOfInheritance: i,
-          _geneCount:obj[i]
+          _geneCount:obj[i],
+          selected: true
         }
       )
     }

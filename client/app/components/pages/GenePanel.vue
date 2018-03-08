@@ -200,7 +200,7 @@ var model = new Model();
     },
     updated(){
       console.log("Hello I am gene panel and I am updated!");
-      
+
 
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
@@ -283,7 +283,8 @@ var model = new Model();
         this.vendorList = vendors;
         console.log("this.vendorList", this.vendorList);
 
-        this.$emit('setVendorList', this.vendorList)
+        this.$emit('setVendorList', this.vendorList); //Emit the vendor list
+                            //back to the parent so it can be used as props in filterpanel
 
         this.selected = this.items.slice()
 
