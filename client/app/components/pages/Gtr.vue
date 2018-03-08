@@ -4,12 +4,18 @@
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
     <div style="display:inline-block;">
       <label>Disorders :</label>
+      <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
+      <!-- v-on:keyup.prevent="submitOnEnter" -->
+      <form v-on:submit.prevent="submitOnEnter">
       <input
         style="width:650px"
         id="input"
         class="form-control"
         type="text"
+        v-on:keyup.prevent="submitOnEnter"
         placeholder="Search Term...">
+      </form>
+      <!-- </form> -->
       <typeahead
         match-start
         v-model="search"
@@ -23,6 +29,7 @@
         v-on:click.prevent="performSearch">
       Go
     </v-btn>
+
     <!-- <hr> -->
     <!-- <ul>
       <li v-for="d in diseaseData">{{ d.Title }}</li>
@@ -70,7 +77,8 @@ var model = new Model();
         selectedCondition: {},
         conditions: conditions.data,
         selectedGene: {},
-        allGenes: geneData
+        allGenes: geneData,
+        enterCount: 0,
       }
     },
     // watch: {
@@ -88,6 +96,16 @@ var model = new Model();
        $("#search-gene-name1").attr('autocomplete', 'off');
     },
     methods:{
+      submitOnEnter: function(e){
+        if (e.keyCode === 13) {
+          this.enterCount++;
+          if(this.enterCount===2){
+            document.getElementById("input").blur();
+            this.performSearch();
+            this.enterCount = 0; 
+          }
+        }
+      },
       performSearch: function(){
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
