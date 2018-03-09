@@ -7,6 +7,53 @@ export default class Model {
   this.selectedGenes = null;
 }
 
+  sumGenesBasedOnModeOfInheritance(items) {
+    console.log("sumGenesBasedOnModeOfInheritance items ", items)
+    var obj ={};
+    items.map(x=> {
+      if(obj[x._modeOfInheritance]===undefined){
+        obj[x._modeOfInheritance] = x._geneCount;
+      }
+      else if(obj[x._modeOfInheritance]!== undefined){
+        obj[x._modeOfInheritance] = obj[x._modeOfInheritance]+x._geneCount;
+      }
+    });
+
+    var newArr = [];
+    for(var i in obj){
+      newArr.push(
+        {
+          _modeOfInheritance: i,
+          _geneCount:obj[i],
+          selected: true
+        }
+      )
+    }
+    return newArr
+  }
+
+  filterItemsForModeOfInheritance(items){
+    var arr =[];
+    var obj= {};
+    var tempArr = [];
+    items.map(x=> {
+      if(x._modeOfInheritance===""){
+        arr.push({_modeOfInheritance:"Not provided", _geneCount: x._geneCount})
+      }
+      else if(x._modeOfInheritance.includes(",")) {
+         tempArr = x._modeOfInheritance.split(", ");
+         tempArr.map(y=> {
+           arr.push({_modeOfInheritance: y, _geneCount: x._geneCount})
+         });
+         tempArr = [];
+      }
+      else {
+        arr.push(x)
+      }
+    });
+     return this.sumGenesBasedOnModeOfInheritance(arr);
+  }
+
 
   promiseGetDiseases(searchTerm) {
   var me = this;
@@ -352,7 +399,7 @@ mergeGenesAcrossPanels(genePanels) {
             value: +gene._genePanelCount,
             diseases: gene._diseaseCount,
             conditions: gene._diseaseNames,
-            htmlData: `<svg width="120" height="30" xmlns="http://www.w3.org/2000/svg">
+            htmlData: `<svg width="${gene._genePanelCount * 10}" height="30" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="MyGradient">
             <stop offset="5%"  stop-color="#36D1DC"/>
@@ -361,7 +408,8 @@ mergeGenesAcrossPanels(genePanels) {
     </defs>
 
     <rect fill="url(#MyGradient)"
-          x="10" y="10" width="${gene._genePanelCount * 7}" height="30"/>
+          x="10" y="10" width="${gene._genePanelCount * 10}" height="30"/>
+    <text x="${gene._genePanelCount * 4.5}" y="25" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
 </svg>`
           };
     });

@@ -20,6 +20,11 @@
           v-model="search"
         ></v-text-field>
       </v-card-title> -->
+      <!-- <ul>
+        <li v-for="item in items "> {{item._modeOfInheritance}}
+        </li>
+      </ul> -->
+      <div id="pie-chart-box"></div>
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
@@ -93,6 +98,8 @@ import jQuery from 'jquery'
 global.jQuery = jQuery
 global.$ = jQuery;
 
+import Model from './Model';
+var model = new Model();
 
 
   export default {
@@ -121,7 +128,10 @@ global.$ = jQuery;
             { text: 'Gene Panels', align: 'left', value: '_genePanelCount' },
             { text: 'Genes', align: 'left', value: '_geneCount' },
           ],
-          items: []
+          items: [],
+          tempItems: [],
+          modeOfInheritanceData: [],
+          piechart : {}
         }
       },
     methods:{
@@ -144,7 +154,13 @@ global.$ = jQuery;
         showDiseasesData: function(){
           console.log("propsData from showDiseasesData: ", this.propsData);
           this.items = this.DiseasePanelData;
-          console.log("this.items  : ", this.items);
+          this.tempItems = this.DiseasePanelData;
+          // console.log("this.items  : ", this.items);
+          this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
+          console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
+          this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
+                                            // the mode of Inheritance back to parent so it can be used as props in summary panel
+          this.draw(this.modeOfInheritanceData)
           //if (this.selected.length) this.selected = []
            this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
@@ -156,8 +172,125 @@ global.$ = jQuery;
         deSelectAllDisorders: function(){
           this.selected = []
         },
+        draw(dataForModeOfInheritance){
+          console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
+          var data = dataForModeOfInheritance
+
+          var width = 400,
+            height = 220,
+            radius = Math.min(width, height) / 2;
+
+
+
+          var color = d3.scale.ordinal()
+            .range(["#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2"]);
+
+          var arc = d3.svg.arc()
+            .outerRadius(radius - 10)
+            .innerRadius(radius - 110);
+
+            var arcOver = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
+
+
+
+          var pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) {
+              return d._geneCount;
+            });
+
+            var svg = d3.select("#pie-chart-box").append("svg")
+              .attr("width", width)
+              .attr("height", height)
+              .append("g")
+              .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+            var g = svg.selectAll(".arc")
+              .data(pie(data))
+              .enter().append("g")
+              .attr("class", "arc");
+
+            var path = g.append("path")
+              .attr("d", arc)
+              // .attr("stroke", "black")
+              // .attr("stroke-width", 1)
+              .style("fill", function(d) {
+                return color(d.data._modeOfInheritance);
+              });
+
+              path.on("mouseenter", function (d) {
+                d3.select(this)
+                    // .attr("stroke", "black")
+                    .transition()
+                    .duration(200)
+                    .attr("d", arcOver)
+                    // .attr("stroke-width", 1);
+                })
+
+                path.on("mouseleave", function (d) {
+                  d3.select(this).transition()
+                       .duration(200)
+                       .attr("d", arc)
+                       // .attr("stroke", "black")
+                       // .attr("stroke-width", 1);
+                     })
+
+                path.on("click", function(d){
+                  d.data.selected = !d.data.selected
+                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                })
+
+            g.append("text")
+              .attr("transform", function(d) {
+                return "translate(" + arc.centroid(d) + ")";
+              })
+              .attr("dy", ".35em")
+              .style("text-anchor", "middle")
+              .text(function(d) {
+                return d.data._modeOfInheritance;
+              })
+              .on('click', function(d){
+                d.data.selected = !d.data.selected
+                pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+              })
+            var pieChartSomething =(modeOfInheritance, selection)=>{
+              this.updateFromPieChart(modeOfInheritance, selection)
+            }
+        },
+        updateFromPieChart(modeOfInheritance, selection){
+          alert(modeOfInheritance);
+          console.log("this tempItems from updateFromPieChart", this.tempItems)
+          if(modeOfInheritance === "Not provided"){
+            modeOfInheritance="";
+          }
+          var tempArr = [];
+          // this.items = this.tempItems;
+          if(!selection){
+            for(var i=0; i<this.items.length; i++){
+              if(modeOfInheritance!==this.items[i]._modeOfInheritance){
+                tempArr.push(this.items[i])
+              }
+            }
+            this.items = tempArr;
+            this.selected = this.items.slice();
+          }
+          else if(selection){
+            tempArr = this.items;
+            for(var i=0; i<this.tempItems.length; i++){
+              if(modeOfInheritance===this.tempItems[i]._modeOfInheritance){
+                // if(i+1 <= this.items.length && )
+                tempArr.push(this.tempItems[i])
+              }
+            }
+            this.items = tempArr;
+            this.selected = this.items.slice();
+          }
+        }
+
+
     },
     mounted(){
+      //this.draw();
       console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
     },

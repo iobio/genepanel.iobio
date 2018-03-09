@@ -7,13 +7,14 @@
         </li>
       </ul>
     </div> -->
+    <PieChartSelector></PieChartSelector>
     <div id="gene-histogram-box" class="hide" >
       <svg id="gene-histogram-chart"></svg>
     </div>
     <div  id="gene-bar-chart-box"  >
               <div id="gene-bar-chart"></div>
             </div>
-    <v-alert color="info" icon="info" dismissible v-model="alert">
+    <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
 
@@ -73,8 +74,21 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td></td> -->
-            <td>{{ props.item.name }}</td>
+            <td>
+              <div id="app">
+                <div>
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:14px; margin-top:5px" slot="activator"><strong>{{ props.item.name }}</strong></p>
+                      <v-card>
+                        <v-card-title>
+                            <div><strong>Conditions: </strong></div>
+                        </v-card-title>
+                        <v-card-text style="margin-top:-25px">{{props.item.conditions}}</v-card-text>
+                      </v-card>
+                  </v-menu>
+                </div>
+              </div>
+            </td>
             <td>{{ props.item.value }}</td>
             <td><span v-html="props.item.htmlData"></span></td>
             <!-- <td>{{ props.item._conditionNames }}</td> -->
@@ -95,12 +109,25 @@
 <script>
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
-import d3 from 'd3'
+import d3 from 'd3';
+import PieChartSelector from './PieChartSelector.vue'
 import Model from './Model';
 var model = new Model();
 
   export default {
-    props: ['GeneData'],
+    components: {
+      'PieChartSelector': PieChartSelector
+    },
+    //props: ['GeneData'],
+    props: {
+      modeOfInheritanceData: {
+        type: Array
+      },
+      GeneData: {
+        type: Array
+      },
+
+    },
     data(){
       return {
         alert:false,
@@ -129,13 +156,14 @@ var model = new Model();
             align: 'left',
             value: 'value'
            },
-          { text: 'Diseases', align: 'left', value: 'htmlData' },
+          { text: 'Gene Panels', align: 'left', value: 'htmlData' },
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
         ],
         items: [],
         GenesFromD3Bars: [],
-        dataForTables:[]
+        dataForTables:[],
+        modeOfInheritanceList: []
 
       }
     },
@@ -144,6 +172,7 @@ var model = new Model();
       this.draw();
       this.AddGeneData();
       // this.drawSimpleViz();
+
 
     },
     updated(){
@@ -172,8 +201,11 @@ var model = new Model();
     },
     watch: {
       GeneData: function(){
-        console.log("watch genes : " , this.GeneData)
+        console.log("watch genes : " , this.GeneData);
         this.AddGeneData();
+      },
+      modeOfInheritanceData: function(){
+        console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
       }
     },
     methods:{
@@ -240,7 +272,10 @@ var model = new Model();
         // var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
         this.alert = true;
-        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . ";
+        this.alertText = " Number of Genes Selected : " + this.selected.length + " ";
+        setTimeout(()=>{
+          this.alert = false;
+        }, 3500);
         // this.alertText = " Number of Genes Selected : " + this.GenesFromD3Bars.length + "  . ";
       },
       toggleAll () {
@@ -259,6 +294,8 @@ var model = new Model();
         this.GetGeneData = this.GeneData;
         console.log("this.GetGeneData", this.GetGeneData);
 
+        this.modeOfInheritanceList = this.modeOfInheritanceData;
+
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
         console.log("mergedGenes", mergedGenes);
 
@@ -275,7 +312,7 @@ var model = new Model();
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
-        console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
+        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
         // console.log("bar char", this.geneBarChart)
         this.items = data;
         this.selected = data.slice(0,50)

@@ -41,8 +41,9 @@
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
                           <show-gene-panel1
-                            v-if="geneProps.length && diseasesProps.length"
-                            v-bind:GeneData="geneProps">
+                            v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceData.length"
+                            v-bind:GeneData="geneProps"
+                            v-bind:modeOfInheritanceData="modeOfInheritanceData">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
@@ -56,7 +57,8 @@
                           <disease-panel
                             v-if="diseases.length"
                             v-bind:DiseasePanelData="diseases"
-                            v-on:selectedDiseases="selectDiseases($event)">
+                            v-on:selectedDiseases="selectDiseases($event)"
+                            v-on:PieChartSelectorData="PieChartSelectorData($event)">
                           </disease-panel>
                         </v-card-text>
                       </v-card>
@@ -129,13 +131,19 @@ export default {
       diseasesProps: [],
       geneProps: [],
       vendorList: [],
-      selectedVendorsList: []
+      selectedVendorsList: [],
+      modeOfInheritanceData: []
     }
   },
   methods: {
     addDiseases: function(e){
-      //console.log("e is from home: addDiseases ", e)
+      console.log("e is from home: addDiseases ", e)
       this.diseases = e;
+      if(e.length<= 0){
+        this.geneProps = [];
+        this.diseasesProps = [];
+      }
+
     },
     selectDiseases: function(e){
     //  console.log("e is from home: ", e)
@@ -146,12 +154,17 @@ export default {
       this.geneProps = e;
     },
     updateVendorList: function(e){
-      console.log("vendor list as callback to home", e);
+      // console.log("vendor list as callback to home", e);
       this.vendorList = e;
     },
     updateSelectedVendors: function(e){
-      console.log("selected vendors from callback to home", e);
+      // console.log("selected vendors from callback to home", e);
       this.selectedVendorsList = e;
+    },
+    PieChartSelectorData: function(e){
+      console.log("modeOfInheritance data callback to home ", e);
+      this.modeOfInheritanceData = e;
+      console.log("this.modeOfInheritanceData", this.modeOfInheritanceData)
     }
 
   }
