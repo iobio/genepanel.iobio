@@ -117,7 +117,6 @@ var model = new Model();
         }
       },
       performSearch: function(){
-        // document.getElementById("showLoader").innerHTML = "show";
         this.checked = true;
         this.alert=false;
 

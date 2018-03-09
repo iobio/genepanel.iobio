@@ -139,6 +139,10 @@ export default {
     addDiseases: function(e){
       console.log("e is from home: addDiseases ", e)
       this.diseases = e;
+      if(e.length<= 0){
+        this.geneProps = [];
+        this.diseasesProps = [];
+      }
 
     },
     selectDiseases: function(e){
