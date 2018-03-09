@@ -137,8 +137,9 @@ export default {
   },
   methods: {
     addDiseases: function(e){
-      //console.log("e is from home: addDiseases ", e)
+      console.log("e is from home: addDiseases ", e)
       this.diseases = e;
+
     },
     selectDiseases: function(e){
     //  console.log("e is from home: ", e)
