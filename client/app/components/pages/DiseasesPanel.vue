@@ -258,19 +258,30 @@ var model = new Model();
             }
         },
         updateFromPieChart(modeOfInheritance, selection){
-          alert(modeOfInheritance);
+          // alert(modeOfInheritance);
           console.log("this tempItems from updateFromPieChart", this.tempItems)
           if(modeOfInheritance === "Not provided"){
             modeOfInheritance="";
           }
           var tempArr = [];
+          var splitHelperArr = [];
           // this.items = this.tempItems;
+
           if(!selection){
             for(var i=0; i<this.items.length; i++){
-              if(modeOfInheritance!==this.items[i]._modeOfInheritance){
+
+              if(modeOfInheritance!==this.items[i]._modeOfInheritance && this.items[i]._modeOfInheritance.split(", ").length===1){
                 tempArr.push(this.items[i])
               }
+              else if(this.items[i]._modeOfInheritance.split(", ").length >1){
+                console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
+                splitHelperArr = this.items[i]._modeOfInheritance.split(", ");
+                if(!splitHelperArr.includes(modeOfInheritance)){
+                  tempArr.push(this.items[i])
+                }
+              }
             }
+            console.log("tempArr is ", tempArr)
             this.items = tempArr;
             this.selected = this.items.slice();
           }
