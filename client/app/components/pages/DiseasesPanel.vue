@@ -288,9 +288,14 @@ var model = new Model();
           else if(selection){
             tempArr = this.items;
             for(var i=0; i<this.tempItems.length; i++){
-              if(modeOfInheritance===this.tempItems[i]._modeOfInheritance){
-                // if(i+1 <= this.items.length && )
+              if(modeOfInheritance===this.tempItems[i]._modeOfInheritance && this.tempItems[i]._modeOfInheritance.split(", ").length===1){
                 tempArr.push(this.tempItems[i])
+              }
+              else if(this.tempItems[i]._modeOfInheritance.split(", ").length >1){
+                splitHelperArr = this.tempItems[i]._modeOfInheritance.split(", ");
+                if(splitHelperArr.includes(modeOfInheritance)){
+                  tempArr.push(this.tempItems[i])
+                }
               }
             }
             this.items = tempArr;
