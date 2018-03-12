@@ -258,7 +258,13 @@ var model = new Model();
             }
         },
         updateFromPieChart(modeOfInheritance, selection){
-          // alert(modeOfInheritance);
+          console.log("selection is ", selection)
+          if (selection) {
+            alert(modeOfInheritance+ " is selected ")
+          }
+          else {
+            alert(modeOfInheritance+ " is deselected")
+          }
           console.log("this tempItems from updateFromPieChart", this.tempItems)
           if(modeOfInheritance === "Not provided"){
             modeOfInheritance="";
