@@ -83,6 +83,7 @@ export default class Model {
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
+        console.log("summaryUrl is : ", summaryUrl)
 
         $.ajax( summaryUrl )
         .done(function(data) {
@@ -94,6 +95,7 @@ export default class Model {
             resolve({'searchTerm': searchTerm, 'diseases': []})
           } else {
             var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
+            console.log("Results in model.js for search terms are ", results)
             if (results.ERROR) {
               if (results.ERROR == 'Empty result - nothing todo') {
                 resolve({'searchTerm': searchTerm, 'diseases': []});
@@ -135,7 +137,7 @@ promiseGetGenePanels(disease) {
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
 
-
+      console.log("search irl to get Panels " , searchUrl)
     $.ajax( searchUrl )
     .done(function(data) {
 

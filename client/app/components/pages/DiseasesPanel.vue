@@ -185,11 +185,11 @@ var model = new Model();
           var color = d3.scale.ordinal()
             .range(["#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2"]);
 
-          var arc = d3.svg.arc()
+          var arcOver = d3.svg.arc()
             .outerRadius(radius - 10)
             .innerRadius(radius - 110);
 
-            var arcOver = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
+            var arc = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
 
 
 
@@ -212,32 +212,54 @@ var model = new Model();
 
             var path = g.append("path")
               .attr("d", arc)
-              // .attr("stroke", "black")
-              // .attr("stroke-width", 1)
+              .attr("stroke", "white")
+              .attr("stroke-width", 3)
               .style("fill", function(d) {
                 return color(d.data._modeOfInheritance);
               });
 
-              path.on("mouseenter", function (d) {
-                d3.select(this)
-                    // .attr("stroke", "black")
-                    .transition()
-                    .duration(200)
-                    .attr("d", arcOver)
-                    // .attr("stroke-width", 1);
-                })
-
-                path.on("mouseleave", function (d) {
-                  d3.select(this).transition()
-                       .duration(200)
-                       .attr("d", arc)
-                       // .attr("stroke", "black")
-                       // .attr("stroke-width", 1);
-                     })
+              // path.on("mouseenter", function (d) {
+              //   d3.select(this)
+              //       // .attr("stroke", "black")
+              //       .transition()
+              //       .duration(200)
+              //       .attr("d", arcOver)
+              //       // .attr("stroke-width", 1);
+              //   })
+              //
+              //   path.on("mouseleave", function (d) {
+              //     d3.select(this).transition()
+              //          .duration(200)
+              //          .attr("d", arc)
+              //          // .attr("stroke", "black")
+              //          // .attr("stroke-width", 1);
+              //        })
 
                 path.on("click", function(d){
-                  d.data.selected = !d.data.selected
-                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                  if(d.data.selected){
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("stroke", "white")
+                        .attr("stroke-width", 1)
+                        .attr("d", arcOver);
+
+                    d.data.selected = !d.data.selected
+                    pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                  }
+                  else {
+                    d3.select(this).transition()
+                         .duration(200)
+                         .attr("d", arc)
+                         .attr("stroke", "white")
+                         .attr("stroke-width", 3)
+
+                         d.data.selected = !d.data.selected
+                         pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+
+                  }
+                  // d.data.selected = !d.data.selected
+                  // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
                 })
 
             g.append("text")
@@ -250,8 +272,27 @@ var model = new Model();
                 return d.data._modeOfInheritance;
               })
               .on('click', function(d){
-                d.data.selected = !d.data.selected
-                pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                if(d.data.selected){
+                  d3.select(this)
+                      .transition()
+                      .duration(200)
+                      .attr("d", arcOver);
+
+                  d.data.selected = !d.data.selected
+                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                }
+                else {
+                  d3.select(this).transition()
+                       .duration(200)
+                       .attr("d", arc)
+
+
+                       d.data.selected = !d.data.selected
+                       pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+
+                }
+                // d.data.selected = !d.data.selected
+                // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
               })
             var pieChartSomething =(modeOfInheritance, selection)=>{
               this.updateFromPieChart(modeOfInheritance, selection)
@@ -259,12 +300,12 @@ var model = new Model();
         },
         updateFromPieChart(modeOfInheritance, selection){
           console.log("selection is ", selection)
-          if (selection) {
-            alert(modeOfInheritance+ " is selected ")
-          }
-          else {
-            alert(modeOfInheritance+ " is deselected")
-          }
+          // if (selection) {
+          //   alert(modeOfInheritance+ " is selected ")
+          // }
+          // else {
+          //   alert(modeOfInheritance+ " is deselected")
+          // }
           console.log("this tempItems from updateFromPieChart", this.tempItems)
           if(modeOfInheritance === "Not provided"){
             modeOfInheritance="";
