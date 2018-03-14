@@ -8,12 +8,13 @@
       </ul>
     </div> -->
     <PieChartSelector></PieChartSelector>
+    <GeneDistribution v-bind:GeneData="items"></GeneDistribution>
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart"></svg>
     </div>
     <div  id="gene-bar-chart-box"  >
-              <div id="gene-bar-chart"></div>
-            </div>
+      <div id="gene-bar-chart"></div>
+    </div>
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
@@ -111,12 +112,14 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import PieChartSelector from './PieChartSelector.vue'
+import GeneDistribution from './GeneDistribution.vue'
 import Model from './Model';
 var model = new Model();
 
   export default {
     components: {
-      'PieChartSelector': PieChartSelector
+      'PieChartSelector': PieChartSelector,
+      'GeneDistribution': GeneDistribution
     },
     //props: ['GeneData'],
     props: {
@@ -163,7 +166,8 @@ var model = new Model();
         items: [],
         GenesFromD3Bars: [],
         dataForTables:[],
-        modeOfInheritanceList: []
+        modeOfInheritanceList: [],
+        countForEmit:0
 
       }
     },
@@ -291,6 +295,7 @@ var model = new Model();
         }
       },
       AddGeneData: function(){
+        // alert("I am in AddGeneData Function")
         this.GetGeneData = this.GeneData;
         console.log("this.GetGeneData", this.GetGeneData);
 
@@ -302,22 +307,22 @@ var model = new Model();
         this.GenesToDisplay = mergedGenes;
         console.log("GenesToDisplay",this.GenesToDisplay);
 
-        //this.items = mergedGenes;
-
-        //Select All rows
-      //  this.selected = this.items.slice()
-        //console.log("this.selected from Show Genes ", this.selected )
-
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
-        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes));
+        console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
         this.items = data;
-        this.selected = data.slice(0,50)
+        this.selected = data.slice(0,50);
+        bus.$emit("GeneDistributionChartData", this.items);
+        // if(countForEmit===1){
+        //   bus.$emit("GeneDistributionChartData", this.items);
+        //   this.countForEmit=0;
+        // }
+
         console.log("this.selected from Show Genes ", this.selected )
-      //  this.geneBarChart(d3.select('#gene-bar-chart'), data);
+       this.geneBarChart(d3.select('#gene-bar-chart'), data);
         // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);
         console.log("dataForTables: ", this.dataForTables)
