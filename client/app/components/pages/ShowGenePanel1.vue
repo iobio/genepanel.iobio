@@ -8,7 +8,7 @@
       </ul>
     </div> -->
     <PieChartSelector></PieChartSelector>
-    <div id="gene-histogram-box" class="hide" >
+    <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart"></svg>
     </div>
     <div  id="gene-bar-chart-box"  >
@@ -235,8 +235,8 @@ var model = new Model();
             .widthPercent("47%")
             .heightPercent("47%")
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
-            .yAxisLabel( "log(Genes)" )
-            .xAxisLabel( "Gene Panels" );
+            .yAxisLabel( "# of genes" )
+            .xAxisLabel( "# of Panels" );
 
         //Drawing horizontal bar chart
         // console.log("bar chart before mounting", this.geneBarChart)
@@ -460,7 +460,7 @@ var model = new Model();
             .tickFormat(function(tickValue) {
               return tickValue;
             })
-            .ticks(max)
+            .ticks(max/1.5)
 
 
         var yAxis = d3.svg.axis()

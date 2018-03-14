@@ -99,6 +99,7 @@
 import Gtr from './Gtr.vue';
 import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
+import ShowGenePanel from './ShowGenePanel.vue';
 import ShowGenePanel1 from './ShowGenePanel1.vue';
 import typeaheadExample from './typeahead-example.vue';
 import datatableExample from './datatable-example.vue';
@@ -116,6 +117,7 @@ export default {
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
     'show-gene-panel1': ShowGenePanel1,
+    'show-gene-panel': ShowGenePanel,
     'typeaheadExample':typeaheadExample,
     'datatableExample':datatableExample,
     'multiSelectExample':multiSelectExample,
