@@ -322,7 +322,7 @@ var model = new Model();
         // }
 
         console.log("this.selected from Show Genes ", this.selected )
-       this.geneBarChart(d3.select('#gene-bar-chart'), data);
+       // this.geneBarChart(d3.select('#gene-bar-chart'), data);
         // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);
         console.log("dataForTables: ", this.dataForTables)
