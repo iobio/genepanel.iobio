@@ -7,8 +7,42 @@
         </li>
       </ul>
     </div> -->
-    <PieChartSelector></PieChartSelector>
-    <GeneDistribution v-bind:GeneData="items"></GeneDistribution>
+    <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm6 md4>
+          <v-card >
+            <!-- <GeneDistribution
+                v-bind:GeneData="items">
+            </GeneDistribution> -->
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md4>
+          <v-card >
+            <v-card-title primary class="title">Genes inheritance modes</v-card-title>
+            <PieChartSelector
+                v-if="modeOfInheritanceProps.length>0"
+                v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+            </PieChartSelector>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md4>
+          <v-card>
+            <!-- <v-card-title primary class="title">Lorem</v-card-title>
+            <v-card-text>
+              ebjsdbdejsdbejsd
+            </v-card-text> -->
+          </v-card>
+        </v-flex>
+
+      </v-layout>
+    </v-container>
+    <!-- <PieChartSelector
+        v-if="modeOfInheritanceProps.length>0"
+        v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+    </PieChartSelector> -->
+    <GeneDistribution
+        v-bind:GeneData="items">
+    </GeneDistribution>
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart"></svg>
     </div>
@@ -129,7 +163,6 @@ var model = new Model();
       GeneData: {
         type: Array
       },
-
     },
     data(){
       return {
@@ -167,12 +200,14 @@ var model = new Model();
         GenesFromD3Bars: [],
         dataForTables:[],
         modeOfInheritanceList: [],
-        countForEmit:0
+        countForEmit:0,
+        modeOfInheritanceProps: [],
 
       }
     },
     mounted(){
-
+      // alert("modeOfInheritance length " + this.modeOfInheritanceData.length)
+      this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.draw();
       this.AddGeneData();
       // this.drawSimpleViz();
@@ -180,6 +215,7 @@ var model = new Model();
 
     },
     updated(){
+
       console.log("Hello I am ShowGenePanel and I am updated")
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
@@ -295,7 +331,6 @@ var model = new Model();
         }
       },
       AddGeneData: function(){
-        // alert("I am in AddGeneData Function")
         this.GetGeneData = this.GeneData;
         console.log("this.GetGeneData", this.GetGeneData);
 
@@ -316,10 +351,6 @@ var model = new Model();
         this.items = data;
         this.selected = data.slice(0,50);
         bus.$emit("GeneDistributionChartData", this.items);
-        // if(countForEmit===1){
-        //   bus.$emit("GeneDistributionChartData", this.items);
-        //   this.countForEmit=0;
-        // }
 
         console.log("this.selected from Show Genes ", this.selected )
        // this.geneBarChart(d3.select('#gene-bar-chart'), data);

@@ -22,16 +22,6 @@ import { bus } from '../../routes';
     },
     watch: {
       GeneData: function(){
-        // alert("I am watching");
-        //
-        // console.log("watch genes from GeneDistribution: " , this.GeneData);
-        // this.GeneDataForChart = this.GeneData.slice(0,50);
-        // console.log("this.GeneDataForChart", this.GeneDataForChart);
-        // this.count++;
-        // if(this.count===1){
-        //   this.doSomething();
-        //   this.count=0
-        // }
 
 
         this.GeneDataForChart = this.GeneData.slice(0,50);
@@ -43,7 +33,6 @@ import { bus } from '../../routes';
     },
     methods:{
       drawProperly(dataArray){
-        console.log("data Array from drawProperly", dataArray)
         this.count++
         // alert(this.count)
         // let svg = null;
@@ -56,7 +45,6 @@ import { bus } from '../../routes';
            dataArray.sort(function(a,b){
              return a.value - b.value
            })
-           console.log(dataArray);
         // d3.select("#gene-distribution-chart").remove();
         d3.select("#gene-distribution-chart").select("svg").remove();
         var chart = d3.select('#gene-distribution-chart')
@@ -70,7 +58,6 @@ import { bus } from '../../routes';
                        })
                        .y0(height)
                        .y1(function(d){
-                         console.log("y data in draw", d.value)
                          return height-d.value*7;
                        })
                        .interpolate("basis")

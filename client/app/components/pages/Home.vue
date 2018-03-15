@@ -41,9 +41,9 @@
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
                           <show-gene-panel1
-                            v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceData.length"
+                            v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
-                            v-bind:modeOfInheritanceData="modeOfInheritanceData">
+                            v-bind:modeOfInheritanceData="modeOfInheritanceProps">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
@@ -134,8 +134,10 @@ export default {
       geneProps: [],
       vendorList: [],
       selectedVendorsList: [],
-      modeOfInheritanceData: []
+      modeOfInheritanceProps: []
     }
+  },
+  mounted(){
   },
   methods: {
     addDiseases: function(e){
@@ -165,8 +167,8 @@ export default {
     },
     PieChartSelectorData: function(e){
       console.log("modeOfInheritance data callback to home ", e);
-      this.modeOfInheritanceData = e;
-      console.log("this.modeOfInheritanceData", this.modeOfInheritanceData)
+      this.modeOfInheritanceProps = e;
+      console.log("this.modeOfInheritanceData", this.modeOfInheritanceProps)
     }
 
   }

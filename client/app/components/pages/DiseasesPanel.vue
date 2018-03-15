@@ -160,6 +160,7 @@ var model = new Model();
           console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
           this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
                                             // the mode of Inheritance back to parent so it can be used as props in summary panel
+
           this.draw(this.modeOfInheritanceData)
           //if (this.selected.length) this.selected = []
            this.selected = this.items.slice()
@@ -298,6 +299,10 @@ var model = new Model();
               this.updateFromPieChart(modeOfInheritance, selection)
             }
         },
+        sendModeOfInheritanceData(){
+          alert(this.modeOfInheritanceData.length)
+          bus.$emit("PieChartSelectorData");
+        },
         updateFromPieChart(modeOfInheritance, selection){
           console.log("selection is ", selection)
           // if (selection) {
@@ -356,6 +361,9 @@ var model = new Model();
       //this.draw();
       console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
+      bus.$on("RequestModeOfInheritanceData", ()=>{
+        this.sendModeOfInheritanceData();
+      })
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
