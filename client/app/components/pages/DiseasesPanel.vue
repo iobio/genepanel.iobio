@@ -363,6 +363,9 @@ var model = new Model();
       this.showDiseasesData()
       bus.$on("RequestModeOfInheritanceData", ()=>{
         this.sendModeOfInheritanceData();
+      });
+      bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
+        this.updateFromPieChart(modeOfInheritance, selection)
       })
     },
     updated(){

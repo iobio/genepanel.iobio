@@ -28,8 +28,6 @@ import { bus } from '../../routes';
           height = 220,
           radius = Math.min(width, height) / 2;
 
-
-
         var color = d3.scale.ordinal()
           .range(["#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2"]);
 
@@ -37,9 +35,7 @@ import { bus } from '../../routes';
           .outerRadius(radius - 10)
           .innerRadius(radius - 110);
 
-          var arc = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
-
-
+        var arc = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
 
         var pie = d3.layout.pie()
           .sort(null)
@@ -62,11 +58,13 @@ import { bus } from '../../routes';
             .attr("d", arc)
             .attr("stroke", "white")
             .attr("stroke-width", 3)
+            .style("box-shadow", "10px -10px  rgba(0,0,0,0.6)")
             .style("fill", function(d) {
               return color(d.data._modeOfInheritance);
             });
 
               path.on("click", function(d){
+                // alert(d.data._modeOfInheritance)
                 if(d.data.selected){
                   d3.select(this)
                       .transition()
@@ -75,7 +73,8 @@ import { bus } from '../../routes';
                       .attr("stroke-width", 1)
                       .attr("d", arcOver);
 
-                  d.data.selected = !d.data.selected
+                  d.data.selected = !d.data.selected;
+                  bus.$on('updateModeOfInheritance', d.data._modeOfInheritance, d.data.selected);
                   pieChartSomething(d.data._modeOfInheritance, d.data.selected)
                 }
                 else {
@@ -85,7 +84,7 @@ import { bus } from '../../routes';
                        .attr("stroke", "white")
                        .attr("stroke-width", 3)
 
-                       d.data.selected = !d.data.selected
+                       d.data.selected = !d.data.selected;
                        pieChartSomething(d.data._modeOfInheritance, d.data.selected)
 
                 }
@@ -129,6 +128,10 @@ import { bus } from '../../routes';
             this.updateFromPieChart(modeOfInheritance, selection)
           }
       },
+      updateFromPieChart(modeOfInheritance, selection){
+        bus.$emit('updateModeOfInheritance',modeOfInheritance, selection);
+
+      }
     },
     mounted(){
       this.modesOfInheritance = this.modeOfInheritanceData
