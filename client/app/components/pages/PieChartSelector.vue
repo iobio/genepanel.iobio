@@ -25,17 +25,17 @@ import { bus } from '../../routes';
         var data = dataForModeOfInheritance
 
         var width = 400,
-          height = 220,
+          height = 260,
           radius = Math.min(width, height) / 2;
 
         var color = d3.scale.ordinal()
-          .range(["#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2"]);
+          .range(["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]);
 
         var arcOver = d3.svg.arc()
-          .outerRadius(radius - 10)
-          .innerRadius(radius - 110);
+          .outerRadius(radius - 20)
+          .innerRadius(radius - height/2);
 
-        var arc = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
+        var arc = d3.svg.arc().outerRadius(radius).innerRadius(radius - height/2);
 
         var pie = d3.layout.pie()
           .sort(null)
@@ -49,6 +49,52 @@ import { bus } from '../../routes';
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+
+            var defs = svg.append("defs");
+
+            // create filter with id #drop-shadow
+            // height=130% so that the shadow is not clipped
+            var filter = defs.append("filter")
+                .attr("id", "drop-shadow")
+                .attr("height", "130%");
+
+            // SourceAlpha refers to opacity of graphic that this filter will be applied to
+            // convolve that with a Gaussian with standard deviation 3 and store result
+            // in blur
+            filter.append("feGaussianBlur")
+                .attr("in", "SourceAlpha")
+                .attr("stdDeviation", 2)
+                .attr("result", "blur");
+
+            // translate output of Gaussian blur to the right and downwards with 2px
+            // store result in offsetBlur
+            filter.append("feOffset")
+                .attr("in", "blur")
+                .attr("dx", 2)
+                .attr("dy", 2)
+                .attr("result", "offsetBlur");
+
+                filter.append("feFlood")
+            .attr("in", "offsetBlur")
+            .attr("flood-color", "#333")
+            .attr("flood-opacity", "1")
+            .attr("result", "offsetColor");
+    filter.append("feComposite")
+            .attr("in", "offsetColor")
+            .attr("in2", "offsetBlur")
+            .attr("operator", "in")
+            .attr("result", "offsetBlur");
+
+            // overlay original SourceGraphic over translated blurred opacity by using
+            // feMerge filter. Order of specifying inputs is important!
+            var feMerge = filter.append("feMerge");
+
+            feMerge.append("feMergeNode")
+                .attr("in", "offsetBlur")
+            feMerge.append("feMergeNode")
+                .attr("in", "SourceGraphic");
+
+
           var g = svg.selectAll(".arc")
             .data(pie(data))
             .enter().append("g")
@@ -56,21 +102,21 @@ import { bus } from '../../routes';
 
           var path = g.append("path")
             .attr("d", arc)
-            .attr("stroke", "white")
-            .attr("stroke-width", 3)
-            .style("box-shadow", "10px -10px  rgba(0,0,0,0.6)")
+            .attr("stroke", "rgb(245, 245, 245)")
+            .attr("stroke-width", 0.5)
+            .style("filter", "url(#drop-shadow)")
             .style("fill", function(d) {
               return color(d.data._modeOfInheritance);
             });
 
+            //On click events
               path.on("click", function(d){
-                // alert(d.data._modeOfInheritance)
                 if(d.data.selected){
                   d3.select(this)
                       .transition()
                       .duration(200)
                       .attr("stroke", "white")
-                      .attr("stroke-width", 1)
+                      .attr("stroke-width", 0)
                       .attr("d", arcOver);
 
                   d.data.selected = !d.data.selected;
@@ -81,49 +127,65 @@ import { bus } from '../../routes';
                   d3.select(this).transition()
                        .duration(200)
                        .attr("d", arc)
-                       .attr("stroke", "white")
-                       .attr("stroke-width", 3)
+                       .attr("stroke", "rgb(245, 245, 245)")
+                       .attr("stroke-width", 0.5)
 
                        d.data.selected = !d.data.selected;
                        pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-
                 }
-                // d.data.selected = !d.data.selected
-                // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
               })
+
+            //Mouse over event
+              path.on("mouseover", function(d){
+                if(d.data.selected){
+                  d3.select(this)
+                      .transition()
+                      .duration(200)
+                      .attr("stroke", "white")
+                      .attr("stroke-width", 0)
+                      .attr("d", arcOver);
+                }
+                else {
+                  d3.select(this).transition()
+                       .duration(200)
+                       .attr("d", arc)
+                       .attr("stroke", "rgb(245, 245, 245)")
+                }
+              })
+
+            //Mouse out event
+            path.on("mouseout", function(d){
+              if(!d.data.selected){
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 0)
+                    .attr("d", arcOver);
+              }
+              else if(d.data.selected) {
+                d3.select(this).transition()
+                     .duration(200)
+                     .attr("d", arc)
+                     .attr("stroke", "rgb(245, 245, 245)")
+              }
+            })
+
+
 
           g.append("text")
             .attr("transform", function(d) {
-              return "translate(" + arc.centroid(d) + ")";
+              var _d = arc.centroid(d);
+                _d[0] *= 1.7;	//multiply by a constant factor
+                _d[1] *= 1.7;	//multiply by a constant factor
+                return "translate(" + _d + ")";
             })
-            .attr("dy", ".35em")
+            .attr("dy", ".70em")
             .style("text-anchor", "middle")
             .text(function(d) {
               return d.data._modeOfInheritance;
             })
-            .on('click', function(d){
-              if(d.data.selected){
-                d3.select(this)
-                    .transition()
-                    .duration(200)
-                    .attr("d", arcOver);
 
-                d.data.selected = !d.data.selected
-                pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-              }
-              else {
-                d3.select(this).transition()
-                     .duration(200)
-                     .attr("d", arc)
-
-
-                     d.data.selected = !d.data.selected
-                     pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-
-              }
-              // d.data.selected = !d.data.selected
-              // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-            })
           var pieChartSomething =(modeOfInheritance, selection)=>{
             this.updateFromPieChart(modeOfInheritance, selection)
           }
