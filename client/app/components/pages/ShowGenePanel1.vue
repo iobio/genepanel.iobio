@@ -7,13 +7,14 @@
         </li>
       </ul>
     </div> -->
-    <v-container grid-list-md text-xs-center>
+    <!-- <v-container grid-list-md text-xs-center> -->
       <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md4>
           <v-card >
-            <!-- <GeneDistribution
+            <v-card-title primary class="title">Gene distribution across panels</v-card-title>
+            <GeneDistribution
                 v-bind:GeneData="items">
-            </GeneDistribution> -->
+            </GeneDistribution>
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md4>
@@ -27,25 +28,25 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md4>
           <v-card>
-            <!-- <v-card-title primary class="title">Lorem</v-card-title>
-            <v-card-text>
-              ebjsdbdejsdbejsd
-            </v-card-text> -->
+            <v-card-title primary class="title">Gene membership in panels</v-card-title>
+            <div id="gene-histogram-box" >
+              <svg id="gene-histogram-chart"></svg>
+            </div>
           </v-card>
         </v-flex>
 
       </v-layout>
-    </v-container>
+    <!-- </v-container> -->
     <!-- <PieChartSelector
         v-if="modeOfInheritanceProps.length>0"
         v-bind:modeOfInheritanceData="modeOfInheritanceProps">
     </PieChartSelector> -->
-    <GeneDistribution
+    <!-- <GeneDistribution
         v-bind:GeneData="items">
-    </GeneDistribution>
-    <div id="gene-histogram-box" >
+    </GeneDistribution> -->
+    <!-- <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart"></svg>
-    </div>
+    </div> -->
     <div  id="gene-bar-chart-box"  >
       <div id="gene-bar-chart"></div>
     </div>
@@ -272,8 +273,8 @@ var model = new Model();
         this.geneHistogramChart = HistogramChart()
             .width(390)
             .height(150)
-            .widthPercent("47%")
-            .heightPercent("47%")
+            .widthPercent("100%")
+            .heightPercent("270px")
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
             .yAxisLabel( "# of genes" )
             .xAxisLabel( "# of Panels" )
@@ -287,17 +288,17 @@ var model = new Model();
 
         //Drawing horizontal bar chart
         // console.log("bar chart before mounting", this.geneBarChart)
-        this.geneBarChart = HorizontalBarChart()
-            .width(650)
-            .height(1000)
-            .widthSmall(80)
-            // .on("barselect", function(selectedGeneNames){
-            //   console.log("bars selected ", selectedGeneNames);
-            //   addSelectedGeneFunction(selectedGeneNames);
-            // })
-         var addSelectedGeneFunction=(selectedGeneNames)=>{
-          this.addSelectedGenesFromD3(selectedGeneNames);
-        }
+        // this.geneBarChart = HorizontalBarChart()
+        //     .width(650)
+        //     .height(1000)
+        //     .widthSmall(80)
+        //     // .on("barselect", function(selectedGeneNames){
+        //     //   console.log("bars selected ", selectedGeneNames);
+        //     //   addSelectedGeneFunction(selectedGeneNames);
+        //     // })
+        //  var addSelectedGeneFunction=(selectedGeneNames)=>{
+        //   this.addSelectedGenesFromD3(selectedGeneNames);
+        // }
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data)

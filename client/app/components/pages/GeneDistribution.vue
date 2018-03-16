@@ -1,6 +1,5 @@
 <template>
   <div>
-    Gene Distribution Component
     <div>
       <div id="gene-distribution-chart"></div>
       <div id="abcd"></div>
@@ -25,7 +24,7 @@ import { bus } from '../../routes';
       GeneData: function(){
         this.GeneDataForChart = this.GeneData.slice(0,50);
         // alert(this.GeneDataForChart[0].value)
-        this.draw(this.GeneData.slice(0,50))
+        this.draw(this.GeneData.slice(0,150))
       },
     },
     methods:{
@@ -48,15 +47,15 @@ import { bus } from '../../routes';
                      .append('svg')
                      .attr('height', '400px')
                      .attr('width', '100%')
-                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                     // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
            var area = d3.svg.area()
                        .x(function(d,i){
-                         return i*10;
+                         return i*2.35;
                        })
                        .y0(height)
                        .y1(function(d){
-                         return height-d.value*8.7;
+                         return height-d.value*8.2;
                        })
                        .interpolate("basis")
 
@@ -77,7 +76,7 @@ import { bus } from '../../routes';
           chart.append("g")
                 .attr("class", "y axis")
                 .attr("stroke", "black")
-                .attr("transform", "translate(50,0)")
+                .attr("transform", "translate(25,3)")
                 .call(yAxis)
 
 
