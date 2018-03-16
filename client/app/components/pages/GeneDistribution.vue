@@ -22,24 +22,19 @@ import { bus } from '../../routes';
     },
     watch: {
       GeneData: function(){
-
-
         this.GeneDataForChart = this.GeneData.slice(0,50);
         // alert(this.GeneDataForChart[0].value)
         this.draw(this.GeneData.slice(0,50))
-
-
       },
     },
     methods:{
       drawProperly(dataArray){
-        this.count++
-        // alert(this.count)
-        // let svg = null;
-        // var dataArray = [{gene:'TCOF1', _genePanelCount:40}, {gene:'POLR1D', _genePanelCount:33}, {gene:'POLR1C', _genePanelCount: 33}, {gene:'DHODH', _genePanelCount:12},
-        //   {gene:'EFTUD2', _genePanelCount:12},{gene:'EFTUD2', _genePanelCount:9},{gene:'EFTUD2', _genePanelCount:9},{gene:'EFTUD2', _genePanelCount:9},{gene:'EFTUD2', _genePanelCount:8}];
-        var height = 350;
-        var width = 700;
+        this.count++;
+
+        var margin = {top: 20, right: 20, bottom: 40, left: 50};
+
+        var height = 350- margin.left - margin.right;
+        var width = 700 - margin.top - margin.bottom;
         // if (this.count==1){
           console.log('dataArray', dataArray)
            dataArray.sort(function(a,b){
@@ -47,10 +42,12 @@ import { bus } from '../../routes';
            })
         // d3.select("#gene-distribution-chart").remove();
         d3.select("#gene-distribution-chart").select("svg").remove();
+
         var chart = d3.select('#gene-distribution-chart')
                      .append('svg')
                      .attr('height', '400px')
-                     .attr('width', '600px');
+                     .attr('width', '600px')
+                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
            var area = d3.svg.area()
                        .x(function(d,i){
@@ -62,11 +59,45 @@ import { bus } from '../../routes';
                        })
                        .interpolate("basis")
 
-                       // .curve(d3.curveBasis)
-
            chart.append('path').attr('d', area(dataArray)).attr("fill", 'steelblue').attr("stroke", "blue").attr("stroke-width", "1px");
 
-      // }
+           // var max = Math.max.apply(Math,dataArray.map(function(o){return o.value;}));
+
+           var yScale = d3.scale.linear()
+                          .domain([0, d3.max(dataArray, function(d) { return d.value; })])
+                          .range([height, 0]);
+
+          var yAxis = d3.svg.axis()
+                    .scale(yScale)
+                    .orient("left")
+                    .ticks(10)
+
+
+          chart.append("g")
+                .attr("class", "y axis")
+                .attr("stroke", "black")
+                .attr("stroke-width", "4px")
+                .call(yAxis)
+
+
+           // var vScale = d3.scale.linear()
+           //               .domain(0, max)
+           //               .range(height, 0)
+           //
+           // var vAxis = d3.svg.axis()
+           //               .scale(vScale)
+           //               .ticks(5)
+           //               .tickPadding(5)
+           //
+           //  var vGuide = d3.select("svg")
+           //                 .append("g")
+           //                  vAxis(vGuide)
+           //                  vGuide.selectAll('path')
+           //                    .style("fill" , "none")
+           //                    .style("stroke", "black")
+           //                  vGuide.selectAll("line")
+           //                      .style("stroke", "black")
+
       },
       draw(dataArray){
         //d3.select("#gene-distribution-chart").remove();
@@ -101,5 +132,14 @@ import { bus } from '../../routes';
   }
 </script>
 
-<style>
+<style scoped>
+.axis path, .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  color: "black";
+
+}
+
+.area { fill: #4ca3bd; }
 </style>

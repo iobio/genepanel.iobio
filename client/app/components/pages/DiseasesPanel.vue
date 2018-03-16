@@ -161,7 +161,7 @@ var model = new Model();
           this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
                                             // the mode of Inheritance back to parent so it can be used as props in summary panel
 
-          this.draw(this.modeOfInheritanceData)
+          // this.draw(this.modeOfInheritanceData)
           //if (this.selected.length) this.selected = []
            this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
