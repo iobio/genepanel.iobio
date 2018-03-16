@@ -3,6 +3,7 @@
     Gene Distribution Component
     <div>
       <div id="gene-distribution-chart"></div>
+      <div id="abcd"></div>
     </div>
   </div>
 </template>
@@ -46,7 +47,7 @@ import { bus } from '../../routes';
         var chart = d3.select('#gene-distribution-chart')
                      .append('svg')
                      .attr('height', '400px')
-                     .attr('width', '600px')
+                     .attr('width', '100%')
                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
            var area = d3.svg.area()
@@ -55,7 +56,7 @@ import { bus } from '../../routes';
                        })
                        .y0(height)
                        .y1(function(d){
-                         return height-d.value*7;
+                         return height-d.value*8.7;
                        })
                        .interpolate("basis")
 
@@ -76,8 +77,12 @@ import { bus } from '../../routes';
           chart.append("g")
                 .attr("class", "y axis")
                 .attr("stroke", "black")
-                .attr("stroke-width", "4px")
+                .attr("transform", "translate(50,0)")
                 .call(yAxis)
+
+
+
+
 
 
            // var vScale = d3.scale.linear()
