@@ -38,6 +38,25 @@
         <!-- <input type="radio" name="disorderSelection" value="selectAllDisorders" v-on:click="SelectAllDisorders">&nbsp; Select All Disorders &nbsp;&nbsp;
         <input type="radio" name="disorderSelection" value="deSelectAllDisorders" v-on:click="deSelectAllDisorders">&nbsp; Deselect All Disorders -->
 
+      <br>
+
+      <v-card flat v-if="disordersDataList.length">
+        <v-card-text>
+          <v-container fluid>
+            <v-layout>
+              <v-flex>
+                <v-select
+                  v-model="selectDisorders"
+                  label="Select Disorders"
+                  chips
+                  tags
+                  :items="multiSelectDisorder"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+      </v-card>
 
     <br><hr>
     <h4>Panels </h4>
@@ -90,7 +109,15 @@
 import { bus } from '../../routes';
 
   export default {
-    props: ['vendorsData'],
+    // props: ['vendorsData'],
+    props: {
+      vendorsData: {
+        type: Array
+      },
+      disordersData: {
+        type: Array
+      }
+    },
     data() {
       return {
         NumberOfGenePanels: 25,
@@ -103,6 +130,9 @@ import { bus } from '../../routes';
         Genes: [],  //multiselect
         alert:false, //To show Alert Text
         alertText: "",
+        disordersDataList: [],
+        selectDisorders: [],
+        multiSelectDisorder: []
       }
     },
     watch:{
@@ -112,13 +142,16 @@ import { bus } from '../../routes';
       vendorsData: function(){
         this.vendorList = this.vendorsData;
         //console.log("vendor list in filter", this.vendorList);
+      },
+      disordersData: function(){
+        this.disordersDataList = this.disordersData;
       }
     },
     updated(){
       //console.log("select from filterpanel: ", this.select);
       this.$emit('setSelectedVendors', this.select);
+      this.multiSelectDisorder = this.disordersData;
       this.multiSelectItems = this.vendorsData;
-    //  this.addMultiSelectData();
     },
     mounted(){
 
@@ -134,10 +167,6 @@ import { bus } from '../../routes';
       //     this.loading = false
       //   }, 500)
       // },
-      addMultiSelectData(){
-        console.log("vendorList from addMultiSelectData", this.vendorList);
-        console.log("vendorList from addMultiSelectData sorted", this.vendorList.sort())
-      },
       deSelectAllDisorders: function(){
         bus.$emit('deSelectAllDisordersBus');
         this.alert = true;

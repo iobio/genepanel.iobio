@@ -131,6 +131,7 @@ var model = new Model();
           items: [],
           tempItems: [],
           modeOfInheritanceData: [],
+          disorderNamesList:[],
           piechart : {}
         }
       },
@@ -153,9 +154,11 @@ var model = new Model();
         },
         showDiseasesData: function(){
           console.log("propsData from showDiseasesData: ", this.propsData);
+
           this.items = this.DiseasePanelData;
           this.tempItems = this.DiseasePanelData;
-          // console.log("this.items  : ", this.items);
+          this.getDisorderNames();
+          console.log("this.items  : ", this.items);
           this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
           console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
           this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
@@ -166,6 +169,10 @@ var model = new Model();
            this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
           //this.toggleAll();
+        },
+        getDisorderNames(){
+          this.disorderNamesList = model.filterItemsForDisorderNames(this.items);
+          this.$emit('setDisorderNamesList', this.disorderNamesList)
         },
         selectAllDisorders: function(){
           this.selected = this.items.slice()

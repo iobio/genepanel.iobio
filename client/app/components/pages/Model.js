@@ -54,6 +54,13 @@ export default class Model {
      return this.sumGenesBasedOnModeOfInheritance(arr);
   }
 
+  filterItemsForDisorderNames(items){
+    var disorderNames = [];
+    items.map(x=>{
+      disorderNames.push(x.Title);
+    })
+    return disorderNames;
+  }
 
   promiseGetDiseases(searchTerm) {
   var me = this;
