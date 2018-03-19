@@ -93,12 +93,13 @@
               ></v-checkbox>
             </th>
             <th v-for="header in props.headers" :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
               @click="changeSort(header.value)"
             >
-              <v-icon>arrow_upward</v-icon>
+              <!-- <v-icon>arrow_upward</v-icon> -->
               {{ header.text }}
             </th>
+
           </tr>
         </template>
         <template slot="items" slot-scope="props">
@@ -126,7 +127,7 @@
               </div>
             </td>
             <td><span v-html="props.item.htmlData"></span></td>
-            <td>{{ props.item.value }}</td>
+            <td style="font-size:0">{{ props.item.value }}</td>
 
             <!-- <td>{{ props.item._conditionNames }}</td> -->
             <!-- <td>{{ props.item._geneCount }}</td> -->
@@ -189,12 +190,15 @@ var model = new Model();
             align: 'left',
             value: 'name'
           },
-          { text: 'Gene Panels', align: 'left', value: 'htmlData' },
+          { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
-            text: 'Panels',
-            align: 'left',
+            text: '',
+            // align: 'left',
             value: 'value',
-            width: '10%'
+            width: '10%',
+            class: 'headerWidth',
+            visibility: 'hidden-lg-only'
+
            },
 
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
@@ -1327,5 +1331,10 @@ div.tooltip {
 
 table.table tbody td, table.table tbody th{
   height: 7px;
+}
+
+.headerWidth{
+  width: 1%;
+  color: red
 }
 </style>
