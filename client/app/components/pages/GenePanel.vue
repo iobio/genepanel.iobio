@@ -282,8 +282,9 @@ var model = new Model();
 
         this.vendorList = vendors;
         console.log("this.vendorList", this.vendorList);
+        console.log("this.vendorList", this.vendorList.sort());
 
-        this.$emit('setVendorList', this.vendorList); //Emit the vendor list
+        this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
 
         this.selected = this.items.slice()

@@ -114,7 +114,7 @@
               <div id="app">
                 <div>
                   <v-menu open-on-hover top offset-y>
-                    <p style="font-size:14px; margin-top:5px" slot="activator"><strong>{{ props.item.name }}</strong></p>
+                    <p style="font-size:13px; margin-top:2px" slot="activator"><strong>{{ props.item.name }}</strong></p>
                       <v-card>
                         <v-card-title>
                             <div><strong>Conditions: </strong></div>
@@ -125,8 +125,9 @@
                 </div>
               </div>
             </td>
-            <td>{{ props.item.value }}</td>
             <td><span v-html="props.item.htmlData"></span></td>
+            <td>{{ props.item.value }}</td>
+
             <!-- <td>{{ props.item._conditionNames }}</td> -->
             <!-- <td>{{ props.item._geneCount }}</td> -->
           </tr>
@@ -176,7 +177,7 @@ var model = new Model();
         pagination: {
           sortBy: 'value',
           descending: true, //Sorts the column in descending order
-          rowsPerPage: 10 //Sets the number of rows per page
+          rowsPerPage: 25 //Sets the number of rows per page
 
         },
         tmp: '',   //For searching the rows in data table
@@ -188,12 +189,14 @@ var model = new Model();
             align: 'left',
             value: 'name'
           },
+          { text: 'Gene Panels', align: 'left', value: 'htmlData' },
           {
             text: 'Panels',
             align: 'left',
-            value: 'value'
+            value: 'value',
+            width: '10%'
            },
-          { text: 'Gene Panels', align: 'left', value: 'htmlData' },
+
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
         ],
@@ -1318,4 +1321,11 @@ div.tooltip {
   stroke-width: 2px;
 }
 
+.input-group__input{
+  min-height: 3px;
+}
+
+table.table tbody td, table.table tbody th{
+  height: 7px;
+}
 </style>

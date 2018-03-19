@@ -118,6 +118,7 @@ import { bus } from '../../routes';
       //console.log("select from filterpanel: ", this.select);
       this.$emit('setSelectedVendors', this.select);
       this.multiSelectItems = this.vendorsData;
+    //  this.addMultiSelectData();
     },
     mounted(){
 
@@ -133,6 +134,10 @@ import { bus } from '../../routes';
       //     this.loading = false
       //   }, 500)
       // },
+      addMultiSelectData(){
+        console.log("vendorList from addMultiSelectData", this.vendorList);
+        console.log("vendorList from addMultiSelectData sorted", this.vendorList.sort())
+      },
       deSelectAllDisorders: function(){
         bus.$emit('deSelectAllDisordersBus');
         this.alert = true;
