@@ -57,6 +57,13 @@
           <v-layout>
             <v-flex>
               <v-select
+                v-model="select"
+                label="Select Vendors"
+                chips
+                tags
+                :items="multiSelectItems"
+              ></v-select>
+              <!-- <v-select
                 label="Select Vendors"
                 autocomplete
                 :loading="loading"
@@ -67,7 +74,7 @@
                 :items="multiSelectItems"
                 :search-input.sync="search"
                 v-model="select"
-              ></v-select>
+              ></v-select> -->
             </v-flex>
           </v-layout>
         </v-container>
@@ -110,18 +117,22 @@ import { bus } from '../../routes';
     updated(){
       //console.log("select from filterpanel: ", this.select);
       this.$emit('setSelectedVendors', this.select);
+      this.multiSelectItems = this.vendorsData;
+    },
+    mounted(){
+
     },
     methods: {
-      querySelections (v) { //for multi select
-        this.loading = true
-        // Simulated ajax query
-        setTimeout(() => {
-          this.multiSelectItems = this.vendorList.filter(e => {
-            return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-          })
-          this.loading = false
-        }, 500)
-      },
+      // querySelections (v) { //for multi select
+      //   this.loading = true
+      //   // Simulated ajax query
+      //   setTimeout(() => {
+      //     this.multiSelectItems = this.vendorList.filter(e => {
+      //       return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+      //     })
+      //     this.loading = false
+      //   }, 500)
+      // },
       deSelectAllDisorders: function(){
         bus.$emit('deSelectAllDisordersBus');
         this.alert = true;
