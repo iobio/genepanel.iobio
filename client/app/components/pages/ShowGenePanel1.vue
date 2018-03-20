@@ -210,6 +210,8 @@ var model = new Model();
         modeOfInheritanceList: [],
         countForEmit:0,
         modeOfInheritanceProps: [],
+        flagForNumberOfGenesSelected: false,
+        NumberOfGenesSelectedFromFilter: 50,
 
       }
     },
@@ -243,7 +245,10 @@ var model = new Model();
       bus.$on('SelectNumberOfGenes', (data)=> {
         //this.filterGenePanelsOnSelectedNumber(data);
         this.filterGenesOnSelectedNumber(data);
+      })
 
+      bus.$on('SelectGenesInNumberOfPanels', (data)=>{
+        this.filterGenesOnSelectedNumberOfPanels(data);
       })
 
     },
@@ -308,7 +313,31 @@ var model = new Model();
         // }
       },
       filterGenesOnSelectedNumber(data){
-        this.selected = this.items.slice(0, data)
+        this.selected = this.items.slice(0, data);
+        this.flagForNumberOfGenesSelected = true;
+        this.NumberOfGenesSelectedFromFilter = data
+      },
+      filterGenesOnSelectedNumberOfPanels(data){
+        console.log("items in filterGenesOnSelectedNumber", this.items);
+        var tempArrForGenesInPanels = [];
+        for(var i=0; i<this.items.length; i++){
+          if(data<=this.items[i].value){
+            tempArrForGenesInPanels.push(this.items[i]);
+          }
+        }
+        if(this.flagForNumberOfGenesSelected){
+          console.log("tempArr : " + tempArrForGenesInPanels.length + " number selected " + this.NumberOfGenesSelectedFromFilter )
+          if(tempArrForGenesInPanels.length<this.NumberOfGenesSelectedFromFilter){
+            this.selected = tempArrForGenesInPanels;
+          }
+          else{
+            this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
+          }
+        }
+        else {
+          this.selected = tempArrForGenesInPanels;
+        }
+
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;

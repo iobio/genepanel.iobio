@@ -144,7 +144,6 @@ promiseGetGenePanels(disease) {
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
 
-      console.log("search irl to get Panels " , searchUrl)
     $.ajax( searchUrl )
     .done(function(data) {
 
