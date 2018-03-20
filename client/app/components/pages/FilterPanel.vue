@@ -38,7 +38,7 @@
     <v-btn small v-on:click="deSelectAllDisorders">Deselect All</v-btn>
       <br>
 
-      <v-card flat v-if="disordersDataList.length">
+      <v-card flat v-if="disordersData.length">
         <v-card-text>
           <v-container fluid>
             <v-layout>
@@ -65,7 +65,7 @@
 
     <br>
 
-    <v-card flat v-if="vendorList.length">
+    <v-card flat v-if="vendorsData.length">
       <v-card-text>
         <v-container fluid>
           <v-layout>
@@ -138,10 +138,16 @@ import { bus } from '../../routes';
       },
       vendorsData: function(){
         this.vendorList = this.vendorsData;
+        if(this.vendorsData.length===0){
+          this.select = [];
+        }
         //console.log("vendor list in filter", this.vendorList);
       },
       disordersData: function(){
         this.disordersDataList = this.disordersData;
+        if(this.disordersData.length===0){
+          this.selectDisorders = []; 
+        }
       }
     },
     updated(){

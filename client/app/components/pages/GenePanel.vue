@@ -268,11 +268,7 @@ var model = new Model();
           }
       },
       AddGenePanelData: function(){
-        //
-        // if(this.flagForVendorFilter){
-        //   // alert("flag is set!");
-        //   console.log(this.items);
-        // }
+
         if(!this.flagForVendorFilter){
           this.DiseasePanel = this.DiseasePanelData
           console.log(this.DiseasePanel)
