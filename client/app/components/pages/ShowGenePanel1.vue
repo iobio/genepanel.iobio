@@ -326,7 +326,6 @@ var model = new Model();
           }
         }
         if(this.flagForNumberOfGenesSelected){
-          console.log("tempArr : " + tempArrForGenesInPanels.length + " number selected " + this.NumberOfGenesSelectedFromFilter )
           if(tempArrForGenesInPanels.length<this.NumberOfGenesSelectedFromFilter){
             this.selected = tempArrForGenesInPanels;
           }
