@@ -103,7 +103,15 @@ var model = new Model();
 
 
   export default {
-    props: ['DiseasePanelData'],
+    // props: ['DiseasePanelData'],
+    props: {
+      DiseasePanelData: {
+        type: Array
+      },
+      selectedDisordersProps: {
+        type: Array
+      }
+    },
     data(){
         return {
           propsData : [],
@@ -132,7 +140,9 @@ var model = new Model();
           tempItems: [],
           modeOfInheritanceData: [],
           disorderNamesList:[],
-          piechart : {}
+          piechart : {},
+          selectedDisordersFromFilterPanel: [],
+          tempDisorders: [],
         }
       },
     methods:{
@@ -157,6 +167,7 @@ var model = new Model();
 
           this.items = this.DiseasePanelData;
           this.tempItems = this.DiseasePanelData;
+          this.tempDisorders = this.DiseasePanelData;
           this.getDisorderNames();
           console.log("this.items  : ", this.items);
           this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
@@ -179,6 +190,29 @@ var model = new Model();
         },
         deSelectAllDisorders: function(){
           this.selected = []
+        },
+        updateDisordersTableOnSelectedDisorders: function(){
+          var tempArray =[];
+          this.items = this.tempDisorders;
+          if(this.selectedDisordersFromFilterPanel.length>0){
+            this.selected=[];
+            for(var i=0; i<this.selectedDisordersFromFilterPanel.length; i++){
+              for(var j=0; j<this.items.length; j++){
+                if(this.selectedDisordersFromFilterPanel[i] === this.items[j].Title){
+                  tempArray.push(this.items[j])
+                }
+              }
+            }
+            this.items = tempArray;
+            this.selected = this.items.slice();
+            return this.items;
+          }
+          else {
+            this.selected = this.tempDisorders.slice();
+            this.items = this.tempDisorders;
+            return this.items;
+          }
+
         },
         draw(dataForModeOfInheritance){
           console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
@@ -394,6 +428,10 @@ var model = new Model();
     watch: {
       DiseasePanelData: function(){
         this.showDiseasesData();
+      },
+      selectedDisordersProps: function(){
+        this.selectedDisordersFromFilterPanel = this.selectedDisordersProps;
+        this.updateDisordersTableOnSelectedDisorders();
       }
     }
 

@@ -152,6 +152,7 @@ import { bus } from '../../routes';
       this.$emit('setSelectedVendors', this.select);
       this.multiSelectDisorder = this.disordersData;
       this.multiSelectItems = this.vendorsData;
+      this.$emit('setSelectedDisorders', this.selectDisorders)
     },
     mounted(){
 

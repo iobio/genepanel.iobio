@@ -16,7 +16,8 @@
                   <FilterPanel
                     v-bind:vendorsData="vendorList"
                     v-bind:disordersData="disorderNamesList"
-                    v-on:setSelectedVendors="updateSelectedVendors($event)">
+                    v-on:setSelectedVendors="updateSelectedVendors($event)"
+                    v-on:setSelectedDisorders="updateSelectedDisorders($event)">
                   </FilterPanel>
                 </v-card-text>
               </v-card>
@@ -60,7 +61,8 @@
                             v-bind:DiseasePanelData="diseases"
                             v-on:selectedDiseases="selectDiseases($event)"
                             v-on:setDisorderNamesList="updateDisorderNamesList($event)"
-                            v-on:PieChartSelectorData="PieChartSelectorData($event)">
+                            v-on:PieChartSelectorData="PieChartSelectorData($event)"
+                            v-bind:selectedDisordersProps="selectedDisordersList">
                           </disease-panel>
                         </v-card-text>
                       </v-card>
@@ -138,6 +140,7 @@ export default {
       selectedVendorsList: [],
       modeOfInheritanceProps: [],
       disorderNamesList: [],
+      selectedDisordersList: [],
     }
   },
   mounted(){
@@ -173,7 +176,11 @@ export default {
     },
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
-      this.disorderNamesList = e; 
+      this.disorderNamesList = e;
+    },
+    updateSelectedDisorders: function(e){
+      // console.log("selected disorders from callback to home ", e)
+      this.selectedDisordersList = e;
     }
 
   }
