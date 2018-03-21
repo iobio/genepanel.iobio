@@ -40,7 +40,7 @@
         </v-flex>
         <v-flex d-flex xs12 sm6 md6>
           <v-card >
-            <v-card-title primary class="title">Genes inheritance modes</v-card-title>
+            <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
             <ConditionsDistribution
                 v-bind:distributionData="GetGeneData">
             </ConditionsDistribution>
