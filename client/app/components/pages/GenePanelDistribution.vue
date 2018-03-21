@@ -53,11 +53,11 @@ import { bus } from '../../routes';
 
             var area = d3.svg.area()
                         .x(function(d,i){
-                          return i*4;
+                          return i*4.9;
                         })
                         .y0(height)
                         .y1(function(d){
-                          return height-d.genecount*2;
+                          return height-d.genecount;
                         })
                         .interpolate("basis")
 
