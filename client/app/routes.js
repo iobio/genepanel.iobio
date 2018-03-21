@@ -82,6 +82,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  mode: 'history'
 })
 
 //Registering component globally for nesting.

@@ -45,13 +45,15 @@ import { bus } from '../../routes';
 
          var chart = d3.select('#genePanel-distribution-chart')
                       .append('svg')
-                      .attr('height', '300px')
-                      .attr('width', '100%')
+                      .attr("height", height + margin.top + margin.bottom)
+                      .attr("width", width + margin.right + margin.left)
+                      .append('g')
+
                       // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             var area = d3.svg.area()
                         .x(function(d,i){
-                          return i*6.4;
+                          return i*4;
                         })
                         .y0(height)
                         .y1(function(d){
@@ -59,7 +61,7 @@ import { bus } from '../../routes';
                         })
                         .interpolate("basis")
 
-            chart.append('path').attr('d', area(dataArray)).attr("fill", 'rgb(87, 157, 208)').attr("stroke", "blue").attr("stroke-width", "1px");
+            chart.append('path').attr('transform', 'translate('+margin.left+','+margin.top+')').attr('d', area(dataArray)).attr("fill", 'rgb(87, 157, 208)').attr("stroke", "blue").attr("stroke-width", "1px");
 
             // var max = Math.max.apply(Math,dataArray.map(function(o){return o.value;}));
 
@@ -77,7 +79,7 @@ import { bus } from '../../routes';
            chart.append("g")
                  .attr("class", "y axis")
                  .attr("stroke", "black")
-                 .attr("transform", "translate(35,0)")
+                 .attr("transform",'translate('+margin.left+','+margin.top+')')
                  .call(yAxis)
 
 
