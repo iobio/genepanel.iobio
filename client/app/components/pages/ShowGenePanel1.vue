@@ -12,9 +12,12 @@
         <v-flex d-flex xs12 sm6 md4>
           <v-card >
             <v-card-title primary class="title">Gene distribution across panels</v-card-title>
-            <GeneDistribution
+            <!-- <GeneDistribution
                 v-bind:GeneData="items">
-            </GeneDistribution>
+            </GeneDistribution> -->
+            <GenePanelDistribution
+                v-bind:distributionData="GetGeneData">
+            </GenePanelDistribution>
           </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md4>
@@ -36,6 +39,9 @@
         </v-flex>
 
       </v-layout>
+      <GenePanelDistribution
+          v-bind:distributionData="GetGeneData">
+      </GenePanelDistribution>
     <!-- </v-container> -->
     <!-- <PieChartSelector
         v-if="modeOfInheritanceProps.length>0"
@@ -149,14 +155,16 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import PieChartSelector from './PieChartSelector.vue'
-import GeneDistribution from './GeneDistribution.vue'
+import GeneDistribution from './GeneDistribution.vue';
+import GenePanelDistribution from './GenePanelDistribution.vue'
 import Model from './Model';
 var model = new Model();
 
   export default {
     components: {
       'PieChartSelector': PieChartSelector,
-      'GeneDistribution': GeneDistribution
+      'GeneDistribution': GeneDistribution,
+      'GenePanelDistribution': GenePanelDistribution
     },
     //props: ['GeneData'],
     props: {

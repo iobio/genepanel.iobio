@@ -131,9 +131,6 @@ import { bus } from '../../routes';
     }
   }
 
-  function AreaChart(){
-
-  }
 </script>
 
 <style scoped>
