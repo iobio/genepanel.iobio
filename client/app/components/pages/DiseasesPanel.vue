@@ -399,7 +399,7 @@ var model = new Model();
 
     },
     mounted(){
-      //this.draw();
+      // this.draw();
       console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
       bus.$on("RequestModeOfInheritanceData", ()=>{

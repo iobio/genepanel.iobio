@@ -2,7 +2,6 @@
   <div>
     <div>
       <div id="genePanel-distribution-chart"></div>
-      <div id="abcd"></div>
     </div>
   </div>
 </template>
@@ -20,6 +19,12 @@ import { bus } from '../../routes';
     },
     watch:{
       distributionData: function(){
+        console.log("this.distributionData",this.distributionData)
+        var a = [];
+        this.distributionData.map(x=>{
+          a.push(x.conditioncount)
+        })
+        console.log("a array ", a)
         this.GeneDataForChart = this.distributionData;
         this.draw(this.GeneDataForChart.slice());
       }
@@ -53,7 +58,13 @@ import { bus } from '../../routes';
 
             var area = d3.svg.area()
                         .x(function(d,i){
-                          return i*4.9;
+                          if(dataArray.length<=65 && dataArray.length>=40){
+                            return i*6.5
+                          }
+                          else{
+                            return i*5.5;
+                          }
+
                         })
                         .y0(height)
                         .y1(function(d){
@@ -78,7 +89,7 @@ import { bus } from '../../routes';
 
            chart.append("g")
                  .attr("class", "y axis")
-                 .attr("stroke", "black")
+                 // .attr("stroke", "black")
                  .attr("transform",'translate('+margin.left+','+margin.top+')')
                  .call(yAxis)
 

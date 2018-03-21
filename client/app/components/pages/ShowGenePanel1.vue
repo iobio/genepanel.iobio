@@ -9,18 +9,8 @@
     </div> -->
     <!-- <v-container grid-list-md text-xs-center> -->
       <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md4>
-          <v-card >
-            <v-card-title primary class="title">Gene distribution across panels</v-card-title>
-            <!-- <GeneDistribution
-                v-bind:GeneData="items">
-            </GeneDistribution> -->
-            <GenePanelDistribution
-                v-bind:distributionData="GetGeneData">
-            </GenePanelDistribution>
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md4>
+
+        <v-flex d-flex xs12 sm6 md5>
           <v-card >
             <v-card-title primary class="title">Genes inheritance modes</v-card-title>
             <PieChartSelector
@@ -29,12 +19,31 @@
             </PieChartSelector>
           </v-card>
         </v-flex>
-        <v-flex d-flex xs12 sm6 md4>
+        <v-flex d-flex xs12 sm6 md7>
           <v-card>
             <v-card-title primary class="title">Gene membership in panels</v-card-title>
             <div id="gene-histogram-box" >
               <svg id="gene-histogram-chart"></svg>
             </div>
+          </v-card>
+        </v-flex>
+
+      </v-layout>
+      <v-layout row wrap>
+        <v-flex d-flex xs12 sm6 md6>
+          <v-card >
+            <v-card-title primary class="title">Gene distribution across panels</v-card-title>
+            <GenePanelDistribution
+                v-bind:distributionData="GetGeneData">
+            </GenePanelDistribution>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs12 sm6 md6>
+          <v-card >
+            <v-card-title primary class="title">Genes inheritance modes</v-card-title>
+            <ConditionsDistribution
+                v-bind:distributionData="GetGeneData">
+            </ConditionsDistribution>
           </v-card>
         </v-flex>
 
@@ -156,7 +165,8 @@ import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import PieChartSelector from './PieChartSelector.vue'
 import GeneDistribution from './GeneDistribution.vue';
-import GenePanelDistribution from './GenePanelDistribution.vue'
+import GenePanelDistribution from './GenePanelDistribution.vue';
+import ConditionsDistribution from './ConditionsDistribution.vue';
 import Model from './Model';
 var model = new Model();
 
@@ -164,7 +174,8 @@ var model = new Model();
     components: {
       'PieChartSelector': PieChartSelector,
       'GeneDistribution': GeneDistribution,
-      'GenePanelDistribution': GenePanelDistribution
+      'GenePanelDistribution': GenePanelDistribution,
+      'ConditionsDistribution': ConditionsDistribution
     },
     //props: ['GeneData'],
     props: {
@@ -486,6 +497,7 @@ var model = new Model();
 
 
     function chart(selection, options) {
+      console.log("options in chart", selection)
       // merge options and defaults
       options = $.extend(defaults,options);
       let innerHeight = height - margin.top - margin.bottom;
@@ -493,6 +505,7 @@ var model = new Model();
 
 
       selection.each(function(dataOrig) {
+        console.log("dataOrig" , dataOrig)
         // set svg element
         svg = d3.select(this);
 
@@ -524,6 +537,8 @@ var model = new Model();
             .bins(x.ticks(max))
             .value(function(d){return d._genePanelCount;})
             (dataOrig);
+
+        console.log("data in histogram", data)
 
 
 
