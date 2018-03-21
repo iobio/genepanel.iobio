@@ -211,6 +211,10 @@ var model = new Model();
         this.filterGenePanelsOnSelectedNumber(data);
         //this.selected = [];
       })
+
+      bus.$on('selectNumberOfConditionsInPanel', (data)=>{
+        this.filterPanelsOnSelectedConditions(data);
+      })
     },
 
     methods:{
@@ -238,6 +242,16 @@ var model = new Model();
           this.items = this.tempItems
           return this.items
         }
+      },
+      filterPanelsOnSelectedConditions: function(data){
+        var tempArrForConditions = [];
+        this.items.map(x=>{
+          if(x.genecount<=data){
+            tempArrForConditions.push(x);
+          }
+        })
+        console.log(tempArrForConditions)
+        this.selected = tempArrForConditions;
       },
       filterGenePanelsOnSelectedNumber: function(data){
         console.log("filterGenePanelsOnSelectedNumber", this.items)

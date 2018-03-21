@@ -45,7 +45,7 @@ import { bus } from '../../routes';
 
          var chart = d3.select('#genePanel-distribution-chart')
                       .append('svg')
-                      .attr('height', '400px')
+                      .attr('height', '300px')
                       .attr('width', '100%')
                       // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 

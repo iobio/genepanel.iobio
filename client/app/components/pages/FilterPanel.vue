@@ -61,6 +61,11 @@
     <span>
     Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfGenePanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfGenePanels"> genes
     &nbsp;<a><v-icon v-on:click="selectNumberOfGenePanels">navigate_next</v-icon></a>
+    </span>
+    <br><br>
+    <span>
+    Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfConditions" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfConditions"> conditions
+    &nbsp;<a><v-icon v-on:click="selectNumberOfConditions">navigate_next</v-icon></a>
   </span>
 
     <br>
@@ -130,6 +135,7 @@ import { bus } from '../../routes';
         multiSelectDisorder: [],
         GenesInPanels: 2,
         flagForNumberOfGenesSelected: false,
+        NumberOfConditions:10,
       }
     },
     watch:{
@@ -146,7 +152,7 @@ import { bus } from '../../routes';
       disordersData: function(){
         this.disordersDataList = this.disordersData;
         if(this.disordersData.length===0){
-          this.selectDisorders = []; 
+          this.selectDisorders = [];
         }
       }
     },
@@ -235,6 +241,16 @@ import { bus } from '../../routes';
           bus.$emit('SelectGenesInNumberOfPanels', this.GenesInPanels);
           this.alert = true;
           this.alertText = " Selected Genes present in atleast "+ this.GenesInPanels + " Panels";
+          setTimeout(()=>{
+            this.alert = false;
+          }, 2000);
+        }
+      },
+      selectNumberOfConditions: function(){
+        if(this.NumberOfConditions>0){
+          bus.$emit('selectNumberOfConditionsInPanel', this.NumberOfConditions);
+          this.alert = true;
+          this.alertText = " Selected Panels with less than "+ this.NumberOfConditions + " Conditions";
           setTimeout(()=>{
             this.alert = false;
           }, 2000);
