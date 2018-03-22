@@ -5,6 +5,7 @@
     <!-- <d3Example></d3Example> -->
 
     <NavigationBar></NavigationBar>
+
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
@@ -42,12 +43,13 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
-
+                          <keep-alive>
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
                             v-bind:modeOfInheritanceData="modeOfInheritanceProps">
                           </show-gene-panel1>
+                          </keep-alive>
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -58,7 +60,7 @@
                         <v-card-title primary class="title">Disorders</v-card-title>
                         <v-card-text>
                           <disease-panel
-                            v-if="diseases.length"
+                            v-show="diseases.length"
                             v-bind:DiseasePanelData="diseases"
                             v-on:selectedDiseases="selectDiseases($event)"
                             v-on:setDisorderNamesList="updateDisorderNamesList($event)"
@@ -75,7 +77,7 @@
                         <v-card-title primary class="title">Panels</v-card-title>
                         <v-card-text>
                           <gene-panel
-                            v-if="diseasesProps.length"
+                            v-show="diseasesProps.length"
                             v-bind:DiseasePanelData="diseasesProps"
                             v-on:selectedPanels="selectPanels($event)"
                             v-on:setVendorList="updateVendorList($event)"
