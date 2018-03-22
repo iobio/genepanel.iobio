@@ -68,7 +68,7 @@ Vue.use(Clipboard)
 const routes = [
   {
     path: '/',
-    component: Home,
+    component: Main,
   },
   {
     path: '/app',
@@ -77,10 +77,6 @@ const routes = [
   {
     path: '/phenolyzer',
     component: phenolyzer
-  },
-  {
-    path: '/main',
-    component: Main
   }
 ]
 
