@@ -42,8 +42,9 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
+
                           <show-gene-panel1
-                            v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                          v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
                             v-bind:modeOfInheritanceData="modeOfInheritanceProps">
                           </show-gene-panel1>
@@ -141,6 +142,7 @@ export default {
       modeOfInheritanceProps: [],
       disorderNamesList: [],
       selectedDisordersList: [],
+      showSummaryComponent: false,
     }
   },
   mounted(){
@@ -148,6 +150,7 @@ export default {
   methods: {
     addDiseases: function(e){
       console.log("e is from home: addDiseases ", e)
+      this.showSummaryComponent = true
       // alert(e.length)
       this.diseases = e;
       if(e.length<= 0){

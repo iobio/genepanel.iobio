@@ -92,9 +92,9 @@ import { bus } from '../../routes';
                               .data(histogram)
                               .enter()
                               .append("g")
-                              .on("click", function(d){
-                                alert(d)
-                              })
+                              // .on("click", function(d){
+                              //   alert(d)
+                              // })
 
                   bars.append("rect")
                     .attr("x", function(d){return x(d.x)})
@@ -103,17 +103,17 @@ import { bus } from '../../routes';
                     .attr("height", function(d){return height-y(d.y)})
                     .attr("fill", "steelblue")
 
-                  bars.append("text")
-                    .attr("x", function(d){return x(d.x)-3.5})
-                    .attr("y", function(d){return y(d.y)-25})
-                    .attr("dy", "20px")
-                    .attr("dx", function(d){
-                      return x(d.dx)/2;
-                    })
-                    .attr("fill", "black")
-                    .text(function(d){ if(d.y!==0){
-                      return d.y;
-                    } })
+                  // bars.append("text")
+                  //   .attr("x", function(d){return x(d.x)-3.5})
+                  //   .attr("y", function(d){return y(d.y)-25})
+                  //   .attr("dy", "20px")
+                  //   .attr("dx", function(d){
+                  //     return x(d.dx)/2;
+                  //   })
+                  //   .attr("fill", "black")
+                  //   .text(function(d){ if(d.y!==0){
+                  //     return d.y;
+                  //   } })
 
       }
     },
