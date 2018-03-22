@@ -24,39 +24,65 @@
     &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
     <!-- <v-btn v-on:click="selectNumberOfTopGenes" color="info" style="height:30px;" class="btnWidth">Go</v-btn></span> -->
     </span>
+    <br>
+    <span>
+    Select genes present in at least &nbsp; <input v-on:focusout="selectGenesInPanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="GenesInPanels"> panels
+    &nbsp;<a><v-icon v-on:click="selectGenesInPanels">navigate_next</v-icon></a>
+    </span>
 
-
-   <!-- <input type="radio" name="topGeneSelection" id="topGeneSelection" v-on:click="selectNumberOfTopGenes"> &nbsp; Select Top Genes -->
 
     <br><hr>
 
     <h4>Disorders</h4>
-    <!-- <btn v-on:click="SelectAllDisorders"> Select All Disorders</btn>
-    <btn v-on:click="deSelectAllDisorders"> De Select All Disorders</btn> -->
     <v-btn small v-on:click="SelectAllDisorders">Select All</v-btn>
     <v-btn small v-on:click="deSelectAllDisorders">Deselect All</v-btn>
-        <!-- <input type="radio" name="disorderSelection" value="selectAllDisorders" v-on:click="SelectAllDisorders">&nbsp; Select All Disorders &nbsp;&nbsp;
-        <input type="radio" name="disorderSelection" value="deSelectAllDisorders" v-on:click="deSelectAllDisorders">&nbsp; Deselect All Disorders -->
+      <br>
 
+      <v-card flat v-if="disordersData.length">
+        <v-card-text>
+          <v-container fluid>
+            <v-layout>
+              <v-flex>
+                <v-select
+                  v-model="selectDisorders"
+                  label="Select Disorders"
+                  chips
+                  tags
+                  :items="multiSelectDisorder"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+      </v-card>
 
     <br><hr>
     <h4>Panels </h4>
-    <!-- <button v-on:click="selectNumberOfGenePanels">select with less than 25</button> -->
     <span>
-      <!-- <input type="radio" id="disorderSelection" name="disorderSelection" value="selectGenePanelsValue" v-on:click="selectNumberOfGenePanels">&nbsp; -->
     Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfGenePanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfGenePanels"> genes
     &nbsp;<a><v-icon v-on:click="selectNumberOfGenePanels">navigate_next</v-icon></a>
-    <!-- <v-btn v-on:click="selectNumberOfGenePanels" color="info" style="height:30px;" class="btnWidth">Go</v-btn> -->
+    </span>
+    <br><br>
+    <span>
+    Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfConditions" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfConditions"> conditions
+    &nbsp;<a><v-icon v-on:click="selectNumberOfConditions">navigate_next</v-icon></a>
   </span>
 
     <br>
 
-    <v-card flat v-if="vendorList.length">
+    <v-card flat v-if="vendorsData.length">
       <v-card-text>
         <v-container fluid>
           <v-layout>
             <v-flex>
               <v-select
+                v-model="select"
+                label="Select Vendors"
+                chips
+                tags
+                :items="multiSelectItems"
+              ></v-select>
+              <!-- <v-select
                 label="Select Vendors"
                 autocomplete
                 :loading="loading"
@@ -67,7 +93,7 @@
                 :items="multiSelectItems"
                 :search-input.sync="search"
                 v-model="select"
-              ></v-select>
+              ></v-select> -->
             </v-flex>
           </v-layout>
         </v-container>
@@ -83,7 +109,15 @@
 import { bus } from '../../routes';
 
   export default {
-    props: ['vendorsData'],
+    // props: ['vendorsData'],
+    props: {
+      vendorsData: {
+        type: Array
+      },
+      disordersData: {
+        type: Array
+      }
+    },
     data() {
       return {
         NumberOfGenePanels: 25,
@@ -96,6 +130,12 @@ import { bus } from '../../routes';
         Genes: [],  //multiselect
         alert:false, //To show Alert Text
         alertText: "",
+        disordersDataList: [],
+        selectDisorders: [],
+        multiSelectDisorder: [],
+        GenesInPanels: 2,
+        flagForNumberOfGenesSelected: false,
+        NumberOfConditions:10,
       }
     },
     watch:{
@@ -104,24 +144,39 @@ import { bus } from '../../routes';
       },
       vendorsData: function(){
         this.vendorList = this.vendorsData;
+        if(this.vendorsData.length===0){
+          this.select = [];
+        }
         //console.log("vendor list in filter", this.vendorList);
+      },
+      disordersData: function(){
+        this.disordersDataList = this.disordersData;
+        if(this.disordersData.length===0){
+          this.selectDisorders = [];
+        }
       }
     },
     updated(){
       //console.log("select from filterpanel: ", this.select);
       this.$emit('setSelectedVendors', this.select);
+      this.multiSelectDisorder = this.disordersData;
+      this.multiSelectItems = this.vendorsData;
+      this.$emit('setSelectedDisorders', this.selectDisorders)
+    },
+    mounted(){
+
     },
     methods: {
-      querySelections (v) { //for multi select
-        this.loading = true
-        // Simulated ajax query
-        setTimeout(() => {
-          this.multiSelectItems = this.vendorList.filter(e => {
-            return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-          })
-          this.loading = false
-        }, 500)
-      },
+      // querySelections (v) { //for multi select
+      //   this.loading = true
+      //   // Simulated ajax query
+      //   setTimeout(() => {
+      //     this.multiSelectItems = this.vendorList.filter(e => {
+      //       return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+      //     })
+      //     this.loading = false
+      //   }, 500)
+      // },
       deSelectAllDisorders: function(){
         bus.$emit('deSelectAllDisordersBus');
         this.alert = true;
@@ -170,6 +225,7 @@ import { bus } from '../../routes';
       selectNumberOfTopGenes: function(){
         if(this.NumberOfTopGenes>0){
           bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+          this.flagForNumberOfGenesSelected= true;
           this.alert = true;
           this.alertText = " Selected top " +this.NumberOfTopGenes + " genes";
           setTimeout(()=>{
@@ -178,6 +234,26 @@ import { bus } from '../../routes';
         }
         else if (this.NumberOfTopGenes<0) {
           document.getElementById("geneSelection").reset();
+        }
+      },
+      selectGenesInPanels: function(){
+        if (this.GenesInPanels>0) {
+          bus.$emit('SelectGenesInNumberOfPanels', this.GenesInPanels);
+          this.alert = true;
+          this.alertText = " Selected Genes present in atleast "+ this.GenesInPanels + " Panels";
+          setTimeout(()=>{
+            this.alert = false;
+          }, 2000);
+        }
+      },
+      selectNumberOfConditions: function(){
+        if(this.NumberOfConditions>0){
+          bus.$emit('selectNumberOfConditionsInPanel', this.NumberOfConditions);
+          this.alert = true;
+          this.alertText = " Selected Panels with less than "+ this.NumberOfConditions + " Conditions";
+          setTimeout(()=>{
+            this.alert = false;
+          }, 2000);
         }
       }
     }

@@ -103,7 +103,15 @@ var model = new Model();
 
 
   export default {
-    props: ['DiseasePanelData'],
+    // props: ['DiseasePanelData'],
+    props: {
+      DiseasePanelData: {
+        type: Array
+      },
+      selectedDisordersProps: {
+        type: Array
+      }
+    },
     data(){
         return {
           propsData : [],
@@ -131,7 +139,10 @@ var model = new Model();
           items: [],
           tempItems: [],
           modeOfInheritanceData: [],
-          piechart : {}
+          disorderNamesList:[],
+          piechart : {},
+          selectedDisordersFromFilterPanel: [],
+          tempDisorders: [],
         }
       },
     methods:{
@@ -153,24 +164,55 @@ var model = new Model();
         },
         showDiseasesData: function(){
           console.log("propsData from showDiseasesData: ", this.propsData);
+
           this.items = this.DiseasePanelData;
           this.tempItems = this.DiseasePanelData;
-          // console.log("this.items  : ", this.items);
+          this.tempDisorders = this.DiseasePanelData;
+          this.getDisorderNames();
+          console.log("this.items  : ", this.items);
           this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
           console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
           this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
                                             // the mode of Inheritance back to parent so it can be used as props in summary panel
-          this.draw(this.modeOfInheritanceData)
+
+          // this.draw(this.modeOfInheritanceData)
           //if (this.selected.length) this.selected = []
            this.selected = this.items.slice()
           console.log("this.selected from showDiseases ", this.selected )
           //this.toggleAll();
+        },
+        getDisorderNames(){
+          this.disorderNamesList = model.filterItemsForDisorderNames(this.items);
+          this.$emit('setDisorderNamesList', this.disorderNamesList)
         },
         selectAllDisorders: function(){
           this.selected = this.items.slice()
         },
         deSelectAllDisorders: function(){
           this.selected = []
+        },
+        updateDisordersTableOnSelectedDisorders: function(){
+          var tempArray =[];
+          this.items = this.tempDisorders;
+          if(this.selectedDisordersFromFilterPanel.length>0){
+            this.selected=[];
+            for(var i=0; i<this.selectedDisordersFromFilterPanel.length; i++){
+              for(var j=0; j<this.items.length; j++){
+                if(this.selectedDisordersFromFilterPanel[i] === this.items[j].Title){
+                  tempArray.push(this.items[j])
+                }
+              }
+            }
+            this.items = tempArray;
+            this.selected = this.items.slice();
+            return this.items;
+          }
+          else {
+            this.selected = this.tempDisorders.slice();
+            this.items = this.tempDisorders;
+            return this.items;
+          }
+
         },
         draw(dataForModeOfInheritance){
           console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
@@ -185,11 +227,11 @@ var model = new Model();
           var color = d3.scale.ordinal()
             .range(["#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2"]);
 
-          var arc = d3.svg.arc()
+          var arcOver = d3.svg.arc()
             .outerRadius(radius - 10)
             .innerRadius(radius - 110);
 
-            var arcOver = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
+            var arc = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
 
 
 
@@ -212,32 +254,54 @@ var model = new Model();
 
             var path = g.append("path")
               .attr("d", arc)
-              // .attr("stroke", "black")
-              // .attr("stroke-width", 1)
+              .attr("stroke", "white")
+              .attr("stroke-width", 3)
               .style("fill", function(d) {
                 return color(d.data._modeOfInheritance);
               });
 
-              path.on("mouseenter", function (d) {
-                d3.select(this)
-                    // .attr("stroke", "black")
-                    .transition()
-                    .duration(200)
-                    .attr("d", arcOver)
-                    // .attr("stroke-width", 1);
-                })
-
-                path.on("mouseleave", function (d) {
-                  d3.select(this).transition()
-                       .duration(200)
-                       .attr("d", arc)
-                       // .attr("stroke", "black")
-                       // .attr("stroke-width", 1);
-                     })
+              // path.on("mouseenter", function (d) {
+              //   d3.select(this)
+              //       // .attr("stroke", "black")
+              //       .transition()
+              //       .duration(200)
+              //       .attr("d", arcOver)
+              //       // .attr("stroke-width", 1);
+              //   })
+              //
+              //   path.on("mouseleave", function (d) {
+              //     d3.select(this).transition()
+              //          .duration(200)
+              //          .attr("d", arc)
+              //          // .attr("stroke", "black")
+              //          // .attr("stroke-width", 1);
+              //        })
 
                 path.on("click", function(d){
-                  d.data.selected = !d.data.selected
-                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                  if(d.data.selected){
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr("stroke", "white")
+                        .attr("stroke-width", 1)
+                        .attr("d", arcOver);
+
+                    d.data.selected = !d.data.selected
+                    pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                  }
+                  else {
+                    d3.select(this).transition()
+                         .duration(200)
+                         .attr("d", arc)
+                         .attr("stroke", "white")
+                         .attr("stroke-width", 3)
+
+                         d.data.selected = !d.data.selected
+                         pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+
+                  }
+                  // d.data.selected = !d.data.selected
+                  // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
                 })
 
             g.append("text")
@@ -250,36 +314,81 @@ var model = new Model();
                 return d.data._modeOfInheritance;
               })
               .on('click', function(d){
-                d.data.selected = !d.data.selected
-                pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                if(d.data.selected){
+                  d3.select(this)
+                      .transition()
+                      .duration(200)
+                      .attr("d", arcOver);
+
+                  d.data.selected = !d.data.selected
+                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                }
+                else {
+                  d3.select(this).transition()
+                       .duration(200)
+                       .attr("d", arc)
+
+
+                       d.data.selected = !d.data.selected
+                       pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+
+                }
+                // d.data.selected = !d.data.selected
+                // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
               })
             var pieChartSomething =(modeOfInheritance, selection)=>{
               this.updateFromPieChart(modeOfInheritance, selection)
             }
         },
+        sendModeOfInheritanceData(){
+          alert(this.modeOfInheritanceData.length)
+          bus.$emit("PieChartSelectorData");
+        },
         updateFromPieChart(modeOfInheritance, selection){
-          alert(modeOfInheritance);
+          console.log("selection is ", selection)
+          // if (selection) {
+          //   alert(modeOfInheritance+ " is selected ")
+          // }
+          // else {
+          //   alert(modeOfInheritance+ " is deselected")
+          // }
           console.log("this tempItems from updateFromPieChart", this.tempItems)
           if(modeOfInheritance === "Not provided"){
             modeOfInheritance="";
           }
           var tempArr = [];
+          var splitHelperArr = [];
           // this.items = this.tempItems;
+
           if(!selection){
             for(var i=0; i<this.items.length; i++){
-              if(modeOfInheritance!==this.items[i]._modeOfInheritance){
+
+              if(modeOfInheritance!==this.items[i]._modeOfInheritance && this.items[i]._modeOfInheritance.split(", ").length===1){
                 tempArr.push(this.items[i])
               }
+              else if(this.items[i]._modeOfInheritance.split(", ").length >1){
+                console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
+                splitHelperArr = this.items[i]._modeOfInheritance.split(", ");
+                if(!splitHelperArr.includes(modeOfInheritance)){
+                  tempArr.push(this.items[i])
+                }
+              }
             }
+            console.log("tempArr is ", tempArr)
             this.items = tempArr;
             this.selected = this.items.slice();
           }
           else if(selection){
             tempArr = this.items;
             for(var i=0; i<this.tempItems.length; i++){
-              if(modeOfInheritance===this.tempItems[i]._modeOfInheritance){
-                // if(i+1 <= this.items.length && )
+              if(modeOfInheritance===this.tempItems[i]._modeOfInheritance && this.tempItems[i]._modeOfInheritance.split(", ").length===1){
                 tempArr.push(this.tempItems[i])
+              }
+              else if(this.tempItems[i]._modeOfInheritance.split(", ").length >1){
+                splitHelperArr = this.tempItems[i]._modeOfInheritance.split(", ");
+                if(splitHelperArr.includes(modeOfInheritance)){
+                  tempArr.push(this.tempItems[i])
+                }
               }
             }
             this.items = tempArr;
@@ -290,9 +399,15 @@ var model = new Model();
 
     },
     mounted(){
-      //this.draw();
+      // this.draw();
       console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
+      bus.$on("RequestModeOfInheritanceData", ()=>{
+        this.sendModeOfInheritanceData();
+      });
+      bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
+        this.updateFromPieChart(modeOfInheritance, selection)
+      })
     },
     updated(){
       console.log("DiseasePanel: I am updated!");
@@ -313,6 +428,10 @@ var model = new Model();
     watch: {
       DiseasePanelData: function(){
         this.showDiseasesData();
+      },
+      selectedDisordersProps: function(){
+        this.selectedDisordersFromFilterPanel = this.selectedDisordersProps;
+        this.updateDisordersTableOnSelectedDisorders();
       }
     }
 

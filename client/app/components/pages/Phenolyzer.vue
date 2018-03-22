@@ -2,7 +2,7 @@
   <div>
 
     <!-- url: https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/?term=lacticacidosis@treacher_collins -->
-    <NavigationBar></NavigationBar>
+    <!-- <NavigationBar></NavigationBar> -->
 
     <div id="phenotype-input" style="display:inline-block;">
       <!-- <v-text-field id="phenotype-term" hide-details v-model="phenotypeTermEntered"

@@ -54,6 +54,13 @@ export default class Model {
      return this.sumGenesBasedOnModeOfInheritance(arr);
   }
 
+  filterItemsForDisorderNames(items){
+    var disorderNames = [];
+    items.map(x=>{
+      disorderNames.push(x.Title);
+    })
+    return disorderNames;
+  }
 
   promiseGetDiseases(searchTerm) {
   var me = this;
@@ -83,6 +90,7 @@ export default class Model {
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
+        console.log("summaryUrl is : ", summaryUrl)
 
         $.ajax( summaryUrl )
         .done(function(data) {
@@ -94,6 +102,7 @@ export default class Model {
             resolve({'searchTerm': searchTerm, 'diseases': []})
           } else {
             var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
+            console.log("Results in model.js for search terms are ", results)
             if (results.ERROR) {
               if (results.ERROR == 'Empty result - nothing todo') {
                 resolve({'searchTerm': searchTerm, 'diseases': []});
@@ -134,7 +143,6 @@ promiseGetGenePanels(disease) {
                     + '&usehistory=y&retmode=json'
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
-
 
     $.ajax( searchUrl )
     .done(function(data) {
@@ -399,7 +407,7 @@ mergeGenesAcrossPanels(genePanels) {
             value: +gene._genePanelCount,
             diseases: gene._diseaseCount,
             conditions: gene._diseaseNames,
-            htmlData: `<svg width="${gene._genePanelCount * 10}" height="30" xmlns="http://www.w3.org/2000/svg">
+            htmlData: `<svg width="${gene._genePanelCount * 15}" height="25" xmlns="http://www.w3.org/2000/svg">
     <defs>
         <linearGradient id="MyGradient">
             <stop offset="5%"  stop-color="#36D1DC"/>
@@ -408,8 +416,8 @@ mergeGenesAcrossPanels(genePanels) {
     </defs>
 
     <rect fill="url(#MyGradient)"
-          x="10" y="10" width="${gene._genePanelCount * 10}" height="30"/>
-    <text x="${gene._genePanelCount * 4.5}" y="25" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
+          x="10" y="5" width="${gene._genePanelCount * 15}" height="25"/>
+    <text x="${gene._genePanelCount * 6}" y="20" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
 </svg>`
           };
     });

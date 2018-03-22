@@ -174,6 +174,7 @@ var model = new Model();
           { text: 'Selected diseases', value: '_diseaseCount' },
         ],
         selectedVendorsFromFilterPanel: [],
+        flagForVendorFilter: false,
         tempItems: [],
         items: []   //Data tables
       }
@@ -189,6 +190,7 @@ var model = new Model();
       selectedVendorsProps: function(){
         console.log("selectedVendorsProps in genepanel ", this.selectedVendorsProps);
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
+        this.flagForVendorFilter = true;
         this.updatePanelsOnSelectedVendors();
       }
 
@@ -208,6 +210,10 @@ var model = new Model();
       bus.$on('SelectNumberOfPanel', (data)=> {
         this.filterGenePanelsOnSelectedNumber(data);
         //this.selected = [];
+      })
+
+      bus.$on('selectNumberOfConditionsInPanel', (data)=>{
+        this.filterPanelsOnSelectedConditions(data);
       })
     },
 
@@ -236,6 +242,16 @@ var model = new Model();
           this.items = this.tempItems
           return this.items
         }
+      },
+      filterPanelsOnSelectedConditions: function(data){
+        var tempArrForConditions = [];
+        this.items.map(x=>{
+          if(x.genecount<=data){
+            tempArrForConditions.push(x);
+          }
+        })
+        console.log(tempArrForConditions)
+        this.selected = tempArrForConditions;
       },
       filterGenePanelsOnSelectedNumber: function(data){
         console.log("filterGenePanelsOnSelectedNumber", this.items)
@@ -267,26 +283,61 @@ var model = new Model();
       },
       AddGenePanelData: function(){
 
-        this.DiseasePanel = this.DiseasePanelData
-        console.log(this.DiseasePanel)
-        var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-        console.log("mergedGenePanels", mergedGenePanels)
-        this.mergedGene = mergedGenePanels
-        console.log("this.mergedGenes", this.mergedGene);
+        if(!this.flagForVendorFilter){
+          this.DiseasePanel = this.DiseasePanelData
+          console.log(this.DiseasePanel)
+          var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
+          console.log("mergedGenePanels", mergedGenePanels)
+          this.mergedGene = mergedGenePanels
+          console.log("this.mergedGenes", this.mergedGene);
 
-        this.items = mergedGenePanels;
-        this.tempItems = mergedGenePanels
-        console.log("this.items : ", this.items)
+          this.items = mergedGenePanels;
+          this.tempItems = mergedGenePanels
+          console.log("this.items : ", this.items)
 
-        let vendors = model.getGenePanelVendors(mergedGenePanels);
+          let vendors = model.getGenePanelVendors(mergedGenePanels);
 
-        this.vendorList = vendors;
-        console.log("this.vendorList", this.vendorList);
+          this.vendorList = vendors;
+          console.log("this.vendorList", this.vendorList);
+          console.log("this.vendorList", this.vendorList.sort());
 
-        this.$emit('setVendorList', this.vendorList); //Emit the vendor list
-                            //back to the parent so it can be used as props in filterpanel
+          this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
+                              //back to the parent so it can be used as props in filterpanel
 
-        this.selected = this.items.slice()
+          this.selected = this.items.slice()
+        }
+        else if(this.flagForVendorFilter){
+          this.DiseasePanel = this.DiseasePanelData
+          console.log(this.DiseasePanel)
+          var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
+          console.log("mergedGenePanels", mergedGenePanels)
+          this.mergedGene = mergedGenePanels
+          console.log("this.mergedGenes", this.mergedGene);
+
+          this.items = mergedGenePanels;
+          this.tempItems = mergedGenePanels
+          console.log("this.items : ", this.items);
+          this.updatePanelsOnSelectedVendors();
+
+          // var tempArrForVendorFilter = [];
+          // var secondTempArr = [];
+          // secondTempArr = this.items;
+          // console.log("this items", this.items);
+          // console.log("this selected vendors", this.selectedVendorsFromFilterPanel);
+          // if(this.selectedVendorsFromFilterPanel.length>0){
+          //   this.selected = [];
+          //   for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
+          //     for(var j=0; j<this.items.length; j++){
+          //       if( this.selectedVendorsFromFilterPanel[i] === this.items[j].offerer ){
+          //         tempArrForVendorFilter.push(this.items[j]);
+          //       }
+          //     }
+          //   }
+          //   this.items = tempArrForVendorFilter;
+          //   this.selected = this.items.slice();
+          // }
+        }
+
 
 
       },
