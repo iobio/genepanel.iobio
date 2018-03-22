@@ -4,8 +4,6 @@
     <!-- <multiSelectExample></multiSelectExample> -->
     <!-- <d3Example></d3Example> -->
 
-    <!-- <NavigationBar></NavigationBar> -->
-
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
@@ -43,6 +41,7 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
+
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
@@ -58,7 +57,7 @@
                         <v-card-title primary class="title">Disorders</v-card-title>
                         <v-card-text>
                           <disease-panel
-                            v-show="diseases.length"
+                            v-if="diseases.length"
                             v-bind:DiseasePanelData="diseases"
                             v-on:selectedDiseases="selectDiseases($event)"
                             v-on:setDisorderNamesList="updateDisorderNamesList($event)"
@@ -75,7 +74,7 @@
                         <v-card-title primary class="title">Panels</v-card-title>
                         <v-card-text>
                           <gene-panel
-                            v-show="diseasesProps.length"
+                            v-if="diseasesProps.length"
                             v-bind:DiseasePanelData="diseasesProps"
                             v-on:selectedPanels="selectPanels($event)"
                             v-on:setVendorList="updateVendorList($event)"
@@ -111,11 +110,8 @@ import datatableExample from './datatable-example.vue';
 import multiSelectExample from './MultiSelectExample.vue';
 import FilterPanel from './FilterPanel.vue';
 import NavigationBar from './NavigationBar.vue';
-
 import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
-
-
 export default {
   components: { //Registering locally for nesting!
     'app-gtr': Gtr,
@@ -159,7 +155,6 @@ export default {
         this.vendorList=[];
         this.disorderNamesList=[];
       }
-
     },
     selectDiseases: function(e){
     //  console.log("e is from home: ", e)
@@ -188,7 +183,6 @@ export default {
       // console.log("selected disorders from callback to home ", e)
       this.selectedDisordersList = e;
     }
-
   }
 }
 </script>
