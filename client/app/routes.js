@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import App from './App.vue'
 import Home from './components/pages/Home.vue';
+import Main from './components/pages/Main.vue'
 import HomeTest from './components/pages/HomeTest.vue';
 import phenolyzer from './components/pages/Phenolyzer.vue'
 
@@ -76,7 +77,10 @@ const routes = [
   {
     path: '/phenolyzer',
     component: phenolyzer
-
+  },
+  {
+    path: '/main',
+    component: Main
   }
 ]
 

@@ -4,7 +4,7 @@
     <!-- <multiSelectExample></multiSelectExample> -->
     <!-- <d3Example></d3Example> -->
 
-    <NavigationBar></NavigationBar>
+    <!-- <NavigationBar></NavigationBar> -->
 
     <div id="app">
       <v-app id="inspire">
@@ -43,13 +43,11 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
-                          <keep-alive>
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
                             v-bind:modeOfInheritanceData="modeOfInheritanceProps">
                           </show-gene-panel1>
-                          </keep-alive>
                         </v-card-text>
                       </v-card>
                     </v-flex>

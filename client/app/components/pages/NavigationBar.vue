@@ -27,7 +27,7 @@
 
 
     <!-- <v-card height="50px" flat> -->
-      <center>
+      <!-- <center>
       <div  color="transparent">
         <router-link :to="{ path: '/' }">
           <v-btn flat color="blue darken-1" value="GTR">
@@ -38,7 +38,7 @@
           <v-btn flat color="blue darken-1" value="phenolyzer">
             Phenolyzer
           </v-btn>
-        </router-link>
+        </router-link> -->
         <!-- <router-link :to="{ path: 'phenolyzer' }">
           <v-btn flat color="teal" value="phenolyzer">
             Phenolyzer
@@ -54,8 +54,8 @@
           <span>Nearby</span>
           <v-icon>place</v-icon>
         </v-btn> -->
-      </div>
-      </center>
+      <!-- </div>
+      </center> -->
     <!-- </v-card> -->
 
 
