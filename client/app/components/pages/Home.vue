@@ -8,7 +8,7 @@
       <v-app id="inspire">
         <v-container fluid grid-list-md>
           <v-layout row wrap>
-            <v-flex d-flex xs12 sm12 md3>
+            <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
                 <v-card-text>
@@ -23,7 +23,7 @@
             </v-flex>
 
 
-            <v-flex d-flex xs12 sm12 md9>
+            <v-flex d-flex xs12 sm12 md9 lg9>
                 <v-card-text>
                   <v-layout row wrap>
                     <v-flex d-flex xs12 sm12 md12>
@@ -41,6 +41,10 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
+                          <!-- <PieChartSelectorBackup
+                            v-if="modeOfInheritanceProps.length"
+                            v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                          </PieChartSelectorBackup> -->
 
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
@@ -112,6 +116,7 @@ import FilterPanel from './FilterPanel.vue';
 import NavigationBar from './NavigationBar.vue';
 import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
+import PieChartSelectorBackup from './PieChartSelectorBackup.vue'
 export default {
   components: { //Registering locally for nesting!
     'app-gtr': Gtr,
@@ -124,7 +129,8 @@ export default {
     'multiSelectExample':multiSelectExample,
     'd3Example':d3Example,
     'FilterPanel':FilterPanel,
-    'NavigationBar': NavigationBar
+    'NavigationBar': NavigationBar,
+    'PieChartSelectorBackup': PieChartSelectorBackup
   },
   name: 'home',
   props: [],

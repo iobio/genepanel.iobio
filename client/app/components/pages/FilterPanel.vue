@@ -99,6 +99,7 @@
         </v-container>
       </v-card-text>
     </v-card>
+    <v-btn v-show="select.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
 
 
   </div>
@@ -255,6 +256,9 @@ import { bus } from '../../routes';
             this.alert = false;
           }, 2000);
         }
+      },
+      ClearVendors: function(){
+        this.select=[];
       }
     }
   }

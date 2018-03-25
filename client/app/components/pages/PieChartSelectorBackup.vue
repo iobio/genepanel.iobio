@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div id="pie-chart-box1"></div>
+    Hii
+    <div id="pie-chart-box2"></div>
 
   </div>
 </template>
@@ -22,7 +23,9 @@ import { bus } from '../../routes';
     methods:{
       draw(dataForModeOfInheritance){
         console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
-        var data = dataForModeOfInheritance
+        var data = dataForModeOfInheritance;
+
+        d3.select("#pie-chart-box2").select("svg").remove();
 
         var width = 400,
           height = 260,
@@ -43,7 +46,7 @@ import { bus } from '../../routes';
             return d._geneCount;
           });
 
-          var svg = d3.select("#pie-chart-box1").append("svg")
+          var svg = d3.select("#pie-chart-box2").append("svg")
             .attr("width", width)
             .attr("height", height)
             .append("g")
@@ -108,35 +111,6 @@ import { bus } from '../../routes';
             .style("fill", function(d) {
               return color(d.data._modeOfInheritance);
             });
-
-            // path.on("onload", function(d){
-            //   if(d.data.selected){
-            //     d3.select(this)
-            //         .transition()
-            //         .duration(200)
-            //         .attr("d", arcOver)
-            //         .attr("stroke", "rgb(245, 245, 245)")
-            //         .attr("stroke-width", 0.5)
-            //         .style("filter", "url(#drop-shadow)")
-            //         .style("fill", function(d) {
-            //           return color(d.data._modeOfInheritance);
-            //         });
-            //
-            //   }
-            //   else {
-            //     d3.select(this).transition()
-            //          .duration(200)
-            //          .attr("d", arc)
-            //          .attr("stroke", "rgb(245, 245, 245)")
-            //          .attr("stroke-width", 0.5)
-            //          .style("filter", "url(#drop-shadow)")
-            //          .style("fill", function(d) {
-            //            return color(d.data._modeOfInheritance);
-            //          });
-            //   }
-            // })
-
-
 
             //On click events
               path.on("click", function(d){

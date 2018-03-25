@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import jQuery from 'jquery'
 global.jQuery = jQuery
 global.$ = jQuery
@@ -17,7 +18,8 @@ import { Typeahead } from 'uiv';
 
 import * as uiv from 'uiv';
 
-import Clipboard from 'v-clipboard'
+import Clipboard from 'v-clipboard';
+
 
 
 Vue.use(uiv)
@@ -44,6 +46,7 @@ Vue.use(Vuetify)
 
 //Use typeahead
 Vue.use(Typeahead)
+
 
 
 
