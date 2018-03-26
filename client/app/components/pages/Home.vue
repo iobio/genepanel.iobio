@@ -41,10 +41,50 @@
                       <v-card >
                         <v-card-title primary class="title">Summary</v-card-title>
                         <v-card-text>
-                          <!-- <PieChartSelectorBackup
-                            v-if="modeOfInheritanceProps.length"
-                            v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-                          </PieChartSelectorBackup> -->
+
+                          <v-layout row wrap>
+                            <v-flex d-flex xs12 sm6 md5>
+                              <v-card >
+                                <v-card-title primary class="title">Gene distribution across panels</v-card-title>
+                                <PieChartSelectorBackup
+                                  v-if="diseases.length &&modeOfInheritanceProps.length"
+                                  v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                                </PieChartSelectorBackup>
+                              </v-card>
+                            </v-flex>
+                            <v-flex d-flex xs12 sm6 md7>
+                              <v-card >
+                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+                                <GeneMembership
+                                  v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                                  v-bind:GeneData="geneProps">
+                                </GeneMembership>
+                              </v-card>
+                            </v-flex>
+
+                          </v-layout>
+
+                          <v-layout row wrap>
+                            <v-flex d-flex xs12 sm6 md6>
+                              <v-card >
+                                <v-card-title primary class="title">Gene distribution across panels</v-card-title>
+                                <GenePanelDistribution
+                                    v-if="geneProps.length && diseasesProps.length"
+                                    v-bind:distributionData="geneProps">
+                                </GenePanelDistribution>
+                              </v-card>
+                            </v-flex>
+                            <v-flex d-flex xs12 sm6 md6>
+                              <v-card >
+                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+                                <ConditionsDistribution
+                                    v-if="geneProps.length && diseasesProps.length"
+                                    v-bind:distributionData="geneProps">
+                                </ConditionsDistribution>
+                              </v-card>
+                            </v-flex>
+
+                          </v-layout>
 
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
@@ -116,7 +156,11 @@ import FilterPanel from './FilterPanel.vue';
 import NavigationBar from './NavigationBar.vue';
 import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
-import PieChartSelectorBackup from './PieChartSelectorBackup.vue'
+import PieChartSelectorBackup from './PieChartSelectorBackup.vue';
+import GenePanelDistribution from './GenePanelDistribution.vue';
+import ConditionsDistribution from './ConditionsDistribution.vue';
+import GeneMembership from './GeneMembership.vue'
+
 export default {
   components: { //Registering locally for nesting!
     'app-gtr': Gtr,
@@ -130,7 +174,10 @@ export default {
     'd3Example':d3Example,
     'FilterPanel':FilterPanel,
     'NavigationBar': NavigationBar,
-    'PieChartSelectorBackup': PieChartSelectorBackup
+    'PieChartSelectorBackup': PieChartSelectorBackup,
+    'GenePanelDistribution': GenePanelDistribution,
+    'ConditionsDistribution': ConditionsDistribution,
+    'GeneMembership': GeneMembership
   },
   name: 'home',
   props: [],
@@ -160,6 +207,7 @@ export default {
         this.diseasesProps = [];
         this.vendorList=[];
         this.disorderNamesList=[];
+        this.modeOfInheritanceProps=[];
       }
     },
     selectDiseases: function(e){

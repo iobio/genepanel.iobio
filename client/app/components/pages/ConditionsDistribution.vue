@@ -118,6 +118,13 @@ import { bus } from '../../routes';
       }
     },
     mounted(){
+      this.GeneDataForChart = this.distributionData;
+      var a = [];
+      this.distributionData.map(x=>{
+        a.push(x.conditioncount)
+      });
+      this.ConditionHistogramData = a;
+      this.draw(this.ConditionHistogramData.slice());
     },
     updated(){
     }

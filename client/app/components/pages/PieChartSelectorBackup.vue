@@ -1,8 +1,6 @@
 <template>
   <div>
-    Hii
     <div id="pie-chart-box2"></div>
-
   </div>
 </template>
 
@@ -24,6 +22,8 @@ import { bus } from '../../routes';
       draw(dataForModeOfInheritance){
         console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
         var data = dataForModeOfInheritance;
+
+        // var dispatch = d3.dispatch("backupEvent");
 
         d3.select("#pie-chart-box2").select("svg").remove();
 
@@ -124,7 +124,7 @@ import { bus } from '../../routes';
 
                   d.data.selected = !d.data.selected;
                   bus.$on('updateModeOfInheritance', d.data._modeOfInheritance, d.data.selected);
-                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                  pieChartSomething(d.data._modeOfInheritance, d.data.selected);
                 }
                 else {
                   d3.select(this).transition()
@@ -134,9 +134,10 @@ import { bus } from '../../routes';
                        .attr("stroke-width", 0.5)
 
                        d.data.selected = !d.data.selected;
-                       pieChartSomething(d.data._modeOfInheritance, d.data.selected)
+                       pieChartSomething(d.data._modeOfInheritance, d.data.selected);
                 }
               })
+
 
             //Mouse over event
               path.on("mouseover", function(d){

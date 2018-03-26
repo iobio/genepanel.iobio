@@ -1,159 +1,12 @@
 <template>
   <div>
-    <!-- <div v-if="dataForTables.length">
-      <ul>
-        <li class="abcde" v-for="(data, index) in dataForTables">
-          <span v-html="data.htmlData"></span></p>
-        </li>
-      </ul>
-    </div> -->
-    <!-- <v-container grid-list-md text-xs-center> -->
-      <!-- <v-layout row wrap>
-
-        <v-flex d-flex xs12 sm6 md5>
-          <v-card >
-            <v-card-title primary class="title">Genes inheritance modes</v-card-title> -->
-            <!-- <PieChartSelector
-                v-if="modeOfInheritanceProps.length>0"
-                v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-            </PieChartSelector> -->
-          <!-- </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md7>
-          <v-card>
-            <v-card-title primary class="title">Gene membership in panels</v-card-title>
-            <div id="gene-histogram-box" >
-              <svg id="gene-histogram-chart"></svg>
-            </div>
-          </v-card>
-        </v-flex>
-
-      </v-layout> -->
-      <!-- <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md6>
-          <v-card >
-            <v-card-title primary class="title">Gene distribution across panels</v-card-title>
-            <GenePanelDistribution
-                v-bind:distributionData="GetGeneData">
-            </GenePanelDistribution>
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md6>
-          <v-card >
-            <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
-            <ConditionsDistribution
-                v-bind:distributionData="GetGeneData">
-            </ConditionsDistribution>
-          </v-card>
-        </v-flex>
-
-      </v-layout> -->
-      <!-- <GenePanelDistribution
-          v-bind:distributionData="GetGeneData">
-      </GenePanelDistribution> -->
-    <!-- </v-container> -->
-    <!-- <PieChartSelector
-        v-if="modeOfInheritanceProps.length>0"
-        v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-    </PieChartSelector> -->
-    <!-- <GeneDistribution
-        v-bind:GeneData="items">
-    </GeneDistribution> -->
-    <!-- <div id="gene-histogram-box" >
-      <svg id="gene-histogram-chart"></svg>
-    </div> -->
-    <div  id="gene-bar-chart-box"  >
-      <div id="gene-bar-chart"></div>
+    <div id="gene-histogram-box" >
+      <svg id="gene-histogram-chart1"></svg>
     </div>
-    <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
-      {{ alertText }}
-    </v-alert>
-
 
 
     <!-- <v-app id="inspire"> -->
-      <v-card-title>
-        <btn @click="copy">
-            <i class="material-icons">content_copy</i> Copy to clipboard
-        </btn>
-        <v-spacer></v-spacer>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-        ></v-text-field>
-      </v-card-title>
-      <v-data-table
-          v-model="selected"
-          v-bind:headers="headers"
-          v-bind:items="items"
-          select-all
-          v-bind:pagination.sync="pagination"
-          item-key="name"
-          class="elevation-1"
-          v-bind:search="search"
-          no-data-text="No Genes Available Currently"
-        >
-        <template slot="headers" slot-scope="props">
-          <tr>
-            <th>
-              <v-checkbox
-                primary
-                hide-details
-                @click.native="toggleAll"
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-              ></v-checkbox>
-            </th>
-            <th v-for="header in props.headers" :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-              @click="changeSort(header.value)"
-            >
-              <!-- <v-icon>arrow_upward</v-icon> -->
-              {{ header.text }}
-            </th>
 
-          </tr>
-        </template>
-        <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
-            <td>
-              <v-checkbox
-                primary
-                hide-details
-                :input-value="props.selected"
-              ></v-checkbox>
-            </td>
-            <td>
-              <div id="app">
-                <div>
-                  <v-menu open-on-hover top offset-y>
-                    <p style="font-size:13px; margin-top:2px" slot="activator"><strong>{{ props.item.name }}</strong></p>
-                      <v-card>
-                        <v-card-title>
-                            <div><strong>Conditions: </strong></div>
-                        </v-card-title>
-                        <v-card-text style="margin-top:-25px">{{props.item.conditions}}</v-card-text>
-                      </v-card>
-                  </v-menu>
-                </div>
-              </div>
-            </td>
-            <td><span v-html="props.item.htmlData"></span></td>
-            <td style="font-size:0">{{ props.item.value }}</td>
-
-            <!-- <td>{{ props.item._conditionNames }}</td> -->
-            <!-- <td>{{ props.item._geneCount }}</td> -->
-          </tr>
-        </template>
-        <template slot="footer">
-        <td colspan="100%">
-          <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
-        </td>
-      </template>
-      </v-data-table>
     <!-- </v-app> -->
   </div>
 </template>
@@ -188,41 +41,11 @@ var model = new Model();
     },
     data(){
       return {
-        alert:false,
-        alertText: "",
         geneHistogramChart: {},
         geneBarChart: {},
         GetGeneData : [],
         GenesToDisplay: [],
-        pagination: {
-          sortBy: 'value',
-          descending: true, //Sorts the column in descending order
-          rowsPerPage: 25 //Sets the number of rows per page
-
-        },
-        tmp: '',   //For searching the rows in data table
-        search: '',  //For searching the rows in data table
         selected: [],
-        headers: [
-          {
-            text: 'Name',
-            align: 'left',
-            value: 'name'
-          },
-          { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-          {
-            text: '',
-            // align: 'left',
-            value: 'value',
-            width: '10%',
-            class: 'headerWidth',
-            visibility: 'hidden-lg-only'
-
-           },
-
-        //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
-          // { text: 'Genes', align: 'left', value: '_conditionNames' },
-        ],
         items: [],
         GenesFromD3Bars: [],
         dataForTables:[],
@@ -241,15 +64,9 @@ var model = new Model();
       this.AddGeneData();
       // this.drawSimpleViz();
 
+
     },
     updated(){
-
-      console.log("Hello I am ShowGenePanel and I am updated")
-      console.log("this.selected from Show Genes ", this.selected.map(gene=> {
-         var x =  gene.name;
-         //.toString().replace(/,/gi , ' ')
-         return x.toString() ;
-      }) );
 
       bus.$on('deSelectAllGenesBus', ()=>{
         this.deSelectAllGenes();
@@ -269,11 +86,6 @@ var model = new Model();
         this.filterGenesOnSelectedNumberOfPanels(data);
       })
 
-      bus.$on("updateFromGenesHistogram", (data)=>{
-        console.log("updateFromGenesHistogram", data);
-        this.selected = data;
-      })
-
     },
     watch: {
       GeneData: function(){
@@ -285,24 +97,6 @@ var model = new Model();
       }
     },
     methods:{
-      drawSimpleViz: function(){
-        var arr = [40, 70, 30, 25, 102];
-        var x = 40;
-        var max = Math.max(...arr);
-        console.log(max);
-        var no = Math.round(x*500/max);
-        console.log(no)
-
-
-        d3.select(".abcd")
-            .append('svg')
-            .attr("heigth", 500)
-            .attr("width", 500)
-          .append('rect')
-              .attr('width', no)
-              .attr('height', 30)
-              .style('fill', "red")
-      },
       draw(){
         //Drawing histogram chart
         this.geneHistogramChart = HistogramChart()
@@ -319,6 +113,7 @@ var model = new Model();
             })
         var addSelectedFromHistogramChart = (data)=>{
           this.selected = data;
+          bus.$emit("updateFromGenesHistogram", data)
         }
 
         //Drawing horizontal bar chart
@@ -335,67 +130,12 @@ var model = new Model();
         //   this.addSelectedGenesFromD3(selectedGeneNames);
         // }
       },
-      filterGenesOnSelectedNumber(data){
-        this.selected = this.items.slice(0, data);
-        this.flagForNumberOfGenesSelected = true;
-        this.NumberOfGenesSelectedFromFilter = data
-      },
-      filterGenesOnSelectedNumberOfPanels(data){
-        console.log("items in filterGenesOnSelectedNumber", this.items);
-        var tempArrForGenesInPanels = [];
-        for(var i=0; i<this.items.length; i++){
-          if(data<=this.items[i].value){
-            tempArrForGenesInPanels.push(this.items[i]);
-          }
-        }
-        if(this.flagForNumberOfGenesSelected){
-          if(tempArrForGenesInPanels.length<this.NumberOfGenesSelectedFromFilter){
-            this.selected = tempArrForGenesInPanels;
-          }
-          else{
-            this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
-          }
-        }
-        else {
-          this.selected = tempArrForGenesInPanels;
-        }
-
-      },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;
         console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
-      copy () { //Copy to clipboard
-        var geneNames = this.selected.map(gene => {
-          return gene.name
-        })
-        var geneNamesToString = geneNames.toString();
-        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
-        // console.log("this.GenesFromD3Bars from copy", this.GenesFromD3Bars)
-        //  var geneNames = this.GenesFromD3Bars;
-        //  var geneNamesToString = geneNames.toString();
-        //  console.log("geneNamesToString", geneNamesToString)
-        // var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
-        this.$clipboard(genesToCopy);
-        this.alert = true;
-        this.alertText = " Number of Genes Selected : " + this.selected.length + " ";
-        setTimeout(()=>{
-          this.alert = false;
-        }, 3500);
-        // this.alertText = " Number of Genes Selected : " + this.GenesFromD3Bars.length + "  . ";
-      },
-      toggleAll () {
-        if (this.selected.length) this.selected = []
-        else this.selected = this.items.slice()
-      },
-      changeSort (column) {
-        if (this.pagination.sortBy === column) {
-          this.pagination.descending = !this.pagination.descending
-        } else {
-          this.pagination.sortBy = column
-          this.pagination.descending = false
-        }
-      },
+
+    
       AddGeneData: function(){
         this.GetGeneData = this.GeneData;
         console.log("this.GetGeneData", this.GetGeneData);
@@ -408,9 +148,8 @@ var model = new Model();
         this.GenesToDisplay = mergedGenes;
         console.log("GenesToDisplay",this.GenesToDisplay);
 
-        //Draws the histogram
-        // var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
-        // this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
+        var selection = d3.select('#gene-histogram-chart1').datum(model.mergedGenes);
+        this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
         console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
@@ -1293,27 +1032,27 @@ var model = new Model();
 
 <style>
 
-#gene-histogram-chart .bar rect {
+#gene-histogram-chart1 .bar rect {
     fill:   #7dc2e5;
     stroke: #1f5d7a;
     stroke-width: .5;
 }
 
-#gene-histogram-chart .bar.selected rect {
+#gene-histogram-chart1 .bar.selected rect {
     fill: #2d8fc1;
 }
 
-#gene-histogram-chart .bar text {
+#gene-histogram-chart1 .bar text {
     font-size: 10px;
 }
 
-#gene-histogram-chart .x.axis {
+#gene-histogram-chart1 .x.axis {
   font-size: 10px;
 }
-#gene-histogram-chart .y.axis {
+#gene-histogram-chart1 .y.axis {
   font-size: 10px !important;
 }
-#gene-histogram-chart .axis .label {
+#gene-histogram-chart1 .axis .label {
   font-size: 12px !important;
 }
 

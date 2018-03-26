@@ -93,15 +93,16 @@ import { bus } from '../../routes';
                  .attr("transform",'translate('+margin.left+','+margin.top+')')
                  .call(yAxis)
 
-
-
-
-
-
-
       }
     },
     mounted(){
+      var aTemp = [];
+      this.distributionData.map(x=>{
+        aTemp.push(x.conditioncount)
+      })
+      console.log("a array ", aTemp)
+      this.GeneDataForChart = this.distributionData;
+      this.draw(this.GeneDataForChart.slice());
     },
     updated(){
     }
