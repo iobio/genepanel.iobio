@@ -45,7 +45,7 @@
                           <v-layout row wrap>
                             <v-flex d-flex xs12 sm6 md5>
                               <v-card >
-                                <v-card-title primary class="title">Gene distribution across panels</v-card-title>
+                                <v-card-title primary class="title">Genes inheritance modes</v-card-title>
                                 <PieChartSelectorBackup
                                   v-if="diseases.length &&modeOfInheritanceProps.length"
                                   v-bind:modeOfInheritanceData="modeOfInheritanceProps">
@@ -54,7 +54,7 @@
                             </v-flex>
                             <v-flex d-flex xs12 sm6 md7>
                               <v-card >
-                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+                                <v-card-title primary class="title">Gene membership in panels</v-card-title>
                                 <GeneMembership
                                   v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                                   v-bind:GeneData="geneProps">
