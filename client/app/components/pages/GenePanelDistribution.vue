@@ -31,7 +31,7 @@ import { bus } from '../../routes';
     },
     methods:{
       draw(dataArray){
-        var margin = {top: 20, right: 20, bottom: 40, left: 50};
+        var margin = {top: 20, right: 20, bottom: 40, left: 60};
 
         var height = 350- margin.left - margin.right;
         var width = 700 - margin.top - margin.bottom;
@@ -87,11 +87,26 @@ import { bus } from '../../routes';
 
 
 
-           chart.append("g")
+           var group1 = chart.append("g")
                  .attr("class", "y axis")
                  // .attr("stroke", "black")
                  .attr("transform",'translate('+margin.left+','+margin.top+')')
                  .call(yAxis)
+
+                 group1.append("text")
+                       .attr("class", "y axis label")
+                       .attr("transform", "rotate(-90)")
+                       .attr("y", -2 - margin.left)
+                       .attr("x",0 - (height / 2))
+                       .attr("dy", "1em")
+                       .style("text-anchor", "start")
+                       .text('Gene count');
+
+                       group1.append("text")
+                           .attr("class", "x axis label")
+                           .attr('transform', 'translate('+ (width / 2.25) +',300)')
+                           .style("text-anchor", "end")
+                           .text("Distribution of Panels");
 
       }
     },
@@ -111,4 +126,7 @@ import { bus } from '../../routes';
 </script>
 
 <style>
+.axis .label {
+  font-size: 17px;
+}
 </style>

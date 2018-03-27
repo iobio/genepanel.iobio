@@ -47,6 +47,9 @@ import { bus } from '../../routes';
                      .append('svg')
                      .attr('height', '400px')
                      .attr('width', '100%')
+                     .append("text")
+                     .style("text-anchor", "end")
+                     .text('xAxisLabel')
                      // .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
            var area = d3.svg.area()
@@ -59,7 +62,7 @@ import { bus } from '../../routes';
                        })
                        .interpolate("basis")
 
-           chart.append('path').attr('d', area(dataArray)).attr("fill", 'steelblue').attr("stroke", "blue").attr("stroke-width", "1px");
+           var group = chart.append('path').attr('d', area(dataArray)).attr("fill", 'steelblue').attr("stroke", "blue").attr("stroke-width", "1px");
 
            // var max = Math.max.apply(Math,dataArray.map(function(o){return o.value;}));
 
@@ -73,12 +76,18 @@ import { bus } from '../../routes';
                     .ticks(10)
 
 
-          chart.append("g")
+          var group1 = chart.append("g")
                 .attr("class", "y axis")
                 .attr("stroke", "black")
                 .attr("transform", "translate(25,3)")
                 .call(yAxis)
 
+                // svg.append("text")
+                //       .attr("class", "y axis label")
+                //       .attr("transform", "rotate(-90)")
+                //       .attr("dy", "1em")
+                //       .style("text-anchor", "start")
+                //       .text('# of Panels');
 
 
 
@@ -143,4 +152,8 @@ import { bus } from '../../routes';
 }
 
 .area { fill: #4ca3bd; }
+
+.axis .label {
+  font-size: 17px;
+}
 </style>
