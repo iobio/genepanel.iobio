@@ -40,6 +40,14 @@
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card >
                         <v-card-title primary class="title">Results</v-card-title>
+                        <span>
+                          <strong>
+                            <center>
+                              Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:5%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
+                              &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
+                            </center>
+                          </strong>
+                          </span>
                         <v-card-text>
 
                           <v-layout row wrap>
@@ -201,11 +209,21 @@ export default {
       disorderNamesList: [],
       selectedDisordersList: [],
       showSummaryComponent: false,
+      NumberOfTopGenes: 50,
     }
   },
   mounted(){
   },
   methods: {
+    selectNumberOfTopGenes: function(){
+      if(this.NumberOfTopGenes>0){
+        bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+        this.flagForNumberOfGenesSelected= true;
+      }
+      else if (this.NumberOfTopGenes<0) {
+        document.getElementById("geneSelection").reset();
+      }
+    },
     addDiseases: function(e){
       console.log("e is from home: addDiseases ", e)
       this.showSummaryComponent = true
