@@ -109,7 +109,7 @@
             </th>
             <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-              @click="changeSort(header.value)"
+            
             >
               <!-- <v-icon>arrow_upward</v-icon> -->
               {{ header.text }}
