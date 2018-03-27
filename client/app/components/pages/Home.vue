@@ -43,7 +43,7 @@
                         <v-card-text>
 
                           <v-layout row wrap>
-                            <v-flex d-flex xs12 sm6 md5>
+                            <v-flex d-flex xs12 sm3 md3>
                               <v-card >
                                 <v-card-title primary class="title">Genes inheritance modes</v-card-title>
                                 <PieChartSelectorBackup
@@ -52,7 +52,7 @@
                                 </PieChartSelectorBackup>
                               </v-card>
                             </v-flex>
-                            <v-flex d-flex xs12 sm6 md7>
+                            <v-flex d-flex xs12 sm5 md5>
                               <v-card >
                                 <v-card-title primary class="title">Gene membership in panels</v-card-title>
                                 <GeneMembership
@@ -61,10 +61,19 @@
                                 </GeneMembership>
                               </v-card>
                             </v-flex>
+                            <v-flex d-flex xs12 sm4 md4>
+                              <v-card >
+                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+                                <ConditionsDistribution
+                                    v-if="geneProps.length && diseasesProps.length"
+                                    v-bind:distributionData="geneProps">
+                                </ConditionsDistribution>
+                              </v-card>
+                            </v-flex>
 
                           </v-layout>
 
-                          <v-layout row wrap>
+                          <!-- <v-layout row wrap>
                             <v-flex d-flex xs12 sm6 md6>
                               <v-card >
                                 <v-card-title primary class="title">Gene distribution across panels</v-card-title>
@@ -84,7 +93,7 @@
                               </v-card>
                             </v-flex>
 
-                          </v-layout>
+                          </v-layout> -->
 
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"

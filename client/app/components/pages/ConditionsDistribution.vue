@@ -34,7 +34,7 @@ import { bus } from '../../routes';
         console.log("data in draw is ", data)
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
-        var height = 350- margin.top - margin.bottom;
+        var height = 250- margin.top - margin.bottom;
         var width = 500 - margin.left - margin.right;
         var padding = 50;
 
