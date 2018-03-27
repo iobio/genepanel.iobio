@@ -39,7 +39,7 @@
 
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card >
-                        <v-card-title primary class="title">Summary</v-card-title>
+                        <v-card-title primary class="title">Results</v-card-title>
                         <v-card-text>
 
                           <v-layout row wrap>
