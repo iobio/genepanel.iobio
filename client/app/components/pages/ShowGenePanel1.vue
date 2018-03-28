@@ -231,6 +231,7 @@ var model = new Model();
         modeOfInheritanceProps: [],
         flagForNumberOfGenesSelected: false,
         NumberOfGenesSelectedFromFilter: 50,
+        selectedGenesText:"",
 
       }
     },
@@ -271,6 +272,8 @@ var model = new Model();
         console.log("updateFromGenesHistogram", data);
         if(count>1){
           this.selected = data;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
         }
       })
 
@@ -417,6 +420,8 @@ var model = new Model();
         // console.log("bar char", this.geneBarChart)
         this.items = data;
         this.selected = data.slice(0,50);
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
         bus.$emit("GeneDistributionChartData", this.items);
 
         console.log("this.selected from Show Genes ", this.selected )

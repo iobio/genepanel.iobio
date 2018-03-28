@@ -76,4 +76,7 @@ import SummaryTab from './SummaryTab.vue';
 </script>
 
 <style>
+.toolbar__content {
+  height: 0px;
+}
 </style>

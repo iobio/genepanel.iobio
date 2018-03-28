@@ -40,6 +40,7 @@
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card >
                         <v-card-title primary class="title">Results</v-card-title>
+                        <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span>
                         <span>
                           <strong>
                             <center>
@@ -51,7 +52,7 @@
                         <v-card-text>
 
                           <v-layout row wrap>
-                            <v-flex d-flex xs12 sm3 md3>
+                            <v-flex d-flex xs12 sm4 md4>
                               <v-card >
                                 <v-card-title primary class="title">Genes inheritance modes</v-card-title>
                                 <PieChartSelectorBackup
@@ -60,7 +61,7 @@
                                 </PieChartSelectorBackup>
                               </v-card>
                             </v-flex>
-                            <v-flex d-flex xs12 sm5 md5>
+                            <v-flex d-flex xs12 sm4 md4>
                               <v-card >
                                 <v-card-title primary class="title">Gene membership in panels</v-card-title>
                                 <GeneMembership
@@ -106,7 +107,8 @@
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
-                            v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                            v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                            v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
@@ -210,6 +212,7 @@ export default {
       selectedDisordersList: [],
       showSummaryComponent: false,
       NumberOfTopGenes: 50,
+      selectedGenesText: "",
     }
   },
   mounted(){
@@ -263,6 +266,9 @@ export default {
     updateSelectedDisorders: function(e){
       // console.log("selected disorders from callback to home ", e)
       this.selectedDisordersList = e;
+    },
+    ChangeSelectedGenesText: function(e){
+      this.selectedGenesText = e;
     }
   }
 }
