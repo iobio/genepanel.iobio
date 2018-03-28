@@ -321,12 +321,12 @@ var model = new Model();
             .attr("width", Math.abs((x(data[0].dx) - x(0))) - 1)
             .attr("height", function(d) { return 0; })
             .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0);
-        bar.append("text")
-            .attr("dy", ".75em")
-            .attr("y", -9)
-            .attr("x", (x(data[0].dx) - x(0)) / 2)
-            .attr("text-anchor", "middle")
-            .text(function(d) { return formatCount(d.y) <= 0 ? "" : formatCount(d.y) });
+        // bar.append("text")
+        //     .attr("dy", ".75em")
+        //     .attr("y", -9)
+        //     .attr("x", (x(data[0].dx) - x(0)) / 2)
+        //     .attr("text-anchor", "middle")
+        //     .text(function(d) { return formatCount(d.y) <= 0 ? "" : formatCount(d.y) });
 
 
         group.append("g")
