@@ -46,41 +46,46 @@
     </v-toolbar>
     <v-content>
       <div>
-        <v-toolbar color="cyan" dark tabs>
           <v-tabs
+            dark tabs
             color="cyan"
             slot="extension"
             grow
           >
+          <v-tab v-on:click="component='HomePage'">
+            <div class="text-xs-center">
+            <v-badge left style="background-color:#fff0; font-size:20px">
+              <span ><strong>Home</strong></span>
+            </v-badge>
+          </div>
+          </v-tab>
             <v-tabs-slider color="yellow"></v-tabs-slider>
             <v-tab v-on:click="component='Home'">
               <div class="text-xs-center">
                 <v-badge left style="background-color:#fff0; font-size:20px">
-                  <span slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
+                  <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
                   <span ><strong>GTR</strong></span>
                 </v-badge>
               </div>
             </v-tab>
-            <v-tab v-on:click="component='HomePage'">
-              <v-badge left style="background-color:#fff0; font-size:20px">
-                <span ><strong>Home</strong></span>
-              </v-badge>
 
-            </v-tab>
             <v-tab v-on:click="component='Phenolyzer'">
+              <div class="text-xs-center">
               <v-badge left style="background-color:#fff0; font-size:20px">
                 <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
                 <span ><strong>Phenolyzer</strong></span>
               </v-badge>
+              </div>
             </v-tab>
             <v-tab v-on:click="component='SummaryTab'">
+              <div class="text-xs-center">
               <v-badge left style="background-color:#fff0; font-size:20px">
                 <span ><strong>Summary</strong></span>
               </v-badge>
+              </div>
             </v-tab>
 
           </v-tabs>
-        </v-toolbar>
         <!-- <v-tabs-items>
           <keep-alive>
             <component v-bind:is="component"></component>
@@ -170,7 +175,14 @@ import FilterGTR from './FilterGTR.vue'
 </script>
 
 <style>
-.toolbar__content {
-  height: 0px;
+.tabs__container{
+  height:58px;
+}
+.toolbar__content{
+  background-color: #174065;
+}
+
+.toolbar__side-icon{
+  margin-top: -5px;
 }
 </style>

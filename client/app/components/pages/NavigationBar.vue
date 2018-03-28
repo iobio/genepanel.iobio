@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
   .toolbar__title{
     color: #66D4ED;
   }
