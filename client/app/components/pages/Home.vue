@@ -8,7 +8,7 @@
       <v-app id="inspire">
         <v-container fluid grid-list-md>
           <v-layout row wrap>
-            <v-flex d-flex xs12 sm12 md3 lg3>
+            <!-- <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
                 <v-card-text>
@@ -20,10 +20,10 @@
                   </FilterPanel>
                 </v-card-text>
               </v-card>
-            </v-flex>
+            </v-flex> -->
 
 
-            <v-flex d-flex xs12 sm12 md9 lg9>
+            <v-flex d-flex xs12 sm12 md12 lg12>
                 <v-card-text>
                   <v-layout row wrap>
                     <v-flex d-flex xs12 sm12 md12>
@@ -199,7 +199,11 @@ export default {
     'GeneMembership': GeneMembership
   },
   name: 'home',
-  props: [],
+  props: {
+    selectedVendorsListCB:{
+      type: Array
+    }
+  },
   data() {
     return {
       diseases: [],
@@ -213,6 +217,12 @@ export default {
       showSummaryComponent: false,
       NumberOfTopGenes: 50,
       selectedGenesText: "",
+      selectedVendorsListFromFilterCB:[]
+    }
+  },
+  watch:{
+    selectedVendorsListCB: function(){
+      this.selectedVendorsList = this.selectedVendorsListCB
     }
   },
   mounted(){
@@ -230,8 +240,8 @@ export default {
     addDiseases: function(e){
       console.log("e is from home: addDiseases ", e)
       this.showSummaryComponent = true
-      // alert(e.length)
       this.diseases = e;
+      this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];
         this.diseasesProps = [];
