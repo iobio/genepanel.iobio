@@ -341,7 +341,9 @@ var model = new Model();
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
         this.flagForNumberOfGenesSelected = true;
-        this.NumberOfGenesSelectedFromFilter = data
+        this.NumberOfGenesSelectedFromFilter = data;
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
       },
       filterGenesOnSelectedNumberOfPanels(data){
         console.log("items in filterGenesOnSelectedNumber", this.items);
@@ -354,13 +356,19 @@ var model = new Model();
         if(this.flagForNumberOfGenesSelected){
           if(tempArrForGenesInPanels.length<this.NumberOfGenesSelectedFromFilter){
             this.selected = tempArrForGenesInPanels;
+            this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+            this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
           }
           else{
             this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
+            this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+            this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
           }
         }
         else {
           this.selected = tempArrForGenesInPanels;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
         }
 
       },
@@ -432,10 +440,14 @@ var model = new Model();
 
       },
       selectAllGenes: function(){
-        this.selected = this.items.slice()
+        this.selected = this.items.slice();
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
       },
       deSelectAllGenes: function(){
-        this.selected = []
+        this.selected = [];
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
       },
 
     }
