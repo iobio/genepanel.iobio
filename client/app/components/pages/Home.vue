@@ -108,7 +108,8 @@
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
                             v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                            v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)">
+                            v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
+                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
@@ -220,7 +221,8 @@ export default {
       showSummaryComponent: false,
       NumberOfTopGenes: 50,
       selectedGenesText: "",
-      selectedVendorsListFromFilterCB:[]
+      selectedVendorsListFromFilterCB:[],
+      GtrGenesTabNumber: 0,
     }
   },
   watch:{
@@ -254,6 +256,7 @@ export default {
         this.vendorList=[];
         this.disorderNamesList=[];
         this.modeOfInheritanceProps=[];
+        this.selectedGenesText = ""
       }
     },
     selectDiseases: function(e){
@@ -287,6 +290,10 @@ export default {
     },
     ChangeSelectedGenesText: function(e){
       this.selectedGenesText = e;
+    },
+    UpdateNoOfGenesSelectedFromGTR: function(e){
+      this.GtrGenesTabNumber = e;
+      this.$emit("UpdateNumberOfGenesSelectedFromGTR", e)
     }
   }
 }

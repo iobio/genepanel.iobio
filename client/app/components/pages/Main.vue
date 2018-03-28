@@ -54,16 +54,29 @@
           >
             <v-tabs-slider color="yellow"></v-tabs-slider>
             <v-tab v-on:click="component='Home'">
-              GTR
+              <div class="text-xs-center">
+                <v-badge left style="background-color:#fff0; font-size:20px">
+                  <span slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
+                  <span ><strong>GTR</strong></span>
+                </v-badge>
+              </div>
             </v-tab>
             <v-tab v-on:click="component='HomePage'">
-              Home
+              <v-badge left style="background-color:#fff0; font-size:20px">
+                <span ><strong>Home</strong></span>
+              </v-badge>
+
             </v-tab>
             <v-tab v-on:click="component='Phenolyzer'">
-              Phenolyzer
+              <v-badge left style="background-color:#fff0; font-size:20px">
+                <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
+                <span ><strong>Phenolyzer</strong></span>
+              </v-badge>
             </v-tab>
             <v-tab v-on:click="component='SummaryTab'">
-              Summary
+              <v-badge left style="background-color:#fff0; font-size:20px">
+                <span ><strong>Summary</strong></span>
+              </v-badge>
             </v-tab>
 
           </v-tabs>
@@ -81,7 +94,8 @@
               v-bind:selectedVendorsListCB="selectedVendorsList"
               v-on:diseasesCB=addDiseases($event)
               v-on:disorderNamesListCB="updateDisorderNames($event)"
-              v-bind:selectedDisordersListCB="selectedDisordersList">
+              v-bind:selectedDisordersListCB="selectedDisordersList"
+              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)">
             </Home>
             <HomePage v-else-if="component==='HomePage'"></HomePage>
             <Phenolyzer v-else-if="component==='Phenolyzer'"></Phenolyzer>
@@ -121,14 +135,17 @@ import FilterGTR from './FilterGTR.vue'
         vendorList:[],
         selectedVendorsList:[],
         disorderList:[],
-        selectedDisordersList: []
+        selectedDisordersList: [],
+        NumberOfGenesSelectedFromGTR: 0,
+        NumberOfGenesSelectedFromPhenolyzer: 0
       }
     },
     methods: {
       addDiseases: function(e){
         if(e.length<= 0){
           this.vendorList=[];
-          this.disorderList=[]
+          this.disorderList=[];
+          this.NumberOfGenesSelectedFromGTR=0;
         }
       },
       updateVendors: function(e){
@@ -142,6 +159,9 @@ import FilterGTR from './FilterGTR.vue'
       },
       updateSelectedDisorders: function(e){
         this.selectedDisordersList = e;
+      },
+      updateGtrTabBadge: function(e){
+        this.NumberOfGenesSelectedFromGTR = e;
       }
     }
 
