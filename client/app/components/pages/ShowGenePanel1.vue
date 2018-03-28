@@ -109,7 +109,7 @@
             </th>
             <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-            
+
             >
               <!-- <v-icon>arrow_upward</v-icon> -->
               {{ header.text }}
@@ -243,8 +243,6 @@ var model = new Model();
 
     },
     updated(){
-
-      console.log("Hello I am ShowGenePanel and I am updated")
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
@@ -269,9 +267,11 @@ var model = new Model();
         this.filterGenesOnSelectedNumberOfPanels(data);
       })
 
-      bus.$on("updateFromGenesHistogram", (data)=>{
+      bus.$on("updateFromGenesHistogram", (data, count)=>{
         console.log("updateFromGenesHistogram", data);
-        this.selected = data;
+        if(count>1){
+          this.selected = data;
+        }
       })
 
     },
@@ -502,7 +502,7 @@ var model = new Model();
 
 
     function chart(selection, options) {
-      console.log("options in chart", selection)
+
       // merge options and defaults
       options = $.extend(defaults,options);
       let innerHeight = height - margin.top - margin.bottom;
