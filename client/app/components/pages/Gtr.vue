@@ -117,7 +117,7 @@ var model = new Model();
         }
       },
       performSearch: function(){
-        this.$emit('showDiseases', []); 
+        this.$emit('showDiseases', []);
         this.checked = true;
         this.alert=false;
 

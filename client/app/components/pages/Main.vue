@@ -7,16 +7,19 @@
       app
       v-model="drawer"
     >
-    <v-list dense v-if="component==='Home'">
+    <v-list dense>
         <v-card >
           <v-card-title primary class="title">Filters</v-card-title>
           <v-card-text>
-            <FilterGTR
-              v-bind:vendorsData="vendorList"
-              v-on:setSelectedVendors="updateSelectedVendors($event)"
-              v-bind:disordersData="disorderList"
-              v-on:setSelectedDisorders="updateSelectedDisorders($event)">
-            </FilterGTR>
+            <keep-alive>
+              <FilterGTR
+                v-if="component==='Home'"
+                v-bind:vendorsData="vendorList"
+                v-on:setSelectedVendors="updateSelectedVendors($event)"
+                v-bind:disordersData="disorderList"
+                v-on:setSelectedDisorders="updateSelectedDisorders($event)">
+              </FilterGTR>
+            </keep-alive>
           </v-card-text>
         </v-card>
     </v-list>
