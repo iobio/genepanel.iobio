@@ -115,7 +115,7 @@
                     </v-flex>
 
                     <br>
-                    <v-flex d-flex xs12 sm12 md12>
+                    <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
                       <v-card >
                         <v-card-title primary class="title">Disorders</v-card-title>
                         <v-card-text>
@@ -132,7 +132,7 @@
                     </v-flex>
                     <br>
 
-                    <v-flex d-flex xs12 sm12 md12>
+                    <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
                       <v-card >
                         <v-card-title primary class="title">Panels</v-card-title>
                         <v-card-text>
