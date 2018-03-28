@@ -202,6 +202,9 @@ export default {
   props: {
     selectedVendorsListCB:{
       type: Array
+    },
+    selectedDisordersListCB:{
+      type: Array
     }
   },
   data() {
@@ -223,6 +226,9 @@ export default {
   watch:{
     selectedVendorsListCB: function(){
       this.selectedVendorsList = this.selectedVendorsListCB
+    },
+    selectedDisordersListCB: function(){
+      this.selectedDisordersList = this.selectedDisordersListCB
     }
   },
   mounted(){
@@ -273,6 +279,7 @@ export default {
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
+      this.$emit("disorderNamesListCB", e)
     },
     updateSelectedDisorders: function(e){
       // console.log("selected disorders from callback to home ", e)

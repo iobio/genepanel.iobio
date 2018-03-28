@@ -13,7 +13,9 @@
           <v-card-text>
             <FilterGTR
               v-bind:vendorsData="vendorList"
-              v-on:setSelectedVendors="updateSelectedVendors($event)">
+              v-on:setSelectedVendors="updateSelectedVendors($event)"
+              v-bind:disordersData="disorderList"
+              v-on:setSelectedDisorders="updateSelectedDisorders($event)">
             </FilterGTR>
           </v-card-text>
         </v-card>
@@ -74,25 +76,14 @@
               v-if="component==='Home'"
               v-on:vendorListCB="updateVendors($event)"
               v-bind:selectedVendorsListCB="selectedVendorsList"
-              v-on:diseasesCB=addDiseases($event)>
+              v-on:diseasesCB=addDiseases($event)
+              v-on:disorderNamesListCB="updateDisorderNames($event)"
+              v-bind:selectedDisordersListCB="selectedDisordersList">
             </Home>
             <HomePage v-else-if="component==='HomePage'"></HomePage>
             <Phenolyzer v-else-if="component==='Phenolyzer'"></Phenolyzer>
             <SummaryTab v-else-if="component==='SummaryTab'"></SummaryTab>
           </keep-alive>
-          <!-- <div v-if="component==='Home'">
-            <Home></Home>
-          </div>
-          <div v-else-if="component==='Phenolyzer'">
-            <Phenolyzer></Phenolyzer>
-          </div>
-          <div v-else-if="component==='HomePage'">
-            <HomePage></HomePage>
-          </div>
-          <div v-else-if="component==='SummaryTab'">
-            <SummaryTab></SummaryTab>
-          </div> -->
-
         </v-tabs-items>
       </div>
     </v-content>
@@ -125,13 +116,16 @@ import FilterGTR from './FilterGTR.vue'
         component: 'Home',
         drawer: false,
         vendorList:[],
-        selectedVendorsList:[]
+        selectedVendorsList:[],
+        disorderList:[],
+        selectedDisordersList: []
       }
     },
     methods: {
       addDiseases: function(e){
         if(e.length<= 0){
           this.vendorList=[];
+          this.disorderList=[]
         }
       },
       updateVendors: function(e){
@@ -139,6 +133,12 @@ import FilterGTR from './FilterGTR.vue'
       },
       updateSelectedVendors: function(e){
         this.selectedVendorsList = e;
+      },
+      updateDisorderNames: function(e){
+        this.disorderList = e;
+      },
+      updateSelectedDisorders: function(e){
+        this.selectedDisordersList = e;
       }
     }
 

@@ -32,11 +32,9 @@
     <v-btn small v-on:click="deSelectAllDisorders">Deselect All</v-btn>
       <br>
 
-      <!-- <v-card flat v-if="disordersData.length">
+      <v-card flat v-if="disordersData.length">
         <v-card-text>
-          <v-container fluid>
             <v-layout>
-              <v-flex>
                 <v-select
                   v-model="selectDisorders"
                   label="Select Disorders"
@@ -44,11 +42,9 @@
                   tags
                   :items="multiSelectDisorder"
                 ></v-select>
-              </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
-      </v-card> -->
+      </v-card>
 
     <br><hr>
     <h4>Panels </h4>
