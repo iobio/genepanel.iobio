@@ -1,7 +1,6 @@
 <template>
   <div>
     <NavigationBar></NavigationBar>
-    {{ component }}
     <div>
       <v-toolbar color="cyan" dark tabs>
         <v-tabs
@@ -32,7 +31,10 @@
       </v-tabs-items> -->
       <v-tabs-items>
         <keep-alive>
-          <Home v-if="component==='Home'"></Home>
+          <Home
+            v-if="component==='Home'"
+            v-on:vendorListCB="updateVendors($event)">
+          </Home>
           <HomePage v-else-if="component==='HomePage'"></HomePage>
           <Phenolyzer v-else-if="component==='Phenolyzer'"></Phenolyzer>
           <SummaryTab v-else-if="component==='SummaryTab'"></SummaryTab>
@@ -88,9 +90,13 @@ import SummaryTab from './SummaryTab.vue';
     data(){
       return{
         component: 'Home',
+        vendorList:[],
       }
     },
     methods: {
+      updateVendors: function(e){
+        this.vendorList = e;
+      }
     }
 
   }

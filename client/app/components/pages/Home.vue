@@ -251,6 +251,7 @@ export default {
     updateVendorList: function(e){
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
+      this.$emit("vendorListCB", e);
     },
     updateSelectedVendors: function(e){
       // console.log("selected vendors from callback to home", e);
