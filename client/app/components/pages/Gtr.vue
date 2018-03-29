@@ -12,6 +12,7 @@
         id="input"
         class="form-control"
         type="text"
+        autocomplete="off"
         v-on:keyup.prevent="submitOnEnter"
         placeholder="Search Term...">
       <!-- </form> -->
