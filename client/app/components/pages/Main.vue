@@ -186,7 +186,7 @@ import FilterGTR from './FilterGTR.vue'
 }
 
 .toolbar__side-icon{
-  margin-top: -5px;
+  margin-top: -3px;
 }
 
 .card__title{

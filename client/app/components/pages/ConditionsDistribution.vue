@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
     <div>
       <div id="conditions-distribution-chart"></div>
     </div>

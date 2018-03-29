@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card-title primary class="title">Gene membership in panels</v-card-title>
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart1"></svg>
     </div>

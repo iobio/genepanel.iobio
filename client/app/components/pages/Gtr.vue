@@ -224,4 +224,7 @@ var model = new Model();
  .btnColor{
    color: white;
  }
+ .btn{
+   padding: 0px
+ }
 </style>

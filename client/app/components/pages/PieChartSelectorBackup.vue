@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card-title primary class="title">Genes inheritance modes</v-card-title>
     <div id="pie-chart-box2"></div>
   </div>
 </template>

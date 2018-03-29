@@ -53,31 +53,22 @@
 
                           <v-layout row wrap>
                             <v-flex d-flex xs12 sm4 md4>
-                              <v-card >
-                                <v-card-title primary class="title">Genes inheritance modes</v-card-title>
                                 <PieChartSelectorBackup
                                   v-if="diseases.length &&modeOfInheritanceProps.length"
                                   v-bind:modeOfInheritanceData="modeOfInheritanceProps">
                                 </PieChartSelectorBackup>
-                              </v-card>
                             </v-flex>
                             <v-flex d-flex xs12 sm4 md4>
-                              <v-card >
-                                <v-card-title primary class="title">Gene membership in panels</v-card-title>
                                 <GeneMembership
                                   v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                                   v-bind:GeneData="geneProps">
                                 </GeneMembership>
-                              </v-card>
                             </v-flex>
                             <v-flex d-flex xs12 sm4 md4>
-                              <v-card >
-                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
                                 <ConditionsDistribution
                                     v-if="geneProps.length && diseasesProps.length"
                                     v-bind:distributionData="geneProps">
                                 </ConditionsDistribution>
-                              </v-card>
                             </v-flex>
 
                           </v-layout>
@@ -319,5 +310,9 @@ export default {
 
   .btn__content{
     font-family: 'Open Sans', sans-serif;
+  }
+
+  .btn{
+    padding: 0px
   }
 </style>
