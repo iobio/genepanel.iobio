@@ -33,7 +33,7 @@
     >
       <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down">GenePanel.iobio</span>
+        <span class="hidden-sm-and-down">genePanel.iobio</span>
       </v-toolbar-title>
       <!-- <v-text-field
         flat
@@ -175,8 +175,11 @@ import FilterGTR from './FilterGTR.vue'
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 .tabs__container{
   height:58px;
+  font-family: 'Open Sans', sans-serif;
 }
 .toolbar__content{
   background-color: #174065;
@@ -184,5 +187,9 @@ import FilterGTR from './FilterGTR.vue'
 
 .toolbar__side-icon{
   margin-top: -5px;
+}
+
+.card__title{
+  font-family: 'Open Sans', sans-serif;
 }
 </style>

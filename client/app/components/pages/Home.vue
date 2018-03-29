@@ -300,7 +300,24 @@ export default {
 </script>
 
 <style >
+@import url('https://fonts.googleapis.com/css?family=Quicksand:500');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
   .toolbar__title{
     color: #66D4ED;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 24px;
+  }
+
+  label, strong, th{
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  center, span, h1, h2, h3, h4{
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .btn__content{
+    font-family: 'Open Sans', sans-serif;
   }
 </style>
