@@ -41,14 +41,14 @@
                       <v-card >
                         <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title>
                         <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
-                        <span>
+                        <!-- <span>
                           <strong>
                             <center>
                               Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:5%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
                               &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
                             </center>
                           </strong>
-                          </span>
+                          </span> -->
                         <v-card-text>
 
                           <v-layout row wrap>

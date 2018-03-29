@@ -43,49 +43,72 @@
         class="hidden-sm-and-down"
       ></v-text-field> -->
       <v-spacer></v-spacer>
+      <v-menu bottom offset-y>
+          <v-btn flat slot="activator"><v-icon>input</v-icon>&nbsp; Export</v-btn>
+          <v-list>
+            <v-list-tile @click="clickFuncTemp">
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="clickFuncTemp">
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
+            </v-list-tile>
+            <hr>
+            <v-list-tile @click="clickFuncTemp">
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="clickFuncTemp">
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
+            </v-list-tile>
+
+          </v-list>
+        </v-menu>
+        <v-btn icon>
+          <v-icon>apps</v-icon>
+        </v-btn>
+      <v-tabs style="box-shadow: 0px 3px 1px #00BCD4"
+        dark tabs
+        color="cyan"
+        slot="extension"
+        grow
+      >
+      <v-tab v-on:click="component='HomePage'">
+        <div class="text-xs-center">
+        <v-badge left style="background-color:#fff0; font-size:20px">
+          <span ><strong>Home</strong></span>
+        </v-badge>
+      </div>
+      </v-tab>
+        <v-tabs-slider color="yellow"></v-tabs-slider>
+        <v-tab v-on:click="component='Home'">
+          <div class="text-xs-center">
+            <v-badge left style="background-color:#fff0; font-size:20px">
+              <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
+              <span ><strong>GTR</strong></span>
+            </v-badge>
+          </div>
+        </v-tab>
+
+        <v-tab v-on:click="component='Phenolyzer'">
+          <div class="text-xs-center">
+          <v-badge left style="background-color:#fff0; font-size:20px">
+            <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
+            <span ><strong>Phenolyzer</strong></span>
+          </v-badge>
+          </div>
+        </v-tab>
+        <v-tab v-on:click="component='SummaryTab'">
+          <div class="text-xs-center">
+          <v-badge left style="background-color:#fff0; font-size:20px">
+            <span ><strong>Summary</strong></span>
+          </v-badge>
+          </div>
+        </v-tab>
+
+      </v-tabs>
     </v-toolbar>
     <v-content>
       <div>
-          <v-tabs
-            dark tabs
-            color="cyan"
-            slot="extension"
-            grow
-          >
-          <v-tab v-on:click="component='HomePage'">
-            <div class="text-xs-center">
-            <v-badge left style="background-color:#fff0; font-size:20px">
-              <span ><strong>Home</strong></span>
-            </v-badge>
-          </div>
-          </v-tab>
-            <v-tabs-slider color="yellow"></v-tabs-slider>
-            <v-tab v-on:click="component='Home'">
-              <div class="text-xs-center">
-                <v-badge left style="background-color:#fff0; font-size:20px">
-                  <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-                  <span ><strong>GTR</strong></span>
-                </v-badge>
-              </div>
-            </v-tab>
 
-            <v-tab v-on:click="component='Phenolyzer'">
-              <div class="text-xs-center">
-              <v-badge left style="background-color:#fff0; font-size:20px">
-                <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
-                <span ><strong>Phenolyzer</strong></span>
-              </v-badge>
-              </div>
-            </v-tab>
-            <v-tab v-on:click="component='SummaryTab'">
-              <div class="text-xs-center">
-              <v-badge left style="background-color:#fff0; font-size:20px">
-                <span ><strong>Summary</strong></span>
-              </v-badge>
-              </div>
-            </v-tab>
-
-          </v-tabs>
         <!-- <v-tabs-items>
           <keep-alive>
             <component v-bind:is="component"></component>
@@ -167,6 +190,9 @@ import FilterGTR from './FilterGTR.vue'
       },
       updateGtrTabBadge: function(e){
         this.NumberOfGenesSelectedFromGTR = e;
+      },
+      clickFuncTemp: function(){
+        alert("functionality coming soon")
       }
     }
 
@@ -192,4 +218,10 @@ import FilterGTR from './FilterGTR.vue'
 .card__title{
   font-family: 'Open Sans', sans-serif;
 }
+
+.list__tile__title{
+  font-family: 'Open Sans', sans-serif;
+}
+
+
 </style>

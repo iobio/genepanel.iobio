@@ -76,6 +76,10 @@
         <btn @click="copy">
             <i class="material-icons">content_copy</i> Copy to clipboard
         </btn>
+        <strong>
+          Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
+          &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
+        </strong>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -232,6 +236,7 @@ var model = new Model();
         flagForNumberOfGenesSelected: false,
         NumberOfGenesSelectedFromFilter: 50,
         selectedGenesText:"",
+        NumberOfTopGenes: 50,
 
       }
     },
@@ -461,6 +466,15 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+      },
+      selectNumberOfTopGenes: function(){
+        if(this.NumberOfTopGenes>0){
+          bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+          this.flagForNumberOfGenesSelected= true;
+        }
+        else if (this.NumberOfTopGenes<0) {
+          document.getElementById("geneSelection").reset();
+        }
       },
 
     }
