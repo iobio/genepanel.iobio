@@ -39,8 +39,8 @@
 
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card >
-                        <v-card-title primary class="title">Results</v-card-title>
-                        <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span>
+                        <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title>
+                        <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
                         <span>
                           <strong>
                             <center>
