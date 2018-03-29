@@ -244,6 +244,7 @@ var model = new Model();
 
     },
     updated(){
+
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
@@ -277,6 +278,9 @@ var model = new Model();
           this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
         }
       })
+
+      this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+      this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
 
     },
     watch: {
