@@ -10,23 +10,17 @@
       </v-alert>
 
     <h4>Genes</h4>
-    <!-- <btn v-on:click="SelectAllGenes"> Select All Genes</btn>
-    <btn v-on:click="deSelectAllGenes"> De Select All Genes</btn> -->
 
     <v-btn small v-on:click="SelectAllGenes">Select All</v-btn>
     <v-btn small v-on:click="deSelectAllGenes">Deselect All</v-btn>
-    <!-- <input type="radio" name="genesSelection" value="selectAllGenes" v-on:click="SelectAllGenes">&nbsp; Select All Genes &nbsp;&nbsp;
-    <input type="radio" name="genesSelection" value="deSelectAllGenes" v-on:click="deSelectAllGenes">&nbsp; Deselect All Genes -->
     <br><br>
     <span>
-      <!-- <input type="radio" id="geneSelection" name="geneSelection" value="deSelectTopGenes" v-on:click="selectNumberOfTopGenes">&nbsp; -->
     Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
     &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
-    <!-- <v-btn v-on:click="selectNumberOfTopGenes" color="info" style="height:30px;" class="btnWidth">Go</v-btn></span> -->
     </span>
     <br>
     <span>
-    Select genes present in at least &nbsp; <input v-on:focusout="selectGenesInPanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="GenesInPanels"> panels
+    Select genes in at least &nbsp; <input v-on:focusout="selectGenesInPanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="GenesInPanels"> panels
     &nbsp;<a><v-icon v-on:click="selectGenesInPanels">navigate_next</v-icon></a>
     </span>
 
@@ -40,9 +34,7 @@
 
       <v-card flat v-if="disordersData.length">
         <v-card-text>
-          <v-container fluid>
             <v-layout>
-              <v-flex>
                 <v-select
                   v-model="selectDisorders"
                   label="Select Disorders"
@@ -50,9 +42,7 @@
                   tags
                   :items="multiSelectDisorder"
                 ></v-select>
-              </v-flex>
             </v-layout>
-          </v-container>
         </v-card-text>
       </v-card>
 
@@ -72,9 +62,7 @@
 
     <v-card flat v-if="vendorsData.length">
       <v-card-text>
-        <v-container fluid>
           <v-layout>
-            <v-flex>
               <v-select
                 v-model="select"
                 label="Select Vendors"
@@ -82,21 +70,7 @@
                 tags
                 :items="multiSelectItems"
               ></v-select>
-              <!-- <v-select
-                label="Select Vendors"
-                autocomplete
-                :loading="loading"
-                multiple
-                cache-items
-                chips
-                required
-                :items="multiSelectItems"
-                :search-input.sync="search"
-                v-model="select"
-              ></v-select> -->
-            </v-flex>
           </v-layout>
-        </v-container>
       </v-card-text>
     </v-card>
     <v-btn v-show="select.length" small v-on:click="ClearVendors">Clear vendors</v-btn>

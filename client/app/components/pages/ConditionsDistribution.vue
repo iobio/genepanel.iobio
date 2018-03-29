@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
     <div>
       <div id="conditions-distribution-chart"></div>
     </div>
@@ -34,8 +35,8 @@ import { bus } from '../../routes';
         console.log("data in draw is ", data)
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
-        var height = 350- margin.left - margin.right;
-        var width = 500 - margin.top - margin.bottom;
+        var height = 250- margin.top - margin.bottom;
+        var width = 500 - margin.left - margin.right;
         var padding = 50;
 
         data.sort(function(a,b){
@@ -82,11 +83,28 @@ import { bus } from '../../routes';
                               .call(xAxis)
                               .attr("class", "x axis")
 
+                    group.append("text")
+                        .attr("class", "x axis label")
+                        .attr('transform', 'translate('+ (width / 2) +',37)')
+                        .style("text-anchor", "end")
+                        .text("# of Conditions");
+
+
+
         var group1 = canvas.append("g")
                             // .attr("transform",'translate('+margin.left+','+margin.top+')')
                             .call(yAxis)
                             .attr("class", "y axis")
                             // .attr("stroke", "black")
+
+                    group1.append("text")
+                          .attr("class", "y axis label")
+                          .attr("transform", "rotate(-90)")
+                          .attr("y", 0 - margin.left)
+                          .attr("x",0 - (height / 2))
+                          .attr("dy", "1em")
+                          .style("text-anchor", "start")
+                          .text('# of Panels');
 
         var bars = canvas.selectAll(".bar")
                               .data(histogram)
@@ -118,6 +136,13 @@ import { bus } from '../../routes';
       }
     },
     mounted(){
+      this.GeneDataForChart = this.distributionData;
+      var a = [];
+      this.distributionData.map(x=>{
+        a.push(x.conditioncount)
+      });
+      this.ConditionHistogramData = a;
+      this.draw(this.ConditionHistogramData.slice());
     },
     updated(){
     }
@@ -126,4 +151,7 @@ import { bus } from '../../routes';
 </script>
 
 <style>
+.axis .label {
+  font-size: 17px;
+}
 </style>

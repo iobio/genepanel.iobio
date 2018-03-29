@@ -8,7 +8,7 @@
       <v-app id="inspire">
         <v-container fluid grid-list-md>
           <v-layout row wrap>
-            <v-flex d-flex xs12 sm12 md3>
+            <!-- <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
                 <v-card-text>
@@ -20,10 +20,10 @@
                   </FilterPanel>
                 </v-card-text>
               </v-card>
-            </v-flex>
+            </v-flex> -->
 
 
-            <v-flex d-flex xs12 sm12 md9>
+            <v-flex d-flex xs12 sm12 md12 lg12>
                 <v-card-text>
                   <v-layout row wrap>
                     <v-flex d-flex xs12 sm12 md12>
@@ -39,20 +39,75 @@
 
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card >
-                        <v-card-title primary class="title">Summary</v-card-title>
+                        <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title>
+                        <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
+                        <!-- <span>
+                          <strong>
+                            <center>
+                              Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:5%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
+                              &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
+                            </center>
+                          </strong>
+                          </span> -->
                         <v-card-text>
+
+                          <v-layout row wrap>
+                            <v-flex d-flex xs12 sm4 md4>
+                                <PieChartSelectorBackup
+                                  v-if="diseases.length &&modeOfInheritanceProps.length"
+                                  v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                                </PieChartSelectorBackup>
+                            </v-flex>
+                            <v-flex d-flex xs12 sm4 md4>
+                                <GeneMembership
+                                  v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                                  v-bind:GeneData="geneProps">
+                                </GeneMembership>
+                            </v-flex>
+                            <v-flex d-flex xs12 sm4 md4>
+                                <ConditionsDistribution
+                                    v-if="geneProps.length && diseasesProps.length"
+                                    v-bind:distributionData="geneProps">
+                                </ConditionsDistribution>
+                            </v-flex>
+
+                          </v-layout>
+
+                          <!-- <v-layout row wrap>
+                            <v-flex d-flex xs12 sm6 md6>
+                              <v-card >
+                                <v-card-title primary class="title">Gene distribution across panels</v-card-title>
+                                <GenePanelDistribution
+                                    v-if="geneProps.length && diseasesProps.length"
+                                    v-bind:distributionData="geneProps">
+                                </GenePanelDistribution>
+                              </v-card>
+                            </v-flex>
+                            <v-flex d-flex xs12 sm6 md6>
+                              <v-card >
+                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+                                <ConditionsDistribution
+                                    v-if="geneProps.length && diseasesProps.length"
+                                    v-bind:distributionData="geneProps">
+                                </ConditionsDistribution>
+                              </v-card>
+                            </v-flex>
+
+                          </v-layout> -->
 
                           <show-gene-panel1
                           v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                             v-bind:GeneData="geneProps"
-                            v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                            v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                            v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
+                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
                     </v-flex>
 
                     <br>
-                    <v-flex d-flex xs12 sm12 md12>
+                    <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
                       <v-card >
                         <v-card-title primary class="title">Disorders</v-card-title>
                         <v-card-text>
@@ -69,7 +124,7 @@
                     </v-flex>
                     <br>
 
-                    <v-flex d-flex xs12 sm12 md12>
+                    <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
                       <v-card >
                         <v-card-title primary class="title">Panels</v-card-title>
                         <v-card-text>
@@ -112,6 +167,11 @@ import FilterPanel from './FilterPanel.vue';
 import NavigationBar from './NavigationBar.vue';
 import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
+import PieChartSelectorBackup from './PieChartSelectorBackup.vue';
+import GenePanelDistribution from './GenePanelDistribution.vue';
+import ConditionsDistribution from './ConditionsDistribution.vue';
+import GeneMembership from './GeneMembership.vue'
+
 export default {
   components: { //Registering locally for nesting!
     'app-gtr': Gtr,
@@ -124,10 +184,21 @@ export default {
     'multiSelectExample':multiSelectExample,
     'd3Example':d3Example,
     'FilterPanel':FilterPanel,
-    'NavigationBar': NavigationBar
+    'NavigationBar': NavigationBar,
+    'PieChartSelectorBackup': PieChartSelectorBackup,
+    'GenePanelDistribution': GenePanelDistribution,
+    'ConditionsDistribution': ConditionsDistribution,
+    'GeneMembership': GeneMembership
   },
   name: 'home',
-  props: [],
+  props: {
+    selectedVendorsListCB:{
+      type: Array
+    },
+    selectedDisordersListCB:{
+      type: Array
+    }
+  },
   data() {
     return {
       diseases: [],
@@ -139,21 +210,44 @@ export default {
       disorderNamesList: [],
       selectedDisordersList: [],
       showSummaryComponent: false,
+      NumberOfTopGenes: 50,
+      selectedGenesText: "",
+      selectedVendorsListFromFilterCB:[],
+      GtrGenesTabNumber: 0,
+    }
+  },
+  watch:{
+    selectedVendorsListCB: function(){
+      this.selectedVendorsList = this.selectedVendorsListCB
+    },
+    selectedDisordersListCB: function(){
+      this.selectedDisordersList = this.selectedDisordersListCB
     }
   },
   mounted(){
   },
   methods: {
+    selectNumberOfTopGenes: function(){
+      if(this.NumberOfTopGenes>0){
+        bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+        this.flagForNumberOfGenesSelected= true;
+      }
+      else if (this.NumberOfTopGenes<0) {
+        document.getElementById("geneSelection").reset();
+      }
+    },
     addDiseases: function(e){
       console.log("e is from home: addDiseases ", e)
       this.showSummaryComponent = true
-      // alert(e.length)
       this.diseases = e;
+      this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];
         this.diseasesProps = [];
         this.vendorList=[];
         this.disorderNamesList=[];
+        this.modeOfInheritanceProps=[];
+        this.selectedGenesText = ""
       }
     },
     selectDiseases: function(e){
@@ -167,6 +261,7 @@ export default {
     updateVendorList: function(e){
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
+      this.$emit("vendorListCB", e);
     },
     updateSelectedVendors: function(e){
       // console.log("selected vendors from callback to home", e);
@@ -178,17 +273,46 @@ export default {
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
+      this.$emit("disorderNamesListCB", e)
     },
     updateSelectedDisorders: function(e){
       // console.log("selected disorders from callback to home ", e)
       this.selectedDisordersList = e;
+    },
+    ChangeSelectedGenesText: function(e){
+      this.selectedGenesText = e;
+    },
+    UpdateNoOfGenesSelectedFromGTR: function(e){
+      this.GtrGenesTabNumber = e;
+      this.$emit("UpdateNumberOfGenesSelectedFromGTR", e)
     }
   }
 }
 </script>
 
-<style scoped>
+<style >
+@import url('https://fonts.googleapis.com/css?family=Quicksand:500');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
   .toolbar__title{
     color: #66D4ED;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 24px;
+  }
+
+  label, strong, th{
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  center, span, h1, h2, h3, h4{
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .btn__content{
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .btn{
+    padding: 0px
   }
 </style>

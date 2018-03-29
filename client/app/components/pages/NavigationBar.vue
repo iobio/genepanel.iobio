@@ -12,7 +12,7 @@
         scroll-off-screen
         scroll-target="#scrolling-techniques"
       >
-        <v-toolbar-title>geneLists.iobio</v-toolbar-title>
+        <v-toolbar-title>GenePanel.iobio</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
       <div
@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
   .toolbar__title{
     color: #66D4ED;
   }

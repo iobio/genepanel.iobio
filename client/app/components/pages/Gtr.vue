@@ -12,6 +12,7 @@
         id="input"
         class="form-control"
         type="text"
+        autocomplete="off"
         v-on:keyup.prevent="submitOnEnter"
         placeholder="Search Term...">
       <!-- </form> -->
@@ -117,7 +118,7 @@ var model = new Model();
         }
       },
       performSearch: function(){
-        this.$emit('showDiseases', []); 
+        this.$emit('showDiseases', []);
         this.checked = true;
         this.alert=false;
 
@@ -223,5 +224,8 @@ var model = new Model();
 <style scoped>
  .btnColor{
    color: white;
+ }
+ .btn{
+   padding: 0px
  }
 </style>

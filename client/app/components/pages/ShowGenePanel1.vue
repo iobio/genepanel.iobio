@@ -8,16 +8,16 @@
       </ul>
     </div> -->
     <!-- <v-container grid-list-md text-xs-center> -->
-      <v-layout row wrap>
+      <!-- <v-layout row wrap>
 
         <v-flex d-flex xs12 sm6 md5>
           <v-card >
-            <v-card-title primary class="title">Genes inheritance modes</v-card-title>
-            <PieChartSelector
+            <v-card-title primary class="title">Genes inheritance modes</v-card-title> -->
+            <!-- <PieChartSelector
                 v-if="modeOfInheritanceProps.length>0"
                 v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-            </PieChartSelector>
-          </v-card>
+            </PieChartSelector> -->
+          <!-- </v-card>
         </v-flex>
         <v-flex d-flex xs12 sm6 md7>
           <v-card>
@@ -28,8 +28,8 @@
           </v-card>
         </v-flex>
 
-      </v-layout>
-      <v-layout row wrap>
+      </v-layout> -->
+      <!-- <v-layout row wrap>
         <v-flex d-flex xs12 sm6 md6>
           <v-card >
             <v-card-title primary class="title">Gene distribution across panels</v-card-title>
@@ -47,10 +47,10 @@
           </v-card>
         </v-flex>
 
-      </v-layout>
-      <GenePanelDistribution
+      </v-layout> -->
+      <!-- <GenePanelDistribution
           v-bind:distributionData="GetGeneData">
-      </GenePanelDistribution>
+      </GenePanelDistribution> -->
     <!-- </v-container> -->
     <!-- <PieChartSelector
         v-if="modeOfInheritanceProps.length>0"
@@ -76,6 +76,10 @@
         <btn @click="copy">
             <i class="material-icons">content_copy</i> Copy to clipboard
         </btn>
+        <strong>
+          Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
+          &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
+        </strong>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -109,7 +113,7 @@
             </th>
             <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-              @click="changeSort(header.value)"
+
             >
               <!-- <v-icon>arrow_upward</v-icon> -->
               {{ header.text }}
@@ -231,6 +235,8 @@ var model = new Model();
         modeOfInheritanceProps: [],
         flagForNumberOfGenesSelected: false,
         NumberOfGenesSelectedFromFilter: 50,
+        selectedGenesText:"",
+        NumberOfTopGenes: 50,
 
       }
     },
@@ -241,11 +247,9 @@ var model = new Model();
       this.AddGeneData();
       // this.drawSimpleViz();
 
-
     },
     updated(){
 
-      console.log("Hello I am ShowGenePanel and I am updated")
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
@@ -269,6 +273,19 @@ var model = new Model();
       bus.$on('SelectGenesInNumberOfPanels', (data)=>{
         this.filterGenesOnSelectedNumberOfPanels(data);
       })
+
+      bus.$on("updateFromGenesHistogram", (data, count)=>{
+        console.log("updateFromGenesHistogram", data);
+        if(count>1){
+          this.selected = data;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+          this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        }
+      })
+
+      this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+      this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
 
     },
     watch: {
@@ -334,7 +351,10 @@ var model = new Model();
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
         this.flagForNumberOfGenesSelected = true;
-        this.NumberOfGenesSelectedFromFilter = data
+        this.NumberOfGenesSelectedFromFilter = data;
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       },
       filterGenesOnSelectedNumberOfPanels(data){
         console.log("items in filterGenesOnSelectedNumber", this.items);
@@ -347,13 +367,22 @@ var model = new Model();
         if(this.flagForNumberOfGenesSelected){
           if(tempArrForGenesInPanels.length<this.NumberOfGenesSelectedFromFilter){
             this.selected = tempArrForGenesInPanels;
+            this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+            this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
+            this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
           }
           else{
             this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
+            this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+            this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
+            this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
           }
         }
         else {
           this.selected = tempArrForGenesInPanels;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
+          this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
         }
 
       },
@@ -404,14 +433,19 @@ var model = new Model();
         this.GenesToDisplay = mergedGenes;
         console.log("GenesToDisplay",this.GenesToDisplay);
 
-        var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
-        this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
+        //Draws the histogram
+        // var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
+        // this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
         console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
         this.items = data;
         this.selected = data.slice(0,50);
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+
         bus.$emit("GeneDistributionChartData", this.items);
 
         console.log("this.selected from Show Genes ", this.selected )
@@ -422,10 +456,25 @@ var model = new Model();
 
       },
       selectAllGenes: function(){
-        this.selected = this.items.slice()
+        this.selected = this.items.slice();
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       },
       deSelectAllGenes: function(){
-        this.selected = []
+        this.selected = [];
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+      },
+      selectNumberOfTopGenes: function(){
+        if(this.NumberOfTopGenes>0){
+          bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+          this.flagForNumberOfGenesSelected= true;
+        }
+        else if (this.NumberOfTopGenes<0) {
+          document.getElementById("geneSelection").reset();
+        }
       },
 
     }
@@ -497,7 +546,7 @@ var model = new Model();
 
 
     function chart(selection, options) {
-      console.log("options in chart", selection)
+
       // merge options and defaults
       options = $.extend(defaults,options);
       let innerHeight = height - margin.top - margin.bottom;
