@@ -100,7 +100,8 @@
                             v-bind:GeneData="geneProps"
                             v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                             v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
-                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)">
+                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
+                            v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
@@ -285,6 +286,9 @@ export default {
     UpdateNoOfGenesSelectedFromGTR: function(e){
       this.GtrGenesTabNumber = e;
       this.$emit("UpdateNumberOfGenesSelectedFromGTR", e)
+    },
+    UpdateListOfSelectedGenes: function(e){
+      this.$emit("UpdateListOfSelectedGenesGTR", e); 
     }
   }
 }

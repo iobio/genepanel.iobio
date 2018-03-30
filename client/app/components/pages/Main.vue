@@ -1,6 +1,19 @@
 <template>
   <div id="app">
   <v-app id="inspire">
+    <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     <v-navigation-drawer
       fixed
       :clipped="$vuetify.breakpoint.mdAndUp"
@@ -46,7 +59,7 @@
       <v-menu bottom offset-y>
           <v-btn flat slot="activator"><v-icon>input</v-icon>&nbsp; Export</v-btn>
           <v-list>
-            <v-list-tile @click="clickFuncTemp">
+            <v-list-tile @click="copyGtrGenes">
               <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="clickFuncTemp">
@@ -123,7 +136,8 @@
               v-on:diseasesCB=addDiseases($event)
               v-on:disorderNamesListCB="updateDisorderNames($event)"
               v-bind:selectedDisordersListCB="selectedDisordersList"
-              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)">
+              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
+              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)">
             </Home>
             <HomePage v-else-if="component==='HomePage'"></HomePage>
             <Phenolyzer v-else-if="component==='Phenolyzer'"></Phenolyzer>
@@ -165,7 +179,15 @@ import FilterGTR from './FilterGTR.vue'
         disorderList:[],
         selectedDisordersList: [],
         NumberOfGenesSelectedFromGTR: 0,
-        NumberOfGenesSelectedFromPhenolyzer: 0
+        NumberOfGenesSelectedFromPhenolyzer: 0,
+        selectedGtrGenes: [],
+        snackbar: false,
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
+        snackbarText:"You need to select Genes inorder to copy them"
+
       }
     },
     methods: {
@@ -193,6 +215,21 @@ import FilterGTR from './FilterGTR.vue'
       },
       clickFuncTemp: function(){
         alert("functionality coming soon")
+      },
+      updateGtrGenes: function(e){
+        this.selectedGtrGenes = e;
+      },
+      copyGtrGenes: function(){
+        var geneNames = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+        var geneNamesToString = geneNames.toString();
+        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
+        this.$clipboard(genesToCopy);
+        if(this.selectedGtrGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
+        }
+        this.snackbar=true;
       }
     }
 
