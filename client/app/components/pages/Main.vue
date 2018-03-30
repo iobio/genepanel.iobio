@@ -59,13 +59,25 @@
       <v-menu bottom offset-y>
           <v-btn flat slot="activator"><v-icon>input</v-icon>&nbsp; Export</v-btn>
           <v-list>
-            <v-list-tile @click="copyGtrGenes">
-              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile @click="exportGtrGenes">
-              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
-            </v-list-tile>
-            <hr>
+            <div v-if="component==='Home'">
+              <v-list-tile @click="copyGtrGenes">
+                <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="exportGtrGenes">
+                <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
+              </v-list-tile>
+              <hr>
+            </div>
+            <div v-if="component==='Phenolyzer'">
+              <v-list-tile @click="copyGtrGenes">
+                <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="exportGtrGenes">
+                <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
+              </v-list-tile>
+              <hr>
+            </div>
+
             <v-list-tile @click="clickFuncTemp">
               <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
             </v-list-tile>
@@ -73,6 +85,7 @@
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
             </v-list-tile>
           </v-list>
+
         </v-menu>
         <v-btn icon>
           <v-icon>apps</v-icon>
