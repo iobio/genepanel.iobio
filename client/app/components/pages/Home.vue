@@ -7,6 +7,19 @@
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
+
+          <!-- <v-layout row justify-center>
+          <v-flex xs12 sm12 md12 lg12 margin-top:4px>
+            <v-card >
+              <v-card-text>
+                <app-gtr
+                  v-on:showDiseases="addDiseases($event)">
+                </app-gtr>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout> -->
+
           <v-layout row wrap>
             <!-- <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
@@ -27,9 +40,8 @@
                 <v-card-text>
                   <v-layout row wrap>
                     <v-flex d-flex xs12 sm12 md12>
-                      <v-card >
-                        <v-card-title primary class="title">Search</v-card-title>
-                        <v-card-text>
+                      <v-card>
+                        <v-card-text style="margin-bottom:-20px">
                           <app-gtr
                             v-on:showDiseases="addDiseases($event)">
                           </app-gtr>
@@ -37,9 +49,10 @@
                       </v-card>
                     </v-flex>
 
+
                     <v-flex d-flex xs12 sm12 md12>
-                      <v-card >
-                        <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title>
+                      <v-card style="margin-top:4px">
+                       <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title></center>
                         <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
                         <!-- <span>
                           <strong>

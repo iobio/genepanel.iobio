@@ -2,36 +2,39 @@
   <div>
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <div style="display:inline-block;">
-      <label>Disorders :</label>
-      <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
-      <!-- v-on:keyup.prevent="submitOnEnter" -->
-      <!-- <form v-on:submit.prevent="submitOnEnter"> -->
-      <input
-        style="width:650px"
-        id="input"
-        class="form-control"
-        type="text"
-        autocomplete="off"
-        v-on:keyup.prevent="submitOnEnter"
-        placeholder="Search Term...">
-      <!-- </form> -->
-      <!-- </form> -->
-      <typeahead
-        match-start
-        v-model="search"
-        target="#input"
-        :data="conditions"
-        item-key="DiseaseName"/>
-    </div>
-    <v-btn
-        color="blue darken-1"
-        class="btnColor"
-        v-on:click.prevent="performSearch">
-      Go
-    </v-btn>
+    <center>
+      <div style="display:inline-block; padding-top:5px;">
+        <!-- <label>Disorders :</label> -->
+        <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
+        <!-- v-on:keyup.prevent="submitOnEnter" -->
+        <!-- <form v-on:submit.prevent="submitOnEnter"> -->
+        <input
+          style="width:1050px; height:36px; margin-top:4px;"
+          id="input"
+          class="form-control"
+          type="text"
+          autocomplete="off"
+          v-on:keyup.prevent="submitOnEnter"
+          placeholder="Search Disorder...">
+        <!-- </form> -->
+        <!-- </form> -->
+        <typeahead
+          match-start
+          v-model="search"
+          target="#input"
+          :data="conditions"
+          item-key="DiseaseName"/>
+
+      </div>
+
+      <v-btn
+          color="blue darken-1"
+          class="btnColor"
+          v-on:click.prevent="performSearch">
+        Go
+      </v-btn>
+    </center>
     <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
-    <br>
     <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
@@ -227,5 +230,9 @@ var model = new Model();
  }
  .btn{
    padding: 0px
+ }
+ .form-control{
+   font-size: 15px;
+   font-weight: 800
  }
 </style>

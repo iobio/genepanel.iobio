@@ -1,14 +1,133 @@
 <template>
   <div>
+    <div id="app">
+      <v-app id="inspire">
+        <v-container fluid grid-list-md>
+
+          <v-layout row wrap>
+
+            <v-flex d-flex xs12 sm12 md12 lg12>
+                <v-card-text>
+                  <v-layout row wrap>
+                    <v-flex d-flex xs12 sm12 md12>
+                      <v-card>
+                        <v-card-text >
+                          <center>
+                            <div id="phenotype-input" style="display:inline-block; padding-top:5px;">
+                              <input
+                                style="width:1050px; height:36px; margin-top:4px;"
+                                id="phenotype-term"
+                                class="form-control"
+                                type="text"
+                                autocomplete="off"
+                                placeholder="Search phenotype..."
+                                v-model="phenotypeTermEntered">
+
+                              <typeahead
+                               v-model="phenotypeTerm"
+                              hide-details="false"
+                              force-select match-start
+                              target="#phenotype-term"
+                              async-src="http://nv-blue.iobio.io/hpo/hot/lookup/?term=" item-key="value"/>
+                            </div>
+
+                            <v-btn
+                                color="blue darken-1"
+                                class="btnColor"
+                                v-on:click="onSearchPhenolyzerGenes">
+                              Go
+                            </v-btn>
+                          </center>
+                          <div v-if="phenolyzerStatus!==null">
+                            {{ phenolyzerStatus }}
+                          </div>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+
+
+                    <v-flex d-flex xs12 sm12 md12>
+                      <v-card style="margin-top:4px">
+                        <v-card-title primary class="title">Results &nbsp;</v-card-title></center>
+                        <v-card-text>
+                          <v-data-table
+                              v-if="items.length"
+                              v-model="selected"
+                              v-bind:headers="headers"
+                              v-bind:items="items"
+                              select-all
+                              v-bind:pagination.sync="pagination"
+                              item-key="geneName"
+                              class="elevation-1"
+                              no-data-text="No pheotype genes Available Currently"
+                            >
+                            <template slot="headers" slot-scope="props">
+                              <tr>
+                                <th>
+                                  <v-checkbox
+                                    primary
+                                    hide-details
+                                    @click.native="toggleAll"
+                                    :input-value="props.all"
+                                    :indeterminate="props.indeterminate"
+                                  ></v-checkbox>
+                                </th>
+                                <th v-for="header in props.headers" :key="header.text"
+                                  :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                                  @click="changeSort(header.value)"
+                                >
+                                  <v-icon>arrow_upward</v-icon>
+                                  {{ header.text }}
+                                </th>
+                              </tr>
+                            </template>
+                            <template slot="items" slot-scope="props">
+                              <tr :active="props.selected" @click="props.selected = !props.selected">
+                                <td>
+                                  <v-checkbox
+                                    primary
+                                    hide-details
+                                    :input-value="props.selected"
+                                  ></v-checkbox>
+                                </td>
+                                <!-- <td></td> -->
+                                <td>{{ props.item.rank }}</td>
+                                <td>{{ props.item.geneName }}</td>
+                                <td>{{ props.item.score }}</td>
+                              </tr>
+                            </template>
+                            <template slot="footer">
+                            <td colspan="100%">
+                              <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+                            </td>
+                          </template>
+                          </v-data-table>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+
+                    <br>
+
+                    <br>
+
+
+                 </v-layout>
+                </v-card-text>
+            </v-flex>
+
+          </v-layout>
+        </v-container>
+      </v-app>
+    </div>
 
     <!-- url: https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/?term=lacticacidosis@treacher_collins -->
     <!-- <NavigationBar></NavigationBar> -->
 
-    <div id="phenotype-input" style="display:inline-block;">
+    <!-- <div id="phenotype-input" style="display:inline-block;"> -->
       <!-- <v-text-field id="phenotype-term" hide-details v-model="phenotypeTermEntered"
       label="enter phenotype">
       </v-text-field> -->
-      <input
+      <!-- <input
         id="phenotype-term"
         class="form-control"
         type="text"
@@ -29,9 +148,9 @@
     </div>
     <div v-if="phenolyzerStatus!==null">
       {{ phenolyzerStatus }}
-    </div>
+    </div> -->
     <br>
-    <v-app>
+    <!-- <v-app>
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
@@ -71,7 +190,6 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td></td> -->
             <td>{{ props.item.rank }}</td>
             <td>{{ props.item.geneName }}</td>
             <td>{{ props.item.score }}</td>
@@ -83,13 +201,13 @@
         </td>
       </template>
       </v-data-table>
-    </v-app>
-    <strong>Genes </strong>
+    </v-app> -->
+    <!-- <strong>Genes </strong>
     <ul v-if="geneList.length>0">
       <li v-for="gene in geneList">
-        {{gene.rank}} -- {{gene.geneName}} -- {{gene.score}}
+        {{gene.rank}} - {{gene.geneName}} - {{gene.score}}
       </li>
-    </ul>
+    </ul> -->
 
   </div>
 </template>
@@ -223,7 +341,14 @@ var geneModel = new GeneModel();
 
 
 <style scoped>
-  .toolbar__title{
-    color: #66D4ED;
-  }
+.btnColor, .btn__content{
+  color: white;
+}
+.btn{
+  padding: 0px
+}
+.form-control{
+  font-size: 15px;
+  font-weight: 800
+}
 </style>

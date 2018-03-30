@@ -68,7 +68,7 @@
               </v-list-tile>
               <hr>
             </div>
-            <div v-if="component==='Phenolyzer'">
+            <div v-else-if="component==='Phenolyzer'">
               <v-list-tile @click="copyGtrGenes">
                 <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
               </v-list-tile>
@@ -174,6 +174,8 @@ import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
 import FilterGTR from './FilterGTR.vue'
 var FileSaver = require('file-saver');
+import Gtr from './Gtr.vue';
+
 
   export default {
     components: {
@@ -183,6 +185,7 @@ var FileSaver = require('file-saver');
       'HomePage': HomePage,
       'SummaryTab': SummaryTab,
       'FilterGTR': FilterGTR,
+      'app-gtr': Gtr,
     },
     data(){
       return{

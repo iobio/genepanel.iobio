@@ -215,7 +215,13 @@ var model = new Model();
       var end   = brush.extent()[1];
       svg.selectAll(".bar")
          .classed("selected", function(d,i) {
+
+           if(d.length>0){
+             console.log("selected d", d[0].name);
+           }
+
             var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
+            console.log("inBrushExtent", inBrushExtent)
             return inBrushExtent;
          })
 
@@ -321,7 +327,21 @@ var model = new Model();
             .attr("x", 1)
             .attr("width", Math.abs((x(data[0].dx) - x(0))) - 1)
             .attr("height", function(d) { return 0; })
-            .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0);
+            .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0)
+            // .attr("fill", function(d){
+            //   if(d.length>0){
+            //     console.log(d[0].name);
+            //     if(d[0].name==="MVK"){
+            //       return "red";
+            //     }
+            //     else {
+            //       return "green"
+            //     }
+            //   }
+            //   else {
+            //     return "green"
+            //   }
+            // })
         // bar.append("text")
         //     .attr("dy", ".75em")
         //     .attr("y", -9)
