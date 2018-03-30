@@ -19,6 +19,7 @@ import { Typeahead } from 'uiv';
 import * as uiv from 'uiv';
 
 import Clipboard from 'v-clipboard';
+var FileSaver = require('file-saver');
 
 
 

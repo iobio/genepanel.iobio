@@ -62,7 +62,7 @@
             <v-list-tile @click="copyGtrGenes">
               <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile @click="clickFuncTemp">
+            <v-list-tile @click="exportGtrGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
             </v-list-tile>
             <hr>
@@ -72,12 +72,12 @@
             <v-list-tile @click="clickFuncTemp">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
             </v-list-tile>
-
           </v-list>
         </v-menu>
         <v-btn icon>
           <v-icon>apps</v-icon>
         </v-btn>
+        &nbsp; &nbsp; &nbsp; &nbsp;
       <v-tabs style="box-shadow: 0px 3px 1px #00BCD4"
         dark tabs
         color="cyan"
@@ -160,6 +160,7 @@ import NavigationBar from './NavigationBar.vue';
 import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
 import FilterGTR from './FilterGTR.vue'
+var FileSaver = require('file-saver');
 
   export default {
     components: {
@@ -214,7 +215,10 @@ import FilterGTR from './FilterGTR.vue'
         this.NumberOfGenesSelectedFromGTR = e;
       },
       clickFuncTemp: function(){
-        alert("functionality coming soon")
+        // alert("functionality coming soon")
+        var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, "hello world.txt");
+
       },
       updateGtrGenes: function(e){
         this.selectedGtrGenes = e;
@@ -230,6 +234,21 @@ import FilterGTR from './FilterGTR.vue'
           this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
         }
         this.snackbar=true;
+      },
+      exportGtrGenes: function(){
+        var geneNames = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+        var geneNamesToExport = geneNames.toString();
+        if(this.selectedGtrGenes.length>0){
+          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+          FileSaver.saveAs(blob, "GTR Genes.txt");
+        }
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
+
       }
     }
 

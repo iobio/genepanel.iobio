@@ -73,9 +73,9 @@
 
     <!-- <v-app id="inspire"> -->
       <v-card-title>
-        <btn @click="copy">
+        <!-- <btn @click="copy">
             <i class="material-icons">content_copy</i> Copy to clipboard
-        </btn>
+        </btn> -->
         <strong>
           Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
           &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
