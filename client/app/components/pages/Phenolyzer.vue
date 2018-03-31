@@ -103,7 +103,8 @@
                                 </td>
                                 <!-- <td></td> -->
                                 <!-- <td>{{ props.item.rank }}</td> -->
-                                <td>{{ props.item.geneName }}</td>
+                                <td><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
+                                <td><span v-html="props.item.htmlData"></span></td>
                                 <td>{{ props.item.score }}</td>
                               </tr>
                             </template>
@@ -188,6 +189,11 @@ var geneModel = new GeneModel();
              align: 'left',
              value: 'score'
             },
+            {
+              text: 'Score Viz',
+              align: 'left',
+              value: 'htmlData'
+            }
         ],
         tempItems: [],
         items: []
@@ -221,8 +227,12 @@ var geneModel = new GeneModel();
             } else {
               console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
+              // self.items = geneModel.phenolyzerGenes;
               // self.selected = self.items.slice(0,50);
-              self.doSomething(self.tempItems);
+              let data = self.doSomething(self.tempItems);
+              console.log("data is " ,data)
+              self.items = data;
+              self.selected = self.items.slice(0,50)
               // var geneCount = geneModel.phenolyzerGenes.filter(function(gene) {
               //   return gene.selected;
               // }).length;
@@ -269,7 +279,7 @@ var geneModel = new GeneModel();
       },
       doSomething: function(tempItems){
         tempItems.map(function(gene){
-          gene.htmlData = `<svg width="${gene.score * 15}" height="25" xmlns="http://www.w3.org/2000/svg">
+          gene.htmlData = `<svg width="${gene.score * 800}" height="25" xmlns="http://www.w3.org/2000/svg">
   <defs>
       <linearGradient id="MyGradient">
           <stop offset="5%"  stop-color="#36D1DC"/>
@@ -278,11 +288,13 @@ var geneModel = new GeneModel();
   </defs>
 
   <rect fill="url(#MyGradient)"
-        x="10" y="5" width="${gene.score * 15}" height="25"/>
-  <text x="${gene.score * 6}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
+        x="10" y="5" width="${gene.score * 800}" height="25"/>
+  <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
 </svg>`
         })
-        console.log(tempItems.slice(0,5))
+        //console.log(tempItems.slice(0,5));
+        //self.items = tempItems;
+        return tempItems
       }
     }
   }
