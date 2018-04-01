@@ -13,12 +13,11 @@
                           <center>
                             <div id="phenotype-input" style="display:inline-block; padding-top:5px;">
                               <input
-                                style="width:1050px; height:36px; margin-top:4px;"
                                 id="phenotype-term"
                                 class="form-control"
                                 type="text"
                                 autocomplete="off"
-                                placeholder="Search phenotype..."
+                                placeholder="Search phenotype (E.g. lacticacidosis)"
                                 v-model="phenotypeTermEntered">
 
                               <typeahead
@@ -322,4 +321,37 @@ table.table tbody td, table.table tbody th{
   width: 1%;
   color: red
 }
+
+#phenotype-term{
+  width: 850px;
+  height:36px;
+  margin-top: 4px;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1050px){
+  #phenotype-term{
+    width: 800px;
+    height:36px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 950px){
+  #phenotype-term{
+    width: 600px;
+    height:36px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  #phenotype-term{
+    width: 400px;
+    height:36px;
+    margin-top: 4px;
+  }
+}
+
 </style>

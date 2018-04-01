@@ -9,13 +9,12 @@
         <!-- v-on:keyup.prevent="submitOnEnter" -->
         <!-- <form v-on:submit.prevent="submitOnEnter"> -->
         <input
-          style="width:1050px; height:36px; margin-top:4px;"
           id="input"
           class="form-control"
           type="text"
           autocomplete="off"
           v-on:keyup.prevent="submitOnEnter"
-          placeholder="Search Disorder...">
+          placeholder="Search Disorder (E.g. Treacher Collins)">
         <!-- </form> -->
         <!-- </form> -->
         <typeahead
@@ -229,10 +228,42 @@ var model = new Model();
    color: white;
  }
  .btn{
-   padding: 0px
+   padding: 0px;
  }
  .form-control{
    font-size: 15px;
-   font-weight: 800
+   font-weight: 800;
  }
+#input{
+  width: 850px;
+  height:36px;
+  margin-top: 4px;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1050px){
+  #input{
+    width: 800px;
+    height:36px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 950px){
+  #input{
+    width: 600px;
+    height:36px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  #input{
+    width: 400px;
+    height:36px;
+    margin-top: 4px;
+  }
+}
+
 </style>

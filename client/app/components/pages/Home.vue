@@ -65,23 +65,29 @@
                         <v-card-text>
 
                           <v-layout row wrap>
-                            <v-flex d-flex xs12 sm4 md4>
+                            <v-flex d-flex xs12 sm12 md4>
+                              <center>
                                 <PieChartSelectorBackup
-                                  v-if="diseases.length &&modeOfInheritanceProps.length"
-                                  v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-                                </PieChartSelectorBackup>
+                                    v-if="diseases.length &&modeOfInheritanceProps.length"
+                                    v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                                  </PieChartSelectorBackup>
+                                </center>
                             </v-flex>
-                            <v-flex d-flex xs12 sm4 md4>
-                                <GeneMembership
+                            <v-flex d-flex xs12 sm12 md4>
+                                <center>
+                                  <GeneMembership
                                   v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                                   v-bind:GeneData="geneProps">
                                 </GeneMembership>
+                              </center>
                             </v-flex>
-                            <v-flex d-flex xs12 sm4 md4>
-                                <ConditionsDistribution
+                            <v-flex d-flex xs12 sm12 md4>
+                                <center>
+                                  <ConditionsDistribution
                                     v-if="geneProps.length && diseasesProps.length"
                                     v-bind:distributionData="geneProps">
                                 </ConditionsDistribution>
+                              </center>
                             </v-flex>
 
                           </v-layout>

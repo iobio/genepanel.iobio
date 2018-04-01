@@ -32,7 +32,9 @@ import { bus } from '../../routes';
     },
     methods:{
       draw(data){
-        console.log("data in draw is ", data)
+        console.log("data in draw is ", data);
+        var widthPercent = "100%";
+        var heightPercent = "270px";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
         var height = 250- margin.top - margin.bottom;
@@ -72,11 +74,22 @@ import { bus } from '../../routes';
                     .orient("bottom");
 
 
+        // var canvas = d3.select("#conditions-distribution-chart").append("svg")
+        //                     .attr("height", height + margin.top + margin.bottom)
+        //                     .attr("width", width + margin.right + margin.left)
+        //                     .append("g")
+        //                       .attr('transform', 'translate('+margin.left+','+margin.top+')')
+
+        var ht = height + margin.top + margin.bottom;
+        var wdth = width + margin.right + margin.left
         var canvas = d3.select("#conditions-distribution-chart").append("svg")
-                            .attr("height", height + margin.top + margin.bottom)
-                            .attr("width", width + margin.right + margin.left)
+                            .attr("height", heightPercent)
+                            .attr("width", widthPercent)
+                            .attr('viewBox', "0 0 " + parseInt(wdth) + " " + parseInt(ht))
+                            .attr("preserveAspectRatio", "none")
                             .append("g")
                               .attr('transform', 'translate('+margin.left+','+margin.top+')')
+
 
         var group = canvas.append("g")
                           .attr('transform', 'translate(0,'+ height +')')
@@ -120,6 +133,8 @@ import { bus } from '../../routes';
                     .attr("width", function(d){return x(d.dx)})
                     .attr("height", function(d){return height-y(d.y)})
                     .attr("fill", "steelblue")
+                    .attr("stroke", "#1f5d7a")
+                    .attr("stroke-width", 1)
 
                   // bars.append("text")
                   //   .attr("x", function(d){return x(d.x)-3.5})

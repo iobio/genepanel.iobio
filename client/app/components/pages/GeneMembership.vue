@@ -217,11 +217,11 @@ var model = new Model();
          .classed("selected", function(d,i) {
 
            if(d.length>0){
-             console.log("selected d", d[0].name);
+             // console.log("selected d", d[0].name);
            }
 
             var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
-            console.log("inBrushExtent", inBrushExtent)
+            // console.log("inBrushExtent", inBrushExtent)
             return inBrushExtent;
          })
 
@@ -247,7 +247,6 @@ var model = new Model();
         console.log("dataOrig" , dataOrig)
         // set svg element
         svg = d3.select(this);
-
         svg.attr("width", widthPercent)
           .attr("height", heightPercent)
           .attr('viewBox', "0 0 " + parseInt(width) + " " + parseInt(height))

@@ -28,6 +28,8 @@ import { bus } from '../../routes';
 
         d3.select("#pie-chart-box2").select("svg").remove();
 
+        var widthPercent = "85%";
+        var heightPercent = "240px";
         var width = 400,
           height = 260,
           radius = Math.min(width, height) / 2;
@@ -47,9 +49,17 @@ import { bus } from '../../routes';
             return d._geneCount;
           });
 
+          // var svg = d3.select("#pie-chart-box2").append("svg")
+          //   .attr("width", width)
+          //   .attr("height", height)
+          //   .append("g")
+          //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
           var svg = d3.select("#pie-chart-box2").append("svg")
-            .attr("width", width)
-            .attr("height", height)
+            .attr("height", heightPercent)
+            .attr("width", widthPercent)
+            .attr('viewBox', "0 0 " + parseInt(width) + " " + parseInt(height))
+            .attr("preserveAspectRatio", "none")
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -181,7 +191,7 @@ import { bus } from '../../routes';
           g.append("text")
             .attr("transform", function(d) {
               var _d = arc.centroid(d);
-                _d[0] *= 1.7;	//multiply by a constant factor
+                _d[0] *= 1.6;	//multiply by a constant factor
                 _d[1] *= 1.7;	//multiply by a constant factor
                 return "translate(" + _d + ")";
             })
