@@ -45,10 +45,15 @@
 
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card style="margin-top:4px">
-                        <v-card-title primary class="title">Results &nbsp;</v-card-title>
+                        <v-card-title primary class="title">
+                          Results &nbsp;
+                          <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
+                        </v-card-title>
                         <div v-if="items.length">
                         <v-card-title>
                           <strong>
+                            Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
+                            &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
                           </strong>
                           <v-spacer></v-spacer>
                           <v-text-field
@@ -140,6 +145,8 @@
 
 
 <script>
+import { bus } from '../../routes';
+
 import { Typeahead, Btn } from 'uiv';
 import NavigationBar from './NavigationBar.vue';
 
@@ -195,10 +202,33 @@ var geneModel = new GeneModel();
             }
         ],
         tempItems: [],
-        items: []
+        items: [],
+        NumberOfTopPhenolyzerGenes: 50,
+        selectedGenesText: ""
       }
     },
+    updated(){
+      bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
+        this.filterGenesOnSelectedNumber(data);
+        this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      })
+
+      this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+      this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+      this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+    },
     methods: {
+      filterGenesOnSelectedNumber(data){
+        this.selected = this.items.slice(0,data)
+      },
+      selectNumberOfTopPhenolyzerGenes: function(){
+        if(this.NumberOfTopPhenolyzerGenes>0){
+          bus.$emit('SelectNumberOfPhenolyzerGenes', this.NumberOfTopPhenolyzerGenes);
+        }
+      },
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []
         else this.selected = this.items.slice()
@@ -232,6 +262,10 @@ var geneModel = new GeneModel();
               console.log("data is " ,data)
               self.items = data;
               self.selected = self.items.slice(0,50)
+              self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+              self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+              self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+              self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
               // var geneCount = geneModel.phenolyzerGenes.filter(function(gene) {
               //   return gene.selected;
               // }).length;

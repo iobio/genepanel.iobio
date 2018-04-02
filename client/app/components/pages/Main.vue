@@ -69,7 +69,7 @@
               <hr>
             </div>
             <div v-else-if="component==='Phenolyzer'">
-              <v-list-tile @click="copyGtrGenes">
+              <v-list-tile @click="copyPhenolyzerGenes">
                 <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
               </v-list-tile>
               <v-list-tile @click="exportGtrGenes">
@@ -153,7 +153,11 @@
               v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)">
             </Home>
             <HomePage v-else-if="component==='HomePage'"></HomePage>
-            <Phenolyzer v-else-if="component==='Phenolyzer'"></Phenolyzer>
+            <Phenolyzer
+              v-else-if="component==='Phenolyzer'"
+              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
+              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)">
+            </Phenolyzer>
             <SummaryTab v-else-if="component==='SummaryTab'"></SummaryTab>
           </keep-alive>
         </v-tabs-items>
@@ -189,7 +193,7 @@ import Gtr from './Gtr.vue';
     },
     data(){
       return{
-        component: 'Home',
+        component: 'Phenolyzer',
         drawer: false,
         vendorList:[],
         selectedVendorsList:[],
@@ -198,6 +202,7 @@ import Gtr from './Gtr.vue';
         NumberOfGenesSelectedFromGTR: 0,
         NumberOfGenesSelectedFromPhenolyzer: 0,
         selectedGtrGenes: [],
+        selectedPhenolyzerGenes: [],
         snackbar: false,
         y: 'top',
         x: null,
@@ -230,6 +235,9 @@ import Gtr from './Gtr.vue';
       updateGtrTabBadge: function(e){
         this.NumberOfGenesSelectedFromGTR = e;
       },
+      updatePhenolyzerTabBadge: function(e){
+        this.NumberOfGenesSelectedFromPhenolyzer = e;
+      },
       clickFuncTemp: function(){
         // alert("functionality coming soon")
         var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
@@ -238,6 +246,9 @@ import Gtr from './Gtr.vue';
       },
       updateGtrGenes: function(e){
         this.selectedGtrGenes = e;
+      },
+      updatePhenolyzerGenes:function(e){
+        this.selectedPhenolyzerGenes = e;
       },
       copyGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
@@ -248,6 +259,18 @@ import Gtr from './Gtr.vue';
         this.$clipboard(genesToCopy);
         if(this.selectedGtrGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
+        }
+        this.snackbar=true;
+      },
+      copyPhenolyzerGenes: function(){
+        var geneNames = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        var geneNamesToString = geneNames.toString();
+        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
+        this.$clipboard(genesToCopy);
+        if(this.selectedPhenolyzerGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.selectedPhenolyzerGenes.length + " ";
         }
         this.snackbar=true;
       },
