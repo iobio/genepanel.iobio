@@ -39,6 +39,11 @@
                             {{ phenolyzerStatus }}
                           </div>
                           <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
+                          <p>
+                            <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
+                              Sorry, the following search term returns no data!
+                            </v-alert>
+                          </p>
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -203,6 +208,7 @@ var geneModel = new GeneModel();
         NumberOfTopPhenolyzerGenes: 50,
         selectedGenesText: "",
         checked: false,
+        alert:false,
       }
     },
     updated(){
@@ -243,6 +249,7 @@ var geneModel = new GeneModel();
         let self = this;
         self.items = [];
         self.checked = true;
+        self.alert = false; 
         self.selectedGenesText = "";
         self.phenolyzerStatus = null;
         self.genesToApply = "";
@@ -257,6 +264,8 @@ var geneModel = new GeneModel();
             if (geneModel.phenolyzerGenes.length == 0) {
               self.phenolyzerStatus = "no genes found."
               self.genesToApply = "";
+              self.checked = false;
+              self.alert = true;
             } else {
               console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
@@ -266,7 +275,7 @@ var geneModel = new GeneModel();
               let data = self.doSomething(self.tempItems);
               self.items = data;
               self.selected = self.items.slice(0,50);
-              self.phenolyzerStatus = null; 
+              self.phenolyzerStatus = null;
               self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
               self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
               self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
