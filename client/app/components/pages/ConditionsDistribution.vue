@@ -46,7 +46,7 @@ import { bus } from '../../routes';
         })
         d3.select("#conditions-distribution-chart").select("svg").remove();
         var histogram = d3.layout.histogram()
-                          .bins(20)
+                          .bins(30)
                           (data)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
@@ -70,7 +70,7 @@ import { bus } from '../../routes';
 
         var xAxis = d3.svg.axis()
                     .scale(x)
-                    .ticks(data.length/3)
+                    .ticks(10)
                     .orient("bottom");
 
 
@@ -165,7 +165,7 @@ import { bus } from '../../routes';
 
 </script>
 
-<style>
+<style scoped>
 .axis .label {
   font-size: 17px;
 }

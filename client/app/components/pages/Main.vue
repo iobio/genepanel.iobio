@@ -78,10 +78,10 @@
               <hr>
             </div>
 
-            <v-list-tile @click="clickFuncTemp">
+            <v-list-tile @click="copyAllGenes">
               <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile @click="clickFuncTemp">
+            <v-list-tile @click="exportAllGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
             </v-list-tile>
           </v-list>
@@ -279,6 +279,24 @@ import Gtr from './Gtr.vue';
         }
         this.snackbar=true;
       },
+      copyAllGenes: function(){
+        var gtrGenes = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+
+        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+
+        var allGenes = [...gtrGenes, ...phenolyzerGenes];
+
+        var genesToCopy = allGenes.toString();
+        this.$clipboard(genesToCopy);
+        if(allGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + allGenes.length + " ";
+        }
+        this.snackbar=true;
+      },
       exportGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
           return gene.name
@@ -306,6 +324,26 @@ import Gtr from './Gtr.vue';
           this.snackbarText = "You need to select genes inorder to use this feature";
           this.snackbar=true;
         }
+      },
+      exportAllGenes: function(){
+          var gtrGenes = this.selectedGtrGenes.map(gene => {
+            return gene.name
+          })
+
+          var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+            return gene.geneName
+          })
+
+          var allGenes = [...gtrGenes, ...phenolyzerGenes];
+          var geneNamesToExport = allGenes.toString();
+          if(allGenes.length>0){
+            var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+            FileSaver.saveAs(blob, "All Genes.txt");
+          }
+          else {
+            this.snackbarText = "You need to select genes inorder to use this feature";
+            this.snackbar=true;
+          }
       }
     }
 

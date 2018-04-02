@@ -29,6 +29,7 @@
                             </div>
 
                             <v-btn
+                                style="margin-top:-0.35px"
                                 color="blue darken-1"
                                 class="btnColor"
                                 v-on:click="onSearchPhenolyzerGenes">
@@ -249,7 +250,7 @@ var geneModel = new GeneModel();
         let self = this;
         self.items = [];
         self.checked = true;
-        self.alert = false; 
+        self.alert = false;
         self.selectedGenesText = "";
         self.phenolyzerStatus = null;
         self.genesToApply = "";

@@ -27,6 +27,7 @@
       </div>
 
       <v-btn
+          style="margin-top:-0.35px"
           color="blue darken-1"
           class="btnColor"
           v-on:click.prevent="performSearch">
@@ -245,15 +246,15 @@ var model = new Model();
 @media screen and (max-width: 1050px){
   #input{
     width: 800px;
-    height:36px;
+    height:36.5px;
     margin-top: 4px;
   }
 }
 
 @media screen and (max-width: 950px){
   #input{
-    width: 600px;
-    height:36px;
+    width: 500px;
+    height:36.5px;
     margin-top: 4px;
   }
 }
@@ -261,8 +262,12 @@ var model = new Model();
 @media screen and (max-width: 700px){
   #input{
     width: 400px;
-    height:36px;
+    height:36.5px;
     margin-top: 4px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+  }
+  .btnColor{
+    margin-top: 2px
   }
 }
 

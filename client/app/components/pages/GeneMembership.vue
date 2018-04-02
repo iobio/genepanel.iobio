@@ -214,11 +214,7 @@ var model = new Model();
       var start = brush.extent()[0];
       var end   = brush.extent()[1];
       svg.selectAll(".bar")
-         .classed("selected", function(d,i) {
-
-           if(d.length>0){
-             // console.log("selected d", d[0].name);
-           }
+         .classed("selected", function(d,i) {10
 
             var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
             // console.log("inBrushExtent", inBrushExtent)
@@ -268,13 +264,15 @@ var model = new Model();
               .range(options.descendingX ? [innerWidth, 0] : [0, innerWidth]);
 
 
-
+              // console.log("x.ticks(max)", x.ticks(max))
 
         // Generate a histogram using twenty uniformly-spaced bins.
         var data = d3.layout.histogram()
             .bins(x.ticks(max))
             .value(function(d){return d._genePanelCount;})
             (dataOrig);
+
+
 
         console.log("data in histogram", data)
 
