@@ -38,6 +38,7 @@
                           <div v-if="phenolyzerStatus!==null">
                             {{ phenolyzerStatus }}
                           </div>
+                          <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -122,12 +123,8 @@
                         </div>
                       </v-card>
                     </v-flex>
-
                     <br>
-
                     <br>
-
-
                  </v-layout>
                 </v-card-text>
             </v-flex>
@@ -204,7 +201,8 @@ var geneModel = new GeneModel();
         tempItems: [],
         items: [],
         NumberOfTopPhenolyzerGenes: 50,
-        selectedGenesText: ""
+        selectedGenesText: "",
+        checked: false,
       }
     },
     updated(){
@@ -243,8 +241,14 @@ var geneModel = new GeneModel();
       },
       onSearchPhenolyzerGenes: function() {
         let self = this;
+        self.items = [];
+        self.checked = true;
+        self.selectedGenesText = "";
         self.phenolyzerStatus = null;
         self.genesToApply = "";
+        self.selected = [];
+        self.NoOfGenesSelectedFromPhenolyzer = 0;
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
         var searchTerm = self.phenotypeTerm.value;
         self.phenotypeTermEntered = self.phenotypeTerm.value;
         geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
@@ -256,12 +260,13 @@ var geneModel = new GeneModel();
             } else {
               console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
+              self.checked = false;
               // self.items = geneModel.phenolyzerGenes;
               // self.selected = self.items.slice(0,50);
               let data = self.doSomething(self.tempItems);
-              console.log("data is " ,data)
               self.items = data;
-              self.selected = self.items.slice(0,50)
+              self.selected = self.items.slice(0,50);
+              self.phenolyzerStatus = null; 
               self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
               self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
               self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
