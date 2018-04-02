@@ -125,6 +125,7 @@
         <v-tab v-on:click="component='SummaryTab'">
           <div class="text-xs-center">
           <v-badge left style="background-color:#fff0; font-size:20px">
+            <span slot="badge">{{ NumberOfAllGenes }}</span>
             <span ><strong>Summary</strong></span>
           </v-badge>
           </div>
@@ -193,7 +194,7 @@ import Gtr from './Gtr.vue';
     },
     data(){
       return{
-        component: 'Phenolyzer',
+        component: 'Home',
         drawer: false,
         vendorList:[],
         selectedVendorsList:[],
@@ -201,6 +202,7 @@ import Gtr from './Gtr.vue';
         selectedDisordersList: [],
         NumberOfGenesSelectedFromGTR: 0,
         NumberOfGenesSelectedFromPhenolyzer: 0,
+        NumberOfAllGenes: 0,
         selectedGtrGenes: [],
         selectedPhenolyzerGenes: [],
         snackbar: false,
@@ -211,6 +213,9 @@ import Gtr from './Gtr.vue';
         snackbarText:"You need to select Genes inorder to copy them"
 
       }
+    },
+    updated(){
+      this.NumberOfAllGenes = this.NumberOfGenesSelectedFromGTR + this.NumberOfGenesSelectedFromPhenolyzer
     },
     methods: {
       addDiseases: function(e){
