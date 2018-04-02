@@ -72,7 +72,7 @@
               <v-list-tile @click="copyPhenolyzerGenes">
                 <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="exportGtrGenes">
+              <v-list-tile @click="exportPhenolyzerGenes">
                 <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
               </v-list-tile>
               <hr>
@@ -287,7 +287,20 @@ import Gtr from './Gtr.vue';
           this.snackbarText = "You need to select genes inorder to use this feature";
           this.snackbar=true;
         }
-
+      },
+      exportPhenolyzerGenes: function(){
+        var geneNames = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        var geneNamesToExport = geneNames.toString();
+        if(this.selectedPhenolyzerGenes.length>0){
+          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+          FileSaver.saveAs(blob, "Phenolyzer Genes.txt");
+        }
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
       }
     }
 
