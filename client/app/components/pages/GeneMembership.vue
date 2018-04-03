@@ -214,7 +214,7 @@ var model = new Model();
       var start = brush.extent()[0];
       var end   = brush.extent()[1];
       svg.selectAll(".bar")
-         .classed("selected", function(d,i) {10
+         .classed("selected", function(d,i) {
 
             var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
             // console.log("inBrushExtent", inBrushExtent)
@@ -265,9 +265,24 @@ var model = new Model();
 
 
               // console.log("x.ticks(max)", x.ticks(max))
+              console.log("dataOrig.length : " , dataOrig.length)
 
         // Generate a histogram using twenty uniformly-spaced bins.
-        var data = d3.layout.histogram()
+        if(dataOrig.length>2000){
+          var data = d3.layout.histogram()
+              .bins(20)
+              .value(function(d){return d._genePanelCount;})
+              (dataOrig);
+        }
+        else {
+          var data = d3.layout.histogram()
+              .bins(x.ticks(max))
+              .value(function(d){return d._genePanelCount;})
+              (dataOrig);
+        }
+
+
+        var dataForBrush = d3.layout.histogram()
             .bins(x.ticks(max))
             .value(function(d){return d._genePanelCount;})
             (dataOrig);
@@ -302,7 +317,7 @@ var model = new Model();
             .tickFormat(function(tickValue) {
               return tickValue;
             })
-            .ticks(max/1.5)
+            .ticks(10) //max/1.5
 
 
         var yAxis = d3.svg.axis()
@@ -404,19 +419,23 @@ var model = new Model();
 
         // Select all bars to equal total count of 100
         if (options.selectTop) {
-          var maxX = data.length+1;
+          console.log("options", options);
+          console.log("options selectTop", options.selectTop);
+          console.log("data", dataForBrush)
+          var maxX = dataForBrush.length+1;
           var minX = null;
           var total = 0;
-          for (let i = data.length-1; i >= 0; i-- ) {
-            let d = data[i];
+          for (let i = dataForBrush.length-1; i >= 0; i-- ) {
+            let d = dataForBrush[i];
             total += d.y;
             if (minX == null && total >= options.selectTop) {
               minX = i+1;
             }
           }
           if (minX == null) {
-            minX = data.length;
+            minX = dataForBrush.length;
           }
+          console.log('minX' , minX , "  maxX " , maxX)
           brush.extent([minX, maxX]);
         }
 

@@ -45,9 +45,22 @@ import { bus } from '../../routes';
           return a - b
         })
         d3.select("#conditions-distribution-chart").select("svg").remove();
-        var histogram = d3.layout.histogram()
+        console.log("data length in conditions", data.length)
+
+        if(data.length>1000){
+          var histogram = d3.layout.histogram()
                           .bins(30)
                           (data)
+        }
+        else{
+          var histogram = d3.layout.histogram()
+                          .bins(20)
+                          (data)
+        }
+
+        // var histogram = d3.layout.histogram()
+        //                   .bins(40)
+        //                   (data)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
@@ -66,7 +79,7 @@ import { bus } from '../../routes';
         var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
-                    .ticks(5)
+                    .ticks(6)
 
         var xAxis = d3.svg.axis()
                     .scale(x)
