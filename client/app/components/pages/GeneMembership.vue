@@ -370,7 +370,7 @@ var model = new Model();
 
         group.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(" + 0 + "," + innerHeight + ")")  //((x(data[0].dx) - x(0)) / 2)
+            .attr("transform", "translate(" +((x(data[0].dx) - x(0)) / 2) + "," + innerHeight + ")")  //((x(data[0].dx) - x(0)) / 2)
             .call(xAxis);
 
 
