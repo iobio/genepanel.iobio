@@ -28,7 +28,7 @@ import { bus } from '../../routes';
 
         d3.select("#pie-chart-box2").select("svg").remove();
 
-        var widthPercent = "85%";
+        var widthPercent = "80%";
         var heightPercent = "240px";
         var width = 400,
           height = 260,

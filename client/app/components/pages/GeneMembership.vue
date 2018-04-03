@@ -201,12 +201,16 @@ var model = new Model();
     // A formatter for counts.
     let formatCount = d3.format(",.0f");
 
-    let logFormat = function(d) {
+    let logFormat = function(d, i) {
       if (d < 1) {
         return "";
       } else {
-        var x = Math.log(d) / Math.log(10) + 1e-6;
-        return Math.abs(x - Math.floor(x)) < .7 ? formatCount(d) : "";
+        console.log("d :" , d, " i : ", i, " i/2 : ",  i/2)
+        if(i%2===0){
+          var x = Math.log(d) / Math.log(10) + 1e-6;
+          console.log(Math.abs(x - Math.floor(x)))
+          return Math.abs(x - Math.floor(x)) < 1.1 ? formatCount(d) : "";
+        }
       }
     }
 
@@ -323,7 +327,9 @@ var model = new Model();
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left")
+            .ticks(5)
             .tickFormat(options.logScale ? logFormat : d3.format("i"))
+
 
 
         var barGroup = group.append("g")
