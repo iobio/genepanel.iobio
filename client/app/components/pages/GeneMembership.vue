@@ -265,7 +265,7 @@ var model = new Model();
         var min = d3.min(dataOrig, function(d){ return d._genePanelCount;});
         var x = d3.scale.linear()
               .domain([min, max+1])
-              .range(options.descendingX ? [innerWidth, 0] : [0, innerWidth]);
+              .range([0, innerWidth]);  //.range(options.descendingX ? [innerWidth, 0] : [0, innerWidth]);
 
 
               // console.log("x.ticks(max)", x.ticks(max))
@@ -345,7 +345,7 @@ var model = new Model();
             .attr("x", 1)
             .attr("width", Math.abs((x(data[0].dx) - x(0))) - 1)
             .attr("height", function(d) { return 0; })
-            .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0)
+            // .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0)
             // .attr("fill", function(d){
             //   if(d.length>0){
             //     console.log(d[0].name);
@@ -370,7 +370,7 @@ var model = new Model();
 
         group.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(" + ((x(data[0].dx) - x(0)) / 2) + "," + innerHeight + ")")
+            .attr("transform", "translate(" + 0 + "," + innerHeight + ")")  //((x(data[0].dx) - x(0)) / 2)
             .call(xAxis);
 
 
