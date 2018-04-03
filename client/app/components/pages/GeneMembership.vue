@@ -291,12 +291,6 @@ var model = new Model();
             .value(function(d){return d._genePanelCount;})
             (dataOrig);
 
-
-
-        console.log("data in histogram", data)
-
-
-
         var yMax = d3.max(data, function(d){return d.length});
         var yMin = d3.min(data, function(d){return d.length});
 
