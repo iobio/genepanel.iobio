@@ -159,7 +159,11 @@
               v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)">
             </Phenolyzer>
-            <SummaryTab v-else-if="component==='SummaryTab'"></SummaryTab>
+            <SummaryTab
+              v-else-if="component==='SummaryTab'"
+              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer">
+            </SummaryTab>
           </keep-alive>
         </v-tabs-items>
       </div>
