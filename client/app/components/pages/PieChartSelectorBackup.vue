@@ -29,9 +29,9 @@ import { bus } from '../../routes';
         d3.select("#pie-chart-box2").select("svg").remove();
 
         var widthPercent = "75%";
-        var heightPercent = "240px";
+        var heightPercent = "220px";
         var width = 400,
-          height = 260,
+          height = 240,
           radius = Math.min(width, height) / 2;
 
         var color = d3.scale.ordinal()

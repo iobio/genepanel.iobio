@@ -90,7 +90,7 @@ var model = new Model();
             .width(390)
             .height(150)
             .widthPercent("100%")
-            .heightPercent("270px")
+            .heightPercent("240px")
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
             .yAxisLabel( "# of genes" )
             .xAxisLabel( "# of Panels" )

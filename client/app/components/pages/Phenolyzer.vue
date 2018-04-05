@@ -373,7 +373,7 @@ table.table tbody td, table.table tbody th{
 
 #phenotype-term{
   width: 850px;
-  height:36px;
+  height:35px;
   margin-top: 4px;
 }
 
@@ -382,7 +382,7 @@ table.table tbody td, table.table tbody th{
 @media screen and (max-width: 1050px){
   #phenotype-term{
     width: 800px;
-    height:36px;
+    height:35px;
     margin-top: 4px;
   }
 }
@@ -390,7 +390,7 @@ table.table tbody td, table.table tbody th{
 @media screen and (max-width: 950px){
   #phenotype-term{
     width: 600px;
-    height:36px;
+    height:35px;
     margin-top: 4px;
   }
 }
@@ -398,7 +398,7 @@ table.table tbody td, table.table tbody th{
 @media screen and (max-width: 700px){
   #phenotype-term{
     width: 400px;
-    height:36px;
+    height:35px;
     margin-top: 4px;
   }
 }

@@ -34,7 +34,7 @@ import { bus } from '../../routes';
       draw(data){
         console.log("data in draw is ", data);
         var widthPercent = "100%";
-        var heightPercent = "270px";
+        var heightPercent = "240px";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
         var height = 250- margin.top - margin.bottom;
@@ -120,14 +120,14 @@ import { bus } from '../../routes';
         var group1 = canvas.append("g")
                             // .attr("transform",'translate('+margin.left+','+margin.top+')')
                             .call(yAxis)
-                            .attr("class", "y axis")
+                            .attr("class", "y axis ")
                             // .attr("stroke", "black")
 
                     group1.append("text")
                           .attr("class", "y axis label")
                           .attr("transform", "rotate(-90)")
                           .attr("y", 0 - margin.left)
-                          .attr("x",0 - (height / 2))
+                          .attr("x",0 - ((height / 2) + 20))
                           .attr("dy", "1em")
                           .style("text-anchor", "start")
                           .text('# of Panels');
@@ -178,8 +178,10 @@ import { bus } from '../../routes';
 
 </script>
 
-<style scoped>
-.axis .label {
-  font-size: 17px;
+<style>
+#conditions-distribution-chart .axis .label {
+  font-size: 13.7px !important;
 }
+
+
 </style>
