@@ -222,6 +222,7 @@ import { bus } from '../../routes';
                   return d.data._modeOfInheritance;
                 })
 
+                //tooltip
                 path.append("svg:title")
                   .text(function(d){
                     return d.data._modeOfInheritance;
