@@ -125,8 +125,12 @@ import { bus } from '../../routes';
             .enter().append("g")
             .attr("class", "arc");
 
+          var count = 0;
           var path = g.append("path")
             .attr("d", arc)
+            .attr("id", function(d){
+              return "arc-"+ (count++);
+            })
             .attr("stroke", "rgb(245, 245, 245)")
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
@@ -163,6 +167,7 @@ import { bus } from '../../routes';
 
             //Mouse over event
               path.on("mouseover", function(d){
+                console.log(d3.select(this).attr("id"))
                 if(d.data.selected){
                   d3.select(this)
                       .transition()
@@ -199,12 +204,17 @@ import { bus } from '../../routes';
 
 
           //Setting legend
+          var countt = 0;
           var legend = svg.append("g")
                           .attr("class", "legend")
                           .attr("transform", "translate(150, -105)")
                           .selectAll("g")
                           .data(pie(data))
                           .enter().append("g")
+                          .attr("legend-id", function(d){
+                            return countt++;
+                          })
+
           legend.append("circle")
               .attr("cy", function(d,i){
                 return i*20;
@@ -220,6 +230,17 @@ import { bus } from '../../routes';
                 .attr("x", 25)
                 .text(function(d){
                   return d.data._modeOfInheritance;
+                })
+
+                legend.on("mouseover", function(d){
+                  console.log($(this).attr("legend-id"))
+                  var oarc = d3.select("#pie-chart-box2 #arc-" + $(this).attr("legend-id"));
+                  oarc.style("opacity", 0.3)
+                  .attr("stroke", "red")
+                  .transition()
+                  .duration(200)
+                  .attr("d", arcOver)
+                  .attr("stroke-width", 1)
                 })
 
                 //tooltip
