@@ -230,6 +230,7 @@ var model = new Model();
  }
  .btn{
    padding: 0px;
+   height:34px;
  }
  .form-control{
    font-size: 15px;

@@ -355,7 +355,8 @@ var geneModel = new GeneModel();
   color: white;
 }
 .btn{
-  padding: 0px
+  padding: 0px;
+  height: 34px;
 }
 .form-control{
   font-size: 15px;
