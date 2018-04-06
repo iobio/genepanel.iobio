@@ -126,8 +126,8 @@ import { bus } from '../../routes';
                     group1.append("text")
                           .attr("class", "y axis label")
                           .attr("transform", "rotate(-90)")
-                          .attr("y", 0 - margin.left)
-                          .attr("x",0 - ((height / 2) + 20))
+                          .attr("y", 0 - margin.left -3.5)
+                          .attr("x",0 - ((height / 2) + 30))
                           .attr("dy", "1em")
                           .style("text-anchor", "start")
                           .text('# of Panels');

@@ -249,7 +249,7 @@ var model = new Model();
         svg = d3.select(this);
         svg.attr("width", widthPercent)
           .attr("height", heightPercent)
-          .attr('viewBox', "0 0 " + parseInt(width) + " " + parseInt(height))
+          .attr('viewBox', "0 0 " + parseInt(width+10) + " " + parseInt(height))
           .attr("preserveAspectRatio", "none");
 
         svg.select("g").remove();
