@@ -167,7 +167,7 @@ import { bus } from '../../routes';
 
             //Mouse over event
               path.on("mouseover", function(d){
-                console.log(d3.select(this).attr("id"))
+                // console.log(d3.select(this).attr("id"))
                 if(d.data.selected){
                   d3.select(this)
                       .transition()
@@ -214,6 +214,7 @@ import { bus } from '../../routes';
                           .attr("legend-id", function(d){
                             return countt++;
                           })
+                          .style("cursor", "pointer")
 
           legend.append("circle")
               .attr("cy", function(d,i){
@@ -234,16 +235,45 @@ import { bus } from '../../routes';
 
                 legend.on("mouseover", function(d){
                   var oarc = d3.select("#pie-chart-box2 #arc-" + $(this).attr("legend-id"));
-                  oarc.style("opacity", 0.7)
-                  .attr("stroke", "red")
-                  .transition()
-                  .duration(200)
-                  // .attr("d", arcOver)
-                  .attr("stroke-width", 1)
+                  // console.log(oarc[0][0].__data__.data.selected)
+                  // console.log(oarc[0][0].__data__.data._modeOfInheritance)
+                  if(oarc[0][0].__data__.data.selected){
+                    oarc.style("opacity", 0.7)
+                    .attr("stroke", "red")
+                    .transition()
+                    .duration(200)
+                    // .attr("d", arcOver)
+                    .attr("stroke-width", 1)
+                  }
+                  else {
+                    oarc.style("opacity", 0.7)
+                    .attr("stroke", "red")
+                    .transition()
+                    .duration(200)
+                    // .attr("d", arc)
+                    .attr("stroke-width", 1)
+                  }
+
                 })
 
                 legend.on("mouseout", function(d){
                   var oarc = d3.select("#pie-chart-box2 #arc-" + $(this).attr("legend-id"));
+                  if(oarc[0][0].__data__.data.selected){
+                    oarc.style("opacity", 1)
+                    .attr("stroke", "white")
+                    .transition()
+                    .duration(200)
+                    // .attr("d", arcOver)
+                    .attr("stroke-width", 1)
+                  }
+                  else {
+                    oarc.style("opacity", 1)
+                    .attr("stroke", "white")
+                    .transition()
+                    .duration(200)
+                    // .attr("d", arc)
+                    .attr("stroke-width", 1)
+                  }
                   oarc.style("opacity", 1)
                   .attr("stroke", "white")
                   .transition()
