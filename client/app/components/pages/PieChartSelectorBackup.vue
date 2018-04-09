@@ -29,9 +29,9 @@ import { bus } from '../../routes';
         d3.select("#pie-chart-box2").select("svg").remove();
 
         var widthPercent = "100%";
-        var heightPercent = "220px";
+        var heightPercent = "240px";
         var width = 400,
-          height = 240,
+          height = 260,
           radius = Math.min(width, height) / 2;
 
       //   var color = d3.scale.ordinal()
@@ -49,10 +49,10 @@ import { bus } from '../../routes';
     ]);
 
         var arcOver = d3.svg.arc()
-          .outerRadius(radius - 20)
+          .outerRadius(radius - 30)
           .innerRadius(radius - height/2);
 
-        var arc = d3.svg.arc().outerRadius(radius).innerRadius(radius - height/2);
+        var arc = d3.svg.arc().outerRadius(radius- 15).innerRadius(radius - height/2);
 
         var pie = d3.layout.pie()
           .sort(null)
