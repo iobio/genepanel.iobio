@@ -2,6 +2,10 @@
   <div>
     <br><br>
     <center>
+      <SummaryPieChart
+        v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+        v-bind:summaryPieChartData="pieChartdataArr">
+      </SummaryPieChart>
       <strong>Number of GTR Genes selected: {{ GtrGenesCount }}</strong>
       <br>
       <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong>
@@ -10,7 +14,11 @@
 </template>
 
 <script>
+import SummaryPieChart from './SummaryPieChart.vue';
   export default {
+    components: {
+      'SummaryPieChart': SummaryPieChart
+    },
     props:{
       NumberOfGtrGenes:{
         type: Number
@@ -33,7 +41,11 @@
       PhenolyzerGenes: [],
       GtrGenesArr:[],
       PhenolyzerGenesArr:[],
-      AllSourcesGenes:[]
+      AllSourcesGenes:[],
+      commonGtrPhenoGenes:[],
+      uniqueGtrGenes:[],
+      uniquePhenoGenes:[],
+      pieChartdataArr:[],
     }),
     watch: {
       NumberOfGtrGenes: function(){
@@ -44,9 +56,11 @@
       },
       GtrGenesForSummary:function(){
         this.GtrGenes = this.GtrGenesForSummary;
+        this.performSetOperations();
       },
       PhenolyzerGenesForSummary: function(){
         this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
+        this.performSetOperations();
       }
     },
     mounted(){
@@ -71,7 +85,35 @@
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
 
-      }
+        var gtrSet = new Set(this.GtrGenesArr);
+        var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
+        var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
+        this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
+
+        var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
+        this.uniqueGtrGenes = [...uniqueGtr];
+
+        var uniquePheno = new Set([...phenolyzerSet].filter(x => !gtrSet.has(x)));
+        this.uniquePheno = [...uniquePheno];
+
+        this.setPieChartData();
+      },
+      setPieChartData(){
+        this.pieChartdataArr = [
+          {
+            name: "Unique to GTR",
+            count: this.uniqueGtrGenes.length
+          },
+          {
+            name: "Unique to Phenolyzer",
+            count: this.uniquePheno.length
+          },
+          {
+            name: "GTR and Phenolyzer",
+            count: this.commonGtrPhenoGenes.length
+          }
+        ]
+      },
     }
   }
 </script>

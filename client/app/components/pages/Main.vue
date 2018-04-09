@@ -380,5 +380,24 @@ import Gtr from './Gtr.vue';
   font-family: 'Open Sans', sans-serif;
 }
 
+.tabs__slider { /* This is for the tabs slider */
+  background-color: #66d4ed!important;
+  border-color: #66d4ed!important;
+  height:4px;
 
+}
+
+.accent {
+  background-color: #66d4ed!important;
+  border-color: #66d4ed!important;
+}
+
+.badge__badge{
+  height:26.5px;
+  width: 26.5px;
+}
+
+.badge__badge, .badge__badge .icon{
+  font-size: 10px;
+}
 </style>
