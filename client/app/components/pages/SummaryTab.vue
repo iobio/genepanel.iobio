@@ -2,14 +2,46 @@
   <div>
     <br><br>
     <center>
-      <SummaryPieChart
-        v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
-        v-bind:summaryPieChartData="pieChartdataArr">
-      </SummaryPieChart>
-      <strong>Number of GTR Genes selected: {{ GtrGenesCount }}</strong>
+
+      <!-- <strong>Number of GTR Genes selected: {{ GtrGenesCount }}</strong>
       <br>
-      <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong>
+      <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong> -->
     </center>
+    <div id="app">
+      <v-app id="inspire">
+        <v-container fluid grid-list-md>
+          <v-layout row wrap>
+            <v-flex d-flex xs12 sm12 md12 lg12>
+              <v-card>
+                <v-card-text>
+                  <v-layout row wrap>
+                    <v-flex d-flex xs12 sm12 md4 lg4>
+                        <center>
+                          <!-- put the pie chart component here  -->
+                          <SummaryPieChart
+                            v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                            v-bind:summaryPieChartData="pieChartdataArr">
+                          </SummaryPieChart>
+                        </center>
+                    </v-flex>
+
+                    <v-flex d-flex xs12 sm12 md4 lg4>
+                          <!-- put the pie chart component here  -->
+                    </v-flex>
+
+                    <v-flex d-flex xs12 sm12 md4 lg4>
+                          <!-- put the pie chart component here  -->
+                    </v-flex>
+
+                 </v-layout>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+
+          </v-layout>
+        </v-container>
+      </v-app>
+    </div>
   </div>
 </template>
 

@@ -387,7 +387,7 @@ import Gtr from './Gtr.vue';
 
 }
 
-.accent {
+.accent { /* A part of slider*/
   background-color: #66d4ed!important;
   border-color: #66d4ed!important;
 }
@@ -399,5 +399,10 @@ import Gtr from './Gtr.vue';
 
 .badge__badge, .badge__badge .icon{
   font-size: 10px;
+}
+
+.toolbar__extension{
+  height: 50px;
+  background-color: #00bcd4 /* Removes the small line between nav and tabs*/
 }
 </style>

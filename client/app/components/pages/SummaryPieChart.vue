@@ -93,16 +93,17 @@
                 .attr("dy", 2)
                 .attr("result", "offsetBlur");
 
-                filter.append("feFlood")
-            .attr("in", "offsetBlur")
-            .attr("flood-color", "#333")
-            .attr("flood-opacity", "1")
-            .attr("result", "offsetColor");
-    filter.append("feComposite")
-            .attr("in", "offsetColor")
-            .attr("in2", "offsetBlur")
-            .attr("operator", "in")
-            .attr("result", "offsetBlur");
+            filter.append("feFlood")
+                .attr("in", "offsetBlur")
+                .attr("flood-color", "#333")
+                .attr("flood-opacity", "1")
+                .attr("result", "offsetColor");
+
+            filter.append("feComposite")
+                .attr("in", "offsetColor")
+                .attr("in2", "offsetBlur")
+                .attr("operator", "in")
+                .attr("result", "offsetBlur");
 
             // overlay original SourceGraphic over translated blurred opacity by using
             // feMerge filter. Order of specifying inputs is important!
@@ -165,10 +166,10 @@
                 })
 
                 //tooltip
-                path.append("svg:title")
-                  .text(function(d){
-                    return d.data.name;
-                  })
+            path.append("svg:title")
+              .text(function(d){
+                return d.data.name;
+              })
       }
     }
   }
