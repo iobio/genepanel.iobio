@@ -162,7 +162,9 @@
             <SummaryTab
               v-else-if="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer">
+              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+              v-bind:GtrGenesForSummary="selectedGtrGenes"
+              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes">
             </SummaryTab>
           </keep-alive>
         </v-tabs-items>

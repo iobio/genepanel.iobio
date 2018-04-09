@@ -326,19 +326,20 @@ var geneModel = new GeneModel();
         });
       },
       doSomething: function(tempItems){
+        var svgWidth = tempItems[0].score * 800;
         tempItems.map(function(gene){
-          gene.htmlData = `<svg width="${gene.score * 800}" height="25" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-      <linearGradient id="MyGradient">
-          <stop offset="5%"  stop-color="#36D1DC"/>
-          <stop offset="95%" stop-color="#5B86E5"/>
-      </linearGradient>
-  </defs>
+          gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="MyGradient">
+                                    <stop offset="5%"  stop-color="#36D1DC"/>
+                                    <stop offset="95%" stop-color="#5B86E5"/>
+                                </linearGradient>
+                            </defs>
 
-  <rect fill="url(#MyGradient)"
-        x="10" y="5" width="${gene.score * 800}" height="25"/>
-  <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
-</svg>`
+                            <rect fill="url(#MyGradient)"
+                                  x="10" y="5" width="${gene.score * 800}" height="25"/>
+                            <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
+                          </svg>`
         })
         //console.log(tempItems.slice(0,5));
         //self.items = tempItems;

@@ -400,6 +400,7 @@ mergeGenesAcrossPanels(genePanels) {
       }
     })
     var multiplicationFactor = 900/sortedGenes[0]._genePanelCount;
+    var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
       return sortedGenes.map(function(gene, idx) {
         return {
               key: idx,
@@ -407,18 +408,18 @@ mergeGenesAcrossPanels(genePanels) {
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
-              htmlData: `<svg width="${gene._genePanelCount * multiplicationFactor}" height="25" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-          <linearGradient id="MyGradient">
-              <stop offset="5%"  stop-color="#36D1DC"/>
-              <stop offset="95%" stop-color="#5B86E5"/>
-          </linearGradient>
-      </defs>
+              htmlData: `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="MyGradient">
+                                    <stop offset="5%"  stop-color="#36D1DC"/>
+                                    <stop offset="95%" stop-color="#5B86E5"/>
+                                </linearGradient>
+                            </defs>
 
-      <rect fill="url(#MyGradient)"
-            x="10" y="5" width="${gene._genePanelCount * multiplicationFactor}" height="25"/>
-      <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="20" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
-  </svg>`
+                            <rect fill="url(#MyGradient)"
+                                  x="10" y="5" width="${gene._genePanelCount * multiplicationFactor}" height="25"/>
+                            <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="20" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
+                        </svg>`
             };
       });
 
