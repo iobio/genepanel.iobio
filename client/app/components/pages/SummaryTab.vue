@@ -26,18 +26,35 @@
                     </v-flex>
 
                     <v-flex d-flex xs12 sm12 md4 lg4>
-                          <!-- put the pie chart component here  -->
                     </v-flex>
 
                     <v-flex d-flex xs12 sm12 md4 lg4>
-                          <!-- put the pie chart component here  -->
                     </v-flex>
 
                  </v-layout>
                 </v-card-text>
               </v-card>
             </v-flex>
-
+          </v-layout>
+        </v-container>
+        <v-container fluid grid-list-md>
+          <v-layout row wrap>
+            <v-flex d-flex xs12 sm12 md12 lg12>
+              <v-card>
+                <v-card-text>
+                  <v-layout row wrap>
+                    <v-flex d-flex xs12 sm12 md12 lg12>
+                        <center>
+                          <SummaryDataTable
+                              v-if="summaryTableArray.length>1"
+                              v-bind:summaryTableData="summaryTableArray">
+                            </SummaryDataTable>
+                        </center>
+                    </v-flex>
+                 </v-layout>
+                </v-card-text>
+              </v-card>
+            </v-flex>
           </v-layout>
         </v-container>
       </v-app>
@@ -47,9 +64,11 @@
 
 <script>
 import SummaryPieChart from './SummaryPieChart.vue';
+import SummaryDataTable from './SummaryDataTable.vue'
   export default {
     components: {
-      'SummaryPieChart': SummaryPieChart
+      'SummaryPieChart': SummaryPieChart,
+      'SummaryDataTable': SummaryDataTable
     },
     props:{
       NumberOfGtrGenes:{
@@ -82,24 +101,18 @@ import SummaryPieChart from './SummaryPieChart.vue';
       summaryTableArray:[]
     }),
     watch: {
-      NumberOfGtrGenes: function(){
-        this.GtrGenesCount = this.NumberOfGtrGenes;
-      },
-      NumberOfPhenolyzerGenes:function(){
-        this.phenolyzerGenesCount = this.NumberOfPhenolyzerGenes;
-      },
       GtrGenesForSummary:function(){
         this.GtrGenes = this.GtrGenesForSummary;
+        this.summaryTableArray=[];
         this.performSetOperations();
       },
       PhenolyzerGenesForSummary: function(){
         this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
+        this.summaryTableArray=[];
         this.performSetOperations();
       }
     },
     mounted(){
-      this.GtrGenesCount = this.NumberOfGtrGenes;
-      this.phenolyzerGenesCount = this.NumberOfPhenolyzerGenes;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
       this.performSetOperations();
@@ -168,7 +181,7 @@ import SummaryPieChart from './SummaryPieChart.vue';
             }
           }
         }
-        console.log("temp A", tempA)
+
         tempA.sort(function(a, b){
           return a.rank > b.rank;
         });
@@ -199,7 +212,14 @@ import SummaryPieChart from './SummaryPieChart.vue';
           }
         }))
 
-        this.summaryTableArray = [...arr[0],...arr[1],...arr[2]];
+        var tempSummaryTableArray = [];
+        console.log("summaryTableArray", this.summaryTableArray)
+        tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
+        tempSummaryTableArray.map((x,i)=>{
+          x["indexVal"]=i+1;
+          this.summaryTableArray.push(x);
+        })
+
         console.log(this.summaryTableArray)
 
       }
