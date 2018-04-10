@@ -57,7 +57,7 @@
       ></v-text-field> -->
       <v-spacer></v-spacer>
       <v-menu bottom offset-y>
-          <v-btn flat slot="activator"><v-icon>input</v-icon>&nbsp; Export</v-btn>
+          <v-btn flat slot="activator" color="cyan"><v-icon color="cyan">input</v-icon>&nbsp; Export</v-btn>
           <v-list>
             <div v-if="component==='Home'">
               <v-list-tile @click="copyGtrGenes">
@@ -88,12 +88,12 @@
 
         </v-menu>
         <v-btn icon>
-          <v-icon>apps</v-icon>
+          <v-icon color="cyan">apps</v-icon>
         </v-btn>
         &nbsp; &nbsp; &nbsp; &nbsp;
-      <v-tabs style="box-shadow: 0px 3px 1px #00BCD4"
+      <v-tabs style="box-shadow: 0px 3px 1px #2c3e50"
         dark tabs
-        color="cyan"
+        color="#2c3e50"
         slot="extension"
         grow
       >
@@ -104,7 +104,7 @@
         </v-badge>
       </div>
       </v-tab>
-        <v-tabs-slider color="yellow"></v-tabs-slider>
+        <v-tabs-slider color="cyan"></v-tabs-slider>
         <v-tab v-on:click="component='Home'">
           <div class="text-xs-center">
             <v-badge left style="background-color:#fff0; font-size:20px">
@@ -381,15 +381,8 @@ import Gtr from './Gtr.vue';
 }
 
 .tabs__slider { /* This is for the tabs slider */
-  background-color: #66d4ed!important;
-  border-color: #66d4ed!important;
   height:4px;
 
-}
-
-.accent { /* A part of slider*/
-  background-color: #66d4ed!important;
-  border-color: #66d4ed!important;
 }
 
 .badge__badge{
@@ -403,6 +396,15 @@ import Gtr from './Gtr.vue';
 
 .toolbar__extension{
   height: 50px;
-  background-color: #00bcd4 /* Removes the small line between nav and tabs*/
+  background-color: #2c3e50 /* Removes the small line between nav and tabs*/
+}
+
+
+.application .theme--dark.tabs__bar, .theme--dark .tabs__bar{
+  background-color: #2c3e50;
+}
+
+.btn .btn__content .icon {
+  color:#66d4ed
 }
 </style>

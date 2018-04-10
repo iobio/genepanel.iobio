@@ -78,6 +78,8 @@ import SummaryPieChart from './SummaryPieChart.vue';
       uniqueGtrGenes:[],
       uniquePhenoGenes:[],
       pieChartdataArr:[],
+      uniqueGenes: [],
+      summaryTableArray:[]
     }),
     watch: {
       NumberOfGtrGenes: function(){
@@ -128,7 +130,10 @@ import SummaryPieChart from './SummaryPieChart.vue';
         var uniquePheno = new Set([...phenolyzerSet].filter(x => !gtrSet.has(x)));
         this.uniquePheno = [...uniquePheno];
 
+        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+
         this.setPieChartData();
+        this.setSummaryTableData();
       },
       setPieChartData(){
         this.pieChartdataArr = [
@@ -143,9 +148,61 @@ import SummaryPieChart from './SummaryPieChart.vue';
           {
             name: "GTR and Phenolyzer",
             count: this.commonGtrPhenoGenes.length
+          },
+          {
+            name: "Unique Genes",
+            count: this.uniqueGenes.length
           }
         ]
       },
+      setSummaryTableData(){
+        var tempA = [];
+
+        for(var i=0; i<this.commonGtrPhenoGenes.length; i++){
+          for(var j=0; j<this.PhenolyzerGenes.length; j++){
+            if(this.commonGtrPhenoGenes[i]===this.PhenolyzerGenes[j].geneName){
+              tempA.push({
+                name:this.PhenolyzerGenes[j].geneName,
+                rank: parseInt(this.PhenolyzerGenes[j].rank)
+              })
+            }
+          }
+        }
+        console.log("temp A", tempA)
+        tempA.sort(function(a, b){
+          return a.rank > b.rank;
+        });
+
+        var arr=[];
+        arr.push(tempA.map(x=>{
+          return {
+            name: x.name,
+            isGtr: true,
+            isPheno: true
+          }
+        }))
+
+        arr.push(this.uniqueGtrGenes.map(x=>{
+          return {
+            name: x,
+            isGtr: true,
+            isPheno: false
+          }
+        }))
+
+
+        arr.push(this.uniquePheno.map(x=>{
+          return {
+            name: x,
+            isGtr: false,
+            isPheno: true
+          }
+        }))
+
+        this.summaryTableArray = [...arr[0],...arr[1],...arr[2]];
+        console.log(this.summaryTableArray)
+
+      }
     }
   }
 </script>
