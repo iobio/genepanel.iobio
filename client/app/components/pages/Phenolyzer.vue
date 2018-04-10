@@ -116,7 +116,7 @@
                                 <!-- <td>{{ props.item.rank }}</td> -->
                                 <td><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
                                 <td><span v-html="props.item.htmlData"></span></td>
-                                <td>{{ props.item.score }}</td>
+                                <td style="font-size:0px;">{{ props.item.score }}</td>
                               </tr>
                             </template>
                             <template slot="footer">
@@ -199,7 +199,7 @@ var geneModel = new GeneModel();
              value: 'score'
             },
             {
-              text: 'Score Viz',
+              text: '',
               align: 'left',
               value: 'htmlData'
             }

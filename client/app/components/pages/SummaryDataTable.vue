@@ -68,7 +68,7 @@
             <span v-if="props.item.isPheno"><v-icon color="green" >check_circle</v-icon></span>
             <span v-else></span>
           </td>
-          <td>{{ props.item.indexVal }}</td>
+          <td style="font-size:0px;">{{ props.item.indexVal }}</td>
 
           <!-- <td>{{ props.item._conditionNames }}</td> -->
           <!-- <td>{{ props.item._geneCount }}</td> -->
@@ -100,14 +100,15 @@
       search: '',  //For searching the rows in data table
       selected: [],
       headers: [
-        {
-          text: 'Name',
-          align: 'left',
-          value: 'name'
-        },
+        { text: 'Name', align: 'left', sortable: false, value: 'indexVal' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
         { text: 'phenolyzer', align: 'left', sortable: false, value: 'isPheno' },
-        { text: 'indexVal', align: 'left', sortable: false, value: 'indexVal' },
+        {
+          text: '',
+          align: 'left',
+          value: 'name'
+        }
+
       ],
       items: [],
       tableData:[],

@@ -43,13 +43,17 @@
               <v-card>
                 <v-card-text>
                   <v-layout row wrap>
-                    <v-flex d-flex xs12 sm12 md12 lg12>
+                    <v-flex d-flex xs12 sm12 md1 lg1>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md9 lg9>
                         <center>
                           <SummaryDataTable
                               v-if="summaryTableArray.length>1"
                               v-bind:summaryTableData="summaryTableArray">
                             </SummaryDataTable>
                         </center>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm12 md2 lg2>
                     </v-flex>
                  </v-layout>
                 </v-card-text>
