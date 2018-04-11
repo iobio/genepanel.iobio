@@ -9,55 +9,70 @@
     </center>
     <div id="app">
       <v-app id="inspire">
+        <!-- pie chart layout -->
         <v-container fluid grid-list-md>
           <v-layout row wrap>
             <v-flex d-flex xs12 sm12 md12 lg12>
-              <v-card>
-                <v-card-text>
-                  <v-layout row wrap>
-                    <v-flex d-flex xs12 sm12 md4 lg4>
-                        <center>
-                          <!-- put the pie chart component here  -->
-                          <SummaryPieChart
-                            v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
-                            v-bind:summaryPieChartData="pieChartdataArr">
-                          </SummaryPieChart>
-                        </center>
-                    </v-flex>
+              <v-card-text>
+                <v-layout row wrap>
+                  <v-flex d-flex xs12 sm12 md12 lg12>
+                    <v-card>
+                      <v-card-text>
+                        <v-layout row wrap>
+                          <v-flex d-flex xs12 sm12 md4 lg4>
+                              <center>
+                                <!-- put the pie chart component here  -->
+                                <SummaryPieChart
+                                  v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                                  v-bind:summaryPieChartData="pieChartdataArr">
+                                </SummaryPieChart>
+                              </center>
+                          </v-flex>
 
-                    <v-flex d-flex xs12 sm12 md4 lg4>
-                    </v-flex>
+                          <v-flex d-flex xs12 sm12 md4 lg4>
+                          </v-flex>
 
-                    <v-flex d-flex xs12 sm12 md4 lg4>
-                    </v-flex>
+                          <v-flex d-flex xs12 sm12 md4 lg4>
+                          </v-flex>
 
-                 </v-layout>
-                </v-card-text>
-              </v-card>
+                       </v-layout>
+                      </v-card-text>
+                    </v-card>
+                  </v-flex>
+                </v-layout>
+              </v-card-text>
             </v-flex>
           </v-layout>
         </v-container>
+
+        <!-- Data Table layout -->
         <v-container fluid grid-list-md>
           <v-layout row wrap>
             <v-flex d-flex xs12 sm12 md12 lg12>
-              <v-card>
-                <v-card-text>
-                  <v-layout row wrap>
-                    <v-flex d-flex xs12 sm12 md1 lg1>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm12 md9 lg9>
-                        <center>
-                          <SummaryDataTable
-                              v-if="summaryTableArray.length>1"
-                              v-bind:summaryTableData="summaryTableArray">
-                            </SummaryDataTable>
-                        </center>
-                    </v-flex>
-                    <v-flex d-flex xs12 sm12 md2 lg2>
-                    </v-flex>
-                 </v-layout>
-                </v-card-text>
-              </v-card>
+              <v-card-text>
+                <v-layout row wrap>
+                  <v-flex d-flex xs12 sm12 md12 lg12>
+                    <v-card>
+                      <v-card-text>
+                        <v-layout row wrap>
+                          <v-flex d-flex xs12 sm12 md1 lg1>
+                          </v-flex>
+                          <v-flex d-flex xs12 sm12 md9 lg9>
+                              <center>
+                                <SummaryDataTable
+                                    v-if="summaryTableArray.length>1"
+                                    v-bind:summaryTableData="summaryTableArray">
+                                  </SummaryDataTable>
+                              </center>
+                          </v-flex>
+                          <v-flex d-flex xs12 sm12 md2 lg2>
+                          </v-flex>
+                       </v-layout>
+                      </v-card-text>
+                    </v-card>
+                  </v-flex>
+                </v-layout>
+              </v-card-text>
             </v-flex>
           </v-layout>
         </v-container>
@@ -195,7 +210,8 @@ import SummaryDataTable from './SummaryDataTable.vue'
           return {
             name: x.name,
             isGtr: true,
-            isPheno: true
+            isPheno: true,
+            sources: "gtrPheno"
           }
         }))
 
@@ -203,7 +219,8 @@ import SummaryDataTable from './SummaryDataTable.vue'
           return {
             name: x,
             isGtr: true,
-            isPheno: false
+            isPheno: false,
+            sources: "gtr"
           }
         }))
 
@@ -212,7 +229,8 @@ import SummaryDataTable from './SummaryDataTable.vue'
           return {
             name: x,
             isGtr: false,
-            isPheno: true
+            isPheno: true,
+            sources: "pheno"
           }
         }))
 

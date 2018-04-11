@@ -59,7 +59,39 @@
           </td>
 
           <!-- <td><span v-html="props.item.htmlData"></span></td> -->
-          <td>{{ props.item.name }}</td>
+          <td><strong>{{ props.item.name }}</strong></td>
+          <td>
+              <span v-if="props.item.sources==='gtrPheno'">
+                <v-progress-circular
+                  :size="25"
+                  :width="5"
+                  :rotate="360"
+                  :value="100"
+                  color="light-blue darken-1"
+                >
+                </v-progress-circular>
+              </span>
+              <span v-else-if="props.item.sources==='gtr'">
+                <v-progress-circular
+                  :size="25"
+                  :width="5"
+                  :rotate="90"
+                  :value="50"
+                  color="light-blue darken-1"
+                >
+                </v-progress-circular>
+              </span>
+              <span v-else-if="props.item.sources==='pheno'">
+                <v-progress-circular
+                  :size="25"
+                  :width="5"
+                  :rotate="-90"
+                  :value="50"
+                  color="light-blue darken-1"
+                >
+                </v-progress-circular>
+              </span>
+          </td>
           <td>
             <span v-if="props.item.isGtr"><v-icon color="green" >check_circle</v-icon></span>
             <span v-else></span>
@@ -101,6 +133,7 @@
       selected: [],
       headers: [
         { text: 'Name', align: 'left', sortable: false, value: 'indexVal' },
+        { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
         { text: 'phenolyzer', align: 'left', sortable: false, value: 'isPheno' },
         {
