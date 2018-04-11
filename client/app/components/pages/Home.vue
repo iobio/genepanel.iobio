@@ -318,7 +318,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
   .toolbar__title{
-    color: #66D4ED;
+    /* color: #66D4ED; */
     font-family: 'Quicksand', sans-serif;
     font-size: 24px;
   }

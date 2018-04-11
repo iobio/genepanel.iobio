@@ -57,7 +57,7 @@
       ></v-text-field> -->
       <v-spacer></v-spacer>
       <v-menu bottom offset-y>
-          <v-btn flat slot="activator" color="cyan"><v-icon color="cyan">input</v-icon>&nbsp; Export</v-btn>
+          <v-btn flat slot="activator"><v-icon >input</v-icon>&nbsp; Export</v-btn>
           <v-list>
             <div v-if="component==='Home'">
               <v-list-tile @click="copyGtrGenes">
@@ -88,7 +88,7 @@
 
         </v-menu>
         <v-btn icon>
-          <v-icon color="cyan">apps</v-icon>
+          <v-icon >apps</v-icon>
         </v-btn>
         &nbsp; &nbsp; &nbsp; &nbsp;
       <v-tabs style="box-shadow: 0px 3px 1px #2c3e50"
@@ -97,36 +97,36 @@
         slot="extension"
         grow
       >
-      <v-tab v-on:click="component='HomePage'">
+      <v-tab v-on:click="component='HomePage'" >
         <div class="text-xs-center">
         <v-badge left style="background-color:#fff0; font-size:20px">
-          <span ><strong>Home</strong></span>
+          <span class="tabTitle"><strong>Home</strong></span>
         </v-badge>
       </div>
       </v-tab>
         <v-tabs-slider color="cyan"></v-tabs-slider>
         <v-tab v-on:click="component='Home'">
           <div class="text-xs-center">
-            <v-badge left style="background-color:#fff0; font-size:20px">
+            <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-              <span ><strong>GTR</strong></span>
+              <span class="tabTitle"><strong>GTR</strong></span>
             </v-badge>
           </div>
         </v-tab>
 
         <v-tab v-on:click="component='Phenolyzer'">
           <div class="text-xs-center">
-          <v-badge left style="background-color:#fff0; font-size:20px">
+          <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
             <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
-            <span ><strong>Phenolyzer</strong></span>
+            <span class="tabTitle"><strong>Phenolyzer</strong></span>
           </v-badge>
           </div>
         </v-tab>
         <v-tab v-on:click="component='SummaryTab'">
           <div class="text-xs-center">
-          <v-badge left style="background-color:#fff0; font-size:20px">
+          <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
             <span slot="badge">{{ NumberOfAllGenes }}</span>
-            <span ><strong>Summary</strong></span>
+            <span class="tabTitle"><strong>Summary</strong></span>
           </v-badge>
           </div>
         </v-tab>
@@ -419,8 +419,12 @@ import Gtr from './Gtr.vue';
   height:58px;
   font-family: 'Open Sans', sans-serif;
 }
-.toolbar__content{
+/* .toolbar__content{
   background-color: #174065;
+} */
+
+.toolbar__content{
+  background-color: #2c3e50;
 }
 
 .toolbar__side-icon{
@@ -443,14 +447,20 @@ import Gtr from './Gtr.vue';
 .badge__badge{
   height:26.5px;
   width: 26.5px;
+  background-color: #66d4ed;
+  color: black;
 }
 
 .badge__badge, .badge__badge .icon{
   font-size: 10px;
 }
 
+.primary{
+  background-color: #66d4ed !important;
+}
+
 .toolbar__extension{
-  height: 50px;
+  height: 19px !important;
   background-color: #2c3e50 /* Removes the small line between nav and tabs*/
 }
 
@@ -459,7 +469,11 @@ import Gtr from './Gtr.vue';
   background-color: #2c3e50;
 }
 
-.btn .btn__content .icon {
+.tabTitle{
   color:#66d4ed
 }
+
+/* .btn .btn__content .icon {
+  color:#66d4ed
+} */
 </style>
