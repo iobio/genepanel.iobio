@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import { bus } from '../../routes';
   export default {
     props:{
       summaryTableData:{
@@ -159,9 +160,11 @@
       this.items = this.tableData;
       this.selected = this.items.slice();
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+      bus.$emit("updateAllGenes", this.selected);
     },
     updated(){
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+      bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
       toggleAll () { //Data Table

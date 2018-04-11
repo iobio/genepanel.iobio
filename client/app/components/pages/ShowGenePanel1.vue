@@ -256,6 +256,9 @@ var model = new Model();
          return x.toString() ;
       }) );
 
+      this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+
+
       bus.$on('deSelectAllGenesBus', ()=>{
         this.deSelectAllGenes();
       });

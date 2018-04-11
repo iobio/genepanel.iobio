@@ -221,21 +221,29 @@ import Gtr from './Gtr.vue';
         uniqueGenes:[]
       }
     },
+    mounted(){
+      bus.$on("updateAllGenes", (data)=>{
+        console.log(data)
+        this.updateAllGenesFromSelection(data);
+      })
+    },
     updated(){
+      console.log("updated!")
+
       // this.NumberOfAllGenes = this.NumberOfGenesSelectedFromGTR + this.NumberOfGenesSelectedFromPhenolyzer
-      var gtrGenes = this.selectedGtrGenes.map(gene => {
-        return gene.name
-      })
-
-      var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-        return gene.geneName
-      })
-
-      var allGenes = [...gtrGenes, ...phenolyzerGenes];
-      this.AllSourcesGenes = allGenes;
-
-      this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-      this.NumberOfAllGenes = this.uniqueGenes.length
+      // var gtrGenes = this.selectedGtrGenes.map(gene => {
+      //   return gene.name
+      // })
+      //
+      // var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+      //   return gene.geneName
+      // })
+      //
+      // var allGenes = [...gtrGenes, ...phenolyzerGenes];
+      // this.AllSourcesGenes = allGenes;
+      //
+      // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+      // this.NumberOfAllGenes = this.uniqueGenes.length
     },
     methods: {
       addDiseases: function(e){
@@ -271,9 +279,35 @@ import Gtr from './Gtr.vue';
       },
       updateGtrGenes: function(e){
         this.selectedGtrGenes = e;
+        var gtrGenes = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+
+        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+
+        var allGenes = [...gtrGenes, ...phenolyzerGenes];
+        this.AllSourcesGenes = allGenes;
+
+        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+        this.NumberOfAllGenes = this.uniqueGenes.length
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
+        var gtrGenes = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+
+        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+
+        var allGenes = [...gtrGenes, ...phenolyzerGenes];
+        this.AllSourcesGenes = allGenes;
+
+        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+        this.NumberOfAllGenes = this.uniqueGenes.length
       },
       copyGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
@@ -364,6 +398,13 @@ import Gtr from './Gtr.vue';
             this.snackbarText = "You need to select genes inorder to use this feature";
             this.snackbar=true;
           }
+      },
+      updateAllGenesFromSelection(data){
+        var allGenes = data.map(x=>{
+          return x.name;
+        })
+        this.uniqueGenes = allGenes;
+        this.NumberOfAllGenes = this.uniqueGenes.length
       }
     }
 

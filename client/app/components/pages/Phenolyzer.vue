@@ -54,7 +54,7 @@
                       <v-card style="margin-top:4px">
                         <v-card-title primary class="title">
                           Results &nbsp;
-                          <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
+                          <span class="text-xs-center" v-if="items.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
                         </v-card-title>
                         <div v-if="items.length">
                         <v-card-title>
@@ -213,6 +213,7 @@ var geneModel = new GeneModel();
       }
     },
     updated(){
+
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -224,6 +225,7 @@ var geneModel = new GeneModel();
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
       this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     methods: {
       filterGenesOnSelectedNumber(data){
