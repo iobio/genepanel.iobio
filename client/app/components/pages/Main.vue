@@ -216,12 +216,26 @@ import Gtr from './Gtr.vue';
         x: null,
         mode: '',
         snackbarTimeout: 4000,
-        snackbarText:"You need to select Genes inorder to copy them"
-
+        snackbarText:"You need to select Genes inorder to copy them",
+        AllSourcesGenes:[],
+        uniqueGenes:[]
       }
     },
     updated(){
-      this.NumberOfAllGenes = this.NumberOfGenesSelectedFromGTR + this.NumberOfGenesSelectedFromPhenolyzer
+      // this.NumberOfAllGenes = this.NumberOfGenesSelectedFromGTR + this.NumberOfGenesSelectedFromPhenolyzer
+      var gtrGenes = this.selectedGtrGenes.map(gene => {
+        return gene.name
+      })
+
+      var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+        return gene.geneName
+      })
+
+      var allGenes = [...gtrGenes, ...phenolyzerGenes];
+      this.AllSourcesGenes = allGenes;
+
+      this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+      this.NumberOfAllGenes = this.uniqueGenes.length
     },
     methods: {
       addDiseases: function(e){
@@ -286,20 +300,20 @@ import Gtr from './Gtr.vue';
         this.snackbar=true;
       },
       copyAllGenes: function(){
-        var gtrGenes = this.selectedGtrGenes.map(gene => {
-          return gene.name
-        })
+        // var gtrGenes = this.selectedGtrGenes.map(gene => {
+        //   return gene.name
+        // })
+        //
+        // var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+        //   return gene.geneName
+        // })
+        //
+        // var allGenes = [...gtrGenes, ...phenolyzerGenes];
 
-        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-          return gene.geneName
-        })
-
-        var allGenes = [...gtrGenes, ...phenolyzerGenes];
-
-        var genesToCopy = allGenes.toString();
+        var genesToCopy = this.uniqueGenes.toString();
         this.$clipboard(genesToCopy);
-        if(allGenes.length>0){
-          this.snackbarText = " Number of Genes Copied : " + allGenes.length + " ";
+        if(this.uniqueGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
         }
         this.snackbar=true;
       },
@@ -332,17 +346,17 @@ import Gtr from './Gtr.vue';
         }
       },
       exportAllGenes: function(){
-          var gtrGenes = this.selectedGtrGenes.map(gene => {
-            return gene.name
-          })
-
-          var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-            return gene.geneName
-          })
-
-          var allGenes = [...gtrGenes, ...phenolyzerGenes];
-          var geneNamesToExport = allGenes.toString();
-          if(allGenes.length>0){
+          // var gtrGenes = this.selectedGtrGenes.map(gene => {
+          //   return gene.name
+          // })
+          //
+          // var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          //   return gene.geneName
+          // })
+          //
+          // var allGenes = [...gtrGenes, ...phenolyzerGenes];
+          var geneNamesToExport = this.uniqueGenes.toString();
+          if(this.uniqueGenes.length>0){
             var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
             FileSaver.saveAs(blob, "All Genes.txt");
           }

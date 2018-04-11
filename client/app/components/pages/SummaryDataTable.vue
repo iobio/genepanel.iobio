@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-card-title>
-      <!-- <btn @click="copy">
-          <i class="material-icons">content_copy</i> Copy to clipboard
-      </btn> -->
+      <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
       <strong>
 
       </strong>
@@ -145,12 +143,14 @@
       ],
       items: [],
       tableData:[],
+      selectedGenesText: ""
     }),
     watch: {
       summaryTableData: function(){
         this.tableData = this.summaryTableData;
         this.items = this.tableData;
-        this.selected = this.items.slice()
+        this.selected = this.items.slice();
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
       },
 
     },
@@ -158,6 +158,10 @@
       this.tableData = this.summaryTableData;
       this.items = this.tableData;
       this.selected = this.items.slice();
+      this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+    },
+    updated(){
+      this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     methods: {
       toggleAll () { //Data Table
