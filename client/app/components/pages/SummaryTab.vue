@@ -46,7 +46,8 @@
         </v-container>
 
         <!-- Data Table layout -->
-        <v-container fluid grid-list-md>
+        <v-container fluid grid-list-md
+          v-if="summaryTableArray.length>1">
           <v-layout row wrap>
             <v-flex d-flex xs12 sm12 md12 lg12>
               <v-card-text>
@@ -60,7 +61,6 @@
                           <v-flex d-flex xs12 sm12 md9 lg9>
                               <center>
                                 <SummaryDataTable
-                                    v-if="summaryTableArray.length>1"
                                     v-bind:summaryTableData="summaryTableArray">
                                   </SummaryDataTable>
                               </center>
@@ -83,11 +83,14 @@
 
 <script>
 import SummaryPieChart from './SummaryPieChart.vue';
-import SummaryDataTable from './SummaryDataTable.vue'
+import SummaryDataTable from './SummaryDataTable.vue';
+import { bus } from '../../routes';
+import FilterSummary from './FilterSummary.vue'
   export default {
     components: {
       'SummaryPieChart': SummaryPieChart,
-      'SummaryDataTable': SummaryDataTable
+      'SummaryDataTable': SummaryDataTable,
+      'FilterSummary': FilterSummary
     },
     props:{
       NumberOfGtrGenes:{
@@ -211,7 +214,8 @@ import SummaryDataTable from './SummaryDataTable.vue'
             name: x.name,
             isGtr: true,
             isPheno: true,
-            sources: "gtrPheno"
+            sources: "gtrPheno",
+            noOfSources: 2
           }
         }))
 
@@ -220,7 +224,8 @@ import SummaryDataTable from './SummaryDataTable.vue'
             name: x,
             isGtr: true,
             isPheno: false,
-            sources: "gtr"
+            sources: "gtr",
+            noOfSources: 1
           }
         }))
 
@@ -230,7 +235,8 @@ import SummaryDataTable from './SummaryDataTable.vue'
             name: x,
             isGtr: false,
             isPheno: true,
-            sources: "pheno"
+            sources: "pheno",
+            noOfSources: 1
           }
         }))
 

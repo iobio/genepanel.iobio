@@ -163,10 +163,37 @@ import { bus } from '../../routes';
       bus.$emit("updateAllGenes", this.selected);
     },
     updated(){
+      bus.$on('deSelectAllSummaryGenesBus', (data)=>{
+        this.DeSelectAllSummaryGenes(data);
+      })
+
+      bus.$on('SelectAllSummaryGenesBus', (data)=>{
+        this.SelectAllSummaryGenes(data);
+      })
+
+      bus.$on("selectCommonGenesBus", ()=>{
+        this.selectCommonGenes();
+      })
+
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      selectCommonGenes(){
+        var tempSelected = [];
+        for(var i=0; i<this.items.length; i++){
+          if(this.items[i].isGtr && this.items[i].isPheno){
+            tempSelected.push(this.items[i]);
+          }
+        }
+        this.selected = tempSelected;
+      },
+      SelectAllSummaryGenes(){
+        this.selected = this.items.slice();
+      },
+      DeSelectAllSummaryGenes(){
+        this.selected = [];
+      },
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []
         else this.selected = this.items.slice()

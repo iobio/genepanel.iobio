@@ -32,6 +32,12 @@
                 v-bind:disordersData="disorderList"
                 v-on:setSelectedDisorders="updateSelectedDisorders($event)">
               </FilterGTR>
+              <FilterPhenolyzer
+                v-else-if="component==='Phenolyzer'">
+              </FilterPhenolyzer>
+              <FilterSummary
+                v-else-if="component='SummaryTab'">
+              </FilterSummary>
             </keep-alive>
           </v-card-text>
         </v-card>
@@ -183,7 +189,9 @@ import Phenolyzer from './Phenolyzer.vue';
 import NavigationBar from './NavigationBar.vue';
 import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
-import FilterGTR from './FilterGTR.vue'
+import FilterGTR from './FilterGTR.vue';
+import FilterPhenolyzer from './FilterPhenolyzer.vue';
+import FilterSummary from './FilterSummary.vue';
 var FileSaver = require('file-saver');
 import Gtr from './Gtr.vue';
 
@@ -197,6 +205,8 @@ import Gtr from './Gtr.vue';
       'SummaryTab': SummaryTab,
       'FilterGTR': FilterGTR,
       'app-gtr': Gtr,
+      'FilterPhenolyzer': FilterPhenolyzer,
+      'FilterSummary': FilterSummary
     },
     data(){
       return{
@@ -460,7 +470,7 @@ import Gtr from './Gtr.vue';
 }
 
 .toolbar__extension{
-  height: 19px !important;
+  height: 25px !important;
   background-color: #2c3e50 /* Removes the small line between nav and tabs*/
 }
 

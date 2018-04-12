@@ -222,12 +222,26 @@ var geneModel = new GeneModel();
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       })
 
+      bus.$on('deSelectAllPhenolyzerGenesBus', (data)=>{
+        this.DeSelectAllPhenolyzerGenes(data);
+      })
+
+      bus.$on('SelectAllPhenolyzerGenesBus', (data)=>{
+        this.SelectAllPhenolyzerGenes(data);
+      })
+
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
       this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     methods: {
+      SelectAllPhenolyzerGenes(data){
+        this.selected = this.items.slice();
+      },
+      DeSelectAllPhenolyzerGenes(data){
+        this.selected = [];
+      },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0,data)
       },
