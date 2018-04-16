@@ -122,11 +122,12 @@
           </tr>
         </template>
         <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
+          <tr :active="props.selected" @click="props.expanded = !props.expanded">
             <td>
               <v-checkbox
                 primary
                 hide-details
+                v-model="props.selected"
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
@@ -146,12 +147,42 @@
               </div>
             </td>
             <td><span v-html="props.item.htmlData"></span></td>
+            <td >
+              <div id="app">
+                <div v-if="props.item.clinGen.val">
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px; margin-top:2px" slot="activator">ClinGen Analysis</p>
+                      <v-card>
+                        <v-card-title>
+                            <div><strong>ClinGen Analysis: </strong></div>
+                        </v-card-title>
+                        <v-card-text style="margin-top:-25px">
+                          {{props.item.name}}
+                          <br>
+                          <strong> Haploinsufficiency Score: </strong>{{props.item.haploScore}}
+                          <br>
+                          <p v-html="props.item.locationImgSrc"></p>
+                          <p></p>
+                          <!-- <img src="https://ghr.nlm.nih.gov/gene/TNNI3/location.png"> -->
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </div>
+              </div>
+            </td>
+            <td></td>
             <td style="font-size:0">{{ props.item.value }}</td>
 
             <!-- <td>{{ props.item._conditionNames }}</td> -->
             <!-- <td>{{ props.item._geneCount }}</td> -->
+
           </tr>
         </template>
+        <template slot="expand" slot-scope="props">
+        <v-card flat>
+          <v-card-text><a>ClinGen Analysis <strong> > </strong></a></v-card-text>
+        </v-card>
+      </template>
         <template slot="footer">
         <td colspan="100%">
           <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
@@ -214,15 +245,26 @@ var model = new Model();
             value: 'name'
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+          { text: 'ClinGen', align: 'left', sortable: false, value: 'clinGen' },
           {
             text: '',
             // align: 'left',
-            value: 'value',
+            value: 'locationImgSrc',
             width: '10%',
             class: 'headerWidth',
             visibility: 'hidden-lg-only'
 
            },
+          {
+            text: '',
+            // align: 'left',
+            value: ['haploScore', 'value'],
+            width: '10%',
+            class: 'headerWidth',
+            visibility: 'hidden-lg-only'
+
+           },
+
 
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
@@ -302,6 +344,9 @@ var model = new Model();
       }
     },
     methods:{
+      showSomeAlert(){
+        alert("sdhdsbslakbn")
+      },
       drawSimpleViz: function(){
         var arr = [40, 70, 30, 25, 102];
         var x = 40;
@@ -442,9 +487,12 @@ var model = new Model();
         // this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
-        console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
+        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
-        this.items = data;
+
+        let dataWithClinGenFlag = model.getClinGenFlag(data);
+        console.log("dataWithClinGenFlag", dataWithClinGenFlag[0])
+        this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
@@ -452,11 +500,11 @@ var model = new Model();
 
         bus.$emit("GeneDistributionChartData", this.items);
 
-        console.log("this.selected from Show Genes ", this.selected )
+        // console.log("this.selected from Show Genes ", this.selected )
        // this.geneBarChart(d3.select('#gene-bar-chart'), data);
         // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);
-        console.log("dataForTables: ", this.dataForTables)
+        // console.log("dataForTables: ", this.dataForTables)
 
       },
       selectAllGenes: function(){

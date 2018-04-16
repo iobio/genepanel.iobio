@@ -426,8 +426,99 @@ mergeGenesAcrossPanels(genePanels) {
   }
 
 
-  drawSvg(){
-    return "<strong>svgggg</strong>"
+  binarySearchFunction(array, targetValue){
+    var min = 0;
+    var max = array.length - 1;
+    var guess;
+
+    while(min <= max) {
+        guess = Math.floor((max + min) / 2);
+
+        if (array[guess] === targetValue) {
+            return true;
+        }
+        else if (array[guess] < targetValue) {
+            min = guess + 1;
+        }
+        else {
+            max = guess - 1;
+        }
+
+    }
+
+    return false;
+  }
+
+  getHaploInsufficiencyScore(gene){
+    var genesScr = [
+      {
+        name: "ACP5",
+        score: "sufficient evidence"
+      },
+      {
+        name: "ALX1",
+        score: "some evidence"
+      },
+      {
+        name: "AVP",
+        score: "some evidence"
+      },
+      {
+        name: "BRAC2",
+        score: "sufficient evidence"
+      },
+      {
+        name: "CPT2",
+        score: "minimal evidence"
+      },
+      {
+        name: "DHODH",
+        score: "some evidence"
+      },
+      {
+        name: "EYA1",
+        score: "some evidence"
+      },
+      {
+        name: "POLR1D",
+        score: "sufficient evidence"
+      },
+      {
+        name: "SF3B4",
+        score: "no evidence"
+      },
+      {
+        name: "TCOF1",
+        score: "sufficient evidence"
+      }
+    ];
+    for(var i=0; i<genesScr.length; i++){
+      if(gene === genesScr[i].name){
+        return genesScr[i].score;
+      }
+    }
+  }
+
+  getClinGenFlag(data){
+    var curatedGenes = [
+      "ACP5", "ALX1", "AVP", "BRAC2", "CPT2", "DHODH", "EYA1", "POLR1D", "SF3B4", "TCOF1"
+    ];
+    data.map((x,i)=>{
+    if(this.binarySearchFunction(curatedGenes, x.name)){
+      x["clinGen"] = {
+        val: true
+      };
+      x["haploScore"]= this.getHaploInsufficiencyScore(x.name);
+      x["locationImgSrc"] = `<img src="https://ghr.nlm.nih.gov/gene/${x.name}/location.png">`
+    }
+    else {
+      x["clinGen"] = {
+        val: false
+      };;
+    }
+  })
+
+  return data;
   }
 
   getGeneHistogramData(genes) {
