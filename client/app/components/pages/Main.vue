@@ -83,7 +83,6 @@
               </v-list-tile>
               <hr>
             </div>
-
             <v-list-tile @click="copyAllGenes">
               <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
             </v-list-tile>
@@ -91,8 +90,18 @@
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
             </v-list-tile>
           </v-list>
-
         </v-menu>
+
+        <v-menu bottom offset-y>
+            <v-btn flat slot="activator">Help</v-btn>
+            <v-list>
+              <v-list-tile  >
+                <v-list-tile-title>Disclaimer</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+
+
         <v-btn icon>
           <v-icon >apps</v-icon>
         </v-btn>

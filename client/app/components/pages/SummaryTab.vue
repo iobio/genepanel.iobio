@@ -205,7 +205,7 @@ import FilterSummary from './FilterSummary.vue'
         }
 
         tempA.sort(function(a, b){
-          return a.rank > b.rank;
+          return a.rank - b.rank;
         });
 
         var arr=[];
