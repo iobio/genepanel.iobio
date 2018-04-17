@@ -122,7 +122,7 @@
           </tr>
         </template>
         <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.expanded = !props.expanded">
+          <tr :active="props.selected" @click="props.selected = !props.selected">
             <td>
               <v-checkbox
                 primary
@@ -147,7 +147,7 @@
               </div>
             </td>
             <td><span v-html="props.item.htmlData"></span></td>
-            <td >
+            <!-- <td >
               <div id="app">
                 <div v-if="props.item.clinGen.val">
                   <v-menu open-on-hover top offset-y>
@@ -166,14 +166,13 @@
                           <br>
                           <p v-html="props.item.locationImgSrc"></p>
                           <p></p>
-                          <!-- <img src="https://ghr.nlm.nih.gov/gene/TNNI3/location.png"> -->
                         </v-card-text>
                       </v-card>
                   </v-menu>
                 </div>
               </div>
-            </td>
-            <td></td>
+            </td> -->
+            <!-- <td></td> -->
             <td style="font-size:0">{{ props.item.value }}</td>
 
             <!-- <td>{{ props.item._conditionNames }}</td> -->
@@ -181,11 +180,11 @@
 
           </tr>
         </template>
-        <template slot="expand" slot-scope="props">
+        <!-- <template slot="expand" slot-scope="props">
         <v-card flat>
           <v-card-text><a>ClinGen Analysis <strong> > </strong></a></v-card-text>
         </v-card>
-      </template>
+      </template> -->
         <template slot="footer">
         <td colspan="100%">
           <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
@@ -248,19 +247,17 @@ var model = new Model();
             value: 'name'
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-          { text: 'ClinGen', align: 'left', sortable: false, value: 'clinGen' },
+          // { text: 'ClinGen', align: 'left', sortable: false, value: 'clinGen' },
+          // {
+          //   text: '',
+          //   value: 'locationImgSrc',
+          //   width: '10%',
+          //   class: 'headerWidth',
+          //   visibility: 'hidden-lg-only'
+          //
+          //  },
           {
             text: '',
-            // align: 'left',
-            value: 'locationImgSrc',
-            width: '10%',
-            class: 'headerWidth',
-            visibility: 'hidden-lg-only'
-
-           },
-          {
-            text: '',
-            // align: 'left',
             value: ['haploScore', 'value'],
             width: '10%',
             class: 'headerWidth',

@@ -17,6 +17,7 @@
                                 class="form-control"
                                 type="text"
                                 autocomplete="off"
+                                v-on:keyup.prevent="submitOnEnter"
                                 placeholder="Search phenotype (E.g. lactic acidosis)"
                                 v-model="phenotypeTermEntered">
 
@@ -164,7 +165,7 @@ var geneModel = new GeneModel();
     data(){
       return {
         showGenesMenu: null,
-
+        enterCount: 0,
         genesToApply: null,
 
         phenolyzerTopCounts: [30, 50, 80, 100],
@@ -260,6 +261,16 @@ var geneModel = new GeneModel();
         } else {
           this.pagination.sortBy = column
           this.pagination.descending = false
+        }
+      },
+      submitOnEnter: function(e){
+        if (e.keyCode === 13) {
+          this.enterCount++;
+          if(this.enterCount===2){
+            document.getElementById("phenotype-term").blur();
+            this.onSearchPhenolyzerGenes();
+            this.enterCount = 0;
+          }
         }
       },
       onSearchPhenolyzerGenes: function() {
