@@ -151,15 +151,18 @@
               <div id="app">
                 <div v-if="props.item.clinGen.val">
                   <v-menu open-on-hover top offset-y>
-                    <p style="font-size:13px; margin-top:2px" slot="activator">ClinGen Analysis</p>
+                      <span style="margin-top:2px" slot="activator">
+                           ClinGen
+                      </span>
                       <v-card>
                         <v-card-title>
-                            <div><strong>ClinGen Analysis: </strong></div>
+                            <div style="cursor: context-menu"><strong>ClinGen Analysis: </strong></div>
                         </v-card-title>
                         <v-card-text style="margin-top:-25px">
-                          {{props.item.name}}
+                          <strong>{{props.item.name}}</strong>
                           <br>
-                          <strong> Haploinsufficiency Score: </strong>{{props.item.haploScore}}
+                          <strong > Haploinsufficiency Score: {{props.item.haploScore}}</strong>
+                          <br>
                           <br>
                           <p v-html="props.item.locationImgSrc"></p>
                           <p></p>

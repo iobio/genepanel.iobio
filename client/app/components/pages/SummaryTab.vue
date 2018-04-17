@@ -184,10 +184,10 @@ import FilterSummary from './FilterSummary.vue'
             name: "GTR and Phenolyzer",
             count: this.commonGtrPhenoGenes.length
           },
-          {
-            name: "Unique Genes",
-            count: this.uniqueGenes.length
-          }
+          // {
+          //   name: "Unique Genes",
+          //   count: this.uniqueGenes.length
+          // }
         ]
       },
       setSummaryTableData(){
