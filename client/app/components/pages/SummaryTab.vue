@@ -11,10 +11,10 @@
       <v-app id="inspire">
         <!-- pie chart layout -->
         <v-container fluid grid-list-md>
-          <v-layout row wrap>
+          <v-layout row wrap >
             <v-flex d-flex xs12 sm12 md12 lg12>
               <v-card-text>
-                <v-layout row wrap>
+                <v-layout row wrap style="margin-top:-70px;">
                   <v-flex d-flex xs12 sm12 md12 lg12>
                     <v-card>
                       <v-card-text>

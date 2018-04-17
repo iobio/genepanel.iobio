@@ -3,7 +3,7 @@
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
-          <v-layout row wrap>
+          <v-layout row wrap style="margin-top:-30px;">
             <v-flex d-flex xs12 sm12 md12 lg12>
                 <v-card-text>
                   <v-layout row wrap>
@@ -17,7 +17,7 @@
                                 class="form-control"
                                 type="text"
                                 autocomplete="off"
-                                placeholder="Search phenotype (E.g. lacticacidosis)"
+                                placeholder="Search phenotype (E.g. lactic acidosis)"
                                 v-model="phenotypeTermEntered">
 
                               <typeahead

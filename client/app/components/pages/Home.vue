@@ -20,7 +20,7 @@
           </v-flex>
         </v-layout> -->
 
-          <v-layout row wrap>
+          <v-layout row wrap style="margin-top:-30px;">
             <!-- <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
