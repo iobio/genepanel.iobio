@@ -59,10 +59,27 @@
                         </v-card-title>
                         <div v-if="items.length">
                         <v-card-title>
-                          <strong>
+                          <!-- <strong>
                             Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
                             &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
-                          </strong>
+                          </strong> -->
+                          <span id="genes-top-input" style="display:inline-block;max-width:130px;width:130px;margin-left:25px;padding-top:4px">
+                            <v-select
+                            v-model="genesTop"
+                            label="Select Genes"
+                            hide-details
+                            hint="Genes"
+                            combobox
+                            :items="genesTopCounts"
+                            v-on:focusout="selectNumberOfTopPhenolyzerGenes"
+                            >
+                            </v-select>
+                          </span>
+                          <span style="padding-top:22px">
+                            <a>
+                              <v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon>
+                            </a>
+                          </span>
                           <v-spacer></v-spacer>
                           <v-text-field
                             append-icon="search"
@@ -167,7 +184,8 @@ var geneModel = new GeneModel();
         showGenesMenu: null,
         enterCount: 0,
         genesToApply: null,
-
+        genesTopCounts: [5, 10, 30, 50, 80, 100],
+        genesTop: 50,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -247,8 +265,8 @@ var geneModel = new GeneModel();
         this.selected = this.items.slice(0,data)
       },
       selectNumberOfTopPhenolyzerGenes: function(){
-        if(this.NumberOfTopPhenolyzerGenes>0){
-          bus.$emit('SelectNumberOfPhenolyzerGenes', this.NumberOfTopPhenolyzerGenes);
+        if(this.genesTop>0){
+          bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
         }
       },
       toggleAll () { //Data Table

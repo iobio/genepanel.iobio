@@ -14,7 +14,7 @@
           type="text"
           autocomplete="off"
           v-on:keyup.prevent="submitOnEnter"
-          placeholder="Search Disorder (E.g. Treacher Collins)">
+          placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
         <!-- </form> -->
         <!-- </form> -->
         <typeahead

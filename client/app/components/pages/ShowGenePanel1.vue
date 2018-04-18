@@ -76,10 +76,27 @@
         <!-- <btn @click="copy">
             <i class="material-icons">content_copy</i> Copy to clipboard
         </btn> -->
-        <strong>
+        <!-- <strong>
           Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
           &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
-        </strong>
+        </strong> -->
+        <span id="genes-top-input" style="display:inline-block;max-width:130px;width:130px;margin-left:25px;padding-top:4px">
+          <v-select
+          v-model="NumberOfTopGenes"
+          label="Select Genes"
+          hide-details
+          hint="Genes"
+          combobox
+          :items="genesTopCounts"
+          v-on:focusout="selectNumberOfTopGenes"
+          >
+          </v-select>
+        </span>
+        <span style="padding-top:22px">
+          <a>
+            <v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon>
+          </a>
+        </span>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -231,6 +248,7 @@ var model = new Model();
         geneBarChart: {},
         GetGeneData : [],
         GenesToDisplay: [],
+        genesTopCounts: [5, 10, 30, 50, 80, 100],
         pagination: {
           sortBy: 'value',
           descending: true, //Sorts the column in descending order

@@ -108,16 +108,16 @@
               <v-divider></v-divider>
 
               <v-list-tile >
-                <v-list-tile-title><a href="http://iobio.io/tags/gene.iobio/" target="_iobio">Blog</a></v-list-tile-title>
+                <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io/tags/gene.iobio/" target="_iobio">Blog</a></v-list-tile-title>
               </v-list-tile>
               <v-list-tile >
-                <v-list-tile-title><a href="http://gene.iobio.io/help_resources.html" target="_iobio">Tutorials</a></v-list-tile-title>
+                <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://gene.iobio.io/help_resources.html" target="_iobio">Tutorials</a></v-list-tile-title>
               </v-list-tile>
               <v-list-tile >
-              <v-list-tile-title><a href="http://iobio.io" target=")iobio">iobio</a></v-list-tile-title>
+              <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io" target=")iobio">iobio</a></v-list-tile-title>
               </v-list-tile>
               <v-list-tile >
-                <v-list-tile-title><a href="http://iobio.io/support.html" target=")iobio">Support the iobio project</a></v-list-tile-title>
+                <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io/support.html" target=")iobio">Support the iobio project</a></v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
@@ -550,9 +550,7 @@ import Gtr from './Gtr.vue';
   color:#66d4ed
 }
 
-a {
-  color: rgba(0,0,0,.87) !important
-}
+
 
 /* .btn .btn__content .icon {
   color:#66d4ed
