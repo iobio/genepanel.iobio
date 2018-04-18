@@ -232,6 +232,8 @@ import { bus } from '../../routes';
                 .text(function(d){
                   return d.data._modeOfInheritance;
                 })
+                .style("font-size", "1.1em")
+
 
                 legend.on("mouseover", function(d){
                   var oarc = d3.select("#pie-chart-box2 #arc-" + $(this).attr("legend-id"));
@@ -286,6 +288,8 @@ import { bus } from '../../routes';
                   .text(function(d){
                     return d.data._modeOfInheritance;
                   })
+
+
 
           // g.append("text")
           //   .attr("transform", function(d) {
