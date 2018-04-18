@@ -58,7 +58,7 @@
 
           <!-- <td><span v-html="props.item.htmlData"></span></td> -->
           <td><strong>{{ props.item.name }}</strong></td>
-          <td>
+          <!-- <td>
               <span v-if="props.item.sources==='gtrPheno'">
                 <v-progress-circular
                   :size="25"
@@ -89,7 +89,7 @@
                 >
                 </v-progress-circular>
               </span>
-          </td>
+          </td> -->
           <td>
             <span v-if="props.item.isGtr"><v-icon color="green" >check_circle</v-icon></span>
             <span v-else></span>
@@ -98,7 +98,7 @@
             <span v-if="props.item.isPheno"><v-icon color="green" >check_circle</v-icon></span>
             <span v-else></span>
           </td>
-          <td style="font-size:0px;">{{ props.item.indexVal }}</td>
+          <!-- <td style="font-size:0px;">{{ props.item.indexVal }}</td> -->
 
           <!-- <td>{{ props.item._conditionNames }}</td> -->
           <!-- <td>{{ props.item._geneCount }}</td> -->
@@ -131,15 +131,15 @@ import { bus } from '../../routes';
       search: '',  //For searching the rows in data table
       selected: [],
       headers: [
-        { text: 'Name', align: 'left', sortable: false, value: 'indexVal' },
-        { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
+        { text: 'Name', align: 'left', sortable: false, value: ['indexVal','name'] },
+        // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
         { text: 'phenolyzer', align: 'left', sortable: false, value: 'isPheno' },
-        {
-          text: '',
-          align: 'left',
-          value: 'name'
-        }
+        // {
+        //   text: '',
+        //   align: 'left',
+        //   value: 'name'
+        // }
 
       ],
       items: [],

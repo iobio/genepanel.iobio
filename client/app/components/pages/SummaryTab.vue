@@ -56,9 +56,9 @@
                     <v-card>
                       <v-card-text>
                         <v-layout row wrap>
-                          <v-flex d-flex xs12 sm12 md1 lg1>
+                          <v-flex d-flex xs12 sm12 md2 lg2>
                           </v-flex>
-                          <v-flex d-flex xs12 sm12 md9 lg9>
+                          <v-flex d-flex xs12 sm12 md8 lg8>
                               <center>
                                 <SummaryDataTable
                                     v-bind:summaryTableData="summaryTableArray">
