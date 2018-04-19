@@ -16,6 +16,7 @@
       </v-snackbar>
     <v-navigation-drawer
       fixed
+      width=325
       :clipped="$vuetify.breakpoint.mdAndUp"
       app
       v-model="drawer"
