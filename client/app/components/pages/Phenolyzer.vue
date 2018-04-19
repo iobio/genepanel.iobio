@@ -2,6 +2,19 @@
   <div>
     <div id="app">
       <v-app id="inspire">
+        <v-snackbar
+            :timeout="snackbarTimeout"
+            :top="y === 'top'"
+            :bottom="y === 'bottom'"
+            :right="x === 'right'"
+            :left="x === 'left'"
+            :multi-line="mode === 'multi-line'"
+            :vertical="mode === 'vertical'"
+            v-model="snackbar"
+          >
+            {{ snackbarText }}
+            <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+          </v-snackbar>
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-30px;">
             <v-flex d-flex xs12 sm12 md12 lg12>
@@ -71,14 +84,13 @@
                             hint="Genes"
                             combobox
                             :items="genesTopCounts"
-                            v-on:focusout="selectNumberOfTopPhenolyzerGenes"
                             >
                             </v-select>
                           </span>
                           <span style="padding-top:22px">
-                            <a>
-                              <v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon>
-                            </a>
+                            <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
+                              <v-icon>navigate_next</v-icon>
+                            </v-btn>
                           </span>
                           <v-spacer></v-spacer>
                           <v-text-field
@@ -229,6 +241,8 @@ var geneModel = new GeneModel();
         selectedGenesText: "",
         checked: false,
         alert:false,
+        snackbar: false,
+        snackbarText: ""
       }
     },
     updated(){
@@ -265,9 +279,14 @@ var geneModel = new GeneModel();
         this.selected = this.items.slice(0,data)
       },
       selectNumberOfTopPhenolyzerGenes: function(){
-        if(this.genesTop>0){
-          bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
-        }
+        setTimeout(()=>{
+          if(this.genesTop>0){
+            bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
+            this.snackbarText = "Top " + this.genesTop + " genes selected";
+            this.snackbar = true;
+          }
+        }, 1200);
+
       },
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []

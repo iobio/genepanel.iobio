@@ -1,5 +1,18 @@
 <template>
   <div>
+    <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     <!-- <div v-if="dataForTables.length">
       <ul>
         <li class="abcde" v-for="(data, index) in dataForTables">
@@ -296,6 +309,8 @@ var model = new Model();
         NumberOfGenesSelectedFromFilter: 50,
         selectedGenesText:"",
         NumberOfTopGenes: 50,
+        snackbar: false,
+        snackbarText: ""
 
       }
     },
@@ -539,6 +554,8 @@ var model = new Model();
           if(this.NumberOfTopGenes>0){
             bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
             this.flagForNumberOfGenesSelected= true;
+            this.snackbarText = "Top " + this.NumberOfTopGenes + " genes selected";
+            this.snackbar = true;
           }
           else if (this.NumberOfTopGenes<0) {
             document.getElementById("geneSelection").reset();

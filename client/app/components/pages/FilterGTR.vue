@@ -20,15 +20,7 @@
              &nbsp; Genes
           </div>
             <v-card-text>
-              <!-- Select All Genes
-              <v-btn flat icon color="indigo">
-                <v-icon>play_arrow</v-icon>
-              </v-btn>
-              <br>
-              Deselect All Genes
-              <v-btn flat icon color="indigo">
-                <v-icon>play_arrow</v-icon>
-              </v-btn> -->
+
               <v-btn small v-on:click="SelectAllGenes" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
               <v-btn small v-on:click="deSelectAllGenes" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
               <br>
@@ -39,7 +31,6 @@
               Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
               &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
               </span> -->
-              {{ GenesInPanels }}
               <span id="genes-top-input" style="display:inline-block;max-width:170px;width:170px;margin-left:25px;padding-top:4px">
                 <v-select
                 v-model="GenesInPanels"
@@ -52,9 +43,17 @@
                 </v-select>
               </span>
               <span style="padding-top:22px">
-                <a>
-                  <v-icon v-on:click="selectGenesInPanels">navigate_next</v-icon>
-                </a>
+                <v-btn v-on:click="selectGenesInPanels" flat icon color="indigo">
+                  <v-icon>navigate_next</v-icon>
+                </v-btn>
+              </span>
+              <span >
+                <v-menu open-on-hover top offset-y>
+                  <p style="font-size:13px; margin-top:18px" slot="activator"><v-icon small  >help</v-icon></p>
+                    <v-card>
+                      <v-card-text >Select genes in atleast N panels</v-card-text>
+                    </v-card>
+                </v-menu>
               </span>
               <!-- <span>
               Select genes in at least &nbsp; <input v-on:focusout="selectGenesInPanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="GenesInPanels"> panels
@@ -66,10 +65,8 @@
           <div slot="header"><v-icon color="red">local_pharmacy</v-icon>&nbsp; &nbsp;Disorders</div>
           <v-card>
             <v-card-text>
-              <v-btn small v-on:click="SelectAllDisorders">Select All</v-btn>
-              <v-btn small v-on:click="deSelectAllDisorders">Deselect All</v-btn>
-                <br>
-
+                <v-btn small v-on:click="SelectAllDisorders" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
+                <v-btn small v-on:click="deSelectAllDisorders" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
                 <v-card flat v-if="disordersData.length">
                   <v-card-text>
                       <v-layout>
@@ -90,17 +87,62 @@
           <div slot="header"><v-icon color="blue darken-2">view_list</v-icon>&nbsp; &nbsp;Panels</div>
           <v-card>
             <v-card-text>
-              <span>
+              <!-- <span>
               Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfGenePanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfGenePanels"> genes
               &nbsp;<a><v-icon v-on:click="selectNumberOfGenePanels">navigate_next</v-icon></a>
               </span>
-              <br><br>
-              <span>
-              Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfConditions" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfConditions"> conditions
-              &nbsp;<a><v-icon v-on:click="selectNumberOfConditions">navigate_next</v-icon></a>
-            </span>
+              <br><br> -->
+
 
               <br>
+              <span style="display:inline-block;max-width:170px;width:170px;margin-left:25px;padding-top:4px">
+                <v-select
+                v-model="NumberOfGenePanels"
+                label="Maximum Genes"
+                hide-details
+                combobox
+                :items="NumberOfGenePanelsDropDown"
+                >
+                </v-select>
+              </span>
+              <span style="padding-top:22px">
+                <v-btn v-on:click="selectNumberOfGenePanels" flat icon color="indigo">
+                  <v-icon>navigate_next</v-icon>
+                </v-btn>
+              </span>
+              <span >
+                <v-menu open-on-hover top offset-y>
+                  <p style="font-size:13px; margin-top:18px" slot="activator"><v-icon small  >help</v-icon></p>
+                    <v-card>
+                      <v-card-text >Select Panels with less than N genes</v-card-text>
+                    </v-card>
+                </v-menu>
+              </span>
+              <br>
+
+              <span style="display:inline-block;max-width:170px;width:170px;margin-left:25px;padding-top:4px">
+                <v-select
+                v-model="NumberOfConditions"
+                label="Maximum Genes"
+                hide-details
+                combobox
+                :items="NumberOfConditionsDropDown"
+                >
+                </v-select>
+              </span>
+              <span style="padding-top:22px">
+                <v-btn v-on:click="selectNumberOfConditions" flat icon color="indigo">
+                  <v-icon>navigate_next</v-icon>
+                </v-btn>
+              </span>
+              <span >
+                <v-menu open-on-hover top offset-y>
+                  <p style="font-size:13px; margin-top:18px" slot="activator"><v-icon small  >help</v-icon></p>
+                    <v-card>
+                      <v-card-text >Select Panels with less than N conditions</v-card-text>
+                    </v-card>
+                </v-menu>
+              </span>
 
               <v-card flat v-if="vendorsData.length">
                 <v-card-text>
@@ -224,7 +266,9 @@ import { bus } from '../../routes';
         GenesInPanels: 2,
         flagForNumberOfGenesSelected: false,
         NumberOfConditions:10,
-        panelCounts: [2, 5, 10, 20]
+        panelCounts: [2, 5, 10, 20],
+        NumberOfGenePanelsDropDown: [25, 50],
+        NumberOfConditionsDropDown: [5, 10, 15, 20]
       }
     },
     watch:{
@@ -299,17 +343,19 @@ import { bus } from '../../routes';
         }, 2000);
       },
       selectNumberOfGenePanels: function(){
-        if(this.NumberOfGenePanels>0){
-          bus.$emit('SelectNumberOfPanel', this.NumberOfGenePanels);
-          this.alert = true;
-          this.alertText = " Selected Panels with less than " +this.NumberOfGenePanels + " genes";
-          setTimeout(()=>{
-            this.alert = false;
-          }, 2000);
-        }
-        else if (this.NumberOfGenePanels<0) {
-          document.getElementById("disorderSelection").reset();
-        }
+        setTimeout(()=>{
+          if(this.NumberOfGenePanels>0){
+            bus.$emit('SelectNumberOfPanel', this.NumberOfGenePanels);
+            this.alert = true;
+            this.alertText = " Selected Panels with less than " +this.NumberOfGenePanels + " genes";
+            setTimeout(()=>{
+              this.alert = false;
+            }, 2000);
+          }
+          else if (this.NumberOfGenePanels<0) {
+            document.getElementById("disorderSelection").reset();
+          }
+         }, 1500);
       },
       selectNumberOfTopGenes: function(){
         if(this.NumberOfTopGenes>0){
@@ -326,25 +372,29 @@ import { bus } from '../../routes';
         }
       },
       selectGenesInPanels: function(e){
-        console.log(this.GenesInPanels)
-        if (this.GenesInPanels>0) {
-          bus.$emit('SelectGenesInNumberOfPanels', this.GenesInPanels);
-          this.alert = true;
-          this.alertText = " Selected Genes present in atleast "+ this.GenesInPanels + " Panels";
-          setTimeout(()=>{
-            this.alert = false;
-          }, 2000);
-        }
+        setTimeout(()=>{
+          if (this.GenesInPanels>0) {
+            bus.$emit('SelectGenesInNumberOfPanels', this.GenesInPanels);
+            this.alert = true;
+            this.alertText = " Selected Genes present in atleast "+ this.GenesInPanels + " Panels";
+            setTimeout(()=>{
+              this.alert = false;
+            }, 2000);
+          }
+         }, 1500);
       },
       selectNumberOfConditions: function(){
-        if(this.NumberOfConditions>0){
-          bus.$emit('selectNumberOfConditionsInPanel', this.NumberOfConditions);
-          this.alert = true;
-          this.alertText = " Selected Panels with less than "+ this.NumberOfConditions + " Conditions";
-          setTimeout(()=>{
-            this.alert = false;
-          }, 2000);
-        }
+        setTimeout(()=>{
+          if(this.NumberOfConditions>0){
+            bus.$emit('selectNumberOfConditionsInPanel', this.NumberOfConditions);
+            this.alert = true;
+            this.alertText = " Selected Panels with less than "+ this.NumberOfConditions + " Conditions";
+            setTimeout(()=>{
+              this.alert = false;
+            }, 2000);
+          }
+        }, 1200);
+
       },
       ClearVendors: function(){
         this.select=[];
