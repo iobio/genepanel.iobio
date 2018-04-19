@@ -21,10 +21,17 @@
       app
       v-model="drawer"
     >
+    <v-list>
+          <v-list-tile>
+            <v-list-tile-title class="title">
+              Filters
+            </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
     <v-list dense>
-        <v-card >
+        <!-- <v-card >
           <v-card-title primary class="title">Filters</v-card-title>
-          <v-card-text>
+          <v-card-text> -->
             <keep-alive>
               <FilterGTR
                 v-if="component==='Home'"
@@ -40,8 +47,8 @@
                 v-else-if="component='SummaryTab'">
               </FilterSummary>
             </keep-alive>
-          </v-card-text>
-        </v-card>
+          <!-- </v-card-text>
+        </v-card> -->
     </v-list>
     </v-navigation-drawer>
     <v-toolbar

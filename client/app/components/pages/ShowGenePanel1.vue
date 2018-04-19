@@ -88,14 +88,13 @@
           hint="Genes"
           combobox
           :items="genesTopCounts"
-          v-on:focusout="selectNumberOfTopGenes"
           >
           </v-select>
         </span>
         <span style="padding-top:22px">
-          <a>
-            <v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon>
-          </a>
+          <v-btn v-on:click="selectNumberOfTopGenes" flat icon color="indigo">
+                <v-icon >navigate_next</v-icon>
+          </v-btn>
         </span>
         <v-spacer></v-spacer>
         <v-text-field
@@ -309,7 +308,6 @@ var model = new Model();
 
     },
     updated(){
-
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
@@ -363,7 +361,6 @@ var model = new Model();
     },
     methods:{
       showSomeAlert(){
-        alert("sdhdsbslakbn")
       },
       drawSimpleViz: function(){
         var arr = [40, 70, 30, 25, 102];
@@ -538,15 +535,16 @@ var model = new Model();
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       },
       selectNumberOfTopGenes: function(){
-        if(this.NumberOfTopGenes>0){
-          bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
-          this.flagForNumberOfGenesSelected= true;
-        }
-        else if (this.NumberOfTopGenes<0) {
-          document.getElementById("geneSelection").reset();
-        }
+        setTimeout(()=>{
+          if(this.NumberOfTopGenes>0){
+            bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+            this.flagForNumberOfGenesSelected= true;
+          }
+          else if (this.NumberOfTopGenes<0) {
+            document.getElementById("geneSelection").reset();
+          }
+         }, 1500);
       },
-
     }
   }
 
