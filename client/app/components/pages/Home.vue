@@ -7,7 +7,20 @@
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
-          <v-layout row wrap>
+
+          <!-- <v-layout row justify-center>
+          <v-flex xs12 sm12 md12 lg12 margin-top:4px>
+            <v-card >
+              <v-card-text>
+                <app-gtr
+                  v-on:showDiseases="addDiseases($event)">
+                </app-gtr>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout> -->
+
+          <v-layout row wrap style="margin-top:-30px;">
             <!-- <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
@@ -27,9 +40,8 @@
                 <v-card-text>
                   <v-layout row wrap>
                     <v-flex d-flex xs12 sm12 md12>
-                      <v-card >
-                        <v-card-title primary class="title">Search</v-card-title>
-                        <v-card-text>
+                      <v-card>
+                        <v-card-text style="margin-bottom:-20px">
                           <app-gtr
                             v-on:showDiseases="addDiseases($event)">
                           </app-gtr>
@@ -37,9 +49,10 @@
                       </v-card>
                     </v-flex>
 
+
                     <v-flex d-flex xs12 sm12 md12>
-                      <v-card >
-                        <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title>
+                      <v-card style="margin-top:4px">
+                       <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title></center>
                         <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
                         <!-- <span>
                           <strong>
@@ -52,23 +65,29 @@
                         <v-card-text>
 
                           <v-layout row wrap>
-                            <v-flex d-flex xs12 sm4 md4>
+                            <v-flex d-flex xs12 sm12 md4>
+                              <center>
                                 <PieChartSelectorBackup
-                                  v-if="diseases.length &&modeOfInheritanceProps.length"
-                                  v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-                                </PieChartSelectorBackup>
+                                    v-if="diseases.length &&modeOfInheritanceProps.length"
+                                    v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                                  </PieChartSelectorBackup>
+                                </center>
                             </v-flex>
-                            <v-flex d-flex xs12 sm4 md4>
-                                <GeneMembership
+                            <v-flex d-flex xs12 sm12 md4>
+                                <center>
+                                  <GeneMembership
                                   v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
                                   v-bind:GeneData="geneProps">
                                 </GeneMembership>
+                              </center>
                             </v-flex>
-                            <v-flex d-flex xs12 sm4 md4>
-                                <ConditionsDistribution
+                            <v-flex d-flex xs12 sm12 md4>
+                                <center>
+                                  <ConditionsDistribution
                                     v-if="geneProps.length && diseasesProps.length"
                                     v-bind:distributionData="geneProps">
                                 </ConditionsDistribution>
+                              </center>
                             </v-flex>
 
                           </v-layout>
@@ -100,7 +119,8 @@
                             v-bind:GeneData="geneProps"
                             v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                             v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
-                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)">
+                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
+                            v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
                           </show-gene-panel1>
                         </v-card-text>
                       </v-card>
@@ -285,6 +305,9 @@ export default {
     UpdateNoOfGenesSelectedFromGTR: function(e){
       this.GtrGenesTabNumber = e;
       this.$emit("UpdateNumberOfGenesSelectedFromGTR", e)
+    },
+    UpdateListOfSelectedGenes: function(e){
+      this.$emit("UpdateListOfSelectedGenesGTR", e);
     }
   }
 }
@@ -295,7 +318,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
   .toolbar__title{
-    color: #66D4ED;
+    /* color: #66D4ED; */
     font-family: 'Quicksand', sans-serif;
     font-size: 24px;
   }

@@ -399,33 +399,126 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
+    var multiplicationFactor = 900/sortedGenes[0]._genePanelCount;
+    var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
+      return sortedGenes.map(function(gene, idx) {
+        return {
+              key: idx,
+              name: gene.name,
+              value: +gene._genePanelCount,
+              diseases: gene._diseaseCount,
+              conditions: gene._diseaseNames,
+              htmlData: `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="MyGradient">
+                                    <stop offset="5%"  stop-color="#36D1DC"/>
+                                    <stop offset="95%" stop-color="#5B86E5"/>
+                                </linearGradient>
+                            </defs>
 
-    return sortedGenes.map(function(gene, idx) {
-      return {
-            key: idx,
-            name: gene.name,
-            value: +gene._genePanelCount,
-            diseases: gene._diseaseCount,
-            conditions: gene._diseaseNames,
-            htmlData: `<svg width="${gene._genePanelCount * 15}" height="25" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <linearGradient id="MyGradient">
-            <stop offset="5%"  stop-color="#36D1DC"/>
-            <stop offset="95%" stop-color="#5B86E5"/>
-        </linearGradient>
-    </defs>
+                            <rect fill="url(#MyGradient)"
+                                  x="10" y="5" width="${gene._genePanelCount * multiplicationFactor}" height="25"/>
+                            <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="20" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
+                        </svg>`
+            };
+      });
 
-    <rect fill="url(#MyGradient)"
-          x="10" y="5" width="${gene._genePanelCount * 15}" height="25"/>
-    <text x="${gene._genePanelCount * 6}" y="20" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
-</svg>`
-          };
-    });
   }
 
 
-  drawSvg(){
-    return "<strong>svgggg</strong>"
+  binarySearchFunction(array, targetValue){
+    var min = 0;
+    var max = array.length - 1;
+    var guess;
+
+    while(min <= max) {
+        guess = Math.floor((max + min) / 2);
+
+        if (array[guess] === targetValue) {
+            return true;
+        }
+        else if (array[guess] < targetValue) {
+            min = guess + 1;
+        }
+        else {
+            max = guess - 1;
+        }
+
+    }
+
+    return false;
+  }
+
+  getHaploInsufficiencyScore(gene){
+    var genesScr = [
+      {
+        name: "ACP5",
+        score: "sufficient evidence"
+      },
+      {
+        name: "ALX1",
+        score: "some evidence"
+      },
+      {
+        name: "AVP",
+        score: "some evidence"
+      },
+      {
+        name: "BRAC2",
+        score: "sufficient evidence"
+      },
+      {
+        name: "CPT2",
+        score: "minimal evidence"
+      },
+      {
+        name: "DHODH",
+        score: "some evidence"
+      },
+      {
+        name: "EYA1",
+        score: "some evidence"
+      },
+      {
+        name: "POLR1D",
+        score: "sufficient evidence"
+      },
+      {
+        name: "SF3B4",
+        score: "no evidence"
+      },
+      {
+        name: "TCOF1",
+        score: "sufficient evidence"
+      }
+    ];
+    for(var i=0; i<genesScr.length; i++){
+      if(gene === genesScr[i].name){
+        return genesScr[i].score;
+      }
+    }
+  }
+
+  getClinGenFlag(data){
+    var curatedGenes = [
+      "ACP5", "ALX1", "AVP", "BRAC2", "CPT2", "DHODH", "EYA1", "POLR1D", "SF3B4", "TCOF1"
+    ];
+    data.map((x,i)=>{
+    if(this.binarySearchFunction(curatedGenes, x.name)){
+      x["clinGen"] = {
+        val: true
+      };
+      x["haploScore"]= this.getHaploInsufficiencyScore(x.name);
+      x["locationImgSrc"] = `<img src="https://ghr.nlm.nih.gov/gene/${x.name}/location.png">`
+    }
+    else {
+      x["clinGen"] = {
+        val: false
+      };;
+    }
+  })
+
+  return data;
   }
 
   getGeneHistogramData(genes) {

@@ -90,7 +90,7 @@ var model = new Model();
             .width(390)
             .height(150)
             .widthPercent("100%")
-            .heightPercent("270px")
+            .heightPercent("240px")
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
             .yAxisLabel( "# of genes" )
             .xAxisLabel( "# of Panels" )
@@ -201,12 +201,16 @@ var model = new Model();
     // A formatter for counts.
     let formatCount = d3.format(",.0f");
 
-    let logFormat = function(d) {
+    let logFormat = function(d, i) {
       if (d < 1) {
         return "";
       } else {
-        var x = Math.log(d) / Math.log(10) + 1e-6;
-        return Math.abs(x - Math.floor(x)) < .7 ? formatCount(d) : "";
+        console.log("d :" , d, " i : ", i, " i/2 : ",  i/2)
+        if(i%2===0){
+          var x = Math.log(d) / Math.log(10) + 1e-6;
+          console.log(Math.abs(x - Math.floor(x)))
+          return Math.abs(x - Math.floor(x)) < 1.1 ? formatCount(d) : "";
+        }
       }
     }
 
@@ -215,7 +219,9 @@ var model = new Model();
       var end   = brush.extent()[1];
       svg.selectAll(".bar")
          .classed("selected", function(d,i) {
+
             var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
+            // console.log("inBrushExtent", inBrushExtent)
             return inBrushExtent;
          })
 
@@ -241,10 +247,9 @@ var model = new Model();
         console.log("dataOrig" , dataOrig)
         // set svg element
         svg = d3.select(this);
-
         svg.attr("width", widthPercent)
           .attr("height", heightPercent)
-          .attr('viewBox', "0 0 " + parseInt(width) + " " + parseInt(height))
+          .attr('viewBox', "0 0 " + parseInt(width+10) + " " + parseInt(height))
           .attr("preserveAspectRatio", "none");
 
         svg.select("g").remove();
@@ -260,20 +265,31 @@ var model = new Model();
         var min = d3.min(dataOrig, function(d){ return d._genePanelCount;});
         var x = d3.scale.linear()
               .domain([min, max+1])
-              .range(options.descendingX ? [innerWidth, 0] : [0, innerWidth]);
+              .range([0, innerWidth]);  //.range(options.descendingX ? [innerWidth, 0] : [0, innerWidth]);
 
 
-
+              // console.log("x.ticks(max)", x.ticks(max))
+              console.log("dataOrig.length : " , dataOrig.length)
 
         // Generate a histogram using twenty uniformly-spaced bins.
-        var data = d3.layout.histogram()
+        if(dataOrig.length>2000){
+          var data = d3.layout.histogram()
+              .bins(20)
+              .value(function(d){return d._genePanelCount;})
+              (dataOrig);
+        }
+        else {
+          var data = d3.layout.histogram()
+              .bins(x.ticks(max))
+              .value(function(d){return d._genePanelCount;})
+              (dataOrig);
+        }
+
+
+        var dataForBrush = d3.layout.histogram()
             .bins(x.ticks(max))
             .value(function(d){return d._genePanelCount;})
             (dataOrig);
-
-        console.log("data in histogram", data)
-
-
 
         var yMax = d3.max(data, function(d){return d.length});
         var yMin = d3.min(data, function(d){return d.length});
@@ -299,13 +315,15 @@ var model = new Model();
             .tickFormat(function(tickValue) {
               return tickValue;
             })
-            .ticks(max/1.5)
+            .ticks(10) //max/1.5
 
 
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left")
+            .ticks(5)
             .tickFormat(options.logScale ? logFormat : d3.format("i"))
+
 
 
         var barGroup = group.append("g")
@@ -321,7 +339,21 @@ var model = new Model();
             .attr("x", 1)
             .attr("width", Math.abs((x(data[0].dx) - x(0))) - 1)
             .attr("height", function(d) { return 0; })
-            .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0);
+            // .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0)
+            // .attr("fill", function(d){
+            //   if(d.length>0){
+            //     console.log(d[0].name);
+            //     if(d[0].name==="MVK"){
+            //       return "red";
+            //     }
+            //     else {
+            //       return "green"
+            //     }
+            //   }
+            //   else {
+            //     return "green"
+            //   }
+            // })
         // bar.append("text")
         //     .attr("dy", ".75em")
         //     .attr("y", -9)
@@ -332,7 +364,7 @@ var model = new Model();
 
         group.append("g")
             .attr("class", "x axis")
-            .attr("transform", "translate(" + ((x(data[0].dx) - x(0)) / 2) + "," + innerHeight + ")")
+            .attr("transform", "translate(" +((x(data[0].dx) - x(0)) / 2) + "," + innerHeight + ")")  //((x(data[0].dx) - x(0)) / 2)
             .call(xAxis);
 
 
@@ -387,19 +419,23 @@ var model = new Model();
 
         // Select all bars to equal total count of 100
         if (options.selectTop) {
-          var maxX = data.length+1;
+          console.log("options", options);
+          console.log("options selectTop", options.selectTop);
+          console.log("data", dataForBrush)
+          var maxX = dataForBrush.length+1;
           var minX = null;
           var total = 0;
-          for (let i = data.length-1; i >= 0; i-- ) {
-            let d = data[i];
+          for (let i = dataForBrush.length-1; i >= 0; i-- ) {
+            let d = dataForBrush[i];
             total += d.y;
             if (minX == null && total >= options.selectTop) {
               minX = i+1;
             }
           }
           if (minX == null) {
-            minX = data.length;
+            minX = dataForBrush.length;
           }
+          console.log('minX' , minX , "  maxX " , maxX)
           brush.extent([minX, maxX]);
         }
 

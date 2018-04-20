@@ -1,101 +1,185 @@
 <template>
   <div>
+    <div id="app">
+      <v-app id="inspire">
+        <v-snackbar
+            :timeout="snackbarTimeout"
+            :top="y === 'top'"
+            :bottom="y === 'bottom'"
+            :right="x === 'right'"
+            :left="x === 'left'"
+            :multi-line="mode === 'multi-line'"
+            :vertical="mode === 'vertical'"
+            v-model="snackbar"
+          >
+            {{ snackbarText }}
+            <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+          </v-snackbar>
+        <v-container fluid grid-list-md>
+          <v-layout row wrap style="margin-top:-30px;">
+            <v-flex d-flex xs12 sm12 md12 lg12>
+                <v-card-text>
+                  <v-layout row wrap>
+                    <v-flex d-flex xs12 sm12 md12>
+                      <v-card>
+                        <v-card-text >
+                          <center>
+                            <div id="phenotype-input" style="display:inline-block; padding-top:5px;">
+                              <input
+                                id="phenotype-term"
+                                class="form-control"
+                                type="text"
+                                autocomplete="off"
+                                v-on:keyup.prevent="submitOnEnter"
+                                placeholder="Search phenotype (E.g. lactic acidosis)"
+                                v-model="phenotypeTermEntered">
+
+                              <typeahead
+                               v-model="phenotypeTerm"
+                              hide-details="false"
+                              force-select match-start
+                              target="#phenotype-term"
+                              async-src="http://nv-blue.iobio.io/hpo/hot/lookup/?term=" item-key="value"/>
+                            </div>
+
+                            <v-btn
+                                style="margin-top:-0.35px"
+                                color="blue darken-1"
+                                class="btnColor"
+                                v-on:click="onSearchPhenolyzerGenes">
+                              Go
+                            </v-btn>
+                          </center>
+                          <div v-if="phenolyzerStatus!==null">
+                            {{ phenolyzerStatus }}
+                          </div>
+                          <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
+                          <p>
+                            <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
+                              Sorry, the following search term returns no data!
+                            </v-alert>
+                          </p>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+
+
+                    <v-flex d-flex xs12 sm12 md12>
+                      <v-card style="margin-top:4px">
+                        <v-card-title primary class="title">
+                          Results &nbsp;
+                          <span class="text-xs-center" v-if="items.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
+                        </v-card-title>
+                        <div v-if="items.length">
+                        <v-card-title>
+                          <!-- <strong>
+                            Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
+                            &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
+                          </strong> -->
+                          <span id="genes-top-input" style="display:inline-block;max-width:130px;width:130px;margin-left:25px;padding-top:4px">
+                            <v-select
+                            v-model="genesTop"
+                            label="Select Genes"
+                            hide-details
+                            hint="Genes"
+                            combobox
+                            :items="genesTopCounts"
+                            >
+                            </v-select>
+                          </span>
+                          <span style="padding-top:22px">
+                            <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
+                              <v-icon>navigate_next</v-icon>
+                            </v-btn>
+                          </span>
+                          <v-spacer></v-spacer>
+                          <v-text-field
+                            append-icon="search"
+                            label="Search"
+                            single-line
+                            hide-details
+                            v-model="search"
+                          ></v-text-field>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-data-table
+                              v-model="selected"
+                              v-bind:headers="headers"
+                              v-bind:items="items"
+                              select-all
+                              v-bind:pagination.sync="pagination"
+                              item-key="geneName"
+                              class="elevation-1"
+                              v-bind:search="search"
+                              no-data-text="No pheotype genes Available Currently"
+                            >
+                            <template slot="headers" slot-scope="props">
+                              <tr>
+                                <th>
+                                  <v-checkbox
+                                    primary
+                                    hide-details
+                                    @click.native="toggleAll"
+                                    :input-value="props.all"
+                                    :indeterminate="props.indeterminate"
+                                  ></v-checkbox>
+                                </th>
+                                <th v-for="header in props.headers" :key="header.text"
+                                  :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                                  @click="changeSort(header.value)"
+                                >
+                                  <v-icon>arrow_upward</v-icon>
+                                  {{ header.text }}
+                                </th>
+                              </tr>
+                            </template>
+                            <template slot="items" slot-scope="props">
+                              <tr :active="props.selected" @click="props.selected = !props.selected">
+                                <td>
+                                  <v-checkbox
+                                    primary
+                                    hide-details
+                                    :input-value="props.selected"
+                                  ></v-checkbox>
+                                </td>
+                                <!-- <td></td> -->
+                                <!-- <td>{{ props.item.rank }}</td> -->
+                                <td><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
+                                <td><span v-html="props.item.htmlData"></span></td>
+                                <td style="font-size:0px;">{{ props.item.score }}</td>
+                              </tr>
+                            </template>
+                            <template slot="footer">
+                            <td colspan="100%">
+                              <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+                            </td>
+                          </template>
+                          </v-data-table>
+                        </v-card-text>
+                        </div>
+                      </v-card>
+                    </v-flex>
+                    <br>
+                    <br>
+                 </v-layout>
+                </v-card-text>
+            </v-flex>
+
+          </v-layout>
+        </v-container>
+      </v-app>
+    </div>
 
     <!-- url: https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/?term=lacticacidosis@treacher_collins -->
     <!-- <NavigationBar></NavigationBar> -->
-
-    <div id="phenotype-input" style="display:inline-block;">
-      <!-- <v-text-field id="phenotype-term" hide-details v-model="phenotypeTermEntered"
-      label="enter phenotype">
-      </v-text-field> -->
-      <input
-        id="phenotype-term"
-        class="form-control"
-        type="text"
-        style="width: 650px"
-        placeholder="Search Term..."
-        v-model="phenotypeTermEntered">
-      <typeahead
-       v-model="phenotypeTerm"
-      hide-details="false"
-      force-select match-start
-      target="#phenotype-term"
-      async-src="http://nv-blue.iobio.io/hpo/hot/lookup/?term=" item-key="value"/>
-    </div>
-    <btn v-on:click="onSearchPhenolyzerGenes">go</btn>
-
-    <div v-if="phenotypeTermEntered.length>0">
-      Search term: {{ phenotypeTermEntered }}
-    </div>
-    <div v-if="phenolyzerStatus!==null">
-      {{ phenolyzerStatus }}
-    </div>
-    <br>
-    <v-app>
-      <v-data-table
-          v-model="selected"
-          v-bind:headers="headers"
-          v-bind:items="items"
-          select-all
-          v-bind:pagination.sync="pagination"
-          item-key="geneName"
-          class="elevation-1"
-          no-data-text="No Disorders Available Currently"
-        >
-        <template slot="headers" slot-scope="props">
-          <tr>
-            <th>
-              <v-checkbox
-                primary
-                hide-details
-                @click.native="toggleAll"
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-              ></v-checkbox>
-            </th>
-            <th v-for="header in props.headers" :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-              @click="changeSort(header.value)"
-            >
-              <v-icon>arrow_upward</v-icon>
-              {{ header.text }}
-            </th>
-          </tr>
-        </template>
-        <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
-            <td>
-              <v-checkbox
-                primary
-                hide-details
-                :input-value="props.selected"
-              ></v-checkbox>
-            </td>
-            <!-- <td></td> -->
-            <td>{{ props.item.rank }}</td>
-            <td>{{ props.item.geneName }}</td>
-            <td>{{ props.item.score }}</td>
-          </tr>
-        </template>
-        <template slot="footer">
-        <td colspan="100%">
-          <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
-        </td>
-      </template>
-      </v-data-table>
-    </v-app>
-    <strong>Genes </strong>
-    <ul v-if="geneList.length>0">
-      <li v-for="gene in geneList">
-        {{gene.rank}} -- {{gene.geneName}} -- {{gene.score}}
-      </li>
-    </ul>
 
   </div>
 </template>
 
 
 <script>
+import { bus } from '../../routes';
+
 import { Typeahead, Btn } from 'uiv';
 import NavigationBar from './NavigationBar.vue';
 
@@ -110,9 +194,10 @@ var geneModel = new GeneModel();
     data(){
       return {
         showGenesMenu: null,
-
+        enterCount: 0,
         genesToApply: null,
-
+        genesTopCounts: [5, 10, 30, 50, 80, 100],
+        genesTop: 50,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -122,15 +207,18 @@ var geneModel = new GeneModel();
         geneList: [],
         //DataTable
         pagination: {
-          sortBy: 'rank'
+          sortBy: 'score',
+          descending: true,
+          rowsPerPage: 25
         },
+        search: '',
         selected: [],
         headers: [
-          {
-            text: 'Rank',
-            align: 'left',
-            value: 'rank'
-          },
+          // {
+          //   text: 'Rank',
+          //   align: 'left',
+          //   value: 'rank'
+          // },
           {
             text: 'Gene',
             align: 'left',
@@ -141,11 +229,65 @@ var geneModel = new GeneModel();
              align: 'left',
              value: 'score'
             },
+            {
+              text: '',
+              align: 'left',
+              value: 'htmlData'
+            }
         ],
-        items: []
+        tempItems: [],
+        items: [],
+        NumberOfTopPhenolyzerGenes: 50,
+        selectedGenesText: "",
+        checked: false,
+        alert:false,
+        snackbar: false,
+        snackbarText: ""
       }
     },
+    updated(){
+
+      bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
+        this.filterGenesOnSelectedNumber(data);
+        this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      })
+
+      bus.$on('deSelectAllPhenolyzerGenesBus', (data)=>{
+        this.DeSelectAllPhenolyzerGenes(data);
+      })
+
+      bus.$on('SelectAllPhenolyzerGenesBus', (data)=>{
+        this.SelectAllPhenolyzerGenes(data);
+      })
+
+      this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+      this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+      this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+    },
     methods: {
+      SelectAllPhenolyzerGenes(data){
+        this.selected = this.items.slice();
+      },
+      DeSelectAllPhenolyzerGenes(data){
+        this.selected = [];
+      },
+      filterGenesOnSelectedNumber(data){
+        this.selected = this.items.slice(0,data)
+      },
+      selectNumberOfTopPhenolyzerGenes: function(){
+        setTimeout(()=>{
+          if(this.genesTop>0){
+            bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
+            this.snackbarText = "Top " + this.genesTop + " genes selected";
+            this.snackbar = true;
+          }
+        }, 1200);
+
+      },
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []
         else this.selected = this.items.slice()
@@ -158,10 +300,27 @@ var geneModel = new GeneModel();
           this.pagination.descending = false
         }
       },
+      submitOnEnter: function(e){
+        if (e.keyCode === 13) {
+          this.enterCount++;
+          if(this.enterCount===2){
+            document.getElementById("phenotype-term").blur();
+            this.onSearchPhenolyzerGenes();
+            this.enterCount = 0;
+          }
+        }
+      },
       onSearchPhenolyzerGenes: function() {
         let self = this;
+        self.items = [];
+        self.checked = true;
+        self.alert = false;
+        self.selectedGenesText = "";
         self.phenolyzerStatus = null;
         self.genesToApply = "";
+        self.selected = [];
+        self.NoOfGenesSelectedFromPhenolyzer = 0;
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
         var searchTerm = self.phenotypeTerm.value;
         self.phenotypeTermEntered = self.phenotypeTerm.value;
         geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
@@ -170,51 +329,85 @@ var geneModel = new GeneModel();
             if (geneModel.phenolyzerGenes.length == 0) {
               self.phenolyzerStatus = "no genes found."
               self.genesToApply = "";
+              self.checked = false;
+              self.alert = true;
             } else {
-              console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes)
-              var geneCount = geneModel.phenolyzerGenes.filter(function(gene) {
-                return gene.selected;
-              }).length;
-              self.genesToApply = geneModel.phenolyzerGenes
-              .filter(function(gene) {
-              //  console.log(gene)
-                return gene.selected;
-              })
-              .map( function(gene) {
-                return gene.geneName;
-              })
-              .join(", ");
+              console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
+              self.tempItems = geneModel.phenolyzerGenes;
+              self.checked = false;
+              // self.items = geneModel.phenolyzerGenes;
+              // self.selected = self.items.slice(0,50);
+              let data = self.doSomething(self.tempItems);
+              self.items = data;
+              self.selected = self.items.slice(0,50);
+              self.phenolyzerStatus = null;
+              self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+              self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+              self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+              self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+              // var geneCount = geneModel.phenolyzerGenes.filter(function(gene) {
+              //   return gene.selected;
+              // }).length;
+              // self.genesToApply = geneModel.phenolyzerGenes
+              // .filter(function(gene) {
+              // //  console.log(gene)
+              //   return gene.selected;
+              // })
+              // .map( function(gene) {
+              //   return gene.geneName;
+              // })
+              // .join(", ");
 
-              var x = geneModel.phenolyzerGenes
-              .filter(function(gene) {
-                return gene.selected;
-              })
-              .map( function(gene) {
-                return gene;
-              })
-
-              self.items = geneModel.phenolyzerGenes
-              .filter(function(gene) {
-                return gene.selected;
-              })
-              .map( function(gene) {
-                return gene;
-              })
-
-              //console.log(x);
-              var tempArr = [];
-
-              tempArr.push(x);
-              self.geneList = tempArr[0]
-              console.log("genelist", self.geneList)
-
-              self.phenolyzerStatus = geneCount + " genes shown.";
-              console.log(self.phenolyzerStatus)
+              // var x = geneModel.phenolyzerGenes
+              // .filter(function(gene) {
+              //   return gene.selected;
+              // })
+              // .map( function(gene) {
+              //   return gene;
+              // })
+              //
+              // self.items = geneModel.phenolyzerGenes
+              // .filter(function(gene) {
+              //   return gene.selected;
+              // })
+              // .map( function(gene) {
+              //   return gene;
+              // })
+              //
+              // //console.log(x);
+              // var tempArr = [];
+              //
+              // tempArr.push(x);
+              // self.geneList = tempArr[0]
+              // console.log("genelist", self.geneList)
+              //
+              // self.phenolyzerStatus = geneCount + " genes shown.";
+              // console.log(self.phenolyzerStatus)
             }
           } else {
             self.phenolyzerStatus = status;
           }
         });
+      },
+      doSomething: function(tempItems){
+        var svgWidth = tempItems[0].score * 800;
+        tempItems.map(function(gene){
+          gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="MyGradient">
+                                    <stop offset="5%"  stop-color="#36D1DC"/>
+                                    <stop offset="95%" stop-color="#5B86E5"/>
+                                </linearGradient>
+                            </defs>
+
+                            <rect fill="url(#MyGradient)"
+                                  x="10" y="5" width="${gene.score * 800}" height="25"/>
+                            <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
+                          </svg>`
+        })
+        //console.log(tempItems.slice(0,5));
+        //self.items = tempItems;
+        return tempItems
       }
     }
   }
@@ -223,7 +416,57 @@ var geneModel = new GeneModel();
 
 
 <style scoped>
-  .toolbar__title{
-    color: #66D4ED;
+.btnColor, .btn__content{
+  color: white;
+}
+.btn{
+  padding: 0px;
+  height: 34px;
+}
+.form-control{
+  font-size: 15px;
+  font-weight: 800
+}
+
+table.table tbody td, table.table tbody th{
+  height: 7px;
+}
+
+.headerWidth{
+  width: 1%;
+  color: red
+}
+
+#phenotype-term{
+  width: 850px;
+  height:35px;
+  margin-top: 4px;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1050px){
+  #phenotype-term{
+    width: 800px;
+    height:35px;
+    margin-top: 4px;
   }
+}
+
+@media screen and (max-width: 950px){
+  #phenotype-term{
+    width: 600px;
+    height:35px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  #phenotype-term{
+    width: 400px;
+    height:35px;
+    margin-top: 4px;
+  }
+}
+
 </style>

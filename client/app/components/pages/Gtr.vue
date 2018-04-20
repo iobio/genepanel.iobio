@@ -2,36 +2,39 @@
   <div>
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <div style="display:inline-block;">
-      <label>Disorders :</label>
-      <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
-      <!-- v-on:keyup.prevent="submitOnEnter" -->
-      <!-- <form v-on:submit.prevent="submitOnEnter"> -->
-      <input
-        style="width:650px"
-        id="input"
-        class="form-control"
-        type="text"
-        autocomplete="off"
-        v-on:keyup.prevent="submitOnEnter"
-        placeholder="Search Term...">
-      <!-- </form> -->
-      <!-- </form> -->
-      <typeahead
-        match-start
-        v-model="search"
-        target="#input"
-        :data="conditions"
-        item-key="DiseaseName"/>
-    </div>
-    <v-btn
-        color="blue darken-1"
-        class="btnColor"
-        v-on:click.prevent="performSearch">
-      Go
-    </v-btn>
+    <center>
+      <div style="display:inline-block; padding-top:5px;">
+        <!-- <label>Disorders :</label> -->
+        <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
+        <!-- v-on:keyup.prevent="submitOnEnter" -->
+        <!-- <form v-on:submit.prevent="submitOnEnter"> -->
+        <input
+          id="input"
+          class="form-control"
+          type="text"
+          autocomplete="off"
+          v-on:keyup.prevent="submitOnEnter"
+          placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
+        <!-- </form> -->
+        <!-- </form> -->
+        <typeahead
+          match-start
+          v-model="search"
+          target="#input"
+          :data="conditions"
+          item-key="DiseaseName"/>
+
+      </div>
+
+      <v-btn
+          style="margin-top:-0.35px"
+          color="blue darken-1"
+          class="btnColor"
+          v-on:click.prevent="performSearch">
+        Go
+      </v-btn>
+    </center>
     <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
-    <br>
     <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
@@ -226,6 +229,47 @@ var model = new Model();
    color: white;
  }
  .btn{
-   padding: 0px
+   padding: 0px;
+   height:34px;
  }
+ .form-control{
+   font-size: 15px;
+   font-weight: 800;
+ }
+#input{
+  width: 850px;
+  height:35px;
+  margin-top: 4px;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1050px){
+  #input{
+    width: 800px;
+    height:35px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 950px){
+  #input{
+    width: 500px;
+    height:35px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  #input{
+    width: 400px;
+    height:35px;
+    margin-top: 4px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+  }
+  .btnColor{
+    margin-top: 2px
+  }
+}
+
 </style>

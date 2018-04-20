@@ -1,5 +1,18 @@
 <template>
   <div>
+    <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     <!-- <div v-if="dataForTables.length">
       <ul>
         <li class="abcde" v-for="(data, index) in dataForTables">
@@ -73,13 +86,29 @@
 
     <!-- <v-app id="inspire"> -->
       <v-card-title>
-        <btn @click="copy">
+        <!-- <btn @click="copy">
             <i class="material-icons">content_copy</i> Copy to clipboard
-        </btn>
-        <strong>
+        </btn> -->
+        <!-- <strong>
           Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
           &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
-        </strong>
+        </strong> -->
+        <span id="genes-top-input" style="display:inline-block;max-width:130px;width:130px;margin-left:25px;padding-top:4px">
+          <v-select
+          v-model="NumberOfTopGenes"
+          label="Select Genes"
+          hide-details
+          hint="Genes"
+          combobox
+          :items="genesTopCounts"
+          >
+          </v-select>
+        </span>
+        <span style="padding-top:22px">
+          <v-btn v-on:click="selectNumberOfTopGenes" flat icon color="indigo">
+                <v-icon >navigate_next</v-icon>
+          </v-btn>
+        </span>
         <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
@@ -127,6 +156,7 @@
               <v-checkbox
                 primary
                 hide-details
+                v-model="props.selected"
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
@@ -146,12 +176,44 @@
               </div>
             </td>
             <td><span v-html="props.item.htmlData"></span></td>
+            <!-- <td >
+              <div id="app">
+                <div v-if="props.item.clinGen.val">
+                  <v-menu open-on-hover top offset-y>
+                      <span style="margin-top:2px" slot="activator">
+                           ClinGen
+                      </span>
+                      <v-card>
+                        <v-card-title>
+                            <div style="cursor: context-menu"><strong>ClinGen Analysis: </strong></div>
+                        </v-card-title>
+                        <v-card-text style="margin-top:-25px">
+                          <strong>{{props.item.name}}</strong>
+                          <br>
+                          <strong > Haploinsufficiency Score: {{props.item.haploScore}}</strong>
+                          <br>
+                          <br>
+                          <p v-html="props.item.locationImgSrc"></p>
+                          <p></p>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </div>
+              </div>
+            </td> -->
+            <!-- <td></td> -->
             <td style="font-size:0">{{ props.item.value }}</td>
 
             <!-- <td>{{ props.item._conditionNames }}</td> -->
             <!-- <td>{{ props.item._geneCount }}</td> -->
+
           </tr>
         </template>
+        <!-- <template slot="expand" slot-scope="props">
+        <v-card flat>
+          <v-card-text><a>ClinGen Analysis <strong> > </strong></a></v-card-text>
+        </v-card>
+      </template> -->
         <template slot="footer">
         <td colspan="100%">
           <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
@@ -198,6 +260,7 @@ var model = new Model();
         geneBarChart: {},
         GetGeneData : [],
         GenesToDisplay: [],
+        genesTopCounts: [5, 10, 30, 50, 80, 100],
         pagination: {
           sortBy: 'value',
           descending: true, //Sorts the column in descending order
@@ -214,15 +277,24 @@ var model = new Model();
             value: 'name'
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+          // { text: 'ClinGen', align: 'left', sortable: false, value: 'clinGen' },
+          // {
+          //   text: '',
+          //   value: 'locationImgSrc',
+          //   width: '10%',
+          //   class: 'headerWidth',
+          //   visibility: 'hidden-lg-only'
+          //
+          //  },
           {
             text: '',
-            // align: 'left',
-            value: 'value',
+            value: ['haploScore', 'value'],
             width: '10%',
             class: 'headerWidth',
             visibility: 'hidden-lg-only'
 
            },
+
 
         //  { text: 'Conditions', align: 'left', value: '_conditionNames' },
           // { text: 'Genes', align: 'left', value: '_conditionNames' },
@@ -237,6 +309,8 @@ var model = new Model();
         NumberOfGenesSelectedFromFilter: 50,
         selectedGenesText:"",
         NumberOfTopGenes: 50,
+        snackbar: false,
+        snackbarText: ""
 
       }
     },
@@ -249,12 +323,14 @@ var model = new Model();
 
     },
     updated(){
-
       console.log("this.selected from Show Genes ", this.selected.map(gene=> {
          var x =  gene.name;
          //.toString().replace(/,/gi , ' ')
          return x.toString() ;
       }) );
+
+      this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+
 
       bus.$on('deSelectAllGenesBus', ()=>{
         this.deSelectAllGenes();
@@ -286,6 +362,7 @@ var model = new Model();
 
       this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+      this.$emit("SelectedGenesToCopy", this.selected);
 
     },
     watch: {
@@ -298,6 +375,8 @@ var model = new Model();
       }
     },
     methods:{
+      showSomeAlert(){
+      },
       drawSimpleViz: function(){
         var arr = [40, 70, 30, 25, 102];
         var x = 40;
@@ -438,9 +517,12 @@ var model = new Model();
         // this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
-        console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
+        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
-        this.items = data;
+
+        let dataWithClinGenFlag = model.getClinGenFlag(data);
+        console.log("dataWithClinGenFlag", dataWithClinGenFlag[0])
+        this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
@@ -448,11 +530,11 @@ var model = new Model();
 
         bus.$emit("GeneDistributionChartData", this.items);
 
-        console.log("this.selected from Show Genes ", this.selected )
+        // console.log("this.selected from Show Genes ", this.selected )
        // this.geneBarChart(d3.select('#gene-bar-chart'), data);
         // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);
-        console.log("dataForTables: ", this.dataForTables)
+        // console.log("dataForTables: ", this.dataForTables)
 
       },
       selectAllGenes: function(){
@@ -468,15 +550,18 @@ var model = new Model();
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       },
       selectNumberOfTopGenes: function(){
-        if(this.NumberOfTopGenes>0){
-          bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
-          this.flagForNumberOfGenesSelected= true;
-        }
-        else if (this.NumberOfTopGenes<0) {
-          document.getElementById("geneSelection").reset();
-        }
+        setTimeout(()=>{
+          if(this.NumberOfTopGenes>0){
+            bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+            this.flagForNumberOfGenesSelected= true;
+            this.snackbarText = "Top " + this.NumberOfTopGenes + " genes selected";
+            this.snackbar = true;
+          }
+          else if (this.NumberOfTopGenes<0) {
+            document.getElementById("geneSelection").reset();
+          }
+         }, 1500);
       },
-
     }
   }
 

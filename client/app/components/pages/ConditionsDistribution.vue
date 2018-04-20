@@ -32,7 +32,9 @@ import { bus } from '../../routes';
     },
     methods:{
       draw(data){
-        console.log("data in draw is ", data)
+        console.log("data in draw is ", data);
+        var widthPercent = "100%";
+        var heightPercent = "240px";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
         var height = 250- margin.top - margin.bottom;
@@ -43,9 +45,22 @@ import { bus } from '../../routes';
           return a - b
         })
         d3.select("#conditions-distribution-chart").select("svg").remove();
-        var histogram = d3.layout.histogram()
+        console.log("data length in conditions", data.length)
+
+        if(data.length>1000){
+          var histogram = d3.layout.histogram()
+                          .bins(30)
+                          (data)
+        }
+        else{
+          var histogram = d3.layout.histogram()
                           .bins(20)
                           (data)
+        }
+
+        // var histogram = d3.layout.histogram()
+        //                   .bins(40)
+        //                   (data)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
@@ -64,19 +79,30 @@ import { bus } from '../../routes';
         var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
-                    .ticks(5)
+                    .ticks(6)
 
         var xAxis = d3.svg.axis()
                     .scale(x)
-                    .ticks(data.length/3)
+                    .ticks(10)
                     .orient("bottom");
 
 
+        // var canvas = d3.select("#conditions-distribution-chart").append("svg")
+        //                     .attr("height", height + margin.top + margin.bottom)
+        //                     .attr("width", width + margin.right + margin.left)
+        //                     .append("g")
+        //                       .attr('transform', 'translate('+margin.left+','+margin.top+')')
+
+        var ht = height + margin.top + margin.bottom;
+        var wdth = width + margin.right + margin.left
         var canvas = d3.select("#conditions-distribution-chart").append("svg")
-                            .attr("height", height + margin.top + margin.bottom)
-                            .attr("width", width + margin.right + margin.left)
+                            .attr("height", heightPercent)
+                            .attr("width", widthPercent)
+                            .attr('viewBox', "0 0 " + parseInt(wdth) + " " + parseInt(ht))
+                            .attr("preserveAspectRatio", "none")
                             .append("g")
                               .attr('transform', 'translate('+margin.left+','+margin.top+')')
+
 
         var group = canvas.append("g")
                           .attr('transform', 'translate(0,'+ height +')')
@@ -94,14 +120,14 @@ import { bus } from '../../routes';
         var group1 = canvas.append("g")
                             // .attr("transform",'translate('+margin.left+','+margin.top+')')
                             .call(yAxis)
-                            .attr("class", "y axis")
+                            .attr("class", "y axis ")
                             // .attr("stroke", "black")
 
                     group1.append("text")
                           .attr("class", "y axis label")
                           .attr("transform", "rotate(-90)")
-                          .attr("y", 0 - margin.left)
-                          .attr("x",0 - (height / 2))
+                          .attr("y", 0 - margin.left -3.5)
+                          .attr("x",0 - ((height / 2) + 30))
                           .attr("dy", "1em")
                           .style("text-anchor", "start")
                           .text('# of Panels');
@@ -120,6 +146,8 @@ import { bus } from '../../routes';
                     .attr("width", function(d){return x(d.dx)})
                     .attr("height", function(d){return height-y(d.y)})
                     .attr("fill", "steelblue")
+                    .attr("stroke", "#1f5d7a")
+                    .attr("stroke-width", 1)
 
                   // bars.append("text")
                   //   .attr("x", function(d){return x(d.x)-3.5})
@@ -151,7 +179,9 @@ import { bus } from '../../routes';
 </script>
 
 <style>
-.axis .label {
-  font-size: 17px;
+#conditions-distribution-chart .axis .label {
+  font-size: 13.7px !important;
 }
+
+
 </style>
