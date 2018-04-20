@@ -310,7 +310,11 @@ var model = new Model();
         selectedGenesText:"",
         NumberOfTopGenes: 50,
         snackbar: false,
-        snackbarText: ""
+        snackbarText: "",
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
 
       }
     },
