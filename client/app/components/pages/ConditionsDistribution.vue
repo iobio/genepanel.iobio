@@ -103,6 +103,22 @@ import { bus } from '../../routes';
                             .append("g")
                               .attr('transform', 'translate('+margin.left+','+margin.top+')')
 
+// Brush
+                              // var brush = d3.svg.brush()
+                              //   .x(x)
+                              //   .y(y);
+                              //
+                              //
+                              // var slider = canvas.append("g")
+                              //
+                              // brush.extent([0, 0]);
+                              // brush(slider);
+                              //
+                              //
+                              // slider.selectAll("rect.background")
+                              // .attr("height", 300);
+                              //
+
 
         var group = canvas.append("g")
                           .attr('transform', 'translate(0,'+ height +')')
@@ -183,5 +199,14 @@ import { bus } from '../../routes';
   font-size: 13.7px !important;
 }
 
+.extent {
+  visibility: visible !important;
+}
+
+
+.brush .extent {
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
 
 </style>

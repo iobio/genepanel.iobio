@@ -101,7 +101,7 @@ var model = new Model();
         var addSelectedFromHistogramChart = (data)=>{
           this.CountBrushSelection++;
           //alert(this.CountBrushSelection)
-          //this.selected = data;
+          this.selected = data;
           bus.$emit("updateFromGenesHistogram", data, this.CountBrushSelection)
         }
 
@@ -217,18 +217,26 @@ var model = new Model();
     let brushEnd = function() {
       var start = brush.extent()[0];
       var end   = brush.extent()[1];
-      svg.selectAll(".bar")
-         .classed("selected", function(d,i) {
+      console.log("start", Math.round(start));
+      console.log("end", Math.round(end));
+      if(Math.round(start) === Math.round(end)){
+        svg.selectAll(".bar").classed("selected", true);
+      }
+      else {
+        svg.selectAll(".bar")
+           .classed("selected", function(d,i) {
+              var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
+              console.log("inBrushExtent", inBrushExtent)
+              return inBrushExtent;
+           })
+      }
 
-            var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
-            // console.log("inBrushExtent", inBrushExtent)
-            return inBrushExtent;
-         })
+
 
       var selected = [];
       svg.selectAll(".bar.selected").data().forEach(function(selectedBarData) {
         selected = selected.concat(Array.from(selectedBarData));
-        // console.log("selected", selected)
+        console.log("selected", selected)
       })
       onSelected(selected);
     }
@@ -455,18 +463,18 @@ var model = new Model();
 
 
 
-        brushGroup.selectAll(".resize")
-          .append("line")
-          .style("visibility", options.selectTop ? "visible" : "hidden")
-          .attr("y2", innerHeight);
+        // brushGroup.selectAll(".resize")
+        //   .append("line")
+        //   .style("visibility", options.selectTop ? "visible" : "hidden")
+        //   .attr("y2", innerHeight);
 
-        brushGroup.selectAll(".resize")
-          .append("path")
-          .style("visibility", options.selectTop ? "visible" : "hidden")
-          .attr("d", d3.svg.symbol().type("triangle-up").size(20))
-          .attr("transform", function(d,i) {
-            return i ?  "translate(-4," + (innerHeight/2) + ") rotate(-90)" : "translate(4," + (innerHeight/2) + ") rotate(90)";
-          });
+        // brushGroup.selectAll(".resize")
+        //   .append("path")
+        //   .style("visibility", options.selectTop ? "visible" : "hidden")
+        //   .attr("d", d3.svg.symbol().type("triangle-up").size(20))
+        //   .attr("transform", function(d,i) {
+        //     return i ?  "translate(-4," + (innerHeight/2) + ") rotate(-90)" : "translate(4," + (innerHeight/2) + ") rotate(90)";
+        //   });
 
         brush.on("brushend", function() {
           brushEnd();

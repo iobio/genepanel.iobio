@@ -558,8 +558,15 @@ import Gtr from './Gtr.vue';
   color:#66d4ed
 }
 
+/* .navigation-drawer .navigation-drawer--clipped .navigation-drawer--fixed .navigation-drawer--open{
+  margin-top: 112px !important;
+} */
 
 
+aside {
+  margin-top: 112px !important;
+  max-height: calc(100% - 112px) !important;
+}
 /* .btn .btn__content .icon {
   color:#66d4ed
 } */
