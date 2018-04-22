@@ -74,7 +74,7 @@ global.jQuery = jQuery;
 global.$ = jQuery;
 //import typeahead from 'jquery-typeahead'
 
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
   export default {

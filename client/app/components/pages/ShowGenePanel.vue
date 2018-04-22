@@ -108,7 +108,7 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3'
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
   export default {

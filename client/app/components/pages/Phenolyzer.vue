@@ -183,7 +183,7 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import NavigationBar from './NavigationBar.vue';
 
-import GeneModel from './GeneModel';
+import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 
   export default {

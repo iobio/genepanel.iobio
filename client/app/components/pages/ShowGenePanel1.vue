@@ -229,16 +229,16 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
-import PieChartSelector from './PieChartSelector.vue'
+// import PieChartSelector from './PieChartSelector.vue'
 import GeneDistribution from './GeneDistribution.vue';
 import GenePanelDistribution from './GenePanelDistribution.vue';
-import ConditionsDistribution from './ConditionsDistribution.vue';
-import Model from './Model';
+import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
+import Model from '../../models/Model';
 var model = new Model();
 
   export default {
     components: {
-      'PieChartSelector': PieChartSelector,
+      // 'PieChartSelector': PieChartSelector,
       'GeneDistribution': GeneDistribution,
       'GenePanelDistribution': GenePanelDistribution,
       'ConditionsDistribution': ConditionsDistribution

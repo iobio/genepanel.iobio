@@ -125,7 +125,7 @@ import jQuery from 'jquery';
 global.jQuery = jQuery;
 global.$ = jQuery;
 
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
 // var tempArr = [];

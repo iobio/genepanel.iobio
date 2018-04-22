@@ -187,9 +187,9 @@ import FilterPanel from './FilterPanel.vue';
 import NavigationBar from './NavigationBar.vue';
 import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
-import PieChartSelectorBackup from './PieChartSelectorBackup.vue';
+import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
 import GenePanelDistribution from './GenePanelDistribution.vue';
-import ConditionsDistribution from './ConditionsDistribution.vue';
+import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import GeneMembership from './GeneMembership.vue'
 
 export default {

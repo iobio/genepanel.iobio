@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import SummaryPieChart from './SummaryPieChart.vue';
+import SummaryPieChart from '../viz/SummaryPieChart.vue';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
 import FilterSummary from './FilterSummary.vue'

@@ -104,20 +104,20 @@ import { bus } from '../../routes';
                               .attr('transform', 'translate('+margin.left+','+margin.top+')')
 
 // Brush
-                              // var brush = d3.svg.brush()
-                              //   .x(x)
-                              //   .y(y);
-                              //
-                              //
-                              // var slider = canvas.append("g")
-                              //
-                              // brush.extent([0, 0]);
-                              // brush(slider);
-                              //
-                              //
-                              // slider.selectAll("rect.background")
-                              // .attr("height", 300);
-                              //
+                              var brush = d3.svg.brush()
+                                .x(x)
+                                .y(y);
+                            
+
+                              var slider = canvas.append("g")
+
+                              brush.extent([0, 0]);
+                              brush(slider);
+
+
+                              slider.selectAll("rect.background")
+                              .attr("height", 300);
+
 
 
         var group = canvas.append("g")
