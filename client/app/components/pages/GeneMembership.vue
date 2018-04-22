@@ -143,16 +143,16 @@ var model = new Model();
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes);
-        console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
+        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
         this.items = data;
         this.selected = data.slice(0,50);
 
-        console.log("this.selected from Show Genes ", this.selected )
+        // console.log("this.selected from Show Genes ", this.selected )
        // this.geneBarChart(d3.select('#gene-bar-chart'), data);
         // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);
-        console.log("dataForTables: ", this.dataForTables)
+        // console.log("dataForTables: ", this.dataForTables)
 
       },
       selectAllGenes: function(){

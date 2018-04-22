@@ -215,6 +215,10 @@ var model = new Model();
       bus.$on('selectNumberOfConditionsInPanel', (data)=>{
         this.filterPanelsOnSelectedConditions(data);
       })
+
+      bus.$on("conditionsOnBarSelect", (start, end)=>{
+        this.filterPanelsOnBarSelect(start, end);
+      })
     },
 
     methods:{
@@ -252,6 +256,18 @@ var model = new Model();
         })
         console.log(tempArrForConditions)
         this.selected = tempArrForConditions;
+      },
+      filterPanelsOnBarSelect: function(start,end){
+        console.log("start ", start)
+        var tempBarsSelected = [];
+        this.items.map(x=>{
+          if(x.conditioncount>=start && x.conditioncount<=end){
+            console.log(x.conditioncount)
+            tempBarsSelected.push(x);
+          }
+        })
+        console.log("tempBarsSelected", tempBarsSelected)
+        this.selected = tempBarsSelected;
       },
       filterGenePanelsOnSelectedNumber: function(data){
         console.log("filterGenePanelsOnSelectedNumber", this.items)

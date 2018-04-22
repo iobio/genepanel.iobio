@@ -29,7 +29,7 @@ export default function HistogramChart() {
   };
 
   let onSelected = function(selected) {
-    console.log(selected);
+    // console.log(selected);
     dispatch.barselect(selected);
   }
 
@@ -40,10 +40,10 @@ export default function HistogramChart() {
     if (d < 1) {
       return "";
     } else {
-      console.log("d :" , d, " i : ", i, " i/2 : ",  i/2)
+      // console.log("d :" , d, " i : ", i, " i/2 : ",  i/2)
       if(i%2===0){
         var x = Math.log(d) / Math.log(10) + 1e-6;
-        console.log(Math.abs(x - Math.floor(x)))
+        // console.log(Math.abs(x - Math.floor(x)))
         return Math.abs(x - Math.floor(x)) < 1.1 ? formatCount(d) : "";
       }
     }
@@ -52,8 +52,8 @@ export default function HistogramChart() {
   let brushEnd = function() {
     var start = brush.extent()[0];
     var end   = brush.extent()[1];
-    console.log("start", Math.round(start));
-    console.log("end", Math.round(end));
+    // console.log("start", Math.round(start));
+    // console.log("end", Math.round(end));
     if(Math.round(start) === Math.round(end)){
       svg.selectAll(".bar").classed("selected", true);
     }
@@ -61,7 +61,7 @@ export default function HistogramChart() {
       svg.selectAll(".bar")
          .classed("selected", function(d,i) {
             var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
-            console.log("inBrushExtent", inBrushExtent)
+            // console.log("inBrushExtent", inBrushExtent)
             return inBrushExtent;
          })
     }

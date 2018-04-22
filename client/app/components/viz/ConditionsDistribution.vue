@@ -44,6 +44,18 @@ import { bus } from '../../routes';
         data.sort(function(a,b){
           return a - b
         })
+
+        var dispatch = d3.dispatch("barselect");
+
+
+        let onSelected = function(start, end) {
+          console.log("dispatch", start, end);
+          dispatch.barselect(start, end);
+          if(start !== end){
+            bus.$emit("conditionsOnBarSelect", start, end);
+          }
+        }
+
         d3.select("#conditions-distribution-chart").select("svg").remove();
         console.log("data length in conditions", data.length)
 
@@ -104,19 +116,36 @@ import { bus } from '../../routes';
                               .attr('transform', 'translate('+margin.left+','+margin.top+')')
 
 // Brush
-                              var brush = d3.svg.brush()
-                                .x(x)
-                                .y(y);
-                            
 
-                              var slider = canvas.append("g")
+      var brushEnd = function(){
+        var start = brush.extent()[0];
+        var end   = brush.extent()[1];
+        console.log("start", Math.round(start));
+        console.log("end", Math.round(end));
+        onSelected(Math.round(start), Math.round(end))
+      }
+      var brush = d3.svg.brush()
+        .x(x)
+        // .y(y)
+        .on("brushend", function(){
+          brushEnd();
+        })
+        .on("brush", brushed);
 
-                              brush.extent([0, 0]);
-                              brush(slider);
+        function brushed(){
+          var e = brush.extent();
+          console.log("e", e)
 
+          // onSelected(e);
+        }
 
-                              slider.selectAll("rect.background")
-                              .attr("height", 300);
+        var slider = canvas.append("g")
+
+        brush.extent([0, 0], [ht, wdth]);
+        brush(slider);
+
+        slider.selectAll("rect.background")
+        .attr("height", 300);
 
 
 
@@ -201,6 +230,8 @@ import { bus } from '../../routes';
 
 .extent {
   visibility: visible !important;
+  fill: steelblue;
+  fill-opacity: .125;
 }
 
 
@@ -209,4 +240,8 @@ import { bus } from '../../routes';
   shape-rendering: crispEdges;
 }
 
+.brush rect.extent {
+  fill: steelblue;
+  fill-opacity: .125;
+}
 </style>
