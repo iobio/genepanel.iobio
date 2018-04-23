@@ -73,6 +73,8 @@ import { bus } from '../../routes';
         // var histogram = d3.layout.histogram()
         //                   .bins(40)
         //                   (data)
+
+        console.log("histogram data ", histogram)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
@@ -115,39 +117,6 @@ import { bus } from '../../routes';
                             .append("g")
                               .attr('transform', 'translate('+margin.left+','+margin.top+')')
 
-// Brush
-
-      var brushEnd = function(){
-        var start = brush.extent()[0];
-        var end   = brush.extent()[1];
-        console.log("start", Math.round(start));
-        console.log("end", Math.round(end));
-        onSelected(Math.round(start), Math.round(end))
-      }
-      var brush = d3.svg.brush()
-        .x(x)
-        // .y(y)
-        .on("brushend", function(){
-          brushEnd();
-        })
-        .on("brush", brushed);
-
-        function brushed(){
-          var e = brush.extent();
-          console.log("e", e)
-
-          // onSelected(e);
-        }
-
-        var slider = canvas.append("g")
-
-        brush.extent([0, 0], [ht, wdth]);
-        brush(slider);
-
-        slider.selectAll("rect.background")
-        .attr("height", 300);
-
-
 
         var group = canvas.append("g")
                           .attr('transform', 'translate(0,'+ height +')')
@@ -177,22 +146,55 @@ import { bus } from '../../routes';
                           .style("text-anchor", "start")
                           .text('# of Panels');
 
-        var bars = canvas.selectAll(".bar")
+        canvas.selectAll(".bar")
                               .data(histogram)
                               .enter()
                               .append("g")
-                              // .on("click", function(d){
-                              //   alert(d)
-                              // })
+                              .append("rect")
+                              // .attr("clip-path", "url(#clip)")
+                              .attr("class", "bar")
+                              .attr("x", function(d){return x(d.x)})
+                              .attr("y", function(d){return y(d.y)})
+                              .attr("width", function(d){return x(d.dx)})
+                              .attr("height", function(d){return height-y(d.y)})
+                              // .attr("fill", "steelblue")
+                              .attr("stroke", "#1f5d7a")
+                              .attr("stroke-width", 1)
 
-                  bars.append("rect")
-                    .attr("x", function(d){return x(d.x)})
-                    .attr("y", function(d){return y(d.y)})
-                    .attr("width", function(d){return x(d.dx)})
-                    .attr("height", function(d){return height-y(d.y)})
-                    .attr("fill", "steelblue")
-                    .attr("stroke", "#1f5d7a")
-                    .attr("stroke-width", 1)
+                    var brushEnd = function(){
+                      var start = brush.extent()[0];
+                      var end   = brush.extent()[1];
+                      console.log("start", Math.round(start));
+                      console.log("end", Math.round(end));
+
+                      onSelected(Math.round(start), Math.round(end))
+                    }
+                    var brush = d3.svg.brush()
+                      .x(x)
+                      .on("brushend", function(){
+                        brushEnd();
+                      })
+                      .on("brush", brushed);
+
+                      function brushed(){
+                        var e = brush.extent();
+                        canvas.selectAll("rect").classed("bar1", function(d,id) {
+                              return(d.x >= e[0] && d.x <= e[1] ?  false: true )
+                          });
+                        // onSelected(e);
+                      }
+
+
+                      canvas.append("g")
+                        .attr("class", "x brush")
+                        .call(brush) //call the brush function, causing it to create the rectangles
+                        .selectAll("rect") //select all the just-created rectangles
+                        .attr("y", 0)
+                        .attr("height", (height + margin.top - 20)) //set their height
+
+
+// canvas.selectAll(".resize").append("path");
+
 
                   // bars.append("text")
                   //   .attr("x", function(d){return x(d.x)-3.5})
@@ -224,24 +226,19 @@ import { bus } from '../../routes';
 </script>
 
 <style>
-#conditions-distribution-chart .axis .label {
-  font-size: 13.7px !important;
-}
 
-.extent {
-  visibility: visible !important;
+
+.bar {
   fill: steelblue;
-  fill-opacity: .125;
 }
 
+.bar1 {
+  fill: #7dc2e5;
+  stroke-width: .5;
+}
 
 .brush .extent {
-  fill-opacity: .125;
-  shape-rendering: crispEdges;
+  fill: steelblue
 }
 
-.brush rect.extent {
-  fill: steelblue;
-  fill-opacity: .125;
-}
 </style>

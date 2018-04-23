@@ -60,8 +60,8 @@ export default function HistogramChart() {
     else {
       svg.selectAll(".bar")
          .classed("selected", function(d,i) {
-            var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
-            // console.log("inBrushExtent", inBrushExtent)
+            var inBrushExtent = d.x >= Math.round(start) && d.x <= Math.round(end);
+            console.log("inBrushExtent", inBrushExtent)
             return inBrushExtent;
          })
     }
@@ -87,7 +87,7 @@ export default function HistogramChart() {
 
 
     selection.each(function(dataOrig) {
-      console.log("dataOrig" , dataOrig)
+      // console.log("dataOrig" , dataOrig)
       // set svg element
       svg = d3.select(this);
       svg.attr("width", widthPercent)
@@ -112,7 +112,7 @@ export default function HistogramChart() {
 
 
             // console.log("x.ticks(max)", x.ticks(max))
-            console.log("dataOrig.length : " , dataOrig.length)
+            // console.log("dataOrig.length : " , dataOrig.length)
 
       // Generate a histogram using twenty uniformly-spaced bins.
       if(dataOrig.length>2000){
@@ -264,7 +264,7 @@ export default function HistogramChart() {
       if (options.selectTop) {
         // console.log("options", options);
         // console.log("options selectTop", options.selectTop);
-        console.log("data", dataForBrush)
+        // console.log("data", dataForBrush)
         var maxX = dataForBrush.length+1;
         var minX = null;
         var total = 0;
@@ -282,7 +282,7 @@ export default function HistogramChart() {
         brush.extent([minX, maxX]);
       }
 
-      console.log("data", dataForBrush)
+      // console.log("data", dataForBrush)
       let brushHeight = innerHeight + margin.top;
       let brushY = (margin.top-1) * -1;
       group.selectAll("g.x.brush").remove();
