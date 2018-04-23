@@ -570,4 +570,11 @@ aside {
 /* .btn .btn__content .icon {
   color:#66d4ed
 } */
+
+@media screen and (max-width: 1270px){
+  aside {
+    margin-top: 0px !important;
+    max-height: calc(100% - 0px) !important;
+  }
+}
 </style>

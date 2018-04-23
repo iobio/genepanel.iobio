@@ -169,21 +169,18 @@ var model = new Model();
 </script>
 
 <style>
-
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 #gene-histogram-chart1 .bar rect {
     fill:   #7dc2e5;
     stroke: #1f5d7a;
     stroke-width: .5;
 }
-
 #gene-histogram-chart1 .bar.selected rect {
     fill: #2d8fc1;
 }
-
 #gene-histogram-chart1 .bar text {
     font-size: 10px;
 }
-
 #gene-histogram-chart1 .x.axis {
   font-size: 10px;
 }
@@ -193,8 +190,6 @@ var model = new Model();
 #gene-histogram-chart1 .axis .label {
   font-size: 12px !important;
 }
-
-
 div.tooltip {
   position: absolute;
   text-align: center;
@@ -207,7 +202,6 @@ div.tooltip {
   border-radius: 4px;
   pointer-events: none;
 }
-
 /*                           */
 /* Gene horizontal barchart  */
 /*                           */
@@ -217,9 +211,6 @@ div.tooltip {
   padding-top: 20px;
   font-weight: 300;
 }
-
-
-
 /*                      */
 /*  Any svg chart       */
 /*                      */
@@ -228,28 +219,23 @@ div.tooltip {
   stroke: #e0e0e0;
   shape-rendering: crispEdges;
 }
-
 .x.axis line {
   fill: none;
   stroke: #e0e0e0;
   shape-rendering: crispEdges;
 }
-
 .axis path {
   fill: none;
   stroke: #848383;
   shape-rendering: crispEdges;
 }
-
 .axis .label {
   font-size: 12px;
 }
-
 .brush .extent {
   fill-opacity: .125;
   shape-rendering: crispEdges;
 }
-
 .resize {
   display: inline !important; /* show when empty */
   fill: #7A7A7A;
@@ -257,15 +243,12 @@ div.tooltip {
   stroke: #7A7A7A;
   stroke-width: 2px;
 }
-
 .input-group__input{
   min-height: 3px;
 }
-
 table.table tbody td, table.table tbody th{
   height: 7px;
 }
-
 .headerWidth{
   width: 1%;
   color: red
