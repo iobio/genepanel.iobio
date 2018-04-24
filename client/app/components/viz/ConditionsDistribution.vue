@@ -4,6 +4,7 @@
     <div>
       <div id="conditions-distribution-chart"></div>
     </div>
+    <v-btn small v-on:click="clearFilters">Clear filters</v-btn>
   </div>
 </template>
 
@@ -31,6 +32,9 @@ import { bus } from '../../routes';
       }
     },
     methods:{
+      clearFilters(){
+        bus.$emit("clearConditionFilters")
+      },
       draw(data){
         console.log("data in draw is ", data);
         var widthPercent = "100%";

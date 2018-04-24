@@ -219,6 +219,10 @@ var model = new Model();
       bus.$on("conditionsOnBarSelect", (start, end)=>{
         this.filterPanelsOnBarSelect(start, end);
       })
+
+      bus.$on("clearConditionFilters", ()=>{
+        this.selected = this.items.slice()
+      })
     },
 
     methods:{
