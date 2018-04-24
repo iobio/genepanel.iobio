@@ -143,7 +143,7 @@
       >
       <v-tab v-on:click="component='HomePage'" >
         <div class="text-xs-center">
-        <v-badge left style="background-color:#fff0; font-size:20px">
+        <v-badge left style="background-color:#fff0; font-size:18px">
           <span class="tabTitle"><strong>Home</strong></span>
         </v-badge>
       </div>
@@ -151,7 +151,7 @@
         <v-tabs-slider color="cyan"></v-tabs-slider>
         <v-tab v-on:click="component='Home'">
           <div class="text-xs-center">
-            <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
+            <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
               <span class="tabTitle"><strong>GTR</strong></span>
             </v-badge>
@@ -160,7 +160,7 @@
 
         <v-tab v-on:click="component='Phenolyzer'">
           <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
+          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
             <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             <span class="tabTitle"><strong>Phenolyzer</strong></span>
           </v-badge>
@@ -168,7 +168,7 @@
         </v-tab>
         <v-tab v-on:click="component='SummaryTab'">
           <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
+          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
             <span slot="badge">{{ NumberOfAllGenes }}</span>
             <span class="tabTitle"><strong>Summary</strong></span>
           </v-badge>
@@ -501,7 +501,7 @@ import Gtr from './Gtr.vue';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .tabs__container{
-  height:58px;
+  height:48px;
   font-family: 'Open Sans', sans-serif;
 }
 /* .toolbar__content{

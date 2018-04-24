@@ -225,7 +225,12 @@ var model = new Model();
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
         this.items = this.tempItems;
-        console.log("items in updatePanelsOnSelectedVendors", this.items)
+
+        // this.items.sort(function(a,b){
+        //   // console.log("a", a.offerer)
+        //   return a.offerer > b.offerer;
+        // })
+        console.log("items in updatePanelsOnSelectedVendors", this.items[0])
         if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
