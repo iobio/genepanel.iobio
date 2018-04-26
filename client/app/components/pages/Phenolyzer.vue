@@ -53,6 +53,10 @@
                           <div v-if="phenolyzerStatus!==null">
                             {{ phenolyzerStatus }}
                           </div>
+                          <br>
+                          <div v-if="multipleSearchTerms.length">
+                            <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i">{{ searchItem }}</v-chip>
+                          </div>
                           <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
                           <p>
                             <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
@@ -67,11 +71,13 @@
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card style="margin-top:4px">
                         <v-card-title primary class="title">
+
                           Results &nbsp;
-                          <span class="text-xs-center" v-if="items.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
+                          <span class="text-xs-center" ><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
                         </v-card-title>
-                        <div v-if="items.length">
+                        <div>
                         <v-card-title>
+                          <!-- v-if="items.length>1" -->
                           <!-- <strong>
                             Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
                             &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
@@ -242,7 +248,13 @@ var geneModel = new GeneModel();
         checked: false,
         alert:false,
         snackbar: false,
-        snackbarText: ""
+        snackbarText: "",
+        multipleSearchTerms: [],
+        multipleSearchArray: [],
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
       }
     },
     updated(){
@@ -312,6 +324,7 @@ var geneModel = new GeneModel();
       },
       onSearchPhenolyzerGenes: function() {
         let self = this;
+        self.multipleSearchTerms.push(self.phenotypeTerm.value);
         self.items = [];
         self.checked = true;
         self.alert = false;
