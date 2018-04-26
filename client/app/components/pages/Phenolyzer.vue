@@ -46,7 +46,7 @@
                                 style="margin-top:-0.35px"
                                 color="blue darken-1"
                                 class="btnColor"
-                                v-on:click="onSearchPhenolyzerGenes">
+                                v-on:click="getPhenotypeData">
                               Go
                             </v-btn>
                           </center>
@@ -152,6 +152,8 @@
                                 <!-- <td>{{ props.item.rank }}</td> -->
                                 <td><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
                                 <td><span v-html="props.item.htmlData"></span></td>
+                                <td>{{ props.item.sources}}</span></td>
+                                <td>{{ props.item.rank}}</span></td>
                                 <td style="font-size:0px;">{{ props.item.score }}</td>
                               </tr>
                             </template>
@@ -213,8 +215,8 @@ var geneModel = new GeneModel();
         geneList: [],
         //DataTable
         pagination: {
-          sortBy: 'score',
-          descending: true,
+          sortBy: 'rank',
+          // descending: true,
           rowsPerPage: 25
         },
         search: '',
@@ -236,6 +238,16 @@ var geneModel = new GeneModel();
              value: 'score'
             },
             {
+              text: 'sources',
+              align: 'left',
+              value: 'sources'
+             },
+             {
+               text: 'rank',
+               align: 'left',
+               value: 'rank'
+             },
+            {
               text: '',
               align: 'left',
               value: 'htmlData'
@@ -255,6 +267,7 @@ var geneModel = new GeneModel();
         x: null,
         mode: '',
         snackbarTimeout: 4000,
+        dictionaryArr: [],
       }
     },
     updated(){
@@ -317,10 +330,144 @@ var geneModel = new GeneModel();
           this.enterCount++;
           if(this.enterCount===2){
             document.getElementById("phenotype-term").blur();
-            this.onSearchPhenolyzerGenes();
+            this.getPhenotypeData();
             this.enterCount = 0;
           }
         }
+      },
+      getPhenotypeData(){
+        let self = this;
+        self.multipleSearchTerms.push(self.phenotypeTerm.value);
+        var searchTerm = self.phenotypeTerm.value;
+        self.phenotypeTermEntered = self.phenotypeTerm.value;
+        self.selectedGenesText = "";
+        self.phenolyzerStatus = null;
+        self.genesToApply = "";
+        self.NoOfGenesSelectedFromPhenolyzer = 0;
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        self.phenotypeTermEntered = self.phenotypeTerm.value;
+        geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
+        (status, error)=> {
+          if (status == 'done') {
+            if (geneModel.phenolyzerGenes.length == 0) {
+              self.phenolyzerStatus = "no genes found."
+              self.genesToApply = "";
+              self.checked = false;
+              self.alert = true;
+            } else {
+              console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
+              self.tempItems = geneModel.phenolyzerGenes;
+              self.dictionaryArr.push(({
+                name: searchTerm,
+                data: self.tempItems
+              }))
+              var combinedList = self.combineList(self.dictionaryArr);
+              var createdObj = self.createObj(combinedList);
+              var averagedData = self.performMeanOperation(combinedList, createdObj);
+              var sortedPhenotypeData = self.sortTheOrder(averagedData);
+
+              let data = self.drawSvgBars(sortedPhenotypeData);
+              self.items = data;
+              console.log("items ", self.items)
+              self.selected = self.items.slice(0,50);
+              self.phenolyzerStatus = null;
+              self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+              self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+              self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+              self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+
+            }
+          } else {
+            self.phenolyzerStatus = status;
+          }
+        });
+      },
+      combineList(arr){
+        var temp =[];
+          for(var i=0; i<arr.length; i++){
+            for(var j=0; j<arr[i].data.length; j++){
+              temp.push({
+                geneName: arr[i].data[j].geneName,
+                geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
+                score: arr[i].data[j].score,
+                searchTerm: arr[i].name
+              })
+            }
+          }
+          return temp;
+      },
+      createObj(arr){
+        let obj={};
+        for(var i=0; i<arr.length; i++){
+          if(obj[arr[i].geneName]===undefined){
+            obj[arr[i].geneName] = 1;
+          }
+          else {
+            obj[arr[i].geneName]++;
+          }
+        }
+        console.log("obj" , obj);
+        var uniqueGenes = Object.keys(obj);
+        console.log("uniqueGenes", uniqueGenes);
+        return uniqueGenes
+      },
+      performMeanOperation: function(arr, uniqueGenes){
+        var obj ={};
+        for(var i=0; i<uniqueGenes.length; i++){
+          for(var j=0; j<arr.length; j++){
+            if(uniqueGenes[i]===arr[j].geneName){
+              if(obj[uniqueGenes[i]]===undefined){
+                obj[uniqueGenes[i]]= {
+                  geneName: arr[j].geneName,
+                  score: Number(arr[j].score),
+                  total: Number(arr[j].score),
+                  sources: 1
+                }
+              }
+              else {
+                // console.log("obj[uniqueGenes[i]].sources + 1 is ", obj[uniqueGenes[i]].sources + 1)
+                console.log("arr[j].score",typeof Number(arr[j].score));
+                console.log("obj[uniqueGenes[i]].total",typeof obj[uniqueGenes[i]].total)
+                obj[uniqueGenes[i]]= {
+                  geneName: arr[j].geneName,
+                  total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
+                  score: ((Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
+                  sources: Number(obj[uniqueGenes[i]].sources) + 1
+                }
+              }
+            }
+          }
+        }
+
+        var withAvgArr = Object.values(obj);
+        return withAvgArr;
+        // sortTheOrder(withAvgArr)
+      },
+      sortTheOrder(arr){
+        arr.sort(function(a,b){
+            if (a.sources===b.sources){
+               return (b.score-a.score);
+            } else if(a.sources<b.sources){
+               return 1;
+            } else if(a.sources>b.sources){
+               return -1;
+            }
+         })
+         for(var i=0; i<arr.length; i++){
+           arr[i].rank = i+1;
+         }
+         return arr;
+      },
+      createDictionaryOfSearches(){
+        this.multipleSearchTerms.push(this.phenotypeTerm.value);
+        var dictionaryObj = [];
+        for(var i=0; i<this.multipleSearchTerms.length; i++){
+          dictionaryObj.push({
+            name: this.multipleSearchTerms[i],
+            data: this.getPhenotypeData(this.multipleSearchTerms[i])
+          })
+        }
+        console.log(dictionaryObj)
       },
       onSearchPhenolyzerGenes: function() {
         let self = this;
@@ -370,7 +517,7 @@ var geneModel = new GeneModel();
         });
       },
       drawSvgBars: function(tempItems){
-        var svgWidth = tempItems[0].score * 800;
+        var svgWidth = 800;
         tempItems.map(function(gene){
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <defs>
