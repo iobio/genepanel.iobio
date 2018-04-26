@@ -347,10 +347,15 @@ var geneModel = new GeneModel();
             } else {
               console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
+              self.addSearchTermProperty();
               self.checked = false;
-              // self.items = geneModel.phenolyzerGenes;
-              // self.selected = self.items.slice(0,50);
-              let data = self.doSomething(self.tempItems);
+              if(self.multipleSearchTerms.length===1){
+                self.multipleSearchArray = self.tempItems;
+              }
+              else if(self.multipleSearchTerms.length>1){
+                self.multipleSearchArray = [...self.multipleSearchArray, ...self.tempItems]
+              }
+              let data = self.drawSvgBars(self.multipleSearchArray);
               self.items = data;
               self.selected = self.items.slice(0,50);
               self.phenolyzerStatus = null;
@@ -358,51 +363,13 @@ var geneModel = new GeneModel();
               self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
               self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
               self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-              // var geneCount = geneModel.phenolyzerGenes.filter(function(gene) {
-              //   return gene.selected;
-              // }).length;
-              // self.genesToApply = geneModel.phenolyzerGenes
-              // .filter(function(gene) {
-              // //  console.log(gene)
-              //   return gene.selected;
-              // })
-              // .map( function(gene) {
-              //   return gene.geneName;
-              // })
-              // .join(", ");
-
-              // var x = geneModel.phenolyzerGenes
-              // .filter(function(gene) {
-              //   return gene.selected;
-              // })
-              // .map( function(gene) {
-              //   return gene;
-              // })
-              //
-              // self.items = geneModel.phenolyzerGenes
-              // .filter(function(gene) {
-              //   return gene.selected;
-              // })
-              // .map( function(gene) {
-              //   return gene;
-              // })
-              //
-              // //console.log(x);
-              // var tempArr = [];
-              //
-              // tempArr.push(x);
-              // self.geneList = tempArr[0]
-              // console.log("genelist", self.geneList)
-              //
-              // self.phenolyzerStatus = geneCount + " genes shown.";
-              // console.log(self.phenolyzerStatus)
             }
           } else {
             self.phenolyzerStatus = status;
           }
         });
       },
-      doSomething: function(tempItems){
+      drawSvgBars: function(tempItems){
         var svgWidth = tempItems[0].score * 800;
         tempItems.map(function(gene){
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
@@ -421,6 +388,14 @@ var geneModel = new GeneModel();
         //console.log(tempItems.slice(0,5));
         //self.items = tempItems;
         return tempItems
+      },
+      addSearchTermProperty: function(){
+        console.log()
+        this.tempItems.map(x=>{
+          if(x["phenotypeSearchTerm"]===undefined){
+            x["phenotypeSearchTerm"]=this.phenotypeTerm.value
+          }
+        });
       }
     }
   }

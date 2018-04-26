@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="margin-left:12px;">
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <center>
+    <span style="font-size: 20px; font-weight:500">Disorder: &nbsp; &nbsp; </span>
       <div style="display:inline-block; padding-top:5px;">
         <!-- <label>Disorders :</label> -->
         <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
@@ -33,7 +33,6 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
-    </center>
     <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
     <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
     <p>
