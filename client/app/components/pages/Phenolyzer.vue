@@ -55,7 +55,9 @@
                           </div>
                           <br>
                           <div v-if="multipleSearchTerms.length">
-                            <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i">{{ searchItem }}</v-chip>
+                            <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+                              {{ searchItem }}
+                            </v-chip>
                           </div>
                           <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
                           <p>
@@ -303,6 +305,10 @@ var geneModel = new GeneModel();
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0,data)
       },
+      remove (item) {
+        this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
+        this.multipleSearchTerms = [...this.multipleSearchTerms]
+      },
       selectNumberOfTopPhenolyzerGenes: function(){
         setTimeout(()=>{
           if(this.genesTop>0){
@@ -389,7 +395,7 @@ var geneModel = new GeneModel();
               temp.push({
                 geneName: arr[i].data[j].geneName,
                 geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
-                score: arr[i].data[j].score,
+                score: Number(arr[i].data[j].score),
                 searchTerm: arr[i].name
               })
             }
@@ -431,7 +437,7 @@ var geneModel = new GeneModel();
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
-                  score: ((Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
+                  score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
                   sources: Number(obj[uniqueGenes[i]].sources) + 1
                 }
               }

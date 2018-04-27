@@ -153,7 +153,7 @@
           <div class="text-xs-center">
             <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-              <span class="tabTitle"><strong>GTR</strong></span>
+              <span class="tabTitle"><strong>Genetic Testing Registry</strong></span>
             </v-badge>
           </div>
         </v-tab>
