@@ -23,7 +23,12 @@
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card>
                         <v-card-text >
-                          <center>
+                          <v-card-title primary class="title">Description &nbsp;</v-card-title>
+                          <div style="margin-left:30px; margin-right: 30px;">
+                            Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                          </div>
+                          <br>
+                          <span style="font-size: 20px; margin-left:12px; font-weight:500">Phenotype: &nbsp; &nbsp; </span>
                             <div id="phenotype-input" style="display:inline-block; padding-top:5px;">
                               <input
                                 id="phenotype-term"
@@ -49,7 +54,6 @@
                                 v-on:click="getPhenotypeData">
                               Go
                             </v-btn>
-                          </center>
                           <div v-if="phenolyzerStatus!==null">
                             {{ phenolyzerStatus }}
                           </div>
