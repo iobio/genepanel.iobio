@@ -152,10 +152,24 @@
                                 </td>
                                 <!-- <td></td> -->
                                 <!-- <td>{{ props.item.rank }}</td> -->
-                                <td><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
-                                <td><span v-html="props.item.htmlData"></span></td>
-                                <td>{{ props.item.sources}}</span></td>
-                                <td>{{ props.item.rank}}</span></td>
+                                <td style="padding-top: 10px;">{{ props.item.rank}}</span></td>
+                                <td style="padding-top: 10px;"><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
+                                <td style="padding-top: 10px;">
+                                  <span>
+                                    <v-progress-circular
+                                      :size="25"
+                                      :width="5"
+                                      :rotate="-90"
+                                      :value="props.item.sources /multipleSearchTerms.length * 100"
+                                      color="light-blue darken-1"
+                                    >
+                                    </v-progress-circular>
+                                  </span>
+                                </td>
+                                <td style="padding-top: 10px;"><span v-html="props.item.htmlData"></span></td>
+                                <!-- <td>{{ props.item.sources}}</td> -->
+
+
                                 <td style="font-size:0px;">{{ props.item.score }}</td>
                               </tr>
                             </template>
@@ -230,25 +244,25 @@ var geneModel = new GeneModel();
           //   value: 'rank'
           // },
           {
+            text: 'Rank',
+            align: 'left',
+            value: 'rank'
+          },
+          {
             text: 'Gene',
             align: 'left',
             value: 'geneName'
           },
-           {
-             text: 'Score',
-             align: 'left',
-             value: 'score'
-            },
             {
               text: 'sources',
               align: 'left',
               value: 'sources'
              },
              {
-               text: 'rank',
+               text: 'Score',
                align: 'left',
-               value: 'rank'
-             },
+               value: 'score'
+              },
             {
               text: '',
               align: 'left',
@@ -446,7 +460,7 @@ var geneModel = new GeneModel();
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
                   score: Number(arr[j].score),
-                  total: Number(arr[j].score),
+                  total: Number(arr[i].score),
                   sources: 1
                 }
               }
@@ -555,9 +569,10 @@ var geneModel = new GeneModel();
 
                             <rect fill="url(#MyGradient)"
                                   x="10" y="5" width="${gene.score * 800}" height="25"/>
-                            <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
                           </svg>`
         })
+        // <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
+
         //console.log(tempItems.slice(0,5));
         //self.items = tempItems;
         return tempItems
