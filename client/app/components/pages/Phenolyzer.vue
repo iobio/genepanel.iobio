@@ -71,14 +71,14 @@
 
 
                     <v-flex d-flex xs12 sm12 md12>
-                      <v-card style="margin-top:4px">
-                        <v-card-title primary class="title">
+                      <v-card style="margin-top:4px" >
+                        <v-card-title primary class="title" >
 
                           Results &nbsp;
-                          <span class="text-xs-center" ><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
+                          <span class="text-xs-center" v-if="multipleSearchTerms.length"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
                         </v-card-title>
-                        <div>
-                        <v-card-title>
+                        <div v-if="multipleSearchTerms.length">
+                        <v-card-title >
                           <!-- v-if="items.length>1" -->
                           <!-- <strong>
                             Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
@@ -306,8 +306,26 @@ var geneModel = new GeneModel();
         this.selected = this.items.slice(0,data)
       },
       remove (item) {
+        this.items = [];
+        this.selected = [];
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
-        this.multipleSearchTerms = [...this.multipleSearchTerms]
+        this.multipleSearchTerms = [...this.multipleSearchTerms];
+        this.dictionaryArr = this.dictionaryArr.filter(term=>term.name!==item);
+
+        var combinedList = this.combineList(this.dictionaryArr);
+        var createdObj = this.createObj(combinedList);
+        var averagedData = this.performMeanOperation(combinedList, createdObj);
+        var sortedPhenotypeData = this.sortTheOrder(averagedData);
+
+        let data = this.drawSvgBars(sortedPhenotypeData);
+        this.items = data;
+        console.log("items ", this.items)
+        this.selected = this.items.slice(0,50);
+        this.phenolyzerStatus = null;
+        this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       },
       selectNumberOfTopPhenolyzerGenes: function(){
         setTimeout(()=>{
@@ -343,6 +361,7 @@ var geneModel = new GeneModel();
       },
       getPhenotypeData(){
         let self = this;
+        self.checked = true;
         self.multipleSearchTerms.push(self.phenotypeTerm.value);
         var searchTerm = self.phenotypeTerm.value;
         self.phenotypeTermEntered = self.phenotypeTerm.value;
@@ -363,6 +382,7 @@ var geneModel = new GeneModel();
             } else {
               console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
+              self.checked = false;
               self.dictionaryArr.push(({
                 name: searchTerm,
                 data: self.tempItems
