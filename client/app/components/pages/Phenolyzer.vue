@@ -57,9 +57,16 @@
                           <div v-if="phenolyzerStatus!==null">
                             {{ phenolyzerStatus }}
                           </div>
-                          <br>
+                          <br><br>
                           <div v-if="multipleSearchTerms.length">
                             <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+                              {{ searchItem }}
+                            </v-chip>
+                          </div>
+                          <div v-if="noResultsArr.length">
+                            <br>
+                            Searches with no results:
+                            <v-chip disabled v-for="(searchItem, i) in noResultsArr" :key="i">
                               {{ searchItem }}
                             </v-chip>
                           </div>
@@ -288,6 +295,7 @@ var geneModel = new GeneModel();
         mode: '',
         snackbarTimeout: 4000,
         dictionaryArr: [],
+        noResultsArr: [],
       }
     },
     updated(){
@@ -380,7 +388,7 @@ var geneModel = new GeneModel();
       getPhenotypeData(){
         let self = this;
         self.checked = true;
-        self.multipleSearchTerms.push(self.phenotypeTerm.value);
+        // self.multipleSearchTerms.push(self.phenotypeTerm.value);
         var searchTerm = self.phenotypeTerm.value;
         self.phenotypeTermEntered = self.phenotypeTerm.value;
         self.selectedGenesText = "";
@@ -397,10 +405,14 @@ var geneModel = new GeneModel();
               self.genesToApply = "";
               self.checked = false;
               self.alert = true;
+              self.noResultsArr.push(searchTerm);
+              console.log("noResultsArr", self.noResultsArr)
             } else {
               console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
+              self.multipleSearchTerms.push(searchTerm)
               self.checked = false;
+              self.alert = false; 
               self.dictionaryArr.push(({
                 name: searchTerm,
                 data: self.tempItems
