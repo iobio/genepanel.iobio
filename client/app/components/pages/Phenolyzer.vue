@@ -80,6 +80,34 @@
                       </v-card>
                     </v-flex>
 
+                      <v-flex d-flex xs12 sm12 md12 lg12>
+                          <v-layout row wrap>
+                            <v-flex d-flex xs12 sm12 md12 lg12>
+                              <v-card>
+                                <v-card-text>
+                                  <v-layout row wrap>
+                                    <v-flex d-flex xs12 sm12 md4 lg4>
+                                        <center>
+                                          <!-- put the pie chart component here  -->
+                                          <PhenolyzerPieChart
+                                            v-if="pieChartdataArr.length"
+                                            v-bind:PhenolyzerPieChartData="pieChartdataArr">
+                                          </PhenolyzerPieChart>
+                                        </center>
+                                    </v-flex>
+
+                                    <v-flex d-flex xs12 sm12 md4 lg4>
+                                    </v-flex>
+
+                                    <v-flex d-flex xs12 sm12 md4 lg4>
+                                    </v-flex>
+
+                                 </v-layout>
+                                </v-card-text>
+                              </v-card>
+                            </v-flex>
+                          </v-layout>
+                      </v-flex>
 
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card style="margin-top:4px" >
@@ -217,13 +245,14 @@ import { bus } from '../../routes';
 
 import { Typeahead, Btn } from 'uiv';
 import NavigationBar from './NavigationBar.vue';
-
+import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 
   export default {
     components: {
       'NavigationBar': NavigationBar,
+      'PhenolyzerPieChart': PhenolyzerPieChart,
       Typeahead
     },
     data(){
@@ -296,6 +325,7 @@ var geneModel = new GeneModel();
         snackbarTimeout: 4000,
         dictionaryArr: [],
         noResultsArr: [],
+        pieChartdataArr: []
       }
     },
     updated(){
@@ -412,7 +442,7 @@ var geneModel = new GeneModel();
               self.tempItems = geneModel.phenolyzerGenes;
               self.multipleSearchTerms.push(searchTerm)
               self.checked = false;
-              self.alert = false; 
+              self.alert = false;
               self.dictionaryArr.push(({
                 name: searchTerm,
                 data: self.tempItems
@@ -421,6 +451,8 @@ var geneModel = new GeneModel();
               var createdObj = self.createObj(combinedList);
               var averagedData = self.performMeanOperation(combinedList, createdObj);
               var sortedPhenotypeData = self.sortTheOrder(averagedData);
+              self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+              console.log("pieChartdataArr", self.pieChartdataArr)
 
               let data = self.drawSvgBars(sortedPhenotypeData);
               self.items = data;
@@ -513,6 +545,26 @@ var geneModel = new GeneModel();
            arr[i].rank = i+1;
          }
          return arr;
+      },
+      dataForPieChart(arr){
+        var obj = {};
+        for(var i=0; i<arr.length; i++){
+          if(obj[arr[i].sources]===undefined){
+            obj[arr[i].sources] = 1;
+          }
+          else {
+            obj[arr[i].sources]++;
+          }
+        }
+        var dataArray = [];
+        var textToAppend = "Genes present in ";
+        for (var data in obj){
+          dataArray.push({
+            name: textToAppend + data + " sources",
+            count: obj[data]
+          })
+        }
+        return dataArray;
       },
       createDictionaryOfSearches(){
         this.multipleSearchTerms.push(this.phenotypeTerm.value);

@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-card-title primary class="title">Summary Pie Chart</v-card-title>
-    <div id="summary-pie-chart"></div>
+    <div id="phenolyzer-pie-chart"></div>
   </div>
 </template>
 
 <script>
   export default {
     props:{
-      summaryPieChartData:{
+      PhenolyzerPieChartData:{
         type: Array
       },
 
@@ -17,15 +17,15 @@
       summaryData: [],
     }),
     watch: {
-      summaryPieChartData: function(){
-        this.summaryData = this.summaryPieChartData;
+      PhenolyzerPieChartData: function(){
+        this.summaryData = this.PhenolyzerPieChartData;
         this.draw();
       },
 
     },
     mounted(){
-      console.log("this.summaryPieChartData", this.summaryPieChartData)
-      this.summaryData = this.summaryPieChartData;
+      console.log("this.PhenolyzerPieChartData", this.PhenolyzerPieChartData)
+      this.summaryData = this.PhenolyzerPieChartData;
       this.draw();
     },
     methods: {
@@ -34,7 +34,7 @@
 
         // var dispatch = d3.dispatch("backupEvent");
 
-        d3.select("#summary-pie-chart").select("svg").remove();
+        d3.select("#phenolyzer-pie-chart").select("svg").remove();
 
         var widthPercent = "100%";
         var heightPercent = "100%";
@@ -61,7 +61,7 @@
             return d.count;
           });
 
-          var svg = d3.select("#summary-pie-chart").append("svg")
+          var svg = d3.select("#phenolyzer-pie-chart").append("svg")
             .attr("height", heightPercent)
             .attr("width", widthPercent)
             .attr('viewBox', "0 0 " + parseInt(width * 1.5) + " " + parseInt(height))
