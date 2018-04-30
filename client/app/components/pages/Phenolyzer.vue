@@ -26,6 +26,7 @@
                           <v-card-title primary class="title">Description &nbsp;</v-card-title>
                           <div style="margin-left:30px; margin-right: 30px;">
                             Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                            Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <a href="http://phenolyzer.wglab.org/"> Read more</a>
                           </div>
                           <br>
                           <span style="font-size: 20px; margin-left:12px; font-weight:500">Phenotype: &nbsp; &nbsp; </span>

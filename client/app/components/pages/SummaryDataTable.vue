@@ -131,10 +131,10 @@ import { bus } from '../../routes';
       search: '',  //For searching the rows in data table
       selected: [],
       headers: [
-        { text: 'Name', align: 'left', sortable: false, value: ['indexVal','name'] },
+        { text: 'Name', align: 'left', sortable: false, value:'name' },
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
-        { text: 'phenolyzer', align: 'left', sortable: false, value: 'isPheno' },
+        { text: 'phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno'] },
         // {
         //   text: '',
         //   align: 'left',

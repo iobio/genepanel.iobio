@@ -274,6 +274,7 @@ var model = new Model();
           {
             text: 'Name',
             align: 'left',
+            sortable: false,
             value: 'name'
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },

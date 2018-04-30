@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Summary Pie Chart</v-card-title>
+    <v-card-title primary class="title">Phenolyzer Pie Chart</v-card-title>
     <div id="phenolyzer-pie-chart"></div>
   </div>
 </template>
