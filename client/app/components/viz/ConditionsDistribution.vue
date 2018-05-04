@@ -1,9 +1,10 @@
 <template>
   <div>
-    <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+    <div  class="chart-title">Conditions distribution across panels</div>
     <div>
       <div id="conditions-distribution-chart"></div>
     </div>
+    <v-btn small v-on:click="clearFilters">Clear filters</v-btn>
   </div>
 </template>
 
@@ -31,10 +32,13 @@ import { bus } from '../../routes';
       }
     },
     methods:{
+      clearFilters(){
+        bus.$emit("clearConditionFilters")
+      },
       draw(data){
         console.log("data in draw is ", data);
         var widthPercent = "100%";
-        var heightPercent = "240px";
+        var heightPercent = "100%";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
         var height = 250- margin.top - margin.bottom;
@@ -44,6 +48,18 @@ import { bus } from '../../routes';
         data.sort(function(a,b){
           return a - b
         })
+
+        var dispatch = d3.dispatch("barselect");
+
+
+        let onSelected = function(start, end) {
+          console.log("dispatch", start, end);
+          dispatch.barselect(start, end);
+          if(start !== end){
+            bus.$emit("conditionsOnBarSelect", start, end);
+          }
+        }
+
         d3.select("#conditions-distribution-chart").select("svg").remove();
         console.log("data length in conditions", data.length)
 
@@ -61,6 +77,8 @@ import { bus } from '../../routes';
         // var histogram = d3.layout.histogram()
         //                   .bins(40)
         //                   (data)
+
+        console.log("histogram data ", histogram)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
@@ -132,22 +150,55 @@ import { bus } from '../../routes';
                           .style("text-anchor", "start")
                           .text('# of Panels');
 
-        var bars = canvas.selectAll(".bar")
+        canvas.selectAll(".bar")
                               .data(histogram)
                               .enter()
                               .append("g")
-                              // .on("click", function(d){
-                              //   alert(d)
-                              // })
+                              .append("rect")
+                              // .attr("clip-path", "url(#clip)")
+                              .attr("class", "bar")
+                              .attr("x", function(d){return x(d.x)})
+                              .attr("y", function(d){return y(d.y)})
+                              .attr("width", function(d){return x(d.dx)})
+                              .attr("height", function(d){return height-y(d.y)})
+                              // .attr("fill", "steelblue")
+                              .attr("stroke", "#1f5d7a")
+                              .attr("stroke-width", 1)
 
-                  bars.append("rect")
-                    .attr("x", function(d){return x(d.x)})
-                    .attr("y", function(d){return y(d.y)})
-                    .attr("width", function(d){return x(d.dx)})
-                    .attr("height", function(d){return height-y(d.y)})
-                    .attr("fill", "steelblue")
-                    .attr("stroke", "#1f5d7a")
-                    .attr("stroke-width", 1)
+                    var brushEnd = function(){
+                      var start = brush.extent()[0];
+                      var end   = brush.extent()[1];
+                      console.log("start", Math.round(start));
+                      console.log("end", Math.round(end));
+
+                      onSelected(Math.round(start), Math.round(end))
+                    }
+                    var brush = d3.svg.brush()
+                      .x(x)
+                      .on("brushend", function(){
+                        brushEnd();
+                      })
+                      .on("brush", brushed);
+
+                      function brushed(){
+                        var e = brush.extent();
+                        canvas.selectAll("rect").classed("bar1", function(d,id) {
+                              return(d.x >= e[0] && d.x <= e[1] ?  false: true )
+                          });
+                        // onSelected(e);
+                      }
+
+
+                      canvas.append("g")
+                        .attr("class", "x brush")
+                        .call(brush) //call the brush function, causing it to create the rectangles
+                        .selectAll("rect") //select all the just-created rectangles
+                        .attr("y", 0)
+                        .attr("height", (height + margin.top - 20)) //set their height
+
+
+// canvas.selectAll(".resize").append("path");
+
 
                   // bars.append("text")
                   //   .attr("x", function(d){return x(d.x)-3.5})
@@ -179,9 +230,20 @@ import { bus } from '../../routes';
 </script>
 
 <style>
-#conditions-distribution-chart .axis .label {
-  font-size: 13.7px !important;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+
+.bar {
+  fill: steelblue;
 }
 
+.bar1 {
+  fill: #7dc2e5;
+  stroke-width: .5;
+}
+
+.brush .extent {
+  fill: steelblue
+}
 
 </style>

@@ -108,7 +108,7 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3'
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
   export default {
@@ -235,7 +235,7 @@ var model = new Model();
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
-        let data = model.getGeneBarChartData(mergedGenes);
+        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth());
         this.geneBarChart(d3.select('#gene-bar-chart'), data);
 
       },

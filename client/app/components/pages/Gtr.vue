@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="">
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <center>
+    <span style="padding-right:4px">Disorder</span>
       <div style="display:inline-block; padding-top:5px;">
         <!-- <label>Disorders :</label> -->
         <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
@@ -33,7 +33,6 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
-    </center>
     <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
     <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
     <p>
@@ -74,7 +73,7 @@ global.jQuery = jQuery;
 global.$ = jQuery;
 //import typeahead from 'jquery-typeahead'
 
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
   export default {
@@ -122,6 +121,7 @@ var model = new Model();
       },
       performSearch: function(){
         this.$emit('showDiseases', []);
+
         this.checked = true;
         this.alert=false;
 
@@ -132,6 +132,7 @@ var model = new Model();
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
         }
+        this.$emit('search-gtr', searchTerm);
 
         var diseases;
         model.promiseGetDiseases(searchTerm)

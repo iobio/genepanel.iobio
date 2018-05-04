@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Summary Pie Chart</v-card-title>
+
     <div id="summary-pie-chart"></div>
   </div>
 </template>
@@ -24,6 +24,7 @@
 
     },
     mounted(){
+      console.log("this.summaryPieChartData", this.summaryPieChartData)
       this.summaryData = this.summaryPieChartData;
       this.draw();
     },
@@ -63,7 +64,7 @@
           var svg = d3.select("#summary-pie-chart").append("svg")
             .attr("height", heightPercent)
             .attr("width", widthPercent)
-            .attr('viewBox', "0 0 " + parseInt(width * 1.5) + " " + parseInt(height))
+            .attr('viewBox', "0 0 " + parseInt(width * 1.2) + " " + parseInt(height))
             .attr("preserveAspectRatio", "none")
             .append("g")
             .attr("transform", "translate(" + width / 3.33 + "," + height / 2 + ")");

@@ -1,88 +1,46 @@
 <template>
   <div>
-    <br><br>
-    <center>
+
+
 
       <!-- <strong>Number of GTR Genes selected: {{ GtrGenesCount }}</strong>
       <br>
       <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong> -->
-    </center>
     <div id="app">
       <v-app id="inspire">
-        <!-- pie chart layout -->
-        <v-container fluid grid-list-md>
-          <v-layout row wrap >
-            <v-flex d-flex xs12 sm12 md12 lg12>
-              <v-card-text>
-                <v-layout row wrap style="margin-top:-70px;">
-                  <v-flex d-flex xs12 sm12 md12 lg12>
-                    <v-card>
-                      <v-card-text>
-                        <v-layout row wrap>
-                          <v-flex d-flex xs12 sm12 md4 lg4>
-                              <center>
-                                <!-- put the pie chart component here  -->
-                                <SummaryPieChart
-                                  v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
-                                  v-bind:summaryPieChartData="pieChartdataArr">
-                                </SummaryPieChart>
-                              </center>
-                          </v-flex>
+        <v-card style="margin:10px">
+          <v-container fluid grid-list-md>
+            <v-layout row wrap >
+                <v-flex d-flex xs3 v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                      <!-- put the pie chart component here  -->
+                      <SummaryPieChart
 
-                          <v-flex d-flex xs12 sm12 md4 lg4>
-                          </v-flex>
+                        v-bind:summaryPieChartData="pieChartdataArr">
+                      </SummaryPieChart>
+                </v-flex>
+                <v-flex d-flex v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <v-layout row wrap>
 
-                          <v-flex d-flex xs12 sm12 md4 lg4>
-                          </v-flex>
+                        <v-flex d-flex xs12>
 
-                       </v-layout>
-                      </v-card-text>
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-card-text>
-            </v-flex>
-          </v-layout>
-        </v-container>
+                              <SummaryDataTable
+                                  v-bind:summaryTableData="summaryTableArray">
+                                </SummaryDataTable>
+                        </v-flex>
+                     </v-layout>
+                </v-flex>
+              </v-layout>
+          </v-container>
+          </v-card>
 
-        <!-- Data Table layout -->
-        <v-container fluid grid-list-md
-          v-if="summaryTableArray.length>1">
-          <v-layout row wrap>
-            <v-flex d-flex xs12 sm12 md12 lg12>
-              <v-card-text>
-                <v-layout row wrap>
-                  <v-flex d-flex xs12 sm12 md12 lg12>
-                    <v-card>
-                      <v-card-text>
-                        <v-layout row wrap>
-                          <v-flex d-flex xs12 sm12 md2 lg2>
-                          </v-flex>
-                          <v-flex d-flex xs12 sm12 md8 lg8>
-                              <center>
-                                <SummaryDataTable
-                                    v-bind:summaryTableData="summaryTableArray">
-                                  </SummaryDataTable>
-                              </center>
-                          </v-flex>
-                          <v-flex d-flex xs12 sm12 md2 lg2>
-                          </v-flex>
-                       </v-layout>
-                      </v-card-text>
-                    </v-card>
-                  </v-flex>
-                </v-layout>
-              </v-card-text>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-app>
+
+       </v-app>
     </div>
   </div>
 </template>
 
 <script>
-import SummaryPieChart from './SummaryPieChart.vue';
+import SummaryPieChart from '../viz/SummaryPieChart.vue';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
 import FilterSummary from './FilterSummary.vue'

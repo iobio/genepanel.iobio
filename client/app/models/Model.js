@@ -388,7 +388,7 @@ mergeGenesAcrossPanels(genePanels) {
   }
 
 
-  getGeneBarChartData(genes) {
+  getGeneBarChartData(genes, width) {
 
     // Sort genes by gene panel count (descending order)
     // Sort genes by gene panel count (descending order)
@@ -399,7 +399,7 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = 900/sortedGenes[0]._genePanelCount;
+    var multiplicationFactor = (width - 240)/sortedGenes[0]._genePanelCount;
     var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
       return sortedGenes.map(function(gene, idx) {
         return {
