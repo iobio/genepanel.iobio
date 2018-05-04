@@ -72,7 +72,9 @@
       ></v-text-field> -->
       <v-spacer></v-spacer>
       <v-menu bottom offset-y>
-          <v-btn flat slot="activator"><v-icon >input</v-icon>Export</v-btn>
+          <v-btn flat slot="activator"
+          ><v-icon style="padding-right:4px">input</v-icon>
+          Export</v-btn>
           <v-list>
             <div v-if="component==='Home'">
               <v-list-tile @click="copyGtrGenes">
@@ -608,9 +610,7 @@ import Gtr from './Gtr.vue';
   background-color: #2c3e50;
 }
 
-.tabTitle{
-  color:#66d4ed
-}
+
 
 /* .navigation-drawer .navigation-drawer--clipped .navigation-drawer--fixed .navigation-drawer--open{
   margin-top: 112px !important;
@@ -676,4 +676,40 @@ nav.toolbar
   .icon
     font-size: 17px
 
+.tabTitle
+  color: $app-color !important
+
+.tabs__slider.accent
+  background-color: $app-color-light !important
+  border-color: $app-color-light !important
+
+button.btnColor.blue.darken-1
+  background-color: $app-color-light !important
+  border-color: $app-color-light !important
+
+.tabs__item
+  .badge__badge
+    color: white !important
+    font-size: 13px !important
+
+.chip.chip--outline.primary.primary--text
+  background-color: $app-color-light !important
+  border-color: $app-color-light !important
+  color: white !important
+
+
+  font-size: 15px
+  font-weight: bold
+  font-family: Open sans
+
+.checkbox.input-group.input-group--selection-controls.accent--text
+  color:  $default-cb-accent !important
+
+.accent--text
+  color: $app-color-light !important
+
+.emphasize
+  .input-group--select
+    label
+      color: $app-color-light !important
 </style>

@@ -93,7 +93,7 @@
           Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
           &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
         </strong> -->
-        <span id="genes-top-input" style="display:inline-block;max-width:145px;width:145px;">
+        <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
           <v-select
           v-model="NumberOfTopGenes"
           label="Select Genes"
@@ -104,10 +104,12 @@
           >
           </v-select>
         </span>
+        <!--
         <span style="padding-top:22px">
           <v-btn v-on:click="selectNumberOfTopGenes" flat icon color="indigo">
                 <v-icon >navigate_next</v-icon>
           </v-btn>
+        -->
         </span>
         <v-text-field
           append-icon="search"
@@ -378,6 +380,9 @@ var model = new Model();
       },
       modeOfInheritanceData: function(){
         console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
+      },
+      NumberOfTopGenes: function() {
+        this.selectNumberOfTopGenes();
       }
     },
     methods:{

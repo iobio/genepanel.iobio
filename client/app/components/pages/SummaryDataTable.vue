@@ -91,11 +91,11 @@
               </span>
           </td> -->
           <td>
-            <span v-if="props.item.isGtr"><v-icon color="green" >check_circle</v-icon></span>
+            <span v-if="props.item.isGtr"><v-icon >check_circle</v-icon></span>
             <span v-else></span>
           </td>
           <td>
-            <span v-if="props.item.isPheno"><v-icon color="green" >check_circle</v-icon></span>
+            <span v-if="props.item.isPheno"><v-icon >check_circle</v-icon></span>
             <span v-else></span>
           </td>
           <!-- <td style="font-size:0px;">{{ props.item.indexVal }}</td> -->

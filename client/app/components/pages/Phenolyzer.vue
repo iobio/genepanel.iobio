@@ -111,7 +111,7 @@
                               Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
                               &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
                             </strong> -->
-                            <span id="genes-top-input" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
+                            <span id="genes-top-input" class="emphasize" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
                               <v-select
                               v-model="genesTop"
                               label="Select Genes"
@@ -122,11 +122,13 @@
                               >
                               </v-select>
                             </span>
+                            <!--
                             <span style="padding-top:22px">
                               <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
                                 <v-icon>navigate_next</v-icon>
                               </v-btn>
                             </span>
+                          -->
                             <v-text-field
                               append-icon="search"
                               label="Search"
@@ -334,6 +336,11 @@ var geneModel = new GeneModel();
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
       this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+    },
+    watch: {
+      genesTop: function() {
+        this.selectNumberOfTopPhenolyzerGenes();
+      }
     },
     methods: {
       SelectAllPhenolyzerGenes(data){
