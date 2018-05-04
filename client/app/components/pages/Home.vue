@@ -20,7 +20,7 @@
           </v-flex>
         </v-layout> -->
 
-          <v-layout row wrap style="margin-top:-30px;">
+          <v-layout row wrap style="margin-top:-5px;">
             <!-- <v-flex d-flex xs12 sm12 md3 lg3>
               <v-card >
                 <v-card-title primary class="title">Filters</v-card-title>
@@ -36,31 +36,32 @@
             </v-flex> -->
 
 
-            <v-flex d-flex xs12 sm12 md12 lg12>
-                <v-card-text>
-                  <v-layout row wrap>
-
-                    <v-flex d-flex xs12 sm12 md12>
+                    <v-flex d-flex xs12>
                       <v-card>
                         <v-card-text style="margin-bottom:-5px">
-                          <v-card-title primary class="title">Description &nbsp;</v-card-title>
+
                           <div style="margin-left:30px; margin-right: 30px;">
                             The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                           </div>
-                          <br>
                           <app-gtr
-                            v-on:showDiseases="addDiseases($event)">
+                            v-on:showDiseases="addDiseases($event)"
+                            @search-gtr="onSearchGTR">
                           </app-gtr>
                         </v-card-text>
                       </v-card>
-                      <br><br><br>
                     </v-flex>
-                    <br><br><br>
 
 
-                    <v-flex d-flex xs12 sm12 md12>
-                      <v-card style="margin-top:4px">
-                       <v-card-title primary class="title">Results &nbsp; <span class="text-xs-center" v-if="selectedGenesText.length>1"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span></v-card-title></center>
+
+                    <v-flex d-flex xs12 >
+                      <v-card style="">
+                        <v-card-title primary class="title" style="padding-bottom:">
+                           <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
+                              <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
+                           </span>
+
+                        </v-card-title>
+
                         <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
                         <!-- <span>
                           <strong>
@@ -70,33 +71,44 @@
                             </center>
                           </strong>
                           </span> -->
-                        <v-card-text>
 
                           <v-layout row wrap>
-                            <v-flex d-flex xs12 sm12 md4>
-                              <center>
-                                <PieChartSelectorBackup
-                                    v-if="diseases.length &&modeOfInheritanceProps.length"
-                                    v-bind:modeOfInheritanceData="modeOfInheritanceProps">
-                                  </PieChartSelectorBackup>
-                                </center>
-                            </v-flex>
-                            <v-flex d-flex xs12 sm12 md4>
-                                <center>
-                                  <GeneMembership
-                                  v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
-                                  v-bind:GeneData="geneProps">
-                                </GeneMembership>
-                              </center>
-                            </v-flex>
-                            <v-flex d-flex xs12 sm12 md4>
-                                <center>
-                                  <ConditionsDistribution
-                                    v-if="geneProps.length && diseasesProps.length"
-                                    v-bind:distributionData="geneProps">
-                                </ConditionsDistribution>
-                              </center>
-                            </v-flex>
+                           <v-flex xs4 class="pr-4 pl-5" >
+
+                            <div class="d-flex mt-1 mb-2 xs12">
+
+                              <PieChartSelectorBackup
+                                v-if="diseases.length &&modeOfInheritanceProps.length"
+                                v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                              </PieChartSelectorBackup>
+                            </div>
+                            <div class="d-flex mb-2 xs12">
+                              <GeneMembership
+                                v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                                v-bind:GeneData="geneProps">
+                              </GeneMembership>
+                            </div>
+
+                            <div class="d-flex xs12">
+                              <ConditionsDistribution
+                                  v-if="geneProps.length && diseasesProps.length"
+                                  v-bind:distributionData="geneProps">
+                              </ConditionsDistribution>
+                            </div>
+
+                           </v-flex>
+
+                           <v-flex  xs8 style="margin-top:-70px">
+
+                              <show-gene-panel1
+                              v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                                v-bind:GeneData="geneProps"
+                                v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                                v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
+                                v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
+                                v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
+                              </show-gene-panel1>
+                           </v-flex>
 
                           </v-layout>
 
@@ -122,19 +134,9 @@
 
                           </v-layout> -->
 
-                          <show-gene-panel1
-                          v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
-                            v-bind:GeneData="geneProps"
-                            v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                            v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
-                            v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
-                            v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
-                          </show-gene-panel1>
-                        </v-card-text>
                       </v-card>
                     </v-flex>
 
-                    <br>
                     <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
                       <v-card >
                         <v-card-title primary class="title">Disorders</v-card-title>
@@ -167,12 +169,10 @@
                       </v-card>
                     </v-flex>
 
-                    <br>
 
 
-                 </v-layout>
-                </v-card-text>
-            </v-flex>
+
+
 
           </v-layout>
         </v-container>
@@ -316,6 +316,9 @@ export default {
     },
     UpdateListOfSelectedGenes: function(e){
       this.$emit("UpdateListOfSelectedGenesGTR", e);
+    },
+    onSearchGTR: function(genes, phenotype) {
+      this.$emit('search-gtr', genes, phenotype)
     }
   }
 }

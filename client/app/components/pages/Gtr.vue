@@ -1,8 +1,8 @@
 <template>
-  <div style="margin-left:12px;">
+  <div style="">
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <span style="font-size: 20px; font-weight:500">Disorder: &nbsp; &nbsp; </span>
+    <span style="padding-right:4px">Disorder</span>
       <div style="display:inline-block; padding-top:5px;">
         <!-- <label>Disorders :</label> -->
         <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
@@ -121,6 +121,7 @@ var model = new Model();
       },
       performSearch: function(){
         this.$emit('showDiseases', []);
+
         this.checked = true;
         this.alert=false;
 
@@ -131,6 +132,7 @@ var model = new Model();
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
         }
+        this.$emit('search-gtr', searchTerm);
 
         var diseases;
         model.promiseGetDiseases(searchTerm)

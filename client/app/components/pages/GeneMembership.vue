@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Gene membership in panels</v-card-title>
+    <div class="chart-title">Gene membership in panels</div>
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart1"></svg>
     </div>
@@ -92,7 +92,7 @@ var model = new Model();
             .width(390)
             .height(150)
             .widthPercent("100%")
-            .heightPercent("240px")
+            .heightPercent("100%")
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
             .yAxisLabel( "# of genes" )
             .xAxisLabel( "# of Panels" )
@@ -142,7 +142,7 @@ var model = new Model();
         var selection = d3.select('#gene-histogram-chart1').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
-        let data = model.getGeneBarChartData(mergedGenes);
+        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth());
         // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
         this.items = data;

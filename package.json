@@ -2,7 +2,7 @@
   "name": "iobio-vue-skeleton",
   "version": "0.0.0",
   "scripts": {
-    "start": "./node_modules/webpack/bin/webpack.js && DEBUG=http ./node_modules/nodemon/bin/nodemon.js --inspect --ignore client/ www.js",
+    "start": "./node_modules/webpack/bin/webpack.js && DEBUG=http ./node_modules/nodemon/bin/nodemon.js --debug=127.0.0.1:5860 --inspect --ignore client/ www.js",
     "webpack": "./node_modules/webpack/bin/webpack.js --watch",
     "build:dev": "webpack-dev-server  --content-base ./server/views",
     "test": "cross-env NODE_ENV=test karma start",

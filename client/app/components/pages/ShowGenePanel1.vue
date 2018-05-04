@@ -85,7 +85,7 @@
 
 
     <!-- <v-app id="inspire"> -->
-      <v-card-title>
+      <v-card-title style="padding-top:0px">
         <!-- <btn @click="copy">
             <i class="material-icons">content_copy</i> Copy to clipboard
         </btn> -->
@@ -93,7 +93,7 @@
           Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopGenes"> &nbsp; genes
           &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
         </strong> -->
-        <span id="genes-top-input" style="display:inline-block;max-width:130px;width:130px;margin-left:25px;padding-top:4px">
+        <span id="genes-top-input" style="display:inline-block;max-width:145px;width:145px;">
           <v-select
           v-model="NumberOfTopGenes"
           label="Select Genes"
@@ -109,23 +109,24 @@
                 <v-icon >navigate_next</v-icon>
           </v-btn>
         </span>
-        <v-spacer></v-spacer>
         <v-text-field
           append-icon="search"
           label="Search"
           single-line
           hide-details
           v-model="search"
+          style="margin-left:30px;max-width:200px;vertical-align:bottom"
         ></v-text-field>
       </v-card-title>
       <v-data-table
+          id="genes-table"
           v-model="selected"
           v-bind:headers="headers"
           v-bind:items="items"
           select-all
           v-bind:pagination.sync="pagination"
           item-key="name"
-          class="elevation-1"
+          class="elevation-1 pr-3"
           v-bind:search="search"
           no-data-text="No Genes Available Currently"
         >
@@ -521,7 +522,7 @@ var model = new Model();
         // var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         // this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
-        let data = model.getGeneBarChartData(mergedGenes);
+        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
         // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
         // console.log("bar char", this.geneBarChart)
 

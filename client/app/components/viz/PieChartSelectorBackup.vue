@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Genes inheritance modes</v-card-title>
+    <div class="chart-title">Genes inheritance modes</div>
     <div id="pie-chart-box2"></div>
   </div>
 </template>
@@ -327,5 +327,10 @@ import { bus } from '../../routes';
   }
 </script>
 
-<style>
+<style lang="sass">
+.chart-title
+  font-size: 16px
+  font-family:  "Open sans"
+
+
 </style>

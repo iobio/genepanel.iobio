@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
+    <div  class="chart-title">Conditions distribution across panels</div>
     <div>
       <div id="conditions-distribution-chart"></div>
     </div>
@@ -38,7 +38,7 @@ import { bus } from '../../routes';
       draw(data){
         console.log("data in draw is ", data);
         var widthPercent = "100%";
-        var heightPercent = "240px";
+        var heightPercent = "100%";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
 
         var height = 250- margin.top - margin.bottom;

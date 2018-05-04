@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div id="app">
-      <v-app id="inspire">
+    <div>
         <v-snackbar
             :timeout="snackbarTimeout"
             :top="y === 'top'"
@@ -15,22 +13,21 @@
             {{ snackbarText }}
             <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
           </v-snackbar>
-        <v-container fluid grid-list-md>
-          <v-layout row wrap style="margin-top:-30px;">
+        <v-container fluid grid-list-md style="min-height:500px">
+          <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
             <v-flex d-flex xs12 sm12 md12 lg12>
                 <v-card-text>
                   <v-layout row wrap>
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card>
                         <v-card-text >
-                          <v-card-title primary class="title">Description &nbsp;</v-card-title>
-                          <div style="margin-left:30px; margin-right: 30px;">
+                          <div >
                             Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
                             Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <a href="http://phenolyzer.wglab.org/"> Read more</a>
                           </div>
                           <br>
-                          <span style="font-size: 20px; margin-left:12px; font-weight:500">Phenotype: &nbsp; &nbsp; </span>
-                            <div id="phenotype-input" style="display:inline-block; padding-top:5px;">
+                          <span >Phenotype: </span>
+                            <div id="phenotype-input" style="display:inline-block; margin-left:4px;padding-top:5px;">
                               <input
                                 id="phenotype-term"
                                 class="form-control"
@@ -49,7 +46,7 @@
                             </div>
 
                             <v-btn
-                                style="margin-top:-0.35px"
+                                style="margin-top:0px"
                                 color="blue darken-1"
                                 class="btnColor"
                                 v-on:click="getPhenotypeData">
@@ -58,7 +55,6 @@
                           <div v-if="phenolyzerStatus!==null">
                             {{ phenolyzerStatus }}
                           </div>
-                          <br><br>
                           <div v-if="multipleSearchTerms.length">
                             <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
                               {{ searchItem }}
@@ -72,20 +68,15 @@
                             </v-chip>
                           </div>
                           <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
-                          <p>
-                            <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
-                              Sorry, the following search term returns no data!
-                            </v-alert>
-                          </p>
                         </v-card-text>
                       </v-card>
                     </v-flex>
 
-                      <v-flex d-flex xs12 sm12 md12 lg12>
+                      <v-flex v-if="false" d-flex xs12 sm12 md12 lg12>
                           <v-layout row wrap>
                             <v-flex d-flex xs12 sm12 md12 lg12>
                               <v-card>
-                                <v-card-text>
+                                <v-card-text style="padding:5px">
                                   <v-layout row wrap>
                                     <v-flex d-flex xs12 sm12 md4 lg4>
                                         <center>
@@ -113,43 +104,41 @@
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card style="margin-top:4px" >
                         <v-card-title primary class="title" >
-
-                          Results &nbsp;
                           <span class="text-xs-center" v-if="multipleSearchTerms.length"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
-                        </v-card-title>
-                        <div v-if="multipleSearchTerms.length">
-                        <v-card-title >
-                          <!-- v-if="items.length>1" -->
-                          <!-- <strong>
-                            Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
-                            &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
-                          </strong> -->
-                          <span id="genes-top-input" style="display:inline-block;max-width:130px;width:130px;margin-left:25px;padding-top:4px">
-                            <v-select
-                            v-model="genesTop"
-                            label="Select Genes"
-                            hide-details
-                            hint="Genes"
-                            combobox
-                            :items="genesTopCounts"
-                            >
-                            </v-select>
+                          <span  v-if="multipleSearchTerms.length" style="margin-left:20px;display: ">
+                            <!-- v-if="items.length>1" -->
+                            <!-- <strong>
+                              Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
+                              &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
+                            </strong> -->
+                            <span id="genes-top-input" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
+                              <v-select
+                              v-model="genesTop"
+                              label="Select Genes"
+                              hide-details
+                              hint="Genes"
+                              combobox
+                              :items="genesTopCounts"
+                              >
+                              </v-select>
+                            </span>
+                            <span style="padding-top:22px">
+                              <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
+                                <v-icon>navigate_next</v-icon>
+                              </v-btn>
+                            </span>
+                            <v-text-field
+                              append-icon="search"
+                              label="Search"
+                              single-line
+                              hide-details
+                              v-model="search"
+                              style="vertical-align:bottom;width: 200px;display:inline-block;margin-left:20px"
+                            ></v-text-field>
                           </span>
-                          <span style="padding-top:22px">
-                            <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
-                              <v-icon>navigate_next</v-icon>
-                            </v-btn>
-                          </span>
-                          <v-spacer></v-spacer>
-                          <v-text-field
-                            append-icon="search"
-                            label="Search"
-                            single-line
-                            hide-details
-                            v-model="search"
-                          ></v-text-field>
                         </v-card-title>
-                        <v-card-text>
+
+                        <v-card-text style="padding-top:0px;" v-if="multipleSearchTerms.length">
                           <v-data-table
                               v-model="selected"
                               v-bind:headers="headers"
@@ -220,7 +209,7 @@
                           </template>
                           </v-data-table>
                         </v-card-text>
-                        </div>
+
                       </v-card>
                     </v-flex>
                     <br>
@@ -231,12 +220,6 @@
 
           </v-layout>
         </v-container>
-      </v-app>
-    </div>
-
-    <!-- url: https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/?term=lacticacidosis@treacher_collins -->
-    <!-- <NavigationBar></NavigationBar> -->
-
   </div>
 </template>
 
@@ -420,6 +403,7 @@ var geneModel = new GeneModel();
         let self = this;
         self.checked = true;
         // self.multipleSearchTerms.push(self.phenotypeTerm.value);
+        self.$emit('search-phenotype', self.phenotypeTerm);
         var searchTerm = self.phenotypeTerm.value;
         self.phenotypeTermEntered = self.phenotypeTerm.value;
         self.selectedGenesText = "";

@@ -235,7 +235,7 @@ var model = new Model();
         var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
-        let data = model.getGeneBarChartData(mergedGenes);
+        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth());
         this.geneBarChart(d3.select('#gene-bar-chart'), data);
 
       },
