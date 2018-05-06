@@ -40,7 +40,7 @@
                       <v-card>
                         <v-card-text style="margin-bottom:-5px">
 
-                          <div style="margin-left:30px; margin-right: 30px;">
+                          <div class="mb-1">
                             The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                           </div>
                           <app-gtr
@@ -79,20 +79,23 @@
 
                               <PieChartSelectorBackup
                                 v-if="diseases.length &&modeOfInheritanceProps.length"
-                                v-bind:modeOfInheritanceData="modeOfInheritanceProps">
+                                v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                                :color="chartColor">
                               </PieChartSelectorBackup>
                             </div>
                             <div class="d-flex mb-2 xs12">
                               <GeneMembership
                                 v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
-                                v-bind:GeneData="geneProps">
+                                v-bind:GeneData="geneProps"
+                                :color="barColor">
                               </GeneMembership>
                             </div>
 
                             <div class="d-flex xs12">
                               <ConditionsDistribution
                                   v-if="geneProps.length && diseasesProps.length"
-                                  v-bind:distributionData="geneProps">
+                                  v-bind:distributionData="geneProps"
+                                  :color="barColor">
                               </ConditionsDistribution>
                             </div>
 
@@ -225,7 +228,9 @@ export default {
     },
     selectedDisordersListCB:{
       type: Array
-    }
+    },
+    chartColor: null,
+    barColor: null
   },
   data() {
     return {

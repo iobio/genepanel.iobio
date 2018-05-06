@@ -13,6 +13,7 @@ import { bus } from '../../routes';
       modeOfInheritanceData: {
         type: Array
       },
+      color: null
     },
     data(){
       return {
@@ -21,6 +22,7 @@ import { bus } from '../../routes';
     },
     methods:{
       draw(dataForModeOfInheritance){
+        let self = this;
         console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
         var data = dataForModeOfInheritance;
 
@@ -43,9 +45,9 @@ import { bus } from '../../routes';
 			// 	"#807ece", "#8db27c", "#be66a2", "#9ed3c6", "#00644b", "#005064", "#77979f", "#77e079", "#9c73ab", "#1f79a7"
 			// ]); //["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]
 
-      var color = d3.scale.ordinal()
-        .range([
-       "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
+      //var color = d3.scale.ordinal()
+      //  .range([
+      // "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
     ]);
 
         var arcOver = d3.svg.arc()
@@ -135,7 +137,7 @@ import { bus } from '../../routes';
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
             .style("fill", function(d) {
-              return color(d.data._modeOfInheritance);
+              return self.color(d.data._modeOfInheritance);
             });
 
             //On click events
@@ -222,7 +224,7 @@ import { bus } from '../../routes';
               })
               .attr("r", 5)
               .style("fill", function(d) {
-                return color(d.data._modeOfInheritance);
+                return self.color(d.data._modeOfInheritance);
               });
             legend.append("text")
                 .attr("y", function(d,i){

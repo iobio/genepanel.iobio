@@ -12,7 +12,10 @@
 import { bus } from '../../routes';
 
   export default {
-    props:["distributionData"],
+    props:{
+      distributionData: null,
+      color: null
+    },
     data(){
       return{
         GeneDistData: [],
@@ -36,6 +39,7 @@ import { bus } from '../../routes';
         bus.$emit("clearConditionFilters")
       },
       draw(data){
+        let self = this;
         console.log("data in draw is ", data);
         var widthPercent = "100%";
         var heightPercent = "100%";
@@ -161,7 +165,7 @@ import { bus } from '../../routes';
                               .attr("y", function(d){return y(d.y)})
                               .attr("width", function(d){return x(d.dx)})
                               .attr("height", function(d){return height-y(d.y)})
-                              // .attr("fill", "steelblue")
+                              .attr("fill", self.color.selected)
                               .attr("stroke", "#1f5d7a")
                               .attr("stroke-width", 1)
 
@@ -234,12 +238,11 @@ import { bus } from '../../routes';
 
 
 .bar {
-  fill: steelblue;
 }
 
 .bar1 {
-  fill: #7dc2e5;
   stroke-width: .5;
+  opacity: .7;
 }
 
 .brush .extent {

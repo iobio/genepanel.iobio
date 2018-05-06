@@ -15,7 +15,8 @@
                       <!-- put the pie chart component here  -->
                       <SummaryPieChart
 
-                        v-bind:summaryPieChartData="pieChartdataArr">
+                        v-bind:summaryPieChartData="pieChartdataArr"
+                        :color="chartColor">
                       </SummaryPieChart>
                 </v-flex>
                 <v-flex d-flex v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
@@ -63,6 +64,7 @@ import FilterSummary from './FilterSummary.vue'
       PhenolyzerGenesForSummary:{
         type:Array
       },
+      chartColor: null
     },
     data: () => ({
       gradient: 'to top, #7B1FA2, #E1BEE7',

@@ -21,11 +21,10 @@
                     <v-flex d-flex xs12 sm12 md12>
                       <v-card>
                         <v-card-text >
-                          <div >
+                          <div class="mb-1" >
                             Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
                             Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <a href="http://phenolyzer.wglab.org/"> Read more</a>
                           </div>
-                          <br>
                           <span >Phenotype: </span>
                             <div id="phenotype-input" style="display:inline-block; margin-left:4px;padding-top:5px;">
                               <input
@@ -67,7 +66,7 @@
                               {{ searchItem }}
                             </v-chip>
                           </div>
-                          <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
+                          <p v-if="checked"><v-progress-linear  height="3" color="cyan" :indeterminate="true"></v-progress-linear></p>
                         </v-card-text>
                       </v-card>
                     </v-flex>

@@ -11,6 +11,7 @@
       summaryPieChartData:{
         type: Array
       },
+      color: null
 
     },
     data: () => ({
@@ -30,6 +31,7 @@
     },
     methods: {
       draw(){
+        let self = this;
         var data = this.summaryData;
 
         // var dispatch = d3.dispatch("backupEvent");
@@ -42,12 +44,11 @@
           height = 260,
           radius = Math.min(width, height) / 2;
 
- //["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]
 
-      var color = d3.scale.ordinal()
-        .range([
-       "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
-    ]);
+        //var color = d3.scale.ordinal()
+        //    .range([
+        //   "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
+        //]);
 
         var arcOver = d3.svg.arc()
           .outerRadius(radius - 30)
@@ -131,7 +132,7 @@
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
             .style("fill", function(d) {
-              return color(d.data.name);
+              return self.color(d.data.name);
             });
 
 
@@ -155,7 +156,7 @@
               })
               .attr("r", 5)
               .style("fill", function(d) {
-                return color(d.data.name);
+                return self.color(d.data.name);
               });
             legend.append("text")
                 .attr("y", function(d,i){

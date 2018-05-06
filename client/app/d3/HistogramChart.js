@@ -21,6 +21,8 @@ export default function HistogramChart() {
   let xAxisLabel = null;
   let yAxisLabel = null;
 
+  let color = null;
+
   var dispatch = d3.dispatch("barselect");
 
   let tooltip = d3.select("#tooltip");
@@ -66,6 +68,9 @@ export default function HistogramChart() {
          })
     }
 
+
+    svg.selectAll(".bar rect").attr("fill", color.notselected);
+    svg.selectAll(".bar.selected rect").attr("fill", color.selected);
 
 
     var selected = [];
@@ -182,6 +187,7 @@ export default function HistogramChart() {
           .attr("x", 1)
           .attr("width", Math.abs((x(data[0].dx) - x(0))) - 1)
           .attr("height", function(d) { return 0; })
+          .attr("fill", 'lightgrey')
           // .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0)
           // .attr("fill", function(d){
           //   if(d.length>0){
@@ -441,6 +447,12 @@ export default function HistogramChart() {
     return chart;
   };
 
+
+  chart.color = function(_) {
+    if (!arguments.length) return color;
+    color = _;
+    return chart;
+  };
 
   d3.rebind(chart, dispatch, "on");
   return chart;

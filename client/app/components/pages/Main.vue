@@ -22,7 +22,7 @@
       app
       v-model="drawer"
     >
-    <v-list>
+    <v-list >
           <v-list-tile>
             <v-list-tile-title class="title">
               Filters
@@ -157,7 +157,7 @@
           <div class="text-xs-center">
             <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-              <span class="tabTitle"><strong>Genetic Testing Registry</strong></span>
+              <span class="tabTitle">Genetic Testing Registry</span>
             </v-badge>
           </div>
         </v-tab>
@@ -196,6 +196,8 @@
               v-bind:selectedDisordersListCB="selectedDisordersList"
               v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
               v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+              :chartColor="ordinalColor"
+              :barColor="barColor"
               @search-gtr="onSearchGTR">
             </Home>
           <!--
@@ -212,7 +214,8 @@
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
               v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
               v-bind:GtrGenesForSummary="selectedGtrGenes"
-              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes">
+              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+              :chartColor="ordinalColor">
             </SummaryTab>
           </keep-alive>
         </v-tabs-items>
@@ -307,7 +310,18 @@ import Gtr from './Gtr.vue';
         showVersion: false,
         searchTermGTR: null,
         searchTermPhenotype: null,
-        clinIoBioURL:  "http://localhost:4030"
+        clinIoBioURL:  "http://localhost:4030",
+        ordinalColor: d3.scale.ordinal().range([
+          '#0097A7',
+          '#00ACC1',
+          '#26C6DA',
+          '#80DEEA',
+          '#4DD0E1'
+        ]),
+        barColor: {
+          selected: '#00ACC1',
+          notselected: 'lightgrey'
+        }
 
       }
     },
@@ -618,8 +632,8 @@ import Gtr from './Gtr.vue';
 
 
 aside {
-  margin-top: 112px !important;
-  max-height: calc(100% - 112px) !important;
+  margin-top: 64px !important;
+  max-height: calc(100% - 64px) !important;
 }
 /* .btn .btn__content .icon {
   color:#66d4ed
@@ -670,18 +684,22 @@ nav.toolbar
 
     span
       font-family: Quicksand !important
-      font-weight: 500 !important
+      font-weight: 400 !important
 
 .list__tile__title
   .icon
     font-size: 17px
 
 .tabTitle
-  color: $app-color !important
+  color: $text-color !important
+  font-size: 18px
+  text-transform: none
+  font-weight: normal
 
 .tabs__slider.accent
   background-color: $app-color-light !important
   border-color: $app-color-light !important
+  opacity: .5
 
 button.btnColor.blue.darken-1
   background-color: $app-color-light !important
@@ -712,4 +730,8 @@ button.btnColor.blue.darken-1
   .input-group--select
     label
       color: $app-color-light !important
+
+.filter-icon
+  color: rgba(0,0,0,.54)
+  fill: rgba(0,0,0,.54)
 </style>

@@ -41,6 +41,7 @@ var model = new Model();
       GeneData: {
         type: Array
       },
+      color: null
     },
     data(){
       return {
@@ -87,6 +88,7 @@ var model = new Model();
     },
     methods:{
       draw(){
+        let self = this;
         //Drawing histogram chart
         this.geneHistogramChart = HistogramChart()
             .width(390)
@@ -96,6 +98,7 @@ var model = new Model();
             .margin( {left: 45, right: 15, top: 10, bottom: 30})
             .yAxisLabel( "# of genes" )
             .xAxisLabel( "# of Panels" )
+            .color(self.color)
             .on("barselect", function(selectedGeneNames){
               console.log("bars selected ", selectedGeneNames);
               addSelectedFromHistogramChart(selectedGeneNames);
@@ -171,12 +174,10 @@ var model = new Model();
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 #gene-histogram-chart1 .bar rect {
-    fill:   #7dc2e5;
-    stroke: #1f5d7a;
+    stroke: darygrey;
     stroke-width: .5;
 }
 #gene-histogram-chart1 .bar.selected rect {
-    fill: #2d8fc1;
 }
 #gene-histogram-chart1 .bar text {
     font-size: 10px;
