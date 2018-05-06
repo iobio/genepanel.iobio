@@ -247,9 +247,6 @@ div.tooltip {
 .input-group__input{
   min-height: 3px;
 }
-table.table tbody td, table.table tbody th{
-  height: 7px;
-}
 .headerWidth{
   width: 1%;
   color: red

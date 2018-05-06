@@ -66,7 +66,7 @@
                               {{ searchItem }}
                             </v-chip>
                           </div>
-                          <p v-if="checked"><v-progress-linear  height="3" color="cyan" :indeterminate="true"></v-progress-linear></p>
+                          <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -182,9 +182,9 @@
                                 </td>
                                 <!-- <td></td> -->
                                 <!-- <td>{{ props.item.rank }}</td> -->
-                                <td style="padding-top: 10px;">{{ props.item.rank}}</span></td>
-                                <td style="padding-top: 10px;"><p style="font-size:13px; margin-top:2px" ><strong>{{ props.item.geneName }}</strong></p></td>
-                                <td style="padding-top: 10px;">
+                                <td>{{ props.item.rank}}</span></td>
+                                <td ><span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td>
+                                <td >
                                   <span>
                                     <v-progress-circular
                                       :size="25"
@@ -196,7 +196,7 @@
                                     </v-progress-circular>
                                   </span>
                                 </td>
-                                <td style="padding-top: 10px;"><span v-html="props.item.htmlData"></span></td>
+                                <td ><span v-html="props.item.htmlData"></span></td>
                                 <!-- <td>{{ props.item.sources}}</td> -->
 
 
@@ -617,17 +617,19 @@ var geneModel = new GeneModel();
       },
       drawSvgBars: function(tempItems){
         var svgWidth = 800;
+        //<stop offset="5%"  stop-color="#36D1DC"/>
+        //<stop offset="95%" stop-color="#5B86E5"/>
         tempItems.map(function(gene){
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="MyGradient">
-                                    <stop offset="5%"  stop-color="#36D1DC"/>
-                                    <stop offset="95%" stop-color="#5B86E5"/>
+                                    <stop offset="5%"  stop-color="#7CA8CF"/>
+                                    <stop offset="95%" stop-color="#576E97"/>
                                 </linearGradient>
                             </defs>
 
                             <rect fill="url(#MyGradient)"
-                                  x="10" y="5" width="${gene.score * 800}" height="25"/>
+                                  x="10" y="5" width="${gene.score * 800}" height="18"/>
                           </svg>`
         })
         // <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
@@ -660,12 +662,8 @@ var geneModel = new GeneModel();
 }
 .form-control{
   font-size: 15px;
-  font-weight: 800
 }
 
-table.table tbody td, table.table tbody th{
-  height: 7px;
-}
 
 .headerWidth{
   width: 1%;

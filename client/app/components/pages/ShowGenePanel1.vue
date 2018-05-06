@@ -167,7 +167,7 @@
               <div id="app">
                 <div>
                   <v-menu open-on-hover top offset-y>
-                    <p style="font-size:13px; margin-top:2px" slot="activator"><strong>{{ props.item.name }}</strong></p>
+                    <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
                       <v-card>
                         <v-card-title>
                             <div><strong>Conditions: </strong></div>
@@ -1074,9 +1074,6 @@ div.tooltip {
   min-height: 3px;
 }
 
-table.table tbody td, table.table tbody th{
-  height: 7px;
-}
 
 .headerWidth{
   width: 1%;
