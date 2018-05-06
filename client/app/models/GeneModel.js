@@ -646,20 +646,20 @@ export default class GeneModel {
       url: url,
       type: "GET",
       dataType: "json",
-      success: function( data ) {
+      success: ( data )=> {
       if (data == "") {
       } else if (data.record == 'queued') {
         if (statusCallback) {
           statusCallback('queued');
         }
-        setTimeout(function() {
+        setTimeout(()=> {
             me.searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback);
           }, 5000);
       } else if (data.record == 'pending') {
         if (statusCallback) {
           statusCallback('running');
         }
-        setTimeout(function() {
+        setTimeout(()=> {
             me.searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback);
           }, 5000);
       } else {
@@ -671,7 +671,7 @@ export default class GeneModel {
       }
 
       },
-      fail: function() {
+      fail: ()=> {
         alert("An error occurred in Phenolyzer iobio services. " + thrownError);
         if (statusCallback) {
           statusCallback('error', thrownError)

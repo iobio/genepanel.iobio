@@ -16,12 +16,13 @@
       </v-snackbar>
     <v-navigation-drawer
       fixed
+      :stateless="true"
       width=325
       :clipped="$vuetify.breakpoint.mdAndUp"
       app
       v-model="drawer"
     >
-    <v-list>
+    <v-list >
           <v-list-tile>
             <v-list-tile-title class="title">
               Filters
@@ -58,9 +59,9 @@
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
     >
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-3">
+      <v-toolbar-title >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <span class="hidden-sm-and-down">panel.iobio</span>
+        <span >panel.iobio</span>
       </v-toolbar-title>
       <!-- <v-text-field
         flat
@@ -71,7 +72,9 @@
       ></v-text-field> -->
       <v-spacer></v-spacer>
       <v-menu bottom offset-y>
-          <v-btn flat slot="activator"><v-icon >input</v-icon>&nbsp; Export</v-btn>
+          <v-btn flat slot="activator"
+          ><v-icon style="padding-right:4px">input</v-icon>
+          Export</v-btn>
           <v-list>
             <div v-if="component==='Home'">
               <v-list-tile @click="copyGtrGenes">
@@ -100,8 +103,8 @@
           </v-list>
         </v-menu>
 
-        <v-menu bottom offset-y style="margin-left: -15px;">
-            <v-btn icon slot="activator"><v-icon>help</v-icon></v-btn>
+        <v-menu bottom offset-y style="">
+            <v-btn flat slot="activator">Help</v-btn>
             <v-list>
               <v-list-tile @click="onShowDisclaimer">
                 <v-list-tile-title>Disclaimer</v-list-tile-title>
@@ -128,57 +131,53 @@
                 <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io/support.html" target=")iobio">Support the iobio project</a></v-list-tile-title>
               </v-list-tile>
             </v-list>
-          </v-menu>
+        </v-menu>
 
 
-        <v-btn icon>
-          <v-icon >apps</v-icon>
-        </v-btn>
-        &nbsp; &nbsp; &nbsp; &nbsp;
-      <v-tabs style="box-shadow: 0px 3px 1px #2c3e50"
-        dark tabs
-        color="#2c3e50"
-        slot="extension"
+
+    </v-toolbar>
+    <v-content style="">
+
+
+
+      <v-tabs
+        light tabs
         grow
       >
+      <!--
       <v-tab v-on:click="component='HomePage'" >
         <div class="text-xs-center">
-        <v-badge left style="background-color:#fff0; font-size:20px">
+        <v-badge left style="background-color:#fff0; font-size:18px">
           <span class="tabTitle"><strong>Home</strong></span>
         </v-badge>
       </div>
       </v-tab>
-        <v-tabs-slider color="cyan"></v-tabs-slider>
+    -->
         <v-tab v-on:click="component='Home'">
           <div class="text-xs-center">
-            <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
+            <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-              <span class="tabTitle"><strong>GTR</strong></span>
+              <span class="tabTitle">Genetic Testing Registry</span>
             </v-badge>
           </div>
         </v-tab>
 
         <v-tab v-on:click="component='Phenolyzer'">
           <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
+          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
             <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
-            <span class="tabTitle"><strong>Phenolyzer</strong></span>
+            <span class="tabTitle">Phenolyzer</span>
           </v-badge>
           </div>
         </v-tab>
         <v-tab v-on:click="component='SummaryTab'">
           <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:20px">
+          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
             <span slot="badge">{{ NumberOfAllGenes }}</span>
-            <span class="tabTitle"><strong>Summary</strong></span>
+            <span class="tabTitle">Summary</span>
           </v-badge>
           </div>
         </v-tab>
-
-      </v-tabs>
-    </v-toolbar>
-    <v-content>
-      <div>
 
         <!-- <v-tabs-items>
           <keep-alive>
@@ -187,6 +186,7 @@
         </v-tabs-items> -->
         <v-tabs-items>
           <keep-alive>
+
             <Home
               v-if="component==='Home'"
               v-on:vendorListCB="updateVendors($event)"
@@ -195,24 +195,34 @@
               v-on:disorderNamesListCB="updateDisorderNames($event)"
               v-bind:selectedDisordersListCB="selectedDisordersList"
               v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)">
+              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+              :chartColor="ordinalColor"
+              :barColor="barColor"
+              @search-gtr="onSearchGTR">
             </Home>
+          <!--
             <HomePage v-else-if="component==='HomePage'"></HomePage>
+          -->
             <Phenolyzer
-              v-else-if="component==='Phenolyzer'"
+              v-if="component==='Phenolyzer'"
               v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)">
+              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+              @search-phenotype="onSearchPhenotype">
             </Phenolyzer>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
               v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
               v-bind:GtrGenesForSummary="selectedGtrGenes"
-              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes">
+              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+              :chartColor="ordinalColor">
             </SummaryTab>
           </keep-alive>
         </v-tabs-items>
-      </div>
+      </v-tabs>
+
+
+
     </v-content>
 
     <v-dialog v-model="showDisclaimer" max-width="600">
@@ -298,6 +308,37 @@ import Gtr from './Gtr.vue';
         uniqueGenes:[],
         showDisclaimer: false,
         showVersion: false,
+        searchTermGTR: null,
+        searchTermPhenotype: null,
+        clinIoBioURL:  "http://localhost:4030",
+        ordinalColorCyan: d3.scale.ordinal().range([
+          '#0097A7',
+          '#00ACC1',
+          '#26C6DA',
+          '#80DEEA',
+          '#4DD0E1'
+        ]),
+        ordinalColorGrey: d3.scale.ordinal().range([
+          '#B0BEC5',
+          '#90A4AE',
+          '#78909C',
+          '#546E7A',
+          '#455A64'
+        ]),
+        ordinalColorBlueGrey: d3.scale.ordinal().range([
+          '#5685BF', '#39597F', '#72B1FF', '#1D2C40', '#67A0E5'
+        ]),
+        ordinalColorSkin: d3.scale.ordinal().range([
+          '#454559', '#B89380', '#BFAE99', '#848E85', '#726270'
+        ]),
+        ordinalColor: d3.scale.ordinal().range([
+          '#576E97', '#7CA8CF', '#A4D3A7', '#ADA6B7', '#B57E74'
+        ]),
+        barColor: {
+          selected: '#7CA8CF',
+          notselected: 'lightgrey'
+        }
+
       }
     },
     mounted(){
@@ -305,6 +346,7 @@ import Gtr from './Gtr.vue';
         console.log(data)
         this.updateAllGenesFromSelection(data);
       })
+      window.addEventListener("message", this.receiveClin, false);
     },
     updated(){
       console.log("updated!")
@@ -401,6 +443,9 @@ import Gtr from './Gtr.vue';
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
+
+        this.sendClin({'type': 'apply-genes', source: 'gtr', genes: geneNames, searchTerms: [this.searchTermGTR]});
+
         if(this.selectedGtrGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
         }
@@ -413,12 +458,16 @@ import Gtr from './Gtr.vue';
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
+
+        this.sendClin({'type': 'apply-genes', source: 'phenotype-driven', genes: geneNames, searchTerms: [this.searchTermPhenotype]});
+
         if(this.selectedPhenolyzerGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedPhenolyzerGenes.length + " ";
         }
         this.snackbar=true;
       },
       copyAllGenes: function(){
+        let self = this;
         // var gtrGenes = this.selectedGtrGenes.map(gene => {
         //   return gene.name
         // })
@@ -431,6 +480,14 @@ import Gtr from './Gtr.vue';
 
         var genesToCopy = this.uniqueGenes.toString();
         this.$clipboard(genesToCopy);
+
+        this.sendClin({
+          type: 'apply-genes',
+          source: 'all',
+          genes: self.uniqueGenes,
+          searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+        });
+
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
         }
@@ -490,19 +547,48 @@ import Gtr from './Gtr.vue';
         })
         this.uniqueGenes = allGenes;
         this.NumberOfAllGenes = this.uniqueGenes.length
+      },
+      receiveClin: function(event) {
+        // Do we trust the sender of this message?
+        if (event.origin !== this.clinIoBioURL) {
+          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          return;
+        }
+
+        var clinObject = JSON.parse(event.data);
+
+        var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
+        window.parent.postMessage(JSON.stringify(responseObject), this.clinIoBioURL);
+      },
+      sendClin: function(obj) {
+        var theObject = $.extend({}, obj);
+        theObject.sender = 'genepanel.iobio.io';
+        window.parent.postMessage(JSON.stringify(theObject), this.clinIoBioURL);
+      },
+      onSearchGTR: function(searchTerm)  {
+        this.searchTermGTR = searchTerm;
+      },
+      onSearchPhenotype: function(searchTermObject)  {
+        this.searchTermPhenotype = searchTermObject.label;
       }
+
     }
 
   }
 
 </script>
 
+
+
+
+
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 .tabs__container{
-  height:58px;
+  height:50px;
   font-family: 'Open Sans', sans-serif;
+  padding-top: 5px;
 }
 /* .toolbar__content{
   background-color: #174065;
@@ -554,13 +640,114 @@ import Gtr from './Gtr.vue';
   background-color: #2c3e50;
 }
 
-.tabTitle{
-  color:#66d4ed
+
+
+/* .navigation-drawer .navigation-drawer--clipped .navigation-drawer--fixed .navigation-drawer--open{
+  margin-top: 112px !important;
+} */
+
+
+aside {
+  margin-top: 64px !important;
+  max-height: calc(100% - 64px) !important;
 }
-
-
-
 /* .btn .btn__content .icon {
   color:#66d4ed
 } */
+
+@media screen and (max-width: 1270px){
+  aside {
+    margin-top: 0px !important;
+    max-height: calc(100% - 0px) !important;
+  }
+}
+</style>
+
+<style lang="sass">
+
+@import ../assets/sass/variables
+
+nav.toolbar
+  background-color: $app-color !important
+  font-weight: 300 !important
+
+  .toolbar__side-icon.btn.btn--icon
+    max-width: 40px
+    min-width: 40px
+
+  .toolbar__items
+    width: 60%
+
+  .btn
+    margin: 0px
+    min-width: 120px
+    height: 40px
+    font-weight: 600
+
+    .btn__content
+      padding: 0 0px
+
+
+  i.material-icons
+    margin-right: 2px
+
+  .toolbar__title
+    font-size: 24px
+    margin-right: 5px
+    margin-left: 5px
+    padding-bottom: 5px
+    min-width: 130px
+
+    span
+      font-family: Quicksand !important
+      font-weight: 400 !important
+
+.list__tile__title
+  .icon
+    font-size: 17px
+
+.tabTitle
+  color: $text-color !important
+  font-size: 18px
+  text-transform: none
+  font-weight: normal
+
+.tabs__slider.accent
+  background-color: $app-color-light !important
+  border-color: $app-color-light !important
+  opacity: .5
+
+button.btnColor.blue.darken-1
+  background-color: $app-color-light !important
+  border-color: $app-color-light !important
+
+.tabs__item
+  .badge__badge
+    color: white !important
+    font-size: 13px !important
+
+.chip.chip--outline.primary.primary--text
+  background-color: $app-color-light !important
+  border-color: $app-color-light !important
+  color: white !important
+
+
+  font-size: 15px
+  font-weight: bold
+  font-family: Open sans
+
+.checkbox.input-group.input-group--selection-controls.accent--text
+  color:  $default-cb-accent !important
+
+.accent--text
+  color: $app-color-light !important
+
+.emphasize
+  .input-group--select
+    label
+      color: $app-color-light !important
+
+.filter-icon
+  color: rgba(0,0,0,.54)
+  fill: rgba(0,0,0,.54)
 </style>

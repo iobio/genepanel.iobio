@@ -15,7 +15,10 @@ html {
 }
 
 .theme--light .card,
-.application .theme--light.card {
+.application .theme--light.card,
+.application .theme--light.list,
+.theme--light .list
+ {
   color:  rgb(113,113,113);
   fill:  rgb(113,113,113);
 }
@@ -30,25 +33,21 @@ html {
   height: 28px;
 }
 
-.card {
-  width: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
 
-.card__title--primary {
-    padding-top: 4px;
-}
-.card__title {
-    padding-top: 0px;
-    padding-right: 0px;
-    padding-bottom: 4px;
-    padding-left: 0px;
-}
 
 .list__tile {
     font-size: 14px;
     height: 25px;
+}
+
+table.table tbody td, table.table tbody th {
+  height: 28px !important;
+  line-height: 1.2 !important;
+  vertical-align: middle;
+  padding-top: 0px !important;
+}
+
+table.table tbody td .input-group.input-group--selection-controls {
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
 }

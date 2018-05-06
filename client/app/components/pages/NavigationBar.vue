@@ -1,10 +1,12 @@
+
+
 <template>
-  <div>
+
     <!-- <datatableExample></datatableExample> -->
     <!-- <multiSelectExample></multiSelectExample> -->
     <!-- <d3Example></d3Example> -->
   <!-- Navbar  -->
-    <div style="position: relative; overflow: hidden;">
+
       <v-toolbar
         absolute
         color="blue-grey darken-4"
@@ -15,14 +17,6 @@
         <v-toolbar-title>GenePanel.iobio</v-toolbar-title>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <div
-        style="max-height: 600px; color:red"
-        class="scroll-y"
-        id="scrolling-techniques"
-      >
-        <v-container style="height: 60px;"></v-container>
-      </div>
-    </div>
 
 
 
@@ -60,7 +54,6 @@
 
 
 
-  </div>
 </template>
 
 <script>
@@ -70,9 +63,3 @@ export default {
   name: 'navigationBar',
 }
 </script>
-
-<style >
-  .toolbar__title{
-    color: #66D4ED;
-  }
-</style>
