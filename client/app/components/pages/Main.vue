@@ -762,7 +762,6 @@ button.btnColor.blue.darken-1
 .fixed-top-tabs
   position: fixed
   top: 64px
-  z-index: 1000
   width: 100%
 
 .tab-content
