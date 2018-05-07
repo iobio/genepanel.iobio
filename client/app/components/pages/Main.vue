@@ -336,7 +336,7 @@ import Gtr from './Gtr.vue';
           '#4DD0E1'
         ]),
         ordinalColor: d3.scale.ordinal().range([
-          '#576E97', '#7CA8CF', '#A4D3A7', '#70A6B7', '#4EA395'
+          '#576E97', '#7CA8CF', '#A4D3A7', '#70A6B7', '#4EA395', '#DAC87A'
         ]),
         barColor: {
           selected: '#7CA8CF',

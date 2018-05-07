@@ -136,8 +136,8 @@ import { bus } from '../../routes';
             .attr("stroke", "rgb(245, 245, 245)")
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
-            .style("fill", function(d) {
-              return self.color(d.data._modeOfInheritance);
+            .style("fill", function(d,i) {
+              return self.color(i);
             });
 
             //On click events
@@ -223,8 +223,8 @@ import { bus } from '../../routes';
                 return i*20;
               })
               .attr("r", 5)
-              .style("fill", function(d) {
-                return self.color(d.data._modeOfInheritance);
+              .style("fill", function(d,i) {
+                return self.color(i);
               });
             legend.append("text")
                 .attr("y", function(d,i){

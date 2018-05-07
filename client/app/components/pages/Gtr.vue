@@ -13,7 +13,6 @@
           class="form-control"
           type="text"
           autocomplete="off"
-          v-on:keyup.prevent="submitOnEnter"
           placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
         <!-- </form> -->
         <!-- </form> -->
@@ -103,6 +102,13 @@ var model = new Model();
     //     }
     //   }
     // },
+    watch: {
+      search: function() {
+        if (this.search && this.search.DiseaseName) {
+          this.performSearch();
+        }
+      }
+    },
 
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
@@ -123,16 +129,6 @@ var model = new Model();
       }
     },
     methods:{
-      submitOnEnter: function(e){
-        if (e.keyCode === 13) {
-          this.enterCount++;
-          if(this.enterCount===2){
-            document.getElementById("input").blur();
-            this.performSearch();
-            this.enterCount = 0;
-          }
-        }
-      },
       performSearch: function(){
         this.$emit('showDiseases', []);
 

@@ -32,7 +32,6 @@
                                 class="form-control"
                                 type="text"
                                 autocomplete="off"
-                                v-on:keyup.prevent="submitOnEnter"
                                 placeholder="Search phenotype (E.g. lactic acidosis)"
                                 v-model="phenotypeTermEntered">
 
@@ -347,6 +346,11 @@ var geneModel = new GeneModel();
     watch: {
       genesTop: function() {
         this.selectNumberOfTopPhenolyzerGenes();
+      },
+      phenotypeTerm: function() {
+        if (this.phenotypeTerm && this.phenotypeTerm.label) {
+          this.getPhenotypeData();
+        }
       }
     },
     methods: {
@@ -427,16 +431,6 @@ var geneModel = new GeneModel();
         } else {
           this.pagination.sortBy = column
           this.pagination.descending = false
-        }
-      },
-      submitOnEnter: function(e){
-        if (e.keyCode === 13) {
-          this.enterCount++;
-          if(this.enterCount===2){
-            document.getElementById("phenotype-term").blur();
-            this.getPhenotypeData();
-            this.enterCount = 0;
-          }
         }
       },
       getPhenotypeData(){
