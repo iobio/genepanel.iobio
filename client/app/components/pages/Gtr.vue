@@ -22,6 +22,7 @@
           v-model="search"
           target="#input"
           :data="conditions"
+          :limit="parseInt(100)"
           item-key="DiseaseName"/>
 
       </div>
@@ -85,7 +86,6 @@ var model = new Model();
         search: "",
         diseaseData : [],
         selectedCondition: {},
-        conditions: conditions.data,
         selectedGene: {},
         allGenes: geneData,
         enterCount: 0,
@@ -107,6 +107,20 @@ var model = new Model();
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
+    },
+    computed:  {
+
+      conditions: function() {
+        return conditions.data.sort(function(a,b) {
+          if (a.DiseaseName < b.DiseaseName) {
+            return -1;
+          } else if (a.DiseaseName > b.DiseaseName) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+      }
     },
     methods:{
       submitOnEnter: function(e){
