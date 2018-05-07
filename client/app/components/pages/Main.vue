@@ -318,21 +318,8 @@ import Gtr from './Gtr.vue';
           '#80DEEA',
           '#4DD0E1'
         ]),
-        ordinalColorGrey: d3.scale.ordinal().range([
-          '#B0BEC5',
-          '#90A4AE',
-          '#78909C',
-          '#546E7A',
-          '#455A64'
-        ]),
-        ordinalColorBlueGrey: d3.scale.ordinal().range([
-          '#5685BF', '#39597F', '#72B1FF', '#1D2C40', '#67A0E5'
-        ]),
-        ordinalColorSkin: d3.scale.ordinal().range([
-          '#454559', '#B89380', '#BFAE99', '#848E85', '#726270'
-        ]),
         ordinalColor: d3.scale.ordinal().range([
-          '#576E97', '#7CA8CF', '#A4D3A7', '#70A6B7', '#D27D72'
+          '#576E97', '#7CA8CF', '#A4D3A7', '#70A6B7', '#4EA395'
         ]),
         barColor: {
           selected: '#7CA8CF',
