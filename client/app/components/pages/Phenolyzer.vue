@@ -185,16 +185,20 @@
                                 <td>{{ props.item.rank}}</span></td>
                                 <td ><span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td>
                                 <td >
+                                  <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
+                                  <!--
                                   <span>
                                     <v-progress-circular
                                       :size="25"
                                       :width="5"
                                       :rotate="-90"
-                                      :value="props.item.sources /multipleSearchTerms.length * 100"
+                                      :value="props.item.sources / multipleSearchTerms.length * 100"
                                       color="light-blue darken-1"
                                     >
                                     </v-progress-circular>
                                   </span>
+                                -->
+
                                 </td>
                                 <td ><span v-html="props.item.htmlData"></span></td>
                                 <!-- <td>{{ props.item.sources}}</td> -->
@@ -279,12 +283,12 @@ var geneModel = new GeneModel();
             value: 'geneName'
           },
             {
-              text: 'sources',
+              text: 'Matched search terms',
               align: 'left',
               value: 'sources'
              },
              {
-               text: 'Score',
+               text: 'Phenolyzer score',
                align: 'left',
                value: 'score'
               },

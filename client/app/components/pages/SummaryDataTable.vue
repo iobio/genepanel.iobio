@@ -57,7 +57,7 @@
           </td>
 
           <!-- <td><span v-html="props.item.htmlData"></span></td> -->
-          <td><strong>{{ props.item.name }}</strong></td>
+          <td>{{ props.item.name }}</td>
           <!-- <td>
               <span v-if="props.item.sources==='gtrPheno'">
                 <v-progress-circular
