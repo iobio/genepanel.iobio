@@ -36,7 +36,7 @@
     <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
     <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
     <p>
-      <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
+      <v-alert  color="warning" dismissible v-model="alert">
         Sorry, the following search term returns no data!
       </v-alert>
     </p>

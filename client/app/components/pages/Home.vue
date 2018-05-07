@@ -54,7 +54,7 @@
 
 
                     <v-flex d-flex xs12 >
-                      <v-card style="">
+                      <v-card v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length">
                         <v-card-title primary class="title" style="padding-bottom:">
                            <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
                               <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
@@ -78,14 +78,14 @@
                             <div class="d-flex mt-1 mb-2 xs12">
 
                               <PieChartSelectorBackup
-                                v-if="diseases.length &&modeOfInheritanceProps.length"
+                                v-if="diseases.length && modeOfInheritanceProps.length > 1"
                                 v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                                 :color="chartColor">
                               </PieChartSelectorBackup>
                             </div>
                             <div class="d-flex mb-2 xs12">
                               <GeneMembership
-                                v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                                v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
                                 v-bind:GeneData="geneProps"
                                 :color="barColor">
                               </GeneMembership>
@@ -104,7 +104,7 @@
                            <v-flex  xs8 style="margin-top:-70px">
 
                               <show-gene-panel1
-                              v-if="geneProps.length && diseasesProps.length &&modeOfInheritanceProps.length"
+                              v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
                                 v-bind:GeneData="geneProps"
                                 v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                                 v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"

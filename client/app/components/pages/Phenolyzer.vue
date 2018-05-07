@@ -40,8 +40,10 @@
                                v-model="phenotypeTerm"
                               hide-details="false"
                               force-select match-start
+                              :limit="typeaheadLimit"
+                              :async-function="phenotypeLookup"
                               target="#phenotype-term"
-                              async-src="http://nv-blue.iobio.io/hpo/hot/lookup/?term=" item-key="value"/>
+                              item-key="value"/>
                             </div>
 
                             <v-btn
@@ -257,6 +259,8 @@ var geneModel = new GeneModel();
         phenotypeTermEntered: "",
         allPhenotypeTerms: [],
         phenolyzerStatus: null,
+        hpoLookupUrl:  "http://nv-blue.iobio.io/hpo/hot/lookup/?term=",
+        typeaheadLimit: parseInt(100),
         geneList: [],
         //DataTable
         pagination: {
@@ -354,6 +358,32 @@ var geneModel = new GeneModel();
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0,data)
+      },
+      phenotypeLookup: function(term, done) {
+        let self = this;
+
+        $.ajax({
+            url: self.hpoLookupUrl + encodeURIComponent(term),
+            type: 'GET',
+            error: function() {
+                done([])
+            },
+            success: function(res) {
+              if (!res.length) {
+                done([]);
+              }
+              var sortedTerms = res.sort(function(a,b) {
+                if (a.label < b.label) {
+                  return -1;
+                } else if (a.label > b.label) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
+              done(sortedTerms);
+            }
+        });
       },
       remove (item) {
         this.items = [];

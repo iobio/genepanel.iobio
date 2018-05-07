@@ -40,6 +40,11 @@ html {
     height: 25px;
 }
 
+.dropdown.open .dropdown-menu {
+  max-height: 400px !important;
+  overflow-y: scroll !important
+}
+
 table.table tbody td, table.table tbody th {
   height: 28px !important;
   line-height: 1.2 !important;

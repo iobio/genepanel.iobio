@@ -12,7 +12,7 @@
         v-model="snackbar"
       >
         {{ snackbarText }}
-        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+        <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
     <v-navigation-drawer
       fixed
@@ -25,10 +25,13 @@
     <v-list >
           <v-list-tile>
             <v-list-tile-title class="title">
-              Filters
+              Filter
             </v-list-tile-title>
           </v-list-tile>
         </v-list>
+        <v-btn  class="close-button" @click="drawer = false" flat>
+          <v-icon>close</v-icon>
+        </v-btn>
     <v-list dense>
         <!-- <v-card >
           <v-card-title primary class="title">Filters</v-card-title>
@@ -55,7 +58,6 @@
     <v-toolbar
       color="blue darken-3"
       dark
-      app
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
     >
@@ -71,6 +73,12 @@
         class="hidden-sm-and-down"
       ></v-text-field> -->
       <v-spacer></v-spacer>
+
+      <v-btn flat @click="drawer = true">
+        <v-icon>filter_list</v-icon>
+        Filter
+      </v-btn>
+
       <v-menu bottom offset-y>
           <v-btn flat slot="activator"
           ><v-icon style="padding-right:4px">input</v-icon>
@@ -135,25 +143,19 @@
 
 
 
+
     </v-toolbar>
+
+
+
     <v-content style="">
 
-
-
-      <v-tabs
+    <div  >
+      <v-tabs class="fixed-top-tabs"
         light tabs
         grow
       >
-      <!--
-      <v-tab v-on:click="component='HomePage'" >
-        <div class="text-xs-center">
-        <v-badge left style="background-color:#fff0; font-size:18px">
-          <span class="tabTitle"><strong>Home</strong></span>
-        </v-badge>
-      </div>
-      </v-tab>
-    -->
-        <v-tab v-on:click="component='Home'">
+          <v-tab v-on:click="component='Home'">
           <div class="text-xs-center">
             <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
@@ -178,13 +180,28 @@
           </v-badge>
           </div>
         </v-tab>
+      </v-tabs>
+    </div>
+
+
+      <!--
+      <v-tab v-on:click="component='HomePage'" >
+        <div class="text-xs-center">
+        <v-badge left style="background-color:#fff0; font-size:18px">
+          <span class="tabTitle"><strong>Home</strong></span>
+        </v-badge>
+      </div>
+      </v-tab>
+    -->
+
 
         <!-- <v-tabs-items>
           <keep-alive>
             <component v-bind:is="component"></component>
           </keep-alive>
         </v-tabs-items> -->
-        <v-tabs-items>
+
+        <v-tabs-items class="tab-content" >
           <keep-alive>
 
             <Home
@@ -219,7 +236,7 @@
             </SummaryTab>
           </keep-alive>
         </v-tabs-items>
-      </v-tabs>
+
 
 
 
@@ -700,13 +717,12 @@ nav.toolbar
   font-weight: normal
 
 .tabs__slider.accent
-  background-color: $app-color-light !important
-  border-color: $app-color-light !important
-  opacity: .5
+  background-color: $app-color-secondary !important
+  border-color: $app-color-secondary !important
 
 button.btnColor.blue.darken-1
-  background-color: $app-color-light !important
-  border-color: $app-color-light !important
+  background-color: $app-color-primary !important
+  border-color: $app-color-primary !important
 
 .tabs__item
   .badge__badge
@@ -714,8 +730,8 @@ button.btnColor.blue.darken-1
     font-size: 13px !important
 
 .chip.chip--outline.primary.primary--text
-  background-color: $app-color-light !important
-  border-color: $app-color-light !important
+  background-color: $app-color-primary !important
+  border-color: $app-color-primary !important
   color: white !important
 
 
@@ -727,14 +743,41 @@ button.btnColor.blue.darken-1
   color:  $default-cb-accent !important
 
 .accent--text
-  color: $app-color-light !important
+  color: $app-color-primary !important
 
 .emphasize
   .input-group--select
     label
-      color: $app-color-light !important
+      color: $app-color-primary !important
 
 .filter-icon
   color: rgba(0,0,0,.54)
   fill: rgba(0,0,0,.54)
+
+.alert.warning
+  background-color: $info-color !important;
+  color: $text-color !important;
+  width: 400px
+
+.fixed-top-tabs
+  position: fixed
+  top: 64px
+  z-index: 1000
+  width: 100%
+
+.tab-content
+  margin-top: 110px
+
+.close-button
+  padding-right: 0px
+  position: absolute
+  right: 0px
+  display: inline-block
+  margin-left: 0px
+  min-width: 22px
+  top: 0px
+
+  i.material-icons
+    font-size: 22px
+    color: $text-color !important
 </style>
