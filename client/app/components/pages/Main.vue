@@ -765,7 +765,7 @@ button.btnColor.blue.darken-1
   width: 100%
 
 .tab-content
-  margin-top: 110px
+  margin-top: 120px
 
 .close-button
   padding-right: 0px

@@ -134,7 +134,7 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
-        { text: 'phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno'] },
+        { text: 'Phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno'] },
         // {
         //   text: '',
         //   align: 'left',

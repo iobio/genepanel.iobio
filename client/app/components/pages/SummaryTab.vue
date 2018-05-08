@@ -8,7 +8,7 @@
       <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong> -->
     <div id="app">
       <v-app id="inspire">
-        <v-card style="margin:10px">
+        <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1" style="margin:10px">
           <v-container fluid grid-list-md>
             <v-layout row wrap >
                 <v-flex d-flex xs3 v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
