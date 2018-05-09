@@ -157,7 +157,7 @@
       >
           <v-tab v-on:click="component='Home'">
           <div class="text-xs-center">
-            <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
+            <v-badge color="cyan" right style="background-color:white !important; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
               <span class="tabTitle">Genetic Testing Registry</span>
             </v-badge>
