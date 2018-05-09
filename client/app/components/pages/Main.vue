@@ -717,7 +717,7 @@ nav.toolbar
   font-weight: normal
 
 
-.tab__item
+.tabs__item
   .badge
     background-color: white !important
 
