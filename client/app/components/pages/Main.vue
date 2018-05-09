@@ -716,6 +716,11 @@ nav.toolbar
   text-transform: none
   font-weight: normal
 
+
+.tab__items
+  .badge
+    background-color: white !important
+
 .tabs__slider.accent
   background-color: $app-color-secondary !important
   border-color: $app-color-secondary !important
