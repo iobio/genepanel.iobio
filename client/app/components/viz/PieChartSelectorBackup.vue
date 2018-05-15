@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Genes inheritance modes</v-card-title>
+    <div class="chart-title">Genes inheritance modes</div>
     <div id="pie-chart-box2"></div>
   </div>
 </template>
@@ -45,10 +45,10 @@ import { bus } from '../../routes';
 			// 	"#807ece", "#8db27c", "#be66a2", "#9ed3c6", "#00644b", "#005064", "#77979f", "#77e079", "#9c73ab", "#1f79a7"
 			// ]); //["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]
 
-      //var color = d3.scale.ordinal()
-      //  .range([
-      // "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
-    ]);
+//      var color = d3.scale.ordinal()
+//        .range([
+//       "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
+//    ]);
 
         var arcOver = d3.svg.arc()
           .outerRadius(radius - 30)
@@ -136,8 +136,8 @@ import { bus } from '../../routes';
             .attr("stroke", "rgb(245, 245, 245)")
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
-            .style("fill", function(d) {
-              return self.color(d.data._modeOfInheritance);
+            .style("fill", function(d,i) {
+              return self.color(i);
             });
 
             //On click events
@@ -223,8 +223,8 @@ import { bus } from '../../routes';
                 return i*20;
               })
               .attr("r", 5)
-              .style("fill", function(d) {
-                return self.color(d.data._modeOfInheritance);
+              .style("fill", function(d,i) {
+                return self.color(i);
               });
             legend.append("text")
                 .attr("y", function(d,i){
@@ -329,5 +329,10 @@ import { bus } from '../../routes';
   }
 </script>
 
-<style>
+<style lang="sass">
+.chart-title
+  font-size: 16px
+  font-family:  "Open sans"
+
+
 </style>

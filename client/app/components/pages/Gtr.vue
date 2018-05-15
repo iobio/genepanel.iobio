@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="">
     <!-- <h1>GTR!</h1> -->
     <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
-    <center>
+    <span style="padding-right:4px">Disorder</span>
       <div style="display:inline-block; padding-top:5px;">
         <!-- <label>Disorders :</label> -->
         <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
@@ -13,7 +13,6 @@
           class="form-control"
           type="text"
           autocomplete="off"
-          v-on:keyup.prevent="submitOnEnter"
           placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
         <!-- </form> -->
         <!-- </form> -->
@@ -22,6 +21,7 @@
           v-model="search"
           target="#input"
           :data="conditions"
+          :limit="parseInt(100)"
           item-key="DiseaseName"/>
 
       </div>
@@ -33,11 +33,10 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
-    </center>
     <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
-    <p v-if="checked"><v-progress-linear :indeterminate="true"></v-progress-linear></p>
+    <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
     <p>
-      <v-alert outline color="warning" icon="priority_high" dismissible v-model="alert">
+      <v-alert  color="warning" dismissible v-model="alert">
         Sorry, the following search term returns no data!
       </v-alert>
     </p>
@@ -74,7 +73,7 @@ global.jQuery = jQuery;
 global.$ = jQuery;
 //import typeahead from 'jquery-typeahead'
 
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
   export default {
@@ -86,7 +85,6 @@ var model = new Model();
         search: "",
         diseaseData : [],
         selectedCondition: {},
-        conditions: conditions.data,
         selectedGene: {},
         allGenes: geneData,
         enterCount: 0,
@@ -104,24 +102,36 @@ var model = new Model();
     //     }
     //   }
     // },
+    watch: {
+      search: function() {
+        if (this.search && this.search.DiseaseName) {
+          this.performSearch();
+        }
+      }
+    },
 
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
     },
-    methods:{
-      submitOnEnter: function(e){
-        if (e.keyCode === 13) {
-          this.enterCount++;
-          if(this.enterCount===2){
-            document.getElementById("input").blur();
-            this.performSearch();
-            this.enterCount = 0;
+    computed:  {
+
+      conditions: function() {
+        return conditions.data.sort(function(a,b) {
+          if (a.DiseaseName < b.DiseaseName) {
+            return -1;
+          } else if (a.DiseaseName > b.DiseaseName) {
+            return 1;
+          } else {
+            return 0;
           }
-        }
-      },
+        });
+      }
+    },
+    methods:{
       performSearch: function(){
         this.$emit('showDiseases', []);
+
         this.checked = true;
         this.alert=false;
 
@@ -132,6 +142,7 @@ var model = new Model();
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
         }
+        this.$emit('search-gtr', searchTerm);
 
         var diseases;
         model.promiseGetDiseases(searchTerm)
@@ -234,7 +245,6 @@ var model = new Model();
  }
  .form-control{
    font-size: 15px;
-   font-weight: 800;
  }
 #input{
   width: 850px;

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title primary class="title">Summary Pie Chart</v-card-title>
+
     <div id="summary-pie-chart"></div>
   </div>
 </template>
@@ -11,6 +11,7 @@
       summaryPieChartData:{
         type: Array
       },
+      color: null
 
     },
     data: () => ({
@@ -24,11 +25,13 @@
 
     },
     mounted(){
+      console.log("this.summaryPieChartData", this.summaryPieChartData)
       this.summaryData = this.summaryPieChartData;
       this.draw();
     },
     methods: {
       draw(){
+        let self = this;
         var data = this.summaryData;
 
         // var dispatch = d3.dispatch("backupEvent");
@@ -41,12 +44,11 @@
           height = 260,
           radius = Math.min(width, height) / 2;
 
- //["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]
 
-      var color = d3.scale.ordinal()
-        .range([
-       "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
-    ]);
+        //var color = d3.scale.ordinal()
+        //    .range([
+        //   "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
+        //]);
 
         var arcOver = d3.svg.arc()
           .outerRadius(radius - 30)
@@ -63,7 +65,7 @@
           var svg = d3.select("#summary-pie-chart").append("svg")
             .attr("height", heightPercent)
             .attr("width", widthPercent)
-            .attr('viewBox', "0 0 " + parseInt(width * 1.5) + " " + parseInt(height))
+            .attr('viewBox', "0 0 " + parseInt(width * 1.2) + " " + parseInt(height))
             .attr("preserveAspectRatio", "none")
             .append("g")
             .attr("transform", "translate(" + width / 3.33 + "," + height / 2 + ")");
@@ -129,8 +131,8 @@
             .attr("stroke", "rgb(245, 245, 245)")
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
-            .style("fill", function(d) {
-              return color(d.data.name);
+            .style("fill", function(d,i) {
+              return self.color(i);
             });
 
 
@@ -153,8 +155,8 @@
                 return i*20;
               })
               .attr("r", 5)
-              .style("fill", function(d) {
-                return color(d.data.name);
+              .style("fill", function(d,i) {
+                return self.color(i);
               });
             legend.append("text")
                 .attr("y", function(d,i){

@@ -388,7 +388,7 @@ mergeGenesAcrossPanels(genePanels) {
   }
 
 
-  getGeneBarChartData(genes) {
+  getGeneBarChartData(genes, width) {
 
     // Sort genes by gene panel count (descending order)
     // Sort genes by gene panel count (descending order)
@@ -399,7 +399,7 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = 900/sortedGenes[0]._genePanelCount;
+    var multiplicationFactor = (width - 240)/sortedGenes[0]._genePanelCount;
     var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
       return sortedGenes.map(function(gene, idx) {
         return {
@@ -408,17 +408,20 @@ mergeGenesAcrossPanels(genePanels) {
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
-              htmlData: `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
+//            <stop offset="5%"  stop-color="#36D1DC"/>
+//            <stop offset="95%" stop-color="#5B86E5"/>
+              htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="MyGradient">
-                                    <stop offset="5%"  stop-color="#36D1DC"/>
-                                    <stop offset="95%" stop-color="#5B86E5"/>
+
+                                    <stop offset="5%"  stop-color="#7CA8CF"/>
+                                    <stop offset="95%" stop-color="#576E97"/>
                                 </linearGradient>
                             </defs>
 
                             <rect fill="url(#MyGradient)"
-                                  x="10" y="5" width="${gene._genePanelCount * multiplicationFactor}" height="25"/>
-                            <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="20" font-family="Verdana" font-size="14" fill="white">${gene._genePanelCount}</text>
+                                  x="10" y="1" width="${gene._genePanelCount * multiplicationFactor}" height="18"/>
+                            <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="14" font-family="Verdana" font-size="13" fill="white">${gene._genePanelCount}</text>
                         </svg>`
             };
       });

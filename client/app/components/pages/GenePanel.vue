@@ -125,7 +125,7 @@ import jQuery from 'jquery';
 global.jQuery = jQuery;
 global.$ = jQuery;
 
-import Model from './Model';
+import Model from '../../models/Model';
 var model = new Model();
 
 // var tempArr = [];
@@ -215,13 +215,26 @@ var model = new Model();
       bus.$on('selectNumberOfConditionsInPanel', (data)=>{
         this.filterPanelsOnSelectedConditions(data);
       })
+
+      bus.$on("conditionsOnBarSelect", (start, end)=>{
+        this.filterPanelsOnBarSelect(start, end);
+      })
+
+      bus.$on("clearConditionFilters", ()=>{
+        this.selected = this.items.slice()
+      })
     },
 
     methods:{
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
         this.items = this.tempItems;
-        console.log("items in updatePanelsOnSelectedVendors", this.items)
+
+        // this.items.sort(function(a,b){
+        //   // console.log("a", a.offerer)
+        //   return a.offerer > b.offerer;
+        // })
+        console.log("items in updatePanelsOnSelectedVendors", this.items[0])
         if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
@@ -252,6 +265,18 @@ var model = new Model();
         })
         console.log(tempArrForConditions)
         this.selected = tempArrForConditions;
+      },
+      filterPanelsOnBarSelect: function(start,end){
+        console.log("start ", start)
+        var tempBarsSelected = [];
+        this.items.map(x=>{
+          if(x.conditioncount>=start && x.conditioncount<=end){
+            console.log(x.conditioncount)
+            tempBarsSelected.push(x);
+          }
+        })
+        console.log("tempBarsSelected", tempBarsSelected)
+        this.selected = tempBarsSelected;
       },
       filterGenePanelsOnSelectedNumber: function(data){
         console.log("filterGenePanelsOnSelectedNumber", this.items)
