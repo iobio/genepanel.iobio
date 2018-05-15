@@ -74,7 +74,7 @@
       ></v-text-field> -->
       <v-spacer></v-spacer>
 
-      <v-btn flat @click="drawer = true">
+      <v-btn flat @click="drawer = !drawer">
         <v-icon>filter_list</v-icon>
         Filter
       </v-btn>
