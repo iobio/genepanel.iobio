@@ -440,58 +440,66 @@ var geneModel = new GeneModel();
       getPhenotypeData(){
         let self = this;
         self.checked = true;
-        // self.multipleSearchTerms.push(self.phenotypeTerm.value);
-        self.$emit('search-phenotype', self.phenotypeTerm);
         var searchTerm = self.phenotypeTerm.value;
-        self.phenotypeTermEntered = self.phenotypeTerm.value;
-        self.selectedGenesText = "";
-        self.phenolyzerStatus = null;
-        self.genesToApply = "";
-        self.NoOfGenesSelectedFromPhenolyzer = 0;
-        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-        self.phenotypeTermEntered = self.phenotypeTerm.value;
-        geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
-        (status, error)=> {
-          if (status == 'done') {
-            if (geneModel.phenolyzerGenes.length == 0) {
-              self.phenolyzerStatus = "no genes found."
-              self.genesToApply = "";
-              self.checked = false;
-              self.alert = true;
-              self.noResultsArr.push(searchTerm);
-              console.log("noResultsArr", self.noResultsArr)
+        console.log("self.multipleSearchTerms from getPhenotypeData", self.multipleSearchTerms )
+        if(!self.multipleSearchTerms.includes(searchTerm)){
+          self.$emit('search-phenotype', self.phenotypeTerm);
+          self.phenotypeTermEntered = self.phenotypeTerm.value;
+          self.selectedGenesText = "";
+          self.phenolyzerStatus = null;
+          self.genesToApply = "";
+          self.NoOfGenesSelectedFromPhenolyzer = 0;
+          this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+          self.phenotypeTermEntered = self.phenotypeTerm.value;
+          geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
+          (status, error)=> {
+            if (status == 'done') {
+              if (geneModel.phenolyzerGenes.length == 0) {
+                self.phenolyzerStatus = "no genes found."
+                self.genesToApply = "";
+                self.checked = false;
+                self.alert = true;
+                self.noResultsArr.push(searchTerm);
+                console.log("noResultsArr", self.noResultsArr)
+              } else {
+                console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
+                self.tempItems = geneModel.phenolyzerGenes;
+
+                self.multipleSearchTerms.push(searchTerm)
+                self.checked = false;
+                self.alert = false;
+                self.dictionaryArr.push(({
+                  name: searchTerm,
+                  data: self.tempItems
+                }))
+                var combinedList = self.combineList(self.dictionaryArr);
+                var createdObj = self.createObj(combinedList);
+                var averagedData = self.performMeanOperation(combinedList, createdObj);
+                var sortedPhenotypeData = self.sortTheOrder(averagedData);
+                self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+                console.log("pieChartdataArr", self.pieChartdataArr)
+
+                let data = self.drawSvgBars(sortedPhenotypeData);
+                self.items = data;
+                console.log("items ", self.items)
+                self.selected = self.items.slice(0,50);
+                self.phenolyzerStatus = null;
+                self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+                self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+                self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+                self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+
+              }
             } else {
-              console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
-              self.tempItems = geneModel.phenolyzerGenes;
-              self.multipleSearchTerms.push(searchTerm)
-              self.checked = false;
-              self.alert = false;
-              self.dictionaryArr.push(({
-                name: searchTerm,
-                data: self.tempItems
-              }))
-              var combinedList = self.combineList(self.dictionaryArr);
-              var createdObj = self.createObj(combinedList);
-              var averagedData = self.performMeanOperation(combinedList, createdObj);
-              var sortedPhenotypeData = self.sortTheOrder(averagedData);
-              self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-              console.log("pieChartdataArr", self.pieChartdataArr)
-
-              let data = self.drawSvgBars(sortedPhenotypeData);
-              self.items = data;
-              console.log("items ", self.items)
-              self.selected = self.items.slice(0,50);
-              self.phenolyzerStatus = null;
-              self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-              self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-              self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-              self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-
+              self.phenolyzerStatus = status;
             }
-          } else {
-            self.phenolyzerStatus = status;
-          }
-        });
+          });
+        }
+        else {
+          self.checked = false;
+        }
+        // self.multipleSearchTerms.push(self.phenotypeTerm.value);
+
       },
       combineList(arr){
         var temp =[];
@@ -537,8 +545,8 @@ var geneModel = new GeneModel();
               }
               else {
                 // console.log("obj[uniqueGenes[i]].sources + 1 is ", obj[uniqueGenes[i]].sources + 1)
-                console.log("arr[j].score",typeof Number(arr[j].score));
-                console.log("obj[uniqueGenes[i]].total",typeof obj[uniqueGenes[i]].total)
+                // console.log("arr[j].score",typeof Number(arr[j].score));
+                // console.log("obj[uniqueGenes[i]].total",typeof obj[uniqueGenes[i]].total)
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
