@@ -188,7 +188,30 @@
                                 <!-- <td></td> -->
                                 <!-- <td>{{ props.item.rank }}</td> -->
                                 <td>{{ props.item.rank}}</span></td>
-                                <td ><span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td>
+                                <td >
+                                  <div id="app">
+                                    <div>
+                                      <v-menu open-on-hover top offset-y>
+                                        <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
+                                          <div >
+                                            <v-card>
+                                              <v-card-title>
+                                                  <div style="width:600px"><strong>Resources: </strong></div>
+                                              </v-card-title>
+                                              <v-card-text style="margin-top:-25px">
+                                                <ul style="margin-left:25px; margin-top:5px">
+                                                  <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                                                  <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                                                  <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                                                  <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                                                </ul>
+                                              </v-card-text>
+                                            </v-card>
+                                          </div>
+                                      </v-menu>
+                                    </div>
+                                  </div>
+                                  <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
                                 <td >
                                   <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
                                   <!--
@@ -292,7 +315,7 @@ var geneModel = new GeneModel();
             {
               text: 'Matched search terms',
               align: 'left',
-              value: 'sources'
+              value: ['sources', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc']
              },
              {
                text: 'Phenolyzer score',
@@ -496,7 +519,7 @@ var geneModel = new GeneModel();
           });
         }
         else {
-          self.checked = false;
+          self.checked = true;
         }
         // self.multipleSearchTerms.push(self.phenotypeTerm.value);
 
@@ -670,7 +693,11 @@ var geneModel = new GeneModel();
 
                             <rect fill="url(#MyGradient)"
                                   x="10" y="5" width="${gene.score * 800}" height="18"/>
-                          </svg>`
+                          </svg>`;
+          gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
+          gene.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.geneName}`;
+          gene.geneCardsSrc = `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.geneName}`;
+          gene.ghrSrc = `https://ghr.nlm.nih.gov/gene/${gene.geneName}`;
         })
         // <text x="${gene.score * 400}" y="20" font-family="Verdana" font-size="14" fill="white">${gene.score}</text>
 

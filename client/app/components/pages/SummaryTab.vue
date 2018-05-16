@@ -158,7 +158,11 @@ import FilterSummary from './FilterSummary.vue'
             if(this.commonGtrPhenoGenes[i]===this.PhenolyzerGenes[j].geneName){
               tempA.push({
                 name:this.PhenolyzerGenes[j].geneName,
-                rank: parseInt(this.PhenolyzerGenes[j].rank)
+                rank: parseInt(this.PhenolyzerGenes[j].rank),
+                omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${this.PhenolyzerGenes[j].geneName}`,
+                medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${this.PhenolyzerGenes[j].geneName}`,
+                geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
+                ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
               })
             }
           }
@@ -205,6 +209,10 @@ import FilterSummary from './FilterSummary.vue'
         tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
         tempSummaryTableArray.map((x,i)=>{
           x["indexVal"]=i+1;
+          x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
+          x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
+          x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
+          x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`; 
           this.summaryTableArray.push(x);
         })
 

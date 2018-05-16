@@ -57,7 +57,31 @@
           </td>
 
           <!-- <td><span v-html="props.item.htmlData"></span></td> -->
-          <td>{{ props.item.name }}</td>
+          <td>
+            <div id="app">
+              <div>
+                <v-menu open-on-hover top offset-y>
+                  <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                    <div >
+                      <v-card>
+                        <v-card-title>
+                            <div style="width:600px"><strong>Resources: </strong></div>
+                        </v-card-title>
+                        <v-card-text style="margin-top:-25px">
+                          <ul style="margin-left:25px; margin-top:5px">
+                            <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                            <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                            <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                            <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                          </ul>
+                        </v-card-text>
+                      </v-card>
+                    </div>
+                </v-menu>
+              </div>
+            </div>
+            <!-- {{ props.item.name }} -->
+          </td>
           <!-- <td>
               <span v-if="props.item.sources==='gtrPheno'">
                 <v-progress-circular
@@ -134,7 +158,7 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
-        { text: 'Phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno'] },
+        { text: 'Phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
         // {
         //   text: '',
         //   align: 'left',
