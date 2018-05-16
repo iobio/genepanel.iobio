@@ -408,6 +408,10 @@ mergeGenesAcrossPanels(genePanels) {
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
+              omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
+              medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
+              geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
+              ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`, 
 //            <stop offset="5%"  stop-color="#36D1DC"/>
 //            <stop offset="95%" stop-color="#5B86E5"/>
               htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">

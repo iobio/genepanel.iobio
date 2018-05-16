@@ -172,7 +172,17 @@
                         <v-card-title>
                             <div><strong>Conditions: </strong></div>
                         </v-card-title>
-                        <v-card-text style="margin-top:-25px">{{props.item.conditions}}</v-card-text>
+                        <v-card-text style="margin-top:-25px">
+                          {{props.item.conditions}}
+                          <hr>
+                          <div><strong>Resources: </strong></div>
+                          <ul style="margin-left:25px; margin-top:5px">
+                            <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                            <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                            <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                            <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                          </ul>
+                        </v-card-text>
                       </v-card>
                   </v-menu>
                 </div>
@@ -292,7 +302,7 @@ var model = new Model();
           //  },
           {
             text: '',
-            value: ['haploScore', 'value'],
+            value: ['haploScore', 'value', 'omimSrc'],
             width: '10%',
             class: 'headerWidth',
             visibility: 'hidden-lg-only'
