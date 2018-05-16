@@ -169,10 +169,10 @@
                   <v-menu open-on-hover top offset-y>
                     <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
                       <v-card>
-                        <v-card-title>
-                            <div><strong>Conditions: </strong></div>
-                        </v-card-title>
-                        <v-card-text style="margin-top:-25px">
+                        <v-card-text style="margin-top:-22px">
+                          <center ><h3>{{ props.item.name }}</h3></center>
+                          <hr>
+                          <div style="width:600px"><strong>Conditions: </strong></div>
                           {{props.item.conditions}}
                           <hr>
                           <div><strong>Resources: </strong></div>

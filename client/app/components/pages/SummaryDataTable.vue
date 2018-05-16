@@ -64,10 +64,10 @@
                   <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
                     <div >
                       <v-card>
-                        <v-card-title>
-                            <div style="width:600px"><strong>Resources: </strong></div>
-                        </v-card-title>
                         <v-card-text style="margin-top:-25px">
+                          <center ><h3>{{ props.item.name }}</h3></center>
+                          <hr>
+                          <div style="width:600px"><strong>Resources: </strong></div>
                           <ul style="margin-left:25px; margin-top:5px">
                             <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
                             <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
