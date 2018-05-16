@@ -54,7 +54,7 @@
 
 
                     <v-flex d-flex xs12 >
-                      <v-card v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length">
+                      <v-card >
                         <v-card-title primary class="title" style="padding-bottom:">
                            <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
                               <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
