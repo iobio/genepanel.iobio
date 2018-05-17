@@ -54,6 +54,13 @@
           <div slot="header"><v-icon class="filter-icon">local_pharmacy</v-icon>&nbsp; &nbsp;Disorders</div>
           <v-card>
             <v-card-text>
+              <br>
+              <PieChartSelectorBackup
+                v-if="modeOfInheritanceList.length > 1"
+                v-bind:modeOfInheritanceData="modeOfInheritanceList"
+                :color="chartColor">
+              </PieChartSelectorBackup>
+              <br>
                 <v-btn small v-on:click="SelectAllDisorders" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
                 <v-btn small v-on:click="deSelectAllDisorders" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
                 <v-card flat v-if="disordersData.length">
@@ -152,8 +159,13 @@
 
 <script>
 import { bus } from '../../routes';
+import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
+
 
   export default {
+    components:{
+      'PieChartSelectorBackup': PieChartSelectorBackup,
+    },
     // props: ['vendorsData'],
     props: {
       vendorsData: {
@@ -161,7 +173,11 @@ import { bus } from '../../routes';
       },
       disordersData: {
         type: Array
-      }
+      },
+      modeOfInheritanceProps: {
+        type:Array
+      },
+      chartColor: null,
     },
     data() {
       return {
@@ -183,7 +199,8 @@ import { bus } from '../../routes';
         NumberOfConditions:10,
         panelCounts: [2, 5, 10, 20],
         NumberOfGenePanelsDropDown: [25, 50],
-        NumberOfConditionsDropDown: [5, 10, 15, 20]
+        NumberOfConditionsDropDown: [5, 10, 15, 20],
+        modeOfInheritanceList: [],
       }
     },
     watch:{
@@ -202,6 +219,9 @@ import { bus } from '../../routes';
         if(this.disordersData.length===0){
           this.selectDisorders = [];
         }
+      },
+      modeOfInheritanceProps: function(){
+        this.modeOfInheritanceList = this.modeOfInheritanceProps;
       }
     },
     updated(){
