@@ -108,13 +108,6 @@ import { bus } from '../../routes';
                     .ticks(10)
                     .orient("bottom");
 
-
-        // var canvas = d3.select("#conditions-distribution-chart").append("svg")
-        //                     .attr("height", height + margin.top + margin.bottom)
-        //                     .attr("width", width + margin.right + margin.left)
-        //                     .append("g")
-        //                       .attr('transform', 'translate('+margin.left+','+margin.top+')')
-
         var ht = height + margin.top + margin.bottom;
         var wdth = width + margin.right + margin.left
         var canvas = d3.select("#conditions-distribution-chart").append("svg")
@@ -189,7 +182,6 @@ import { bus } from '../../routes';
                         canvas.selectAll("rect").classed("bar1", function(d,id) {
                               return(d.x >= e[0] && d.x <= e[1] ?  false: true )
                           });
-                        // onSelected(e);
                       }
 
 
@@ -199,22 +191,6 @@ import { bus } from '../../routes';
                         .selectAll("rect") //select all the just-created rectangles
                         .attr("y", 0)
                         .attr("height", (height + margin.top - 20)) //set their height
-
-
-// canvas.selectAll(".resize").append("path");
-
-
-                  // bars.append("text")
-                  //   .attr("x", function(d){return x(d.x)-3.5})
-                  //   .attr("y", function(d){return y(d.y)-25})
-                  //   .attr("dy", "20px")
-                  //   .attr("dx", function(d){
-                  //     return x(d.dx)/2;
-                  //   })
-                  //   .attr("fill", "black")
-                  //   .text(function(d){ if(d.y!==0){
-                  //     return d.y;
-                  //   } })
 
       }
     },

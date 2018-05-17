@@ -230,8 +230,6 @@
                                 </td>
                                 <td ><span v-html="props.item.htmlData"></span></td>
                                 <!-- <td>{{ props.item.sources}}</td> -->
-
-
                                 <td style="font-size:0px;">{{ props.item.score }}</td>
                               </tr>
                             </template>
@@ -261,14 +259,12 @@
 import { bus } from '../../routes';
 
 import { Typeahead, Btn } from 'uiv';
-import NavigationBar from './NavigationBar.vue';
 import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 
   export default {
     components: {
-      'NavigationBar': NavigationBar,
       'PhenolyzerPieChart': PhenolyzerPieChart,
       Typeahead
     },
@@ -297,11 +293,6 @@ var geneModel = new GeneModel();
         search: '',
         selected: [],
         headers: [
-          // {
-          //   text: 'Rank',
-          //   align: 'left',
-          //   value: 'rank'
-          // },
           {
             text: 'Rank',
             align: 'left',
@@ -569,9 +560,6 @@ var geneModel = new GeneModel();
                 }
               }
               else {
-                // console.log("obj[uniqueGenes[i]].sources + 1 is ", obj[uniqueGenes[i]].sources + 1)
-                // console.log("arr[j].score",typeof Number(arr[j].score));
-                // console.log("obj[uniqueGenes[i]].total",typeof obj[uniqueGenes[i]].total)
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),

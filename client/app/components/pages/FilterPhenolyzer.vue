@@ -20,16 +20,12 @@
              &nbsp; Genes
           </div>
             <v-card-text>
-
               <v-btn small v-on:click="SelectAllGenes" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
               <v-btn small v-on:click="deSelectAllGenes" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
               <br>
-
             </v-card-text>
         </v-expansion-panel-content>
       </v-expansion-panel>
-
-
   </div>
 </template>
 

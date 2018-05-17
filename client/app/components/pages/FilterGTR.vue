@@ -24,13 +24,6 @@
               <v-btn small v-on:click="SelectAllGenes" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
               <v-btn small v-on:click="deSelectAllGenes" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
               <br>
-              <!-- <v-btn small v-on:click="SelectAllGenes">Select All</v-btn>
-              <v-btn small v-on:click="deSelectAllGenes">Deselect All</v-btn>
-              <br><br>
-              <span>
-              Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
-              &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
-              </span> -->
               <span id="genes-top-input" style="display:inline-block;max-width:170px;width:170px;margin-left:25px;padding-top:4px">
                 <v-select
                 v-model="GenesInPanels"
@@ -55,10 +48,6 @@
                     </v-card>
                 </v-menu>
               </span>
-              <!-- <span>
-              Select genes in at least &nbsp; <input v-on:focusout="selectGenesInPanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="GenesInPanels"> panels
-              &nbsp;<a><v-icon v-on:click="selectGenesInPanels">navigate_next</v-icon></a>
-              </span> -->
             </v-card-text>
         </v-expansion-panel-content>
         <v-expansion-panel-content>
@@ -87,13 +76,6 @@
           <div slot="header"><v-icon class="filter-icon">view_list</v-icon>&nbsp; &nbsp;Panels</div>
           <v-card>
             <v-card-text>
-              <!-- <span>
-              Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfGenePanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfGenePanels"> genes
-              &nbsp;<a><v-icon v-on:click="selectNumberOfGenePanels">navigate_next</v-icon></a>
-              </span>
-              <br><br> -->
-
-
               <br>
               <span style="display:inline-block;max-width:170px;width:170px;margin-left:25px;padding-top:4px">
                 <v-select
@@ -164,73 +146,6 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
 
-    <!-- <h4>Genes</h4>
-
-    <v-btn small v-on:click="SelectAllGenes">Select All</v-btn>
-    <v-btn small v-on:click="deSelectAllGenes">Deselect All</v-btn>
-    <br><br>
-    <span>
-    Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
-    &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
-    </span>
-    <br>
-    <span>
-    Select genes in at least &nbsp; <input v-on:focusout="selectGenesInPanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="GenesInPanels"> panels
-    &nbsp;<a><v-icon v-on:click="selectGenesInPanels">navigate_next</v-icon></a>
-    </span>
-
-
-    <br><hr>
-
-    <h4>Disorders</h4>
-    <v-btn small v-on:click="SelectAllDisorders">Select All</v-btn>
-    <v-btn small v-on:click="deSelectAllDisorders">Deselect All</v-btn>
-      <br>
-
-      <v-card flat v-if="disordersData.length">
-        <v-card-text>
-            <v-layout>
-                <v-select
-                  v-model="selectDisorders"
-                  label="Select Disorders"
-                  chips
-                  tags
-                  :items="multiSelectDisorder"
-                ></v-select>
-            </v-layout>
-        </v-card-text>
-      </v-card>
-
-    <br><hr>
-    <h4>Panels </h4>
-    <span>
-    Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfGenePanels" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfGenePanels"> genes
-    &nbsp;<a><v-icon v-on:click="selectNumberOfGenePanels">navigate_next</v-icon></a>
-    </span>
-    <br><br>
-    <span>
-    Select Panels with less than &nbsp; <input v-on:focusout="selectNumberOfConditions" type="number" style="width:15%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfConditions"> conditions
-    &nbsp;<a><v-icon v-on:click="selectNumberOfConditions">navigate_next</v-icon></a>
-  </span>
-
-    <br>
-
-    <v-card flat v-if="vendorsData.length">
-      <v-card-text>
-          <v-layout>
-              <v-select
-                v-model="select"
-                label="Select Vendors"
-                chips
-                tags
-                :items="multiSelectItems"
-              ></v-select>
-          </v-layout>
-      </v-card-text>
-    </v-card>
-    <v-btn v-show="select.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
- -->
-
   </div>
 </template>
 
@@ -300,16 +215,6 @@ import { bus } from '../../routes';
 
     },
     methods: {
-      // querySelections (v) { //for multi select
-      //   this.loading = true
-      //   // Simulated ajax query
-      //   setTimeout(() => {
-      //     this.multiSelectItems = this.vendorList.filter(e => {
-      //       return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
-      //     })
-      //     this.loading = false
-      //   }, 500)
-      // },
       deSelectAllDisorders: function(){
         bus.$emit('deSelectAllDisordersBus');
         this.alert = true;
@@ -408,4 +313,3 @@ import { bus } from '../../routes';
     width: 5px
   }
 </style>
-

@@ -130,11 +130,9 @@ var model = new Model();
 
 // var tempArr = [];
 
-// import ShowGenePanel from './ShowGenePanel.vue';
 
   export default {
     // components: {
-    //   'show-gene-panel': ShowGenePanel
     // },
     // props: ['DiseasePanelData'],
     props: {

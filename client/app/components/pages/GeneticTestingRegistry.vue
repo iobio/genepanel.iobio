@@ -1,41 +1,9 @@
 <template>
   <div>
-    <!-- <datatableExample></datatableExample> -->
-    <!-- <multiSelectExample></multiSelectExample> -->
-    <!-- <d3Example></d3Example> -->
-
     <div id="app">
       <v-app id="inspire">
         <v-container fluid grid-list-md>
-
-          <!-- <v-layout row justify-center>
-          <v-flex xs12 sm12 md12 lg12 margin-top:4px>
-            <v-card >
-              <v-card-text>
-                <app-gtr
-                  v-on:showDiseases="addDiseases($event)">
-                </app-gtr>
-              </v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout> -->
-
           <v-layout row wrap style="margin-top:-5px;">
-            <!-- <v-flex d-flex xs12 sm12 md3 lg3>
-              <v-card >
-                <v-card-title primary class="title">Filters</v-card-title>
-                <v-card-text>
-                  <FilterPanel
-                    v-bind:vendorsData="vendorList"
-                    v-bind:disordersData="disorderNamesList"
-                    v-on:setSelectedVendors="updateSelectedVendors($event)"
-                    v-on:setSelectedDisorders="updateSelectedDisorders($event)">
-                  </FilterPanel>
-                </v-card-text>
-              </v-card>
-            </v-flex> -->
-
-
                     <v-flex d-flex xs12>
                       <v-card>
                         <v-card-text style="margin-bottom:-5px">
@@ -43,10 +11,10 @@
                           <div class="mb-1">
                             The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                           </div>
-                          <app-gtr
+                          <DisorderSearch
                             v-on:showDiseases="addDiseases($event)"
                             @search-gtr="onSearchGTR">
-                          </app-gtr>
+                          </DisorderSearch>
                         </v-card-text>
                       </v-card>
                     </v-flex>
@@ -59,18 +27,7 @@
                            <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
                               <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
                            </span>
-
                         </v-card-title>
-
-                        <!-- <span v-if="selectedGenesText.length>1"><strong><center>{{ selectedGenesText }}</center></strong></span> -->
-                        <!-- <span>
-                          <strong>
-                            <center>
-                              Select top &nbsp; <input v-on:focusout="selectNumberOfTopGenes" type="number" style="width:5%; padding: 5px ;border: 1px solid #c6c6c6 ;" v-model="NumberOfTopGenes"> genes
-                              &nbsp;<a><v-icon v-on:click="selectNumberOfTopGenes">navigate_next</v-icon></a>
-                            </center>
-                          </strong>
-                          </span> -->
 
                           <v-layout row wrap>
                            <v-flex xs4 class="pr-4 pl-5" >
@@ -98,11 +55,9 @@
                                   :color="barColor">
                               </ConditionsDistribution>
                             </div>
-
                            </v-flex>
 
                            <v-flex  xs8 style="margin-top:-70px">
-
                               <show-gene-panel1
                               v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
                                 v-bind:GeneData="geneProps"
@@ -112,31 +67,7 @@
                                 v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
                               </show-gene-panel1>
                            </v-flex>
-
                           </v-layout>
-
-                          <!-- <v-layout row wrap>
-                            <v-flex d-flex xs12 sm6 md6>
-                              <v-card >
-                                <v-card-title primary class="title">Gene distribution across panels</v-card-title>
-                                <GenePanelDistribution
-                                    v-if="geneProps.length && diseasesProps.length"
-                                    v-bind:distributionData="geneProps">
-                                </GenePanelDistribution>
-                              </v-card>
-                            </v-flex>
-                            <v-flex d-flex xs12 sm6 md6>
-                              <v-card >
-                                <v-card-title primary class="title">Conditions distribution across panels</v-card-title>
-                                <ConditionsDistribution
-                                    v-if="geneProps.length && diseasesProps.length"
-                                    v-bind:distributionData="geneProps">
-                                </ConditionsDistribution>
-                              </v-card>
-                            </v-flex>
-
-                          </v-layout> -->
-
                       </v-card>
                     </v-flex>
 
@@ -171,12 +102,6 @@
                         </v-card-text>
                       </v-card>
                     </v-flex>
-
-
-
-
-
-
           </v-layout>
         </v-container>
       </v-app>
@@ -186,38 +111,22 @@
 </template>
 
 <script>
-import Gtr from './Gtr.vue';
+import DisorderSearch from './DisorderSearch.vue';
 import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
-import ShowGenePanel from './ShowGenePanel.vue';
 import ShowGenePanel1 from './ShowGenePanel1.vue';
-import typeaheadExample from './typeahead-example.vue';
-import datatableExample from './datatable-example.vue';
-import multiSelectExample from './MultiSelectExample.vue';
-import FilterPanel from './FilterPanel.vue';
-import NavigationBar from './NavigationBar.vue';
-import d3Example from './d3Example.vue';
 import { bus } from '../../routes';
 import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
-import GenePanelDistribution from './GenePanelDistribution.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
-import GeneMembership from './GeneMembership.vue'
+import GeneMembership from '../viz/GeneMembership.vue'
 
 export default {
   components: { //Registering locally for nesting!
-    'app-gtr': Gtr,
+    'DisorderSearch': DisorderSearch,
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
     'show-gene-panel1': ShowGenePanel1,
-    'show-gene-panel': ShowGenePanel,
-    'typeaheadExample':typeaheadExample,
-    'datatableExample':datatableExample,
-    'multiSelectExample':multiSelectExample,
-    'd3Example':d3Example,
-    'FilterPanel':FilterPanel,
-    'NavigationBar': NavigationBar,
     'PieChartSelectorBackup': PieChartSelectorBackup,
-    'GenePanelDistribution': GenePanelDistribution,
     'ConditionsDistribution': ConditionsDistribution,
     'GeneMembership': GeneMembership
   },

@@ -4,11 +4,6 @@
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart1"></svg>
     </div>
-
-
-    <!-- <v-app id="inspire"> -->
-
-    <!-- </v-app> -->
   </div>
 </template>
 
@@ -17,10 +12,6 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
-// import PieChartSelector from './PieChartSelector.vue'
-// import GeneDistribution from './GeneDistribution.vue';
-// import GenePanelDistribution from './GenePanelDistribution.vue';
-// import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import Model from '../../models/Model';
 import HistogramChart from '../../d3/HistogramChart';
 
@@ -28,10 +19,6 @@ var model = new Model();
 
   export default {
     components: {
-      // 'PieChartSelector': PieChartSelector,
-      // 'GeneDistribution': GeneDistribution,
-      // 'GenePanelDistribution': GenePanelDistribution,
-      // 'ConditionsDistribution': ConditionsDistribution
     },
     //props: ['GeneData'],
     props: {
@@ -63,14 +50,10 @@ var model = new Model();
       }
     },
     mounted(){
-      // alert("modeOfInheritance length " + this.modeOfInheritanceData.length)
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.CountBrushSelection = 0;
       this.draw();
       this.AddGeneData();
-      // this.drawSimpleViz();
-
-
     },
     updated(){
 
@@ -110,19 +93,6 @@ var model = new Model();
           bus.$emit("updateFromGenesHistogram", data, this.CountBrushSelection)
         }
 
-        //Drawing horizontal bar chart
-        // console.log("bar chart before mounting", this.geneBarChart)
-        // this.geneBarChart = HorizontalBarChart()
-        //     .width(650)
-        //     .height(1000)
-        //     .widthSmall(80)
-        //     // .on("barselect", function(selectedGeneNames){
-        //     //   console.log("bars selected ", selectedGeneNames);
-        //     //   addSelectedGeneFunction(selectedGeneNames);
-        //     // })
-        //  var addSelectedGeneFunction=(selectedGeneNames)=>{
-        //   this.addSelectedGenesFromD3(selectedGeneNames);
-        // }
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;

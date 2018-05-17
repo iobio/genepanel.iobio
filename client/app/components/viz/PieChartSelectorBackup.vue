@@ -36,20 +36,6 @@ import { bus } from '../../routes';
           height = 260,
           radius = Math.min(width, height) / 2;
 
-      //   var color = d3.scale.ordinal()
-      //     .range([
-			// 	"#2484c1", "#65a620", "#7b6888", "#a05d56", "#961a1a", "#d8d23a", "#e98125", "#d0743c", "#635222", "#6ada6a",
-			// 	"#0c6197", "#7d9058", "#207f33", "#44b9b0", "#bca44a", "#e4a14b", "#a3acb2", "#8cc3e9", "#69a6f9", "#5b388f",
-			// 	"#546e91", "#8bde95", "#d2ab58", "#273c71", "#98bf6e", "#4daa4b", "#98abc5", "#cc1010", "#31383b", "#006391",
-			// 	"#c2643f", "#b0a474", "#a5a39c", "#a9c2bc", "#22af8c", "#7fcecf", "#987ac6", "#3d3b87", "#b77b1c", "#c9c2b6",
-			// 	"#807ece", "#8db27c", "#be66a2", "#9ed3c6", "#00644b", "#005064", "#77979f", "#77e079", "#9c73ab", "#1f79a7"
-			// ]); //["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]
-
-//      var color = d3.scale.ordinal()
-//        .range([
-//       "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
-//    ]);
-
         var arcOver = d3.svg.arc()
           .outerRadius(radius - 30)
           .innerRadius(radius - height/2);
@@ -61,12 +47,6 @@ import { bus } from '../../routes';
           .value(function(d) {
             return d._geneCount;
           });
-
-          // var svg = d3.select("#pie-chart-box2").append("svg")
-          //   .attr("width", width)
-          //   .attr("height", height)
-          //   .append("g")
-          //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
           var svg = d3.select("#pie-chart-box2").append("svg")
             .attr("height", heightPercent)
@@ -291,21 +271,6 @@ import { bus } from '../../routes';
                     return d.data._modeOfInheritance;
                   })
 
-
-
-          // g.append("text")
-          //   .attr("transform", function(d) {
-          //     var _d = arc.centroid(d);
-          //       _d[0] *= 1.6;	//multiply by a constant factor
-          //       _d[1] *= 1.7;	//multiply by a constant factor
-          //       return "translate(" + _d + ")";
-          //   })
-          //   .attr("dy", ".70em")
-          //   .style("text-anchor", "middle")
-          //   .text(function(d) {
-          //     return d.data._modeOfInheritance;
-          //   })
-
           var pieChartSomething =(modeOfInheritance, selection)=>{
             this.updateFromPieChart(modeOfInheritance, selection)
           }
@@ -318,7 +283,6 @@ import { bus } from '../../routes';
     mounted(){
       this.modesOfInheritance = this.modeOfInheritanceData
       this.draw(this.modesOfInheritance)
-      // console.log(" modeOfInheritanceData from PieChartSelector ", this.modeOfInheritanceData)
     },
     updated(){
 

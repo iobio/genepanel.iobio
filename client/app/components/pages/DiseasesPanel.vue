@@ -1,29 +1,5 @@
 <template>
   <div>
-    <!-- Hello from DiseasesPanel! -->
-    <!-- <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn> -->
-
-    <!-- <ul>
-      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
-    </ul> -->
-    <!-- <v-app id="inspire"> -->
-      <!-- <v-card-title>
-        Disease Table -->
-        <!-- <btn v-on:click.prevent="selectAllDisorders">Select All</btn> -->
-        <!-- <btn v-on:click.prevent="deSelectAllDisorders">De Select All</btn> -->
-        <!-- <v-spacer></v-spacer>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-        ></v-text-field>
-      </v-card-title> -->
-      <!-- <ul>
-        <li v-for="item in items "> {{item._modeOfInheritance}}
-        </li>
-      </ul> -->
       <div id="pie-chart-box"></div>
       <v-data-table
           v-model="selected"
@@ -65,7 +41,6 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td></td> -->
             <td>{{ props.item.Title }}</td>
             <td>{{ props.item._omim }}</td>
             <td>{{ props.item._modeOfInheritance }}</td>
@@ -79,14 +54,8 @@
         </td>
       </template>
       </v-data-table>
-    <!-- </v-app> -->
-
     <br>
     <br>
-
-    <!-- {{ selected.Title }} -->
-
-
   </div>
 </template>
 
@@ -260,23 +229,6 @@ var model = new Model();
                 return color(d.data._modeOfInheritance);
               });
 
-              // path.on("mouseenter", function (d) {
-              //   d3.select(this)
-              //       // .attr("stroke", "black")
-              //       .transition()
-              //       .duration(200)
-              //       .attr("d", arcOver)
-              //       // .attr("stroke-width", 1);
-              //   })
-              //
-              //   path.on("mouseleave", function (d) {
-              //     d3.select(this).transition()
-              //          .duration(200)
-              //          .attr("d", arc)
-              //          // .attr("stroke", "black")
-              //          // .attr("stroke-width", 1);
-              //        })
-
                 path.on("click", function(d){
                   if(d.data.selected){
                     d3.select(this)
@@ -300,8 +252,6 @@ var model = new Model();
                          pieChartSomething(d.data._modeOfInheritance, d.data.selected)
 
                   }
-                  // d.data.selected = !d.data.selected
-                  // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
                 })
 
             g.append("text")
@@ -333,8 +283,6 @@ var model = new Model();
                        pieChartSomething(d.data._modeOfInheritance, d.data.selected)
 
                 }
-                // d.data.selected = !d.data.selected
-                // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
               })
             var pieChartSomething =(modeOfInheritance, selection)=>{
               this.updateFromPieChart(modeOfInheritance, selection)
@@ -345,21 +293,11 @@ var model = new Model();
           bus.$emit("PieChartSelectorData");
         },
         updateFromPieChart(modeOfInheritance, selection){
-          console.log("selection is ", selection)
-          // if (selection) {
-          //   alert(modeOfInheritance+ " is selected ")
-          // }
-          // else {
-          //   alert(modeOfInheritance+ " is deselected")
-          // }
-          console.log("this tempItems from updateFromPieChart", this.tempItems)
           if(modeOfInheritance === "Not provided"){
             modeOfInheritance="";
           }
           var tempArr = [];
           var splitHelperArr = [];
-          // this.items = this.tempItems;
-
           if(!selection){
             for(var i=0; i<this.items.length; i++){
 
@@ -439,7 +377,4 @@ var model = new Model();
 </script>
 
 <style scoped>
- /* #inspire {
-   height: 500px;
- } */
 </style>

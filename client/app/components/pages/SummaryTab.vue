@@ -1,11 +1,5 @@
 <template>
   <div>
-
-
-
-      <!-- <strong>Number of GTR Genes selected: {{ GtrGenesCount }}</strong>
-      <br>
-      <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong> -->
     <div id="app">
       <v-app id="inspire">
         <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1" style="margin:10px">
@@ -14,16 +8,13 @@
                 <v-flex d-flex xs3 v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                       <!-- put the pie chart component here  -->
                       <SummaryPieChart
-
                         v-bind:summaryPieChartData="pieChartdataArr"
                         :color="chartColor">
                       </SummaryPieChart>
                 </v-flex>
                 <v-flex d-flex v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-layout row wrap>
-
                         <v-flex d-flex xs12>
-
                               <SummaryDataTable
                                   v-bind:summaryTableData="summaryTableArray">
                                 </SummaryDataTable>
@@ -144,10 +135,6 @@ import FilterSummary from './FilterSummary.vue'
             name: "GTR and Phenolyzer",
             count: this.commonGtrPhenoGenes.length
           },
-          // {
-          //   name: "Unique Genes",
-          //   count: this.uniqueGenes.length
-          // }
         ]
       },
       setSummaryTableData(){
@@ -212,7 +199,7 @@ import FilterSummary from './FilterSummary.vue'
           x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
           x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
           x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
-          x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`; 
+          x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
           this.summaryTableArray.push(x);
         })
 

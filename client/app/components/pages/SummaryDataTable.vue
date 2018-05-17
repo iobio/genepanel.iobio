@@ -80,40 +80,7 @@
                 </v-menu>
               </div>
             </div>
-            <!-- {{ props.item.name }} -->
           </td>
-          <!-- <td>
-              <span v-if="props.item.sources==='gtrPheno'">
-                <v-progress-circular
-                  :size="25"
-                  :width="5"
-                  :rotate="360"
-                  :value="100"
-                  color="light-blue darken-1"
-                >
-                </v-progress-circular>
-              </span>
-              <span v-else-if="props.item.sources==='gtr'">
-                <v-progress-circular
-                  :size="25"
-                  :width="5"
-                  :rotate="90"
-                  :value="50"
-                  color="light-blue darken-1"
-                >
-                </v-progress-circular>
-              </span>
-              <span v-else-if="props.item.sources==='pheno'">
-                <v-progress-circular
-                  :size="25"
-                  :width="5"
-                  :rotate="-90"
-                  :value="50"
-                  color="light-blue darken-1"
-                >
-                </v-progress-circular>
-              </span>
-          </td> -->
           <td>
             <span v-if="props.item.isGtr"><v-icon >check_circle</v-icon></span>
             <span v-else></span>
@@ -122,10 +89,6 @@
             <span v-if="props.item.isPheno"><v-icon >check_circle</v-icon></span>
             <span v-else></span>
           </td>
-          <!-- <td style="font-size:0px;">{{ props.item.indexVal }}</td> -->
-
-          <!-- <td>{{ props.item._conditionNames }}</td> -->
-          <!-- <td>{{ props.item._geneCount }}</td> -->
         </tr>
       </template>
       <template slot="footer">
@@ -159,12 +122,6 @@ import { bus } from '../../routes';
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
-        // {
-        //   text: '',
-        //   align: 'left',
-        //   value: 'name'
-        // }
-
       ],
       items: [],
       tableData:[],

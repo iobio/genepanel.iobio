@@ -1,21 +1,13 @@
 <template>
   <div style="">
-    <!-- <h1>GTR!</h1> -->
-    <!-- <input type="text" v-model="search" placeholder="Search term" /> -->
     <span style="padding-right:4px">Disorder</span>
       <div style="display:inline-block; padding-top:5px;">
-        <!-- <label>Disorders :</label> -->
-        <!-- <form v-on:keyup.prevent="submitOnEnter"> -->
-        <!-- v-on:keyup.prevent="submitOnEnter" -->
-        <!-- <form v-on:submit.prevent="submitOnEnter"> -->
         <input
           id="input"
           class="form-control"
           type="text"
           autocomplete="off"
           placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
-        <!-- </form> -->
-        <!-- </form> -->
         <typeahead
           match-start
           v-model="search"
@@ -33,30 +25,12 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
-    <!-- <img style="display:hidden" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" height="70px" width="70px"> -->
     <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
         Sorry, the following search term returns no data!
       </v-alert>
     </p>
-    <!-- <hr> -->
-    <!-- <ul>
-      <li v-for="d in diseaseData">{{ d.Title }}</li>
-    </ul> -->
-
-    <!-- <v-form >
-          <v-text-field id="search-gene-name1" label="Conditions">
-          </v-text-field>
-          <typeahead v-model="selectedCondition" force-select match-start  target="#search-gene-name" :data="conditionsData" item-key="DiseaseName"/>
-    </v-form>
-
-    <v-form >
-          <v-text-field id="search-gene-name" label="Gene">
-          </v-text-field>
-          <typeahead v-model="selectedGene" force-select match-start  target="#search-gene-name" :data="allGenes" item-key="gene_name"/>
-    </v-form> -->
-
   </div>
 </template>
 
@@ -93,15 +67,6 @@ var model = new Model();
         alert:false
       }
     },
-    // watch: {
-    //   selectedCondition: function(a, b) {
-    //     if (this.selectedCondition) {
-    //       console.log("this.selectedCondition", this.selectedCondition.DiseaseName);
-    //       this.search = this.selectedCondition.DiseaseName;
-    //       //this.performSearch();
-    //     }
-    //   }
-    // },
     watch: {
       search: function() {
         if (this.search && this.search.DiseaseName) {
@@ -152,23 +117,11 @@ var model = new Model();
           var promises = [];
           var filteredDiseases;
 
-          console.log("diseasesss : ", diseases);
-          // this.DiseaseDataArray = ["abcd"];
-          // console.log("this.DiseaseDataArray", this.DiseaseDataArray)
-
-
           data.diseases.forEach(function (disease){
-             //console.log("disease: ", disease)
-
             var p = model.promiseGetGenePanels(disease)
             .then(function (data){
-              // console.log("data from promiseGetGenePanels ", data);
-              //console.log("data.genePanels " , data )
-
               var filteredGenePanels = model.processGenePanelData(data.genePanels);
               data.disease.genePanels = filteredGenePanels;
-
-
             },
             function(error) {
 
@@ -183,8 +136,6 @@ var model = new Model();
              console.log("filteredDiseases",filteredDiseases)
 
             addFilteredDiseases(filteredDiseases);
-
-           // this.$emit('showDiseases', filteredDiseases)
           })
 
         })
@@ -198,9 +149,6 @@ var model = new Model();
           }
           this.checked=false;
           this.$emit('showDiseases', filteredDiseases)
-         //this.diseaseData = filteredDiseases;
-        //this.filteredDiseasesForProps(filteredDiseases)
-
         }
 
       },
@@ -208,29 +156,7 @@ var model = new Model();
         alert("you are in method A")
       },
       methodB(filteredDiseases){
-        console.log(filteredDiseases)
-        alert("I am in method B!");
-        //this.diseaseData = filteredDiseases
       },
-      // filteredDiseasesForProps(filteredDiseases){
-      //   var arr =[];
-      //   console.log(filteredDiseases);
-      //   for(var i=0; i<filteredDiseases.length; i++){
-      //     //console.log("ConceptId ", filteredDiseases[i].ConceptId)
-      //     arr.push({
-      //       ConceptId: filteredDiseases[i].ConceptId,
-      //       Title: filteredDiseases[i].Title,
-      //       _geneCount: filteredDiseases[i]._geneCount,
-      //       _genePanelCount: filteredDiseases[i]._genePanelCount,
-      //       _modeOfInheritance: filteredDiseases[i]._modeOfInheritance,
-      //       _omim: filteredDiseases[i]._omim,
-      //       genePanels: filteredDiseases[i].genePanels
-      //     })
-      //   }
-      //   console.log(arr);
-      // //  this.diseaseData = arr;
-      // //  this.$emit('showDiseases', arr)
-      // }
     }
   }
 </script>

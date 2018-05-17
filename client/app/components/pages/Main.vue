@@ -33,12 +33,9 @@
           <v-icon>close</v-icon>
         </v-btn>
     <v-list dense>
-        <!-- <v-card >
-          <v-card-title primary class="title">Filters</v-card-title>
-          <v-card-text> -->
             <keep-alive>
               <FilterGTR
-                v-if="component==='Home'"
+                v-if="component==='GeneticTestingRegistry'"
                 v-bind:vendorsData="vendorList"
                 v-on:setSelectedVendors="updateSelectedVendors($event)"
                 v-bind:disordersData="disorderList"
@@ -51,8 +48,6 @@
                 v-else-if="component='SummaryTab'">
               </FilterSummary>
             </keep-alive>
-          <!-- </v-card-text>
-        </v-card> -->
     </v-list>
     </v-navigation-drawer>
     <v-toolbar
@@ -65,13 +60,6 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span >panel.iobio</span>
       </v-toolbar-title>
-      <!-- <v-text-field
-        flat
-        solo-inverted
-        prepend-icon="search"
-        label="Search"
-        class="hidden-sm-and-down"
-      ></v-text-field> -->
       <v-spacer></v-spacer>
 
       <v-btn flat @click="drawer = !drawer">
@@ -84,7 +72,7 @@
           ><v-icon style="padding-right:4px">input</v-icon>
           Export</v-btn>
           <v-list>
-            <div v-if="component==='Home'">
+            <div v-if="component==='GeneticTestingRegistry'">
               <v-list-tile @click="copyGtrGenes">
                 <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
               </v-list-tile>
@@ -140,14 +128,7 @@
               </v-list-tile>
             </v-list>
         </v-menu>
-
-
-
-
     </v-toolbar>
-
-
-
     <v-content style="">
 
     <div  >
@@ -155,7 +136,7 @@
         light tabs
         grow
       >
-          <v-tab v-on:click="component='Home'">
+          <v-tab v-on:click="component='GeneticTestingRegistry'">
           <div class="text-xs-center">
             <v-badge color="cyan" right style="background-color:white !important; font-size:18px">
               <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
@@ -182,30 +163,11 @@
         </v-tab>
       </v-tabs>
     </div>
-
-
-      <!--
-      <v-tab v-on:click="component='HomePage'" >
-        <div class="text-xs-center">
-        <v-badge left style="background-color:#fff0; font-size:18px">
-          <span class="tabTitle"><strong>Home</strong></span>
-        </v-badge>
-      </div>
-      </v-tab>
-    -->
-
-
-        <!-- <v-tabs-items>
-          <keep-alive>
-            <component v-bind:is="component"></component>
-          </keep-alive>
-        </v-tabs-items> -->
-
         <v-tabs-items class="tab-content" >
           <keep-alive>
 
-            <Home
-              v-if="component==='Home'"
+            <GeneticTestingRegistry
+              v-if="component==='GeneticTestingRegistry'"
               v-on:vendorListCB="updateVendors($event)"
               v-bind:selectedVendorsListCB="selectedVendorsList"
               v-on:diseasesCB=addDiseases($event)
@@ -216,7 +178,7 @@
               :chartColor="ordinalColor"
               :barColor="barColor"
               @search-gtr="onSearchGTR">
-            </Home>
+            </GeneticTestingRegistry>
           <!--
             <HomePage v-else-if="component==='HomePage'"></HomePage>
           -->
@@ -278,33 +240,31 @@
 
 <script>
 import { bus } from '../../routes';
-import Home from './Home.vue';
+import GeneticTestingRegistry from './GeneticTestingRegistry.vue';
 import Phenolyzer from './Phenolyzer.vue';
-import NavigationBar from './NavigationBar.vue';
-import HomePage from './HomePage.vue';
+// import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
 import FilterGTR from './FilterGTR.vue';
 import FilterPhenolyzer from './FilterPhenolyzer.vue';
 import FilterSummary from './FilterSummary.vue';
 var FileSaver = require('file-saver');
-import Gtr from './Gtr.vue';
+import DisorderSearch from './DisorderSearch.vue';
 
 
   export default {
     components: {
-      'Home': Home,
+      'GeneticTestingRegistry': GeneticTestingRegistry,
       'Phenolyzer': Phenolyzer,
-      'NavigationBar': NavigationBar,
-      'HomePage': HomePage,
+      // 'HomePage': HomePage,
       'SummaryTab': SummaryTab,
       'FilterGTR': FilterGTR,
-      'app-gtr': Gtr,
+      'DisorderSearch': DisorderSearch,
       'FilterPhenolyzer': FilterPhenolyzer,
       'FilterSummary': FilterSummary,
     },
     data(){
       return{
-        component: 'Home',
+        component: 'GeneticTestingRegistry',
         drawer: false,
         vendorList:[],
         selectedVendorsList:[],
@@ -353,22 +313,6 @@ import Gtr from './Gtr.vue';
       window.addEventListener("message", this.receiveClin, false);
     },
     updated(){
-      console.log("updated!")
-
-      // this.NumberOfAllGenes = this.NumberOfGenesSelectedFromGTR + this.NumberOfGenesSelectedFromPhenolyzer
-      // var gtrGenes = this.selectedGtrGenes.map(gene => {
-      //   return gene.name
-      // })
-      //
-      // var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-      //   return gene.geneName
-      // })
-      //
-      // var allGenes = [...gtrGenes, ...phenolyzerGenes];
-      // this.AllSourcesGenes = allGenes;
-      //
-      // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-      // this.NumberOfAllGenes = this.uniqueGenes.length
     },
     methods: {
       onShowDisclaimer: function() {
@@ -403,7 +347,6 @@ import Gtr from './Gtr.vue';
         this.NumberOfGenesSelectedFromPhenolyzer = e;
       },
       clickFuncTemp: function(){
-        // alert("functionality coming soon")
         var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
         FileSaver.saveAs(blob, "hello world.txt");
 
@@ -472,16 +415,6 @@ import Gtr from './Gtr.vue';
       },
       copyAllGenes: function(){
         let self = this;
-        // var gtrGenes = this.selectedGtrGenes.map(gene => {
-        //   return gene.name
-        // })
-        //
-        // var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-        //   return gene.geneName
-        // })
-        //
-        // var allGenes = [...gtrGenes, ...phenolyzerGenes];
-
         var genesToCopy = this.uniqueGenes.toString();
         this.$clipboard(genesToCopy);
 
@@ -526,15 +459,6 @@ import Gtr from './Gtr.vue';
         }
       },
       exportAllGenes: function(){
-          // var gtrGenes = this.selectedGtrGenes.map(gene => {
-          //   return gene.name
-          // })
-          //
-          // var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-          //   return gene.geneName
-          // })
-          //
-          // var allGenes = [...gtrGenes, ...phenolyzerGenes];
           var geneNamesToExport = this.uniqueGenes.toString();
           if(this.uniqueGenes.length>0){
             var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
@@ -579,12 +503,7 @@ import Gtr from './Gtr.vue';
     }
 
   }
-
 </script>
-
-
-
-
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
