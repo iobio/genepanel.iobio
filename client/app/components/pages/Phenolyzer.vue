@@ -518,8 +518,10 @@ var geneModel = new GeneModel();
             }
           });
         }
-        else {
-          self.checked = true;
+        else if(self.multipleSearchTerms.includes(searchTerm)){
+          self.checked = false;
+          self.snackbarText = "This phenotype term is already searched.";
+          self.snackbar = true;
         }
         // self.multipleSearchTerms.push(self.phenotypeTerm.value);
 
