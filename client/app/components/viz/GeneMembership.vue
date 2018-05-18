@@ -62,11 +62,11 @@ var model = new Model();
     watch: {
       GeneData: function(){
         this.CountBrushSelection = 0;
-        console.log("watch genes : " , this.GeneData);
+        // console.log("watch genes : " , this.GeneData);
         this.AddGeneData();
       },
       modeOfInheritanceData: function(){
-        console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
+        // console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
       }
     },
     methods:{
@@ -83,7 +83,7 @@ var model = new Model();
             .xAxisLabel( "# of Panels" )
             .color(self.color)
             .on("barselect", function(selectedGeneNames){
-              console.log("bars selected ", selectedGeneNames);
+              // console.log("bars selected ", selectedGeneNames);
               addSelectedFromHistogramChart(selectedGeneNames);
             })
         var addSelectedFromHistogramChart = (data)=>{
@@ -96,21 +96,21 @@ var model = new Model();
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;
-        console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
+        // console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
 
 
       AddGeneData: function(){
         this.GetGeneData = this.GeneData;
-        console.log("this.GetGeneData", this.GetGeneData);
+        // console.log("this.GetGeneData", this.GetGeneData);
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        console.log("mergedGenes", mergedGenes);
+        // console.log("mergedGenes", mergedGenes);
 
         this.GenesToDisplay = mergedGenes;
-        console.log("GenesToDisplay",this.GenesToDisplay);
+        // console.log("GenesToDisplay",this.GenesToDisplay);
 
         var selection = d3.select('#gene-histogram-chart1').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});

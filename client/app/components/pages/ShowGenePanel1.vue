@@ -204,11 +204,11 @@ var model = new Model();
 
     },
     updated(){
-      console.log("this.selected from Show Genes ", this.selected.map(gene=> {
-         var x =  gene.name;
-         //.toString().replace(/,/gi , ' ')
-         return x.toString() ;
-      }) );
+      // console.log("this.selected from Show Genes ", this.selected.map(gene=> {
+      //    var x =  gene.name;
+      //    //.toString().replace(/,/gi , ' ')
+      //    return x.toString() ;
+      // }) );
 
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
 
@@ -231,7 +231,7 @@ var model = new Model();
       })
 
       bus.$on("updateFromGenesHistogram", (data, count)=>{
-        console.log("updateFromGenesHistogram", data);
+        // console.log("updateFromGenesHistogram", data);
         if(count>1){
           this.selected = data;
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -247,11 +247,9 @@ var model = new Model();
     },
     watch: {
       GeneData: function(){
-        console.log("watch genes : " , this.GeneData);
         this.AddGeneData();
       },
       modeOfInheritanceData: function(){
-        console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
       },
       NumberOfTopGenes: function() {
         this.selectNumberOfTopGenes();
@@ -268,7 +266,7 @@ var model = new Model();
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       },
       filterGenesOnSelectedNumberOfPanels(data){
-        console.log("items in filterGenesOnSelectedNumber", this.items);
+        // console.log("items in filterGenesOnSelectedNumber", this.items);
         var tempArrForGenesInPanels = [];
         for(var i=0; i<this.items.length; i++){
           if(data<=this.items[i].value){
@@ -299,7 +297,7 @@ var model = new Model();
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;
-        console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
+        // console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
       copy () { //Copy to clipboard
         var geneNames = this.selected.map(gene => {
@@ -327,14 +325,14 @@ var model = new Model();
         }
       },
       AddGeneData: function(){
-        bus.$emit("openNavDrawer"); 
+        // bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
-        console.log("this.GetGeneData", this.GetGeneData);
+        // console.log("this.GetGeneData", this.GetGeneData);
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        console.log("mergedGenes", mergedGenes);
+        // console.log("mergedGenes", mergedGenes);
 
         this.GenesToDisplay = mergedGenes;
 

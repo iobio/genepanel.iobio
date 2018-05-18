@@ -102,17 +102,6 @@
         </v-data-table>
       <!-- </v-app> -->
 
-
-    <!-- Gene- panel- table  -->
-
-
-    <!-- <div> -->
-      <!-- <show-gene-panel
-        v-if="selected.length"
-        v-bind:GeneData="selected">
-      </show-gene-panel> -->
-    <!-- </div> -->
-
   </div>
 </template>
 
@@ -194,14 +183,10 @@ var model = new Model();
 
     },
     mounted(){
-      console.log("GenePanel: I am mounted now!");
       console.log("this.mergedGene from mounted() : ", this.mergedGene)
       this.AddGenePanelData();
     },
     updated(){
-      console.log("Hello I am gene panel and I am updated!");
-
-
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
 

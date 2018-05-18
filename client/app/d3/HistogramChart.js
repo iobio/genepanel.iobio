@@ -63,7 +63,7 @@ export default function HistogramChart() {
       svg.selectAll(".bar")
          .classed("selected", function(d,i) {
             var inBrushExtent = d.x >= Math.round(start) && d.x <= Math.round(end);
-            console.log("inBrushExtent", inBrushExtent)
+            // console.log("inBrushExtent", inBrushExtent)
             return inBrushExtent;
          })
     }
@@ -84,7 +84,7 @@ export default function HistogramChart() {
 
   function chart(selection, options) {
     d3.select("#gene-histogram-chart1").select("svg").remove();
-    console.log("options in chart", options)
+    // console.log("options in chart", options)
     // merge options and defaults
     options = $.extend(defaults,options);
     let innerHeight = height - margin.top - margin.bottom;
@@ -284,7 +284,7 @@ export default function HistogramChart() {
         if (minX == null) {
           minX = dataForBrush.length;
         }
-        console.log('minX' , minX , "  maxX " , maxX)
+        // console.log('minX' , minX , "  maxX " , maxX)
         brush.extent([minX, maxX]);
       }
 

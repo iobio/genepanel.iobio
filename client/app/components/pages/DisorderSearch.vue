@@ -25,6 +25,11 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
+      <div v-if="multipleSearchTerms.length">
+        <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+          {{ searchItem }}
+        </v-chip>
+      </div>
     <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
@@ -64,7 +69,9 @@ var model = new Model();
         enterCount: 0,
         DiseaseDataArray: [],
         checked:false,
-        alert:false
+        alert:false,
+        multipleSearchTerms:[],
+        filteredDiseasesItems:[],
       }
     },
     watch: {
@@ -94,11 +101,16 @@ var model = new Model();
       }
     },
     methods:{
+      remove(item){
+        alert(item);
+        this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
+        this.multipleSearchTerms = [...this.multipleSearchTerms];
+      },
       performSearch: function(){
-        this.$emit('showDiseases', []);
+        // this.$emit('showDiseases', []);
         this.checked = true;
         this.alert=false;
-        
+
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
@@ -106,6 +118,9 @@ var model = new Model();
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
         }
+
+        this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
+
         this.$emit('search-gtr', searchTerm);
 
         var diseases;
@@ -143,18 +158,19 @@ var model = new Model();
         var addFilteredDiseases = (filteredDiseases) =>{
           console.log("filteredDiseases : ",filteredDiseases);
           if (filteredDiseases.length===0) {
-
             this.alert= true;
           }
           this.checked=false;
-          this.$emit('showDiseases', filteredDiseases)
+          filteredDiseases.map(x=>{
+            x["searchTerm"]=searchTerm
+            this.filteredDiseasesItems.push(x);
+          });
+          this.$emit('showDiseases', this.filteredDiseasesItems)
         }
 
       },
-      methodA(){
-        alert("you are in method A")
-      },
-      methodB(filteredDiseases){
+      removeDups(arr){
+        return Array.from(new Set(arr.map(JSON.stringify ))).map(JSON.parse);
       },
     }
   }

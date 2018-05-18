@@ -1,256 +1,256 @@
 <template>
-    <div>
-        <v-snackbar
-            :timeout="snackbarTimeout"
-            :top="y === 'top'"
-            :bottom="y === 'bottom'"
-            :right="x === 'right'"
-            :left="x === 'left'"
-            :multi-line="mode === 'multi-line'"
-            :vertical="mode === 'vertical'"
-            v-model="snackbar"
-          >
-            {{ snackbarText }}
-            <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
-          </v-snackbar>
-        <v-container fluid grid-list-md style="min-height:500px">
-          <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
-            <v-flex d-flex xs12 sm12 md12 lg12>
-                <v-card-text>
+  <div>
+    <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
+      <v-container fluid grid-list-md style="min-height:500px">
+        <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
+          <v-flex d-flex xs12 sm12 md12 lg12>
+            <v-card-text>
+              <v-layout row wrap>
+                <v-flex d-flex xs12 sm12 md12>
+                  <v-card>
+                    <v-card-text >
+                      <div class="mb-1" >
+                        Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                        Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <a href="http://phenolyzer.wglab.org/"> Read more</a>
+                      </div>
+                      <span >Phenotype: </span>
+                        <div id="phenotype-input" style="display:inline-block; margin-left:4px;padding-top:5px;">
+                          <input
+                            id="phenotype-term"
+                            class="form-control"
+                            type="text"
+                            autocomplete="off"
+                            placeholder="Search phenotype (E.g. lactic acidosis)"
+                            v-model="phenotypeTermEntered">
+
+                          <typeahead
+                            v-model="phenotypeTerm"
+                            hide-details="false"
+                            force-select match-start
+                            :limit="typeaheadLimit"
+                            :async-function="phenotypeLookup"
+                            target="#phenotype-term"
+                            item-key="value"/>
+                        </div>
+
+                        <v-btn
+                            style="margin-top:0px"
+                            color="blue darken-1"
+                            class="btnColor"
+                            v-on:click="getPhenotypeData">
+                          Go
+                        </v-btn>
+                      <div v-if="phenolyzerStatus!==null">
+                        <br>
+                        <center>
+                          <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
+                          The phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                        </center>
+                      </div>
+                      <div v-if="multipleSearchTerms.length">
+                        <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+                          {{ searchItem }}
+                        </v-chip>
+                      </div>
+                      <div v-if="noResultsArr.length">
+                        <br>
+                        Searches with no results:
+                        <v-chip disabled v-for="(searchItem, i) in noResultsArr" :key="i">
+                          {{ searchItem }}
+                        </v-chip>
+                      </div>
+                      <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+
+                <v-flex v-if="false" d-flex xs12 sm12 md12 lg12>
                   <v-layout row wrap>
-                    <v-flex d-flex xs12 sm12 md12>
+                    <v-flex d-flex xs12 sm12 md12 lg12>
                       <v-card>
-                        <v-card-text >
-                          <div class="mb-1" >
-                            Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
-                            Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <a href="http://phenolyzer.wglab.org/"> Read more</a>
-                          </div>
-                          <span >Phenotype: </span>
-                            <div id="phenotype-input" style="display:inline-block; margin-left:4px;padding-top:5px;">
-                              <input
-                                id="phenotype-term"
-                                class="form-control"
-                                type="text"
-                                autocomplete="off"
-                                placeholder="Search phenotype (E.g. lactic acidosis)"
-                                v-model="phenotypeTermEntered">
-
-                              <typeahead
-                               v-model="phenotypeTerm"
-                              hide-details="false"
-                              force-select match-start
-                              :limit="typeaheadLimit"
-                              :async-function="phenotypeLookup"
-                              target="#phenotype-term"
-                              item-key="value"/>
-                            </div>
-
-                            <v-btn
-                                style="margin-top:0px"
-                                color="blue darken-1"
-                                class="btnColor"
-                                v-on:click="getPhenotypeData">
-                              Go
-                            </v-btn>
-                          <div v-if="phenolyzerStatus!==null">
-                            <br>
-                            <center>
-                              <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
-                              The phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
-                            </center>
-                          </div>
-                          <div v-if="multipleSearchTerms.length">
-                            <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
-                              {{ searchItem }}
-                            </v-chip>
-                          </div>
-                          <div v-if="noResultsArr.length">
-                            <br>
-                            Searches with no results:
-                            <v-chip disabled v-for="(searchItem, i) in noResultsArr" :key="i">
-                              {{ searchItem }}
-                            </v-chip>
-                          </div>
-                          <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
-                        </v-card-text>
-                      </v-card>
-                    </v-flex>
-
-                      <v-flex v-if="false" d-flex xs12 sm12 md12 lg12>
+                        <v-card-text style="padding:5px">
                           <v-layout row wrap>
-                            <v-flex d-flex xs12 sm12 md12 lg12>
-                              <v-card>
-                                <v-card-text style="padding:5px">
-                                  <v-layout row wrap>
-                                    <v-flex d-flex xs12 sm12 md4 lg4>
-                                        <center>
-                                          <!-- put the pie chart component here  -->
-                                          <PhenolyzerPieChart
-                                            v-if="pieChartdataArr.length"
-                                            v-bind:PhenolyzerPieChartData="pieChartdataArr">
-                                          </PhenolyzerPieChart>
-                                        </center>
-                                    </v-flex>
-
-                                    <v-flex d-flex xs12 sm12 md4 lg4>
-                                    </v-flex>
-
-                                    <v-flex d-flex xs12 sm12 md4 lg4>
-                                    </v-flex>
-
-                                 </v-layout>
-                                </v-card-text>
-                              </v-card>
+                            <v-flex d-flex xs12 sm12 md4 lg4>
+                              <center>
+                                <!-- put the pie chart component here  -->
+                                <PhenolyzerPieChart
+                                  v-if="pieChartdataArr.length"
+                                  v-bind:PhenolyzerPieChartData="pieChartdataArr">
+                                </PhenolyzerPieChart>
+                              </center>
                             </v-flex>
-                          </v-layout>
-                      </v-flex>
 
-                    <v-flex d-flex xs12 sm12 md12>
-                      <v-card style="margin-top:4px" >
-                        <v-card-title primary class="title" >
-                          <span class="text-xs-center" v-if="multipleSearchTerms.length"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
-                          <span  v-if="multipleSearchTerms.length" style="margin-left:20px;display: ">
-                            <!-- v-if="items.length>1" -->
-                            <!-- <strong>
-                              Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
-                              &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
-                            </strong> -->
-                            <span id="genes-top-input" class="emphasize" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
-                              <v-select
-                              v-model="genesTop"
-                              label="Select Genes"
-                              hide-details
-                              hint="Genes"
-                              combobox
-                              :items="genesTopCounts"
-                              >
-                              </v-select>
-                            </span>
-                            <!--
-                            <span style="padding-top:22px">
-                              <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
-                                <v-icon>navigate_next</v-icon>
-                              </v-btn>
-                            </span>
-                          -->
-                            <v-text-field
-                              append-icon="search"
-                              label="Search"
-                              single-line
-                              hide-details
-                              v-model="search"
-                              style="vertical-align:bottom;width: 200px;display:inline-block;margin-left:20px"
-                            ></v-text-field>
-                          </span>
-                        </v-card-title>
+                            <v-flex d-flex xs12 sm12 md4 lg4>
+                            </v-flex>
 
-                        <v-card-text style="padding-top:0px;" v-if="multipleSearchTerms.length">
-                          <v-data-table
-                              v-model="selected"
-                              v-bind:headers="headers"
-                              v-bind:items="items"
-                              select-all
-                              v-bind:pagination.sync="pagination"
-                              item-key="geneName"
-                              class="elevation-1"
-                              v-bind:search="search"
-                              no-data-text="No pheotype genes Available Currently"
-                            >
-                            <template slot="headers" slot-scope="props">
-                              <tr>
-                                <th>
-                                  <v-checkbox
-                                    primary
-                                    hide-details
-                                    @click.native="toggleAll"
-                                    :input-value="props.all"
-                                    :indeterminate="props.indeterminate"
-                                  ></v-checkbox>
-                                </th>
-                                <th v-for="header in props.headers" :key="header.text"
-                                  :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                                  @click="changeSort(header.value)"
-                                >
-                                  <v-icon>arrow_upward</v-icon>
-                                  {{ header.text }}
-                                </th>
-                              </tr>
-                            </template>
-                            <template slot="items" slot-scope="props">
-                              <tr :active="props.selected" @click="props.selected = !props.selected">
-                                <td>
-                                  <v-checkbox
-                                    primary
-                                    hide-details
-                                    :input-value="props.selected"
-                                  ></v-checkbox>
-                                </td>
-                                <!-- <td></td> -->
-                                <!-- <td>{{ props.item.rank }}</td> -->
-                                <td>{{ props.item.rank}}</span></td>
-                                <td >
-                                  <div id="app">
-                                    <div>
-                                      <v-menu open-on-hover top offset-y>
-                                        <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
-                                          <div >
-                                            <v-card>
-                                              <v-card-text style="margin-top:-25px">
-                                                <center ><h3>{{ props.item.geneName }}</h3></center>
-                                                <hr>
-                                                <div style="width:600px"><strong>Resources: </strong></div>
-                                                <ul style="margin-left:25px; margin-top:5px">
-                                                  <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                                                  <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                                                  <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                                                  <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                                                </ul>
-                                              </v-card-text>
-                                            </v-card>
-                                          </div>
-                                      </v-menu>
-                                    </div>
-                                  </div>
-                                  <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
-                                <td >
-                                  <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
-                                  <!--
-                                  <span>
-                                    <v-progress-circular
-                                      :size="25"
-                                      :width="5"
-                                      :rotate="-90"
-                                      :value="props.item.sources / multipleSearchTerms.length * 100"
-                                      color="light-blue darken-1"
-                                    >
-                                    </v-progress-circular>
-                                  </span>
-                                -->
+                            <v-flex d-flex xs12 sm12 md4 lg4>
+                            </v-flex>
 
-                                </td>
-                                <td ><span v-html="props.item.htmlData"></span></td>
-                                <!-- <td>{{ props.item.sources}}</td> -->
-                                <td style="font-size:0px;">{{ props.item.score }}</td>
-                              </tr>
-                            </template>
-                            <template slot="footer">
-                            <td colspan="100%">
-                              <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
-                            </td>
-                          </template>
-                          </v-data-table>
+                         </v-layout>
                         </v-card-text>
-
                       </v-card>
                     </v-flex>
-                    <br>
-                    <br>
-                 </v-layout>
-                </v-card-text>
-            </v-flex>
+                  </v-layout>
+                </v-flex>
 
-          </v-layout>
-        </v-container>
+                <v-flex d-flex xs12 sm12 md12>
+                  <v-card style="margin-top:4px" >
+                    <v-card-title primary class="title" >
+                      <span class="text-xs-center" v-if="multipleSearchTerms.length"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
+                      <span  v-if="multipleSearchTerms.length" style="margin-left:20px;display: ">
+                        <!-- v-if="items.length>1" -->
+                        <!-- <strong>
+                          Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
+                          &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
+                        </strong> -->
+                        <span id="genes-top-input" class="emphasize" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
+                          <v-select
+                          v-model="genesTop"
+                          label="Select Genes"
+                          hide-details
+                          hint="Genes"
+                          combobox
+                          :items="genesTopCounts"
+                          >
+                          </v-select>
+                        </span>
+                        <!--
+                        <span style="padding-top:22px">
+                          <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
+                            <v-icon>navigate_next</v-icon>
+                          </v-btn>
+                        </span>
+                      -->
+                        <v-text-field
+                          append-icon="search"
+                          label="Search"
+                          single-line
+                          hide-details
+                          v-model="search"
+                          style="vertical-align:bottom;width: 200px;display:inline-block;margin-left:20px"
+                        ></v-text-field>
+                      </span>
+                    </v-card-title>
+
+                    <v-card-text style="padding-top:0px;" v-if="multipleSearchTerms.length">
+                      <v-data-table
+                          v-model="selected"
+                          v-bind:headers="headers"
+                          v-bind:items="items"
+                          select-all
+                          v-bind:pagination.sync="pagination"
+                          item-key="geneName"
+                          class="elevation-1"
+                          v-bind:search="search"
+                          no-data-text="No pheotype genes Available Currently"
+                        >
+                        <template slot="headers" slot-scope="props">
+                          <tr>
+                            <th>
+                              <v-checkbox
+                                primary
+                                hide-details
+                                @click.native="toggleAll"
+                                :input-value="props.all"
+                                :indeterminate="props.indeterminate"
+                              ></v-checkbox>
+                            </th>
+                            <th v-for="header in props.headers" :key="header.text"
+                              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                              @click="changeSort(header.value)"
+                            >
+                              <v-icon>arrow_upward</v-icon>
+                              {{ header.text }}
+                            </th>
+                          </tr>
+                        </template>
+                        <template slot="items" slot-scope="props">
+                          <tr :active="props.selected" @click="props.selected = !props.selected">
+                            <td>
+                              <v-checkbox
+                                primary
+                                hide-details
+                                :input-value="props.selected"
+                              ></v-checkbox>
+                            </td>
+                            <!-- <td></td> -->
+                            <!-- <td>{{ props.item.rank }}</td> -->
+                            <td>{{ props.item.rank}}</span></td>
+                            <td >
+                              <div id="app">
+                                <div>
+                                  <v-menu open-on-hover top offset-y>
+                                    <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
+                                      <div >
+                                        <v-card>
+                                          <v-card-text style="margin-top:-25px">
+                                            <center ><h3>{{ props.item.geneName }}</h3></center>
+                                            <hr>
+                                            <div style="width:600px"><strong>Resources: </strong></div>
+                                            <ul style="margin-left:25px; margin-top:5px">
+                                              <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                                              <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                                              <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                                              <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                                            </ul>
+                                          </v-card-text>
+                                        </v-card>
+                                      </div>
+                                  </v-menu>
+                                </div>
+                              </div>
+                              <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
+                            <td >
+                              <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
+                              <!--
+                              <span>
+                                <v-progress-circular
+                                  :size="25"
+                                  :width="5"
+                                  :rotate="-90"
+                                  :value="props.item.sources / multipleSearchTerms.length * 100"
+                                  color="light-blue darken-1"
+                                >
+                                </v-progress-circular>
+                              </span>
+                            -->
+
+                            </td>
+                            <td ><span v-html="props.item.htmlData"></span></td>
+                            <!-- <td>{{ props.item.sources}}</td> -->
+                            <td style="font-size:0px;">{{ props.item.score }}</td>
+                          </tr>
+                        </template>
+                        <template slot="footer">
+                        <td colspan="100%">
+                          <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+                        </td>
+                      </template>
+                      </v-data-table>
+                    </v-card-text>
+
+                  </v-card>
+                </v-flex>
+                <br>
+                <br>
+             </v-layout>
+            </v-card-text>
+          </v-flex>
+
+        </v-layout>
+      </v-container>
   </div>
 </template>
 
