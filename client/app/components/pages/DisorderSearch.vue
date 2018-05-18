@@ -102,7 +102,6 @@ var model = new Model();
     },
     methods:{
       remove(item){
-        alert(item);
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         var temp = [];
