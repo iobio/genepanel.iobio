@@ -295,7 +295,8 @@ import DisorderSearch from './DisorderSearch.vue';
         searchTermPhenotype: null,
         modeOfInheritanceProps: [],
         GeneMembershipProps: [],
-        clinIoBioURL:  "http://localhost:4030",
+        clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io"],
+        clinIobioUrl: null,
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -495,20 +496,22 @@ import DisorderSearch from './DisorderSearch.vue';
       },
       receiveClin: function(event) {
         // Do we trust the sender of this message?
-        if (event.origin !== this.clinIoBioURL) {
+        // Do we trust the sender of this message?
+        if (this.clinIobioUrls.indexOf(event.origin) == -1) {
           console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
+        this.clinIobioUrl = event.origin;
 
         var clinObject = JSON.parse(event.data);
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
-        window.parent.postMessage(JSON.stringify(responseObject), this.clinIoBioURL);
+        window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);
       },
       sendClin: function(obj) {
         var theObject = $.extend({}, obj);
         theObject.sender = 'genepanel.iobio.io';
-        window.parent.postMessage(JSON.stringify(theObject), this.clinIoBioURL);
+        window.parent.postMessage(JSON.stringify(theObject), this.clinIobioUrl);
       },
       onSearchGTR: function(searchTerm)  {
         this.searchTermGTR = searchTerm;
