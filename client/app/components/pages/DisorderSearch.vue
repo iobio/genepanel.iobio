@@ -135,7 +135,7 @@ var model = new Model();
           var diseases;
           model.promiseGetDiseases(searchTerm)
           .then(function(data){
-            console.log("data got from promise : " , data)
+            // console.log("data got from promise : " , data)
             diseases = data.diseases;
             var promises = [];
             var filteredDiseases;
@@ -156,7 +156,7 @@ var model = new Model();
 
             Promise.all(promises).then(function(){
                filteredDiseases = model.processDiseaseData(diseases);
-               console.log("filteredDiseases",filteredDiseases)
+               // console.log("filteredDiseases",filteredDiseases)
 
               addFilteredDiseases(filteredDiseases);
             })
@@ -165,7 +165,6 @@ var model = new Model();
           var x = [];
 
           var addFilteredDiseases = (filteredDiseases) =>{
-            console.log("filteredDiseases : ",filteredDiseases);
             if (filteredDiseases.length===0) {
               this.alert= true;
             }

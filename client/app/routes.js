@@ -52,7 +52,7 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 
 //Use Axios
-Vue.use(axios);
+// Vue.use(axios);
 
 
 //Use copy to clipboard

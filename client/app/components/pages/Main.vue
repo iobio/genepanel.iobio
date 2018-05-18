@@ -316,7 +316,6 @@ import DisorderSearch from './DisorderSearch.vue';
     },
     mounted(){
       bus.$on("updateAllGenes", (data)=>{
-        console.log(data)
         this.updateAllGenesFromSelection(data);
       });
       // bus.$on("openNavDrawer", ()=>{

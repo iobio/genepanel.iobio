@@ -421,7 +421,6 @@ var geneModel = new GeneModel();
 
         let data = this.drawSvgBars(sortedPhenotypeData);
         this.items = data;
-        console.log("items ", this.items)
         this.selected = this.items.slice(0,50);
         this.phenolyzerStatus = null;
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -455,7 +454,6 @@ var geneModel = new GeneModel();
         let self = this;
         self.checked = true;
         var searchTerm = self.phenotypeTerm.value;
-        console.log("self.multipleSearchTerms from getPhenotypeData", self.multipleSearchTerms )
         if(!self.multipleSearchTerms.includes(searchTerm)){
           self.$emit('search-phenotype', self.phenotypeTerm);
           self.phenotypeTermEntered = self.phenotypeTerm.value;
@@ -474,9 +472,7 @@ var geneModel = new GeneModel();
                 self.checked = false;
                 self.alert = true;
                 self.noResultsArr.push(searchTerm);
-                console.log("noResultsArr", self.noResultsArr)
               } else {
-                console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
                 self.tempItems = geneModel.phenolyzerGenes;
 
                 self.multipleSearchTerms.push(searchTerm)
@@ -491,11 +487,9 @@ var geneModel = new GeneModel();
                 var averagedData = self.performMeanOperation(combinedList, createdObj);
                 var sortedPhenotypeData = self.sortTheOrder(averagedData);
                 self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-                console.log("pieChartdataArr", self.pieChartdataArr)
 
                 let data = self.drawSvgBars(sortedPhenotypeData);
                 self.items = data;
-                console.log("items ", self.items)
                 self.selected = self.items.slice(0,50);
                 self.phenolyzerStatus = null;
                 self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
@@ -541,9 +535,7 @@ var geneModel = new GeneModel();
             obj[arr[i].geneName]++;
           }
         }
-        console.log("obj" , obj);
         var uniqueGenes = Object.keys(obj);
-        console.log("uniqueGenes", uniqueGenes);
         return uniqueGenes
       },
       performMeanOperation: function(arr, uniqueGenes){
@@ -619,7 +611,6 @@ var geneModel = new GeneModel();
             data: this.getPhenotypeData(this.multipleSearchTerms[i])
           })
         }
-        console.log(dictionaryObj)
       },
       onSearchPhenolyzerGenes: function() {
         let self = this;
@@ -644,7 +635,6 @@ var geneModel = new GeneModel();
               self.checked = false;
               self.alert = true;
             } else {
-              console.log("geneModel.phenolyzerGenes", geneModel.phenolyzerGenes);
               self.tempItems = geneModel.phenolyzerGenes;
               self.addSearchTermProperty();
               self.checked = false;
@@ -696,7 +686,6 @@ var geneModel = new GeneModel();
         return tempItems
       },
       addSearchTermProperty: function(){
-        console.log()
         this.tempItems.map(x=>{
           if(x["phenotypeSearchTerm"]===undefined){
             x["phenotypeSearchTerm"]=this.phenotypeTerm.value

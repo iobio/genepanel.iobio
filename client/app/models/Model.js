@@ -8,7 +8,6 @@ export default class Model {
 }
 
   sumGenesBasedOnModeOfInheritance(items) {
-    console.log("sumGenesBasedOnModeOfInheritance items ", items)
     var obj ={};
     items.map(x=> {
       if(obj[x._modeOfInheritance]===undefined){
@@ -64,7 +63,6 @@ export default class Model {
 
   promiseGetDiseases(searchTerm) {
   var me = this;
-  console.log("me ", me)
   return new Promise(function(resolve, reject) {
 
 
@@ -74,23 +72,19 @@ export default class Model {
                     + '&term='
                     + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
-    console.log("searchUrl", searchUrl)
 
 
     $.ajax( searchUrl )
     .done(function(data) {
-      console.log("data is : ",data)
 
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "disease search error: " + data["esearchresult"]["ERROR"];
-        console.log(msg);
         reject(msg);
       } else {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
-        console.log("summaryUrl is : ", summaryUrl)
 
         $.ajax( summaryUrl )
         .done(function(data) {
@@ -102,7 +96,6 @@ export default class Model {
             resolve({'searchTerm': searchTerm, 'diseases': []})
           } else {
             var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
-            console.log("Results in model.js for search terms are ", results)
             if (results.ERROR) {
               if (results.ERROR == 'Empty result - nothing todo') {
                 resolve({'searchTerm': searchTerm, 'diseases': []});
@@ -117,7 +110,6 @@ export default class Model {
         })
         .fail(function() {
           var msg = "Error in medgen disease summary. ";
-          console.log(msg);
           reject(msg);
         })
       }
@@ -125,7 +117,6 @@ export default class Model {
     })
     .fail(function(data) {
         var msg = "Error in medgen disease search. ";
-        console.log(msg)
         reject(msg);
     })
 
@@ -149,7 +140,6 @@ promiseGetGenePanels(disease) {
 
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
-        console.log(msg);
         reject(msg);
       } else {
         var webenv = data["esearchresult"]["webenv"];
@@ -411,7 +401,7 @@ mergeGenesAcrossPanels(genePanels) {
               omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
               medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
               geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
-              ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`, 
+              ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`,
 //            <stop offset="5%"  stop-color="#36D1DC"/>
 //            <stop offset="95%" stop-color="#5B86E5"/>
               htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">

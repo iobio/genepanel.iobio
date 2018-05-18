@@ -117,7 +117,6 @@ var model = new Model();
     methods:{
         alertIndex: function(i, title){
           alert(i);
-          console.log( "i" , i , " and title is : ", title)
         },
         toggleAll () {
           if (this.selected.length) this.selected = []
@@ -137,7 +136,7 @@ var model = new Model();
           this.tempDisorders = this.DiseasePanelData;
           this.getDisorderNames();
           this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-          console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
+          // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
           this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
                                             // the mode of Inheritance back to parent so it can be used as props in summary panel
           this.selected = this.items.slice()
@@ -192,14 +191,13 @@ var model = new Model();
                 tempArr.push(this.items[i])
               }
               else if(this.items[i]._modeOfInheritance.split(", ").length >1){
-                console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
+                // console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
                 splitHelperArr = this.items[i]._modeOfInheritance.split(", ");
                 if(!splitHelperArr.includes(modeOfInheritance)){
                   tempArr.push(this.items[i])
                 }
               }
             }
-            console.log("tempArr is ", tempArr)
             this.items = tempArr;
             this.selected = this.items.slice();
           }
