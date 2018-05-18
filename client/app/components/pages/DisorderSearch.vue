@@ -105,6 +105,17 @@ var model = new Model();
         alert(item);
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
+        console.log("this.filteredDiseasesItems", this.filteredDiseasesItems);
+
+        var temp = [];
+        this.filteredDiseasesItems.map(x=>{
+          if(x.searchTerm!== item){
+            temp.push(x);
+          }
+        })
+        this.filteredDiseasesItems = temp;
+        this.$emit('showDiseases', this.filteredDiseasesItems)
+
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
@@ -168,9 +179,6 @@ var model = new Model();
           this.$emit('showDiseases', this.filteredDiseasesItems)
         }
 
-      },
-      removeDups(arr){
-        return Array.from(new Set(arr.map(JSON.stringify ))).map(JSON.parse);
       },
     }
   }
