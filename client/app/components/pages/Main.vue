@@ -41,7 +41,9 @@
                 v-bind:disordersData="disorderList"
                 v-on:setSelectedDisorders="updateSelectedDisorders($event)"
                 :chartColor="ordinalColor"
-                v-bind:modeOfInheritanceProps="modeOfInheritanceProps">
+                :barColor="barColor"
+                v-bind:modeOfInheritanceProps="modeOfInheritanceProps"
+                v-bind:GeneMembershipProps="GeneMembershipProps">
               </FilterGTR>
               <FilterPhenolyzer
                 v-else-if="component==='Phenolyzer'">
@@ -175,6 +177,7 @@
               v-on:diseasesCB=addDiseases($event)
               v-on:disorderNamesListCB="updateDisorderNames($event)"
               v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
+              v-on:GeneMembershipData="GeneMembershipData($event)"
               v-bind:selectedDisordersListCB="selectedDisordersList"
               v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
               v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
@@ -291,6 +294,7 @@ import DisorderSearch from './DisorderSearch.vue';
         searchTermGTR: null,
         searchTermPhenotype: null,
         modeOfInheritanceProps: [],
+        GeneMembershipProps: [],
         clinIoBioURL:  "http://localhost:4030",
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
@@ -352,6 +356,9 @@ import DisorderSearch from './DisorderSearch.vue';
       },
       modeOfInheritanceData: function(e){
         this.modeOfInheritanceProps = e;
+      },
+      GeneMembershipData: function(e){
+        this.GeneMembershipProps = e;
       },
       clickFuncTemp: function(){
         var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});

@@ -20,6 +20,13 @@
              &nbsp; Genes
           </div>
             <v-card-text>
+              <br>
+              <GeneMembership
+                v-if="GeneMembershipList.length"
+                v-bind:GeneData="GeneMembershipList"
+                :color="barColor">
+              </GeneMembership>
+
 
               <v-btn small v-on:click="SelectAllGenes" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
               <v-btn small v-on:click="deSelectAllGenes" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
@@ -160,11 +167,13 @@
 <script>
 import { bus } from '../../routes';
 import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
+import GeneMembership from '../viz/GeneMembership.vue'
 
 
   export default {
     components:{
       'PieChartSelectorBackup': PieChartSelectorBackup,
+      'GeneMembership': GeneMembership
     },
     // props: ['vendorsData'],
     props: {
@@ -177,7 +186,11 @@ import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
       modeOfInheritanceProps: {
         type:Array
       },
+      GeneMembershipProps: {
+        type:Array
+      },
       chartColor: null,
+      barColor: null
     },
     data() {
       return {
@@ -201,6 +214,7 @@ import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
         NumberOfGenePanelsDropDown: [25, 50],
         NumberOfConditionsDropDown: [5, 10, 15, 20],
         modeOfInheritanceList: [],
+        GeneMembershipList: []
       }
     },
     watch:{
@@ -222,6 +236,9 @@ import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
       },
       modeOfInheritanceProps: function(){
         this.modeOfInheritanceList = this.modeOfInheritanceProps;
+      },
+      GeneMembershipProps: function(){
+        this.GeneMembershipList = this.GeneMembershipProps;
       }
     },
     updated(){

@@ -41,11 +41,11 @@
                     </div> -->
                     <div class="d-flex mb-2 xs12">
 
-                      <GeneMembership
+                      <!-- <GeneMembership
                         v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
                         v-bind:GeneData="geneProps"
                         :color="barColor">
-                      </GeneMembership>
+                      </GeneMembership> -->
 
                     </div>
 
@@ -202,6 +202,7 @@ export default {
     selectPanels: function(e){
     //  console.log("e is from home for selected panels: ", e)
       this.geneProps = e;
+      this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
       // console.log("vendor list as callback to home", e);
