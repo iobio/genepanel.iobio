@@ -40,7 +40,7 @@ import { bus } from '../../routes';
       },
       draw(data){
         let self = this;
-        console.log("data in draw is ", data);
+        // console.log("data in draw is ", data);
         var widthPercent = "100%";
         var heightPercent = "100%";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
@@ -57,7 +57,7 @@ import { bus } from '../../routes';
 
 
         let onSelected = function(start, end) {
-          console.log("dispatch", start, end);
+          // console.log("dispatch", start, end);
           dispatch.barselect(start, end);
           if(start !== end){
             bus.$emit("conditionsOnBarSelect", start, end);
@@ -65,7 +65,7 @@ import { bus } from '../../routes';
         }
 
         d3.select("#conditions-distribution-chart").select("svg").remove();
-        console.log("data length in conditions", data.length)
+        // console.log("data length in conditions", data.length)
 
         if(data.length>1000){
           var histogram = d3.layout.histogram()
@@ -82,7 +82,7 @@ import { bus } from '../../routes';
         //                   .bins(40)
         //                   (data)
 
-        console.log("histogram data ", histogram)
+        // console.log("histogram data ", histogram)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
@@ -165,8 +165,8 @@ import { bus } from '../../routes';
                     var brushEnd = function(){
                       var start = brush.extent()[0];
                       var end   = brush.extent()[1];
-                      console.log("start", Math.round(start));
-                      console.log("end", Math.round(end));
+                      // console.log("start", Math.round(start));
+                      // console.log("end", Math.round(end));
 
                       onSelected(Math.round(start), Math.round(end))
                     }

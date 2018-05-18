@@ -25,6 +25,11 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
+      <div v-if="multipleSearchTerms.length">
+        <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+          {{ searchItem }}
+        </v-chip>
+      </div>
     <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
@@ -64,7 +69,9 @@ var model = new Model();
         enterCount: 0,
         DiseaseDataArray: [],
         checked:false,
-        alert:false
+        alert:false,
+        multipleSearchTerms:[],
+        filteredDiseasesItems:[],
       }
     },
     watch: {
@@ -94,11 +101,24 @@ var model = new Model();
       }
     },
     methods:{
+      remove(item){
+        this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
+        this.multipleSearchTerms = [...this.multipleSearchTerms];
+        var temp = [];
+        this.filteredDiseasesItems.map(x=>{
+          if(x.searchTerm!== item){
+            temp.push(x);
+          }
+        })
+        this.filteredDiseasesItems = temp;
+        this.$emit('showDiseases', this.filteredDiseasesItems)
+
+      },
       performSearch: function(){
-        this.$emit('showDiseases', []);
+        // this.$emit('showDiseases', []);
         this.checked = true;
         this.alert=false;
-        
+
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
@@ -106,55 +126,62 @@ var model = new Model();
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
         }
-        this.$emit('search-gtr', searchTerm);
 
-        var diseases;
-        model.promiseGetDiseases(searchTerm)
-        .then(function(data){
-          console.log("data got from promise : " , data)
-          diseases = data.diseases;
-          var promises = [];
-          var filteredDiseases;
+        if(!this.multipleSearchTerms.includes(searchTerm)){
+          this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
 
-          data.diseases.forEach(function (disease){
-            var p = model.promiseGetGenePanels(disease)
-            .then(function (data){
-              var filteredGenePanels = model.processGenePanelData(data.genePanels);
-              data.disease.genePanels = filteredGenePanels;
-            },
-            function(error) {
+          this.$emit('search-gtr', searchTerm);
+
+          var diseases;
+          model.promiseGetDiseases(searchTerm)
+          .then(function(data){
+            console.log("data got from promise : " , data)
+            diseases = data.diseases;
+            var promises = [];
+            var filteredDiseases;
+
+            data.diseases.forEach(function (disease){
+              var p = model.promiseGetGenePanels(disease)
+              .then(function (data){
+                var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                data.disease.genePanels = filteredGenePanels;
+              },
+              function(error) {
+
+              })
+
+               promises.push(p);
 
             })
 
-             promises.push(p);
+            Promise.all(promises).then(function(){
+               filteredDiseases = model.processDiseaseData(diseases);
+               console.log("filteredDiseases",filteredDiseases)
+
+              addFilteredDiseases(filteredDiseases);
+            })
 
           })
+          var x = [];
 
-          Promise.all(promises).then(function(){
-             filteredDiseases = model.processDiseaseData(diseases);
-             console.log("filteredDiseases",filteredDiseases)
-
-            addFilteredDiseases(filteredDiseases);
-          })
-
-        })
-        var x = [];
-
-        var addFilteredDiseases = (filteredDiseases) =>{
-          console.log("filteredDiseases : ",filteredDiseases);
-          if (filteredDiseases.length===0) {
-
-            this.alert= true;
+          var addFilteredDiseases = (filteredDiseases) =>{
+            console.log("filteredDiseases : ",filteredDiseases);
+            if (filteredDiseases.length===0) {
+              this.alert= true;
+            }
+            this.checked=false;
+            filteredDiseases.map(x=>{
+              x["searchTerm"]=searchTerm
+              this.filteredDiseasesItems.push(x);
+            });
+            this.$emit('showDiseases', this.filteredDiseasesItems)
           }
-          this.checked=false;
-          this.$emit('showDiseases', filteredDiseases)
-        }
 
-      },
-      methodA(){
-        alert("you are in method A")
-      },
-      methodB(filteredDiseases){
+        }
+        else if(this.multipleSearchTerms.includes(searchTerm)){
+          this.checked = false;
+          alert("This disorder is already searched before")
+        }
       },
     }
   }

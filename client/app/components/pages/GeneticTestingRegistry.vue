@@ -90,6 +90,7 @@
               </v-card>
             </v-flex>
             <br>
+<!--  -->
 
             <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
               <v-card >
@@ -182,7 +183,15 @@ export default {
       }
     },
     addDiseases: function(e){
-      console.log("e is from home: addDiseases ", e)
+      console.log("e is from home: addDiseases ", e);
+
+      //Remove duplicates from the disorders array.
+      e = e.filter((disorder, index, self) =>
+        index === self.findIndex((t) => (
+          t.Title === disorder.Title
+        ))
+      )
+
       this.showSummaryComponent = true
       this.diseases = e;
       this.$emit("diseasesCB", e);

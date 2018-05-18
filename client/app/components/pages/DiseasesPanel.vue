@@ -225,7 +225,6 @@ var model = new Model();
     },
     mounted(){
       // this.draw();
-      console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
       bus.$on("RequestModeOfInheritanceData", ()=>{
         this.sendModeOfInheritanceData();
@@ -235,8 +234,7 @@ var model = new Model();
       })
     },
     updated(){
-      console.log("DiseasePanel: I am updated!");
-      console.log("this.selected from showDiseases updated", this.selected );
+      // console.log("this.selected from showDiseases updated", this.selected );
 
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedDiseases', this.selected);
@@ -247,7 +245,8 @@ var model = new Model();
 
       bus.$on('SelectAllDisordersBus', ()=>{
         this.selectAllDisorders();
-      })
+      });
+      this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
 
     },
     watch: {
