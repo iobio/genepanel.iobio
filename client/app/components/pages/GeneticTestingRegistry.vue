@@ -185,7 +185,7 @@ export default {
     addDiseases: function(e){
       console.log("e is from home: addDiseases ", e);
 
-      //Remove duplicates from the disorders array. 
+      //Remove duplicates from the disorders array.
       e = e.filter((disorder, index, self) =>
         index === self.findIndex((t) => (
           t.Title === disorder.Title

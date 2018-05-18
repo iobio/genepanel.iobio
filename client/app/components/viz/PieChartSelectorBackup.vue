@@ -20,6 +20,13 @@ import { bus } from '../../routes';
         modesOfInheritance: []
       }
     },
+    watch: {
+      modeOfInheritanceData: function(){
+        this.modesOfInheritance = this.modeOfInheritanceData
+        this.draw(this.modesOfInheritance)
+      },
+
+    },
     methods:{
       draw(dataForModeOfInheritance){
         let self = this;

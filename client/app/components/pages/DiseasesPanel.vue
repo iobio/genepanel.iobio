@@ -245,7 +245,8 @@ var model = new Model();
 
       bus.$on('SelectAllDisordersBus', ()=>{
         this.selectAllDisorders();
-      })
+      });
+      this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
 
     },
     watch: {
