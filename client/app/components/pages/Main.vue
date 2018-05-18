@@ -319,9 +319,9 @@ import DisorderSearch from './DisorderSearch.vue';
         console.log(data)
         this.updateAllGenesFromSelection(data);
       });
-      bus.$on("openNavDrawer", ()=>{
-        this.drawer = true;
-      })
+      // bus.$on("openNavDrawer", ()=>{
+      //   this.drawer = true;
+      // })
       window.addEventListener("message", this.receiveClin, false);
     },
     updated(){
