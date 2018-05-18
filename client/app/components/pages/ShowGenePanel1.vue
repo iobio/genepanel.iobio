@@ -327,6 +327,7 @@ var model = new Model();
         }
       },
       AddGeneData: function(){
+        bus.$emit("openNavDrawer"); 
         this.GetGeneData = this.GeneData;
         console.log("this.GetGeneData", this.GetGeneData);
 

@@ -17,7 +17,7 @@
     <v-navigation-drawer
       fixed
       :stateless="true"
-      width=500
+      width=475
       :clipped="$vuetify.breakpoint.mdAndUp"
       app
       v-model="drawer"
@@ -317,6 +317,9 @@ import DisorderSearch from './DisorderSearch.vue';
       bus.$on("updateAllGenes", (data)=>{
         console.log(data)
         this.updateAllGenesFromSelection(data);
+      });
+      bus.$on("openNavDrawer", ()=>{
+        this.drawer = true;
       })
       window.addEventListener("message", this.receiveClin, false);
     },

@@ -96,10 +96,9 @@ var model = new Model();
     methods:{
       performSearch: function(){
         this.$emit('showDiseases', []);
-
         this.checked = true;
         this.alert=false;
-
+        
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;

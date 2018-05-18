@@ -90,6 +90,11 @@
           <div slot="header"><v-icon class="filter-icon">view_list</v-icon>&nbsp; &nbsp;Panels</div>
           <v-card>
             <v-card-text>
+              <ConditionsDistribution
+                  v-if="GeneMembershipList.length"
+                  v-bind:distributionData="GeneMembershipList"
+                  :color="barColor">
+              </ConditionsDistribution>
               <br>
               <span style="display:inline-block;max-width:170px;width:170px;margin-left:25px;padding-top:4px">
                 <v-select
@@ -167,13 +172,14 @@
 <script>
 import { bus } from '../../routes';
 import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
-import GeneMembership from '../viz/GeneMembership.vue'
-
+import GeneMembership from '../viz/GeneMembership.vue';
+import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 
   export default {
     components:{
       'PieChartSelectorBackup': PieChartSelectorBackup,
-      'GeneMembership': GeneMembership
+      'GeneMembership': GeneMembership,
+      'ConditionsDistribution': ConditionsDistribution
     },
     // props: ['vendorsData'],
     props: {

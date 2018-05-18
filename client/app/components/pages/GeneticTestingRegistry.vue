@@ -51,16 +51,16 @@
 
                     <div class="d-flex xs12">
 
-                      <ConditionsDistribution
+                      <!-- <ConditionsDistribution
                           v-if="geneProps.length && diseasesProps.length"
                           v-bind:distributionData="geneProps"
                           :color="barColor">
-                      </ConditionsDistribution>
+                      </ConditionsDistribution> -->
 
                     </div>
                    </v-flex>
 
-                   <v-flex  xs8 style="margin-top:-70px">
+                   <v-flex  xs12 >
                       <show-gene-panel1
                       v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
                         v-bind:GeneData="geneProps"
