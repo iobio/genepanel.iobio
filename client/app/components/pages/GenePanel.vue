@@ -245,7 +245,6 @@ var model = new Model();
           this.mergedGene = mergedGenePanels
           this.items = mergedGenePanels;
           this.tempItems = mergedGenePanels
-          // console.log("this.items : ", this.items)
 
           let vendors = model.getGenePanelVendors(mergedGenePanels);
 

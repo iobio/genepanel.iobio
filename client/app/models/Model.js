@@ -269,9 +269,12 @@ getGenePanelVendors(genePanels) {
 mergeGenePanelsAcrossDiseases(diseases) {
   var me = this;
   var genePanelMap = {};
-
+//Find a way to pass the search terms here...
   diseases.forEach(function(disease) {
+    // console.log(disease)
     disease.genePanels.forEach(function(genePanel) {
+      genePanel["searchTerm"] = disease.searchTerm;
+      // console.log("genePanel", genePanel)
       var theGenePanel = genePanelMap[genePanel.id];
       if (theGenePanel == null) {
         genePanel._diseases = {};
@@ -282,11 +285,10 @@ mergeGenePanelsAcrossDiseases(diseases) {
       theGenePanel._diseases[disease._uid] = disease;
     })
   })
-
+  // console.log("genePanelMap", genePanelMap)
   var mergedGenePanels = [];
   for (var key in genePanelMap) {
     var genePanel = genePanelMap[key];
-
     genePanel._diseaseNames = me.hashToSimpleList(genePanel._diseases, "Title", ", ");
     genePanel._diseaseCount = Object.keys(genePanel._diseases).length;
     genePanel._rowNumber = mergedGenePanels.length+1;
@@ -304,7 +306,10 @@ mergeGenesAcrossPanels(genePanels) {
     // Merge genes common across selected gene panels
     var geneMap = {};
     genePanels.forEach(function(genePanel) {
+
       genePanel._genes.forEach(function(gene) {
+        gene["searchTerm"] = genePanel.searchTerm;
+        // console.log("gene", gene)
         var theGene = geneMap[gene.geneid];
         if (theGene == null) {
           gene._genePanels = {};
@@ -389,7 +394,7 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = (width - 240)/sortedGenes[0]._genePanelCount;
+    var multiplicationFactor = (width - 400)/sortedGenes[0]._genePanelCount;
     var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
       return sortedGenes.map(function(gene, idx) {
         return {
@@ -398,6 +403,7 @@ mergeGenesAcrossPanels(genePanels) {
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
+              searchTerm: gene.searchTerm,
               omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
               medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
               geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,

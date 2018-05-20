@@ -109,6 +109,7 @@
                 </div>
               </div>
             </td>
+            <!-- <td>{{ props.item.searchTerm }}</span></td> -->
             <td><span v-html="props.item.htmlData"></span></td>
             <td style="font-size:0">{{ props.item.value }}</td>
           </tr>
@@ -169,6 +170,7 @@ var model = new Model();
             sortable: false,
             value: 'name'
           },
+          // { text: 'Search Terms', align: 'left', value: 'searchTerm' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
             text: '',
@@ -337,8 +339,10 @@ var model = new Model();
         this.GenesToDisplay = mergedGenes;
 
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
-        let dataWithClinGenFlag = model.getClinGenFlag(data);
-        this.items = dataWithClinGenFlag;
+        this.items = data;
+        // console.log(this.items)
+        // let dataWithClinGenFlag = model.getClinGenFlag(data);
+        // this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);

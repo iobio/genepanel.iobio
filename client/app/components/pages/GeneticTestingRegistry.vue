@@ -183,13 +183,25 @@ export default {
       }
     },
     addDiseases: function(e){
+      var disorderItemsTemp = e;
+      for(var i=0; i<e.length; i++){
+        for(var j=e.length-1; j>i; j--){
+          {
+            if(e[i].Title === e[j].Title){
+              var temp = e[i].searchTerm + " , " + e[j].searchTerm;
+              e[i].searchTerm = temp;
+              e[j].searchTerm = temp;
+              temp = "";
+            }
+          }
+        }
+      }
       //Remove duplicates from the disorders array.
       e = e.filter((disorder, index, self) =>
         index === self.findIndex((t) => (
           t.Title === disorder.Title
         ))
       )
-
       this.showSummaryComponent = true
       this.diseases = e;
       this.$emit("diseasesCB", e);
@@ -207,7 +219,7 @@ export default {
       this.diseasesProps = e;
     },
     selectPanels: function(e){
-    //  console.log("e is from home for selected panels: ", e)
+     // console.log("e is from home for selected panels: ", e)
       this.geneProps = e;
       this.$emit("GeneMembershipData", e);
     },

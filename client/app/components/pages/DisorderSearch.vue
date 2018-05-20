@@ -170,7 +170,9 @@ var model = new Model();
             }
             this.checked=false;
             filteredDiseases.map(x=>{
-              x["searchTerm"]=searchTerm
+              // console.log(this.multipleSearchTerms.findIndex())
+              x["searchTerm"]=searchTerm;
+              // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
               this.filteredDiseasesItems.push(x);
             });
             this.$emit('showDiseases', this.filteredDiseasesItems)
