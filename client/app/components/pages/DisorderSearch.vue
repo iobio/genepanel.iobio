@@ -27,7 +27,7 @@
       </v-btn>
       <div v-if="multipleSearchTerms.length">
         <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
-          {{ searchItem }}
+          {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>
     <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
@@ -59,6 +59,11 @@ var model = new Model();
     components: {
       Typeahead
     },
+    props: {
+      DisordersPropsBackArr: {
+        type: Array
+      }
+    },
     data(){
       return {
         search: "",
@@ -79,6 +84,10 @@ var model = new Model();
         if (this.search && this.search.DiseaseName) {
           this.performSearch();
         }
+      },
+      DisordersPropsBackArr: function() {
+        console.log("this.DisordersPropsBackArr", this.DisordersPropsBackArr)
+        this.filteredDiseasesItems = this.DisordersPropsBackArr;
       }
     },
 
@@ -102,14 +111,28 @@ var model = new Model();
     },
     methods:{
       remove(item){
+        // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
+        item = "ip"+item+"ip";
         var temp = [];
         this.filteredDiseasesItems.map(x=>{
+          // console.log(x.searchTerm);
+          // console.log(x.searchTerm.indexOf(item));
           if(x.searchTerm!== item){
             temp.push(x);
           }
         })
+
+        temp.map(x=>{
+          // console.log("temp search", x.searchTerm);
+          // console.log(item)
+          x.searchTerm = x.searchTerm.replace(item, "");
+          if(x.searchTerm[0]===" "){
+            x.searchTerm = x.searchTerm.slice(1);
+          }
+        })
+        console.log("temp" , temp)
         this.filteredDiseasesItems = temp;
         this.$emit('showDiseases', this.filteredDiseasesItems)
 
@@ -171,7 +194,7 @@ var model = new Model();
             this.checked=false;
             filteredDiseases.map(x=>{
               // console.log(this.multipleSearchTerms.findIndex())
-              x["searchTerm"]=searchTerm;
+              x["searchTerm"]="ip"+searchTerm+"ip";
               // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
               this.filteredDiseasesItems.push(x);
             });

@@ -12,6 +12,7 @@
                   </div>
 
                   <DisorderSearch
+                    v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                     v-on:showDiseases="addDiseases($event)"
                     @search-gtr="onSearchGTR">
                   </DisorderSearch>
@@ -160,6 +161,8 @@ export default {
       selectedGenesText: "",
       selectedVendorsListFromFilterCB:[],
       GtrGenesTabNumber: 0,
+      DisordersPropsBackArr: [],
+
     }
   },
   watch:{
@@ -183,25 +186,27 @@ export default {
       }
     },
     addDiseases: function(e){
-      var disorderItemsTemp = e;
       for(var i=0; i<e.length; i++){
         for(var j=e.length-1; j>i; j--){
           {
             if(e[i].Title === e[j].Title){
-              var temp = e[i].searchTerm + " , " + e[j].searchTerm;
-              e[i].searchTerm = temp;
-              e[j].searchTerm = temp;
-              temp = "";
+              // var temp = e[i].searchTerm + " , " + e[j].searchTerm;
+              e[i].searchTerm = e[i].searchTerm + " " + e[j].searchTerm;
+              // e[j].searchTerm = temp;
+              // temp = "";
             }
           }
         }
       }
+
       //Remove duplicates from the disorders array.
       e = e.filter((disorder, index, self) =>
         index === self.findIndex((t) => (
           t.Title === disorder.Title
         ))
-      )
+      );
+      console.log(e);
+      this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;
       this.$emit("diseasesCB", e);
