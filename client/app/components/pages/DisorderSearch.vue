@@ -114,24 +114,45 @@ var model = new Model();
         // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
-        item = "ip"+item+"ip";
+        // item = "ip"+item+"ip";
         var temp = [];
         this.filteredDiseasesItems.map(x=>{
-          // console.log(x.searchTerm);
-          // console.log(x.searchTerm.indexOf(item));
-          if(x.searchTerm!== item){
+          console.log(x["searchTermArray"]);
+          // if(x.searchTerm!== item){
+          //   temp.push(x);
+          // }
+          console.log("item", item)
+          console.log(x["searchTermArray"].includes(item))
+          if(x["searchTermArray"].includes(item) && x["searchTermArray"].length>1){
+            temp.push(x);
+          }
+          else if(!x["searchTermArray"].includes(item)){
             temp.push(x);
           }
         })
 
         temp.map(x=>{
-          // console.log("temp search", x.searchTerm);
-          // console.log(item)
-          x.searchTerm = x.searchTerm.replace(item, "");
-          if(x.searchTerm[0]===" "){
-            x.searchTerm = x.searchTerm.slice(1);
+          if(x["searchTermArray"].includes(item)){
+            x["searchTermArray"].splice(x["searchTermArray"].indexOf(item), 1)
+            x["searchTermArray"] = [...x["searchTermArray"]];
           }
         })
+
+        temp.map(x=>{
+          x["searchTermIndex"] = [];
+          x["searchTermArray"].map(y=>{
+            x["searchTermIndex"].push(this.multipleSearchTerms.indexOf(y)+1)
+          })
+        })
+
+        // temp.map(x=>{
+        //   // console.log("temp search", x.searchTerm);
+        //   // console.log(item)
+        //   x.searchTerm = x.searchTerm.replace(item, "");
+        //   if(x.searchTerm[0]===" "){
+        //     x.searchTerm = x.searchTerm.slice(1);
+        //   }
+        // })
         console.log("temp" , temp)
         this.filteredDiseasesItems = temp;
         this.$emit('showDiseases', this.filteredDiseasesItems)
@@ -195,6 +216,9 @@ var model = new Model();
             filteredDiseases.map(x=>{
               // console.log(this.multipleSearchTerms.findIndex())
               x["searchTerm"]="ip"+searchTerm+"ip";
+              // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
+              x["searchTermArray"] = [searchTerm];
+              x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
               // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
               this.filteredDiseasesItems.push(x);
             });

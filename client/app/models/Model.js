@@ -274,6 +274,8 @@ mergeGenePanelsAcrossDiseases(diseases) {
     // console.log(disease)
     disease.genePanels.forEach(function(genePanel) {
       genePanel["searchTerm"] = disease.searchTerm;
+      genePanel["searchTermArray"] = disease.searchTermArray;
+      genePanel["searchTermIndex"] = disease.searchTermIndex;
       // console.log("genePanel", genePanel)
       var theGenePanel = genePanelMap[genePanel.id];
       if (theGenePanel == null) {
@@ -309,6 +311,8 @@ mergeGenesAcrossPanels(genePanels) {
 
       genePanel._genes.forEach(function(gene) {
         gene["searchTerm"] = genePanel.searchTerm;
+        gene["searchTermArray"] = genePanel.searchTermArray;
+        gene["searchTermIndex"] = genePanel.searchTermIndex;
         // console.log("gene", gene)
         var theGene = geneMap[gene.geneid];
         if (theGene == null) {
@@ -404,6 +408,8 @@ mergeGenesAcrossPanels(genePanels) {
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
               searchTerm: gene.searchTerm,
+              searchTermArray: gene.searchTermArray,
+              searchTermIndex: gene.searchTermIndex,
               omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
               medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
               geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
@@ -422,7 +428,8 @@ mergeGenesAcrossPanels(genePanels) {
                             <rect fill="url(#MyGradient)"
                                   x="10" y="1" width="${gene._genePanelCount * multiplicationFactor}" height="18"/>
                             <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="14" font-family="Verdana" font-size="13" fill="white">${gene._genePanelCount}</text>
-                        </svg>`
+                        </svg>`,
+
             };
       });
 

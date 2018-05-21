@@ -109,7 +109,12 @@
                 </div>
               </div>
             </td>
-            <!-- <td>{{ props.item.searchTerm }}</span></td> -->
+            <!-- <td>{{ props.item.searchTermIndex }}</span></td> -->
+            <td>
+              <span v-for="x in props.item.searchTermIndex">
+                <span v-html="x"></span>
+              </span>
+            </td>
             <td><span v-html="props.item.htmlData"></span></td>
             <td style="font-size:0">{{ props.item.value }}</td>
           </tr>
@@ -170,7 +175,7 @@ var model = new Model();
             sortable: false,
             value: 'name'
           },
-          // { text: 'Search Terms', align: 'left', value: 'searchTerm' },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
             text: '',
@@ -340,7 +345,8 @@ var model = new Model();
 
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
         this.items = data;
-        // console.log(this.items)
+        this.noOfSourcesSvg();
+        console.log(this.items)
         // let dataWithClinGenFlag = model.getClinGenFlag(data);
         // this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
@@ -352,6 +358,18 @@ var model = new Model();
 
         this.dataForTables = data.slice(0,10);
 
+      },
+      noOfSourcesSvg: function(){
+        this.items.map(x=>{
+          x.searchTermIndex = x.searchTermIndex.map(y=>{
+            // console.log(y)
+            return `<svg height="30" width="30">
+                  <circle cx="10" cy="15" r="10" fill="#0093a5" />
+                  <text x="10" y="15" text-anchor="middle" fill="white" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                </svg> `
+          })
+        });
+        console.log(this.items)
       },
       selectAllGenes: function(){
         this.selected = this.items.slice();

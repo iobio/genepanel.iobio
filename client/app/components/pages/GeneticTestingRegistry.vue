@@ -186,12 +186,16 @@ export default {
       }
     },
     addDiseases: function(e){
+      // console.log("E", e);
       for(var i=0; i<e.length; i++){
         for(var j=e.length-1; j>i; j--){
           {
             if(e[i].Title === e[j].Title){
               // var temp = e[i].searchTerm + " , " + e[j].searchTerm;
               e[i].searchTerm = e[i].searchTerm + " " + e[j].searchTerm;
+              // e[i].searchTermIndex = e[i].searchTermIndex + " , " + e[j].searchTermIndex;
+              e[i].searchTermArray = [...e[i].searchTermArray, ...e[j].searchTermArray];
+              e[i].searchTermIndex = [...e[i].searchTermIndex, ...e[j].searchTermIndex];
               // e[j].searchTerm = temp;
               // temp = "";
             }
