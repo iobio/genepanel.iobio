@@ -452,64 +452,66 @@ var geneModel = new GeneModel();
       },
       getPhenotypeData(){
         let self = this;
-        self.checked = true;
-        var searchTerm = self.phenotypeTerm.value;
-        if(!self.multipleSearchTerms.includes(searchTerm)){
-          self.$emit('search-phenotype', self.phenotypeTerm);
-          self.phenotypeTermEntered = self.phenotypeTerm.value;
-          self.selectedGenesText = "";
-          self.phenolyzerStatus = null;
-          self.genesToApply = "";
-          self.NoOfGenesSelectedFromPhenolyzer = 0;
-          this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-          self.phenotypeTermEntered = self.phenotypeTerm.value;
-          geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
-          (status, error)=> {
-            if (status == 'done') {
-              if (geneModel.phenolyzerGenes.length == 0) {
-                self.phenolyzerStatus = "no genes found."
-                self.genesToApply = "";
-                self.checked = false;
-                self.alert = true;
-                self.noResultsArr.push(searchTerm);
+        if(self.phenotypeTerm.value.length>1){
+          self.checked = true;
+          var searchTerm = self.phenotypeTerm.value;
+          if(!self.multipleSearchTerms.includes(searchTerm)){
+            self.$emit('search-phenotype', self.phenotypeTerm);
+            self.phenotypeTermEntered = self.phenotypeTerm.value;
+            self.selectedGenesText = "";
+            self.phenolyzerStatus = null;
+            self.genesToApply = "";
+            self.NoOfGenesSelectedFromPhenolyzer = 0;
+            this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+            self.phenotypeTermEntered = self.phenotypeTerm.value;
+            geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
+            (status, error)=> {
+              if (status == 'done') {
+                if (geneModel.phenolyzerGenes.length == 0) {
+                  self.phenolyzerStatus = "no genes found."
+                  self.genesToApply = "";
+                  self.checked = false;
+                  self.alert = true;
+                  self.noResultsArr.push(searchTerm);
+                } else {
+                  self.tempItems = geneModel.phenolyzerGenes;
+
+                  self.multipleSearchTerms.push(searchTerm)
+                  self.checked = false;
+                  self.alert = false;
+                  self.dictionaryArr.push(({
+                    name: searchTerm,
+                    data: self.tempItems
+                  }))
+                  var combinedList = self.combineList(self.dictionaryArr);
+                  var createdObj = self.createObj(combinedList);
+                  var averagedData = self.performMeanOperation(combinedList, createdObj);
+                  var sortedPhenotypeData = self.sortTheOrder(averagedData);
+                  self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+
+                  let data = self.drawSvgBars(sortedPhenotypeData);
+                  self.items = data;
+                  self.selected = self.items.slice(0,50);
+                  self.phenolyzerStatus = null;
+                  self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+                  self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+                  self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+                  self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+
+                }
               } else {
-                self.tempItems = geneModel.phenolyzerGenes;
-
-                self.multipleSearchTerms.push(searchTerm)
-                self.checked = false;
-                self.alert = false;
-                self.dictionaryArr.push(({
-                  name: searchTerm,
-                  data: self.tempItems
-                }))
-                var combinedList = self.combineList(self.dictionaryArr);
-                var createdObj = self.createObj(combinedList);
-                var averagedData = self.performMeanOperation(combinedList, createdObj);
-                var sortedPhenotypeData = self.sortTheOrder(averagedData);
-                self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-
-                let data = self.drawSvgBars(sortedPhenotypeData);
-                self.items = data;
-                self.selected = self.items.slice(0,50);
-                self.phenolyzerStatus = null;
-                self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-                self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-                self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-                self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-
+                self.phenolyzerStatus = status;
               }
-            } else {
-              self.phenolyzerStatus = status;
-            }
-          });
-        }
-        else if(self.multipleSearchTerms.includes(searchTerm)){
-          self.checked = false;
-          self.snackbarText = "This phenotype term is already searched.";
-          self.snackbar = true;
-        }
-        // self.multipleSearchTerms.push(self.phenotypeTerm.value);
+            });
+          }
+          else if(self.multipleSearchTerms.includes(searchTerm)){
+            self.checked = false;
+            self.snackbarText = "This phenotype term is already searched.";
+            self.snackbar = true;
+          }
+          // self.multipleSearchTerms.push(self.phenotypeTerm.value);
 
+        }
       },
       combineList(arr){
         var temp =[];
