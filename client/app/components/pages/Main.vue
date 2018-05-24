@@ -55,7 +55,7 @@
     </v-list>
     </v-navigation-drawer>
     <v-toolbar
-      color="blue darken-3"
+      :class="launchedFromClin ? 'clin' : '' "
       dark
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
@@ -297,6 +297,7 @@ import DisorderSearch from './DisorderSearch.vue';
         GeneMembershipProps: [],
         clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io"],
         clinIobioUrl: null,
+        launchedFromClin: false,
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -310,7 +311,8 @@ import DisorderSearch from './DisorderSearch.vue';
         barColor: {
           selected: '#7CA8CF',
           notselected: 'lightgrey'
-        }
+        },
+
 
       }
     },
@@ -500,6 +502,7 @@ import DisorderSearch from './DisorderSearch.vue';
           console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
+        this.launchedFromClin = true;
         this.clinIobioUrl = event.origin;
 
         var clinObject = JSON.parse(event.data);
@@ -532,13 +535,7 @@ import DisorderSearch from './DisorderSearch.vue';
   font-family: 'Open Sans', sans-serif;
   padding-top: 5px;
 }
-/* .toolbar__content{
-  background-color: #174065;
-} */
 
-.toolbar__content{
-  background-color: #2c3e50;
-}
 
 .toolbar__side-icon{
   /* margin-top: -3px; */
@@ -612,6 +609,9 @@ aside {
 nav.toolbar
   background-color: $app-color !important
   font-weight: 300 !important
+
+  &.clin
+    background-color: $app-color-clin !important
 
   .toolbar__side-icon.btn.btn--icon
     max-width: 40px
