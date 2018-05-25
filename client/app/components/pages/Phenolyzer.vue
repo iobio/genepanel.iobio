@@ -281,7 +281,7 @@ var geneModel = new GeneModel();
         phenotypeTermEntered: "",
         allPhenotypeTerms: [],
         phenolyzerStatus: null,
-        hpoLookupUrl:  "http://nv-blue.iobio.io/hpo/hot/lookup/?term=",
+        hpoLookupUrl:  "http://nv-prod.iobio.io/hpo/hot/lookup/?term=",
         typeaheadLimit: parseInt(100),
         geneList: [],
         //DataTable
