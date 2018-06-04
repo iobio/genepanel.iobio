@@ -20,7 +20,7 @@
       {{ alertText }}
     </v-alert>
 
-      <v-card-title style="padding-top:0px">
+      <!-- <v-card-title style="padding-top:0px">
         <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
           <v-select
           v-model="NumberOfTopGenes"
@@ -41,7 +41,7 @@
           v-model="search"
           style="margin-left:30px;max-width:200px;vertical-align:bottom"
         ></v-text-field>
-      </v-card-title>
+      </v-card-title> -->
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -244,12 +244,14 @@ var model = new Model();
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
           this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+          this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         }
       })
 
       this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       this.$emit("SelectedGenesToCopy", this.selected);
+      this.$emit("TotalNoOfGenesFromGTR", this.items.length);
 
     },
     watch: {
@@ -271,6 +273,7 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       filterGenesOnSelectedNumberOfPanels(data){
         // console.log("items in filterGenesOnSelectedNumber", this.items);
@@ -286,12 +289,14 @@ var model = new Model();
             this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
             this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
             this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+            this.$emit("TotalNoOfGenesFromGTR", this.items.length);
           }
           else{
             this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
             this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
             this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
             this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+            this.$emit("TotalNoOfGenesFromGTR", this.items.length);
           }
         }
         else {
@@ -299,6 +304,7 @@ var model = new Model();
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
           this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+          this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         }
 
       },
@@ -353,7 +359,7 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
-
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         bus.$emit("GeneDistributionChartData", this.items);
 
         this.dataForTables = data.slice(0,10);
@@ -376,12 +382,14 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       deSelectAllGenes: function(){
         this.selected = [];
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       selectNumberOfTopGenes: function(){
         setTimeout(()=>{

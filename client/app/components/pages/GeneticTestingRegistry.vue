@@ -7,9 +7,9 @@
             <v-flex d-flex xs12>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
-                  <div class="mb-1">
+                  <!-- <div class="mb-1">
                     The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                  </div>
+                  </div> -->
 
                   <DisorderSearch
                     v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
@@ -23,59 +23,166 @@
 
             <v-flex d-flex xs12 >
               <v-card >
-                <v-card-title primary class="title" style="padding-bottom:">
+                <!-- chip to display number of genes selected  -->
+                <!-- <v-card-title primary class="title" style="padding-bottom:">
                    <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
                       <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
                    </span>
-                </v-card-title>
+                </v-card-title> -->
 
                   <v-layout row wrap>
-                   <v-flex xs4 class="pr-4 pl-5" >
-                    <!-- <div class="d-flex mt-1 mb-2 xs12">
+                    <!-- insert here  -->
 
-                      <PieChartSelectorBackup
-                        v-if="diseases.length && modeOfInheritanceProps.length > 1"
-                        v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                        :color="chartColor">
-                      </PieChartSelectorBackup>
+                    <v-flex  xs8 >
+                       <show-gene-panel1
+                       v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
+                         v-bind:GeneData="geneProps"
+                         v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                         v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
+                         v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
+                         v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
+                         v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
+                       </show-gene-panel1>
+                    </v-flex>
 
-                    </div> -->
+
+                   <v-flex xs4 class="pr-2 pl-1" >
+                     <div class="d-flex mt-1 mb-2 xs12">
+                       <v-card v-if="geneProps.length">
+                         <v-card-title primary-title>
+                          <div>
+                            <div style="font-size:16px">GENES</div>
+                            <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
+                            <div>of {{ TotalGtrGenes }} selected</div>
+                          </div>
+                        </v-card-title>
+                       </v-card>
+                     </div>
+
+                    <div class="d-flex mt-1 mb-2 xs12">
+                      <div v-if="diseases.length && modeOfInheritanceProps.length > 1">
+                        <v-card>
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">DISORDERS</div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                                 <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
+                                 <strong v-else>{{ selectDisorders.length }}</strong>
+                               </span>
+                               <span
+                                style="background: #FE8485; border-radius:8px; cursor: pointer; height:30px;"
+                                v-on:click="showChartComponent('PieChartSelector')">
+                               View and Filter
+                               </span>
+                               <div>of {{ multiSelectDisorder.length }} selected</div>
+                             </div>
+                          </v-card-title>
+                        <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
+                          <v-card-title>
+                            <PieChartSelectorBackup
+                              v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                              :color="chartColor">
+                            </PieChartSelectorBackup>
+                            <br>
+                            <v-card flat >
+                              <v-card-text>
+                                  <v-layout>
+                                      <v-select
+                                        v-model="selectDisorders"
+                                        label="Select Disorders"
+                                        chips
+                                        tags
+                                        :items="multiSelectDisorder"
+                                      ></v-select>
+                                  </v-layout>
+                              </v-card-text>
+                            </v-card>
+                          </v-card-title>
+                        </div>
+                      </v-card>
+                    </div>
+                  </div>
+
                     <div class="d-flex mb-2 xs12">
-
-                      <!-- <GeneMembership
-                        v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
-                        v-bind:GeneData="geneProps"
-                        :color="barColor">
-                      </GeneMembership> -->
-
+                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                        <v-card>
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">PANELS</div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
+                               <span
+                                style="background: #FE8485; border-radius:8px; cursor: pointer; height:30px;"
+                                v-on:click="showChartComponent('GeneMembership')">
+                               View and Filter
+                               </span>
+                               <div>present</div>
+                             </div>
+                          </v-card-title>
+                          <div v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
+                              <GeneMembership
+                                v-bind:GeneData="geneProps"
+                                :color="barColor">
+                              </GeneMembership>
+                          </div>
+                        </v-card>
+                      </div>
                     </div>
 
                     <div class="d-flex xs12">
+                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                        <v-card>
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">VENDORS</div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                                 <strong v-if="vendorsSelect.length===0">{{ vendorList.length }}</strong>
+                                 <strong v-else>{{ vendorsSelect.length }}</strong>
+                               </span>
+                               </span>
+                               <span
+                                style="background: #FE8485; border-radius:8px; cursor: pointer; height:30px;"
+                                v-on:click="showChartComponent('Vendors')">
+                               View and Filter
+                               </span>
+                               <div>of {{ vendorList.length}} selected</div>
+                             </div>
+                          </v-card-title>
+                          <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
+                            <v-card flat v-if="vendorList.length">
+                              <v-card-text>
+                                  <v-layout>
+                                      <v-select
+                                        v-model="vendorsSelect"
+                                        label="Select Vendors"
+                                        chips
+                                        tags
+                                        :items="multiSelectItems"
+                                      ></v-select>
+                                  </v-layout>
+                              </v-card-text>
+                            </v-card>
+                          </div>
+                        </v-card>
+                      </div>
+                    </div>
 
-                      <!-- <ConditionsDistribution
+                    <!-- <div class="d-flex xs12">
+
+                      <ConditionsDistribution
                           v-if="geneProps.length && diseasesProps.length"
                           v-bind:distributionData="geneProps"
                           :color="barColor">
-                      </ConditionsDistribution> -->
+                      </ConditionsDistribution>
 
-                    </div>
+                    </div> -->
                    </v-flex>
 
-                   <v-flex  xs12 >
-                      <show-gene-panel1
-                      v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
-                        v-bind:GeneData="geneProps"
-                        v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                        v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
-                        v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
-                        v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
-                      </show-gene-panel1>
-                   </v-flex>
+
                   </v-layout>
               </v-card>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -85,15 +192,15 @@
                     v-on:selectedDiseases="selectDiseases($event)"
                     v-on:setDisorderNamesList="updateDisorderNamesList($event)"
                     v-on:PieChartSelectorData="PieChartSelectorData($event)"
-                    v-bind:selectedDisordersProps="selectedDisordersList">
+                    v-bind:selectedDisordersProps="selectDisorders">
                   </disease-panel>
                 </v-card-text>
               </v-card>
             </v-flex>
             <br>
-<!--  -->
+<!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -101,8 +208,10 @@
                     v-if="diseasesProps.length"
                     v-bind:DiseasePanelData="diseasesProps"
                     v-on:selectedPanels="selectPanels($event)"
+                    v-on:NoOfPanels="NoOfPanels($event)"
                     v-on:setVendorList="updateVendorList($event)"
-                    v-bind:selectedVendorsProps="selectedVendorsList">
+                    v-bind:selectedVendorsProps="vendorsSelect">
+                    <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
                   </gene-panel>
                 </v-card-text>
               </v-card>
@@ -162,7 +271,18 @@ export default {
       selectedVendorsListFromFilterCB:[],
       GtrGenesTabNumber: 0,
       DisordersPropsBackArr: [],
-
+      chartComponent: null,
+      isActive: true,
+      TotalGtrGenes: 0,
+      genePanelsCount:0,
+      loading: false, //multiselect
+      multiSelectItems: [],   //multiselect
+      search: null,  //multiselect
+      vendorsSelect: [],  //multiselect
+      Genes: [],  //multiselect
+      disordersDataList: [],
+      selectDisorders: [],
+      multiSelectDisorder: [],
     }
   },
   watch:{
@@ -213,6 +333,7 @@ export default {
       this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;
+      this.selectDisorders = [];
       this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];
@@ -235,6 +356,7 @@ export default {
     updateVendorList: function(e){
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
+      this.multiSelectItems = e;
       this.$emit("vendorListCB", e);
     },
     updateSelectedVendors: function(e){
@@ -248,6 +370,7 @@ export default {
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
+      this.multiSelectDisorder = e;
       this.$emit("disorderNamesListCB", e)
     },
     updateSelectedDisorders: function(e){
@@ -266,6 +389,15 @@ export default {
     },
     onSearchGTR: function(genes, phenotype) {
       this.$emit('search-gtr', genes, phenotype)
+    },
+    showChartComponent: function(chart_component){
+      this.chartComponent = chart_component;
+    },
+    TotalNoOfGenesFromGTR: function(e){
+      this.TotalGtrGenes = e;
+    },
+    NoOfPanels: function(e){
+      this.genePanelsCount = e.length;
     }
   }
 }
@@ -295,5 +427,16 @@ export default {
 
   .btn{
     padding: 0px
+  }
+  .cardBoxTitle{
+    font-size: 16px;
+    color: #000000;
+  }
+
+  .activeClass{
+    display: visible;
+  }
+  .disabledClass{
+    display: none;
   }
 </style>
