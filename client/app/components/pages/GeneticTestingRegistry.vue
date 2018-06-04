@@ -271,7 +271,7 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Quicksand:500');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
