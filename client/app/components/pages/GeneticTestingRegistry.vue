@@ -61,7 +61,7 @@
 
                     <div class="d-flex mt-1 mb-2 xs12">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 1">
-                        <v-card>
+                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">DISORDERS</div>
@@ -69,8 +69,7 @@
                                  <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
                                  <strong v-else>{{ selectDisorders.length }}</strong>
                                </span>
-                               <span
-                                style="background: #FE8485; border-radius:8px; cursor: pointer; height:30px;"
+                               <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
                                </span>
@@ -98,6 +97,13 @@
                               </v-card-text>
                             </v-card>
                           </v-card-title>
+                          <center>
+                            <span class="FilterAndViewBtn"
+                              v-on:click="chartComponent=null">
+                              Exit
+                            </span>
+                          </center>
+                          <br>
                         </div>
                       </v-card>
                     </div>
@@ -105,13 +111,12 @@
 
                     <div class="d-flex mb-2 xs12">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
-                        <v-card>
+                        <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">PANELS</div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
-                               <span
-                                style="background: #FE8485; border-radius:8px; cursor: pointer; height:30px;"
+                               <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('GeneMembership')">
                                View and Filter
                                </span>
@@ -123,6 +128,13 @@
                                 v-bind:GeneData="geneProps"
                                 :color="barColor">
                               </GeneMembership>
+                              <center>
+                                <span class="FilterAndViewBtn"
+                                  v-on:click="chartComponent=null">
+                                  Exit
+                                </span>
+                              </center>
+                              <br>
                           </div>
                         </v-card>
                       </div>
@@ -130,7 +142,7 @@
 
                     <div class="d-flex xs12">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
-                        <v-card>
+                        <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">VENDORS</div>
@@ -139,8 +151,7 @@
                                  <strong v-else>{{ vendorsSelect.length }}</strong>
                                </span>
                                </span>
-                               <span
-                                style="background: #FE8485; border-radius:8px; cursor: pointer; height:30px;"
+                               <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('Vendors')">
                                View and Filter
                                </span>
@@ -161,6 +172,15 @@
                                   </v-layout>
                               </v-card-text>
                             </v-card>
+                            <v-btn v-show="vendorsSelect.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
+                            <br>
+                            <center>
+                              <span class="FilterAndViewBtn"
+                                v-on:click="chartComponent=null">
+                                Exit
+                              </span>
+                            </center>
+                            <br>
                           </div>
                         </v-card>
                       </div>
@@ -182,7 +202,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -200,7 +220,7 @@
             <br>
 <!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12 >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -398,6 +418,9 @@ export default {
     },
     NoOfPanels: function(e){
       this.genePanelsCount = e.length;
+    },
+    ClearVendors: function(){
+      this.vendorsSelect=[];
     }
   }
 }
@@ -438,5 +461,18 @@ export default {
   }
   .disabledClass{
     display: none;
+  }
+  .FilterAndViewBtn{
+    background: #e0e0e0;
+    color: rgba(68, 68, 68, 0.87);
+    padding:3px 8px;
+    border-radius:8px;
+    cursor: pointer;
+    height:30px;
+    margin-left: 8px;
+  }
+  .activeCardBox{
+    border: 1px solid #F16335;
+    box-shadow: 0 2px 6px 0 #F16335;
   }
 </style>
