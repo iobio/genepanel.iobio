@@ -117,6 +117,30 @@
               </span>
             </td>
             <td><span v-html="props.item.htmlData"></span></td>
+            <td>
+              <v-menu bottom offset-y style="color:black">
+                <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+
+                <v-list>
+                  <v-list-tile >
+                    <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
+                  </v-list-tile>
+                  <hr>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+            </td>
             <td style="font-size:0">{{ props.item.value }}</td>
           </tr>
         </template>
@@ -178,6 +202,7 @@ var model = new Model();
           },
           { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+          { text: 'More', align: 'left', sortable: false, value: '' },
           {
             text: '',
             value: ['haploScore', 'value', 'omimSrc'],

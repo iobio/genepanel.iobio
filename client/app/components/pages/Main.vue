@@ -15,6 +15,7 @@
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
     <v-navigation-drawer
+      style="background: #F5F6F7; "
       permanent
       app
     >
@@ -128,8 +129,58 @@
       <v-content>
         <div style="width:100%; height:64px; background:white">
           <v-card-text>
-            <span style="font-size:18px">Genetic Testing Registry</span>
-            <p class="text-xs-right" style="margin-top:-30px">
+            <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
+              Genetic Testing Registry
+              <v-menu open-on-hover top offset-y>
+                <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                  <v-card>
+                    <v-card-text >
+                      <br>
+                      <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                      <br>
+                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                      <br>
+                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                      <br><br>
+                    </v-card-text>
+                  </v-card>
+              </v-menu>
+            </span>
+            <span v-else-if="component==='Phenolyzer'" style="font-size:18px">
+              Phenolyzer
+              <v-menu open-on-hover top offset-y>
+                <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                  <v-card>
+                    <v-card-text >
+                      <br>
+                      Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                      <br>
+                      <strong>Phenolyzer</strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
+                      <br>
+                      <a href="http://phenolyzer.wglab.org/">Read more</a>
+                      <br><br>
+                    </v-card-text>
+                  </v-card>
+              </v-menu>
+            </span>
+            <span v-else-if="component==='SummaryTab'" style="font-size:18px">
+              Summary
+              <v-menu open-on-hover top offset-y>
+                <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                  <v-card>
+                    <v-card-text >
+                      <br>
+                      <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                      <br>
+                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                      <br>
+                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                      <br><br>
+                    </v-card-text>
+                  </v-card>
+              </v-menu>
+            </span>
+            <p class="text-xs-right" style="margin-top:-37px">
               <v-menu bottom offset-y style="color:black">
                 <v-btn flat slot="activator"
                 ><v-icon style="padding-right:4px">input</v-icon>
@@ -158,6 +209,24 @@
                   </v-list-tile>
                   <v-list-tile @click="exportAllGenes">
                     <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+
+
+              <v-menu bottom offset-y style="color:black">
+                <v-btn flat slot="activator"
+                  ><v-icon style="padding-right:4px">apps</v-icon>
+                </v-btn>
+                <v-list>
+                  <v-list-tile >
+                    <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
                   </v-list-tile>
                 </v-list>
               </v-menu>

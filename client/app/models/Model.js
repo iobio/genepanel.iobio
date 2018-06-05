@@ -398,7 +398,7 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = (width - 400)/sortedGenes[0]._genePanelCount;
+    var multiplicationFactor = (width - 600)/sortedGenes[0]._genePanelCount;
     var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
       return sortedGenes.map(function(gene, idx) {
         return {
