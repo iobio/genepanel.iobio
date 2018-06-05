@@ -2,7 +2,19 @@
   <div>
     <div id="app">
       <v-app id="inspire">
-        
+        <v-snackbar
+          :timeout="snackbarTimeout"
+          :top="y === 'top'"
+          :bottom="y === 'bottom'"
+          :right="x === 'right'"
+          :left="x === 'left'"
+          :multi-line="mode === 'multi-line'"
+          :vertical="mode === 'vertical'"
+          v-model="snackbar"
+        >
+          {{ snackbarText }}
+          <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
             <v-flex d-flex xs12>
@@ -27,15 +39,22 @@
                           id="top-genes-input"
                           class="form-control"
                           type="text"
+                          v-model="NumberOfTopGenes"
                           autocomplete="off"
+                          list="genes"
                           placeholder="50">
+                          <datalist id="genes">
+                            <option v-for="genesCount in genesTopCounts">
+                              {{ genesCount }}
+                            </option>
+                          </datalist>
                       </div>
 
                       <v-btn
                           style="margin-top:-0.35px"
                           color="blue darken-1"
                           class="btnColor"
-                          v-on:click.prevent="performSearch">
+                          v-on:click.prevent="selectNumberOfTopGenes">
                         Go
                       </v-btn>
                     </v-flex>
@@ -312,7 +331,7 @@ export default {
       disorderNamesList: [],
       selectedDisordersList: [],
       showSummaryComponent: false,
-      NumberOfTopGenes: 50,
+      NumberOfTopGenes: null,
       selectedGenesText: "",
       selectedVendorsListFromFilterCB:[],
       GtrGenesTabNumber: 0,
@@ -329,6 +348,13 @@ export default {
       disordersDataList: [],
       selectDisorders: [],
       multiSelectDisorder: [],
+      snackbar: false,
+      snackbarText: "",
+      y: 'top',
+      x: null,
+      mode: '',
+      snackbarTimeout: 4000,
+      genesTopCounts: [5, 10, 30, 50, 80, 100],
     }
   },
   watch:{
@@ -343,11 +369,13 @@ export default {
   },
   methods: {
     selectNumberOfTopGenes: function(){
-      if(this.NumberOfTopGenes>0){
-        bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+      if(parseInt(this.NumberOfTopGenes)>0){
+        bus.$emit('SelectNumberOfGenes', parseInt(this.NumberOfTopGenes));
         this.flagForNumberOfGenesSelected= true;
+        this.snackbarText = "Top " + parseInt(this.NumberOfTopGenes) + " genes selected";
+        this.snackbar = true;
       }
-      else if (this.NumberOfTopGenes<0) {
+      else if (parseInt(this.NumberOfTopGenes)<0) {
         document.getElementById("geneSelection").reset();
       }
     },

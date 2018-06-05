@@ -221,7 +221,7 @@ import { bus } from '../../routes';
                 .text(function(d){
                   return d.data._modeOfInheritance;
                 })
-                .style("font-size", "1.1em")
+                .style("font-size", "1.5em")
 
 
                 legend.on("mouseover", function(d){

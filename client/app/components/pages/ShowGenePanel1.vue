@@ -23,6 +23,7 @@
       <!-- <v-card-title style="padding-top:0px">
         <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
           <v-select
+          outline
           v-model="NumberOfTopGenes"
           label="Select Genes"
           hide-details
