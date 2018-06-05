@@ -1,7 +1,9 @@
 <template>
   <div style="">
-    <span style="padding-right:4px">Disorder</span>
+    <!-- <span style="padding-right:4px">Disorder</span> -->
+
       <div style="display:inline-block; padding-top:5px;">
+        <label>Search Disorder</label>
         <input
           id="input"
           class="form-control"
@@ -247,13 +249,13 @@ var model = new Model();
    font-size: 15px;
  }
 #input{
-  width: 850px;
+  width: 600px;
   height:35px;
   margin-top: 4px;
 }
 
 /* Media Queries */
-
+/*
 @media screen and (max-width: 1050px){
   #input{
     width: 800px;
@@ -280,7 +282,7 @@ var model = new Model();
   .btnColor{
     margin-top: 2px
   }
-}
+} */
 
 .input-box{
   background: #00ACC1;

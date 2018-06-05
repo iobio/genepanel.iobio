@@ -2,6 +2,7 @@
   <div>
     <div id="app">
       <v-app id="inspire">
+        
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
             <v-flex d-flex xs12>
@@ -10,12 +11,37 @@
                   <!-- <div class="mb-1">
                     The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                   </div> -->
+                  <v-layout row wrap>
+                    <v-flex  xs7 >
+                      <DisorderSearch
+                        v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
+                        v-on:showDiseases="addDiseases($event)"
+                        @search-gtr="onSearchGTR">
+                      </DisorderSearch>
+                    </v-flex>
 
-                  <DisorderSearch
-                    v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
-                    v-on:showDiseases="addDiseases($event)"
-                    @search-gtr="onSearchGTR">
-                  </DisorderSearch>
+                    <v-flex  xs3 >
+                      <div style="display:inline-block; padding-top:5px;">
+                        <label>Genes</label>
+                        <input
+                          id="top-genes-input"
+                          class="form-control"
+                          type="text"
+                          autocomplete="off"
+                          placeholder="50">
+                      </div>
+
+                      <v-btn
+                          style="margin-top:-0.35px"
+                          color="blue darken-1"
+                          class="btnColor"
+                          v-on:click.prevent="performSearch">
+                        Go
+                      </v-btn>
+                    </v-flex>
+                    <v-flex  xs2 >
+                    </v-flex>
+                  </v-layout>
 
                 </v-card-text>
               </v-card>
@@ -475,4 +501,20 @@ export default {
     border: 1px solid #F16335;
     box-shadow: 0 2px 6px 0 #F16335;
   }
+  .btnColor{
+    color: white;
+  }
+  .btn{
+    padding: 0px;
+    height:34px;
+  }
+  .form-control{
+    font-size: 15px;
+  }
+ #top-genes-input{
+   width: 200px;
+   height:35px;
+   margin-top: 4px;
+ }
+
 </style>

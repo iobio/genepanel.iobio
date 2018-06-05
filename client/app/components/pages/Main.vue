@@ -20,8 +20,10 @@
     >
     <br>
      <v-list dense class="pt-0">
-       <v-list-tile style="background-color:#D8D8D8; color:#ED8059; border-left: 8px solid #ED8059;" @click="component='GeneticTestingRegistry'">
-         <v-list-tile-action style="margin-left: -8px">
+       <v-list-tile
+          v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
+          @click="component='GeneticTestingRegistry'">
+         <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
            <v-icon>dashboard</v-icon>
          </v-list-tile-action>
          <v-list-tile-content>
@@ -34,8 +36,10 @@
          </v-list-tile-content>
        </v-list-tile>
 
-       <v-list-tile @click="component='Phenolyzer'">
-         <v-list-tile-action>
+       <v-list-tile
+          v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
+          @click="component='Phenolyzer'">
+         <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
            <v-icon>dashboard</v-icon>
          </v-list-tile-action>
          <v-list-tile-content>
@@ -49,8 +53,10 @@
          </v-list-tile-content>
        </v-list-tile>
 
-       <v-list-tile @click="component='SummaryTab'">
-         <v-list-tile-action>
+       <v-list-tile
+          v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
+          @click="component='SummaryTab'">
+         <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
            <v-icon>dashboard</v-icon>
          </v-list-tile-action>
          <v-list-tile-content>
@@ -120,6 +126,47 @@
 
     <div>
       <v-content>
+        <div style="width:100%; height:64px; background:white">
+          <v-card-text>
+            <span style="font-size:18px">Genetic Testing Registry</span>
+            <p class="text-xs-right" style="margin-top:-30px">
+              <v-menu bottom offset-y style="color:black">
+                <v-btn flat slot="activator"
+                ><v-icon style="padding-right:4px">input</v-icon>
+                Export</v-btn>
+                <v-list>
+                  <div v-if="component==='GeneticTestingRegistry'">
+                    <v-list-tile @click="copyGtrGenes">
+                      <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile @click="exportGtrGenes">
+                      <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
+                    </v-list-tile>
+                    <hr>
+                  </div>
+                  <div v-else-if="component==='Phenolyzer'">
+                    <v-list-tile @click="copyPhenolyzerGenes">
+                      <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
+                    </v-list-tile>
+                    <v-list-tile @click="exportPhenolyzerGenes">
+                      <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
+                    </v-list-tile>
+                    <hr>
+                  </div>
+                  <v-list-tile @click="copyAllGenes">
+                    <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile @click="exportAllGenes">
+                    <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+
+            </p>
+          </v-card-text>
+
+        </div>
+
         <keep-alive>
 
             <GeneticTestingRegistry
@@ -522,6 +569,17 @@ import DisorderSearch from './DisorderSearch.vue';
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.activeTab{
+  background-color:#D8D8D8;
+  color:#ED8059;
+  border-left: 8px solid #ED8059;
+}
+
+.margin_ActiveTab{
+  margin-left: -8px
+}
+
 
 .tabs__container{
   height:50px;
