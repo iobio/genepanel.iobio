@@ -19,7 +19,6 @@
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
-
       <!-- <v-card-title style="padding-top:0px">
         <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
           <v-select
@@ -76,7 +75,8 @@
           </tr>
         </template>
         <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
+          <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
+          <tr :active="props.selected">
             <td>
               <v-checkbox
                 primary
@@ -174,6 +174,9 @@ var model = new Model();
       GeneData: {
         type: Array
       },
+      geneSearch: {
+        type: String
+      }
     },
     data(){
       return {
@@ -288,6 +291,9 @@ var model = new Model();
       },
       NumberOfTopGenes: function() {
         this.selectNumberOfTopGenes();
+      },
+      geneSearch: function(){
+        this.search = this.geneSearch;
       }
     },
     methods:{

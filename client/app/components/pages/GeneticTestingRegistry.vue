@@ -86,17 +86,48 @@
                          v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
                          v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
                          v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
-                         v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
+                         v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
+                         v-bind:geneSearch="geneSearch">
                        </show-gene-panel1>
                     </v-flex>
 
 
                    <v-flex xs4 class="pr-2 pl-1" >
+                     <div class="d-flex mb-2 xs12">
+                       <v-card v-if="geneProps.length">
+                        <v-card-title primary-title>
+                          <v-text-field
+                            append-icon="search"
+                            label="Search Genes"
+                            single-line
+                            hide-details
+                            v-model="geneSearch"
+                          ></v-text-field>
+                        </v-card-title>
+                       </v-card>
+                     </div>
                      <div class="d-flex mt-1 mb-2 xs12">
                        <v-card v-if="geneProps.length">
                          <v-card-title primary-title>
                           <div>
-                            <div style="font-size:16px">GENES</div>
+                            <div style="font-size:16px">
+                              GENES
+                              <v-dialog v-model="dialog" width="600px">
+                                <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                <v-card>
+                                  <v-card-title>
+                                    <span class="headline">Genes</span>
+                                  </v-card-title>
+                                  <v-card-text>
+                                    Help information text
+                                  </v-card-text>
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                  </v-card-actions>
+                                </v-card>
+                              </v-dialog>
+                            </div>
                             <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
                             <div>of {{ TotalGtrGenes }} selected</div>
                           </div>
@@ -109,7 +140,24 @@
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
-                               <div style="font-size:16px">DISORDERS</div>
+                               <div style="font-size:16px">
+                                 DISORDERS
+                                 <v-dialog v-model="dialog" width="600px">
+                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                   <v-card>
+                                     <v-card-title>
+                                       <span class="headline">Disorders</span>
+                                     </v-card-title>
+                                     <v-card-text>
+                                       Help information text
+                                     </v-card-text>
+                                     <v-card-actions>
+                                       <v-spacer></v-spacer>
+                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                     </v-card-actions>
+                                   </v-card>
+                                 </v-dialog>
+                               </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
                                  <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
                                  <strong v-else>{{ selectDisorders.length }}</strong>
@@ -159,7 +207,24 @@
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
-                               <div style="font-size:16px">PANELS</div>
+                               <div style="font-size:16px">
+                                 PANELS
+                                 <v-dialog v-model="dialog" width="600px">
+                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                   <v-card>
+                                     <v-card-title>
+                                       <span class="headline">Panels</span>
+                                     </v-card-title>
+                                     <v-card-text>
+                                       Help information text
+                                     </v-card-text>
+                                     <v-card-actions>
+                                       <v-spacer></v-spacer>
+                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                     </v-card-actions>
+                                   </v-card>
+                                 </v-dialog>
+                               </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
                                <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('GeneMembership')">
@@ -190,7 +255,24 @@
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
-                               <div style="font-size:16px">VENDORS</div>
+                               <div style="font-size:16px">
+                                 VENDORS
+                                 <v-dialog v-model="dialog" width="600px">
+                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                   <v-card>
+                                     <v-card-title>
+                                       <span class="headline">Vendors</span>
+                                     </v-card-title>
+                                     <v-card-text>
+                                       Help information text
+                                     </v-card-text>
+                                     <v-card-actions>
+                                       <v-spacer></v-spacer>
+                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                     </v-card-actions>
+                                   </v-card>
+                                 </v-dialog>
+                               </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
                                  <strong v-if="vendorsSelect.length===0">{{ vendorList.length }}</strong>
                                  <strong v-else>{{ vendorsSelect.length }}</strong>
@@ -355,6 +437,8 @@ export default {
       mode: '',
       snackbarTimeout: 4000,
       genesTopCounts: [5, 10, 30, 50, 80, 100],
+      dialog: false,
+      geneSearch: '',
     }
   },
   watch:{
