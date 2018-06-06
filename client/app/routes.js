@@ -17,6 +17,9 @@ import { Typeahead } from 'uiv';
 
 import * as uiv from 'uiv';
 
+// import BackToTop from 'vue-backtotop'
+
+
 import Clipboard from 'v-clipboard';
 var FileSaver = require('file-saver');
 
@@ -59,6 +62,8 @@ Vue.use(VueResource);
 //Link: https://github.com/euvl/v-clipboard
 Vue.use(Clipboard)
 
+// Back to top button
+// Vue.use(BackToTop);
 
 
 //Route

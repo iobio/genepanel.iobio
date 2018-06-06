@@ -1,6 +1,8 @@
 <template>
   <div id="app">
   <v-app id="inspire">
+    <!-- <back-to-top text="Back to top" visibleoffset="500"></back-to-top> -->
+
     <v-snackbar
         :timeout="snackbarTimeout"
         :top="y === 'top'"
@@ -127,114 +129,120 @@
 
     <div>
       <v-content>
-        <div style="width:100%; height:64px; background:white">
-          <v-card-text>
-            <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
-              Genetic Testing Registry
-              <v-menu open-on-hover top offset-y>
-                <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-                  <v-card>
-                    <v-card-text >
-                      <br>
-                      <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
-                      <br>
-                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
-                      <br>
-                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                      <br><br>
-                    </v-card-text>
-                  </v-card>
-              </v-menu>
-            </span>
-            <span v-else-if="component==='Phenolyzer'" style="font-size:18px">
-              Phenolyzer
-              <v-menu open-on-hover top offset-y>
-                <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-                  <v-card>
-                    <v-card-text >
-                      <br>
-                      Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
-                      <br>
-                      <strong>Phenolyzer</strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
-                      <br>
-                      <a href="http://phenolyzer.wglab.org/">Read more</a>
-                      <br><br>
-                    </v-card-text>
-                  </v-card>
-              </v-menu>
-            </span>
-            <span v-else-if="component==='SummaryTab'" style="font-size:18px">
-              Summary
-              <v-menu open-on-hover top offset-y>
-                <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-                  <v-card>
-                    <v-card-text >
-                      <br>
-                      <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
-                      <br>
-                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
-                      <br>
-                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                      <br><br>
-                    </v-card-text>
-                  </v-card>
-              </v-menu>
-            </span>
-            <p class="text-xs-right" style="margin-top:-37px">
-              <v-menu bottom offset-y style="color:black">
-                <v-btn flat slot="activator"
-                ><v-icon style="padding-right:4px">input</v-icon>
-                Export</v-btn>
-                <v-list>
-                  <div v-if="component==='GeneticTestingRegistry'">
-                    <v-list-tile @click="copyGtrGenes">
-                      <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
-                    </v-list-tile>
-                    <v-list-tile @click="exportGtrGenes">
-                      <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
-                    </v-list-tile>
-                    <hr>
-                  </div>
-                  <div v-else-if="component==='Phenolyzer'">
-                    <v-list-tile @click="copyPhenolyzerGenes">
-                      <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
-                    </v-list-tile>
-                    <v-list-tile @click="exportPhenolyzerGenes">
-                      <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
-                    </v-list-tile>
-                    <hr>
-                  </div>
-                  <v-list-tile @click="copyAllGenes">
-                    <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile @click="exportAllGenes">
-                    <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
+        <v-flex xs10 offset-xs1>
+          <v-card style="margin-left: 5px;margin-right:  5px;">
+            <div style="width:100%; height:64px; background:white">
+              <v-card-text>
+                <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
+                  <strong style="color:#222">Genetic Testing Registry</strong>
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                      <v-card>
+                        <v-card-text >
+                          <br>
+                          <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                          <br>
+                          The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                          <br>
+                          The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                          <br><br>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </span>
+                <span v-else-if="component==='Phenolyzer'" style="font-size:18px">
+                  Phenolyzer
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                      <v-card>
+                        <v-card-text >
+                          <br>
+                          Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                          <br>
+                          <strong>Phenolyzer</strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
+                          <br>
+                          <a href="http://phenolyzer.wglab.org/">Read more</a>
+                          <br><br>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </span>
+                <span v-else-if="component==='SummaryTab'" style="font-size:18px">
+                  Summary
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                      <v-card>
+                        <v-card-text >
+                          <br>
+                          <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                          <br>
+                          The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                          <br>
+                          The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                          <br><br>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </span>
+                <p class="text-xs-right" style="margin-top:-37px">
+                  <v-menu bottom offset-y style="color:black">
+                    <v-btn flat slot="activator"
+                    ><v-icon style="padding-right:4px">input</v-icon>
+                      <strong style="color:#222">Export</strong>
+                    </v-btn>
+                    <v-list>
+                      <div v-if="component==='GeneticTestingRegistry'">
+                        <v-list-tile @click="copyGtrGenes">
+                          <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="exportGtrGenes">
+                          <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
+                        </v-list-tile>
+                        <hr>
+                      </div>
+                      <div v-else-if="component==='Phenolyzer'">
+                        <v-list-tile @click="copyPhenolyzerGenes">
+                          <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="exportPhenolyzerGenes">
+                          <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
+                        </v-list-tile>
+                        <hr>
+                      </div>
+                      <v-list-tile @click="copyAllGenes">
+                        <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile @click="exportAllGenes">
+                        <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
 
 
-              <v-menu bottom offset-y style="color:black">
-                <v-btn flat slot="activator"
-                  ><v-icon style="padding-right:4px">apps</v-icon>
-                </v-btn>
-                <v-list>
-                  <v-list-tile >
-                    <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile >
-                    <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile >
-                    <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
+                  <v-menu bottom offset-y style="color:black">
+                    <v-btn flat slot="activator"
+                      ><v-icon style="padding-right:4px">apps</v-icon>
+                    </v-btn>
+                    <v-list>
+                      <v-list-tile >
+                        <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile >
+                        <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile >
+                        <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
 
-            </p>
-          </v-card-text>
+                </p>
+              </v-card-text>
 
-        </div>
+            </div>
+          </v-card>
+
+        </v-flex>
 
         <keep-alive>
 

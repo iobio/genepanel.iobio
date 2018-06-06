@@ -17,7 +17,7 @@
         </v-snackbar>
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
-            <v-flex d-flex xs12>
+            <v-flex d-flex xs10 offset-xs1>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
                   <!-- <div class="mb-1">
@@ -66,7 +66,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex d-flex xs12 >
+            <v-flex d-flex xs10 offset-xs1 >
               <v-card >
                 <!-- chip to display number of genes selected  -->
                 <!-- <v-card-title primary class="title" style="padding-bottom:">
@@ -618,15 +618,17 @@ export default {
   }
   .btn{
     padding: 0px;
-    height:34px;
+    height:39px;
   }
   .form-control{
     font-size: 15px;
   }
  #top-genes-input{
    width: 200px;
-   height:35px;
+   height:40px;
    margin-top: 4px;
+   background-color: #F4F4F4;
+   border-color: #F4F4F4;
  }
 
 </style>

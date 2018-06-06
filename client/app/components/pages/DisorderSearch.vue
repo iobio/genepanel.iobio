@@ -9,7 +9,7 @@
           class="form-control"
           type="text"
           autocomplete="off"
-          placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
+          placeholder="Treacher Collins Syndrome">
         <typeahead
           match-start
           v-model="search"
@@ -243,15 +243,17 @@ var model = new Model();
  }
  .btn{
    padding: 0px;
-   height:34px;
+   height:39px;
  }
  .form-control{
    font-size: 15px;
  }
 #input{
   width: 600px;
-  height:35px;
+  height:40px;
   margin-top: 4px;
+  background-color: #F4F4F4;
+  border-color: #F4F4F4;
 }
 
 /* Media Queries */

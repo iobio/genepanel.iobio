@@ -85,6 +85,7 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
+            <td>{{ (props.index + 1) * pagination.page}}</td>
             <td>
               <div id="app">
                 <div>
@@ -197,6 +198,12 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
+          {
+            text: 'Index',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
           {
             text: 'Name',
             align: 'left',
