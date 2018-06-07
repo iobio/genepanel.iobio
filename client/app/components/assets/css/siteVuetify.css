@@ -10,8 +10,8 @@ html {
 
 .application.theme--light {
   background: #fafafa;
-  color:  rgb(113,113,113);
-  fill:  rgb(113,113,113);
+  color:  #222;
+  fill:  #222;
 }
 
 .theme--light .card,
@@ -19,13 +19,13 @@ html {
 .application .theme--light.list,
 .theme--light .list
  {
-  color:  rgb(113,113,113);
-  fill:  rgb(113,113,113);
+  color:  #222;
+  fill:  #222;
 }
 
 .theme--light .input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active), .application .theme--light.input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
-  color:  rgb(113,113,113);
-  fill:  rgb(113,113,113);
+  color:  #222;
+  fill:  #222;
 }
 
 .btn {

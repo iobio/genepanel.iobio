@@ -27,12 +27,13 @@
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="component='GeneticTestingRegistry'">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
-           <v-icon>dashboard</v-icon>
+           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>
              Genetic Testing Registry
-             <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
+             <v-badge color="red darken-1" right style="background-color:#fff0; font-size:18px">
                <span  slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
              </v-badge>
            </v-list-tile-title>
@@ -43,12 +44,13 @@
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="component='Phenolyzer'">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
-           <v-icon>dashboard</v-icon>
+           <span v-if="component==='Phenolyzer'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>
              Phenolyzer
-             <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
+             <v-badge color="red" right style="background-color:#fff0; font-size:18px">
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             </v-badge>
            </v-list-tile-title>
@@ -60,12 +62,13 @@
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="component='SummaryTab'">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
-           <v-icon>dashboard</v-icon>
+           <span v-if="component==='SummaryTab'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>
              Summary
-             <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
+             <v-badge color="red" right style="background-color:#fff0; font-size:18px">
               <span slot="badge">{{ NumberOfAllGenes }}</span>
             </v-badge>
            </v-list-tile-title>
@@ -75,7 +78,7 @@
        <v-divider></v-divider>
        <v-list-tile @click="">
          <v-list-tile-action>
-           <v-icon>dashboard</v-icon>
+           <v-icon>settings</v-icon>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>Settings</v-list-tile-title>
@@ -83,7 +86,7 @@
        </v-list-tile>
        <v-list-tile @click="">
          <v-list-tile-action>
-           <v-icon>dashboard</v-icon>
+           <v-icon>help</v-icon>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>Help</v-list-tile-title>
@@ -91,27 +94,6 @@
        </v-list-tile>
      </v-list>
 
-    <!-- <v-list dense>
-            <keep-alive>
-              <FilterGTR
-                v-if="component==='GeneticTestingRegistry'"
-                v-bind:vendorsData="vendorList"
-                v-on:setSelectedVendors="updateSelectedVendors($event)"
-                v-bind:disordersData="disorderList"
-                v-on:setSelectedDisorders="updateSelectedDisorders($event)"
-                :chartColor="ordinalColor"
-                :barColor="barColor"
-                v-bind:modeOfInheritanceProps="modeOfInheritanceProps"
-                v-bind:GeneMembershipProps="GeneMembershipProps">
-              </FilterGTR>
-              <FilterPhenolyzer
-                v-else-if="component==='Phenolyzer'">
-              </FilterPhenolyzer>
-              <FilterSummary
-                v-else-if="component='SummaryTab'">
-              </FilterSummary>
-            </keep-alive>
-    </v-list> -->
     </v-navigation-drawer>
     <v-toolbar
       :class="launchedFromClin ? 'clin' : '' "
@@ -281,81 +263,6 @@
           </keep-alive>
       </v-content>
     </div>
-<!--
-    <div  >
-      <v-tabs class="fixed-top-tabs"
-        light tabs
-        grow
-      >
-          <v-tab v-on:click="component='GeneticTestingRegistry'">
-          <div class="text-xs-center">
-            <v-badge color="cyan" right style="background-color:white !important; font-size:18px">
-              <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-              <span class="tabTitle">Genetic Testing Registry</span>
-            </v-badge>
-          </div>
-        </v-tab>
-
-        <v-tab v-on:click="component='Phenolyzer'">
-          <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
-            <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
-            <span class="tabTitle">Phenolyzer</span>
-          </v-badge>
-          </div>
-        </v-tab>
-        <v-tab v-on:click="component='SummaryTab'">
-          <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
-            <span slot="badge">{{ NumberOfAllGenes }}</span>
-            <span class="tabTitle">Summary</span>
-          </v-badge>
-          </div>
-        </v-tab>
-      </v-tabs>
-    </div>
-        <v-tabs-items class="tab-content" >
-          <keep-alive>
-
-            <GeneticTestingRegistry
-              v-if="component==='GeneticTestingRegistry'"
-              v-on:vendorListCB="updateVendors($event)"
-              v-bind:selectedVendorsListCB="selectedVendorsList"
-              v-on:diseasesCB=addDiseases($event)
-              v-on:disorderNamesListCB="updateDisorderNames($event)"
-              v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
-              v-on:GeneMembershipData="GeneMembershipData($event)"
-              v-bind:selectedDisordersListCB="selectedDisordersList"
-              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
-              :chartColor="ordinalColor"
-              :barColor="barColor"
-              @search-gtr="onSearchGTR">
-            </GeneticTestingRegistry>
-
-            <Phenolyzer
-              v-if="component==='Phenolyzer'"
-              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-              @search-phenotype="onSearchPhenotype">
-            </Phenolyzer>
-            <SummaryTab
-              v-else-if="component==='SummaryTab'"
-              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
-              v-bind:GtrGenesForSummary="selectedGtrGenes"
-              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
-              :chartColor="ordinalColor">
-            </SummaryTab>
-          </keep-alive>
-        </v-tabs-items> -->
-
-
-
-
-    <!-- </v-content> -->
-
-
 
   </v-app>
 </div>
@@ -647,11 +554,11 @@ import DisorderSearch from './DisorderSearch.vue';
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-.activeTab{
+/* .activeTab{
   background-color:#D8D8D8;
   color:#ED8059;
   border-left: 8px solid #ED8059;
-}
+} */
 
 .margin_ActiveTab{
   margin-left: -8px
@@ -680,6 +587,10 @@ import DisorderSearch from './DisorderSearch.vue';
 .tabs__slider { /* This is for the tabs slider */
   height:4px;
 
+}
+
+a:hover {
+  text-decoration: none
 }
 
 .badge__badge{
@@ -837,6 +748,12 @@ button.btnColor.blue.darken-1
 
 .tab-content
   margin-top: 120px
+
+.activeTab
+  background-color: #D8D8D8
+  color: #e53935
+  font-weight: 400
+  border-left: 8px solid $app-color
 
 .close-button
   padding-right: 0px

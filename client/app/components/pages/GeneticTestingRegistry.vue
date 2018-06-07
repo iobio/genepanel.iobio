@@ -24,7 +24,7 @@
                     The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                   </div> -->
                   <v-layout row wrap>
-                    <v-flex  xs7 >
+                    <v-flex  xs8 >
                       <DisorderSearch
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
@@ -32,7 +32,7 @@
                       </DisorderSearch>
                     </v-flex>
 
-                    <v-flex  xs3 >
+                    <v-flex  xs4 >
                       <div style="display:inline-block; padding-top:5px;">
                         <label>Genes</label>
                         <input
@@ -52,14 +52,13 @@
 
                       <v-btn
                           style="margin-top:-0.35px"
-                          color="blue darken-1"
                           class="btnColor"
                           v-on:click.prevent="selectNumberOfTopGenes">
                         Go
                       </v-btn>
                     </v-flex>
-                    <v-flex  xs2 >
-                    </v-flex>
+                    <!-- <v-flex  xs2 >
+                    </v-flex> -->
                   </v-layout>
 
                 </v-card-text>
@@ -78,7 +77,7 @@
                   <v-layout row wrap>
                     <!-- insert here  -->
 
-                    <v-flex  xs8 >
+                    <v-flex  xs7 >
                        <show-gene-panel1
                        v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
                          v-bind:GeneData="geneProps"
@@ -92,7 +91,7 @@
                     </v-flex>
 
 
-                   <v-flex xs4 class="pr-2 pl-1" >
+                   <v-flex xs5 class="pr-2 pl-1" >
                      <div class="d-flex mb-2 xs12">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>
@@ -106,8 +105,10 @@
                         </v-card-title>
                        </v-card>
                      </div>
+                     <br>
+
                      <div class="d-flex mt-1 mb-2 xs12">
-                       <v-card v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent==='GeneCard' ? 'activeCardBox' : '']" v-if="geneProps.length">
                          <v-card-title primary-title>
                           <div>
                             <div style="font-size:16px">
@@ -134,6 +135,7 @@
                         </v-card-title>
                        </v-card>
                      </div>
+                    <br>
 
                     <div class="d-flex mt-1 mb-2 xs12">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 1">
@@ -171,10 +173,10 @@
                           </v-card-title>
                         <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
                           <v-card-title>
-                            <PieChartSelectorBackup
+                            <PieChartSelector
                               v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                               :color="chartColor">
-                            </PieChartSelectorBackup>
+                            </PieChartSelector>
                             <br>
                             <v-card flat >
                               <v-card-text>
@@ -202,6 +204,7 @@
                     </div>
                   </div>
 
+                  <br>
                     <div class="d-flex mb-2 xs12">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
@@ -250,6 +253,7 @@
                       </div>
                     </div>
 
+                    <br>
                     <div class="d-flex xs12">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
@@ -375,9 +379,9 @@
 import DisorderSearch from './DisorderSearch.vue';
 import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
-import ShowGenePanel1 from './ShowGenePanel1.vue';
+import ShowGenePanel from './ShowGenePanel.vue';
 import { bus } from '../../routes';
-import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
+import PieChartSelector from '../viz/PieChartSelector.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import GeneMembership from '../viz/GeneMembership.vue'
 
@@ -386,8 +390,8 @@ export default {
     'DisorderSearch': DisorderSearch,
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
-    'show-gene-panel1': ShowGenePanel1,
-    'PieChartSelectorBackup': PieChartSelectorBackup,
+    'show-gene-panel1': ShowGenePanel,
+    'PieChartSelector': PieChartSelector,
     'ConditionsDistribution': ConditionsDistribution,
     'GeneMembership': GeneMembership
   },
@@ -610,11 +614,13 @@ export default {
     margin-left: 8px;
   }
   .activeCardBox{
-    border: 1px solid #F16335;
-    box-shadow: 0 2px 6px 0 #F16335;
+    /* border: 1px solid #F16335; */
+    box-shadow: 0 2px 6px 0 #CC423F;
   }
   .btnColor{
     color: white;
+    background-color: #D04F4C !important;
+    border-radius: 5px;
   }
   .btn{
     padding: 0px;
@@ -630,5 +636,15 @@ export default {
    background-color: #F4F4F4;
    border-color: #F4F4F4;
  }
+
+</style>
+
+<style lang="sass">
+@import ../assets/sass/variables
+
+.activeCardBox
+  box-shadow: 0 2px 6px 0 $app-color
+
+
 
 </style>

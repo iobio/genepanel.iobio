@@ -85,12 +85,12 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <td>{{ (props.index + 1) * pagination.page}}</td>
+            <td><strong>{{ (props.index + 1) * pagination.page}}</strong></td>
             <td>
               <div id="app">
                 <div>
                   <v-menu open-on-hover top offset-y>
-                    <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                    <span style="font-size:13px; margin-top:2px" slot="activator"><strong>{{ props.item.name }}</strong></span>
                       <v-card>
                         <v-card-text style="margin-top:-22px">
                           <center ><h3>{{ props.item.name }}</h3></center>
@@ -409,7 +409,7 @@ var model = new Model();
           x.searchTermIndex = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
-                  <circle cx="10" cy="15" r="10" fill="#0093a5" />
+                  <circle cx="10" cy="15" r="10" fill="#C3403D" />
                   <text x="10" y="15" text-anchor="middle" fill="white" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })

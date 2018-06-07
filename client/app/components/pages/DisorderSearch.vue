@@ -22,7 +22,6 @@
 
       <v-btn
           style="margin-top:-0.35px"
-          color="blue darken-1"
           class="btnColor"
           v-on:click.prevent="performSearch">
         Go
@@ -240,6 +239,8 @@ var model = new Model();
 <style scoped>
  .btnColor{
    color: white;
+   background-color: #D04F4C !important;
+   border-radius: 5px;
  }
  .btn{
    padding: 0px;
