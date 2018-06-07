@@ -1,6 +1,8 @@
 <template>
   <div id="app">
   <v-app id="inspire">
+    <!-- <back-to-top text="Back to top" visibleoffset="500"></back-to-top> -->
+
     <v-snackbar
         :timeout="snackbarTimeout"
         :top="y === 'top'"
@@ -15,160 +17,216 @@
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
     <v-navigation-drawer
-      fixed
-      :stateless="true"
-      width=475
-      :clipped="$vuetify.breakpoint.mdAndUp"
+      style="background: #F5F6F7; "
+      permanent
       app
-      v-model="drawer"
     >
-    <v-list >
-          <v-list-tile>
-            <v-list-tile-title class="title">
-              Filter
-            </v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-        <v-btn  class="close-button" @click="drawer = false" flat>
-          <v-icon>close</v-icon>
-        </v-btn>
-    <v-list dense>
-            <keep-alive>
-              <FilterGTR
-                v-if="component==='GeneticTestingRegistry'"
-                v-bind:vendorsData="vendorList"
-                v-on:setSelectedVendors="updateSelectedVendors($event)"
-                v-bind:disordersData="disorderList"
-                v-on:setSelectedDisorders="updateSelectedDisorders($event)"
-                :chartColor="ordinalColor"
-                :barColor="barColor"
-                v-bind:modeOfInheritanceProps="modeOfInheritanceProps"
-                v-bind:GeneMembershipProps="GeneMembershipProps">
-              </FilterGTR>
-              <FilterPhenolyzer
-                v-else-if="component==='Phenolyzer'">
-              </FilterPhenolyzer>
-              <FilterSummary
-                v-else-if="component='SummaryTab'">
-              </FilterSummary>
-            </keep-alive>
-    </v-list>
+    <br>
+     <v-list dense class="pt-0">
+       <v-list-tile
+          v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
+          @click="component='GeneticTestingRegistry'">
+         <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title>
+             Genetic Testing Registry
+             <v-badge color="red darken-1" right style="background-color:#fff0; font-size:18px">
+               <span  slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
+             </v-badge>
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
+       <v-list-tile
+          v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
+          @click="component='Phenolyzer'">
+         <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='Phenolyzer'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title>
+             Phenolyzer
+             <v-badge color="red" right style="background-color:#fff0; font-size:18px">
+              <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
+            </v-badge>
+           </v-list-tile-title>
+
+         </v-list-tile-content>
+       </v-list-tile>
+
+       <v-list-tile
+          v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
+          @click="component='SummaryTab'">
+         <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='SummaryTab'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title>
+             Summary
+             <v-badge color="red" right style="background-color:#fff0; font-size:18px">
+              <span slot="badge">{{ NumberOfAllGenes }}</span>
+            </v-badge>
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
+       <v-divider></v-divider>
+       <v-list-tile @click="">
+         <v-list-tile-action>
+           <v-icon>settings</v-icon>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title>Settings</v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+       <v-list-tile @click="">
+         <v-list-tile-action>
+           <v-icon>help</v-icon>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title>Help</v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+     </v-list>
+
     </v-navigation-drawer>
     <v-toolbar
       :class="launchedFromClin ? 'clin' : '' "
       dark
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
+      style="width:300px"
     >
       <v-toolbar-title >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span >panel.iobio</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
 
-      <v-btn flat @click="drawer = !drawer">
-        <v-icon>filter_list</v-icon>
-        Filter
-      </v-btn>
-
-      <v-menu bottom offset-y>
-          <v-btn flat slot="activator"
-          ><v-icon style="padding-right:4px">input</v-icon>
-          Export</v-btn>
-          <v-list>
-            <div v-if="component==='GeneticTestingRegistry'">
-              <v-list-tile @click="copyGtrGenes">
-                <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="exportGtrGenes">
-                <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
-              </v-list-tile>
-              <hr>
-            </div>
-            <div v-else-if="component==='Phenolyzer'">
-              <v-list-tile @click="copyPhenolyzerGenes">
-                <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="exportPhenolyzerGenes">
-                <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
-              </v-list-tile>
-              <hr>
-            </div>
-            <v-list-tile @click="copyAllGenes">
-              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
-            </v-list-tile>
-            <v-list-tile @click="exportAllGenes">
-              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-
-        <v-menu bottom offset-y style="">
-            <v-btn flat slot="activator">Help</v-btn>
-            <v-list>
-              <v-list-tile @click="onShowDisclaimer">
-                <v-list-tile-title>Disclaimer</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="onShowVersion">
-                <v-list-tile-title>Version</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile>
-                <v-list-tile-title>Software and Resources</v-list-tile-title>
-              </v-list-tile>
-
-              <v-divider></v-divider>
-
-              <v-list-tile >
-                <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io/tags/gene.iobio/" target="_iobio">Blog</a></v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile >
-                <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://gene.iobio.io/help_resources.html" target="_iobio">Tutorials</a></v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile >
-              <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io" target=")iobio">iobio</a></v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile >
-                <v-list-tile-title><a style="color: rgba(0,0,0,.87)" href="http://iobio.io/support.html" target=")iobio">Support the iobio project</a></v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-        </v-menu>
     </v-toolbar>
-    <v-content style="">
 
-    <div  >
-      <v-tabs class="fixed-top-tabs"
-        light tabs
-        grow
-      >
-          <v-tab v-on:click="component='GeneticTestingRegistry'">
-          <div class="text-xs-center">
-            <v-badge color="cyan" right style="background-color:white !important; font-size:18px">
-              <span style="paddin:20px" slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
-              <span class="tabTitle">Genetic Testing Registry</span>
-            </v-badge>
-          </div>
-        </v-tab>
+    <div>
+      <v-content>
+        <v-flex xs10 offset-xs1>
+          <v-card style="margin-left: 5px;margin-right:  5px;">
+            <div style="width:100%; height:64px; background:white">
+              <v-card-text>
+                <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
+                  <strong style="color:#222">Genetic Testing Registry</strong>
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                      <v-card>
+                        <v-card-text >
+                          <br>
+                          <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                          <br>
+                          The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                          <br>
+                          The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                          <br><br>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </span>
+                <span v-else-if="component==='Phenolyzer'" style="font-size:18px">
+                  Phenolyzer
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                      <v-card>
+                        <v-card-text >
+                          <br>
+                          Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                          <br>
+                          <strong>Phenolyzer</strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
+                          <br>
+                          <a href="http://phenolyzer.wglab.org/">Read more</a>
+                          <br><br>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </span>
+                <span v-else-if="component==='SummaryTab'" style="font-size:18px">
+                  Summary
+                  <v-menu open-on-hover top offset-y>
+                    <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+                      <v-card>
+                        <v-card-text >
+                          <br>
+                          <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                          <br>
+                          The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                          <br>
+                          The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                          <br><br>
+                        </v-card-text>
+                      </v-card>
+                  </v-menu>
+                </span>
+                <p class="text-xs-right" style="margin-top:-37px">
+                  <v-menu bottom offset-y style="color:black">
+                    <v-btn flat slot="activator"
+                    ><v-icon style="padding-right:4px">input</v-icon>
+                      <strong style="color:#222">Export</strong>
+                    </v-btn>
+                    <v-list>
+                      <div v-if="component==='GeneticTestingRegistry'">
+                        <v-list-tile @click="copyGtrGenes">
+                          <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="exportGtrGenes">
+                          <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
+                        </v-list-tile>
+                        <hr>
+                      </div>
+                      <div v-else-if="component==='Phenolyzer'">
+                        <v-list-tile @click="copyPhenolyzerGenes">
+                          <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="exportPhenolyzerGenes">
+                          <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
+                        </v-list-tile>
+                        <hr>
+                      </div>
+                      <v-list-tile @click="copyAllGenes">
+                        <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile @click="exportAllGenes">
+                        <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
 
-        <v-tab v-on:click="component='Phenolyzer'">
-          <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
-            <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
-            <span class="tabTitle">Phenolyzer</span>
-          </v-badge>
-          </div>
-        </v-tab>
-        <v-tab v-on:click="component='SummaryTab'">
-          <div class="text-xs-center">
-          <v-badge color="cyan" right style="background-color:#fff0; font-size:18px">
-            <span slot="badge">{{ NumberOfAllGenes }}</span>
-            <span class="tabTitle">Summary</span>
-          </v-badge>
-          </div>
-        </v-tab>
-      </v-tabs>
-    </div>
-        <v-tabs-items class="tab-content" >
-          <keep-alive>
+
+                  <v-menu bottom offset-y style="color:black">
+                    <v-btn flat slot="activator"
+                      ><v-icon style="padding-right:4px">apps</v-icon>
+                    </v-btn>
+                    <v-list>
+                      <v-list-tile >
+                        <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile >
+                        <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
+                      </v-list-tile>
+                      <v-list-tile >
+                        <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
+
+                </p>
+              </v-card-text>
+
+            </div>
+          </v-card>
+
+        </v-flex>
+
+        <keep-alive>
 
             <GeneticTestingRegistry
               v-if="component==='GeneticTestingRegistry'"
@@ -203,42 +261,8 @@
               :chartColor="ordinalColor">
             </SummaryTab>
           </keep-alive>
-        </v-tabs-items>
-
-
-
-
-    </v-content>
-
-    <v-dialog v-model="showDisclaimer" max-width="600">
-        <v-card>
-          <v-card-title class="headline">Disclaimer</v-card-title>
-          <v-card-text>
-                  The University of Utah makes no claims that iobio applications, including gene.iobio are approved for clinical use. All users of iobio applications including gene.iobio understand and accept that any information gained by using these applications, whether the information comes from visualization, processing, internal or external databases, or analysis, may not in any way be used for clinical purposes. The University of Utah makes no representation that iobio or gene.iobio is either safe or effective for any intended use for which research may currently be performed.
-                  <br><br>
-                  iobio, or any iobio applications ARE TO BE USED FOR RESEARCH PURPOSES ONLY. USE FOR CLINICAL PURPOSES IS EXPRESSLY FORBIDDEN. Approval of iobio applications for clinical use has neither been applied for, nor received, in any country, including the United States of America.
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn raised  @click.native="showDisclaimer = false">Close</v-btn>
-          </v-card-actions>
-        </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="showVersion" max-width="600">
-        <v-card>
-          <v-card-title class="headline">Version</v-card-title>
-          <v-card-text>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                  <br><br>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn raised  @click.native="showVersion = false">Close</v-btn>
-          </v-card-actions>
-        </v-card>
-    </v-dialog>
-
+      </v-content>
+    </div>
 
   </v-app>
 </div>
@@ -530,6 +554,17 @@ import DisorderSearch from './DisorderSearch.vue';
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+/* .activeTab{
+  background-color:#D8D8D8;
+  color:#ED8059;
+  border-left: 8px solid #ED8059;
+} */
+
+.margin_ActiveTab{
+  margin-left: -8px
+}
+
+
 .tabs__container{
   height:50px;
   font-family: 'Open Sans', sans-serif;
@@ -554,15 +589,19 @@ import DisorderSearch from './DisorderSearch.vue';
 
 }
 
+a:hover {
+  text-decoration: none
+}
+
 .badge__badge{
-  height:26.5px;
-  width: 26.5px;
+  height:23px;
+  width: 23px;
   background-color: #66d4ed;
-  color: black;
+  /* color: black; */
 }
 
 .badge__badge, .badge__badge .icon{
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .primary{
@@ -709,6 +748,12 @@ button.btnColor.blue.darken-1
 
 .tab-content
   margin-top: 120px
+
+.activeTab
+  background-color: #D8D8D8
+  color: #e53935
+  font-weight: 400
+  border-left: 8px solid $app-color
 
 .close-button
   padding-right: 0px

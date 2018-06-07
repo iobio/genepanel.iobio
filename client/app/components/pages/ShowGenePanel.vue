@@ -19,10 +19,10 @@
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
-
-      <v-card-title style="padding-top:0px">
+      <!-- <v-card-title style="padding-top:0px">
         <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
           <v-select
+          outline
           v-model="NumberOfTopGenes"
           label="Select Genes"
           hide-details
@@ -41,7 +41,7 @@
           v-model="search"
           style="margin-left:30px;max-width:200px;vertical-align:bottom"
         ></v-text-field>
-      </v-card-title>
+      </v-card-title> -->
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -75,7 +75,8 @@
           </tr>
         </template>
         <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
+          <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
+          <tr :active="props.selected">
             <td>
               <v-checkbox
                 primary
@@ -84,11 +85,12 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
+            <td><strong>{{ (props.index + 1) * pagination.page}}</strong></td>
             <td>
               <div id="app">
                 <div>
                   <v-menu open-on-hover top offset-y>
-                    <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                    <span style="font-size:13px; margin-top:2px" slot="activator"><strong>{{ props.item.name }}</strong></span>
                       <v-card>
                         <v-card-text style="margin-top:-22px">
                           <center ><h3>{{ props.item.name }}</h3></center>
@@ -116,6 +118,30 @@
               </span>
             </td>
             <td><span v-html="props.item.htmlData"></span></td>
+            <td>
+              <v-menu bottom offset-y style="color:black">
+                <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+
+                <v-list>
+                  <v-list-tile >
+                    <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
+                  </v-list-tile>
+                  <hr>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+            </td>
             <td style="font-size:0">{{ props.item.value }}</td>
           </tr>
         </template>
@@ -149,6 +175,9 @@ var model = new Model();
       GeneData: {
         type: Array
       },
+      geneSearch: {
+        type: String
+      }
     },
     data(){
       return {
@@ -170,6 +199,12 @@ var model = new Model();
         selected: [],
         headers: [
           {
+            text: 'Index',
+            align: 'left',
+            sortable: false,
+            value: 'name'
+          },
+          {
             text: 'Name',
             align: 'left',
             sortable: false,
@@ -177,6 +212,7 @@ var model = new Model();
           },
           { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+          { text: 'More', align: 'left', sortable: false, value: '' },
           {
             text: '',
             value: ['haploScore', 'value', 'omimSrc'],
@@ -244,12 +280,14 @@ var model = new Model();
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
           this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+          this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         }
       })
 
       this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       this.$emit("SelectedGenesToCopy", this.selected);
+      this.$emit("TotalNoOfGenesFromGTR", this.items.length);
 
     },
     watch: {
@@ -260,6 +298,9 @@ var model = new Model();
       },
       NumberOfTopGenes: function() {
         this.selectNumberOfTopGenes();
+      },
+      geneSearch: function(){
+        this.search = this.geneSearch;
       }
     },
     methods:{
@@ -271,6 +312,7 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       filterGenesOnSelectedNumberOfPanels(data){
         // console.log("items in filterGenesOnSelectedNumber", this.items);
@@ -286,12 +328,14 @@ var model = new Model();
             this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
             this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
             this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+            this.$emit("TotalNoOfGenesFromGTR", this.items.length);
           }
           else{
             this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
             this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
             this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
             this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+            this.$emit("TotalNoOfGenesFromGTR", this.items.length);
           }
         }
         else {
@@ -299,6 +343,7 @@ var model = new Model();
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
           this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+          this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         }
 
       },
@@ -353,7 +398,7 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
-
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         bus.$emit("GeneDistributionChartData", this.items);
 
         this.dataForTables = data.slice(0,10);
@@ -364,7 +409,7 @@ var model = new Model();
           x.searchTermIndex = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
-                  <circle cx="10" cy="15" r="10" fill="#0093a5" />
+                  <circle cx="10" cy="15" r="10" fill="#C3403D" />
                   <text x="10" y="15" text-anchor="middle" fill="white" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
@@ -376,12 +421,14 @@ var model = new Model();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       deSelectAllGenes: function(){
         this.selected = [];
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       selectNumberOfTopGenes: function(){
         setTimeout(()=>{

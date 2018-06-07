@@ -62,11 +62,11 @@
           <v-card>
             <v-card-text>
               <br>
-              <PieChartSelectorBackup
+              <PieChartSelector
                 v-if="modeOfInheritanceList.length > 1"
                 v-bind:modeOfInheritanceData="modeOfInheritanceList"
                 :color="chartColor">
-              </PieChartSelectorBackup>
+              </PieChartSelector>
               <br>
                 <v-btn small v-on:click="SelectAllDisorders" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
                 <v-btn small v-on:click="deSelectAllDisorders" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
@@ -171,13 +171,13 @@
 
 <script>
 import { bus } from '../../routes';
-import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
+import PieChartSelector from '../viz/PieChartSelector.vue';
 import GeneMembership from '../viz/GeneMembership.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 
   export default {
     components:{
-      'PieChartSelectorBackup': PieChartSelectorBackup,
+      'PieChartSelector': PieChartSelector,
       'GeneMembership': GeneMembership,
       'ConditionsDistribution': ConditionsDistribution
     },

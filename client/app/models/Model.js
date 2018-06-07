@@ -398,8 +398,8 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = (width - 400)/sortedGenes[0]._genePanelCount;
-    var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
+    var multiplicationFactor = (width - 520)/sortedGenes[0]._genePanelCount;
+    var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor;
       return sortedGenes.map(function(gene, idx) {
         return {
               key: idx,
@@ -416,6 +416,7 @@ mergeGenesAcrossPanels(genePanels) {
               ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`,
 //            <stop offset="5%"  stop-color="#36D1DC"/>
 //            <stop offset="95%" stop-color="#5B86E5"/>
+//            <rect fill="url(#MyGradient)"
               htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="MyGradient">
@@ -425,9 +426,9 @@ mergeGenesAcrossPanels(genePanels) {
                                 </linearGradient>
                             </defs>
 
-                            <rect fill="url(#MyGradient)"
+                            <rect fill="#D04F4C"
                                   x="10" y="1" width="${gene._genePanelCount * multiplicationFactor}" height="18"/>
-                            <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="14" font-family="Verdana" font-size="13" fill="white">${gene._genePanelCount}</text>
+                            <text x="${gene._genePanelCount * multiplicationFactor/1.4}" y="14" font-family="Verdana" font-size="13" fill="white">${gene._genePanelCount}</text>
                         </svg>`,
 
             };

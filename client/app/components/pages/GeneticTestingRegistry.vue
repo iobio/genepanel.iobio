@@ -2,80 +2,355 @@
   <div>
     <div id="app">
       <v-app id="inspire">
+        <v-snackbar
+          :timeout="snackbarTimeout"
+          :top="y === 'top'"
+          :bottom="y === 'bottom'"
+          :right="x === 'right'"
+          :left="x === 'left'"
+          :multi-line="mode === 'multi-line'"
+          :vertical="mode === 'vertical'"
+          v-model="snackbar"
+        >
+          {{ snackbarText }}
+          <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
+        <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button>
+
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
-            <v-flex d-flex xs12>
+            <v-flex d-flex xs10 offset-xs1>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
-                  <div class="mb-1">
+                  <!-- <div class="mb-1">
                     The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                  </div>
+                  </div> -->
+                  <v-layout row wrap>
+                    <v-flex  xs8 >
+                      <DisorderSearch
+                        v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
+                        v-on:showDiseases="addDiseases($event)"
+                        @search-gtr="onSearchGTR">
+                      </DisorderSearch>
+                    </v-flex>
 
-                  <DisorderSearch
-                    v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
-                    v-on:showDiseases="addDiseases($event)"
-                    @search-gtr="onSearchGTR">
-                  </DisorderSearch>
+                    <v-flex  xs4 >
+                      <div style="display:inline-block; padding-top:5px;">
+                        <label>Genes</label>
+                        <input
+                          :disabled="geneProps.length<1"
+                          id="top-genes-input"
+                          class="form-control"
+                          type="text"
+                          v-model="NumberOfTopGenes"
+                          autocomplete="off"
+                          list="genes"
+                          placeholder="50">
+                          <datalist id="genes">
+                            <option v-for="genesCount in genesTopCounts">
+                              {{ genesCount }}
+                            </option>
+                          </datalist>
+                      </div>
+
+                      <v-btn
+                          :disabled="geneProps.length<1"
+                          style="margin-top:-0.35px"
+                          class="btnColor"
+                          v-on:click.prevent="selectNumberOfTopGenes">
+                        Go
+                      </v-btn>
+                    </v-flex>
+                    <!-- <v-flex  xs2 >
+                    </v-flex> -->
+                  </v-layout>
 
                 </v-card-text>
               </v-card>
             </v-flex>
 
-            <v-flex d-flex xs12 >
+            <v-flex d-flex xs10 offset-xs1 >
               <v-card >
-                <v-card-title primary class="title" style="padding-bottom:">
+                <!-- chip to display number of genes selected  -->
+                <!-- <v-card-title primary class="title" style="padding-bottom:">
                    <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
                       <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
                    </span>
-                </v-card-title>
+                </v-card-title> -->
+                <div v-if="!disordersSearchedByUser">
+                  <v-card-title>
+                      <h3>What is Genetic Testing Registry?</h3>
+                      <br>
+                      The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers.
+                      <br>
+                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                      <br>
+                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                      <br><br>
+
+                  </v-card-title>
+                </div>
 
                   <v-layout row wrap>
-                   <v-flex xs4 class="pr-4 pl-5" >
-                    <!-- <div class="d-flex mt-1 mb-2 xs12">
+                    <!-- insert here  -->
 
-                      <PieChartSelectorBackup
-                        v-if="diseases.length && modeOfInheritanceProps.length > 1"
-                        v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                        :color="chartColor">
-                      </PieChartSelectorBackup>
+                    <v-flex  xs7 >
+                       <show-gene-panel1
+                       v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
+                         v-bind:GeneData="geneProps"
+                         v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                         v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
+                         v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
+                         v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
+                         v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
+                         v-bind:geneSearch="geneSearch">
+                       </show-gene-panel1>
+                    </v-flex>
 
-                    </div> -->
+
+                   <v-flex xs5 class="pr-2 pl-1" >
+                     <div class="d-flex mb-2 xs12">
+                       <v-card v-if="geneProps.length">
+                        <v-card-title primary-title>
+                          <v-text-field
+                            append-icon="search"
+                            label="Search Genes"
+                            single-line
+                            hide-details
+                            v-model="geneSearch"
+                          ></v-text-field>
+                        </v-card-title>
+                       </v-card>
+                     </div>
+                     <br>
+
+                     <div class="d-flex mt-1 mb-2 xs12">
+                       <v-card v-bind:class="[chartComponent==='GeneCard' ? 'activeCardBox' : '']" v-if="geneProps.length">
+                         <v-card-title primary-title>
+                          <div>
+                            <div style="font-size:16px">
+                              GENES
+                              <v-dialog v-model="dialog" width="600px">
+                                <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                <v-card>
+                                  <v-card-title>
+                                    <span class="headline">Genes</span>
+                                  </v-card-title>
+                                  <v-card-text>
+                                    Help information text
+                                  </v-card-text>
+                                  <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                  </v-card-actions>
+                                </v-card>
+                              </v-dialog>
+                            </div>
+                            <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
+                            <div>of {{ TotalGtrGenes }} selected</div>
+                          </div>
+                        </v-card-title>
+                       </v-card>
+                     </div>
+                    <br>
+
+                    <div class="d-flex mt-1 mb-2 xs12">
+                      <div v-if="diseases.length && modeOfInheritanceProps.length > 1">
+                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">
+                                 DISORDERS
+                                 <v-dialog v-model="dialog" width="600px">
+                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                   <v-card>
+                                     <v-card-title>
+                                       <span class="headline">Disorders</span>
+                                     </v-card-title>
+                                     <v-card-text>
+                                       Help information text
+                                     </v-card-text>
+                                     <v-card-actions>
+                                       <v-spacer></v-spacer>
+                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                     </v-card-actions>
+                                   </v-card>
+                                 </v-dialog>
+                               </div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                                 <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
+                                 <strong v-else>{{ selectDisorders.length }}</strong>
+                               </span>
+                               <span class="FilterAndViewBtn"
+                                v-on:click="showChartComponent('PieChartSelector')">
+                               View and Filter
+                               </span>
+                               <div>of {{ multiSelectDisorder.length }} selected</div>
+                             </div>
+                          </v-card-title>
+                        <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
+                          <v-card-title>
+                            <PieChartSelector
+                              v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                              :color="chartColor">
+                            </PieChartSelector>
+                            <br>
+                            <v-card flat >
+                              <v-card-text>
+                                  <v-layout>
+                                      <v-select
+                                        v-model="selectDisorders"
+                                        label="Select Disorders"
+                                        chips
+                                        tags
+                                        :items="multiSelectDisorder"
+                                      ></v-select>
+                                  </v-layout>
+                              </v-card-text>
+                            </v-card>
+                          </v-card-title>
+                          <center>
+                            <span class="FilterAndViewBtn"
+                              v-on:click="chartComponent=null">
+                              Exit
+                            </span>
+                          </center>
+                          <br>
+                        </div>
+                      </v-card>
+                    </div>
+                  </div>
+
+                  <br>
                     <div class="d-flex mb-2 xs12">
-
-                      <!-- <GeneMembership
-                        v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
-                        v-bind:GeneData="geneProps"
-                        :color="barColor">
-                      </GeneMembership> -->
-
+                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                        <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">
+                                 PANELS
+                                 <v-dialog v-model="dialog" width="600px">
+                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                   <v-card>
+                                     <v-card-title>
+                                       <span class="headline">Panels</span>
+                                     </v-card-title>
+                                     <v-card-text>
+                                       Help information text
+                                     </v-card-text>
+                                     <v-card-actions>
+                                       <v-spacer></v-spacer>
+                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                     </v-card-actions>
+                                   </v-card>
+                                 </v-dialog>
+                               </div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
+                               <span class="FilterAndViewBtn"
+                                v-on:click="showChartComponent('GeneMembership')">
+                               View and Filter
+                               </span>
+                               <div>present</div>
+                             </div>
+                          </v-card-title>
+                          <div v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
+                              <GeneMembership
+                                v-bind:GeneData="geneProps"
+                                :color="barColor">
+                              </GeneMembership>
+                              <center>
+                                <span class="FilterAndViewBtn"
+                                  v-on:click="chartComponent=null">
+                                  Exit
+                                </span>
+                              </center>
+                              <br>
+                          </div>
+                        </v-card>
+                      </div>
                     </div>
 
+                    <br>
                     <div class="d-flex xs12">
+                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                        <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">
+                                 VENDORS
+                                 <v-dialog v-model="dialog" width="600px">
+                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                   <v-card>
+                                     <v-card-title>
+                                       <span class="headline">Vendors</span>
+                                     </v-card-title>
+                                     <v-card-text>
+                                       Help information text
+                                     </v-card-text>
+                                     <v-card-actions>
+                                       <v-spacer></v-spacer>
+                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                     </v-card-actions>
+                                   </v-card>
+                                 </v-dialog>
+                               </div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                                 <strong v-if="vendorsSelect.length===0">{{ vendorList.length }}</strong>
+                                 <strong v-else>{{ vendorsSelect.length }}</strong>
+                               </span>
+                               </span>
+                               <span class="FilterAndViewBtn"
+                                v-on:click="showChartComponent('Vendors')">
+                               View and Filter
+                               </span>
+                               <div>of {{ vendorList.length}} selected</div>
+                             </div>
+                          </v-card-title>
+                          <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
+                            <v-card flat v-if="vendorList.length">
+                              <v-card-text>
+                                  <v-layout>
+                                      <v-select
+                                        v-model="vendorsSelect"
+                                        label="Select Vendors"
+                                        chips
+                                        tags
+                                        :items="multiSelectItems"
+                                      ></v-select>
+                                  </v-layout>
+                              </v-card-text>
+                            </v-card>
+                            <v-btn v-show="vendorsSelect.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
+                            <br>
+                            <center>
+                              <span class="FilterAndViewBtn"
+                                v-on:click="chartComponent=null">
+                                Exit
+                              </span>
+                            </center>
+                            <br>
+                          </div>
+                        </v-card>
+                      </div>
+                    </div>
 
-                      <!-- <ConditionsDistribution
+                    <!-- <div class="d-flex xs12">
+
+                      <ConditionsDistribution
                           v-if="geneProps.length && diseasesProps.length"
                           v-bind:distributionData="geneProps"
                           :color="barColor">
-                      </ConditionsDistribution> -->
+                      </ConditionsDistribution>
 
-                    </div>
+                    </div> -->
                    </v-flex>
 
-                   <v-flex  xs12 >
-                      <show-gene-panel1
-                      v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
-                        v-bind:GeneData="geneProps"
-                        v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                        v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
-                        v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
-                        v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)">
-                      </show-gene-panel1>
-                   </v-flex>
+
                   </v-layout>
               </v-card>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -85,15 +360,15 @@
                     v-on:selectedDiseases="selectDiseases($event)"
                     v-on:setDisorderNamesList="updateDisorderNamesList($event)"
                     v-on:PieChartSelectorData="PieChartSelectorData($event)"
-                    v-bind:selectedDisordersProps="selectedDisordersList">
+                    v-bind:selectedDisordersProps="selectDisorders">
                   </disease-panel>
                 </v-card-text>
               </v-card>
             </v-flex>
             <br>
-<!--  -->
+<!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -101,8 +376,10 @@
                     v-if="diseasesProps.length"
                     v-bind:DiseasePanelData="diseasesProps"
                     v-on:selectedPanels="selectPanels($event)"
+                    v-on:NoOfPanels="NoOfPanels($event)"
                     v-on:setVendorList="updateVendorList($event)"
-                    v-bind:selectedVendorsProps="selectedVendorsList">
+                    v-bind:selectedVendorsProps="vendorsSelect">
+                    <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
                   </gene-panel>
                 </v-card-text>
               </v-card>
@@ -119,9 +396,9 @@
 import DisorderSearch from './DisorderSearch.vue';
 import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
-import ShowGenePanel1 from './ShowGenePanel1.vue';
+import ShowGenePanel from './ShowGenePanel.vue';
 import { bus } from '../../routes';
-import PieChartSelectorBackup from '../viz/PieChartSelectorBackup.vue';
+import PieChartSelector from '../viz/PieChartSelector.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import GeneMembership from '../viz/GeneMembership.vue'
 
@@ -130,8 +407,8 @@ export default {
     'DisorderSearch': DisorderSearch,
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
-    'show-gene-panel1': ShowGenePanel1,
-    'PieChartSelectorBackup': PieChartSelectorBackup,
+    'show-gene-panel1': ShowGenePanel,
+    'PieChartSelector': PieChartSelector,
     'ConditionsDistribution': ConditionsDistribution,
     'GeneMembership': GeneMembership
   },
@@ -157,12 +434,34 @@ export default {
       disorderNamesList: [],
       selectedDisordersList: [],
       showSummaryComponent: false,
-      NumberOfTopGenes: 50,
+      NumberOfTopGenes: null,
       selectedGenesText: "",
       selectedVendorsListFromFilterCB:[],
       GtrGenesTabNumber: 0,
       DisordersPropsBackArr: [],
-
+      chartComponent: null,
+      isActive: true,
+      TotalGtrGenes: 0,
+      genePanelsCount:0,
+      loading: false, //multiselect
+      multiSelectItems: [],   //multiselect
+      search: null,  //multiselect
+      vendorsSelect: [],  //multiselect
+      Genes: [],  //multiselect
+      disordersDataList: [],
+      selectDisorders: [],
+      multiSelectDisorder: [],
+      snackbar: false,
+      snackbarText: "",
+      y: 'top',
+      x: null,
+      mode: '',
+      snackbarTimeout: 4000,
+      genesTopCounts: [5, 10, 30, 50, 80, 100],
+      dialog: false,
+      geneSearch: '',
+      GoToTop: false,
+      disordersSearchedByUser: false,
     }
   },
   watch:{
@@ -175,17 +474,26 @@ export default {
   },
   mounted(){
   },
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
   methods: {
     selectNumberOfTopGenes: function(){
-      if(this.NumberOfTopGenes>0){
-        bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+      if(parseInt(this.NumberOfTopGenes)>0){
+        bus.$emit('SelectNumberOfGenes', parseInt(this.NumberOfTopGenes));
         this.flagForNumberOfGenesSelected= true;
+        this.snackbarText = "Top " + parseInt(this.NumberOfTopGenes) + " genes selected";
+        this.snackbar = true;
       }
-      else if (this.NumberOfTopGenes<0) {
+      else if (parseInt(this.NumberOfTopGenes)<0) {
         document.getElementById("geneSelection").reset();
       }
     },
     addDiseases: function(e){
+      this.disordersSearchedByUser= true;
       // console.log("E", e);
       for(var i=0; i<e.length; i++){
         for(var j=e.length-1; j>i; j--){
@@ -213,6 +521,7 @@ export default {
       this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;
+      this.selectDisorders = [];
       this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];
@@ -230,11 +539,13 @@ export default {
     selectPanels: function(e){
      // console.log("e is from home for selected panels: ", e)
       this.geneProps = e;
+      this.scrollDown();
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
+      this.multiSelectItems = e;
       this.$emit("vendorListCB", e);
     },
     updateSelectedVendors: function(e){
@@ -248,6 +559,7 @@ export default {
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
+      this.multiSelectDisorder = e;
       this.$emit("disorderNamesListCB", e)
     },
     updateSelectedDisorders: function(e){
@@ -266,12 +578,39 @@ export default {
     },
     onSearchGTR: function(genes, phenotype) {
       this.$emit('search-gtr', genes, phenotype)
-    }
+    },
+    showChartComponent: function(chart_component){
+      this.chartComponent = chart_component;
+    },
+    TotalNoOfGenesFromGTR: function(e){
+      this.TotalGtrGenes = e;
+    },
+    NoOfPanels: function(e){
+      this.genePanelsCount = e.length;
+    },
+    ClearVendors: function(){
+      this.vendorsSelect=[];
+    },
+    scrollDown: function(){
+      window.scrollTo(0, 120);
+      // $vuetify.goTo(120)
+    },
+    handleScroll (event) {
+      if(window.scrollY>=120){
+        this.GoToTop=true;
+      }
+      else if(window.scrollY<120){
+        this.GoToTop=false;
+      }
+    },
+    scrollToTop: function(){
+      window.scrollTo(0,0);
+    },
   }
 }
 </script>
 
-<style >
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Quicksand:500');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
@@ -296,4 +635,91 @@ export default {
   .btn{
     padding: 0px
   }
+  .cardBoxTitle{
+    font-size: 16px;
+    color: #000000;
+  }
+
+  .activeClass{
+    display: visible;
+  }
+  .disabledClass{
+    display: none;
+  }
+  .FilterAndViewBtn{
+    background: #e0e0e0;
+    color: rgba(68, 68, 68, 0.87);
+    padding:3px 8px;
+    border-radius:8px;
+    cursor: pointer;
+    height:30px;
+    margin-left: 8px;
+  }
+  .activeCardBox{
+    /* border: 1px solid #F16335; */
+    box-shadow: 0 2px 6px 0 #CC423F;
+  }
+  .btnColor{
+    color: white;
+    background-color: #D04F4C !important;
+    border-radius: 5px;
+  }
+  .btn{
+    padding: 0px;
+    height:39px;
+  }
+  .form-control{
+    font-size: 15px;
+  }
+ #top-genes-input{
+   width: 200px;
+   height:40px;
+   margin-top: 4px;
+   background-color: #F4F4F4;
+   border-color: #F4F4F4;
+ }
+
+ /* #GoToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#GoToTopBtn:hover {
+  background-color: #555;
+} */
+
+</style>
+
+<style lang="sass">
+@import ../assets/sass/variables
+
+.activeCardBox
+  box-shadow: 0 2px 6px 0 $app-color
+
+#GoToTopBtn
+  position: fixed
+  bottom: 20px
+  right: 30px
+  z-index: 99
+  font-size: 18px
+  border: none
+  outline: none
+  background-color: $app-color
+  color: white
+  cursor: pointer
+  padding: 15px
+  border-radius: 4px
+
+#GoToTopBtn:hover
+  background-color: #555
 </style>

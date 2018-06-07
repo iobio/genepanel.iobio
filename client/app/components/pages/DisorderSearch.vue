@@ -1,13 +1,15 @@
 <template>
   <div style="">
-    <span style="padding-right:4px">Disorder</span>
+    <!-- <span style="padding-right:4px">Disorder</span> -->
+
       <div style="display:inline-block; padding-top:5px;">
+        <label>Search Disorder</label>
         <input
           id="input"
           class="form-control"
           type="text"
           autocomplete="off"
-          placeholder="Search Disorder (E.g. Treacher Collins Syndrome)">
+          placeholder="Treacher Collins Syndrome">
         <typeahead
           match-start
           v-model="search"
@@ -20,7 +22,6 @@
 
       <v-btn
           style="margin-top:-0.35px"
-          color="blue darken-1"
           class="btnColor"
           v-on:click.prevent="performSearch">
         Go
@@ -238,22 +239,26 @@ var model = new Model();
 <style scoped>
  .btnColor{
    color: white;
+   background-color: #D04F4C !important;
+   border-radius: 5px;
  }
  .btn{
    padding: 0px;
-   height:34px;
+   height:39px;
  }
  .form-control{
    font-size: 15px;
  }
 #input{
-  width: 850px;
-  height:35px;
+  width: 600px;
+  height:40px;
   margin-top: 4px;
+  background-color: #F4F4F4;
+  border-color: #F4F4F4;
 }
 
 /* Media Queries */
-
+/*
 @media screen and (max-width: 1050px){
   #input{
     width: 800px;
@@ -280,6 +285,13 @@ var model = new Model();
   .btnColor{
     margin-top: 2px
   }
-}
+} */
 
+.input-box{
+  background: #00ACC1;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.50);
+  height:60px;
+  padding-left: 30px;
+  padding-top: 15px;
+}
 </style>

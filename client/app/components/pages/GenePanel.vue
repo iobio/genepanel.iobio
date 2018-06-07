@@ -144,6 +144,7 @@ var model = new Model();
     updated(){
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
+      this.$emit('NoOfPanels', this.items); 
 
       bus.$on('SelectNumberOfPanel', (data)=> {
         this.filterGenePanelsOnSelectedNumber(data);
