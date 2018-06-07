@@ -15,6 +15,8 @@
           {{ snackbarText }}
           <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
+        <button v-on:click="scrollToTop" v-if="GoToTop===true" id="GoToTopBtn">Top</button>
+
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
             <v-flex d-flex xs10 offset-xs1>
@@ -443,6 +445,7 @@ export default {
       genesTopCounts: [5, 10, 30, 50, 80, 100],
       dialog: false,
       geneSearch: '',
+      GoToTop: false,
     }
   },
   watch:{
@@ -454,6 +457,12 @@ export default {
     }
   },
   mounted(){
+  },
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
     selectNumberOfTopGenes: function(){
@@ -513,6 +522,7 @@ export default {
     selectPanels: function(e){
      // console.log("e is from home for selected panels: ", e)
       this.geneProps = e;
+      this.scrollDown();
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
@@ -563,7 +573,22 @@ export default {
     },
     ClearVendors: function(){
       this.vendorsSelect=[];
-    }
+    },
+    scrollDown: function(){
+      window.scrollTo(0, 120);
+      // $vuetify.goTo(120)
+    },
+    handleScroll (event) {
+      if(window.scrollY>=120){
+        this.GoToTop=true;
+      }
+      else if(window.scrollY<120){
+        this.GoToTop=false;
+      }
+    },
+    scrollToTop: function(){
+      window.scrollTo(0,0);
+    },
   }
 }
 </script>
@@ -637,6 +662,25 @@ export default {
    border-color: #F4F4F4;
  }
 
+ /* #GoToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#GoToTopBtn:hover {
+  background-color: #555;
+} */
+
 </style>
 
 <style lang="sass">
@@ -645,6 +689,20 @@ export default {
 .activeCardBox
   box-shadow: 0 2px 6px 0 $app-color
 
+#GoToTopBtn
+  position: fixed
+  bottom: 20px
+  right: 30px
+  z-index: 99
+  font-size: 18px
+  border: none
+  outline: none
+  background-color: $app-color
+  color: white
+  cursor: pointer
+  padding: 15px
+  border-radius: 4px
 
-
+#GoToTopBtn:hover
+  background-color: #555
 </style>
