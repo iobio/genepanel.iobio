@@ -15,7 +15,7 @@
           {{ snackbarText }}
           <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
-        <button v-on:click="scrollToTop" v-if="GoToTop===true" id="GoToTopBtn">Top</button>
+        <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button>
 
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
@@ -38,6 +38,7 @@
                       <div style="display:inline-block; padding-top:5px;">
                         <label>Genes</label>
                         <input
+                          :disabled="geneProps.length<1"
                           id="top-genes-input"
                           class="form-control"
                           type="text"
@@ -53,6 +54,7 @@
                       </div>
 
                       <v-btn
+                          :disabled="geneProps.length<1"
                           style="margin-top:-0.35px"
                           class="btnColor"
                           v-on:click.prevent="selectNumberOfTopGenes">
@@ -75,6 +77,19 @@
                       <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
                    </span>
                 </v-card-title> -->
+                <div v-if="!disordersSearchedByUser">
+                  <v-card-title>
+                      <h3>What is Genetic Testing Registry?</h3>
+                      <br>
+                      The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers.
+                      <br>
+                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                      <br>
+                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                      <br><br>
+
+                  </v-card-title>
+                </div>
 
                   <v-layout row wrap>
                     <!-- insert here  -->
@@ -446,6 +461,7 @@ export default {
       dialog: false,
       geneSearch: '',
       GoToTop: false,
+      disordersSearchedByUser: false,
     }
   },
   watch:{
@@ -477,6 +493,7 @@ export default {
       }
     },
     addDiseases: function(e){
+      this.disordersSearchedByUser= true;
       // console.log("E", e);
       for(var i=0; i<e.length; i++){
         for(var j=e.length-1; j>i; j--){
