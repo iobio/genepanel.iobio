@@ -19,29 +19,7 @@
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
-      <!-- <v-card-title style="padding-top:0px">
-        <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
-          <v-select
-          outline
-          v-model="NumberOfTopGenes"
-          label="Select Genes"
-          hide-details
-          hint="Genes"
-          combobox
-          :items="genesTopCounts"
-          >
-          </v-select>
-        </span>
-        </span>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-          style="margin-left:30px;max-width:200px;vertical-align:bottom"
-        ></v-text-field>
-      </v-card-title> -->
+
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -85,7 +63,7 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <td><strong>{{ (props.index + 1) * pagination.page}}</strong></td>
+            <!-- <td><strong>{{ (props.index + 1) * pagination.page}}</strong></td> -->
             <td>
               <div id="app">
                 <div>
@@ -95,15 +73,16 @@
                         <v-card-text style="margin-top:-22px">
                           <center ><h3>{{ props.item.name }}</h3></center>
                           <hr>
-                          <div style="width:600px"><strong>Conditions: </strong></div>
+                          <!-- <div style="width:600px"><strong>Conditions: </strong></div>
                           {{props.item.conditions}}
-                          <hr>
+                          <hr> -->
                           <div><strong>Resources: </strong></div>
                           <ul style="margin-left:25px; margin-top:5px">
                             <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
                             <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
                             <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
                             <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                            <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
                           </ul>
                         </v-card-text>
                       </v-card>
@@ -138,6 +117,9 @@
                   </v-list-tile>
                   <v-list-tile >
                     <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
                   </v-list-tile>
                 </v-list>
               </v-menu>
@@ -177,6 +159,9 @@ var model = new Model();
       },
       geneSearch: {
         type: String
+      },
+      multipleSearchItems: {
+        type: Array
       }
     },
     data(){
@@ -198,12 +183,12 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
-          {
-            text: 'Index',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
+          // {
+          //   text: 'Index',
+          //   align: 'left',
+          //   sortable: false,
+          //   value: 'name'
+          // },
           {
             text: 'Name',
             align: 'left',
@@ -215,7 +200,7 @@ var model = new Model();
           { text: 'More', align: 'left', sortable: false, value: '' },
           {
             text: '',
-            value: ['haploScore', 'value', 'omimSrc'],
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
             width: '10%',
             class: 'headerWidth',
             visibility: 'hidden-lg-only'
@@ -238,11 +223,15 @@ var model = new Model();
         x: null,
         mode: '',
         snackbarTimeout: 4000,
+        multipleSearchDisorders: [],
+        DataToIncludeSearchTerms: [],
+        arrangedSearchData: [],
 
       }
     },
     mounted(){
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
+      this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
 
     },
@@ -301,6 +290,9 @@ var model = new Model();
       },
       geneSearch: function(){
         this.search = this.geneSearch;
+      },
+      multipleSearchItems: function(){
+        this.multipleSearchDisorders = this.multipleSearchItems;
       }
     },
     methods:{
@@ -380,18 +372,33 @@ var model = new Model();
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
         // console.log("this.GetGeneData", this.GetGeneData);
-
         this.modeOfInheritanceList = this.modeOfInheritanceData;
+        // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
+        this.DataToIncludeSearchTerms = this.GeneData;
+
+        this.arrangedSearchData = this.searchTermsForGeneId(this.DataToIncludeSearchTerms);
+        // console.log("this.arrangedSearchData", this.arrangedSearchData)
+
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
         // console.log("mergedGenes", mergedGenes);
 
-        this.GenesToDisplay = mergedGenes;
+        // this.GenesToDisplay = mergedGenes;
+        // console.log("data is ", this.GenesToDisplay)
+
+
+        // console.log('mergedGenes', mergedGenes)
 
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
+        // console.log("data is ", data[50].geneid)
+        this.GenesToDisplay = data;
+        // console.log("this.GenesToDisplay", this.GenesToDisplay);
+
+        this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay)
+
         this.items = data;
         this.noOfSourcesSvg();
-        console.log(this.items)
+        // console.log(this.items)
         // let dataWithClinGenFlag = model.getClinGenFlag(data);
         // this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
@@ -404,6 +411,103 @@ var model = new Model();
         this.dataForTables = data.slice(0,10);
 
       },
+      arrangeAllData: function(terms, genesData){
+        // console.log("terms", terms);
+        // console.log("a data", genesData)
+        //
+
+        // for(var i=0; i<terms.length; i++){
+        //   console.log("term", Number(terms[i].id))
+        //   console.log("term", terms[i].searchData)
+        // }
+        // for(var i=0; i<data.length; i++){
+        //   console.log("data",Number(data[i].geneid))
+        //   console.log("data",data[i].searchTermIndex)
+        // }
+
+        for(var i=0; i<terms.length; i++){
+          for(var j=0; j<genesData.length; j++){
+            if(terms[i].id == genesData[j].geneid){
+              genesData[j].searchTermIndex = terms[i].searchData
+            }
+          }
+        }
+
+        // console.log("organized data is ", genesData)
+      },
+      searchTermsForGeneId: function(genePanels){
+        // console.log("searchTermsForGeneId", genePanels);
+
+        genePanels.forEach(function(genePanel) {
+          genePanel._genes.forEach(function(gene, i) {
+            gene["searchTermArray"] = genePanel.searchTermArray;
+            gene["searchTermIndex"] = genePanel.searchTermIndex;
+          })
+        })
+
+        var genesTempArr = [];
+        var tempGeneArrId = [];
+
+        genePanels.forEach(function(genePanel) {
+          genePanel._genes.forEach(function(gene, i) {
+            genesTempArr.push(gene);
+            tempGeneArrId.push(gene.geneid)
+          })
+        })
+
+        // console.log("tempGeneArr", genesTempArr);
+        // console.log("removing duplicates", Array.from(new Set(tempGeneArrId)));
+
+
+        for(var i=0; i<genesTempArr.length; i++){
+          for(var j=genesTempArr.length-1; j>i; j--){
+            if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
+                // dupGeneId.push(genesTempArr[j].geneid)
+              genesTempArr[i].searchTermArray = [...genesTempArr[i].searchTermArray, ...genesTempArr[j].searchTermArray];
+              genesTempArr[i].searchTermIndex = [...genesTempArr[i].searchTermIndex, ...genesTempArr[j].searchTermIndex];
+              genesTempArr[i].searchTermArray = Array.from(new Set(genesTempArr[i].searchTermArray))
+              genesTempArr[i].searchTermIndex = Array.from(new Set(genesTempArr[i].searchTermIndex))
+            }
+          }
+        }
+
+        // console.log("genesTempArr", genesTempArr)
+
+
+        // for(var i=0; i<genesTempArr.length; i++){
+        //   if(genesTempArr[i].geneid==54){
+        //     console.log("genesTempArr[i].searchTermArray", genesTempArr[i].searchTermArray)
+        //     // console.log("ggene", genesTempArr[i])
+        //   }
+        // }
+
+        var obj = {};
+        for(var i=0; i<genesTempArr.length; i++){
+          // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].geneid)
+          // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].searchTermArray)
+          if(obj[genesTempArr[i].geneid]===undefined){
+            obj[genesTempArr[i].geneid] = genesTempArr[i].searchTermIndex;
+          }
+        }
+
+        // console.log(obj)
+
+        var anotherArr = [];
+        for(var key in obj){
+          anotherArr.push({
+            id: key,
+            searchData: obj[key]
+          })
+        }
+
+        // console.log("anotherArr", anotherArr)
+
+        anotherArr.map(x=>{
+          x.searchData.sort();
+        })
+        return anotherArr
+
+      },
       noOfSourcesSvg: function(){
         this.items.map(x=>{
           x.searchTermIndex = x.searchTermIndex.map(y=>{
@@ -414,7 +518,7 @@ var model = new Model();
                 </svg> `
           })
         });
-        console.log(this.items)
+        // console.log(this.items)
       },
       selectAllGenes: function(){
         this.selected = this.items.slice();

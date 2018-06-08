@@ -30,6 +30,7 @@
                       <DisorderSearch
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
+                        v-on:multipleSearchData="multipleSearchData($event)"
                         @search-gtr="onSearchGTR">
                       </DisorderSearch>
                     </v-flex>
@@ -80,7 +81,8 @@
                 <div v-if="!disordersSearchedByUser">
                   <v-card-title>
                       <h3>What is Genetic Testing Registry?</h3>
-                      <br>
+                  </v-card-title>
+                  <v-card-title>
                       The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers.
                       <br>
                       The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
@@ -96,13 +98,14 @@
 
                     <v-flex  xs7 >
                        <show-gene-panel1
-                       v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"
+                       v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"
                          v-bind:GeneData="geneProps"
                          v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                          v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
                          v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
                          v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
                          v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
+                         v-bind:multipleSearchItems="multipleSearchItems"
                          v-bind:geneSearch="geneSearch">
                        </show-gene-panel1>
                     </v-flex>
@@ -462,6 +465,7 @@ export default {
       geneSearch: '',
       GoToTop: false,
       disordersSearchedByUser: false,
+      multipleSearchItems:[],
     }
   },
   watch:{
@@ -538,6 +542,7 @@ export default {
     },
     selectPanels: function(e){
      // console.log("e is from home for selected panels: ", e)
+     // console.log(e[16].searchTermArray)
       this.geneProps = e;
       this.scrollDown();
       this.$emit("GeneMembershipData", e);
@@ -606,6 +611,9 @@ export default {
     scrollToTop: function(){
       window.scrollTo(0,0);
     },
+    multipleSearchData: function(e){
+      this.multipleSearchItems = e;
+    }
   }
 }
 </script>
