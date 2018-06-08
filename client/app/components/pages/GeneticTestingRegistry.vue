@@ -525,7 +525,7 @@ export default {
       this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;
-      this.selectDisorders = [];
+      // this.selectDisorders = [];
       this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];

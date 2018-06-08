@@ -112,6 +112,7 @@ var model = new Model();
           piechart : {},
           selectedDisordersFromFilterPanel: [],
           tempDisorders: [],
+          flagForDisorderFilter: false,
         }
       },
     methods:{
@@ -131,15 +132,25 @@ var model = new Model();
           }
         },
         showDiseasesData: function(){
-          this.items = this.DiseasePanelData;
-          this.tempItems = this.DiseasePanelData;
-          this.tempDisorders = this.DiseasePanelData;
-          this.getDisorderNames();
-          this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-          // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
-          this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
-                                            // the mode of Inheritance back to parent so it can be used as props in summary panel
-          this.selected = this.items.slice()
+          if(!this.flagForDisorderFilter){
+            this.items = this.DiseasePanelData;
+            this.tempItems = this.DiseasePanelData;
+            this.tempDisorders = this.DiseasePanelData;
+            this.getDisorderNames();
+            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
+            // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
+            this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
+                                              // the mode of Inheritance back to parent so it can be used as props in summary panel
+            this.selected = this.items.slice()
+          }
+          else if(this.flagForDisorderFilter){ //Keeps track if the disorder name is selected when new disorder is searched
+            this.items = this.DiseasePanelData;
+            this.tempItems = this.DiseasePanelData;
+
+            this.updateDisordersTableOnSelectedDisorders();
+          }
+
+
         },
         getDisorderNames(){
           this.disorderNamesList = model.filterItemsForDisorderNames(this.items);
@@ -253,6 +264,7 @@ var model = new Model();
       },
       selectedDisordersProps: function(){
         this.selectedDisordersFromFilterPanel = this.selectedDisordersProps;
+        this.flagForDisorderFilter = true;
         this.updateDisordersTableOnSelectedDisorders();
       }
     }

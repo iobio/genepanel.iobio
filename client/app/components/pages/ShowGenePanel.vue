@@ -371,7 +371,7 @@ var model = new Model();
       AddGeneData: function(){
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
-        // console.log("this.GetGeneData", this.GetGeneData);
+        console.log("this.GetGeneData", this.GetGeneData);
         this.modeOfInheritanceList = this.modeOfInheritanceData;
         // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
         this.DataToIncludeSearchTerms = this.GeneData;
@@ -398,7 +398,7 @@ var model = new Model();
 
         this.items = data;
         this.noOfSourcesSvg();
-        // console.log(this.items)
+        console.log(this.items)
         // let dataWithClinGenFlag = model.getClinGenFlag(data);
         // this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
@@ -412,19 +412,6 @@ var model = new Model();
 
       },
       arrangeAllData: function(terms, genesData){
-        // console.log("terms", terms);
-        // console.log("a data", genesData)
-        //
-
-        // for(var i=0; i<terms.length; i++){
-        //   console.log("term", Number(terms[i].id))
-        //   console.log("term", terms[i].searchData)
-        // }
-        // for(var i=0; i<data.length; i++){
-        //   console.log("data",Number(data[i].geneid))
-        //   console.log("data",data[i].searchTermIndex)
-        // }
-
         for(var i=0; i<terms.length; i++){
           for(var j=0; j<genesData.length; j++){
             if(terms[i].id == genesData[j].geneid){
@@ -432,12 +419,8 @@ var model = new Model();
             }
           }
         }
-
-        // console.log("organized data is ", genesData)
       },
       searchTermsForGeneId: function(genePanels){
-        // console.log("searchTermsForGeneId", genePanels);
-
         genePanels.forEach(function(genePanel) {
           genePanel._genes.forEach(function(gene, i) {
             gene["searchTermArray"] = genePanel.searchTermArray;
@@ -455,10 +438,8 @@ var model = new Model();
           })
         })
 
-        // console.log("tempGeneArr", genesTempArr);
-        // console.log("removing duplicates", Array.from(new Set(tempGeneArrId)));
 
-
+        console.log("I am going in the loop") //Need to optimize
         for(var i=0; i<genesTempArr.length; i++){
           for(var j=genesTempArr.length-1; j>i; j--){
             if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
@@ -470,8 +451,10 @@ var model = new Model();
             }
           }
         }
-
-        // console.log("genesTempArr", genesTempArr)
+        // 
+        // var dupsObj = {};
+        //
+        // for(var i=0; i<genesTempArr)
 
 
         // for(var i=0; i<genesTempArr.length; i++){
@@ -505,6 +488,8 @@ var model = new Model();
         anotherArr.map(x=>{
           x.searchData.sort();
         })
+
+        console.log("returning anoherArr");
         return anotherArr
 
       },
