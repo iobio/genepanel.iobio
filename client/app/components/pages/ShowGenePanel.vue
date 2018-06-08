@@ -398,7 +398,7 @@ var model = new Model();
 
         this.items = data;
         this.noOfSourcesSvg();
-        console.log(this.items)
+        // console.log(this.items)
         // let dataWithClinGenFlag = model.getClinGenFlag(data);
         // this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
@@ -440,38 +440,60 @@ var model = new Model();
 
 
         console.log("I am going in the loop") //Need to optimize
+        // for(var i=0; i<genesTempArr.length; i++){
+        //   for(var j=genesTempArr.length-1; j>i; j--){
+        //     if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
+        //         // dupGeneId.push(genesTempArr[j].geneid)
+        //       genesTempArr[i].searchTermArray = [...genesTempArr[i].searchTermArray, ...genesTempArr[j].searchTermArray];
+        //       genesTempArr[i].searchTermIndex = [...genesTempArr[i].searchTermIndex, ...genesTempArr[j].searchTermIndex];
+        //       genesTempArr[i].searchTermArray = Array.from(new Set(genesTempArr[i].searchTermArray))
+        //       genesTempArr[i].searchTermIndex = Array.from(new Set(genesTempArr[i].searchTermIndex))
+        //     }
+        //   }
+        // }
+
+        var dupsObj = {};
+
         for(var i=0; i<genesTempArr.length; i++){
-          for(var j=genesTempArr.length-1; j>i; j--){
-            if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
-                // dupGeneId.push(genesTempArr[j].geneid)
-              genesTempArr[i].searchTermArray = [...genesTempArr[i].searchTermArray, ...genesTempArr[j].searchTermArray];
-              genesTempArr[i].searchTermIndex = [...genesTempArr[i].searchTermIndex, ...genesTempArr[j].searchTermIndex];
-              genesTempArr[i].searchTermArray = Array.from(new Set(genesTempArr[i].searchTermArray))
-              genesTempArr[i].searchTermIndex = Array.from(new Set(genesTempArr[i].searchTermIndex))
-            }
+          if(dupsObj[genesTempArr[i].geneid]===undefined){
+            dupsObj[genesTempArr[i].geneid] = genesTempArr[i];
+          }
+          else {
+            // console.log(dupsObj[genesTempArr[i].geneid].searchTermArray)
+            dupsObj[genesTempArr[i].geneid].searchTermIndex = [...dupsObj[genesTempArr[i].geneid].searchTermIndex, ...genesTempArr[i].searchTermIndex];
+            dupsObj[genesTempArr[i].geneid].searchTermIndex = Array.from(new Set(dupsObj[genesTempArr[i].geneid].searchTermIndex))
           }
         }
-        // 
-        // var dupsObj = {};
-        //
-        // for(var i=0; i<genesTempArr)
+
+        // console.log(dupsObj);
+        var newGeneArr = [];
+
+        for(var key in dupsObj){
+          newGeneArr.push(dupsObj[key])
+        }
 
 
-        // for(var i=0; i<genesTempArr.length; i++){
-        //   if(genesTempArr[i].geneid==54){
-        //     console.log("genesTempArr[i].searchTermArray", genesTempArr[i].searchTermArray)
+        // for(var i=0; i<newGeneArr.length; i++){
+        //   if(newGeneArr[i].geneid==2077){
+        //     console.log("newGeneArr[i].searchTermArray", newGeneArr[i].searchTermArray)
         //     // console.log("ggene", genesTempArr[i])
         //   }
         // }
 
         var obj = {};
-        for(var i=0; i<genesTempArr.length; i++){
-          // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].geneid)
-          // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].searchTermArray)
-          if(obj[genesTempArr[i].geneid]===undefined){
-            obj[genesTempArr[i].geneid] = genesTempArr[i].searchTermIndex;
+        for(var i=0; i<newGeneArr.length; i++){
+          if(obj[newGeneArr[i].geneid]===undefined){
+            obj[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
           }
         }
+
+        // for(var i=0; i<genesTempArr.length; i++){
+        //   // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].geneid)
+        //   // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].searchTermArray)
+        //   if(obj[genesTempArr[i].geneid]===undefined){
+        //     obj[genesTempArr[i].geneid] = genesTempArr[i].searchTermIndex;
+        //   }
+        // }
 
         // console.log(obj)
 
