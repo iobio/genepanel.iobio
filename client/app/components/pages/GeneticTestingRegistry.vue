@@ -81,7 +81,8 @@
                 <div v-if="!disordersSearchedByUser">
                   <v-card-title>
                       <h3>What is Genetic Testing Registry?</h3>
-                      <br>
+                  </v-card-title>
+                  <v-card-title>
                       The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers.
                       <br>
                       The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.

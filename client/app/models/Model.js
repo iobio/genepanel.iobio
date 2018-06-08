@@ -270,33 +270,96 @@ mergeGenePanelsAcrossDiseases(diseases) {
   var me = this;
   var genePanelMap = {};
 //Find a way to pass the search terms here...
-  diseases.forEach(function(disease) {
-    // console.log(disease)
-    disease.genePanels.forEach(function(genePanel) {
+
+  diseases.forEach((disease)=> {
+    disease.genePanels.forEach((genePanel)=> {
       genePanel["searchTerm"] = disease.searchTerm;
       genePanel["searchTermArray"] = disease.searchTermArray;
       genePanel["searchTermIndex"] = disease.searchTermIndex;
-      // console.log("genePanel", genePanel)
-      var theGenePanel = genePanelMap[genePanel.id];
-      if (theGenePanel == null) {
-        genePanel._diseases = {};
-        theGenePanel = genePanel;
-        genePanelMap[genePanel.id] = theGenePanel;
-      }
-
-      theGenePanel._diseases[disease._uid] = disease;
     })
   })
+
+  var diseaseTempArr = [];
+  diseases.forEach((disease)=> {
+    disease.genePanels.forEach((genePanel)=> {
+      diseaseTempArr.push(genePanel)
+    })
+  })
+
+
+
+  for(var i=0; i<diseaseTempArr.length; i++){
+    for(var j=diseaseTempArr.length-1; j>i; j--){
+      if(diseaseTempArr[i].id ===diseaseTempArr[j].id){
+        diseaseTempArr[i].searchTermArray = [...diseaseTempArr[i].searchTermArray, ...diseaseTempArr[j].searchTermArray];
+        diseaseTempArr[i].searchTermIndex = [...diseaseTempArr[i].searchTermIndex, ...diseaseTempArr[j].searchTermIndex];
+        diseaseTempArr[i].searchTermArray = Array.from(new Set(diseaseTempArr[i].searchTermArray))
+        diseaseTempArr[i].searchTermIndex = Array.from(new Set(diseaseTempArr[i].searchTermIndex))
+
+      }
+    }
+  }
+
+  // diseaseTempArr.map((x,i)=>{
+  //   console.log(i , "  --  ",x.id , "   ------    ", x.searchTermArray)
+  // })
+
+  // console.log(" diseaseTempArr[0] ", diseaseTempArr[3]);
+
+  diseaseTempArr.forEach((genePanel)=>{
+    var theGenePanel = genePanelMap[genePanel.id];
+    if (theGenePanel == null) {
+      genePanel._diseases = {};
+      theGenePanel = genePanel;
+      genePanelMap[genePanel.id] = theGenePanel;
+    }
+    // theGenePanel._diseases[disease._uid] = disease;
+  })
+
+  // diseases.forEach(function(disease) {
+  //   disease.genePanels.forEach(function(genePanel) {
+  //     // console.log("genePanel", genePanel)
+  //
+  //     // genePanel["searchTerm"] = disease.searchTerm;
+  //     // genePanel["searchTermArray"] = disease.searchTermArray;
+  //     // genePanel["searchTermIndex"] = disease.searchTermIndex;
+  //     // console.log("genePanel", genePanel.id)
+  //     var theGenePanel = genePanelMap[genePanel.id];
+  //     if (theGenePanel == null) {
+  //       genePanel._diseases = {};
+  //       theGenePanel = genePanel;
+  //       genePanelMap[genePanel.id] = theGenePanel;
+  //       // console.log("theGenePanel", theGenePanel.id)
+  //       // console.log("theGenePanel searchTermArray", theGenePanel.searchTermArray)
+  //       //combine search terms here..
+  //     }
+  //
+  //     theGenePanel._diseases[disease._uid] = disease;
+  //   })
+  // })
+
+
+
+
+
+
   // console.log("genePanelMap", genePanelMap)
   var mergedGenePanels = [];
+  var a = [];
   for (var key in genePanelMap) {
     var genePanel = genePanelMap[key];
+    // console.log(key)
+    // a.push(key);
     genePanel._diseaseNames = me.hashToSimpleList(genePanel._diseases, "Title", ", ");
     genePanel._diseaseCount = Object.keys(genePanel._diseases).length;
     genePanel._rowNumber = mergedGenePanels.length+1;
     mergedGenePanels.push(genePanel);
   }
-
+  // console.log(a);
+  // console.log("mergedGenePanels", mergedGenePanels.map(x=>{
+  //   return x.id
+  // }))
+  // console.log("mergedGenePanels", mergedGenePanels[16].searchTermArray)
   return mergedGenePanels;
 }
 
@@ -304,17 +367,79 @@ mergeGenePanelsAcrossDiseases(diseases) {
 
 mergeGenesAcrossPanels(genePanels) {
     var me = this;
-
     // Merge genes common across selected gene panels
-    var tempGArr =[];
     var geneMap = {};
-    genePanels.forEach(function(genePanel) {
+    // console.log("sqasa" , genePanels[16]._genes)
 
-      genePanel._genes.forEach(function(gene) {
+
+    var tempGeneArr = [];
+
+    // genePanels.forEach(function(genePanel) {
+    //   genePanel._genes.forEach(function(gene, i) {
+    //       tempGeneArr.push(gene.geneid)
+    //   })
+    // })
+    // console.log("tempGeneArr len", tempGeneArr.length)
+    //
+    // genePanels.forEach(function(genePanel) {
+    //   genePanel._genes.forEach(function(gene, i) {
+    //     gene["searchTerm"] = genePanel.searchTerm;
+    //     gene["searchTermArray"] = genePanel.searchTermArray;
+    //     gene["searchTermIndex"] = genePanel.searchTermIndex;
+    //   })
+    // })
+    //
+    // var genesTempArr = [];
+    // genePanels.forEach(function(genePanel) {
+    //   genePanel._genes.forEach(function(gene, i) {
+    //     genesTempArr.push(gene);
+    //   })
+    // })
+    //
+    // console.log("genesTempArr len", genesTempArr[0].searchTermArray)
+    // var dupGeneId = [];
+    //
+    // for(var i=0; i<genesTempArr.length; i++){
+    //   for(var j=genesTempArr.length-1; j>i; j--){
+    //     if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
+    //         // dupGeneId.push(genesTempArr[j].geneid)
+    //       // genesTempArr[i].searchTermArray = [...genesTempArr[i].searchTermArray, ...genesTempArr[j].searchTermArray];
+    //       // genesTempArr[i].searchTermIndex = [...genesTempArr[i].searchTermIndex, ...genesTempArr[j].searchTermIndex];
+    //       // genesTempArr[i].searchTermArray = Array.from(new Set(genesTempArr[i].searchTermArray))
+    //       // genesTempArr[i].searchTermIndex = Array.from(new Set(genesTempArr[i].searchTermIndex))
+    //     }
+    //   }
+    // }
+    // for(var i=0; i<genesTempArr.length; i++){
+    //     if(genesTempArr[i].geneid ==1723){
+    //       dupGeneId.push(genesTempArr[i])
+    //   }
+    // }
+    //
+    // console.log("dupGeneId" ,dupGeneId)
+    //
+    //
+    // genesTempArr.forEach(function(gene, i) {
+    //   var theGene = geneMap[gene.geneid];
+    //   if (theGene == null) {
+    //     gene._genePanels = {};
+    //     gene._conditions = {};
+    //     gene._diseases = {};
+    //     theGene = gene;
+    //     geneMap[gene.geneid] = theGene;
+    //   }
+    // })
+
+
+    genePanels.forEach(function(genePanel) {
+      // console.log(genePanel)
+
+      genePanel._genes.forEach(function(gene, i) {
+
         gene["searchTerm"] = genePanel.searchTerm;
         gene["searchTermArray"] = genePanel.searchTermArray;
-        gene["searchTermIndex"] = [genePanel.searchTermIndex];
-        tempGArr.push(gene.geneid)
+        gene["searchTermIndex"] = genePanel.searchTermIndex;
+        // console.log("gene", gene)
         var theGene = geneMap[gene.geneid];
         if (theGene == null) {
           gene._genePanels = {};
@@ -334,15 +459,13 @@ mergeGenesAcrossPanels(genePanels) {
 
       })
     })
+    // console.log("geneMap", geneMap)
 
-    console.log("tempGArr", tempGArr)
-    var a = Array.from(new Set(tempGArr));
-    console.log("dups", a.length)
     this.mergedGenes = [];
+    var b =[];
     for (var key in geneMap) {
       var gene = geneMap[key];
-      // console.log("key", key)
-
+      b.push(key);
       gene._genePanelNames = me.hashToSimpleList(gene._genePanels, "testname", ", ");
       gene._genePanelCount = Object.keys(gene._genePanels).length;
 
@@ -354,7 +477,11 @@ mergeGenesAcrossPanels(genePanels) {
 
       me.mergedGenes.push(gene);
     }
-    // console.log(this.mergedGenes)
+    // console.log(this.mergedGenes);
+    this.mergedGenes.sort(function (a, b) {
+      return a.geneid - b.geneid;
+    });
+    // console.log(this.mergedGenes);
     return this.mergedGenes;
 
   }
@@ -410,6 +537,7 @@ mergeGenesAcrossPanels(genePanels) {
         return {
               key: idx,
               name: gene.name,
+              geneid: gene.geneid,
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
