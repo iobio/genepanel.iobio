@@ -223,6 +223,7 @@ var model = new Model();
               // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
               this.filteredDiseasesItems.push(x);
             });
+            console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
             this.$emit('showDiseases', this.filteredDiseasesItems)
           }
 

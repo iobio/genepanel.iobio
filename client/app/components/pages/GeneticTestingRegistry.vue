@@ -538,6 +538,7 @@ export default {
     },
     selectPanels: function(e){
      // console.log("e is from home for selected panels: ", e)
+     // console.log(e[16].searchTermArray)
       this.geneProps = e;
       this.scrollDown();
       this.$emit("GeneMembershipData", e);

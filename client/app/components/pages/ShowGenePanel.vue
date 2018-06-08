@@ -391,7 +391,7 @@ var model = new Model();
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
         this.items = data;
         this.noOfSourcesSvg();
-        console.log(this.items)
+        // console.log(this.items)
         // let dataWithClinGenFlag = model.getClinGenFlag(data);
         // this.items = dataWithClinGenFlag;
         this.selected = data.slice(0,50);
@@ -414,7 +414,7 @@ var model = new Model();
                 </svg> `
           })
         });
-        console.log(this.items)
+        // console.log(this.items)
       },
       selectAllGenes: function(){
         this.selected = this.items.slice();
