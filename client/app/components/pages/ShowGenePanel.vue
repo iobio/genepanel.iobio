@@ -82,6 +82,7 @@
                             <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
                             <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
                             <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                            <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
                           </ul>
                         </v-card-text>
                       </v-card>
@@ -116,6 +117,9 @@
                   </v-list-tile>
                   <v-list-tile >
                     <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
                   </v-list-tile>
                 </v-list>
               </v-menu>
@@ -196,7 +200,7 @@ var model = new Model();
           { text: 'More', align: 'left', sortable: false, value: '' },
           {
             text: '',
-            value: ['haploScore', 'value', 'omimSrc'],
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
             width: '10%',
             class: 'headerWidth',
             visibility: 'hidden-lg-only'

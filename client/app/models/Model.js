@@ -548,6 +548,7 @@ mergeGenesAcrossPanels(genePanels) {
               medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
               geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
               ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`,
+              clinGenLink: `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.name}`,
 //            <stop offset="5%"  stop-color="#36D1DC"/>
 //            <stop offset="95%" stop-color="#5B86E5"/>
 //            <rect fill="url(#MyGradient)"
