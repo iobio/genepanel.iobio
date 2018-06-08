@@ -176,7 +176,8 @@ var model = new Model();
           this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
 
           this.$emit('search-gtr', searchTerm);
-
+          // console.log("this.multipleSearchTerms", this.multipleSearchTerms);
+          this.$emit('multipleSearchData', this.multipleSearchTerms);
           var diseases;
           model.promiseGetDiseases(searchTerm)
           .then(function(data){

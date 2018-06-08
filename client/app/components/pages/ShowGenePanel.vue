@@ -19,29 +19,7 @@
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
-      <!-- <v-card-title style="padding-top:0px">
-        <span id="genes-top-input" class="emphasize" style="display:inline-block;max-width:145px;width:145px;">
-          <v-select
-          outline
-          v-model="NumberOfTopGenes"
-          label="Select Genes"
-          hide-details
-          hint="Genes"
-          combobox
-          :items="genesTopCounts"
-          >
-          </v-select>
-        </span>
-        </span>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-          style="margin-left:30px;max-width:200px;vertical-align:bottom"
-        ></v-text-field>
-      </v-card-title> -->
+
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -177,6 +155,9 @@ var model = new Model();
       },
       geneSearch: {
         type: String
+      },
+      multipleSearchItems: {
+        type: Array
       }
     },
     data(){
@@ -238,11 +219,13 @@ var model = new Model();
         x: null,
         mode: '',
         snackbarTimeout: 4000,
+        multipleSearchDisorders: [],
 
       }
     },
     mounted(){
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
+      this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
 
     },
@@ -301,6 +284,9 @@ var model = new Model();
       },
       geneSearch: function(){
         this.search = this.geneSearch;
+      },
+      multipleSearchItems: function(){
+        this.multipleSearchDisorders = this.multipleSearchItems;
       }
     },
     methods:{
@@ -380,8 +366,8 @@ var model = new Model();
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
         // console.log("this.GetGeneData", this.GetGeneData);
-
         this.modeOfInheritanceList = this.modeOfInheritanceData;
+        // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
         // console.log("mergedGenes", mergedGenes);
@@ -389,6 +375,7 @@ var model = new Model();
         this.GenesToDisplay = mergedGenes;
 
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
+        console.log("data is ", data)
         this.items = data;
         this.noOfSourcesSvg();
         // console.log(this.items)
