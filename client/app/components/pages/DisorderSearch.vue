@@ -87,7 +87,7 @@ var model = new Model();
         }
       },
       DisordersPropsBackArr: function() {
-        console.log("this.DisordersPropsBackArr", this.DisordersPropsBackArr)
+        // console.log("this.DisordersPropsBackArr", this.DisordersPropsBackArr)
         this.filteredDiseasesItems = this.DisordersPropsBackArr;
       }
     },
