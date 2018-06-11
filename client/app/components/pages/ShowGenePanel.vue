@@ -73,9 +73,9 @@
                         <v-card-text style="margin-top:-22px">
                           <center ><h3>{{ props.item.name }}</h3></center>
                           <hr>
-                          <!-- <div style="width:600px"><strong>Conditions: </strong></div>
+                          <div style="width:600px"><strong>Conditions: </strong></div>
                           {{props.item.conditions}}
-                          <hr> -->
+                          <hr>
                           <div><strong>Resources: </strong></div>
                           <ul style="margin-left:25px; margin-top:5px">
                             <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
@@ -371,7 +371,7 @@ var model = new Model();
       AddGeneData: function(){
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
-        console.log("this.GetGeneData", this.GetGeneData);
+        // console.log("this.GetGeneData", this.GetGeneData);
         this.modeOfInheritanceList = this.modeOfInheritanceData;
         // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
         this.DataToIncludeSearchTerms = this.GeneData;
@@ -439,7 +439,7 @@ var model = new Model();
         })
 
 
-        console.log("I am going in the loop") //Need to optimize
+      //Need to optimize
         // for(var i=0; i<genesTempArr.length; i++){
         //   for(var j=genesTempArr.length-1; j>i; j--){
         //     if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
@@ -511,7 +511,6 @@ var model = new Model();
           x.searchData.sort();
         })
 
-        console.log("returning anoherArr");
         return anotherArr
 
       },

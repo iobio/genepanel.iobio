@@ -270,12 +270,14 @@ mergeGenePanelsAcrossDiseases(diseases) {
   var me = this;
   var genePanelMap = {};
 //Find a way to pass the search terms here...
-
   diseases.forEach((disease)=> {
     disease.genePanels.forEach((genePanel)=> {
       genePanel["searchTerm"] = disease.searchTerm;
       genePanel["searchTermArray"] = disease.searchTermArray;
       genePanel["searchTermIndex"] = disease.searchTermIndex;
+      genePanel["_uid"] = disease._uid;
+      genePanel["disease"] = disease
+
     })
   })
 
@@ -285,8 +287,6 @@ mergeGenePanelsAcrossDiseases(diseases) {
       diseaseTempArr.push(genePanel)
     })
   })
-
-
 
   for(var i=0; i<diseaseTempArr.length; i++){
     for(var j=diseaseTempArr.length-1; j>i; j--){
@@ -313,7 +313,7 @@ mergeGenePanelsAcrossDiseases(diseases) {
       theGenePanel = genePanel;
       genePanelMap[genePanel.id] = theGenePanel;
     }
-    // theGenePanel._diseases[disease._uid] = disease;
+    theGenePanel._diseases[genePanel._uid] = genePanel.disease;
   })
 
   // diseases.forEach(function(disease) {
@@ -342,8 +342,6 @@ mergeGenePanelsAcrossDiseases(diseases) {
 
 
 
-
-  // console.log("genePanelMap", genePanelMap)
   var mergedGenePanels = [];
   var a = [];
   for (var key in genePanelMap) {
