@@ -245,7 +245,7 @@ var model = new Model();
           var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
           this.mergedGene = mergedGenePanels
           this.items = mergedGenePanels;
-          this.tempItems = mergedGenePanels
+          this.tempItems = mergedGenePanels;
 
           let vendors = model.getGenePanelVendors(mergedGenePanels);
 
