@@ -96,7 +96,11 @@
                 <span v-html="x"></span>
               </span>
             </td>
-            <td><span v-html="props.item.htmlData"></span></td>
+            <td>
+              <span
+                v-html="props.item.htmlData">
+              </span>
+            </td>
             <td>
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
@@ -559,6 +563,14 @@ var model = new Model();
 </script>
 
 <style>
+
+.genepanelsRect{
+  fill: #ffffff00;
+  pointer-events: all;
+}
+.genepanelsRect:hover{
+  fill: #D04F4C;
+}
 
 #gene-histogram-chart .bar rect {
     fill:   #7dc2e5;
