@@ -162,8 +162,7 @@ var model = new Model();
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
-        this.checked = true;
-        this.alert=false;
+
 
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
@@ -173,67 +172,74 @@ var model = new Model();
           searchTerm = this.search;
         }
 
-        if(!this.multipleSearchTerms.includes(searchTerm)){
-          this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
+        if(searchTerm.length>1){
+          this.checked = true;
+          this.alert=false;
 
-          this.$emit('search-gtr', searchTerm);
-          // console.log("this.multipleSearchTerms", this.multipleSearchTerms);
-          this.$emit('multipleSearchData', this.multipleSearchTerms);
-          var diseases;
-          model.promiseGetDiseases(searchTerm)
-          .then(function(data){
-            // console.log("data got from promise : " , data)
-            diseases = data.diseases;
-            var promises = [];
-            var filteredDiseases;
+          if(!this.multipleSearchTerms.includes(searchTerm)){
+            this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
 
-            data.diseases.forEach(function (disease){
-              var p = model.promiseGetGenePanels(disease)
-              .then(function (data){
-                var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                data.disease.genePanels = filteredGenePanels;
-              },
-              function(error) {
+            this.$emit('search-gtr', searchTerm);
+            // console.log("this.multipleSearchTerms", this.multipleSearchTerms);
+            this.$emit('multipleSearchData', this.multipleSearchTerms);
+            var diseases;
+            model.promiseGetDiseases(searchTerm)
+            .then(function(data){
+              // console.log("data got from promise : " , data)
+              diseases = data.diseases;
+              var promises = [];
+              var filteredDiseases;
+
+              data.diseases.forEach(function (disease){
+                var p = model.promiseGetGenePanels(disease)
+                .then(function (data){
+                  var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                  data.disease.genePanels = filteredGenePanels;
+                },
+                function(error) {
+
+                })
+
+                 promises.push(p);
 
               })
 
-               promises.push(p);
+              Promise.all(promises).then(function(){
+                 filteredDiseases = model.processDiseaseData(diseases);
+                 // console.log("filteredDiseases",filteredDiseases)
+
+                addFilteredDiseases(filteredDiseases);
+              })
 
             })
+            var x = [];
 
-            Promise.all(promises).then(function(){
-               filteredDiseases = model.processDiseaseData(diseases);
-               // console.log("filteredDiseases",filteredDiseases)
-
-              addFilteredDiseases(filteredDiseases);
-            })
-
-          })
-          var x = [];
-
-          var addFilteredDiseases = (filteredDiseases) =>{
-            if (filteredDiseases.length===0) {
-              this.alert= true;
+            var addFilteredDiseases = (filteredDiseases) =>{
+              if (filteredDiseases.length===0) {
+                this.alert= true;
+              }
+              this.checked=false;
+              filteredDiseases.map(x=>{
+                // console.log(this.multipleSearchTerms.findIndex())
+                x["searchTerm"]="ip"+searchTerm+"ip";
+                // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
+                x["searchTermArray"] = [searchTerm];
+                x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
+                // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
+                this.filteredDiseasesItems.push(x);
+              });
+              console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
+              this.$emit('showDiseases', this.filteredDiseasesItems)
             }
-            this.checked=false;
-            filteredDiseases.map(x=>{
-              // console.log(this.multipleSearchTerms.findIndex())
-              x["searchTerm"]="ip"+searchTerm+"ip";
-              // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
-              x["searchTermArray"] = [searchTerm];
-              x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
-              // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
-              this.filteredDiseasesItems.push(x);
-            });
-            console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
-            this.$emit('showDiseases', this.filteredDiseasesItems)
-          }
 
+          }
+          else if(this.multipleSearchTerms.includes(searchTerm)){
+            this.checked = false;
+            alert("This disorder is already searched before")
+          }
         }
-        else if(this.multipleSearchTerms.includes(searchTerm)){
-          this.checked = false;
-          alert("This disorder is already searched before")
-        }
+
+
       },
     }
   }
