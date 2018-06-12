@@ -70,14 +70,8 @@
               </v-card>
             </v-flex>
 
-            <v-flex d-flex xs10 offset-xs1 >
+            <v-flex xs10 offset-xs1>
               <v-card >
-                <!-- chip to display number of genes selected  -->
-                <!-- <v-card-title primary class="title" style="padding-bottom:">
-                   <span class="pl-1 text-xs-center" v-if="selectedGenesText.length>1">
-                      <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
-                   </span>
-                </v-card-title> -->
                 <div v-if="!disordersSearchedByUser">
                   <v-card-title>
                       <h3>What is Genetic Testing Registry?</h3>
@@ -89,10 +83,13 @@
                       <br>
                       The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                       <br><br>
-
                   </v-card-title>
                 </div>
+              </v-card>
 
+            </v-flex>
+
+            <v-flex d-flex xs10 offset-xs1 >
                   <v-layout row wrap>
                     <!-- insert here  -->
 
@@ -361,7 +358,6 @@
 
 
                   </v-layout>
-              </v-card>
             </v-flex>
 
             <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >

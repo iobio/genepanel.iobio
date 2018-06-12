@@ -128,14 +128,14 @@
                 </v-list>
               </v-menu>
             </td>
-            <td style="font-size:0">{{ props.item.value }}</td>
+            <!-- <td style="font-size:0">{{ props.item.value }}</td> -->
           </tr>
         </template>
-        <template slot="footer">
+        <!-- <template slot="footer">
         <td colspan="100%">
           <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
         </td>
-      </template>
+      </template> -->
       </v-data-table>
   </div>
 </template>
@@ -201,15 +201,19 @@ var model = new Model();
           },
           { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-          { text: 'More', align: 'left', sortable: false, value: '' },
           {
-            text: '',
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
-            width: '10%',
-            class: 'headerWidth',
-            visibility: 'hidden-lg-only'
-
-           },
+            text: 'More',
+            align: 'left',
+            sortable: false,
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+          // {
+          //   text: '',
+          //   value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
+          //   width: '10%',
+          //   class: 'headerWidth',
+          //   visibility: 'hidden-lg-only'
+          //
+          //  },
         ],
         items: [],
         GenesFromD3Bars: [],
