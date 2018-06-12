@@ -19,7 +19,7 @@
 
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
-            <v-flex d-flex xs10 offset-xs1>
+            <v-flex d-flex xs12>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
                   <!-- <div class="mb-1">
@@ -70,7 +70,7 @@
               </v-card>
             </v-flex>
 
-            <v-flex xs10 offset-xs1>
+            <v-flex xs12 >
               <v-card >
                 <div v-if="!disordersSearchedByUser">
                   <v-card-title>
@@ -89,11 +89,11 @@
 
             </v-flex>
 
-            <v-flex d-flex xs10 offset-xs1 >
+            <v-flex d-flex xs12  >
                   <v-layout row wrap>
                     <!-- insert here  -->
 
-                    <v-flex  xs7 >
+                    <v-flex  xs8 >
                        <show-gene-panel1
                        v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"
                          v-bind:GeneData="geneProps"
@@ -108,7 +108,7 @@
                     </v-flex>
 
 
-                   <v-flex xs5 class="pr-2 pl-1" >
+                   <v-flex xs4 class="pr-2 pl-1" >
                      <div class="d-flex mb-2 xs12">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>

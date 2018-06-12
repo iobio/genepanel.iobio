@@ -110,8 +110,8 @@
 
     <div>
       <v-content>
-        <v-flex xs10 offset-xs1>
-          <v-card style="margin-left: 5px;margin-right:  5px;">
+        <!-- <v-flex xs10 offset-xs1>
+          <v-card style="margin-left: 5px;margin-right:  5px;"> -->
             <div style="width:100%; height:64px; background:white">
               <v-card-text>
                 <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
@@ -221,45 +221,48 @@
               </v-card-text>
 
             </div>
-          </v-card>
+          <!-- </v-card>
 
-        </v-flex>
+        </v-flex> -->
+        <div style="background:white; height:auto">
+          <keep-alive>
 
-        <keep-alive>
+              <GeneticTestingRegistry
+                v-if="component==='GeneticTestingRegistry'"
+                v-on:vendorListCB="updateVendors($event)"
+                v-bind:selectedVendorsListCB="selectedVendorsList"
+                v-on:diseasesCB=addDiseases($event)
+                v-on:disorderNamesListCB="updateDisorderNames($event)"
+                v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
+                v-on:GeneMembershipData="GeneMembershipData($event)"
+                v-bind:selectedDisordersListCB="selectedDisordersList"
+                v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
+                v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+                :chartColor="ordinalColor"
+                :barColor="barColor"
+                @search-gtr="onSearchGTR">
+              </GeneticTestingRegistry>
+            <!--
+              <HomePage v-else-if="component==='HomePage'"></HomePage>
+            -->
+              <Phenolyzer
+                v-if="component==='Phenolyzer'"
+                v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
+                v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+                @search-phenotype="onSearchPhenotype">
+              </Phenolyzer>
+              <SummaryTab
+                v-else-if="component==='SummaryTab'"
+                v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+                v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+                v-bind:GtrGenesForSummary="selectedGtrGenes"
+                v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+                :chartColor="ordinalColor">
+              </SummaryTab>
+            </keep-alive>
+        </div>
 
-            <GeneticTestingRegistry
-              v-if="component==='GeneticTestingRegistry'"
-              v-on:vendorListCB="updateVendors($event)"
-              v-bind:selectedVendorsListCB="selectedVendorsList"
-              v-on:diseasesCB=addDiseases($event)
-              v-on:disorderNamesListCB="updateDisorderNames($event)"
-              v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
-              v-on:GeneMembershipData="GeneMembershipData($event)"
-              v-bind:selectedDisordersListCB="selectedDisordersList"
-              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
-              :chartColor="ordinalColor"
-              :barColor="barColor"
-              @search-gtr="onSearchGTR">
-            </GeneticTestingRegistry>
-          <!--
-            <HomePage v-else-if="component==='HomePage'"></HomePage>
-          -->
-            <Phenolyzer
-              v-if="component==='Phenolyzer'"
-              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-              @search-phenotype="onSearchPhenotype">
-            </Phenolyzer>
-            <SummaryTab
-              v-else-if="component==='SummaryTab'"
-              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
-              v-bind:GtrGenesForSummary="selectedGtrGenes"
-              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
-              :chartColor="ordinalColor">
-            </SummaryTab>
-          </keep-alive>
+
       </v-content>
     </div>
 
