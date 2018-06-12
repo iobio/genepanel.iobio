@@ -17,7 +17,6 @@
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
     <v-navigation-drawer
-      style="background: #F5F6F7; "
       permanent
       app
     >
@@ -116,7 +115,7 @@
             <div style="width:100%; height:64px; background:white">
               <v-card-text>
                 <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
-                  <strong style="color:#222">Genetic Testing Registry</strong>
+                  Genetic Testing Registry
                   <v-menu open-on-hover top offset-y>
                     <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
                       <v-card>
@@ -600,6 +599,11 @@ a:hover {
   /* color: black; */
 }
 
+
+.badge{
+  font-weight: 200
+}
+
 .badge__badge, .badge__badge .icon{
   font-size: 11px;
 }
@@ -750,7 +754,7 @@ button.btnColor.blue.darken-1
   margin-top: 120px
 
 .activeTab
-  background-color: #D8D8D8
+  background-color: #fce8e6
   color: #e53935
   font-weight: 400
   border-left: 8px solid $app-color

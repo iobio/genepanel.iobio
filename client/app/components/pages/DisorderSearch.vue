@@ -27,7 +27,7 @@
         Go
       </v-btn>
       <div v-if="multipleSearchTerms.length">
-        <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+        <v-chip disabled outline color="red darken-1" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>
@@ -112,6 +112,7 @@ var model = new Model();
     },
     methods:{
       remove(item){
+        bus.$emit("removeSearchTerm")
         // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
@@ -260,34 +261,42 @@ var model = new Model();
 }
 
 /* Media Queries */
-/*
+
+@media screen and (max-width: 1620px){
+  #input{
+    width: 370px;
+    height:40px;
+    margin-top: 4px;
+  }
+}
+
 @media screen and (max-width: 1050px){
   #input{
-    width: 800px;
-    height:35px;
+    width: 400px;
+    height:40px;
     margin-top: 4px;
   }
 }
 
 @media screen and (max-width: 950px){
   #input{
-    width: 500px;
-    height:35px;
+    width: 300px;
+    height:40px;
     margin-top: 4px;
   }
 }
 
 @media screen and (max-width: 700px){
   #input{
-    width: 400px;
-    height:35px;
+    width: 300px;
+    height:40px;
     margin-top: 4px;
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
   }
   .btnColor{
     margin-top: 2px
   }
-} */
+}
 
 .input-box{
   background: #00ACC1;

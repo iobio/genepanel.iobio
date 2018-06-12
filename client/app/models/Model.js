@@ -515,8 +515,8 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = (width - 520)/sortedGenes[0]._genePanelCount;
-    var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor;
+    var multiplicationFactor = (width - 580)/sortedGenes[0]._genePanelCount;
+    var svgWidth = (sortedGenes[0]._genePanelCount * multiplicationFactor)+50;
       return sortedGenes.map(function(gene, idx) {
         return {
               key: idx,
@@ -545,9 +545,9 @@ mergeGenesAcrossPanels(genePanels) {
                                 </linearGradient>
                             </defs>
 
-                            <rect fill="#D04F4C"
-                                  x="10" y="1" width="${gene._genePanelCount * multiplicationFactor}" height="18"/>
-                            <text x="${gene._genePanelCount * multiplicationFactor/1.4}" y="14" font-family="Verdana" font-size="13" fill="white">${gene._genePanelCount}</text>
+                            <rect fill="#ffffff00" stroke="#D04F4C" stroke-width="2"
+                                  x="10" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
+                            <text x="${(gene._genePanelCount * multiplicationFactor)+18}" y="14" font-family="Verdana" font-size="13" fill="#D04F4C">${gene._genePanelCount}</text>
                         </svg>`,
 
             };
