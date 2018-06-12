@@ -26,7 +26,7 @@
                     The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
                   </div> -->
                   <v-layout row wrap>
-                    <v-flex  xs8 >
+                    <v-flex xs12 sm12 md12 lg8>
                       <DisorderSearch
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
@@ -35,7 +35,7 @@
                       </DisorderSearch>
                     </v-flex>
 
-                    <v-flex  xs4 >
+                    <v-flex xs12 sm12 md12 lg4 >
                       <div style="display:inline-block; padding-top:5px;">
                         <label>Genes</label>
                         <input
@@ -128,7 +128,7 @@
                      <br>
 
                      <div class="d-flex mt-1 mb-2 xs12">
-                       <v-card v-bind:class="[chartComponent==='GeneCard' ? 'activeCardBox' : '']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="geneProps.length">
                          <v-card-title primary-title>
                           <div>
                             <div style="font-size:16px">
@@ -156,9 +156,8 @@
                        </v-card>
                      </div>
                     <br>
-
                     <div class="d-flex mt-1 mb-2 xs12">
-                      <div v-if="diseases.length && modeOfInheritanceProps.length > 1">
+                      <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
@@ -184,10 +183,12 @@
                                  <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
                                  <strong v-else>{{ selectDisorders.length }}</strong>
                                </span>
-                               <span class="FilterAndViewBtn"
+                               <!-- <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
-                               </span>
+                               </span> -->
+                               <v-btn outline round color="red darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+
                                <div>of {{ multiSelectDisorder.length }} selected</div>
                              </div>
                           </v-card-title>
@@ -213,10 +214,11 @@
                             </v-card>
                           </v-card-title>
                           <center>
-                            <span class="FilterAndViewBtn"
+                            <!-- <span class="FilterAndViewBtn"
                               v-on:click="chartComponent=null">
                               Exit
-                            </span>
+                            </span> -->
+                            <v-btn color="red darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                           </center>
                           <br>
                         </div>
@@ -249,10 +251,12 @@
                                  </v-dialog>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
-                               <span class="FilterAndViewBtn"
+                               <!-- <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('GeneMembership')">
                                View and Filter
-                               </span>
+                               </span> -->
+                               <v-btn outline round color="red darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
+
                                <div>present</div>
                              </div>
                           </v-card-title>
@@ -261,11 +265,14 @@
                                 v-bind:GeneData="geneProps"
                                 :color="barColor">
                               </GeneMembership>
+                              <br>
                               <center>
-                                <span class="FilterAndViewBtn"
+                                <!-- <span class="FilterAndViewBtn"
                                   v-on:click="chartComponent=null">
                                   Exit
-                                </span>
+                                </span> -->
+                                <v-btn color="red darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+
                               </center>
                               <br>
                           </div>
@@ -302,10 +309,12 @@
                                  <strong v-else>{{ vendorsSelect.length }}</strong>
                                </span>
                                </span>
-                               <span class="FilterAndViewBtn"
+                               <!-- <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('Vendors')">
                                View and Filter
-                               </span>
+                               </span> -->
+                               <v-btn outline round color="red darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
+
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
                           </v-card-title>
@@ -326,10 +335,12 @@
                             <v-btn v-show="vendorsSelect.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
                             <br>
                             <center>
-                              <span class="FilterAndViewBtn"
+                              <!-- <span class="FilterAndViewBtn"
                                 v-on:click="chartComponent=null">
                                 Exit
-                              </span>
+                              </span> -->
+                              <v-btn color="red darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+
                             </center>
                             <br>
                           </div>
@@ -462,6 +473,7 @@ export default {
       snackbarTimeout: 4000,
       genesTopCounts: [5, 10, 30, 50, 80, 100],
       dialog: false,
+      DisordersDialog: false,
       geneSearch: '',
       GoToTop: false,
       disordersSearchedByUser: false,
@@ -477,6 +489,9 @@ export default {
     }
   },
   mounted(){
+    bus.$on("removeSearchTerm", ()=>{
+      // this.multiSelectDisorder = [];
+    })
   },
   created () {
     window.addEventListener('scroll', this.handleScroll);
@@ -664,8 +679,8 @@ export default {
     margin-left: 8px;
   }
   .activeCardBox{
-    /* border: 1px solid #F16335; */
-    box-shadow: 0 2px 6px 0 #CC423F;
+    border-bottom: 4px solid #F16335;
+    /* box-shadow: 0 2px 2px 0 #CC423F; */
   }
   .btnColor{
     color: white;
@@ -685,6 +700,14 @@ export default {
    margin-top: 4px;
    background-color: #F4F4F4;
    border-color: #F4F4F4;
+ }
+
+ @media screen and (max-width:1600px){
+   #top-genes-input{
+     width: 120px;
+     height:40px;
+     margin-top: 4px;
+   }
  }
 
  /* #GoToTopBtn {
@@ -711,8 +734,8 @@ export default {
 <style lang="sass">
 @import ../assets/sass/variables
 
-.activeCardBox
-  box-shadow: 0 2px 6px 0 $app-color
+// .activeCardBox
+//   box-shadow: 0 2px 6px 0 $app-color
 
 #GoToTopBtn
   position: fixed

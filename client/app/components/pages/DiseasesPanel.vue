@@ -264,7 +264,12 @@ var model = new Model();
       },
       selectedDisordersProps: function(){
         this.selectedDisordersFromFilterPanel = this.selectedDisordersProps;
-        this.flagForDisorderFilter = true;
+        if(this.selectedDisordersProps.length>0){
+          this.flagForDisorderFilter = true;
+        }
+        else {
+          this.flagForDisorderFilter = false;
+        }
         this.updateDisordersTableOnSelectedDisorders();
       }
     }
