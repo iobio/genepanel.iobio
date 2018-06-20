@@ -37,7 +37,7 @@ require('../app/components/assets/js/selectize.js')
 
 
 //Use vuetify
-Vue.use(Vuetify)
+// Vue.use(Vuetify)
 
 
 
@@ -64,6 +64,15 @@ Vue.use(Clipboard)
 
 // Back to top button
 // Vue.use(BackToTop);
+
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#F44336',
+    secondary: '#b0bec5',
+    accent: '#8c9eff',
+    error: '#b71c1c',
+  }
+})
 
 
 //Route

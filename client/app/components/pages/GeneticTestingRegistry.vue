@@ -94,17 +94,19 @@
                     <!-- insert here  -->
 
                     <v-flex  xs8 >
-                       <show-gene-panel1
-                       v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"
-                         v-bind:GeneData="geneProps"
-                         v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                         v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
-                         v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
-                         v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
-                         v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
-                         v-bind:multipleSearchItems="multipleSearchItems"
-                         v-bind:geneSearch="geneSearch">
-                       </show-gene-panel1>
+                      <v-card>
+                        <show-gene-panel1
+                        v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"
+                          v-bind:GeneData="geneProps"
+                          v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                          v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
+                          v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
+                          v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
+                          v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
+                          v-bind:multipleSearchItems="multipleSearchItems"
+                          v-bind:geneSearch="geneSearch">
+                        </show-gene-panel1>
+                      </v-card>
                     </v-flex>
 
 
@@ -184,7 +186,7 @@
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="red darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
                                <div>of {{ multiSelectDisorder.length }} selected</div>
                              </div>
@@ -211,11 +213,7 @@
                             </v-card>
                           </v-card-title>
                           <center>
-                            <!-- <span class="FilterAndViewBtn"
-                              v-on:click="chartComponent=null">
-                              Exit
-                            </span> -->
-                            <v-btn color="red darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                            <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                           </center>
                           <br>
                         </div>
@@ -252,7 +250,7 @@
                                 v-on:click="showChartComponent('GeneMembership')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="red darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
+                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
 
                                <div>present</div>
                              </div>
@@ -268,7 +266,7 @@
                                   v-on:click="chartComponent=null">
                                   Exit
                                 </span> -->
-                                <v-btn color="red darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                                <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
 
                               </center>
                               <br>
@@ -310,7 +308,7 @@
                                 v-on:click="showChartComponent('Vendors')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="red darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
+                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
 
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
@@ -336,7 +334,7 @@
                                 v-on:click="chartComponent=null">
                                 Exit
                               </span> -->
-                              <v-btn color="red darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                              <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
 
                             </center>
                             <br>
@@ -552,8 +550,6 @@ export default {
       this.diseasesProps = e;
     },
     selectPanels: function(e){
-     // console.log("e is from home for selected panels: ", e)
-     // console.log(e[16].searchTermArray)
       this.geneProps = e;
       this.scrollDown();
       this.$emit("GeneMembershipData", e);
@@ -674,10 +670,10 @@ export default {
     height:30px;
     margin-left: 8px;
   }
-  .activeCardBox{
+  /* .activeCardBox{
     border-bottom: 4px solid #F16335;
-    /* box-shadow: 0 2px 2px 0 #CC423F; */
-  }
+    box-shadow: 0 2px 2px 0 #CC423F;
+  } */
   .btnColor{
     color: white;
     background-color: #D04F4C !important;
@@ -706,25 +702,6 @@ export default {
    }
  }
 
- /* #GoToTopBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 30px;
-  z-index: 99;
-  font-size: 18px;
-  border: none;
-  outline: none;
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 4px;
-}
-
-#GoToTopBtn:hover {
-  background-color: #555;
-} */
-
 </style>
 
 <style lang="sass">
@@ -749,4 +726,13 @@ export default {
 
 #GoToTopBtn:hover
   background-color: #555
+
+.btnColor
+  color: white
+  background-color: $search-button-color !important
+  border-radius: 5px
+
+.activeCardBox
+    border-bottom: 4px solid $activeCard-border
+
 </style>

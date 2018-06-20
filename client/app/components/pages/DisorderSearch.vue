@@ -246,11 +246,11 @@ var model = new Model();
 </script>
 
 <style scoped>
- .btnColor{
+ /* .btnColor{
    color: white;
    background-color: #D04F4C !important;
    border-radius: 5px;
- }
+ } */
  .btn{
    padding: 0px;
    height:39px;
@@ -259,7 +259,7 @@ var model = new Model();
    font-size: 15px;
  }
 #input{
-  width: 600px;
+  width: 680px;
   height:40px;
   margin-top: 4px;
   background-color: #F4F4F4;
@@ -270,7 +270,7 @@ var model = new Model();
 
 @media screen and (max-width: 1620px){
   #input{
-    width: 370px;
+    width: 470px;
     height:40px;
     margin-top: 4px;
   }
@@ -278,7 +278,7 @@ var model = new Model();
 
 @media screen and (max-width: 1050px){
   #input{
-    width: 400px;
+    width: 450px;
     height:40px;
     margin-top: 4px;
   }
@@ -286,7 +286,7 @@ var model = new Model();
 
 @media screen and (max-width: 950px){
   #input{
-    width: 300px;
+    width: 350px;
     height:40px;
     margin-top: 4px;
   }
@@ -311,4 +311,16 @@ var model = new Model();
   padding-left: 30px;
   padding-top: 15px;
 }
+</style>
+
+<style lang="sass" scoped>
+
+  @import ../assets/sass/variables
+
+  .btnColor
+    color: white
+    background-color: $search-button-color !important
+    border-radius: 5px
+
+
 </style>
