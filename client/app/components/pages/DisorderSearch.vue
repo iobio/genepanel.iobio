@@ -179,9 +179,10 @@ var model = new Model();
           if(!this.multipleSearchTerms.includes(searchTerm)){
             this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
 
-            this.$emit('search-gtr', searchTerm);
+            // this.$emit('search-gtr', searchTerm);
             // console.log("this.multipleSearchTerms", this.multipleSearchTerms);
             this.$emit('multipleSearchData', this.multipleSearchTerms);
+            this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
             model.promiseGetDiseases(searchTerm)
             .then(function(data){

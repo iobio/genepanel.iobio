@@ -459,6 +459,7 @@ import DisorderSearch from './DisorderSearch.vue';
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
+
         this.$clipboard(genesToCopy);
 
         this.sendClin({
