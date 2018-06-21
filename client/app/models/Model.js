@@ -545,7 +545,7 @@ mergeGenesAcrossPanels(genePanels) {
                                 </linearGradient>
                             </defs>
 
-                            <rect class="genepanelsRect" fill="#ffffff00" stroke="#D04F4C" stroke-width="2"
+                            <rect class="genepanelsRect"
                                   x="10" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
                             <text x="${(gene._genePanelCount * multiplicationFactor)+18}" y="14" font-family="Verdana" font-size="13" fill="#D04F4C">${gene._genePanelCount}</text>
                         </svg>`,

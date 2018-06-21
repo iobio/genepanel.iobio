@@ -26,13 +26,13 @@
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="component='GeneticTestingRegistry'">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>
              Genetic Testing Registry
-             <v-badge color="red darken-1" right style="background-color:#fff0; font-size:18px">
+             <v-badge color="primary darken-1" right class="badge-bg-color">
                <span  slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
              </v-badge>
            </v-list-tile-title>
@@ -43,13 +43,13 @@
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="component='Phenolyzer'">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='Phenolyzer'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>
              Phenolyzer
-             <v-badge color="red" right style="background-color:#fff0; font-size:18px">
+             <v-badge color="primary" right class="badge-bg-color">
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             </v-badge>
            </v-list-tile-title>
@@ -61,13 +61,13 @@
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="component='SummaryTab'">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='SummaryTab'"><v-icon color="red darken-1">dashboard</v-icon></span>
+           <span v-if="component==='SummaryTab'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title>
              Summary
-             <v-badge color="red" right style="background-color:#fff0; font-size:18px">
+             <v-badge color="primary" right class="badge-bg-color">
               <span slot="badge">{{ NumberOfAllGenes }}</span>
             </v-badge>
            </v-list-tile-title>
@@ -110,8 +110,6 @@
 
     <div>
       <v-content>
-        <v-flex xs10 offset-xs1>
-          <v-card style="margin-left: 5px;margin-right:  5px;">
             <div style="width:100%; height:64px; background:white">
               <v-card-text>
                 <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
@@ -221,45 +219,48 @@
               </v-card-text>
 
             </div>
-          </v-card>
+          <!-- </v-card>
 
-        </v-flex>
+        </v-flex> -->
+        <div style="background:white; height:auto">
+          <keep-alive>
 
-        <keep-alive>
+              <GeneticTestingRegistry
+                v-if="component==='GeneticTestingRegistry'"
+                v-on:vendorListCB="updateVendors($event)"
+                v-bind:selectedVendorsListCB="selectedVendorsList"
+                v-on:diseasesCB=addDiseases($event)
+                v-on:disorderNamesListCB="updateDisorderNames($event)"
+                v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
+                v-on:GeneMembershipData="GeneMembershipData($event)"
+                v-bind:selectedDisordersListCB="selectedDisordersList"
+                v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
+                v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+                :chartColor="ordinalColor"
+                :barColor="barColor"
+                @search-gtr="onSearchGTR">
+              </GeneticTestingRegistry>
+            <!--
+              <HomePage v-else-if="component==='HomePage'"></HomePage>
+            -->
+              <Phenolyzer
+                v-if="component==='Phenolyzer'"
+                v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
+                v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+                @search-phenotype="onSearchPhenotype">
+              </Phenolyzer>
+              <SummaryTab
+                v-else-if="component==='SummaryTab'"
+                v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+                v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+                v-bind:GtrGenesForSummary="selectedGtrGenes"
+                v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+                :chartColor="ordinalColor">
+              </SummaryTab>
+            </keep-alive>
+        </div>
 
-            <GeneticTestingRegistry
-              v-if="component==='GeneticTestingRegistry'"
-              v-on:vendorListCB="updateVendors($event)"
-              v-bind:selectedVendorsListCB="selectedVendorsList"
-              v-on:diseasesCB=addDiseases($event)
-              v-on:disorderNamesListCB="updateDisorderNames($event)"
-              v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
-              v-on:GeneMembershipData="GeneMembershipData($event)"
-              v-bind:selectedDisordersListCB="selectedDisordersList"
-              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
-              :chartColor="ordinalColor"
-              :barColor="barColor"
-              @search-gtr="onSearchGTR">
-            </GeneticTestingRegistry>
-          <!--
-            <HomePage v-else-if="component==='HomePage'"></HomePage>
-          -->
-            <Phenolyzer
-              v-if="component==='Phenolyzer'"
-              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-              @search-phenotype="onSearchPhenotype">
-            </Phenolyzer>
-            <SummaryTab
-              v-else-if="component==='SummaryTab'"
-              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
-              v-bind:GtrGenesForSummary="selectedGtrGenes"
-              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
-              :chartColor="ordinalColor">
-            </SummaryTab>
-          </keep-alive>
+
       </v-content>
     </div>
 
@@ -458,6 +459,7 @@ import DisorderSearch from './DisorderSearch.vue';
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
+
         this.$clipboard(genesToCopy);
 
         this.sendClin({
@@ -588,8 +590,12 @@ import DisorderSearch from './DisorderSearch.vue';
 
 }
 
+a{
+  color: #1976d2
+}
 a:hover {
-  text-decoration: none
+  text-decoration: none;
+
 }
 
 .badge__badge{
@@ -754,7 +760,7 @@ button.btnColor.blue.darken-1
   margin-top: 120px
 
 .activeTab
-  background-color: #fce8e6
+  background-color: $activeTab-background-color
   color: #e53935
   font-weight: 400
   border-left: 8px solid $app-color
@@ -771,4 +777,9 @@ button.btnColor.blue.darken-1
   i.material-icons
     font-size: 22px
     color: $text-color !important
+
+.badge-bg-color
+    background-color: #fff0
+    font-size: 18px
+
 </style>

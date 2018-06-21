@@ -28,7 +28,6 @@
           select-all
           v-bind:pagination.sync="pagination"
           item-key="name"
-          class="elevation-1 pr-3"
           v-bind:search="search"
           no-data-text="No Genes Available Currently"
         >
@@ -105,7 +104,7 @@
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
 
-                <v-list>
+                <v-list style="width:250px">
                   <v-list-tile >
                     <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
                   </v-list-tile>
@@ -128,14 +127,14 @@
                 </v-list>
               </v-menu>
             </td>
-            <td style="font-size:0">{{ props.item.value }}</td>
+            <!-- <td style="font-size:0">{{ props.item.value }}</td> -->
           </tr>
         </template>
-        <template slot="footer">
+        <!-- <template slot="footer">
         <td colspan="100%">
           <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
         </td>
-      </template>
+      </template> -->
       </v-data-table>
   </div>
 </template>
@@ -201,15 +200,19 @@ var model = new Model();
           },
           { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-          { text: 'More', align: 'left', sortable: false, value: '' },
           {
-            text: '',
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
-            width: '10%',
-            class: 'headerWidth',
-            visibility: 'hidden-lg-only'
-
-           },
+            text: 'More',
+            align: 'left',
+            sortable: false,
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+          // {
+          //   text: '',
+          //   value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
+          //   width: '10%',
+          //   class: 'headerWidth',
+          //   visibility: 'hidden-lg-only'
+          //
+          //  },
         ],
         items: [],
         GenesFromD3Bars: [],
@@ -523,7 +526,7 @@ var model = new Model();
           x.searchTermIndex = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
-                  <circle cx="12" cy="15" r="10" fill="#ffffff00" stroke-width="2" stroke="#EB8137" />
+                  <circle class="sourceIndicator"  />
                   <text x="12" y="15" text-anchor="middle" fill="#EB8137" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
@@ -563,14 +566,14 @@ var model = new Model();
 </script>
 
 <style>
-
+/*
 .genepanelsRect{
   fill: #ffffff00;
   pointer-events: all;
 }
 .genepanelsRect:hover{
   fill: #D04F4C;
-}
+} */
 
 #gene-histogram-chart .bar rect {
     fill:   #7dc2e5;
@@ -669,4 +672,29 @@ div.tooltip {
   width: 1%;
   color: red
 }
+</style>
+
+
+<style lang="sass">
+@import ../assets/sass/variables
+
+
+.genepanelsRect
+  fill: $svgBar-fill
+  pointer-events: all
+  stroke: #D04F4C
+  stroke-width: 2
+
+.genepanelsRect:hover
+  fill: #D04F4C
+
+.sourceIndicator
+  fill: #ffffff00
+  stroke: #EB8137
+  stroke-width: 2
+  cx: 12
+  cy: 15
+  r: 10
+
+
 </style>

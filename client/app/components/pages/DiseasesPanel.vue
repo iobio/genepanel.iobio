@@ -176,17 +176,21 @@ var model = new Model();
             }
             this.items = tempArray;
             this.selected = this.items.slice();
+            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
+            this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             return this.items;
           }
           else {
             this.selected = this.tempDisorders.slice();
             this.items = this.tempDisorders;
+            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
+            this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             return this.items;
           }
 
         },
         sendModeOfInheritanceData(){
-          alert(this.modeOfInheritanceData.length)
+          // alert(this.modeOfInheritanceData.length)
           bus.$emit("PieChartSelectorData");
         },
         updateFromPieChart(modeOfInheritance, selection){
@@ -211,6 +215,7 @@ var model = new Model();
             }
             this.items = tempArr;
             this.selected = this.items.slice();
+            this.getDisorderNames(); //Update the select disorders dropdown when pie chart wedge is selected.
           }
           else if(selection){
             tempArr = this.items;
@@ -227,6 +232,7 @@ var model = new Model();
             }
             this.items = tempArr;
             this.selected = this.items.slice();
+            this.getDisorderNames(); //Update the select disorders dropdown when pie chart wedge is selected.
           }
         }
 
