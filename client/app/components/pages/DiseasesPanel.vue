@@ -146,7 +146,7 @@ var model = new Model();
           else if(this.flagForDisorderFilter){ //Keeps track if the disorder name is selected when new disorder is searched
             this.items = this.DiseasePanelData;
             this.tempItems = this.DiseasePanelData;
-
+            this.getDisorderNames();
             this.updateDisordersTableOnSelectedDisorders();
           }
 
