@@ -747,8 +747,8 @@ button.btnColor.blue.darken-1
   fill: rgba(0,0,0,.54)
 
 .alert.warning
-  background-color: $info-color !important;
-  color: $text-color !important;
+  background-color: $info-color !important
+  color: $text-color !important
   width: 400px
 
 .fixed-top-tabs
