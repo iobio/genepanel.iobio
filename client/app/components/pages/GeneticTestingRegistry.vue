@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="app">
-      <v-app id="inspire">
+      <v-app id="inspire" style="background-color:#F3F6FF">
         <v-snackbar
           :timeout="snackbarTimeout"
           :top="y === 'top'"
@@ -676,7 +676,7 @@ export default {
   } */
   .btnColor{
     color: white;
-    background-color: #D04F4C !important;
+    background-color: #2C64FF !important;
     border-radius: 5px;
   }
   .btn{

@@ -27,7 +27,7 @@
         Go
       </v-btn>
       <div v-if="multipleSearchTerms.length">
-        <v-chip disabled outline color="red darken-1" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+        <v-chip disabled text-color="white" color="orange" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>

@@ -99,7 +99,6 @@
       dark
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
-      style="width:300px"
     >
       <v-toolbar-title >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
@@ -110,7 +109,7 @@
 
     <div>
       <v-content>
-            <div style="width:100%; height:64px; background:white">
+            <div class="header-nav-bar" >
               <v-card-text>
                 <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
                   Genetic Testing Registry
@@ -761,8 +760,8 @@ button.btnColor.blue.darken-1
 
 .activeTab
   background-color: $activeTab-background-color
-  color: #e53935
-  font-weight: 400
+  color: #2C64FF
+  font-weight: 00
   border-left: 8px solid $app-color
 
 .close-button
@@ -782,4 +781,11 @@ button.btnColor.blue.darken-1
     background-color: #fff0
     font-size: 18px
 
+.header-nav-bar
+  // position: fixed
+  // top: 0
+  // z-index: 100
+  // width: 80%
+  height: 64px
+  background: white
 </style>

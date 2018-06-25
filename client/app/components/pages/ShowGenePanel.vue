@@ -527,7 +527,7 @@ var model = new Model();
             // console.log(y)
             return `<svg height="30" width="30">
                   <circle class="sourceIndicator"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#EB8137" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <text x="12" y="15" text-anchor="middle" fill="white" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
         });
@@ -682,15 +682,16 @@ div.tooltip {
 .genepanelsRect
   fill: $svgBar-fill
   pointer-events: all
-  stroke: #D04F4C
+  stroke: #FFE650
   stroke-width: 2
+  fill: #FFE650
 
 .genepanelsRect:hover
-  fill: #D04F4C
+  fill: #FFE650
 
 .sourceIndicator
-  fill: #ffffff00
-  stroke: #EB8137
+  fill: #ff9800
+  stroke: #ff9800
   stroke-width: 2
   cx: 12
   cy: 15
