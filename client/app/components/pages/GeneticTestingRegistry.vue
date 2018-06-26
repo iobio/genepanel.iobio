@@ -193,7 +193,7 @@
                              </div>
                           </v-card-title>
                         <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
-                          <v-card-title>
+                          <!-- <v-card-title> -->
                             <PieChartSelector
                               v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                               :color="chartColor">
@@ -212,7 +212,7 @@
                                   </v-layout>
                               </v-card-text>
                             </v-card>
-                          </v-card-title>
+                          <!-- </v-card-title> -->
                           <center>
                             <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                           </center>
@@ -359,7 +359,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12>
+            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -377,7 +377,7 @@
             <br>
 <!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12  >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>

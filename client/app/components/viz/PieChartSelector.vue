@@ -39,8 +39,8 @@ import { bus } from '../../routes';
 
         var widthPercent = "100%";
         var heightPercent = "100%";
-        var width = 400,
-          height = 260,
+        var width = 380,
+          height = 240,
           radius = Math.min(width, height) / 2;
 
         var arcOver = d3.svg.arc()
@@ -221,7 +221,7 @@ import { bus } from '../../routes';
                 .text(function(d){
                   return d.data._modeOfInheritance;
                 })
-                .style("font-size", "1.5em")
+                .style("font-size", "1em")
 
 
                 legend.on("mouseover", function(d){
@@ -302,8 +302,9 @@ import { bus } from '../../routes';
 
 <style lang="sass">
 .chart-title
+  margin-left: 10px
   font-size: 16px
   font-family:  "Open sans"
-
+  font-weight: 300
 
 </style>
