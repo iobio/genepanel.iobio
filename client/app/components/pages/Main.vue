@@ -23,6 +23,17 @@
     >
     <br>
      <v-list dense class="pt-0">
+       <v-list-tile>
+         <v-list-tile-action >
+           <span><v-icon>dashboard</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title >
+             Overview
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
        <v-list-tile
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="component='GeneticTestingRegistry'">

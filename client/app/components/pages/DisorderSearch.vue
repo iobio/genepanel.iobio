@@ -1,7 +1,19 @@
 <template>
   <div style="">
     <!-- <span style="padding-right:4px">Disorder</span> -->
-
+    <v-snackbar
+      :timeout="snackbarTimeout"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar"
+    >
+      {{ snackbarText }}
+      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
       <div style="display:inline-block; padding-top:5px;">
         <label>Search Disorder</label>
         <input
@@ -26,8 +38,11 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
+
       <div v-if="multipleSearchTerms.length">
-        <v-chip disabled  close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+        <br>
+          Disorders Searched:
+        <v-chip disabled outline color="blue-grey darken-3" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>
@@ -78,6 +93,12 @@ var model = new Model();
         alert:false,
         multipleSearchTerms:[],
         filteredDiseasesItems:[],
+        snackbar: false,
+        snackbarText: "",
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
       }
     },
     watch: {
@@ -225,7 +246,9 @@ var model = new Model();
           }
           else if(this.multipleSearchTerms.includes(searchTerm)){
             this.checked = false;
-            alert("This disorder is already searched before")
+            // alert("This disorder is already searched before")
+            this.snackbarText = "This disorder is already searched before"
+            this.snackbar = true;
           }
         }
 
