@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="app">
-      <v-app id="inspire" style="background-color:#F3F6FF">
+      <v-app id="inspire" style="background-color:#f9fbff">
         <v-snackbar
           :timeout="snackbarTimeout"
           :top="y === 'top'"
@@ -122,6 +122,7 @@
                             v-model="geneSearch"
                           ></v-text-field>
                         </v-card-title>
+                        <br>
                        </v-card>
                      </div>
                      <br>
@@ -186,7 +187,7 @@
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
                                <div>of {{ multiSelectDisorder.length }} selected</div>
                              </div>
@@ -250,7 +251,7 @@
                                 v-on:click="showChartComponent('GeneMembership')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
+                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
 
                                <div>present</div>
                              </div>
@@ -308,7 +309,7 @@
                                 v-on:click="showChartComponent('Vendors')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
+                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
 
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
@@ -358,12 +359,12 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12>
+            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
                   <disease-panel
-                    v-if="diseases.length"
+                    v-if="diseases.length && removeSearchTermFlag===false"
                     v-bind:DiseasePanelData="diseases"
                     v-on:selectedDiseases="selectDiseases($event)"
                     v-on:setDisorderNamesList="updateDisorderNamesList($event)"
@@ -472,6 +473,7 @@ export default {
       GoToTop: false,
       disordersSearchedByUser: false,
       multipleSearchItems:[],
+      removeSearchTermFlag: false,
     }
   },
   watch:{
@@ -484,7 +486,8 @@ export default {
   },
   mounted(){
     bus.$on("removeSearchTerm", ()=>{
-      // this.multiSelectDisorder = [];
+      this.selectDisorders = [];
+      this.removeSearchTermFlag = true;
     })
   },
   created () {
@@ -506,6 +509,7 @@ export default {
       }
     },
     addDiseases: function(e){
+      this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       // console.log("E", e);
       for(var i=0; i<e.length; i++){
@@ -551,7 +555,7 @@ export default {
     },
     selectPanels: function(e){
       this.geneProps = e;
-      this.scrollDown();
+      // this.scrollDown();
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
@@ -676,8 +680,8 @@ export default {
   } */
   .btnColor{
     color: white;
-    background-color: #2C64FF !important;
-    border-radius: 5px;
+    background-color: #4e7ad3 !important;
+    /* border-radius: 5px; */
   }
   .btn{
     padding: 0px;
@@ -727,12 +731,12 @@ export default {
 #GoToTopBtn:hover
   background-color: #555
 
-.btnColor
-  color: white
-  background-color: $search-button-color !important
-  border-radius: 5px
+// .btnColor
+//   color: white
+//   background-color: $search-button-color !important
+  // border-radius: 5px
 
 .activeCardBox
-    border-bottom: 4px solid $activeCard-border
+    border-bottom: 6px solid $activeCard-border
 
 </style>

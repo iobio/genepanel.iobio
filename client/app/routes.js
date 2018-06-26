@@ -67,7 +67,7 @@ Vue.use(Clipboard)
 
 Vue.use(Vuetify, {
   theme: {
-    primary: '#2C64FF',
+    primary: '#4e7ad3',
     secondary: '#b0bec5',
     accent: '#8c9eff',
     error: '#b71c1c',

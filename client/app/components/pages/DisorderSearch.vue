@@ -27,7 +27,7 @@
         Go
       </v-btn>
       <div v-if="multipleSearchTerms.length">
-        <v-chip disabled text-color="white" color="orange" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+        <v-chip disabled  close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>
@@ -112,19 +112,15 @@ var model = new Model();
     },
     methods:{
       remove(item){
-        bus.$emit("removeSearchTerm")
-        // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
+        bus.$emit("removeSearchTerm");
+        this.removeItem(item);
+      },
+      removeItem(item){
+
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
-        // item = "ip"+item+"ip";
         var temp = [];
         this.filteredDiseasesItems.map(x=>{
-          console.log(x["searchTermArray"]);
-          // if(x.searchTerm!== item){
-          //   temp.push(x);
-          // }
-          console.log("item", item)
-          console.log(x["searchTermArray"].includes(item))
           if(x["searchTermArray"].includes(item) && x["searchTermArray"].length>1){
             temp.push(x);
           }
@@ -147,17 +143,10 @@ var model = new Model();
           })
         })
 
-        // temp.map(x=>{
-        //   // console.log("temp search", x.searchTerm);
-        //   // console.log(item)
-        //   x.searchTerm = x.searchTerm.replace(item, "");
-        //   if(x.searchTerm[0]===" "){
-        //     x.searchTerm = x.searchTerm.slice(1);
-        //   }
-        // })
-        console.log("temp" , temp)
         this.filteredDiseasesItems = temp;
-        this.$emit('showDiseases', this.filteredDiseasesItems)
+        this.$emit('showDiseases', this.filteredDiseasesItems);
+
+
 
       },
       performSearch: function(){
@@ -321,7 +310,7 @@ var model = new Model();
   .btnColor
     color: white
     background-color: $search-button-color !important
-    border-radius: 5px
+    // border-radius: 5px
 
 
 </style>

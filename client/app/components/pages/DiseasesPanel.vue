@@ -181,6 +181,7 @@ var model = new Model();
             return this.items;
           }
           else if(this.selectedDisordersFromFilterPanel.length===0){
+            this.flagForDisorderFilter = false; 
             this.selected = this.tempDisorders.slice();
             this.items = this.tempDisorders;
             this.getDisorderNames();
