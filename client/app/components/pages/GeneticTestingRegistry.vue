@@ -359,7 +359,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12>
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -377,7 +377,7 @@
             <br>
 <!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex d-flex xs12 sm12 md12  >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -487,6 +487,7 @@ export default {
   mounted(){
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
+      this.vendorsSelect = [];
       this.removeSearchTermFlag = true;
     })
   },

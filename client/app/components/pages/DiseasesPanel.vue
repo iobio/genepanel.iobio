@@ -181,7 +181,7 @@ var model = new Model();
             return this.items;
           }
           else if(this.selectedDisordersFromFilterPanel.length===0){
-            this.flagForDisorderFilter = false; 
+            this.flagForDisorderFilter = false;
             this.selected = this.tempDisorders.slice();
             this.items = this.tempDisorders;
             this.getDisorderNames();
@@ -248,6 +248,9 @@ var model = new Model();
       });
       bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
         this.updateFromPieChart(modeOfInheritance, selection)
+      });
+      bus.$on("removeSearchTerm", ()=>{
+        this.flagForDisorderFilter = false; //Sets the flag to false because removing a terms clears the selection.
       })
     },
     updated(){

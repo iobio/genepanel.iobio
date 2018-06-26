@@ -140,6 +140,9 @@ var model = new Model();
     },
     mounted(){
       this.AddGenePanelData();
+      bus.$on("removeSearchTerm", ()=>{
+        this.flagForVendorFilter = false; //Sets the flag to false because removing a terms clears the selection.
+      })
     },
     updated(){
       //Emit the this.selected array back to the home.vue so it can be passed as props
@@ -168,12 +171,6 @@ var model = new Model();
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
         this.items = this.tempItems;
-
-        // this.items.sort(function(a,b){
-        //   // console.log("a", a.offerer)
-        //   return a.offerer > b.offerer;
-        // })
-        // console.log("items in updatePanelsOnSelectedVendors", this.items[0])
         if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
@@ -186,11 +183,18 @@ var model = new Model();
           }
           this.items = tempArr;
           this.selected = this.items.slice()
+          let vendors = model.getGenePanelVendors(mergedGenePanels);
+          this.vendorList = vendors;
+          this.$emit('setVendorList', this.vendorList.sort());
           return this.items;
         }
-        else {
+        else if(this.selectedVendorsFromFilterPanel.length===0){
+          this.flagForVendorFilter = false;
           this.selected = this.tempItems.slice();
           this.items = this.tempItems
+          let vendors = model.getGenePanelVendors(mergedGenePanels);
+          this.vendorList = vendors;
+          this.$emit('setVendorList', this.vendorList.sort());
           return this.items
         }
       },
@@ -261,7 +265,10 @@ var model = new Model();
           this.mergedGene = mergedGenePanels
 
           this.items = mergedGenePanels;
-          this.tempItems = mergedGenePanels
+          this.tempItems = mergedGenePanels;
+
+          let vendors = model.getGenePanelVendors(mergedGenePanels);
+          this.vendorList = vendors;
           this.updatePanelsOnSelectedVendors();
 
         }

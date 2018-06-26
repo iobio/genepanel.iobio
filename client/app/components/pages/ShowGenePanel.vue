@@ -62,28 +62,30 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <td style="font-weight:600">{{ (props.item.key + 1) }}</td>
+            <!-- <td style="font-weight:600">{{ (props.item.key + 1) }}</td> -->
             <td>
               <div id="app">
                 <div>
                   <v-menu open-on-hover top offset-y>
                     <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
                       <v-card>
-                        <v-card-text style="margin-top:-22px">
-                          <center ><h3>{{ props.item.name }}</h3></center>
-                          <hr>
-                          <div style="width:600px"><strong>Conditions: </strong></div>
-                          {{props.item.conditions}}
-                          <hr>
-                          <div><strong>Resources: </strong></div>
-                          <ul style="margin-left:25px; margin-top:5px">
-                            <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                            <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                            <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                            <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                            <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
-                          </ul>
-                        </v-card-text>
+                        <div class="conditionsBox">
+                          <v-card-text style="margin-top:-22px">
+                            <center ><h3>{{ props.item.name }}</h3></center>
+                            <hr>
+                            <div><strong>Conditions: </strong></div>
+                            {{props.item.conditions}}
+                            <hr>
+                            <div><strong>Resources: </strong></div>
+                            <ul style="margin-left:25px; margin-top:5px">
+                              <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                              <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                              <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                              <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                              <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
+                            </ul>
+                          </v-card-text>
+                        </div>
                       </v-card>
                   </v-menu>
                 </div>
@@ -186,13 +188,13 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
-          {
-            text: 'Index',
-            align: 'left',
-            sortable: false,
-            value: 'key',
-            helpText: 'Information'
-          },
+          // {
+          //   text: 'Index',
+          //   align: 'left',
+          //   sortable: false,
+          //   value: 'key',
+          //   helpText: 'Information'
+          // },
           {
             text: 'Name',
             align: 'left',
@@ -575,6 +577,11 @@ var model = new Model();
 .genepanelsRect:hover{
   fill: #D04F4C;
 } */
+
+.conditionsBox {
+  width: 380px;
+  overflow-wrap: break-word;
+}
 
 #gene-histogram-chart .bar rect {
     fill:   #7dc2e5;
