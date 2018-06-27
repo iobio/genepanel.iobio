@@ -22,6 +22,7 @@
               <v-card-text style="margin-bottom:-5px">
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8>
+                    <!-- {{ multipleSearchTerms }} -->
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Search Phenotype</label>
                       <input
@@ -162,11 +163,13 @@
                       </tr>
                     </template>
                     <template slot="items" slot-scope="props">
-                      <tr :active="props.selected" @click="props.selected = !props.selected">
+                      <tr :active="props.selected">
+                      <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
                         <td>
                           <v-checkbox
                             primary
                             hide-details
+                            v-model="props.selected"
                             :input-value="props.selected"
                           ></v-checkbox>
                         </td>
@@ -197,9 +200,15 @@
                             </div>
                           </div>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
-                        <td >
+                          <td>
+                            <span v-for="x in props.item.searchTermIndex">
+                              <span v-html="x"></span>
+                            </span>
+                          </td>
+
+                        <!-- <td >
                           <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
-                          <!--
+
                           <span>
                             <v-progress-circular
                               :size="25"
@@ -210,9 +219,9 @@
                             >
                             </v-progress-circular>
                           </span>
-                        -->
 
-                        </td>
+
+                        </td> -->
                         <td ><span v-html="props.item.htmlData"></span></td>
                         <!-- <td>{{ props.item.sources}}</td> -->
                         <td style="font-size:0px;">{{ props.item.score }}</td>
@@ -352,16 +361,16 @@
                   </v-layout>
                 </v-flex>
 
-                <v-flex d-flex xs12 sm12 md12>
+                <!-- <v-flex d-flex xs12 sm12 md12>
                   <v-card style="margin-top:4px" >
                     <v-card-title primary class="title" >
                       <span class="text-xs-center" v-if="multipleSearchTerms.length"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
                       <span  v-if="multipleSearchTerms.length" style="margin-left:20px;display: ">
-                        <!-- v-if="items.length>1" -->
-                        <!-- <strong>
+                        v-if="items.length>1"
+                        <strong>
                           Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
                           &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
-                        </strong> -->
+                        </strong>
                         <span id="genes-top-input" class="emphasize" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
                           <v-select
                           v-model="genesTop"
@@ -373,13 +382,13 @@
                           >
                           </v-select>
                         </span>
-                        <!--
+
                         <span style="padding-top:22px">
                           <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
                             <v-icon>navigate_next</v-icon>
                           </v-btn>
                         </span>
-                      -->
+
 
                       </span>
                     </v-card-title>
@@ -389,7 +398,7 @@
                     </v-card-text>
 
                   </v-card>
-                </v-flex>
+                </v-flex> -->
                 <br>
                 <br>
              </v-layout>
@@ -451,11 +460,13 @@ var geneModel = new GeneModel();
             align: 'left',
             value: 'geneName'
           },
-            {
-              text: 'Matched search terms',
-              align: 'left',
-              value: ['sources', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc']
-             },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
+
+            // {
+            //   text: 'Matched search terms',
+            //   align: 'left',
+            //   value: ['sources', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc']
+            //  },
              {
                text: 'Phenolyzer score',
                align: 'left',
@@ -650,6 +661,7 @@ var geneModel = new GeneModel();
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
+                  self.noOfSourcesSvg();
                   self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
@@ -680,7 +692,8 @@ var geneModel = new GeneModel();
                 geneName: arr[i].data[j].geneName,
                 geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
                 score: Number(arr[i].data[j].score),
-                searchTerm: arr[i].name
+                searchTerm: [arr[i].name],
+                searchTermIndex: [this.multipleSearchTerms.indexOf(arr[i].name)+1]
               })
             }
           }
@@ -709,7 +722,9 @@ var geneModel = new GeneModel();
                   geneName: arr[j].geneName,
                   score: Number(arr[j].score),
                   total: Number(arr[i].score),
-                  sources: 1
+                  sources: 1,
+                  searchTerm: arr[j].searchTerm,
+                  searchTermIndex: arr[j].searchTermIndex,
                 }
               }
               else {
@@ -718,7 +733,9 @@ var geneModel = new GeneModel();
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
                   // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))),
                   score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
-                  sources: Number(obj[uniqueGenes[i]].sources) + 1
+                  sources: Number(obj[uniqueGenes[i]].sources) + 1,
+                  searchTerm: [...obj[uniqueGenes[i]].searchTerm, ...arr[j].searchTerm],
+                  searchTermIndex: [...obj[uniqueGenes[i]].searchTermIndex, ...arr[j].searchTermIndex]
                 }
               }
             }
@@ -858,6 +875,19 @@ var geneModel = new GeneModel();
         //console.log(tempItems.slice(0,5));
         //self.items = tempItems;
         return tempItems
+      },
+      noOfSourcesSvg: function(){
+        this.items.map(x=>{
+          console.log(x)
+          x.searchTermIndex = x.searchTermIndex.map(y=>{
+            // console.log(y)
+            return `<svg height="30" width="30">
+                  <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />
+                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                </svg> `
+          })
+        });
+        console.log(this.items)
       },
       addSearchTermProperty: function(){
         this.tempItems.map(x=>{
