@@ -107,6 +107,9 @@ import { bus } from '../../routes';
       summaryTableData:{
         type: Array
       },
+      geneSearch: {
+        type: String
+      },
 
     },
     data: () => ({
@@ -134,6 +137,9 @@ import { bus } from '../../routes';
         this.selected = this.items.slice();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
       },
+      geneSearch: function(){
+        this.search = this.geneSearch;
+      },
 
     },
     mounted(){
@@ -155,6 +161,9 @@ import { bus } from '../../routes';
       bus.$on("selectCommonGenesBus", ()=>{
         this.selectCommonGenes();
       })
+
+      this.$emit("TotalSummaryGenes", this.items.length);
+      this.$emit("TotalSummarySelectedGenes", this.selected.length); 
 
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
       bus.$emit("updateAllGenes", this.selected);

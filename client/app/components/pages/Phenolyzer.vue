@@ -105,6 +105,7 @@
 
                 </v-layout>
               </v-card-text>
+              <br>
             </v-card>
           </v-flex>
 
