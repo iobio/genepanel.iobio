@@ -93,7 +93,7 @@
             </td>
             <!-- <td>{{ props.item.searchTermIndex }}</span></td> -->
             <td>
-              <span v-for="x in props.item.searchTermIndex">
+              <span v-for="x in props.item.searchTermIndexSVG">
                 <span v-html="x"></span>
               </span>
             </td>
@@ -201,7 +201,7 @@ var model = new Model();
             sortable: false,
             value: 'name'
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
             text: 'More',
@@ -425,7 +425,8 @@ var model = new Model();
         for(var i=0; i<terms.length; i++){
           for(var j=0; j<genesData.length; j++){
             if(terms[i].id == genesData[j].geneid){
-              genesData[j].searchTermIndex = terms[i].searchData
+              genesData[j].searchTermIndex = terms[i].searchData;
+              genesData[j].searchTermArray = terms[i].searchDataTerms;
             }
           }
         }
@@ -448,20 +449,6 @@ var model = new Model();
           })
         })
 
-
-      //Need to optimize
-        // for(var i=0; i<genesTempArr.length; i++){
-        //   for(var j=genesTempArr.length-1; j>i; j--){
-        //     if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
-        //         // dupGeneId.push(genesTempArr[j].geneid)
-        //       genesTempArr[i].searchTermArray = [...genesTempArr[i].searchTermArray, ...genesTempArr[j].searchTermArray];
-        //       genesTempArr[i].searchTermIndex = [...genesTempArr[i].searchTermIndex, ...genesTempArr[j].searchTermIndex];
-        //       genesTempArr[i].searchTermArray = Array.from(new Set(genesTempArr[i].searchTermArray))
-        //       genesTempArr[i].searchTermIndex = Array.from(new Set(genesTempArr[i].searchTermIndex))
-        //     }
-        //   }
-        // }
-
         var dupsObj = {};
 
         for(var i=0; i<genesTempArr.length; i++){
@@ -469,64 +456,57 @@ var model = new Model();
             dupsObj[genesTempArr[i].geneid] = genesTempArr[i];
           }
           else {
-            // console.log(dupsObj[genesTempArr[i].geneid].searchTermArray)
             dupsObj[genesTempArr[i].geneid].searchTermIndex = [...dupsObj[genesTempArr[i].geneid].searchTermIndex, ...genesTempArr[i].searchTermIndex];
             dupsObj[genesTempArr[i].geneid].searchTermIndex = Array.from(new Set(dupsObj[genesTempArr[i].geneid].searchTermIndex))
+            dupsObj[genesTempArr[i].geneid].searchTermArray = [...dupsObj[genesTempArr[i].geneid].searchTermArray, ...genesTempArr[i].searchTermArray];
+            dupsObj[genesTempArr[i].geneid].searchTermArray = Array.from(new Set(dupsObj[genesTempArr[i].geneid].searchTermArray))
+
           }
         }
 
-        // console.log(dupsObj);
         var newGeneArr = [];
 
         for(var key in dupsObj){
           newGeneArr.push(dupsObj[key])
         }
 
-
+        // var obj = {};
         // for(var i=0; i<newGeneArr.length; i++){
-        //   if(newGeneArr[i].geneid==2077){
-        //     console.log("newGeneArr[i].searchTermArray", newGeneArr[i].searchTermArray)
-        //     // console.log("ggene", genesTempArr[i])
+        //   if(obj[newGeneArr[i].geneid]===undefined){
+        //     obj[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
         //   }
         // }
+        //
 
         var obj = {};
         for(var i=0; i<newGeneArr.length; i++){
           if(obj[newGeneArr[i].geneid]===undefined){
-            obj[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
+            // obj1[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
+            obj[newGeneArr[i].geneid] = {
+              index: newGeneArr[i].searchTermIndex,
+              terms: newGeneArr[i].searchTermArray
+            }
           }
         }
-
-        // for(var i=0; i<genesTempArr.length; i++){
-        //   // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].geneid)
-        //   // console.log("obj[genesTempArr[i].geneid]", genesTempArr[i].searchTermArray)
-        //   if(obj[genesTempArr[i].geneid]===undefined){
-        //     obj[genesTempArr[i].geneid] = genesTempArr[i].searchTermIndex;
-        //   }
-        // }
-
-        // console.log(obj)
 
         var anotherArr = [];
         for(var key in obj){
           anotherArr.push({
             id: key,
-            searchData: obj[key]
+            searchData: obj[key].index,
+            searchDataTerms: obj[key].terms
           })
         }
-
-        // console.log("anotherArr", anotherArr)
 
         anotherArr.map(x=>{
           x.searchData.sort();
         })
-
         return anotherArr
 
       },
       noOfSourcesSvg: function(){
         this.items.map(x=>{
-          x.searchTermIndex = x.searchTermIndex.map(y=>{
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
                   <circle class="sourceIndicator"  />

@@ -591,7 +591,7 @@ export default {
           t.Title === disorder.Title
         ))
       );
-      console.log(e);
+      // console.log(e);
       this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;

@@ -176,7 +176,6 @@
                         </td>
                         <!-- <td></td> -->
                         <!-- <td>{{ props.item.rank }}</td> -->
-                        <td>{{ props.item.rank}}</span></td>
                         <td >
                           <div id="app">
                             <div>
@@ -256,9 +255,9 @@
                       </tr>
                     </template>
                     <template slot="footer">
-                    <td colspan="100%">
+                    <!-- <td colspan="100%">
                       <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
-                    </td>
+                    </td> -->
                   </template>
                   </v-data-table>
                 </v-card>
@@ -451,11 +450,11 @@ var geneModel = new GeneModel();
         search: '',
         selected: [],
         headers: [
-          {
-            text: 'Rank',
-            align: 'left',
-            value: 'rank'
-          },
+          // {
+          //   text: 'Rank',
+          //   align: 'left',
+          //   value: 'rank'
+          // },
           {
             text: 'Gene',
             align: 'left',
@@ -482,7 +481,7 @@ var geneModel = new GeneModel();
               text: 'More',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '']
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
             }
         ],
         tempItems: [],
@@ -748,7 +747,6 @@ var geneModel = new GeneModel();
         // sortTheOrder(withAvgArr)
       },
       sortTheOrder(arr){
-        console.log(arr)
         arr.sort(function(a,b){
           if (a.score===b.score){
              return (b.score-a.score);
@@ -879,7 +877,6 @@ var geneModel = new GeneModel();
       },
       noOfSourcesSvg: function(){
         this.items.map(x=>{
-          console.log(x)
           x.searchTermIndex = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
@@ -888,7 +885,6 @@ var geneModel = new GeneModel();
                 </svg> `
           })
         });
-        console.log(this.items)
       },
       addSearchTermProperty: function(){
         this.tempItems.map(x=>{

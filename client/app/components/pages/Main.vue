@@ -551,11 +551,29 @@ import DisorderSearch from './DisorderSearch.vue';
         var geneNames = this.selectedGtrGenes.map(gene => {
           return gene.name
         })
+
+        var clinData = this.selectedGtrGenes.map(gene => {
+          return {
+            name: gene.name,
+            searchTerms: gene.searchTermArray,
+            conditions: gene.conditions,
+            genePanels: gene.value,
+            geneid: gene.geneid
+          }
+        })
+
+        console.log("clinData GTR", clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
 
-        this.sendClin({'type': 'apply-genes', source: 'gtr', genes: geneNames, searchTerms: [this.searchTermGTR]});
+        this.sendClin({
+          'type': 'apply-genes',
+          source: 'gtr',
+          data: clinData,
+          genes: geneNames,
+          searchTerms: [this.searchTermGTR]
+        });
 
         if(this.selectedGtrGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
@@ -566,11 +584,26 @@ import DisorderSearch from './DisorderSearch.vue';
         var geneNames = this.selectedPhenolyzerGenes.map(gene => {
           return gene.geneName
         })
+
+        var clinData = this.selectedPhenolyzerGenes.map(gene => {
+          return {
+            name: gene.geneName,
+            searchTerms: gene.searchTerm,
+            score: gene.score,
+          }
+        })
+        console.log("clinData phenolyzer" , clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
 
-        this.sendClin({'type': 'apply-genes', source: 'phenotype-driven', genes: geneNames, searchTerms: [this.searchTermPhenotype]});
+        this.sendClin({
+          'type': 'apply-genes',
+          source: 'phenotype-driven',
+          genes: geneNames,
+          data: clinData,
+          searchTerms: [this.searchTermPhenotype]
+        });
 
         if(this.selectedPhenolyzerGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedPhenolyzerGenes.length + " ";
@@ -581,12 +614,22 @@ import DisorderSearch from './DisorderSearch.vue';
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
 
+        var clinData = this.summaryGenes.map(gene=> {
+          return {
+            name: gene.name,
+            source: gene.sources,
+            gtr: gene.isGtr,
+            pheno: gene.isPheno
+          }
+        })
+        console.log("clinData", clinData)
         this.$clipboard(genesToCopy);
 
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
           genes: self.uniqueGenes,
+          data: clinData,
           searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
         });
 
@@ -635,9 +678,10 @@ import DisorderSearch from './DisorderSearch.vue';
           }
       },
       updateAllGenesFromSelection(data){
+        this.summaryGenes = data;
         var allGenes = data.map(x=>{
           return x.name;
-        })
+        });
         this.uniqueGenes = allGenes;
         this.NumberOfAllGenes = this.uniqueGenes.length
       },

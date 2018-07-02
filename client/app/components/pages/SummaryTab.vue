@@ -253,7 +253,7 @@ import FilterSummary from './FilterSummary.vue'
             name: x.name,
             isGtr: true,
             isPheno: true,
-            sources: "gtrPheno",
+            sources: "GTR and Phenolyzer",
             noOfSources: 2
           }
         }))
@@ -263,7 +263,7 @@ import FilterSummary from './FilterSummary.vue'
             name: x,
             isGtr: true,
             isPheno: false,
-            sources: "gtr",
+            sources: "GTR",
             noOfSources: 1
           }
         }))
@@ -274,13 +274,13 @@ import FilterSummary from './FilterSummary.vue'
             name: x,
             isGtr: false,
             isPheno: true,
-            sources: "pheno",
+            sources: "Phenolyzer",
             noOfSources: 1
           }
         }))
 
         var tempSummaryTableArray = [];
-        console.log("summaryTableArray", this.summaryTableArray)
+        // console.log("summaryTableArray", this.summaryTableArray)
         tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
         tempSummaryTableArray.map((x,i)=>{
           x["indexVal"]=i+1;
@@ -291,7 +291,7 @@ import FilterSummary from './FilterSummary.vue'
           this.summaryTableArray.push(x);
         })
 
-        console.log(this.summaryTableArray)
+        // console.log(this.summaryTableArray)
 
       }
     }
