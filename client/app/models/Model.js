@@ -272,7 +272,7 @@ mergeGenePanelsAcrossDiseases(diseases) {
 //Find a way to pass the search terms here...
   diseases.forEach((disease)=> {
     disease.genePanels.forEach((genePanel)=> {
-      genePanel["searchTerm"] = disease.searchTerm;
+      // genePanel["searchTerm"] = disease.searchTerm;
       genePanel["searchTermArray"] = disease.searchTermArray;
       genePanel["searchTermIndex"] = disease.searchTermIndex;
       genePanel["_uid"] = disease._uid;
@@ -420,7 +420,7 @@ mergeGenesAcrossPanels(genePanels) {
 
       genePanel._genes.forEach(function(gene, i) {
 
-        gene["searchTerm"] = genePanel.searchTerm;
+        // gene["searchTerm"] = genePanel.searchTerm;
         gene["searchTermArray"] = genePanel.searchTermArray;
         gene["searchTermIndex"] = genePanel.searchTermIndex;
         // console.log("gene", gene)
@@ -526,7 +526,7 @@ mergeGenesAcrossPanels(genePanels) {
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
-              searchTerm: gene.searchTerm,
+              // searchTerm: gene.searchTerm,
               searchTermArray: gene.searchTermArray,
               searchTermIndex: gene.searchTermIndex,
               omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
