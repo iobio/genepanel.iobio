@@ -11,7 +11,6 @@
       PhenolyzerPieChartData:{
         type: Array
       },
-
     },
     data: () => ({
       summaryData: [],
@@ -41,8 +40,6 @@
         var width = 400,
           height = 260,
           radius = Math.min(width, height) / 2;
-
- //["#3F91CE", "#2D7BB7", "#296A9D", "#1D5280", ]
 
       var color = d3.scale.ordinal()
         .range([

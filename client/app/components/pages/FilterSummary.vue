@@ -8,7 +8,6 @@
       >
         {{alertText}}
       </v-alert>
-
       <v-expansion-panel>
         <v-expansion-panel-content>
           <div slot="header">
@@ -20,17 +19,13 @@
              &nbsp; Genes
           </div>
             <v-card-text>
-
               <v-btn small v-on:click="SelectAllGenes" outline color="primary" dark>Select All &nbsp; <v-icon small>done_all</v-icon></v-btn>
               <v-btn small v-on:click="deSelectAllGenes" outline color="primary" dark>Deselect All &nbsp; <v-icon small>block</v-icon></v-btn>
               <br>
               <v-btn small v-on:click="selectCommonGenes" outline color="primary" dark>Select common genes &nbsp; <v-icon small>playlist_add_check</v-icon></v-btn>
-
-
             </v-card-text>
         </v-expansion-panel-content>
       </v-expansion-panel>
-
 
   </div>
 </template>

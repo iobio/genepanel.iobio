@@ -1,50 +1,33 @@
 <template>
   <div>
-    <!-- <hr>
-    <hr>
-
-    Hello from Show Gene Panel !
-    <h3> summary </h3>
-    <br> -->
-    <!-- <btn type="primary" v-on:click.prevent="AddGeneData">Show Genes</btn>
-    <br><br> -->
-
-    <div id="gene-histogram-box" class="hide" >
-      <svg id="gene-histogram-chart"></svg>
-    </div>
+    <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     <div  id="gene-bar-chart-box"  >
-              <div id="gene-bar-chart"></div>
-            </div>
-    <v-alert color="info" icon="info" dismissible v-model="alert">
+      <div id="gene-bar-chart"></div>
+    </div>
+    <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
 
-
-
-    <!-- <v-app id="inspire"> -->
-      <v-card-title>
-        <btn @click="copy">
-            <i class="material-icons">content_copy</i> Copy to clipboard
-        </btn>
-        <!-- <btn v-on:click.prevent="selectAllGenes">Select All</btn>
-        <btn v-on:click.prevent="deSelectAllGenes">De Select All</btn> -->
-        <v-spacer></v-spacer>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-        ></v-text-field>
-      </v-card-title>
       <v-data-table
+          id="genes-table"
           v-model="selected"
           v-bind:headers="headers"
           v-bind:items="items"
           select-all
           v-bind:pagination.sync="pagination"
           item-key="name"
-          class="elevation-1"
           v-bind:search="search"
           no-data-text="No Genes Available Currently"
         >
@@ -60,46 +43,101 @@
               ></v-checkbox>
             </th>
             <th v-for="header in props.headers" :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-              @click="changeSort(header.value)"
+              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
+
             >
-              <v-icon>arrow_upward</v-icon>
               {{ header.text }}
             </th>
+
           </tr>
         </template>
         <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
+          <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
+          <tr :active="props.selected">
             <td>
               <v-checkbox
                 primary
                 hide-details
+                v-model="props.selected"
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td></td> -->
-            <td>{{ props.item.name }}</td>
-            <td>{{ props.item._genePanelCount }}</td>
-            <td>{{ props.item._diseaseCount }}</td>
-            <td>{{ props.item._conditionNames }}</td>
-            <!-- <td>{{ props.item._geneCount }}</td> -->
+            <!-- <td style="font-weight:600">{{ (props.item.key + 1) }}</td> -->
+            <td>
+              <div id="app">
+                <div>
+                  <v-menu open-on-hover top offset-y>
+                    <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                      <v-card>
+                        <div class="conditionsBox">
+                          <v-card-text style="margin-top:-22px">
+                            <center ><h3>{{ props.item.name }}</h3></center>
+                            <hr>
+                            <div><strong>Conditions: </strong></div>
+                            {{props.item.conditions}}
+                            <hr>
+                            <div><strong>Resources: </strong></div>
+                            <ul style="margin-left:25px; margin-top:5px">
+                              <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                              <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                              <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                              <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                              <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
+                            </ul>
+                          </v-card-text>
+                        </div>
+                      </v-card>
+                  </v-menu>
+                </div>
+              </div>
+            </td>
+            <!-- <td>{{ props.item.searchTermIndex }}</span></td> -->
+            <td>
+              <span v-for="x in props.item.searchTermIndexSVG">
+                <span v-html="x"></span>
+              </span>
+            </td>
+            <td>
+              <span
+                v-html="props.item.htmlData">
+              </span>
+            </td>
+            <td>
+              <v-menu bottom offset-y style="color:black">
+                <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+
+                <v-list style="width:250px">
+                  <v-list-tile >
+                    <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
+                  </v-list-tile>
+                  <hr>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                  </v-list-tile>
+                  <v-list-tile >
+                    <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
+            </td>
+            <!-- <td style="font-size:0">{{ props.item.value }}</td> -->
           </tr>
         </template>
-        <template slot="footer">
+        <!-- <template slot="footer">
         <td colspan="100%">
           <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
         </td>
-      </template>
+      </template> -->
       </v-data-table>
-    <!-- </v-app> -->
-
-    <!-- <ul>
-      <li v-for="(gene, index) in GenesToDisplay"> {{ gene._rowNumber}}--
-        {{ gene.name}} -- {{ gene._genePanelCount }} -- {{ gene._diseaseCount}}
-        -- {{ gene._conditionNames }}
-      </li>
-    </ul> -->
-
   </div>
 </template>
 
@@ -107,12 +145,30 @@
 <script>
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
-import d3 from 'd3'
+import d3 from 'd3';
+import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import Model from '../../models/Model';
 var model = new Model();
 
   export default {
-    props: ['GeneData'],
+    components: {
+      'ConditionsDistribution': ConditionsDistribution
+    },
+    //props: ['GeneData'],
+    props: {
+      modeOfInheritanceData: {
+        type: Array
+      },
+      GeneData: {
+        type: Array
+      },
+      geneSearch: {
+        type: String
+      },
+      multipleSearchItems: {
+        type: Array
+      }
+    },
     data(){
       return {
         alert:false,
@@ -121,42 +177,83 @@ var model = new Model();
         geneBarChart: {},
         GetGeneData : [],
         GenesToDisplay: [],
+        genesTopCounts: [5, 10, 30, 50, 80, 100],
         pagination: {
-          sortBy: 'name'
+          sortBy: 'value',
+          descending: true, //Sorts the column in descending order
+          rowsPerPage: 25 //Sets the number of rows per page
+
         },
         tmp: '',   //For searching the rows in data table
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
+          // {
+          //   text: 'Index',
+          //   align: 'left',
+          //   sortable: false,
+          //   value: 'key',
+          //   helpText: 'Information'
+          // },
           {
             text: 'Name',
             align: 'left',
+            sortable: false,
             value: 'name'
           },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
+          { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
-            text: 'Panels',
+            text: 'More',
             align: 'left',
-            value: '_genePanelCount'
-           },
-          { text: 'Diseases', align: 'left', value: '_diseaseCount' },
-          { text: 'Conditions', align: 'left', value: '_conditionNames' },
-          // { text: 'Genes', align: 'left', value: '_conditionNames' },
+            sortable: false,
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+          // {
+          //   text: '',
+          //   value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
+          //   width: '10%',
+          //   class: 'headerWidth',
+          //   visibility: 'hidden-lg-only'
+          //
+          //  },
         ],
-        items: []
+        items: [],
+        GenesFromD3Bars: [],
+        dataForTables:[],
+        modeOfInheritanceList: [],
+        countForEmit:0,
+        modeOfInheritanceProps: [],
+        flagForNumberOfGenesSelected: false,
+        NumberOfGenesSelectedFromFilter: 50,
+        selectedGenesText:"",
+        NumberOfTopGenes: 50,
+        snackbar: false,
+        snackbarText: "",
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
+        multipleSearchDisorders: [],
+        DataToIncludeSearchTerms: [],
+        arrangedSearchData: [],
+
       }
     },
     mounted(){
-      this.draw();
+      this.modeOfInheritanceProps = this.modeOfInheritanceData;
+      this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
 
     },
     updated(){
-      console.log("Hello I am ShowGenePanel and I am updated")
-      console.log("this.selected from Show Genes ", this.selected.map(gene=> {
-         var x =  gene.name;
-         //.toString().replace(/,/gi , ' ')
-         return x.toString() ;
-      }) );
+      // console.log("this.selected from Show Genes ", this.selected.map(gene=> {
+      //    var x =  gene.name;
+      //    //.toString().replace(/,/gi , ' ')
+      //    return x.toString() ;
+      // }) );
+
+      this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+
 
       bus.$on('deSelectAllGenesBus', ()=>{
         this.deSelectAllGenes();
@@ -167,42 +264,107 @@ var model = new Model();
       });
 
 
+      bus.$on('SelectNumberOfGenes', (data)=> {
+        this.filterGenesOnSelectedNumber(data);
+      })
+
+      bus.$on('SelectGenesInNumberOfPanels', (data)=>{
+        this.filterGenesOnSelectedNumberOfPanels(data);
+      })
+
+      bus.$on("updateFromGenesHistogram", (data, count)=>{
+        // console.log("updateFromGenesHistogram", data);
+        if(count>1){
+          this.selected = data;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+          this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+          this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+        }
+      })
+
+      this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+      this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+      this.$emit("SelectedGenesToCopy", this.selected);
+      this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+
     },
     watch: {
       GeneData: function(){
-        console.log("watch genes : " , this.GeneData)
         this.AddGeneData();
+      },
+      modeOfInheritanceData: function(){
+      },
+      NumberOfTopGenes: function() {
+        this.selectNumberOfTopGenes();
+      },
+      geneSearch: function(){
+        this.search = this.geneSearch;
+      },
+      multipleSearchItems: function(){
+        this.multipleSearchDisorders = this.multipleSearchItems;
       }
     },
     methods:{
-      draw(){
-        //Drawing histogram chart
-        this.geneHistogramChart = HistogramChart()
-            .width(390)
-            .height(150)
-            .widthPercent("47%")
-            .heightPercent("47%")
-            .margin( {left: 45, right: 15, top: 10, bottom: 30})
-            .yAxisLabel( "log(Genes)" )
-            .xAxisLabel( "Gene Panels" );
 
-        this.geneBarChart = HorizontalBarChart()
-                            .width(550)
-                            .height(1000)
-                            .widthSmall(80)
-                            .on("barselect", function(selectedGeneNames){
-                              console.log("bars selected ", selectedGeneNames);
-                            })
+      filterGenesOnSelectedNumber(data){
+        this.selected = this.items.slice(0, data);
+        this.flagForNumberOfGenesSelected = true;
+        this.NumberOfGenesSelectedFromFilter = data;
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+      },
+      filterGenesOnSelectedNumberOfPanels(data){
+        // console.log("items in filterGenesOnSelectedNumber", this.items);
+        var tempArrForGenesInPanels = [];
+        for(var i=0; i<this.items.length; i++){
+          if(data<=this.items[i].value){
+            tempArrForGenesInPanels.push(this.items[i]);
+          }
+        }
+        if(this.flagForNumberOfGenesSelected){
+          if(tempArrForGenesInPanels.length<this.NumberOfGenesSelectedFromFilter){
+            this.selected = tempArrForGenesInPanels;
+            this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+            this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
+            this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+            this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+          }
+          else{
+            this.selected = tempArrForGenesInPanels.slice(0, this.NumberOfGenesSelectedFromFilter);
+            this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+            this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
+            this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+            this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+          }
+        }
+        else {
+          this.selected = tempArrForGenesInPanels;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdateSelectedGenesText", this.selectedGenesText)
+          this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+          this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+        }
+
+      },
+      addSelectedGenesFromD3(selectedGeneNames){
+        this.GenesFromD3Bars = selectedGeneNames;
+        // console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
       copy () { //Copy to clipboard
         var geneNames = this.selected.map(gene => {
           return gene.name
         })
-        var geneNamesToString = geneNames.toString()
+        var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
         this.alert = true;
-        this.alertText = " Number of Genes Selected : " + this.selected.length + "  . ";
+        this.alertText = " Number of Genes Selected : " + this.selected.length + " ";
+        setTimeout(()=>{
+          this.alert = false;
+        }, 3500);
       },
       toggleAll () {
         if (this.selected.length) this.selected = []
@@ -217,834 +379,189 @@ var model = new Model();
         }
       },
       AddGeneData: function(){
+        bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
-        console.log("this.GetGeneData", this.GetGeneData);
+        // console.log("this.GetGeneData", this.GetGeneData);
+        this.modeOfInheritanceList = this.modeOfInheritanceData;
+        // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
+        this.DataToIncludeSearchTerms = this.GeneData;
+
+        this.arrangedSearchData = this.searchTermsForGeneId(this.DataToIncludeSearchTerms);
+        // console.log("this.arrangedSearchData", this.arrangedSearchData)
+
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        console.log("mergedGenes", mergedGenes);
+        // console.log("mergedGenes", mergedGenes);
 
-        this.GenesToDisplay = mergedGenes;
-        console.log("GenesToDisplay",this.GenesToDisplay);
+        // this.GenesToDisplay = mergedGenes;
+        // console.log("data is ", this.GenesToDisplay)
 
-        this.items = mergedGenes;
 
-        //Select All rows
-        this.selected = this.items.slice()
-        console.log("this.selected from Show Genes ", this.selected )
+        // console.log('mergedGenes', mergedGenes)
 
-        var selection = d3.select('#gene-histogram-chart').datum(model.mergedGenes);
-        this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
+        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
+        // console.log("data is ", data[50].geneid)
+        this.GenesToDisplay = data;
+        // console.log("this.GenesToDisplay", this.GenesToDisplay);
 
-        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth());
-        this.geneBarChart(d3.select('#gene-bar-chart'), data);
+        this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay)
+
+        this.items = data;
+        this.noOfSourcesSvg();
+        // console.log(this.items)
+        // let dataWithClinGenFlag = model.getClinGenFlag(data);
+        // this.items = dataWithClinGenFlag;
+        this.selected = data.slice(0,50);
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+        bus.$emit("GeneDistributionChartData", this.items);
+
+        this.dataForTables = data.slice(0,10);
 
       },
-      selectAllGenes: function(){
-        this.selected = this.items.slice()
-      },
-      deSelectAllGenes: function(){
-        this.selected = []
-      },
-
-    }
-  }
-
-  function HistogramChart() {
-
-    let svg = null;
-
-    let margin = {top: 30, right: 20, bottom: 20, left: 50};
-
-    let width = 200;
-    let height = 100;
-    let widthPercent = "95%";
-    let heightPercent = "95%";
-
-    let brush = null;
-
-    let defaults = {outliers: true, averageLine: true};
-
-    let xValue = function(d) { return d[0]; };
-    let yValue = function(d) { return d[1]; };
-
-    let formatXTick = null;
-
-    let xAxisLabel = null;
-    let yAxisLabel = null;
-
-    let tooltip = d3.select("#tooltip");
-    let tooltipText = function(d, i) {
-          return d[0] + ", " + d[1];
-    };
-
-    let onSelected = function(selected) {
-
-    }
-
-    // A formatter for counts.
-    let formatCount = d3.format(",.0f");
-
-    let logFormat = function(d) {
-      if (d < 1) {
-        return "";
-      } else {
-        var x = Math.log(d) / Math.log(10) + 1e-6;
-        return Math.abs(x - Math.floor(x)) < .7 ? formatCount(d) : "";
-      }
-    }
-
-    let brushEnd = function() {
-      var start = brush.extent()[0];
-      var end   = brush.extent()[1];
-      svg.selectAll(".bar")
-         .classed("selected", function(d,i) {
-            var inBrushExtent = d.x >= Math.floor(start) && d.x <= Math.ceil(end);
-            return inBrushExtent;
-         })
-
-      var selected = [];
-      svg.selectAll(".bar.selected").data().forEach(function(selectedBarData) {
-        selected = selected.concat(Array.from(selectedBarData));
-      })
-      onSelected(selected);
-    }
-
-
-    function chart(selection, options) {
-      // merge options and defaults
-      options = $.extend(defaults,options);
-      let innerHeight = height - margin.top - margin.bottom;
-      let innerWidth  = width  - margin.left - margin.right;
-
-
-      selection.each(function(dataOrig) {
-        // set svg element
-        svg = d3.select(this);
-
-        svg.attr("width", widthPercent)
-          .attr("height", heightPercent)
-          .attr('viewBox', "0 0 " + parseInt(width) + " " + parseInt(height))
-          .attr("preserveAspectRatio", "none");
-
-        svg.select("g").remove();
-
-        if (dataOrig == null || dataOrig.length == 0) {
-          return;
-        }
-        var group = svg.append("g")
-                       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-        var max = d3.max(dataOrig, function(d){ return d._genePanelCount;});
-        var min = d3.min(dataOrig, function(d){ return d._genePanelCount;});
-        var x = d3.scale.linear()
-              .domain([min, max+1])
-              .range(options.descendingX ? [innerWidth, 0] : [0, innerWidth]);
-
-
-
-
-        // Generate a histogram using twenty uniformly-spaced bins.
-        var data = d3.layout.histogram()
-            .bins(x.ticks(max))
-            .value(function(d){return d._genePanelCount;})
-            (dataOrig);
-
-
-
-        var yMax = d3.max(data, function(d){return d.length});
-        var yMin = d3.min(data, function(d){return d.length});
-
-
-        var y = null;
-        if (options.logScale) {
-          y = d3.scale.log()
-            .clamp(true)
-            .base(2)
-            .domain([.1, yMax])
-            .range([innerHeight, 0])
-            .nice();
-        } else {
-          y = d3.scale.linear()
-            .domain([0, yMax])
-            .range([innerHeight, 0])
-        }
-
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom")
-            .tickFormat(function(tickValue) {
-              return tickValue;
-            })
-            .ticks(max)
-
-
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .tickFormat(options.logScale ? logFormat : d3.format("i"))
-
-
-        var barGroup = group.append("g")
-                            .attr("transform", "translate(0,0)");
-
-        var bar = barGroup.selectAll(".bar")
-            .data(data)
-            .enter().append("g")
-            .attr("class", "bar")
-            .attr("transform", function(d) { return "translate(" + x(d.x) + "," + innerHeight + ")"; });
-
-        bar.append("rect")
-            .attr("x", 1)
-            .attr("width", Math.abs((x(data[0].dx) - x(0))) - 1)
-            .attr("height", function(d) { return 0; })
-            .attr("x", options.descendingX ? x(data[0].dx) - x(0) : 0);
-        bar.append("text")
-            .attr("dy", ".75em")
-            .attr("y", -9)
-            .attr("x", (x(data[0].dx) - x(0)) / 2)
-            .attr("text-anchor", "middle")
-            .text(function(d) { return formatCount(d.y) <= 0 ? "" : formatCount(d.y) });
-
-
-        group.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(" + ((x(data[0].dx) - x(0)) / 2) + "," + innerHeight + ")")
-            .call(xAxis);
-
-
-        // All of the ticks were shifted left to be in the bar's center.  So get rid of the last tick.
-        group.selectAll('.x.axis .tick').filter(function(d, i) {
-            return i === data.length;
-        }).remove()
-
-        group.append("g")
-            .attr("class", "y axis")
-            .call(yAxis);
-
-        // Add the text label for the x axis
-        //gEnter.selectAll("g.xaxis label")
-        if (xAxisLabel) {
-          group.selectAll("g.x axis label").remove();
-          group.append("text")
-            .attr("class", "x axis label")
-            .attr("transform", "translate(" + (width / 2) + " ," + (y.range()[0]  + margin.bottom) + ")")
-            .style("text-anchor", "end")
-            .text(xAxisLabel);
-        }
-
-        // Add the text label for the Y axis
-        if (yAxisLabel) {
-        group.selectAll("g.y axis label").remove();
-        group.append("text")
-            .attr("class", "y axis label")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
-            .attr("x",0 - (height / 2))
-            .attr("dy", "1em")
-            .style("text-anchor", "start")
-            .text(yAxisLabel);
-
-        }
-
-
-
-        // Update bars.
-        bar.transition()
-           .duration(1000)
-           .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
-
-        bar.selectAll('rect')
-           .transition()
-           .duration(1000)
-           .attr("height", function(d) { return innerHeight - y(d.y); })
-
-        brush = d3.svg.brush().x(x);
-
-
-        // Select all bars to equal total count of 100
-        if (options.selectTop) {
-          var maxX = data.length+1;
-          var minX = null;
-          var total = 0;
-          for (let i = data.length-1; i >= 0; i-- ) {
-            let d = data[i];
-            total += d.y;
-            if (minX == null && total >= options.selectTop) {
-              minX = i+1;
+      arrangeAllData: function(terms, genesData){
+        for(var i=0; i<terms.length; i++){
+          for(var j=0; j<genesData.length; j++){
+            if(terms[i].id == genesData[j].geneid){
+              genesData[j].searchTermIndex = terms[i].searchData;
+              genesData[j].searchTermArray = terms[i].searchDataTerms;
             }
           }
-          if (minX == null) {
-            minX = data.length;
-          }
-          brush.extent([minX, maxX]);
         }
-
-        let brushHeight = innerHeight + margin.top;
-        let brushY = (margin.top-1) * -1;
-        group.selectAll("g.x.brush").remove();
-        let brushGroup = group.selectAll("g.x.brush").data([0]);
-        brushGroup.enter().append("g")
-            .attr("class", "x brush")
-            .transition()
-            .duration(1000)
-            .call(brush)
-            .selectAll("rect")
-            .attr("y", brushY)
-            .attr("height", brushHeight);
-
-
-
-
-        brushGroup.selectAll(".resize")
-          .append("line")
-          .style("visibility", options.selectTop ? "visible" : "hidden")
-          .attr("y2", innerHeight);
-
-        brushGroup.selectAll(".resize")
-          .append("path")
-          .style("visibility", options.selectTop ? "visible" : "hidden")
-          .attr("d", d3.svg.symbol().type("triangle-up").size(20))
-          .attr("transform", function(d,i) {
-            return i ?  "translate(-4," + (innerHeight/2) + ") rotate(-90)" : "translate(4," + (innerHeight/2) + ") rotate(90)";
-          });
-
-        brush.on("brushend", function() {
-          brushEnd();
-        });
-        brush.on("brush", function() {
-          svg.selectAll(".x.brush .resize line")
-             .style("visibility", "visible");
-          svg.selectAll(".x.brush .resize path")
-             .style("visibility", "visible");
+      },
+      searchTermsForGeneId: function(genePanels){
+        genePanels.forEach(function(genePanel) {
+          genePanel._genes.forEach(function(gene, i) {
+            gene["searchTermArray"] = genePanel.searchTermArray;
+            gene["searchTermIndex"] = genePanel.searchTermIndex;
+          })
         })
 
-        if (options.selectTop) {
-          d3.select("g.x.brush")
-            .transition()
-            .duration(1000)
-            .call(brushEnd);
+        var genesTempArr = [];
+        var tempGeneArrId = [];
+
+        genePanels.forEach(function(genePanel) {
+          genePanel._genes.forEach(function(gene, i) {
+            genesTempArr.push(gene);
+            tempGeneArrId.push(gene.geneid)
+          })
+        })
+
+        var dupsObj = {};
+
+        for(var i=0; i<genesTempArr.length; i++){
+          if(dupsObj[genesTempArr[i].geneid]===undefined){
+            dupsObj[genesTempArr[i].geneid] = genesTempArr[i];
+          }
+          else {
+            dupsObj[genesTempArr[i].geneid].searchTermIndex = [...dupsObj[genesTempArr[i].geneid].searchTermIndex, ...genesTempArr[i].searchTermIndex];
+            dupsObj[genesTempArr[i].geneid].searchTermIndex = Array.from(new Set(dupsObj[genesTempArr[i].geneid].searchTermIndex))
+            dupsObj[genesTempArr[i].geneid].searchTermArray = [...dupsObj[genesTempArr[i].geneid].searchTermArray, ...genesTempArr[i].searchTermArray];
+            dupsObj[genesTempArr[i].geneid].searchTermArray = Array.from(new Set(dupsObj[genesTempArr[i].geneid].searchTermArray))
+
+          }
         }
 
+        var newGeneArr = [];
 
+        for(var key in dupsObj){
+          newGeneArr.push(dupsObj[key])
+        }
 
+        // var obj = {};
+        // for(var i=0; i<newGeneArr.length; i++){
+        //   if(obj[newGeneArr[i].geneid]===undefined){
+        //     obj[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
+        //   }
+        // }
+        //
 
+        var obj = {};
+        for(var i=0; i<newGeneArr.length; i++){
+          if(obj[newGeneArr[i].geneid]===undefined){
+            // obj1[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
+            obj[newGeneArr[i].geneid] = {
+              index: newGeneArr[i].searchTermIndex,
+              terms: newGeneArr[i].searchTermArray
+            }
+          }
+        }
 
+        var anotherArr = [];
+        for(var key in obj){
+          anotherArr.push({
+            id: key,
+            searchData: obj[key].index,
+            searchDataTerms: obj[key].terms
+          })
+        }
 
-      });
+        anotherArr.map(x=>{
+          x.searchData.sort();
+        })
+        return anotherArr
 
-
+      },
+      noOfSourcesSvg: function(){
+        this.items.map(x=>{
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
+            // console.log(y)
+            return `<svg height="30" width="30">
+                  <circle class="sourceIndicator"  />
+                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                </svg> `
+          })
+        });
+        // console.log(this.items)
+      },
+      selectAllGenes: function(){
+        this.selected = this.items.slice();
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+      },
+      deSelectAllGenes: function(){
+        this.selected = [];
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
+        this.$emit("TotalNoOfGenesFromGTR", this.items.length);
+      },
+      selectNumberOfTopGenes: function(){
+        setTimeout(()=>{
+          if(this.NumberOfTopGenes>0){
+            bus.$emit('SelectNumberOfGenes', this.NumberOfTopGenes);
+            this.flagForNumberOfGenesSelected= true;
+            this.snackbarText = "Top " + this.NumberOfTopGenes + " genes selected";
+            this.snackbar = true;
+          }
+          else if (this.NumberOfTopGenes<0) {
+            document.getElementById("geneSelection").reset();
+          }
+         }, 1500);
+      },
     }
-
-    chart.margin = function(_) {
-      if (!arguments.length) return margin;
-      margin = _;
-      return chart;
-    };
-
-    chart.width = function(_) {
-      if (!arguments.length) return width;
-      width = _;
-      return chart;
-    };
-
-    chart.height = function(_) {
-      if (!arguments.length) return height;
-      height = _;
-      return chart;
-    };
-
-    chart.xValue = function(_) {
-      if (!arguments.length) return xValue;
-      xValue = _;
-      return chart;
-    };
-
-    chart.yValue = function(_) {
-      if (!arguments.length) return yValue;
-      yValue = _;
-      return chart;
-    };
-
-    chart.x = function(_) {
-      if (!arguments.length) return x;
-      x = _;
-      return chart;
-    };
-
-    chart.y = function(_) {
-      if (!arguments.length) return y;
-      y = _;
-      return chart;
-    };
-
-    chart.xAxis = function(_) {
-      if (!arguments.length) return xAxis;
-      xAxis = _;
-      return chart;
-    };
-
-    chart.yAxis = function(_) {
-      if (!arguments.length) return yAxis;
-      yAxis = _;
-      return chart;
-    };
-
-    chart.formatXTick = function(_) {
-      if (!arguments.length) return formatXTick;
-      formatXTick = _;
-      return chart;
-    }
-
-    chart.xAxisLabel = function(_) {
-      if (!arguments.length) return xAxisLabel;
-      xAxisLabel = _;
-      return chart;
-    }
-
-    chart.yAxisLabel = function(_) {
-      if (!arguments.length) return yAxisLabel;
-      yAxisLabel = _;
-      return chart;
-    }
-
-    chart.brush = function(_) {
-      if (!arguments.length) return brush;
-      brush = _;
-      return chart;
-    };
-
-    chart.widthPercent = function(_) {
-      if (!arguments.length) return widthPercent;
-      widthPercent = _;
-      return chart;
-    };
-
-    chart.heightPercent = function(_) {
-      if (!arguments.length) return heightPercent;
-      heightPercent = _;
-      return chart;
-    };
-
-    chart.tooltipText = function(_) {
-      if (!arguments.length) return tooltipText;
-      tooltipText = _;
-      return chart;
-    };
-
-    chart.onSelected = function(_) {
-      if (!arguments.length) return onSelected;
-      onSelected = _;
-      return chart;
-    };
-
-
-
-    return chart;
   }
 
-
-
-  function HorizontalBarChart() {
-
-  var container;
-  var data = []
-
-  var margin = {top: 10, right: 10, bottom: 30, left: 60};
-  var width  = 300;
-  var height = 400;
-
-  var marginSmall = {top: 10, right: 10, bottom: 30, left: 10};
-  var widthSmall = 100;
-
-  var svg = null;
-  var defs = null;
-
-  var gBrush = null;
-  var brush = null;
-
-  var xScale = null;
-  var xScaleMini = null;
-  var yScale = null;
-
-  var yScaleMini = null;
-  var yZoom = null;
-
-  var xAxis = null;
-  var yAxis = null;
-
-  var widthSmallChart = null;
-  var textScale = null;
-
-  var dispatch = d3.dispatch("barselect");
-
-
-  function chart(theContainer, theData, options) {
-
-    container = theContainer;
-    data = theData;
-
-
-
-    /////////////////////////////////////////////////////////////
-    ///////////////// Set-up SVG and wrappers ///////////////////
-    /////////////////////////////////////////////////////////////
-
-    var widthChart  = width - widthSmall - margin.left - margin.right;
-    var heightChart = height - margin.top - margin.bottom;
-
-    var heightSmallChart = heightChart - marginSmall.top - marginSmall.bottom;
-    var widthSmallChart  = widthSmall - marginSmall.left - marginSmall.right;
-
-    container.select("svg").remove();
-
-    if (theData = null || theData.length == 0) {
-      return;
-    }
-
-    svg = container.append("svg")
-        .attr("class", "svgWrapper")
-        .attr("width", widthChart + margin.left + margin.right + widthSmallChart + marginSmall.left + marginSmall.right)
-        .attr("height", heightChart + margin.top + margin.bottom)
-        .on("mousedown.zoom", null)
-        .on("touchstart.zoom", null)
-        .on("touchmove.zoom", null)
-        .on("touchend.zoom", null);
-
-    var mainGroup = svg.append("g")
-            .attr("class","mainGroupWrapper")
-            .attr("transform","translate(" + margin.left + "," + margin.top + ")")
-            .append("g") //another one for the clip path - due to not wanting to clip the labels
-            .attr("clip-path", "url(#clip)")
-            .style("clip-path", "url(#clip)")
-            .attr("class","mainGroup")
-
-    var miniGroup = svg.append("g")
-            .attr("class","miniGroup")
-            .attr("transform","translate(" + (margin.left + widthChart + margin.right + marginSmall.left) + "," + marginSmall.top + ")");
-
-    var brushGroup = svg.append("g")
-            .attr("class","brushGroup")
-            .attr("transform","translate(" + (margin.left + widthChart + margin.right + marginSmall.left) + "," + marginSmall.top + ")");
-
-    /////////////////////////////////////////////////////////////
-    ////////////////////// Initiate scales //////////////////////
-    /////////////////////////////////////////////////////////////
-
-    xScale = d3.scale.linear().range([0, widthChart]);
-    xScaleMini = d3.scale.linear().range([0, widthSmallChart]);
-
-    yScale = d3.scale.ordinal().rangeBands([0, heightChart], 0.4, 0);
-    yScaleMini = d3.scale.ordinal().rangeBands([0, heightSmallChart], 0.4, 0);
-
-    //Based on the idea from: http://stackoverflow.com/questions/21485339/d3-brushing-on-grouped-bar-chart
-    yZoom = d3.scale.linear()
-        .range([0, heightChart])
-        .domain([0,heightChart]);
-
-    //Create x axis object
-    xAxis = d3.svg.axis()
-      .scale(xScale)
-      .orient("bottom")
-      .ticks(4)
-      //.tickSize(0)
-      .outerTickSize(0);
-
-    //Add group for the x axis
-    d3.select(".mainGroupWrapper").append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(" + 0 + "," + (heightChart) + ")");
-
-    //Create y axis object
-    yAxis = d3.svg.axis()
-      .scale(yScale)
-      .orient("left")
-      .tickSize(0)
-      .outerTickSize(0);
-
-    // Add the text label for the x axis
-    d3.select(".mainGroupWrapper").append("text")
-        .attr("transform", "translate(" + ((widthChart / 2)) + " ," + (heightChart + margin.bottom) + ")")
-        .style("text-anchor", "middle")
-        .text("Gene Panels");
-
-
-    //Add group for the y axis
-    mainGroup.append("g")
-        .attr("class", "y axis")
-        .attr("transform", "translate(-5,0)");
-
-    /////////////////////////////////////////////////////////////
-    /////////////////////// Update scales ///////////////////////
-    /////////////////////////////////////////////////////////////
-
-    //Update the scales
-    xScale.domain([0, d3.max(data, function(d) { return d.value; })]);
-    xScaleMini.domain([0, d3.max(data, function(d) { return d.value; })]);
-    yScale.domain(data.map(function(d) { return d.name; }));
-    yScaleMini.domain(data.map(function(d) { return d.name; }));
-
-    //Create the visual part of the y axis
-    d3.select(".mainGroup").select(".y.axis").call(yAxis);
-    d3.select(".mainGroupWrapper").select(".x.axis").call(xAxis);
-
-    /////////////////////////////////////////////////////////////
-    ///////////////////// Label axis scales /////////////////////
-    /////////////////////////////////////////////////////////////
-
-    textScale = d3.scale.linear()
-      .domain([15,50])
-      .range([12,6])
-      .clamp(true);
-
-    /////////////////////////////////////////////////////////////
-    ///////////////////////// Create brush //////////////////////
-    /////////////////////////////////////////////////////////////
-
-    //What should the first extent of the brush become
-    var brushExtent = 50;
-    var yExtentEnd = brushExtent >= data.length ? yScaleMini.rangeExtent()[1] : yScaleMini(data[brushExtent].name);
-
-    brush = d3.svg.brush()
-        .y(yScaleMini)
-        .extent([yScaleMini(data[0].name), yExtentEnd])
-        .on("brush", brushmove)
-        //.on("brushend", brushend);
-
-    //Set up the visual part of the brush
-    gBrush = d3.select(".brushGroup").append("g")
-      .attr("class", "brush")
-      .call(brush);
-
-    gBrush.selectAll(".resize")
-      .append("line")
-      .attr("x2", widthSmallChart);
-
-    gBrush.selectAll(".resize")
-      .append("path")
-      .attr("d", d3.svg.symbol().type("triangle-up").size(20))
-      .attr("transform", function(d,i) {
-        return i ? "translate(" + (widthSmallChart/2) + "," + 4 + ") rotate(180)" : "translate(" + (widthSmallChart/2) + "," + -4 + ") rotate(0)";
-      });
-
-    gBrush.selectAll("rect")
-      .attr("width", widthSmallChart);
-
-    //On a click recenter the brush window
-    gBrush.select(".background")
-      .on("mousedown.brush", brushcenter)
-      .on("touchstart.brush", brushcenter);
-
-    ///////////////////////////////////////////////////////////////////////////
-    /////////////////// Create a rainbow gradient - for fun ///////////////////
-    ///////////////////////////////////////////////////////////////////////////
-
-    defs = svg.append("defs")
-
-    //Create two separate gradients for the main and mini bar - just because it looks fun
-    createGradient("gradient-rainbow-main", "60%");
-    createGradient("gradient-rainbow-mini", "13%");
-
-    //Add the clip path for the main bar chart
-    defs.append("clipPath")
-      .attr("id", "clip")
-      .append("rect")
-	    .attr("x", -margin.left)
-      .attr("width", widthChart + margin.left)
-      .attr("height", heightChart);
-
-    /////////////////////////////////////////////////////////////
-    /////////////// Set-up the mini bar chart ///////////////////
-    /////////////////////////////////////////////////////////////
-
-    //The mini brushable bar
-    //DATA JOIN
-    var barMini = d3.select(".miniGroup").selectAll(".bar")
-      .data(data, function(d) { return d.key; });
-
-    //UDPATE
-    barMini
-      .attr("width", function(d) { return xScaleMini(d.value); })
-      .attr("y", function(d,i) { return yScaleMini(d.name); })
-      .attr("height", yScaleMini.rangeBand());
-
-    //ENTER
-    barMini.enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", 0)
-      .attr("width", function(d) { return xScaleMini(d.value); })
-      .attr("y", function(d,i) { return yScaleMini(d.name); })
-      .attr("height", yScaleMini.rangeBand())
-      .style("fill", "url(#gradient-rainbow-mini)");
-
-    //EXIT
-    barMini.exit()
-      .remove();
-
-    //Start the brush
-    gBrush.call(brush.event);
-
-  }//init
-
-  //Function runs on a brush move - to update the big bar chart
-  var update = function() {
-    /////////////////////////////////////////////////////////////
-    ////////// Update the bars of the main bar chart ////////////
-    /////////////////////////////////////////////////////////////
-    //DATA JOIN
-    var bar = d3.select(".mainGroup").selectAll(".bar")
-        .data(data, function(d) { return d.key; });
-
-    //UPDATE
-    bar
-      .attr("x", 0)
-      .attr("width", function(d) { return xScale(d.value); })
-      .attr("y", function(d,i) { return yScale(d.name); })
-      .attr("height", yScale.rangeBand());
-
-    //ENTER
-    bar.enter().append("rect")
-      .attr("class", "bar")
-      .style("fill", "url(#gradient-rainbow-main)")
-      .attr("x", 0)
-      .attr("width", function(d) { return xScale(d.value); })
-      .attr("y", function(d,i) { return yScale(d.name); })
-      .attr("height", yScale.rangeBand());
-
-    //EXIT
-    bar.exit()
-      .remove();
-
-  }//update
-
-  /////////////////////////////////////////////////////////////
-  ////////////////////// Brush functions //////////////////////
-  /////////////////////////////////////////////////////////////
-
-  //First function that runs on a brush move
-  var brushmove = function() {
-
-    var extent = brush.extent();
-
-    //Reset the part that is visible on the big chart
-    var originalRange = yZoom.range();
-    yZoom.domain( extent );
-
-    /////////////////////////////////////////////////////////////
-    ///////////////////// Update the axis ///////////////////////
-    /////////////////////////////////////////////////////////////
-
-    //Update the domain of the x & y scale of the big bar chart
-    yScale.domain(data.map(function(d) { return d.name; }));
-    yScale.rangeBands( [ yZoom(originalRange[0]), yZoom(originalRange[1]) ], 0.4, 0);
-
-    //Update the y axis of the big chart
-    svg.select(".mainGroup")
-      .select(".y.axis")
-      .call(yAxis);
-
-    /////////////////////////////////////////////////////////////
-    /////////////// Update the mini bar fills ///////////////////
-    /////////////////////////////////////////////////////////////
-
-    //Update the colors within the mini bar chart
-    var selected = yScaleMini.domain()
-      .filter(function(d) { return (extent[0] - yScaleMini.rangeBand() + 1e-2 <= yScaleMini(d)) && (yScaleMini(d) <= extent[1] - 1e-2); });
-
-    //Update the colors of the mini chart - Make everything outside the brush grey
-    svg.select(".miniGroup").selectAll(".bar")
-      .style("fill", function(d, i) { return selected.indexOf(d.name) > -1 ? "url(#gradient-rainbow-mini)" : "#a3a3a3"; });
-
-    //Update the label size
-    svg.selectAll(".y.axis text")
-      .style("font-size", textScale(selected.length));
-
-    dispatch.barselect(selected);
-
-    //Update the big bar chart
-    update();
-
-  }//brushmove
-
-  /////////////////////////////////////////////////////////////
-  ////////////////////// Click functions //////////////////////
-  /////////////////////////////////////////////////////////////
-
-  //Based on http://bl.ocks.org/mbostock/6498000
-  //What to do when the user clicks on another location along the brushable bar chart
-  var brushcenter = function() {
-
-    var target = d3.event.target,
-        extent = brush.extent(),
-        size = extent[1] - extent[0],
-        range = yScaleMini.range(),
-        y0 = d3.min(range) + size / 2,
-        y1 = d3.max(range) + yScaleMini.rangeBand() - size / 2,
-        center = Math.max( y0, Math.min( y1, d3.mouse(target)[1] ) );
-
-    d3.event.stopPropagation();
-
-    gBrush
-        .call(brush.extent([center - size / 2, center + size / 2]))
-        .call(brush.event);
-
-  }//brushcenter
-
-
-  /////////////////////////////////////////////////////////////
-  ///////////////////// Helper functions //////////////////////
-  /////////////////////////////////////////////////////////////
-
-  //Create a gradient
-  var createGradient = function(idName, endPerc) {
-
-    var colors = [ '#7fcdbb','#41b6c4','#1d91c0','#225ea8','#0c2c84'];
-
-    defs.append("linearGradient")
-      .attr("id", idName)
-      .attr("gradientUnits", "userSpaceOnUse")
-      .attr("x1", "0%").attr("y1", "0%")
-      .attr("x2", endPerc).attr("y2", "0%")
-      .selectAll("stop")
-      .data(colors)
-      .enter().append("stop")
-      .attr("offset", function(d,i) { return i/(colors.length-1); })
-      .attr("stop-color", function(d) { return d; });
-  }//createGradient
-
-
-  chart.margin = function(_) {
-    if (!arguments.length) return margin;
-    margin = _;
-    return chart;
-  };
-  chart.height = function(_) {
-    if (!arguments.length) return height;
-    height = _;
-    return chart;
-  };
-  chart.width = function(_) {
-    if (!arguments.length) return width;
-    width = _;
-    return chart;
-  };
-  chart.marginSmall = function(_) {
-    if (!arguments.length) return marginSmall;
-    marginSmall = _;
-    return chart;
-  };
-  chart.widthSmall = function(_) {
-    if (!arguments.length) return widthSmall;
-    widthSmall = _;
-    return chart;
-  };
-
-  d3.rebind(chart, dispatch, "on");
-  return chart;
-}
 </script>
 
 <style>
+/*
+.genepanelsRect{
+  fill: #ffffff00;
+  pointer-events: all;
+}
+.genepanelsRect:hover{
+  fill: #D04F4C;
+} */
+
+.conditionsBox {
+  width: 380px;
+  overflow-wrap: break-word;
+}
 
 #gene-histogram-chart .bar rect {
     fill:   #7dc2e5;
@@ -1133,5 +650,46 @@ div.tooltip {
   stroke: #7A7A7A;
   stroke-width: 2px;
 }
+
+.input-group__input{
+  min-height: 3px;
+}
+
+
+.headerWidth{
+  width: 1%;
+  color: red
+}
+</style>
+
+
+<style lang="sass">
+@import ../assets/sass/variables
+
+
+.genepanelsRect
+  fill: #4e7ad3
+  pointer-events: all
+  stroke: $svgBar-fill
+  stroke-width: 2
+  // fill: #FF6845
+
+// .genepanelsRect:hover
+//   fill: #FFE650
+
+.sourceIndicator
+  fill: #ffffff00
+  stroke: #ffa828
+  stroke-width: 2
+  cx: 12
+  cy: 15
+  r: 10
+
+.grayRect
+  fill: #e8ebed
+  stroke: white
+  stroke-width: 2
+
+
 
 </style>

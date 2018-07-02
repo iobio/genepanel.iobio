@@ -1,29 +1,5 @@
 <template>
   <div>
-    <!-- Hello from DiseasesPanel! -->
-    <!-- <btn type="primary" v-on:click.prevent="showDiseasesData">Show Diseases</btn> -->
-
-    <!-- <ul>
-      <li v-for="(disease,index) in DiseasePanelData" v-on:click.prevent="alertIndex(index, disease.Title)">{{ index +1}}..{{ disease.Title }} -- {{ disease._geneCount}} -- {{ disease._modeOfInheritance }}</li>
-    </ul> -->
-    <!-- <v-app id="inspire"> -->
-      <!-- <v-card-title>
-        Disease Table -->
-        <!-- <btn v-on:click.prevent="selectAllDisorders">Select All</btn> -->
-        <!-- <btn v-on:click.prevent="deSelectAllDisorders">De Select All</btn> -->
-        <!-- <v-spacer></v-spacer>
-        <v-text-field
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-          v-model="search"
-        ></v-text-field>
-      </v-card-title> -->
-      <!-- <ul>
-        <li v-for="item in items "> {{item._modeOfInheritance}}
-        </li>
-      </ul> -->
       <div id="pie-chart-box"></div>
       <v-data-table
           v-model="selected"
@@ -65,7 +41,6 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td></td> -->
             <td>{{ props.item.Title }}</td>
             <td>{{ props.item._omim }}</td>
             <td>{{ props.item._modeOfInheritance }}</td>
@@ -79,14 +54,8 @@
         </td>
       </template>
       </v-data-table>
-    <!-- </v-app> -->
-
     <br>
     <br>
-
-    <!-- {{ selected.Title }} -->
-
-
   </div>
 </template>
 
@@ -143,12 +112,12 @@ var model = new Model();
           piechart : {},
           selectedDisordersFromFilterPanel: [],
           tempDisorders: [],
+          flagForDisorderFilter: false,
         }
       },
     methods:{
         alertIndex: function(i, title){
           alert(i);
-          console.log( "i" , i , " and title is : ", title)
         },
         toggleAll () {
           if (this.selected.length) this.selected = []
@@ -163,23 +132,25 @@ var model = new Model();
           }
         },
         showDiseasesData: function(){
-          console.log("propsData from showDiseasesData: ", this.propsData);
+          if(!this.flagForDisorderFilter){
+            this.items = this.DiseasePanelData;
+            this.tempItems = this.DiseasePanelData;
+            this.tempDisorders = this.DiseasePanelData;
+            this.getDisorderNames();
+            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
+            // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
+            this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
+                                              // the mode of Inheritance back to parent so it can be used as props in summary panel
+            this.selected = this.items.slice()
+          }
+          else if(this.flagForDisorderFilter){ //Keeps track if the disorder name is selected when new disorder is searched
+            this.items = this.DiseasePanelData;
+            this.tempItems = this.DiseasePanelData;
+            this.getDisorderNames();
+            this.updateDisordersTableOnSelectedDisorders();
+          }
 
-          this.items = this.DiseasePanelData;
-          this.tempItems = this.DiseasePanelData;
-          this.tempDisorders = this.DiseasePanelData;
-          this.getDisorderNames();
-          console.log("this.items  : ", this.items);
-          this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-          console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
-          this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
-                                            // the mode of Inheritance back to parent so it can be used as props in summary panel
 
-          // this.draw(this.modeOfInheritanceData)
-          //if (this.selected.length) this.selected = []
-           this.selected = this.items.slice()
-          console.log("this.selected from showDiseases ", this.selected )
-          //this.toggleAll();
         },
         getDisorderNames(){
           this.disorderNamesList = model.filterItemsForDisorderNames(this.items);
@@ -205,161 +176,31 @@ var model = new Model();
             }
             this.items = tempArray;
             this.selected = this.items.slice();
+            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
+            this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             return this.items;
           }
-          else {
+          else if(this.selectedDisordersFromFilterPanel.length===0){
+            this.flagForDisorderFilter = false;
             this.selected = this.tempDisorders.slice();
             this.items = this.tempDisorders;
+            this.getDisorderNames();
+            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
+            this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             return this.items;
           }
 
         },
-        draw(dataForModeOfInheritance){
-          console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
-          var data = dataForModeOfInheritance
-
-          var width = 400,
-            height = 220,
-            radius = Math.min(width, height) / 2;
-
-
-
-          var color = d3.scale.ordinal()
-            .range(["#BBDEFB", "#90CAF9", "#64B5F6", "#42A5F5", "#2196F3", "#1E88E5", "#1976D2"]);
-
-          var arcOver = d3.svg.arc()
-            .outerRadius(radius - 10)
-            .innerRadius(radius - 110);
-
-            var arc = d3.svg.arc().outerRadius(radius + 10).innerRadius(radius - 108);
-
-
-
-          var pie = d3.layout.pie()
-            .sort(null)
-            .value(function(d) {
-              return d._geneCount;
-            });
-
-            var svg = d3.select("#pie-chart-box").append("svg")
-              .attr("width", width)
-              .attr("height", height)
-              .append("g")
-              .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-            var g = svg.selectAll(".arc")
-              .data(pie(data))
-              .enter().append("g")
-              .attr("class", "arc");
-
-            var path = g.append("path")
-              .attr("d", arc)
-              .attr("stroke", "white")
-              .attr("stroke-width", 3)
-              .style("fill", function(d) {
-                return color(d.data._modeOfInheritance);
-              });
-
-              // path.on("mouseenter", function (d) {
-              //   d3.select(this)
-              //       // .attr("stroke", "black")
-              //       .transition()
-              //       .duration(200)
-              //       .attr("d", arcOver)
-              //       // .attr("stroke-width", 1);
-              //   })
-              //
-              //   path.on("mouseleave", function (d) {
-              //     d3.select(this).transition()
-              //          .duration(200)
-              //          .attr("d", arc)
-              //          // .attr("stroke", "black")
-              //          // .attr("stroke-width", 1);
-              //        })
-
-                path.on("click", function(d){
-                  if(d.data.selected){
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .attr("stroke", "white")
-                        .attr("stroke-width", 1)
-                        .attr("d", arcOver);
-
-                    d.data.selected = !d.data.selected
-                    pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-                  }
-                  else {
-                    d3.select(this).transition()
-                         .duration(200)
-                         .attr("d", arc)
-                         .attr("stroke", "white")
-                         .attr("stroke-width", 3)
-
-                         d.data.selected = !d.data.selected
-                         pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-
-                  }
-                  // d.data.selected = !d.data.selected
-                  // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-                })
-
-            g.append("text")
-              .attr("transform", function(d) {
-                return "translate(" + arc.centroid(d) + ")";
-              })
-              .attr("dy", ".35em")
-              .style("text-anchor", "middle")
-              .text(function(d) {
-                return d.data._modeOfInheritance;
-              })
-              .on('click', function(d){
-                if(d.data.selected){
-                  d3.select(this)
-                      .transition()
-                      .duration(200)
-                      .attr("d", arcOver);
-
-                  d.data.selected = !d.data.selected
-                  pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-                }
-                else {
-                  d3.select(this).transition()
-                       .duration(200)
-                       .attr("d", arc)
-
-
-                       d.data.selected = !d.data.selected
-                       pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-
-                }
-                // d.data.selected = !d.data.selected
-                // pieChartSomething(d.data._modeOfInheritance, d.data.selected)
-              })
-            var pieChartSomething =(modeOfInheritance, selection)=>{
-              this.updateFromPieChart(modeOfInheritance, selection)
-            }
-        },
         sendModeOfInheritanceData(){
-          alert(this.modeOfInheritanceData.length)
+          // alert(this.modeOfInheritanceData.length)
           bus.$emit("PieChartSelectorData");
         },
         updateFromPieChart(modeOfInheritance, selection){
-          console.log("selection is ", selection)
-          // if (selection) {
-          //   alert(modeOfInheritance+ " is selected ")
-          // }
-          // else {
-          //   alert(modeOfInheritance+ " is deselected")
-          // }
-          console.log("this tempItems from updateFromPieChart", this.tempItems)
           if(modeOfInheritance === "Not provided"){
             modeOfInheritance="";
           }
           var tempArr = [];
           var splitHelperArr = [];
-          // this.items = this.tempItems;
-
           if(!selection){
             for(var i=0; i<this.items.length; i++){
 
@@ -367,16 +208,16 @@ var model = new Model();
                 tempArr.push(this.items[i])
               }
               else if(this.items[i]._modeOfInheritance.split(", ").length >1){
-                console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
+                // console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
                 splitHelperArr = this.items[i]._modeOfInheritance.split(", ");
                 if(!splitHelperArr.includes(modeOfInheritance)){
                   tempArr.push(this.items[i])
                 }
               }
             }
-            console.log("tempArr is ", tempArr)
             this.items = tempArr;
             this.selected = this.items.slice();
+            this.getDisorderNames(); //Update the select disorders dropdown when pie chart wedge is selected.
           }
           else if(selection){
             tempArr = this.items;
@@ -393,6 +234,7 @@ var model = new Model();
             }
             this.items = tempArr;
             this.selected = this.items.slice();
+            this.getDisorderNames(); //Update the select disorders dropdown when pie chart wedge is selected.
           }
         }
 
@@ -400,18 +242,19 @@ var model = new Model();
     },
     mounted(){
       // this.draw();
-      console.log("DiseasePanel: I am mounted!");
       this.showDiseasesData()
       bus.$on("RequestModeOfInheritanceData", ()=>{
         this.sendModeOfInheritanceData();
       });
       bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
         this.updateFromPieChart(modeOfInheritance, selection)
+      });
+      bus.$on("removeSearchTerm", ()=>{
+        this.flagForDisorderFilter = false; //Sets the flag to false because removing a terms clears the selection.
       })
     },
     updated(){
-      console.log("DiseasePanel: I am updated!");
-      console.log("this.selected from showDiseases updated", this.selected );
+      // console.log("this.selected from showDiseases updated", this.selected );
 
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedDiseases', this.selected);
@@ -422,7 +265,8 @@ var model = new Model();
 
       bus.$on('SelectAllDisordersBus', ()=>{
         this.selectAllDisorders();
-      })
+      });
+      this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
 
     },
     watch: {
@@ -431,7 +275,14 @@ var model = new Model();
       },
       selectedDisordersProps: function(){
         this.selectedDisordersFromFilterPanel = this.selectedDisordersProps;
+        if(this.selectedDisordersProps.length>0){
+          this.flagForDisorderFilter = true;
+        }
+        else {
+          this.flagForDisorderFilter = false;
+        }
         this.updateDisordersTableOnSelectedDisorders();
+        bus.$emit("disordersFilter");
       }
     }
 
@@ -439,7 +290,4 @@ var model = new Model();
 </script>
 
 <style scoped>
- /* #inspire {
-   height: 500px;
- } */
 </style>

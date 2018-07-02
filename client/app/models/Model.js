@@ -8,7 +8,6 @@ export default class Model {
 }
 
   sumGenesBasedOnModeOfInheritance(items) {
-    console.log("sumGenesBasedOnModeOfInheritance items ", items)
     var obj ={};
     items.map(x=> {
       if(obj[x._modeOfInheritance]===undefined){
@@ -64,7 +63,6 @@ export default class Model {
 
   promiseGetDiseases(searchTerm) {
   var me = this;
-  console.log("me ", me)
   return new Promise(function(resolve, reject) {
 
 
@@ -74,23 +72,19 @@ export default class Model {
                     + '&term='
                     + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
-    console.log("searchUrl", searchUrl)
 
 
     $.ajax( searchUrl )
     .done(function(data) {
-      console.log("data is : ",data)
 
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "disease search error: " + data["esearchresult"]["ERROR"];
-        console.log(msg);
         reject(msg);
       } else {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
-        console.log("summaryUrl is : ", summaryUrl)
 
         $.ajax( summaryUrl )
         .done(function(data) {
@@ -102,7 +96,6 @@ export default class Model {
             resolve({'searchTerm': searchTerm, 'diseases': []})
           } else {
             var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
-            console.log("Results in model.js for search terms are ", results)
             if (results.ERROR) {
               if (results.ERROR == 'Empty result - nothing todo') {
                 resolve({'searchTerm': searchTerm, 'diseases': []});
@@ -117,7 +110,6 @@ export default class Model {
         })
         .fail(function() {
           var msg = "Error in medgen disease summary. ";
-          console.log(msg);
           reject(msg);
         })
       }
@@ -125,7 +117,6 @@ export default class Model {
     })
     .fail(function(data) {
         var msg = "Error in medgen disease search. ";
-        console.log(msg)
         reject(msg);
     })
 
@@ -149,7 +140,6 @@ promiseGetGenePanels(disease) {
 
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
-        console.log(msg);
         reject(msg);
       } else {
         var webenv = data["esearchresult"]["webenv"];
@@ -279,30 +269,81 @@ getGenePanelVendors(genePanels) {
 mergeGenePanelsAcrossDiseases(diseases) {
   var me = this;
   var genePanelMap = {};
+//Find a way to pass the search terms here...
+  diseases.forEach((disease)=> {
+    disease.genePanels.forEach((genePanel)=> {
+      // genePanel["searchTerm"] = disease.searchTerm;
+      genePanel["searchTermArray"] = disease.searchTermArray;
+      genePanel["searchTermIndex"] = disease.searchTermIndex;
+      genePanel["_uid"] = disease._uid;
+      genePanel["disease"] = disease
 
-  diseases.forEach(function(disease) {
-    disease.genePanels.forEach(function(genePanel) {
-      var theGenePanel = genePanelMap[genePanel.id];
-      if (theGenePanel == null) {
-        genePanel._diseases = {};
-        theGenePanel = genePanel;
-        genePanelMap[genePanel.id] = theGenePanel;
-      }
-
-      theGenePanel._diseases[disease._uid] = disease;
     })
   })
+
+  var diseaseTempArr = [];
+  diseases.forEach((disease)=> {
+    disease.genePanels.forEach((genePanel)=> {
+      diseaseTempArr.push(genePanel)
+    })
+  })
+
+  for(var i=0; i<diseaseTempArr.length; i++){
+    for(var j=diseaseTempArr.length-1; j>i; j--){
+      if(diseaseTempArr[i].id ===diseaseTempArr[j].id){
+        diseaseTempArr[i].searchTermArray = [...diseaseTempArr[i].searchTermArray, ...diseaseTempArr[j].searchTermArray];
+        diseaseTempArr[i].searchTermIndex = [...diseaseTempArr[i].searchTermIndex, ...diseaseTempArr[j].searchTermIndex];
+        diseaseTempArr[i].searchTermArray = Array.from(new Set(diseaseTempArr[i].searchTermArray))
+        diseaseTempArr[i].searchTermIndex = Array.from(new Set(diseaseTempArr[i].searchTermIndex))
+
+      }
+    }
+  }
+
+  diseaseTempArr.forEach((genePanel)=>{
+    var theGenePanel = genePanelMap[genePanel.id];
+    if (theGenePanel == null) {
+      genePanel._diseases = {};
+      theGenePanel = genePanel;
+      genePanelMap[genePanel.id] = theGenePanel;
+    }
+    theGenePanel._diseases[genePanel._uid] = genePanel.disease;
+  })
+
+  // diseases.forEach(function(disease) {
+  //   disease.genePanels.forEach(function(genePanel) {
+  //     // console.log("genePanel", genePanel)
+  //
+  //     // genePanel["searchTerm"] = disease.searchTerm;
+  //     // genePanel["searchTermArray"] = disease.searchTermArray;
+  //     // genePanel["searchTermIndex"] = disease.searchTermIndex;
+  //     // console.log("genePanel", genePanel.id)
+  //     var theGenePanel = genePanelMap[genePanel.id];
+  //     if (theGenePanel == null) {
+  //       genePanel._diseases = {};
+  //       theGenePanel = genePanel;
+  //       genePanelMap[genePanel.id] = theGenePanel;
+  //       // console.log("theGenePanel", theGenePanel.id)
+  //       // console.log("theGenePanel searchTermArray", theGenePanel.searchTermArray)
+  //       //combine search terms here..
+  //     }
+  //
+  //     theGenePanel._diseases[disease._uid] = disease;
+  //   })
+  // })
+
+
+
+
 
   var mergedGenePanels = [];
   for (var key in genePanelMap) {
     var genePanel = genePanelMap[key];
-
     genePanel._diseaseNames = me.hashToSimpleList(genePanel._diseases, "Title", ", ");
     genePanel._diseaseCount = Object.keys(genePanel._diseases).length;
     genePanel._rowNumber = mergedGenePanels.length+1;
     mergedGenePanels.push(genePanel);
   }
-
   return mergedGenePanels;
 }
 
@@ -310,11 +351,79 @@ mergeGenePanelsAcrossDiseases(diseases) {
 
 mergeGenesAcrossPanels(genePanels) {
     var me = this;
-
     // Merge genes common across selected gene panels
     var geneMap = {};
+    // console.log("sqasa" , genePanels[16]._genes)
+
+
+    var tempGeneArr = [];
+
+    // genePanels.forEach(function(genePanel) {
+    //   genePanel._genes.forEach(function(gene, i) {
+    //       tempGeneArr.push(gene.geneid)
+    //   })
+    // })
+    // console.log("tempGeneArr len", tempGeneArr.length)
+    //
+    // genePanels.forEach(function(genePanel) {
+    //   genePanel._genes.forEach(function(gene, i) {
+    //     gene["searchTerm"] = genePanel.searchTerm;
+    //     gene["searchTermArray"] = genePanel.searchTermArray;
+    //     gene["searchTermIndex"] = genePanel.searchTermIndex;
+    //   })
+    // })
+    //
+    // var genesTempArr = [];
+    // genePanels.forEach(function(genePanel) {
+    //   genePanel._genes.forEach(function(gene, i) {
+    //     genesTempArr.push(gene);
+    //   })
+    // })
+    //
+    // console.log("genesTempArr len", genesTempArr[0].searchTermArray)
+    // var dupGeneId = [];
+    //
+    // for(var i=0; i<genesTempArr.length; i++){
+    //   for(var j=genesTempArr.length-1; j>i; j--){
+    //     if(genesTempArr[i].geneid ===genesTempArr[j].geneid){
+    //         // dupGeneId.push(genesTempArr[j].geneid)
+    //       // genesTempArr[i].searchTermArray = [...genesTempArr[i].searchTermArray, ...genesTempArr[j].searchTermArray];
+    //       // genesTempArr[i].searchTermIndex = [...genesTempArr[i].searchTermIndex, ...genesTempArr[j].searchTermIndex];
+    //       // genesTempArr[i].searchTermArray = Array.from(new Set(genesTempArr[i].searchTermArray))
+    //       // genesTempArr[i].searchTermIndex = Array.from(new Set(genesTempArr[i].searchTermIndex))
+    //     }
+    //   }
+    // }
+    // for(var i=0; i<genesTempArr.length; i++){
+    //     if(genesTempArr[i].geneid ==1723){
+    //       dupGeneId.push(genesTempArr[i])
+    //   }
+    // }
+    //
+    // console.log("dupGeneId" ,dupGeneId)
+    //
+    //
+    // genesTempArr.forEach(function(gene, i) {
+    //   var theGene = geneMap[gene.geneid];
+    //   if (theGene == null) {
+    //     gene._genePanels = {};
+    //     gene._conditions = {};
+    //     gene._diseases = {};
+    //     theGene = gene;
+    //     geneMap[gene.geneid] = theGene;
+    //   }
+    // })
+
+
     genePanels.forEach(function(genePanel) {
-      genePanel._genes.forEach(function(gene) {
+      // console.log(genePanel)
+
+      genePanel._genes.forEach(function(gene, i) {
+
+        // gene["searchTerm"] = genePanel.searchTerm;
+        gene["searchTermArray"] = genePanel.searchTermArray;
+        gene["searchTermIndex"] = genePanel.searchTermIndex;
+        // console.log("gene", gene)
         var theGene = geneMap[gene.geneid];
         if (theGene == null) {
           gene._genePanels = {};
@@ -334,11 +443,13 @@ mergeGenesAcrossPanels(genePanels) {
 
       })
     })
+    // console.log("geneMap", geneMap)
 
     this.mergedGenes = [];
+    var b =[];
     for (var key in geneMap) {
       var gene = geneMap[key];
-
+      b.push(key);
       gene._genePanelNames = me.hashToSimpleList(gene._genePanels, "testname", ", ");
       gene._genePanelCount = Object.keys(gene._genePanels).length;
 
@@ -350,6 +461,11 @@ mergeGenesAcrossPanels(genePanels) {
 
       me.mergedGenes.push(gene);
     }
+    // console.log(this.mergedGenes);
+    this.mergedGenes.sort(function (a, b) {
+      return a.geneid - b.geneid;
+    });
+    // console.log(this.mergedGenes);
     return this.mergedGenes;
 
   }
@@ -399,17 +515,28 @@ mergeGenesAcrossPanels(genePanels) {
         return b._genePanelCount - a._genePanelCount ;
       }
     })
-    var multiplicationFactor = (width - 240)/sortedGenes[0]._genePanelCount;
-    var svgWidth = sortedGenes[0]._genePanelCount * multiplicationFactor
+    var multiplicationFactor = Math.abs((width - 770)/sortedGenes[0]._genePanelCount);
+    var svgWidth = (sortedGenes[0]._genePanelCount * multiplicationFactor)+50;
+    var firstBarWidth = sortedGenes[0]._genePanelCount * multiplicationFactor;
       return sortedGenes.map(function(gene, idx) {
         return {
               key: idx,
               name: gene.name,
+              geneid: gene.geneid,
               value: +gene._genePanelCount,
               diseases: gene._diseaseCount,
               conditions: gene._diseaseNames,
+              // searchTerm: gene.searchTerm,
+              searchTermArray: gene.searchTermArray,
+              searchTermIndex: gene.searchTermIndex,
+              omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
+              medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
+              geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
+              ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`,
+              clinGenLink: `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.name}`,
 //            <stop offset="5%"  stop-color="#36D1DC"/>
 //            <stop offset="95%" stop-color="#5B86E5"/>
+//            <rect fill="url(#MyGradient)"
               htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="MyGradient">
@@ -419,10 +546,13 @@ mergeGenesAcrossPanels(genePanels) {
                                 </linearGradient>
                             </defs>
 
-                            <rect fill="url(#MyGradient)"
-                                  x="10" y="1" width="${gene._genePanelCount * multiplicationFactor}" height="18"/>
-                            <text x="${gene._genePanelCount * multiplicationFactor/2.5}" y="14" font-family="Verdana" font-size="13" fill="white">${gene._genePanelCount}</text>
-                        </svg>`
+                            <rect class="genepanelsRect"
+                                  x="10" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
+                            <rect class="grayRect"
+                                        x="${(gene._genePanelCount * multiplicationFactor)+12}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
+                            <text x="${(firstBarWidth + 28)}" y="14" font-family="Verdana" font-size="13" fill="#D04F4C">${gene._genePanelCount}</text>
+                        </svg>`,
+
             };
       });
 

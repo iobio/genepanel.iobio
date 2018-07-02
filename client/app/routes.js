@@ -9,14 +9,16 @@ import VueResource from 'vue-resource';
 import axios from 'axios';
 
 import App from './App.vue'
-import Home from './components/pages/Home.vue';
+import GeneticTestingRegistry from './components/pages/GeneticTestingRegistry.vue';
 import Main from './components/pages/Main.vue'
-import HomeTest from './components/pages/HomeTest.vue';
 import phenolyzer from './components/pages/Phenolyzer.vue'
 
 import { Typeahead } from 'uiv';
 
 import * as uiv from 'uiv';
+
+// import BackToTop from 'vue-backtotop'
+
 
 import Clipboard from 'v-clipboard';
 var FileSaver = require('file-saver');
@@ -35,7 +37,7 @@ require('../app/components/assets/js/selectize.js')
 
 
 //Use vuetify
-Vue.use(Vuetify)
+// Vue.use(Vuetify)
 
 
 
@@ -53,13 +55,24 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 
 //Use Axios
-Vue.use(axios);
+// Vue.use(axios);
 
 
 //Use copy to clipboard
 //Link: https://github.com/euvl/v-clipboard
 Vue.use(Clipboard)
 
+// Back to top button
+// Vue.use(BackToTop);
+
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#4e7ad3',
+    secondary: '#b0bec5',
+    accent: '#8c9eff',
+    error: '#b71c1c',
+  }
+})
 
 
 //Route

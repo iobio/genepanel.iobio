@@ -4,11 +4,6 @@
     <div id="gene-histogram-box" >
       <svg id="gene-histogram-chart1"></svg>
     </div>
-
-
-    <!-- <v-app id="inspire"> -->
-
-    <!-- </v-app> -->
   </div>
 </template>
 
@@ -17,10 +12,6 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
-// import PieChartSelector from './PieChartSelector.vue'
-// import GeneDistribution from './GeneDistribution.vue';
-// import GenePanelDistribution from './GenePanelDistribution.vue';
-// import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import Model from '../../models/Model';
 import HistogramChart from '../../d3/HistogramChart';
 
@@ -28,10 +19,6 @@ var model = new Model();
 
   export default {
     components: {
-      // 'PieChartSelector': PieChartSelector,
-      // 'GeneDistribution': GeneDistribution,
-      // 'GenePanelDistribution': GenePanelDistribution,
-      // 'ConditionsDistribution': ConditionsDistribution
     },
     //props: ['GeneData'],
     props: {
@@ -63,14 +50,10 @@ var model = new Model();
       }
     },
     mounted(){
-      // alert("modeOfInheritance length " + this.modeOfInheritanceData.length)
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.CountBrushSelection = 0;
       this.draw();
       this.AddGeneData();
-      // this.drawSimpleViz();
-
-
     },
     updated(){
 
@@ -79,11 +62,11 @@ var model = new Model();
     watch: {
       GeneData: function(){
         this.CountBrushSelection = 0;
-        console.log("watch genes : " , this.GeneData);
+        // console.log("watch genes : " , this.GeneData);
         this.AddGeneData();
       },
       modeOfInheritanceData: function(){
-        console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
+        // console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
       }
     },
     methods:{
@@ -100,7 +83,7 @@ var model = new Model();
             .xAxisLabel( "# of Panels" )
             .color(self.color)
             .on("barselect", function(selectedGeneNames){
-              console.log("bars selected ", selectedGeneNames);
+              // console.log("bars selected ", selectedGeneNames);
               addSelectedFromHistogramChart(selectedGeneNames);
             })
         var addSelectedFromHistogramChart = (data)=>{
@@ -110,37 +93,24 @@ var model = new Model();
           bus.$emit("updateFromGenesHistogram", data, this.CountBrushSelection)
         }
 
-        //Drawing horizontal bar chart
-        // console.log("bar chart before mounting", this.geneBarChart)
-        // this.geneBarChart = HorizontalBarChart()
-        //     .width(650)
-        //     .height(1000)
-        //     .widthSmall(80)
-        //     // .on("barselect", function(selectedGeneNames){
-        //     //   console.log("bars selected ", selectedGeneNames);
-        //     //   addSelectedGeneFunction(selectedGeneNames);
-        //     // })
-        //  var addSelectedGeneFunction=(selectedGeneNames)=>{
-        //   this.addSelectedGenesFromD3(selectedGeneNames);
-        // }
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;
-        console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
+        // console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
 
 
       AddGeneData: function(){
         this.GetGeneData = this.GeneData;
-        console.log("this.GetGeneData", this.GetGeneData);
+        // console.log("this.GetGeneData", this.GetGeneData);
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        console.log("mergedGenes", mergedGenes);
+        // console.log("mergedGenes", mergedGenes);
 
         this.GenesToDisplay = mergedGenes;
-        console.log("GenesToDisplay",this.GenesToDisplay);
+        // console.log("GenesToDisplay",this.GenesToDisplay);
 
         var selection = d3.select('#gene-histogram-chart1').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});

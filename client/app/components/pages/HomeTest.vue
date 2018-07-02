@@ -1,24 +1,14 @@
 <template>
-  <div>
-    {{ greeting }}
-  </div>
+  <span>{{ greeting }}</span>
 </template>
 
 <script>
+  export default {
+    data () {
+      return {
+        greeting: 'hello world!'
+      }
+    },
 
-export default {
-  name: 'HomeTest',
-  props: [],
-  data() {
-    return {
-      greeting: 'hello world!',
-      count: 0
-    }
-  },
-  methods: {
-    increment () {
-      this.count++
-    }
   }
-}
 </script>

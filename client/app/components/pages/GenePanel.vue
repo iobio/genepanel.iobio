@@ -2,116 +2,63 @@
 
 <template>
   <div>
-    <!-- Hello from Gene Panel! -->
-    <!-- <btn type="primary" v-on:click.prevent="AddGenePanelData">Show Gene panel</btn> -->
-    <!-- <br><br> -->
-    <!-- <div class="control-group">
-			<label for="select-vendors">Vendors:</label>
-			<select id="select-vendors" placeholder="Select Vendors..."></select>
-		</div> -->
-<!--
-    <br>
-    <br>
+    <v-data-table
+        v-model="selected"
+        v-bind:headers="headers"
+        v-bind:items="items"
+        :search="search"
+        select-all
+        v-bind:pagination.sync="pagination"
+        item-key="testname"
+        class="elevation-1"
+        no-data-text="No Panels Available Currently"
+        :custom-filter="customFilter"
+      >
+      <template slot="headers" slot-scope="props">
+        <tr>
+          <th>
+            <v-checkbox
+              primary
+              hide-details
+              @click.native="toggleAll"
+              :input-value="props.all"
+              :indeterminate="props.indeterminate"
+            ></v-checkbox>
+          </th>
+          <th v-for="header in props.headers" :key="header.text"
+            :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+            @click="changeSort(header.value)"
+          >
+            <v-icon>arrow_upward</v-icon>
+            {{ header.text }}
+          </th>
+        </tr>
+      </template>
+      <template slot="items" slot-scope="props">
+        <tr :active="props.selected" @click="props.selected = !props.selected">
+          <td>
+            <v-checkbox
+              primary
+              hide-details
+              :input-value="props.selected"
+            ></v-checkbox>
+          </td>
+            <!-- <td></td> -->
+            <td>{{ props.item.testname }}</td>
+            <td>{{ props.item.genecount }}</td>
+            <td>{{ props.item.offerer }}</td>
 
-
-    <h2> Panels </h2> -->
-
-    <!-- <v-app id="inspire"> -->
-      <!-- placeholder for the multi select -->
-      <!-- <v-card color="secondary" flat>
-        <v-card-text>
-          <v-container fluid>
-            <v-layout>
-              <v-flex>
-                <v-select
-                  label="Select Vendors"
-                  autocomplete
-                  :loading="loading"
-                  dark
-                  multiple
-                  cache-items
-                  chips
-                  required
-                  :items="multiSelectItems"
-                  :rules="[() => select.length > 0 || 'You must choose at least one']"
-                  :search-input.sync="search"
-                  v-model="select"
-                ></v-select>
-              </v-flex>
-            </v-layout>
-          </v-container>
-        </v-card-text>
-      </v-card> -->
-      <!-- <br> -->
-      <!-- {{ selected }} -->
-      <v-data-table
-          v-model="selected"
-          v-bind:headers="headers"
-          v-bind:items="items"
-          :search="search"
-          select-all
-          v-bind:pagination.sync="pagination"
-          item-key="testname"
-          class="elevation-1"
-          no-data-text="No Panels Available Currently"
-          :custom-filter="customFilter"
-        >
-        <template slot="headers" slot-scope="props">
-          <tr>
-            <th>
-              <v-checkbox
-                primary
-                hide-details
-                @click.native="toggleAll"
-                :input-value="props.all"
-                :indeterminate="props.indeterminate"
-              ></v-checkbox>
-            </th>
-            <th v-for="header in props.headers" :key="header.text"
-              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-              @click="changeSort(header.value)"
-            >
-              <v-icon>arrow_upward</v-icon>
-              {{ header.text }}
-            </th>
+            <td>{{ props.item._conditionNames }}</td>
+            <td>{{ props.item._diseaseCount }}</td>
           </tr>
         </template>
-        <template slot="items" slot-scope="props">
-          <tr :active="props.selected" @click="props.selected = !props.selected">
-            <td>
-              <v-checkbox
-                primary
-                hide-details
-                :input-value="props.selected"
-              ></v-checkbox>
-            </td>
-              <!-- <td></td> -->
-              <td>{{ props.item.testname }}</td>
-              <td>{{ props.item.genecount }}</td>
-              <td>{{ props.item.offerer }}</td>
-
-              <td>{{ props.item._conditionNames }}</td>
-              <td>{{ props.item._diseaseCount }}</td>
-            </tr>
-          </template>
-          <template slot="footer">
-          <td colspan="100%">
-            <strong>{{ selected.length}} of {{ items.length }} panels selected</strong>
-          </td>
-        </template>
-        </v-data-table>
+        <template slot="footer">
+        <td colspan="100%">
+          <strong>{{ selected.length}} of {{ items.length }} panels selected</strong>
+        </td>
+      </template>
+      </v-data-table>
       <!-- </v-app> -->
-
-
-    <!-- Gene- panel- table  -->
-
-
-    <!-- <div> -->
-      <!-- <show-gene-panel
-        v-if="selected.length"
-        v-bind:GeneData="selected">
-      </show-gene-panel> -->
-    <!-- </div> -->
 
   </div>
 </template>
@@ -130,11 +77,9 @@ var model = new Model();
 
 // var tempArr = [];
 
-// import ShowGenePanel from './ShowGenePanel.vue';
 
   export default {
     // components: {
-    //   'show-gene-panel': ShowGenePanel
     // },
     // props: ['DiseasePanelData'],
     props: {
@@ -184,28 +129,26 @@ var model = new Model();
         val && this.querySelections(val);
       },
       DiseasePanelData: function(){
-        console.log("DiseasePanelData from props - Genepanel")
         this.AddGenePanelData();
       },
       selectedVendorsProps: function(){
-        console.log("selectedVendorsProps in genepanel ", this.selectedVendorsProps);
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
         this.flagForVendorFilter = true;
         this.updatePanelsOnSelectedVendors();
+        bus.$emit("vendorsFilter");
       }
 
     },
     mounted(){
-      console.log("GenePanel: I am mounted now!");
-      console.log("this.mergedGene from mounted() : ", this.mergedGene)
       this.AddGenePanelData();
+      bus.$on("removeSearchTerm", ()=>{
+        this.flagForVendorFilter = false; //Sets the flag to false because removing a terms clears the selection.
+      })
     },
     updated(){
-      console.log("Hello I am gene panel and I am updated!");
-
-
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
+      this.$emit('NoOfPanels', this.items);
 
       bus.$on('SelectNumberOfPanel', (data)=> {
         this.filterGenePanelsOnSelectedNumber(data);
@@ -229,12 +172,6 @@ var model = new Model();
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
         this.items = this.tempItems;
-
-        // this.items.sort(function(a,b){
-        //   // console.log("a", a.offerer)
-        //   return a.offerer > b.offerer;
-        // })
-        console.log("items in updatePanelsOnSelectedVendors", this.items[0])
         if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
@@ -245,14 +182,20 @@ var model = new Model();
               }
             }
           }
-          console.log("tempArr in gene panel ", tempArr)
           this.items = tempArr;
           this.selected = this.items.slice()
+          // let vendors = model.getGenePanelVendors(mergedGenePanels);
+          // this.vendorList = vendors;
+          // this.$emit('setVendorList', this.vendorList.sort());
           return this.items;
         }
-        else {
+        else if(this.selectedVendorsFromFilterPanel.length===0){
+          this.flagForVendorFilter = false;
           this.selected = this.tempItems.slice();
           this.items = this.tempItems
+          // let vendors = model.getGenePanelVendors(mergedGenePanels);
+          // this.vendorList = vendors;
+          // this.$emit('setVendorList', this.vendorList.sort());
           return this.items
         }
       },
@@ -263,23 +206,18 @@ var model = new Model();
             tempArrForConditions.push(x);
           }
         })
-        console.log(tempArrForConditions)
         this.selected = tempArrForConditions;
       },
       filterPanelsOnBarSelect: function(start,end){
-        console.log("start ", start)
         var tempBarsSelected = [];
         this.items.map(x=>{
           if(x.conditioncount>=start && x.conditioncount<=end){
-            console.log(x.conditioncount)
             tempBarsSelected.push(x);
           }
         })
-        console.log("tempBarsSelected", tempBarsSelected)
         this.selected = tempBarsSelected;
       },
       filterGenePanelsOnSelectedNumber: function(data){
-        console.log("filterGenePanelsOnSelectedNumber", this.items)
         this.items  = this.items.filter(item => {
           return item.genecount < data;
         })
@@ -289,7 +227,6 @@ var model = new Model();
         var tempArr = [];
 
         if(this.select.length>0){
-            console.log("true")
             for(var i=0; i<this.select.length; i++){
               for(var j=0; j<items.length; j++){
                 if( this.select[i] === items[j].offerer ){
@@ -310,22 +247,14 @@ var model = new Model();
 
         if(!this.flagForVendorFilter){
           this.DiseasePanel = this.DiseasePanelData
-          console.log(this.DiseasePanel)
           var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-          console.log("mergedGenePanels", mergedGenePanels)
           this.mergedGene = mergedGenePanels
-          console.log("this.mergedGenes", this.mergedGene);
-
           this.items = mergedGenePanels;
-          this.tempItems = mergedGenePanels
-          console.log("this.items : ", this.items)
+          this.tempItems = mergedGenePanels;
 
           let vendors = model.getGenePanelVendors(mergedGenePanels);
 
           this.vendorList = vendors;
-          console.log("this.vendorList", this.vendorList);
-          console.log("this.vendorList", this.vendorList.sort());
-
           this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                               //back to the parent so it can be used as props in filterpanel
 
@@ -333,34 +262,16 @@ var model = new Model();
         }
         else if(this.flagForVendorFilter){
           this.DiseasePanel = this.DiseasePanelData
-          console.log(this.DiseasePanel)
           var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-          console.log("mergedGenePanels", mergedGenePanels)
           this.mergedGene = mergedGenePanels
-          console.log("this.mergedGenes", this.mergedGene);
 
           this.items = mergedGenePanels;
-          this.tempItems = mergedGenePanels
-          console.log("this.items : ", this.items);
+          this.tempItems = mergedGenePanels;
+
+          let vendors = model.getGenePanelVendors(mergedGenePanels);
+          this.vendorList = vendors;
           this.updatePanelsOnSelectedVendors();
 
-          // var tempArrForVendorFilter = [];
-          // var secondTempArr = [];
-          // secondTempArr = this.items;
-          // console.log("this items", this.items);
-          // console.log("this selected vendors", this.selectedVendorsFromFilterPanel);
-          // if(this.selectedVendorsFromFilterPanel.length>0){
-          //   this.selected = [];
-          //   for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
-          //     for(var j=0; j<this.items.length; j++){
-          //       if( this.selectedVendorsFromFilterPanel[i] === this.items[j].offerer ){
-          //         tempArrForVendorFilter.push(this.items[j]);
-          //       }
-          //     }
-          //   }
-          //   this.items = tempArrForVendorFilter;
-          //   this.selected = this.items.slice();
-          // }
         }
 
 
@@ -375,9 +286,7 @@ var model = new Model();
         })
       },
       checkProps: function(){
-        console.log("props", this.DiseasePanelData);
         this.DiseasePanel = this.DiseasePanelData
-        console.log(this.DiseasePanel)
       },
       querySelections (v) { //for multi select
         this.loading = true

@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <div class="chart-title">Summary of Genes</div>
     <div id="summary-pie-chart"></div>
   </div>
 </template>
@@ -33,22 +33,13 @@
       draw(){
         let self = this;
         var data = this.summaryData;
-
-        // var dispatch = d3.dispatch("backupEvent");
-
         d3.select("#summary-pie-chart").select("svg").remove();
 
         var widthPercent = "100%";
         var heightPercent = "100%";
-        var width = 400,
-          height = 260,
+        var width = 380,
+          height = 240,
           radius = Math.min(width, height) / 2;
-
-
-        //var color = d3.scale.ordinal()
-        //    .range([
-        //   "#1999d3", "#107dac", "#014f73", "#02344b", "#8bb3c6", "#2b6178", "#005b96"
-        //]);
 
         var arcOver = d3.svg.arc()
           .outerRadius(radius - 30)
@@ -176,3 +167,11 @@
     }
   }
 </script>
+  <style lang="sass">
+  .chart-title
+    margin-left: 10px
+    font-size: 16px
+    font-family:  "Open sans"
+    font-weight: 300
+
+  </style>

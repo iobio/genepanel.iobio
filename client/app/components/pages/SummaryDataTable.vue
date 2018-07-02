@@ -57,39 +57,30 @@
           </td>
 
           <!-- <td><span v-html="props.item.htmlData"></span></td> -->
-          <td>{{ props.item.name }}</td>
-          <!-- <td>
-              <span v-if="props.item.sources==='gtrPheno'">
-                <v-progress-circular
-                  :size="25"
-                  :width="5"
-                  :rotate="360"
-                  :value="100"
-                  color="light-blue darken-1"
-                >
-                </v-progress-circular>
-              </span>
-              <span v-else-if="props.item.sources==='gtr'">
-                <v-progress-circular
-                  :size="25"
-                  :width="5"
-                  :rotate="90"
-                  :value="50"
-                  color="light-blue darken-1"
-                >
-                </v-progress-circular>
-              </span>
-              <span v-else-if="props.item.sources==='pheno'">
-                <v-progress-circular
-                  :size="25"
-                  :width="5"
-                  :rotate="-90"
-                  :value="50"
-                  color="light-blue darken-1"
-                >
-                </v-progress-circular>
-              </span>
-          </td> -->
+          <td>
+            <div id="app">
+              <div>
+                <v-menu open-on-hover top offset-y>
+                  <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                    <div >
+                      <v-card>
+                        <v-card-text style="margin-top:-25px">
+                          <center ><h3>{{ props.item.name }}</h3></center>
+                          <hr>
+                          <div style="width:600px"><strong>Resources: </strong></div>
+                          <ul style="margin-left:25px; margin-top:5px">
+                            <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                            <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                            <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                            <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                          </ul>
+                        </v-card-text>
+                      </v-card>
+                    </div>
+                </v-menu>
+              </div>
+            </div>
+          </td>
           <td>
             <span v-if="props.item.isGtr"><v-icon >check_circle</v-icon></span>
             <span v-else></span>
@@ -98,10 +89,6 @@
             <span v-if="props.item.isPheno"><v-icon >check_circle</v-icon></span>
             <span v-else></span>
           </td>
-          <!-- <td style="font-size:0px;">{{ props.item.indexVal }}</td> -->
-
-          <!-- <td>{{ props.item._conditionNames }}</td> -->
-          <!-- <td>{{ props.item._geneCount }}</td> -->
         </tr>
       </template>
       <template slot="footer">
@@ -120,6 +107,9 @@ import { bus } from '../../routes';
       summaryTableData:{
         type: Array
       },
+      geneSearch: {
+        type: String
+      },
 
     },
     data: () => ({
@@ -134,13 +124,7 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
-        { text: 'Phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno'] },
-        // {
-        //   text: '',
-        //   align: 'left',
-        //   value: 'name'
-        // }
-
+        { text: 'Phenolyzer', align: 'left', sortable: false, value: ['indexVal', 'isPheno', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
       ],
       items: [],
       tableData:[],
@@ -152,6 +136,9 @@ import { bus } from '../../routes';
         this.items = this.tableData;
         this.selected = this.items.slice();
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+      },
+      geneSearch: function(){
+        this.search = this.geneSearch;
       },
 
     },
@@ -174,6 +161,9 @@ import { bus } from '../../routes';
       bus.$on("selectCommonGenesBus", ()=>{
         this.selectCommonGenes();
       })
+
+      this.$emit("TotalSummaryGenes", this.items.length);
+      this.$emit("TotalSummarySelectedGenes", this.selected.length); 
 
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
       bus.$emit("updateAllGenes", this.selected);

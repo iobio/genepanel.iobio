@@ -1,7 +1,7 @@
 import { shallow } from '@vue/test-utils';
 import HomeTest from '../../../app/components/pages/HomeTest.vue';
 
-import Gtr from '../../../app/components/pages/Gtr.vue'
+// import Gtr from '../../../app/components/pages/Gtr.vue'
 
 
 describe('Home', () => {
@@ -14,9 +14,9 @@ describe('Home', () => {
 });
 
 
-describe('GTR', () => {
-  const wrapper = shallow(Gtr)
-  it('has a button', () => {
-    expect(wrapper.contains('button')).to.equal(true)
-  });
-})
+// describe('GTR', () => {
+//   const wrapper = shallow(Gtr)
+//   it('has a button', () => {
+//     expect(wrapper.contains('button')).to.equal(true)
+//   });
+// })

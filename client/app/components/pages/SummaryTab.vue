@@ -1,40 +1,108 @@
 <template>
   <div>
-
-
-
-      <!-- <strong>Number of GTR Genes selected: {{ GtrGenesCount }}</strong>
-      <br>
-      <strong>Number of Phenolyzer Genes selected: {{ phenolyzerGenesCount }}</strong> -->
     <div id="app">
-      <v-app id="inspire">
-        <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1" style="margin:10px">
-          <v-container fluid grid-list-md>
-            <v-layout row wrap >
-                <v-flex d-flex xs3 v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
-                      <!-- put the pie chart component here  -->
-                      <SummaryPieChart
+      <v-app id="inspire" style="background-color:#f9fbff">
+        <v-container fluid grid-list-md>
+          <v-layout row wrap style="margin-top:-5px;">
 
-                        v-bind:summaryPieChartData="pieChartdataArr"
-                        :color="chartColor">
-                      </SummaryPieChart>
+            <!-- show description -->
+            <v-flex xs12>
+              <v-card>
+                <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0">
+                  <v-card-title>
+                      <h3>Summary</h3>
+                  </v-card-title>
+                  <v-card-title>
+                    This page summaries the genes from both the sources: Genetic Testing Registry and phenolyzer.
+                      <br><br>
+                  </v-card-title>
+                </div>
+              </v-card>
+            </v-flex>
+            <!-- End description -->
+
+            <!-- show main content -->
+            <v-flex  d-flex xs12 >
+              <v-layout row wrap>
+                <!-- show data table -->
+                <v-flex xs8>
+                  <v-card>
+                    <SummaryDataTable
+                      v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                      v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
+                      v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
+                      v-bind:geneSearch="geneSearch"
+                      v-bind:summaryTableData="summaryTableArray">
+                    </SummaryDataTable>
+                  </v-card>
                 </v-flex>
-                <v-flex d-flex v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
-                      <v-layout row wrap>
+                <!-- end data table -->
 
-                        <v-flex d-flex xs12>
+                <!-- start side bar -->
+                <v-flex xs4 class="pr-2 pl-1">
 
-                              <SummaryDataTable
-                                  v-bind:summaryTableData="summaryTableArray">
-                                </SummaryDataTable>
-                        </v-flex>
-                     </v-layout>
+                  <div class="d-flex mb-2 xs12">
+                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <v-card-title primary-title>
+                        <v-text-field
+                          append-icon="search"
+                          label="Search Genes"
+                          single-line
+                          hide-details
+                          v-model="geneSearch"
+                        ></v-text-field>
+                      </v-card-title>
+                      <br>
+                    </v-card>
+                  </div>
+                  <br>
+                  <div class="d-flex mt-1 mb-2 xs12">
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <v-card-title primary-title>
+                       <div>
+                         <div style="font-size:16px">
+                           GENES
+                           <v-dialog v-model="dialog" width="600px">
+                             <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                             <v-card>
+                               <v-card-title>
+                                 <span class="headline">Genes</span>
+                               </v-card-title>
+                               <v-card-text>
+                                 Help information text
+                               </v-card-text>
+                               <v-card-actions>
+                                 <v-spacer></v-spacer>
+                                 <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                               </v-card-actions>
+                             </v-card>
+                           </v-dialog>
+                         </div>
+                         <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selectedGenes }}</strong></span>
+                         <div>of {{ totalGenes }} selected</div>
+                       </div>
+                     </v-card-title>
+                    </v-card>
+                  </div>
+                  <br>
+                  <div class="d-flex mb-2 xs12">
+                      <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                        <SummaryPieChart
+                          v-bind:summaryPieChartData="pieChartdataArr"
+                          :color="chartColor">
+                        </SummaryPieChart>
+                      </v-card>
+                  </div>
+
                 </v-flex>
+
+                <!-- end side bar -->
               </v-layout>
-          </v-container>
-          </v-card>
+            </v-flex>
 
-
+            <!-- end main content -->
+          </v-layout>
+        </v-container>
        </v-app>
     </div>
   </div>
@@ -80,7 +148,12 @@ import FilterSummary from './FilterSummary.vue'
       uniquePhenoGenes:[],
       pieChartdataArr:[],
       uniqueGenes: [],
-      summaryTableArray:[]
+      summaryTableArray:[],
+      geneSearch: '',
+      selectedGenes: 0,
+      totalGenes: 0,
+      chartComponent: null,
+      dialog: false,
     }),
     watch: {
       GtrGenesForSummary:function(){
@@ -100,6 +173,12 @@ import FilterSummary from './FilterSummary.vue'
       this.performSetOperations();
     },
     methods: {
+      TotalSummaryGenes: function(e){
+        this.totalGenes = e;
+      },
+      TotalSummarySelectedGenes: function(e){
+        this.selectedGenes = e;
+      },
       performSetOperations: function(){
         var gtrGenes = this.GtrGenes.map(gene => {
           return gene.name
@@ -144,10 +223,6 @@ import FilterSummary from './FilterSummary.vue'
             name: "GTR and Phenolyzer",
             count: this.commonGtrPhenoGenes.length
           },
-          // {
-          //   name: "Unique Genes",
-          //   count: this.uniqueGenes.length
-          // }
         ]
       },
       setSummaryTableData(){
@@ -158,7 +233,11 @@ import FilterSummary from './FilterSummary.vue'
             if(this.commonGtrPhenoGenes[i]===this.PhenolyzerGenes[j].geneName){
               tempA.push({
                 name:this.PhenolyzerGenes[j].geneName,
-                rank: parseInt(this.PhenolyzerGenes[j].rank)
+                rank: parseInt(this.PhenolyzerGenes[j].rank),
+                omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${this.PhenolyzerGenes[j].geneName}`,
+                medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${this.PhenolyzerGenes[j].geneName}`,
+                geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
+                ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
               })
             }
           }
@@ -174,7 +253,7 @@ import FilterSummary from './FilterSummary.vue'
             name: x.name,
             isGtr: true,
             isPheno: true,
-            sources: "gtrPheno",
+            sources: "GTR and Phenolyzer",
             noOfSources: 2
           }
         }))
@@ -184,7 +263,7 @@ import FilterSummary from './FilterSummary.vue'
             name: x,
             isGtr: true,
             isPheno: false,
-            sources: "gtr",
+            sources: "GTR",
             noOfSources: 1
           }
         }))
@@ -195,22 +274,34 @@ import FilterSummary from './FilterSummary.vue'
             name: x,
             isGtr: false,
             isPheno: true,
-            sources: "pheno",
+            sources: "Phenolyzer",
             noOfSources: 1
           }
         }))
 
         var tempSummaryTableArray = [];
-        console.log("summaryTableArray", this.summaryTableArray)
+        // console.log("summaryTableArray", this.summaryTableArray)
         tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
         tempSummaryTableArray.map((x,i)=>{
           x["indexVal"]=i+1;
+          x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
+          x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
+          x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
+          x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
           this.summaryTableArray.push(x);
         })
 
-        console.log(this.summaryTableArray)
+        // console.log(this.summaryTableArray)
 
       }
     }
   }
 </script>
+
+<style lang="sass">
+@import ../assets/sass/variables
+
+.activeCardBox
+    border-bottom: 6px solid $activeCard-border
+
+</style>

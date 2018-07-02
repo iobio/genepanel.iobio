@@ -40,7 +40,7 @@ import { bus } from '../../routes';
       },
       draw(data){
         let self = this;
-        console.log("data in draw is ", data);
+        // console.log("data in draw is ", data);
         var widthPercent = "100%";
         var heightPercent = "100%";
         var margin = {top: 20, right: 20, bottom: 40, left: 50};
@@ -57,7 +57,7 @@ import { bus } from '../../routes';
 
 
         let onSelected = function(start, end) {
-          console.log("dispatch", start, end);
+          // console.log("dispatch", start, end);
           dispatch.barselect(start, end);
           if(start !== end){
             bus.$emit("conditionsOnBarSelect", start, end);
@@ -65,7 +65,7 @@ import { bus } from '../../routes';
         }
 
         d3.select("#conditions-distribution-chart").select("svg").remove();
-        console.log("data length in conditions", data.length)
+        // console.log("data length in conditions", data.length)
 
         if(data.length>1000){
           var histogram = d3.layout.histogram()
@@ -82,7 +82,7 @@ import { bus } from '../../routes';
         //                   .bins(40)
         //                   (data)
 
-        console.log("histogram data ", histogram)
+        // console.log("histogram data ", histogram)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
@@ -107,13 +107,6 @@ import { bus } from '../../routes';
                     .scale(x)
                     .ticks(10)
                     .orient("bottom");
-
-
-        // var canvas = d3.select("#conditions-distribution-chart").append("svg")
-        //                     .attr("height", height + margin.top + margin.bottom)
-        //                     .attr("width", width + margin.right + margin.left)
-        //                     .append("g")
-        //                       .attr('transform', 'translate('+margin.left+','+margin.top+')')
 
         var ht = height + margin.top + margin.bottom;
         var wdth = width + margin.right + margin.left
@@ -172,8 +165,8 @@ import { bus } from '../../routes';
                     var brushEnd = function(){
                       var start = brush.extent()[0];
                       var end   = brush.extent()[1];
-                      console.log("start", Math.round(start));
-                      console.log("end", Math.round(end));
+                      // console.log("start", Math.round(start));
+                      // console.log("end", Math.round(end));
 
                       onSelected(Math.round(start), Math.round(end))
                     }
@@ -189,7 +182,6 @@ import { bus } from '../../routes';
                         canvas.selectAll("rect").classed("bar1", function(d,id) {
                               return(d.x >= e[0] && d.x <= e[1] ?  false: true )
                           });
-                        // onSelected(e);
                       }
 
 
@@ -199,22 +191,6 @@ import { bus } from '../../routes';
                         .selectAll("rect") //select all the just-created rectangles
                         .attr("y", 0)
                         .attr("height", (height + margin.top - 20)) //set their height
-
-
-// canvas.selectAll(".resize").append("path");
-
-
-                  // bars.append("text")
-                  //   .attr("x", function(d){return x(d.x)-3.5})
-                  //   .attr("y", function(d){return y(d.y)-25})
-                  //   .attr("dy", "20px")
-                  //   .attr("dx", function(d){
-                  //     return x(d.dx)/2;
-                  //   })
-                  //   .attr("fill", "black")
-                  //   .text(function(d){ if(d.y!==0){
-                  //     return d.y;
-                  //   } })
 
       }
     },
