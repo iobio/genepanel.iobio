@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="background-color:#f9fbff">
     <v-snackbar
         :timeout="snackbarTimeout"
         :top="y === 'top'"
@@ -13,68 +14,324 @@
         {{ snackbarText }}
         <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
+
+      <v-container fluid grid-list-md>
+        <v-layout row wrap style="margin-top:-5px;">
+          <v-flex d-flex xs12>
+            <v-card>
+              <v-card-text style="margin-bottom:-5px">
+                <v-layout row wrap>
+                  <v-flex xs12 sm12 md12 lg8>
+                    <!-- {{ multipleSearchTerms }} -->
+                    <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
+                      <label>Search Phenotype</label>
+                      <input
+                        id="phenotype-term"
+                        class="form-control"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="Search phenotype (E.g. lactic acidosis)"
+                        v-model="phenotypeTermEntered">
+
+                      <typeahead
+                        v-model="phenotypeTerm"
+                        hide-details="false"
+                        force-select match-start
+                        :limit="typeaheadLimit"
+                        :async-function="phenotypeLookup"
+                        target="#phenotype-term"
+                        item-key="value"/>
+                    </div>
+
+                    <v-btn
+                        style="margin-top:-0.35px"
+                        class="btnColor"
+                        v-on:click="getPhenotypeData">
+                      Go
+                    </v-btn>
+
+                    <div v-if="phenolyzerStatus!==null">
+                      <br>
+                      <center>
+                        <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
+                        The phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                      </center>
+                    </div>
+                    <div v-if="multipleSearchTerms.length">
+                      <br>
+                        Phenotypes Searched:
+                      <v-chip disabled outline color="blue-grey darken-3" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+                        {{ i+1 }}. {{ searchItem }}
+                      </v-chip>
+                    </div>
+                    <div v-if="noResultsArr.length">
+                      <br>
+                      Searches with no results:
+                      <v-chip disabled v-for="(searchItem, i) in noResultsArr" :key="i">
+                        {{ searchItem }}
+                      </v-chip>
+                    </div>
+                    <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
+
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 lg4 >
+                    <div style="display:inline-block; padding-top:5px;">
+                      <label>Genes</label>
+                      <input
+                        :disabled="multipleSearchTerms.length<1"
+                        id="top-genes-input"
+                        class="form-control"
+                        type="text"
+                        v-model="genesTop"
+                        autocomplete="off"
+                        list="genes"
+                        placeholder="50">
+                        <datalist id="genes">
+                          <option v-for="genesCount in genesTopCounts">
+                            {{ genesCount }}
+                          </option>
+                        </datalist>
+                    </div>
+
+                    <v-btn
+                        :disabled="multipleSearchTerms.length<1"
+                        style="margin-top:-0.35px"
+                        class="btnColor"
+                        v-on:click.prevent="selectNumberOfTopPhenolyzerGenes">
+                      Go
+                    </v-btn>
+
+                  </v-flex>
+
+                </v-layout>
+              </v-card-text>
+              <br>
+            </v-card>
+          </v-flex>
+
+          <v-flex xs12 >
+            <v-card >
+              <div v-if="!phenotypeSearchedByUser">
+                <v-card-title>
+                    <h3>What is Phenolyzer?</h3>
+                </v-card-title>
+                <v-card-title>
+                    Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
+                    <br>
+                    Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                    <br>
+                </v-card-title>
+              </div>
+            </v-card>
+          </v-flex>
+
+
+          <v-flex d-flex xs12 >
+            <v-layout row wrap>
+
+              <!-- Start data table  -->
+              <v-flex xs8>
+                <v-card v-if="multipleSearchTerms.length">
+                  <v-data-table
+                      v-model="selected"
+                      v-bind:headers="headers"
+                      v-bind:items="items"
+                      select-all
+                      v-bind:pagination.sync="pagination"
+                      item-key="geneName"
+                      class="elevation-1"
+                      v-bind:search="search"
+                      no-data-text="No pheotype genes Available Currently"
+                    >
+                    <template slot="headers" slot-scope="props">
+                      <tr>
+                        <th>
+                          <v-checkbox
+                            primary
+                            hide-details
+                            @click.native="toggleAll"
+                            :input-value="props.all"
+                            :indeterminate="props.indeterminate"
+                          ></v-checkbox>
+                        </th>
+                        <th v-for="header in props.headers" :key="header.text"
+                          :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                          @click="changeSort(header.value)"
+                        >
+                          <v-icon>arrow_upward</v-icon>
+                          {{ header.text }}
+                        </th>
+                      </tr>
+                    </template>
+                    <template slot="items" slot-scope="props">
+                      <tr :active="props.selected">
+                      <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
+                        <td>
+                          <v-checkbox
+                            primary
+                            hide-details
+                            v-model="props.selected"
+                            :input-value="props.selected"
+                          ></v-checkbox>
+                        </td>
+                        <!-- <td></td> -->
+                        <!-- <td>{{ props.item.rank }}</td> -->
+                        <td>{{ props.item.rank}}</span></td>
+                        <td >
+                          <div id="app">
+                            <div>
+                              <v-menu open-on-hover top offset-y>
+                                <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
+                                  <div >
+                                    <v-card>
+                                      <v-card-text style="margin-top:-25px">
+                                        <center ><h3>{{ props.item.geneName }}</h3></center>
+                                        <hr>
+                                        <div style="width:600px"><strong>Resources: </strong></div>
+                                        <ul style="margin-left:25px; margin-top:5px">
+                                          <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                                          <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                                          <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                                          <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                                        </ul>
+                                      </v-card-text>
+                                    </v-card>
+                                  </div>
+                              </v-menu>
+                            </div>
+                          </div>
+                          <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
+                          <td>
+                            <span v-for="x in props.item.searchTermIndex">
+                              <span v-html="x"></span>
+                            </span>
+                          </td>
+
+                        <!-- <td >
+                          <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
+
+                          <span>
+                            <v-progress-circular
+                              :size="25"
+                              :width="5"
+                              :rotate="-90"
+                              :value="props.item.sources / multipleSearchTerms.length * 100"
+                              color="light-blue darken-1"
+                            >
+                            </v-progress-circular>
+                          </span>
+
+
+                        </td> -->
+                        <td ><span v-html="props.item.htmlData"></span></td>
+                        <!-- <td>{{ props.item.sources}}</td> -->
+                        <td style="font-size:0px;">{{ props.item.score }}</td>
+                        <td>
+                          <v-menu bottom offset-y style="color:black">
+                            <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+
+                            <v-list style="width:250px">
+                              <v-list-tile >
+                                <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
+                              </v-list-tile>
+                              <hr>
+                              <v-list-tile >
+                                <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                              </v-list-tile>
+                              <v-list-tile >
+                                <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
+                              </v-list-tile>
+                              <v-list-tile >
+                                <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                              </v-list-tile>
+                              <v-list-tile >
+                                <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                              </v-list-tile>
+                              <v-list-tile >
+                                <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
+                              </v-list-tile>
+                            </v-list>
+                          </v-menu>
+                        </td>
+                      </tr>
+                    </template>
+                    <template slot="footer">
+                    <td colspan="100%">
+                      <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
+                    </td>
+                  </template>
+                  </v-data-table>
+                </v-card>
+              </v-flex>
+              <!-- End data table -->
+
+              <!-- start sidebar -->
+              <v-flex xs4 class="pr-2 pl-1">
+
+                <div class="d-flex mb-2 xs12">
+                  <v-card v-if="multipleSearchTerms.length">
+                    <v-card-title primary-title>
+                      <v-text-field
+                        append-icon="search"
+                        label="Search Genes"
+                        single-line
+                        hide-details
+                        v-model="search"
+                      ></v-text-field>
+                    </v-card-title>
+                    <br>
+                  </v-card>
+                </div>
+                <br>
+
+                <div class="d-flex mt-1 mb-2 xs12">
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="multipleSearchTerms.length">
+                    <v-card-title primary-title>
+                     <div>
+                       <div style="font-size:16px">
+                         GENES
+                         <v-dialog v-model="dialog" width="600px">
+                           <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                           <v-card>
+                             <v-card-title>
+                               <span class="headline">Genes</span>
+                             </v-card-title>
+                             <v-card-text>
+                               Help information text
+                             </v-card-text>
+                             <v-card-actions>
+                               <v-spacer></v-spacer>
+                               <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                             </v-card-actions>
+                           </v-card>
+                         </v-dialog>
+                       </div>
+                       <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selected.length }}</strong></span>
+                       <div>of {{ items.length }} selected</div>
+                     </div>
+                   </v-card-title>
+                  </v-card>
+                </div>
+
+              </v-flex>
+
+            </v-layout>
+          </v-flex>
+
+        </v-layout>
+      </v-container>
+
+
+
+
+
+
+
       <v-container fluid grid-list-md style="min-height:500px">
         <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
           <v-flex d-flex xs12 sm12 md12 lg12>
             <v-card-text>
               <v-layout row wrap>
-                <v-flex d-flex xs12 sm12 md12>
-                  <v-card>
-                    <v-card-text >
-                      <div class="mb-1" >
-                        Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
-                        Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <a href="http://phenolyzer.wglab.org/"> Read more</a>
-                      </div>
-                      <span >Phenotype: </span>
-                        <div id="phenotype-input" style="display:inline-block; margin-left:4px;padding-top:5px;">
-                          <input
-                            id="phenotype-term"
-                            class="form-control"
-                            type="text"
-                            autocomplete="off"
-                            placeholder="Search phenotype (E.g. lactic acidosis)"
-                            v-model="phenotypeTermEntered">
-
-                          <typeahead
-                            v-model="phenotypeTerm"
-                            hide-details="false"
-                            force-select match-start
-                            :limit="typeaheadLimit"
-                            :async-function="phenotypeLookup"
-                            target="#phenotype-term"
-                            item-key="value"/>
-                        </div>
-
-                        <v-btn
-                            style="margin-top:0px"
-                            color="blue darken-1"
-                            class="btnColor"
-                            v-on:click="getPhenotypeData">
-                          Go
-                        </v-btn>
-                      <div v-if="phenolyzerStatus!==null">
-                        <br>
-                        <center>
-                          <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
-                          The phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
-                        </center>
-                      </div>
-                      <div v-if="multipleSearchTerms.length">
-                        <v-chip close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
-                          {{ searchItem }}
-                        </v-chip>
-                      </div>
-                      <div v-if="noResultsArr.length">
-                        <br>
-                        Searches with no results:
-                        <v-chip disabled v-for="(searchItem, i) in noResultsArr" :key="i">
-                          {{ searchItem }}
-                        </v-chip>
-                      </div>
-                      <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
-                    </v-card-text>
-                  </v-card>
-                </v-flex>
 
                 <v-flex v-if="false" d-flex xs12 sm12 md12 lg12>
                   <v-layout row wrap>
@@ -105,16 +362,16 @@
                   </v-layout>
                 </v-flex>
 
-                <v-flex d-flex xs12 sm12 md12>
+                <!-- <v-flex d-flex xs12 sm12 md12>
                   <v-card style="margin-top:4px" >
                     <v-card-title primary class="title" >
                       <span class="text-xs-center" v-if="multipleSearchTerms.length"><v-chip outline color="primary">{{ selectedGenesText }}</v-chip></span>
                       <span  v-if="multipleSearchTerms.length" style="margin-left:20px;display: ">
-                        <!-- v-if="items.length>1" -->
-                        <!-- <strong>
+                        v-if="items.length>1"
+                        <strong>
                           Select top &nbsp; <input v-on:focusout="selectNumberOfTopPhenolyzerGenes" type="number" style="width:18%; padding: 5px ;border: 1px solid #c6c6c6 ; font-size:16px" v-model="NumberOfTopPhenolyzerGenes"> &nbsp; genes
                           &nbsp;<a><v-icon v-on:click="selectNumberOfTopPhenolyzerGenes">navigate_next</v-icon></a>
-                        </strong> -->
+                        </strong>
                         <span id="genes-top-input" class="emphasize" style="vertical-align:bottom;display:inline-block;max-width:150px;width:150px;margin-left:25px;padding-top:4px">
                           <v-select
                           v-model="genesTop"
@@ -126,123 +383,23 @@
                           >
                           </v-select>
                         </span>
-                        <!--
+
                         <span style="padding-top:22px">
                           <v-btn v-on:click="selectNumberOfTopPhenolyzerGenes" flat icon color="indigo">
                             <v-icon>navigate_next</v-icon>
                           </v-btn>
                         </span>
-                      -->
-                        <v-text-field
-                          append-icon="search"
-                          label="Search"
-                          single-line
-                          hide-details
-                          v-model="search"
-                          style="vertical-align:bottom;width: 200px;display:inline-block;margin-left:20px"
-                        ></v-text-field>
+
+
                       </span>
                     </v-card-title>
 
                     <v-card-text style="padding-top:0px;" v-if="multipleSearchTerms.length">
-                      <v-data-table
-                          v-model="selected"
-                          v-bind:headers="headers"
-                          v-bind:items="items"
-                          select-all
-                          v-bind:pagination.sync="pagination"
-                          item-key="geneName"
-                          class="elevation-1"
-                          v-bind:search="search"
-                          no-data-text="No pheotype genes Available Currently"
-                        >
-                        <template slot="headers" slot-scope="props">
-                          <tr>
-                            <th>
-                              <v-checkbox
-                                primary
-                                hide-details
-                                @click.native="toggleAll"
-                                :input-value="props.all"
-                                :indeterminate="props.indeterminate"
-                              ></v-checkbox>
-                            </th>
-                            <th v-for="header in props.headers" :key="header.text"
-                              :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                              @click="changeSort(header.value)"
-                            >
-                              <v-icon>arrow_upward</v-icon>
-                              {{ header.text }}
-                            </th>
-                          </tr>
-                        </template>
-                        <template slot="items" slot-scope="props">
-                          <tr :active="props.selected" @click="props.selected = !props.selected">
-                            <td>
-                              <v-checkbox
-                                primary
-                                hide-details
-                                :input-value="props.selected"
-                              ></v-checkbox>
-                            </td>
-                            <!-- <td></td> -->
-                            <!-- <td>{{ props.item.rank }}</td> -->
-                            <td>{{ props.item.rank}}</span></td>
-                            <td >
-                              <div id="app">
-                                <div>
-                                  <v-menu open-on-hover top offset-y>
-                                    <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
-                                      <div >
-                                        <v-card>
-                                          <v-card-text style="margin-top:-25px">
-                                            <center ><h3>{{ props.item.geneName }}</h3></center>
-                                            <hr>
-                                            <div style="width:600px"><strong>Resources: </strong></div>
-                                            <ul style="margin-left:25px; margin-top:5px">
-                                              <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                                              <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                                              <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                                              <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                                            </ul>
-                                          </v-card-text>
-                                        </v-card>
-                                      </div>
-                                  </v-menu>
-                                </div>
-                              </div>
-                              <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
-                            <td >
-                              <center>{{ props.item.sources }} of {{ multipleSearchTerms.length }}</center>
-                              <!--
-                              <span>
-                                <v-progress-circular
-                                  :size="25"
-                                  :width="5"
-                                  :rotate="-90"
-                                  :value="props.item.sources / multipleSearchTerms.length * 100"
-                                  color="light-blue darken-1"
-                                >
-                                </v-progress-circular>
-                              </span>
-                            -->
 
-                            </td>
-                            <td ><span v-html="props.item.htmlData"></span></td>
-                            <!-- <td>{{ props.item.sources}}</td> -->
-                            <td style="font-size:0px;">{{ props.item.score }}</td>
-                          </tr>
-                        </template>
-                        <template slot="footer">
-                        <td colspan="100%">
-                          <strong>{{ selected.length}} of {{ items.length }} results selected</strong>
-                        </td>
-                      </template>
-                      </v-data-table>
                     </v-card-text>
 
                   </v-card>
-                </v-flex>
+                </v-flex> -->
                 <br>
                 <br>
              </v-layout>
@@ -251,6 +408,7 @@
 
         </v-layout>
       </v-container>
+    </div>
   </div>
 </template>
 
@@ -303,11 +461,13 @@ var geneModel = new GeneModel();
             align: 'left',
             value: 'geneName'
           },
-            {
-              text: 'Matched search terms',
-              align: 'left',
-              value: ['sources', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc']
-             },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
+
+            // {
+            //   text: 'Matched search terms',
+            //   align: 'left',
+            //   value: ['sources', 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc']
+            //  },
              {
                text: 'Phenolyzer score',
                align: 'left',
@@ -317,6 +477,12 @@ var geneModel = new GeneModel();
               text: '',
               align: 'left',
               value: 'htmlData'
+            },
+            {
+              text: 'More',
+              align: 'left',
+              sortable: false,
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '']
             }
         ],
         tempItems: [],
@@ -335,7 +501,11 @@ var geneModel = new GeneModel();
         snackbarTimeout: 4000,
         dictionaryArr: [],
         noResultsArr: [],
-        pieChartdataArr: []
+        pieChartdataArr: [],
+        phenotypeSearchedByUser: false,
+        chartComponent: null,
+        genesTopCounts: [5, 10, 30, 50, 80, 100],
+        dialog: false,
       }
     },
     updated(){
@@ -452,6 +622,7 @@ var geneModel = new GeneModel();
       },
       getPhenotypeData(){
         let self = this;
+        self.phenotypeSearchedByUser = true;
         if(self.phenotypeTerm.value.length>1){
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
@@ -491,6 +662,7 @@ var geneModel = new GeneModel();
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
+                  self.noOfSourcesSvg();
                   self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
@@ -521,7 +693,8 @@ var geneModel = new GeneModel();
                 geneName: arr[i].data[j].geneName,
                 geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
                 score: Number(arr[i].data[j].score),
-                searchTerm: arr[i].name
+                searchTerm: [arr[i].name],
+                searchTermIndex: [this.multipleSearchTerms.indexOf(arr[i].name)+1]
               })
             }
           }
@@ -550,15 +723,20 @@ var geneModel = new GeneModel();
                   geneName: arr[j].geneName,
                   score: Number(arr[j].score),
                   total: Number(arr[i].score),
-                  sources: 1
+                  sources: 1,
+                  searchTerm: arr[j].searchTerm,
+                  searchTermIndex: arr[j].searchTermIndex,
                 }
               }
               else {
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
+                  // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))),
                   score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
-                  sources: Number(obj[uniqueGenes[i]].sources) + 1
+                  sources: Number(obj[uniqueGenes[i]].sources) + 1,
+                  searchTerm: [...obj[uniqueGenes[i]].searchTerm, ...arr[j].searchTerm],
+                  searchTermIndex: [...obj[uniqueGenes[i]].searchTermIndex, ...arr[j].searchTermIndex]
                 }
               }
             }
@@ -570,14 +748,22 @@ var geneModel = new GeneModel();
         // sortTheOrder(withAvgArr)
       },
       sortTheOrder(arr){
+        console.log(arr)
         arr.sort(function(a,b){
-            if (a.sources===b.sources){
-               return (b.score-a.score);
-            } else if(a.sources<b.sources){
-               return 1;
-            } else if(a.sources>b.sources){
-               return -1;
-            }
+          if (a.score===b.score){
+             return (b.score-a.score);
+          } else if(a.score<b.score){
+             return 1;
+          } else if(a.score>b.score){
+             return -1;
+          }
+            // if (a.sources===b.sources){
+            //    return (b.score-a.score);
+            // } else if(a.sources<b.sources){
+            //    return 1;
+            // } else if(a.sources>b.sources){
+            //    return -1;
+            // }
          })
          for(var i=0; i<arr.length; i++){
            arr[i].rank = i+1;
@@ -661,9 +847,10 @@ var geneModel = new GeneModel();
         });
       },
       drawSvgBars: function(tempItems){
-        var svgWidth = 800;
+        var svgWidth = 350;
         //<stop offset="5%"  stop-color="#36D1DC"/>
         //<stop offset="95%" stop-color="#5B86E5"/>
+        var firstBarWidth = tempItems[0].score * 320;
         tempItems.map(function(gene){
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -673,8 +860,11 @@ var geneModel = new GeneModel();
                                 </linearGradient>
                             </defs>
 
-                            <rect fill="url(#MyGradient)"
-                                  x="10" y="5" width="${gene.score * 800}" height="18"/>
+                            <rect fill="#4e7ad3"
+                                  x="10" y="1" rx="5" width="${gene.score * 320}" height="18"/>
+                            <rect fill="#e8ebed" stroke="white" stroke-width="2"
+                                  x="${(gene.score * 320)+12}" y="1" rx="5" width="${(firstBarWidth - (gene.score * 320))}" height="16"/>
+
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
           gene.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.geneName}`;
@@ -686,6 +876,19 @@ var geneModel = new GeneModel();
         //console.log(tempItems.slice(0,5));
         //self.items = tempItems;
         return tempItems
+      },
+      noOfSourcesSvg: function(){
+        this.items.map(x=>{
+          console.log(x)
+          x.searchTermIndex = x.searchTermIndex.map(y=>{
+            // console.log(y)
+            return `<svg height="30" width="30">
+                  <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />
+                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                </svg> `
+          })
+        });
+        console.log(this.items)
       },
       addSearchTermProperty: function(){
         this.tempItems.map(x=>{
@@ -719,35 +922,85 @@ var geneModel = new GeneModel();
 }
 
 #phenotype-term{
-  width: 850px;
-  height:35px;
+  width: 680px;
+  height:40px;
   margin-top: 4px;
+  background-color: #F4F4F4;
+  border-color: #F4F4F4;
+}
+
+#top-genes-input{
+  width: 200px;
+  height:40px;
+  margin-top: 4px;
+  background-color: #F4F4F4;
+  border-color: #F4F4F4;
 }
 
 /* Media Queries */
 
+@media screen and (max-width:1600px){
+  #top-genes-input{
+    width: 120px;
+    height:40px;
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 1620px){
+  #phenotype-term{
+    width: 470px;
+    height:40px;
+    margin-top: 4px;
+  }
+}
+
 @media screen and (max-width: 1050px){
   #phenotype-term{
-    width: 800px;
-    height:35px;
+    width: 450px;
+    height:40px;
     margin-top: 4px;
   }
 }
 
 @media screen and (max-width: 950px){
   #phenotype-term{
-    width: 600px;
-    height:35px;
+    width: 350px;
+    height:40px;
     margin-top: 4px;
   }
 }
 
 @media screen and (max-width: 700px){
   #phenotype-term{
-    width: 400px;
-    height:35px;
+    width: 300px;
+    height:40px;
     margin-top: 4px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+  }
+  .btnColor{
+    margin-top: 2px
   }
 }
+
+.genepanelsRect{
+  fill: #4e7ad3;
+  pointer-events: all;
+  stroke: #4e7ad3;
+  stroke-width: 2;
+}
+
+
+
+</style>
+
+<style lang="sass" scoped>
+
+  @import ../assets/sass/variables
+
+
+  .btnColor
+    color: white
+    background-color: $search-button-color !important
 
 </style>

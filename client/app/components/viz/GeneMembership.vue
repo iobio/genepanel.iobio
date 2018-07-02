@@ -83,7 +83,7 @@ var model = new Model();
             .xAxisLabel( "# of Panels" )
             .color(self.color)
             .on("barselect", function(selectedGeneNames){
-              // console.log("bars selected ", selectedGeneNames);
+              console.log("bars selected ", selectedGeneNames);
               addSelectedFromHistogramChart(selectedGeneNames);
             })
         var addSelectedFromHistogramChart = (data)=>{

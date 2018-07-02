@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="chart-title">Summary of Genes</div>
     <div id="summary-pie-chart"></div>
   </div>
 </template>
@@ -36,8 +37,8 @@
 
         var widthPercent = "100%";
         var heightPercent = "100%";
-        var width = 400,
-          height = 260,
+        var width = 380,
+          height = 240,
           radius = Math.min(width, height) / 2;
 
         var arcOver = d3.svg.arc()
@@ -166,3 +167,11 @@
     }
   }
 </script>
+  <style lang="sass">
+  .chart-title
+    margin-left: 10px
+    font-size: 16px
+    font-family:  "Open sans"
+    font-weight: 300
+
+  </style>

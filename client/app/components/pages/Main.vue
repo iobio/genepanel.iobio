@@ -16,12 +16,24 @@
         {{ snackbarText }}
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
+
     <v-navigation-drawer
       permanent
       app
     >
     <br>
      <v-list dense class="pt-0">
+       <v-list-tile>
+         <v-list-tile-action >
+           <span><v-icon>dashboard</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title >
+             Overview
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
        <v-list-tile
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="component='GeneticTestingRegistry'">
@@ -30,7 +42,7 @@
            <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
-           <v-list-tile-title>
+           <v-list-tile-title v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTabText' : '']">
              Genetic Testing Registry
              <v-badge color="primary darken-1" right class="badge-bg-color">
                <span  slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span>
@@ -47,7 +59,7 @@
            <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
-           <v-list-tile-title>
+           <v-list-tile-title v-bind:class="[component==='Phenolyzer' ? 'activeTabText' : '']">
              Phenolyzer
              <v-badge color="primary" right class="badge-bg-color">
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
@@ -65,7 +77,7 @@
            <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
-           <v-list-tile-title>
+           <v-list-tile-title v-bind:class="[component==='SummaryTab' ? 'activeTabText' : '']">
              Summary
              <v-badge color="primary" right class="badge-bg-color">
               <span slot="badge">{{ NumberOfAllGenes }}</span>
@@ -75,7 +87,7 @@
        </v-list-tile>
 
        <v-divider></v-divider>
-       <v-list-tile @click="">
+       <!-- <v-list-tile @click="">
          <v-list-tile-action>
            <v-icon>settings</v-icon>
          </v-list-tile-action>
@@ -90,7 +102,7 @@
          <v-list-tile-content>
            <v-list-tile-title>Help</v-list-tile-title>
          </v-list-tile-content>
-       </v-list-tile>
+       </v-list-tile> -->
      </v-list>
 
     </v-navigation-drawer>
@@ -99,18 +111,127 @@
       dark
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
-      style="width:300px"
     >
       <v-toolbar-title >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <span >panel.iobio</span>
       </v-toolbar-title>
 
+      <span style="margin-left:130px">
+        <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
+          Genetic Testing Registry &nbsp;
+          <v-menu open-on-hover top offset-y>
+            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+              <v-card>
+                <v-card-text >
+                  <br>
+                  <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                  <br>
+                  The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                  <br>
+                  The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                  <br><br>
+                </v-card-text>
+              </v-card>
+          </v-menu>
+        </v-btn>
+        <v-btn flat v-else-if="component==='Phenolyzer'" style="font-size:16px font-width:200 ">
+          Phenolyzer
+          <v-menu open-on-hover top offset-y>
+            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+              <v-card>
+                <v-card-text >
+                  <br>
+                  Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
+                  <br>
+                  <strong>Phenolyzer</strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
+                  <br>
+                  <a href="http://phenolyzer.wglab.org/">Read more</a>
+                  <br><br>
+                </v-card-text>
+              </v-card>
+          </v-menu>
+        </v-btn>
+        <v-btn flat v-else-if="component==='SummaryTab'" style="font-size:16px font-width:200 ">
+          Summary
+          <v-menu open-on-hover top offset-y>
+            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
+              <v-card>
+                <v-card-text >
+                  <br>
+                  <strong>The Genetic Testing Registry (GTR®)</strong> provides a central location for voluntary submission of genetic test information by providers.
+                  <br>
+                  The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
+                  <br>
+                  The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
+                  <br><br>
+                </v-card-text>
+              </v-card>
+          </v-menu>
+        </v-btn>
+      </span>
+      <v-spacer></v-spacer>
+      <v-menu bottom offset-y style="color:black">
+        <v-btn flat slot="activator"
+        ><v-icon style="padding-right:4px">input</v-icon>
+          <strong>Export</strong>
+        </v-btn>
+        <v-list>
+          <div v-if="component==='GeneticTestingRegistry'">
+            <v-list-tile @click="copyGtrGenes">
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy GTR genes to clipboard</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="exportGtrGenes">
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
+            </v-list-tile>
+            <hr>
+          </div>
+          <div v-else-if="component==='Phenolyzer'">
+            <v-list-tile @click="copyPhenolyzerGenes">
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy Phenolyzer genes to clipboard</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="exportPhenolyzerGenes">
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export Phenolyzer genes to file</v-list-tile-title>
+            </v-list-tile>
+            <hr>
+          </div>
+          <v-list-tile @click="copyAllGenes">
+            <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="exportAllGenes">
+            <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <span>
+        <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
+      </span>
+      <span>
+        <v-btn flat><v-icon>help</v-icon> Help</v-btn>
+      </span>
+      <v-menu bottom offset-y style="color:black">
+        <v-btn flat slot="activator"
+          ><v-icon style="padding-right:4px">apps</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile >
+            <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile >
+            <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile >
+            <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+
+
     </v-toolbar>
 
     <div>
       <v-content>
-            <div style="width:100%; height:64px; background:white">
+            <div class="header-nav-bar" >
               <v-card-text>
                 <span v-if="component==='GeneticTestingRegistry'" style="font-size:18px">
                   Genetic Testing Registry
@@ -733,6 +854,7 @@ button.btnColor.blue.darken-1
 
 .checkbox.input-group.input-group--selection-controls.accent--text
   color:  $default-cb-accent !important
+  // color: #9babff !important
 
 .accent--text
   color: $app-color-primary !important
@@ -747,8 +869,8 @@ button.btnColor.blue.darken-1
   fill: rgba(0,0,0,.54)
 
 .alert.warning
-  background-color: $info-color !important;
-  color: $text-color !important;
+  background-color: $info-color !important
+  color: $text-color !important
   width: 400px
 
 .fixed-top-tabs
@@ -761,9 +883,11 @@ button.btnColor.blue.darken-1
 
 .activeTab
   background-color: $activeTab-background-color
-  color: #e53935
-  font-weight: 400
+  color: $app-utilities-color
   border-left: 8px solid $app-color
+
+.activeTabText
+  font-weight: 600
 
 .close-button
   padding-right: 0px
@@ -782,4 +906,11 @@ button.btnColor.blue.darken-1
     background-color: #fff0
     font-size: 18px
 
+.header-nav-bar
+  // position: fixed
+  // top: 0
+  // z-index: 100
+  // width: 80%
+  height: 64px
+  background: white
 </style>

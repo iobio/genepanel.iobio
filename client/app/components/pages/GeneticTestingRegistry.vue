@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="app">
-      <v-app id="inspire">
+      <v-app id="inspire" style="background-color:#f9fbff">
         <v-snackbar
           :timeout="snackbarTimeout"
           :top="y === 'top'"
@@ -122,6 +122,7 @@
                             v-model="geneSearch"
                           ></v-text-field>
                         </v-card-title>
+                        <br>
                        </v-card>
                      </div>
                      <br>
@@ -186,13 +187,13 @@
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
                                <div>of {{ multiSelectDisorder.length }} selected</div>
                              </div>
                           </v-card-title>
                         <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
-                          <v-card-title>
+                          <!-- <v-card-title> -->
                             <PieChartSelector
                               v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                               :color="chartColor">
@@ -211,7 +212,7 @@
                                   </v-layout>
                               </v-card-text>
                             </v-card>
-                          </v-card-title>
+                          <!-- </v-card-title> -->
                           <center>
                             <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                           </center>
@@ -250,7 +251,7 @@
                                 v-on:click="showChartComponent('GeneMembership')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
+                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
 
                                <div>present</div>
                              </div>
@@ -308,7 +309,7 @@
                                 v-on:click="showChartComponent('Vendors')">
                                View and Filter
                                </span> -->
-                               <v-btn outline round color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
+                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
 
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
@@ -342,6 +343,47 @@
                         </v-card>
                       </div>
                     </div>
+                    <br>
+
+                    <div class="d-flex mb-2 xs12">
+                      <v-card v-if="geneProps.length">
+                       <v-card-title primary-title>
+                         <div>
+                           <div style="font-size:16px">
+                             FILTERS FEED
+                             <v-dialog v-model="dialog" width="600px">
+                               <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                               <v-card>
+                                 <v-card-title>
+                                   <span class="headline">Genes</span>
+                                 </v-card-title>
+                                 <v-card-text>
+                                   Help information text
+                                 </v-card-text>
+                                 <v-card-actions>
+                                   <v-spacer></v-spacer>
+                                   <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                 </v-card-actions>
+                               </v-card>
+                             </v-dialog>
+                           </div>
+                         </div>
+                         </v-card-title>
+                         <div class="filterFeed">
+                           <v-card-text>
+                              <div v-if="filterFeed.length>0">
+                                <p v-for="(filter, i) in filterFeed">
+                                  <v-icon>chevron_right</v-icon> &nbsp; {{ filter }}
+                                </p>
+                              </div>
+                              <div v-else>
+                                <center><i>No filters selected</i></center>
+                              </div>
+                           </v-card-text>
+                         </div>
+                       <br>
+                      </v-card>
+                    </div>
 
                     <!-- <div class="d-flex xs12">
 
@@ -358,12 +400,12 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
                   <disease-panel
-                    v-if="diseases.length"
+                    v-if="diseases.length && removeSearchTermFlag===false"
                     v-bind:DiseasePanelData="diseases"
                     v-on:selectedDiseases="selectDiseases($event)"
                     v-on:setDisorderNamesList="updateDisorderNamesList($event)"
@@ -472,6 +514,8 @@ export default {
       GoToTop: false,
       disordersSearchedByUser: false,
       multipleSearchItems:[],
+      removeSearchTermFlag: false,
+      filterFeed: [],
     }
   },
   watch:{
@@ -484,8 +528,24 @@ export default {
   },
   mounted(){
     bus.$on("removeSearchTerm", ()=>{
-      // this.multiSelectDisorder = [];
-    })
+      this.selectDisorders = [];
+      this.vendorsSelect = [];
+      this.removeSearchTermFlag = true;
+    });
+    bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
+      this.filterFeed.unshift("Mode of inheritance")
+    });
+    bus.$on("vendorsFilter", ()=>{
+      this.filterFeed.unshift("Vendors")
+    });
+    bus.$on("disordersFilter", ()=>{
+      this.filterFeed.unshift("Disorders")
+    });
+    bus.$on("updateFromGenesHistogram", (data, count)=>{
+      if(this.chartComponent==='GeneMembership'){
+        this.filterFeed.unshift("Gene Membership")
+      }
+    });
   },
   created () {
     window.addEventListener('scroll', this.handleScroll);
@@ -506,6 +566,7 @@ export default {
       }
     },
     addDiseases: function(e){
+      this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       // console.log("E", e);
       for(var i=0; i<e.length; i++){
@@ -551,7 +612,7 @@ export default {
     },
     selectPanels: function(e){
       this.geneProps = e;
-      this.scrollDown();
+      // this.scrollDown();
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
@@ -676,8 +737,8 @@ export default {
   } */
   .btnColor{
     color: white;
-    background-color: #D04F4C !important;
-    border-radius: 5px;
+    background-color: #4e7ad3 !important;
+    /* border-radius: 5px; */
   }
   .btn{
     padding: 0px;
@@ -727,12 +788,15 @@ export default {
 #GoToTopBtn:hover
   background-color: #555
 
-.btnColor
-  color: white
-  background-color: $search-button-color !important
-  border-radius: 5px
+// .btnColor
+//   color: white
+//   background-color: $search-button-color !important
+  // border-radius: 5px
 
 .activeCardBox
-    border-bottom: 4px solid $activeCard-border
+    border-bottom: 6px solid $activeCard-border
 
+.filterFeed
+  height: 175px
+  overflow: auto
 </style>

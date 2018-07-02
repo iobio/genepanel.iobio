@@ -62,28 +62,30 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td><strong>{{ (props.index + 1) * pagination.page}}</strong></td> -->
+            <!-- <td style="font-weight:600">{{ (props.item.key + 1) }}</td> -->
             <td>
               <div id="app">
                 <div>
                   <v-menu open-on-hover top offset-y>
-                    <span style="font-size:13px; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                    <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
                       <v-card>
-                        <v-card-text style="margin-top:-22px">
-                          <center ><h3>{{ props.item.name }}</h3></center>
-                          <hr>
-                          <div style="width:600px"><strong>Conditions: </strong></div>
-                          {{props.item.conditions}}
-                          <hr>
-                          <div><strong>Resources: </strong></div>
-                          <ul style="margin-left:25px; margin-top:5px">
-                            <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                            <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                            <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                            <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                            <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
-                          </ul>
-                        </v-card-text>
+                        <div class="conditionsBox">
+                          <v-card-text style="margin-top:-22px">
+                            <center ><h3>{{ props.item.name }}</h3></center>
+                            <hr>
+                            <div><strong>Conditions: </strong></div>
+                            {{props.item.conditions}}
+                            <hr>
+                            <div><strong>Resources: </strong></div>
+                            <ul style="margin-left:25px; margin-top:5px">
+                              <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
+                              <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
+                              <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
+                              <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
+                              <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
+                            </ul>
+                          </v-card-text>
+                        </div>
                       </v-card>
                   </v-menu>
                 </div>
@@ -190,7 +192,8 @@ var model = new Model();
           //   text: 'Index',
           //   align: 'left',
           //   sortable: false,
-          //   value: 'name'
+          //   value: 'key',
+          //   helpText: 'Information'
           // },
           {
             text: 'Name',
@@ -527,7 +530,7 @@ var model = new Model();
             // console.log(y)
             return `<svg height="30" width="30">
                   <circle class="sourceIndicator"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#EB8137" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
         });
@@ -574,6 +577,11 @@ var model = new Model();
 .genepanelsRect:hover{
   fill: #D04F4C;
 } */
+
+.conditionsBox {
+  width: 380px;
+  overflow-wrap: break-word;
+}
 
 #gene-histogram-chart .bar rect {
     fill:   #7dc2e5;
@@ -680,21 +688,28 @@ div.tooltip {
 
 
 .genepanelsRect
-  fill: $svgBar-fill
+  fill: #4e7ad3
   pointer-events: all
-  stroke: #D04F4C
+  stroke: $svgBar-fill
   stroke-width: 2
+  // fill: #FF6845
 
-.genepanelsRect:hover
-  fill: #D04F4C
+// .genepanelsRect:hover
+//   fill: #FFE650
 
 .sourceIndicator
   fill: #ffffff00
-  stroke: #EB8137
+  stroke: #ffa828
   stroke-width: 2
   cx: 12
   cy: 15
   r: 10
+
+.grayRect
+  fill: #e8ebed
+  stroke: white
+  stroke-width: 2
+
 
 
 </style>

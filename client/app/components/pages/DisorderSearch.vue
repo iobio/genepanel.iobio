@@ -1,7 +1,19 @@
 <template>
   <div style="">
     <!-- <span style="padding-right:4px">Disorder</span> -->
-
+    <v-snackbar
+      :timeout="snackbarTimeout"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar"
+    >
+      {{ snackbarText }}
+      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
       <div style="display:inline-block; padding-top:5px;">
         <label>Search Disorder</label>
         <input
@@ -26,8 +38,11 @@
           v-on:click.prevent="performSearch">
         Go
       </v-btn>
+
       <div v-if="multipleSearchTerms.length">
-        <v-chip disabled outline color="red darken-1" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+        <br>
+          Disorders Searched:
+        <v-chip disabled outline color="blue-grey darken-3" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>
@@ -78,6 +93,12 @@ var model = new Model();
         alert:false,
         multipleSearchTerms:[],
         filteredDiseasesItems:[],
+        snackbar: false,
+        snackbarText: "",
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
       }
     },
     watch: {
@@ -112,19 +133,15 @@ var model = new Model();
     },
     methods:{
       remove(item){
-        bus.$emit("removeSearchTerm")
-        // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
+        bus.$emit("removeSearchTerm");
+        this.removeItem(item);
+      },
+      removeItem(item){
+
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
-        // item = "ip"+item+"ip";
         var temp = [];
         this.filteredDiseasesItems.map(x=>{
-          console.log(x["searchTermArray"]);
-          // if(x.searchTerm!== item){
-          //   temp.push(x);
-          // }
-          console.log("item", item)
-          console.log(x["searchTermArray"].includes(item))
           if(x["searchTermArray"].includes(item) && x["searchTermArray"].length>1){
             temp.push(x);
           }
@@ -147,17 +164,10 @@ var model = new Model();
           })
         })
 
-        // temp.map(x=>{
-        //   // console.log("temp search", x.searchTerm);
-        //   // console.log(item)
-        //   x.searchTerm = x.searchTerm.replace(item, "");
-        //   if(x.searchTerm[0]===" "){
-        //     x.searchTerm = x.searchTerm.slice(1);
-        //   }
-        // })
-        console.log("temp" , temp)
         this.filteredDiseasesItems = temp;
-        this.$emit('showDiseases', this.filteredDiseasesItems)
+        this.$emit('showDiseases', this.filteredDiseasesItems);
+
+
 
       },
       performSearch: function(){
@@ -236,7 +246,9 @@ var model = new Model();
           }
           else if(this.multipleSearchTerms.includes(searchTerm)){
             this.checked = false;
-            alert("This disorder is already searched before")
+            // alert("This disorder is already searched before")
+            this.snackbarText = "This disorder is already searched before"
+            this.snackbar = true;
           }
         }
 
@@ -321,7 +333,7 @@ var model = new Model();
   .btnColor
     color: white
     background-color: $search-button-color !important
-    border-radius: 5px
+    // border-radius: 5px
 
 
 </style>

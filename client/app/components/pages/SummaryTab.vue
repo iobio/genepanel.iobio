@@ -1,31 +1,108 @@
 <template>
   <div>
     <div id="app">
-      <v-app id="inspire">
-        <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1" style="margin:10px">
-          <v-container fluid grid-list-md>
-            <v-layout row wrap >
-                <v-flex d-flex xs3 v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
-                      <!-- put the pie chart component here  -->
-                      <SummaryPieChart
-                        v-bind:summaryPieChartData="pieChartdataArr"
-                        :color="chartColor">
-                      </SummaryPieChart>
+      <v-app id="inspire" style="background-color:#f9fbff">
+        <v-container fluid grid-list-md>
+          <v-layout row wrap style="margin-top:-5px;">
+
+            <!-- show description -->
+            <v-flex xs12>
+              <v-card>
+                <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0">
+                  <v-card-title>
+                      <h3>Summary</h3>
+                  </v-card-title>
+                  <v-card-title>
+                    This page summaries the genes from both the sources: Genetic Testing Registry and phenolyzer.
+                      <br><br>
+                  </v-card-title>
+                </div>
+              </v-card>
+            </v-flex>
+            <!-- End description -->
+
+            <!-- show main content -->
+            <v-flex  d-flex xs12 >
+              <v-layout row wrap>
+                <!-- show data table -->
+                <v-flex xs8>
+                  <v-card>
+                    <SummaryDataTable
+                      v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                      v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
+                      v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
+                      v-bind:geneSearch="geneSearch"
+                      v-bind:summaryTableData="summaryTableArray">
+                    </SummaryDataTable>
+                  </v-card>
                 </v-flex>
-                <v-flex d-flex v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
-                      <v-layout row wrap>
-                        <v-flex d-flex xs12>
-                              <SummaryDataTable
-                                  v-bind:summaryTableData="summaryTableArray">
-                                </SummaryDataTable>
-                        </v-flex>
-                     </v-layout>
+                <!-- end data table -->
+
+                <!-- start side bar -->
+                <v-flex xs4 class="pr-2 pl-1">
+
+                  <div class="d-flex mb-2 xs12">
+                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <v-card-title primary-title>
+                        <v-text-field
+                          append-icon="search"
+                          label="Search Genes"
+                          single-line
+                          hide-details
+                          v-model="geneSearch"
+                        ></v-text-field>
+                      </v-card-title>
+                      <br>
+                    </v-card>
+                  </div>
+                  <br>
+                  <div class="d-flex mt-1 mb-2 xs12">
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <v-card-title primary-title>
+                       <div>
+                         <div style="font-size:16px">
+                           GENES
+                           <v-dialog v-model="dialog" width="600px">
+                             <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                             <v-card>
+                               <v-card-title>
+                                 <span class="headline">Genes</span>
+                               </v-card-title>
+                               <v-card-text>
+                                 Help information text
+                               </v-card-text>
+                               <v-card-actions>
+                                 <v-spacer></v-spacer>
+                                 <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                               </v-card-actions>
+                             </v-card>
+                           </v-dialog>
+                         </div>
+                         <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selectedGenes }}</strong></span>
+                         <div>of {{ totalGenes }} selected</div>
+                       </div>
+                     </v-card-title>
+                    </v-card>
+                  </div>
+                  <br>
+                  <div class="d-flex mb-2 xs12">
+                      <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                        <SummaryPieChart
+                          v-bind:summaryPieChartData="pieChartdataArr"
+                          :color="chartColor">
+                        </SummaryPieChart>
+                      </v-card>
+                  </div>
+
                 </v-flex>
+
+                <!-- end side bar -->
               </v-layout>
-          </v-container>
-          </v-card>
+            </v-flex>
 
-
+            <!-- end main content -->
+          </v-layout>
+        </v-container>
        </v-app>
     </div>
   </div>
@@ -71,7 +148,12 @@ import FilterSummary from './FilterSummary.vue'
       uniquePhenoGenes:[],
       pieChartdataArr:[],
       uniqueGenes: [],
-      summaryTableArray:[]
+      summaryTableArray:[],
+      geneSearch: '',
+      selectedGenes: 0,
+      totalGenes: 0,
+      chartComponent: null,
+      dialog: false,
     }),
     watch: {
       GtrGenesForSummary:function(){
@@ -91,6 +173,12 @@ import FilterSummary from './FilterSummary.vue'
       this.performSetOperations();
     },
     methods: {
+      TotalSummaryGenes: function(e){
+        this.totalGenes = e;
+      },
+      TotalSummarySelectedGenes: function(e){
+        this.selectedGenes = e;
+      },
       performSetOperations: function(){
         var gtrGenes = this.GtrGenes.map(gene => {
           return gene.name
@@ -209,3 +297,11 @@ import FilterSummary from './FilterSummary.vue'
     }
   }
 </script>
+
+<style lang="sass">
+@import ../assets/sass/variables
+
+.activeCardBox
+    border-bottom: 6px solid $activeCard-border
+
+</style>
