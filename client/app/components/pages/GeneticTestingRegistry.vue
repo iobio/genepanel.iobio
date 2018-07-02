@@ -343,6 +343,47 @@
                         </v-card>
                       </div>
                     </div>
+                    <br>
+
+                    <div class="d-flex mb-2 xs12">
+                      <v-card v-if="geneProps.length">
+                       <v-card-title primary-title>
+                         <div>
+                           <div style="font-size:16px">
+                             FILTERS FEED
+                             <v-dialog v-model="dialog" width="600px">
+                               <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                               <v-card>
+                                 <v-card-title>
+                                   <span class="headline">Genes</span>
+                                 </v-card-title>
+                                 <v-card-text>
+                                   Help information text
+                                 </v-card-text>
+                                 <v-card-actions>
+                                   <v-spacer></v-spacer>
+                                   <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                 </v-card-actions>
+                               </v-card>
+                             </v-dialog>
+                           </div>
+                         </div>
+                         </v-card-title>
+                         <div class="filterFeed">
+                           <v-card-text>
+                              <div v-if="filterFeed.length>0">
+                                <p v-for="(filter, i) in filterFeed">
+                                  <v-icon>chevron_right</v-icon> &nbsp; {{ filter }}
+                                </p>
+                              </div>
+                              <div v-else>
+                                <center><i>No filters selected</i></center>
+                              </div>
+                           </v-card-text>
+                         </div>
+                       <br>
+                      </v-card>
+                    </div>
 
                     <!-- <div class="d-flex xs12">
 
@@ -474,6 +515,7 @@ export default {
       disordersSearchedByUser: false,
       multipleSearchItems:[],
       removeSearchTermFlag: false,
+      filterFeed: [],
     }
   },
   watch:{
@@ -489,7 +531,21 @@ export default {
       this.selectDisorders = [];
       this.vendorsSelect = [];
       this.removeSearchTermFlag = true;
-    })
+    });
+    bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
+      this.filterFeed.unshift("Mode of inheritance")
+    });
+    bus.$on("vendorsFilter", ()=>{
+      this.filterFeed.unshift("Vendors")
+    });
+    bus.$on("disordersFilter", ()=>{
+      this.filterFeed.unshift("Disorders")
+    });
+    bus.$on("updateFromGenesHistogram", (data, count)=>{
+      if(this.chartComponent==='GeneMembership'){
+        this.filterFeed.unshift("Gene Membership")
+      }
+    });
   },
   created () {
     window.addEventListener('scroll', this.handleScroll);
@@ -740,4 +796,7 @@ export default {
 .activeCardBox
     border-bottom: 6px solid $activeCard-border
 
+.filterFeed
+  height: 175px
+  overflow: auto
 </style>

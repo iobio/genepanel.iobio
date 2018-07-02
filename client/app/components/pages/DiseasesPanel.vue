@@ -282,6 +282,7 @@ var model = new Model();
           this.flagForDisorderFilter = false;
         }
         this.updateDisordersTableOnSelectedDisorders();
+        bus.$emit("disordersFilter");
       }
     }
 

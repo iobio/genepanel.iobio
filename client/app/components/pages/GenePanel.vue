@@ -135,6 +135,7 @@ var model = new Model();
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
         this.flagForVendorFilter = true;
         this.updatePanelsOnSelectedVendors();
+        bus.$emit("vendorsFilter");
       }
 
     },
@@ -183,18 +184,18 @@ var model = new Model();
           }
           this.items = tempArr;
           this.selected = this.items.slice()
-          let vendors = model.getGenePanelVendors(mergedGenePanels);
-          this.vendorList = vendors;
-          this.$emit('setVendorList', this.vendorList.sort());
+          // let vendors = model.getGenePanelVendors(mergedGenePanels);
+          // this.vendorList = vendors;
+          // this.$emit('setVendorList', this.vendorList.sort());
           return this.items;
         }
         else if(this.selectedVendorsFromFilterPanel.length===0){
           this.flagForVendorFilter = false;
           this.selected = this.tempItems.slice();
           this.items = this.tempItems
-          let vendors = model.getGenePanelVendors(mergedGenePanels);
-          this.vendorList = vendors;
-          this.$emit('setVendorList', this.vendorList.sort());
+          // let vendors = model.getGenePanelVendors(mergedGenePanels);
+          // this.vendorList = vendors;
+          // this.$emit('setVendorList', this.vendorList.sort());
           return this.items
         }
       },
