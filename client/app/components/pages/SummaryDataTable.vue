@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card-title>
+    <!-- <v-card-title>
       <v-chip outline color="primary">{{ selectedGenesText }}</v-chip>
       <strong>
 
@@ -13,7 +13,7 @@
         hide-details
         v-model="search"
       ></v-text-field>
-    </v-card-title>
+    </v-card-title> -->
     <v-data-table
         v-model="selected"
         v-bind:headers="headers"
@@ -92,9 +92,9 @@
         </tr>
       </template>
       <template slot="footer">
-      <td colspan="100%">
+      <!-- <td colspan="100%">
         <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
-      </td>
+      </td> -->
     </template>
     </v-data-table>
   </div>
@@ -163,7 +163,7 @@ import { bus } from '../../routes';
       })
 
       this.$emit("TotalSummaryGenes", this.items.length);
-      this.$emit("TotalSummarySelectedGenes", this.selected.length); 
+      this.$emit("TotalSummarySelectedGenes", this.selected.length);
 
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
       bus.$emit("updateAllGenes", this.selected);
