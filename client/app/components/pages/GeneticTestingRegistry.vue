@@ -436,6 +436,9 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <!-- {{ saveSelectedVendorsCount }}
+        <br>
+        {{ saveSelectedVendors  }} -->
       </v-app>
     </div>
 
@@ -516,6 +519,9 @@ export default {
       multipleSearchItems:[],
       removeSearchTermFlag: false,
       filterFeed: [],
+      saveSelectedVendorsCount: 0,
+      saveSelectedVendors: [],
+      newSearchFlag: false,
     }
   },
   watch:{
@@ -524,12 +530,23 @@ export default {
     },
     selectedDisordersListCB: function(){
       this.selectedDisordersList = this.selectedDisordersListCB
+    },
+    vendorsSelect(val) {
+      // this.saveSelectedVendors = this.multiSelectItems.length - this.vendorsSelect.length;
+      if(this.multiSelectItems.length - this.vendorsSelect.length!== 0){ //because everytime a new term is searched this difference will be zero.
+        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor))
+      }
     }
   },
   mounted(){
+    bus.$on("newSearch", ()=>{
+      this.newSearchFlag = true;
+    })
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
-      this.vendorsSelect = [];
+      // this.vendorsSelect = [];
+      this.vendorsSelect = this.multiSelectItems;
       this.removeSearchTermFlag = true;
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
@@ -616,10 +633,20 @@ export default {
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
-      // console.log("vendor list as callback to home", e);
+      console.log("vendor list as callback to home", e);
       this.vendorList = e;
       this.multiSelectItems = e;
+      this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
+      this.checkForDeselectedVendor();
+    },
+    checkForDeselectedVendor: function(){
+      if(this.saveSelectedVendors.length===0){
+        this.vendorsSelect = this.multiSelectItems;
+      }
+      else if(this.saveSelectedVendors.length>0){
+        this.vendorsSelect = this.multiSelectItems.filter( vendor => !this.saveSelectedVendors.includes(vendor))
+      }
     },
     updateSelectedVendors: function(e){
       // console.log("selected vendors from callback to home", e);

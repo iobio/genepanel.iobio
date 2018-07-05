@@ -239,7 +239,8 @@ var model = new Model();
                 // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
                 this.filteredDiseasesItems.push(x);
               });
-              console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
+              // console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
+              bus.$emit("newSearch")
               this.$emit('showDiseases', this.filteredDiseasesItems)
             }
 

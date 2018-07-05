@@ -133,7 +133,8 @@ var model = new Model();
       },
       selectedVendorsProps: function(){
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
-        this.flagForVendorFilter = true;
+        console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
+        // this.flagForVendorFilter = true;
         this.updatePanelsOnSelectedVendors();
         bus.$emit("vendorsFilter");
       }
