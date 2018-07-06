@@ -34,6 +34,7 @@ import { bus } from '../../routes';
         var data = dataForModeOfInheritance;
 
         // var dispatch = d3.dispatch("backupEvent");
+        var dispatch = d3.dispatch("selectionEvent");
 
         d3.select("#pie-chart-box2").select("svg").remove();
 
@@ -44,10 +45,12 @@ import { bus } from '../../routes';
           radius = Math.min(width, height) / 2;
 
         var arcOver = d3.svg.arc()
-          .outerRadius(radius - 30)
+          .outerRadius(radius - 50)
           .innerRadius(radius - height/2);
 
-        var arc = d3.svg.arc().outerRadius(radius- 15).innerRadius(radius - height/2);
+        var arc = d3.svg.arc().outerRadius(radius- 25).innerRadius(radius - height/2);
+
+        var donutArc = d3.svg.arc().outerRadius(radius-9).innerRadius(radius - 24);
 
         var pie = d3.layout.pie()
           .sort(null)
@@ -115,11 +118,16 @@ import { bus } from '../../routes';
             .attr("class", "arc");
 
           var count = 0;
+          var count1 = 0;
           var path = g.append("path")
             .attr("d", arc)
             .attr("id", function(d){
               return "arc-"+ (count++);
             })
+            .attr("arc-id", function(d){
+              return count1++;
+            })
+            .style("cursor", "pointer")
             .attr("stroke", "rgb(245, 245, 245)")
             .attr("stroke-width", 0.5)
             .style("filter", "url(#drop-shadow)")
@@ -129,6 +137,18 @@ import { bus } from '../../routes';
 
             //On click events
               path.on("click", function(d){
+                var darc = d3.select("#pie-chart-box2 #overlay-" + $(this).attr("arc-id"));
+
+                if(darc[0][0].__data__.data.selected){
+                  darc.style("opacity", 0.1)
+                  .attr("stroke", "red")
+
+                }
+                else if(darc[0][0].__data__.data.selected===false){
+                  darc.style("opacity",0.6)
+                  .attr("stroke", "red")
+                }
+
                 if(d.data.selected){
                   d3.select(this)
                       .transition()
@@ -138,8 +158,9 @@ import { bus } from '../../routes';
                       .attr("d", arcOver);
 
                   d.data.selected = !d.data.selected;
-                  bus.$on('updateModeOfInheritance', d.data._modeOfInheritance, d.data.selected);
+                  // bus.$on('updateModeOfInheritance', d.data._modeOfInheritance, d.data.selected);
                   pieChartSomething(d.data._modeOfInheritance, d.data.selected);
+                  // path1.dispatch("selectionEvent");
                 }
                 else {
                   d3.select(this).transition()
@@ -156,6 +177,8 @@ import { bus } from '../../routes';
 
             //Mouse over event
               path.on("mouseover", function(d){
+                var darc = d3.select("#pie-chart-box2 #overlay-" + $(this).attr("arc-id"));
+                console.log(darc[0][0].__data__.data.selected)
                 // console.log(d3.select(this).attr("id"))
                 if(d.data.selected){
                   d3.select(this)
@@ -171,6 +194,8 @@ import { bus } from '../../routes';
                        .attr("d", arc)
                        .attr("stroke", "rgb(245, 245, 245)")
                 }
+
+
               })
 
             //Mouse out event
@@ -226,7 +251,7 @@ import { bus } from '../../routes';
 
                 legend.on("mouseover", function(d){
                   var oarc = d3.select("#pie-chart-box2 #arc-" + $(this).attr("legend-id"));
-                  // console.log(oarc[0][0].__data__.data.selected)
+                  console.log(oarc[0][0].__data__.data.selected)
                   // console.log(oarc[0][0].__data__.data._modeOfInheritance)
                   if(oarc[0][0].__data__.data.selected){
                     oarc.style("opacity", 0.7)
@@ -277,6 +302,44 @@ import { bus } from '../../routes';
                   .text(function(d){
                     return d.data._modeOfInheritance;
                   })
+
+
+              //Setting overlay
+
+              var counttt = 0;
+              var countttt = 0;
+              var overlayPie = svg.append("g")
+                              .attr("class", "overlayPie")
+                              .selectAll("g")
+                              .data(pie(data))
+                              .enter().append("g")
+                              .attr("overlay-id", function(d){
+                                return countt++;
+                              })
+                              .attr("id", function(d){
+                                return "overlay-"+ (countttt++)
+                              })
+                  overlayPie.append("path")
+                  .attr("d", donutArc)
+                  .attr("id", function(d){
+                    return "donutArc-"+ (count++);
+                  })
+                  .attr("stroke", "white")
+                  .attr("stroke-width", 1)
+                  .style("opacity", 0.6)
+                  .style("fill", function(d,i) {
+                    return self.color(i);
+                  });
+                  // .style("fill", function(d){
+                  //   if(d.data.selected===true){
+                  //     return "green";
+                  //   }
+                  //   else{
+                  //     return "red";
+                  //   }
+                  // })
+
+
 
           var pieChartSomething =(modeOfInheritance, selection)=>{
             this.updateFromPieChart(modeOfInheritance, selection)
