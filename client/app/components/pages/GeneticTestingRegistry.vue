@@ -1,7 +1,6 @@
 <template>
   <div>
     <div id="app">
-      {{ geneProps.length }}
       <v-app id="inspire" style="background-color:#f9fbff">
         <v-snackbar
           :timeout="snackbarTimeout"
@@ -438,13 +437,13 @@
           </v-layout>
         </v-container>
 
-        {{ saveSelectedVendors  }}
+        <!-- {{ saveSelectedVendors  }}
         <br>
         saveSelectedVendors - {{ saveSelectedVendors.length }}
         <br>
         multiSelectItems - {{ multiSelectItems.length}}
         <br>
-        vendorsSelect - {{ vendorsSelect.length }}
+        vendorsSelect - {{ vendorsSelect.length }} -->
       </v-app>
     </div>
 
