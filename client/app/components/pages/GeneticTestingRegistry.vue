@@ -187,7 +187,7 @@
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
                                </span> -->
-                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+                               <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
                                <div>of {{ multiSelectDisorder.length }} selected</div>
                              </div>
@@ -278,7 +278,7 @@
 
                     <br>
                     <div class="d-flex xs12">
-                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
@@ -328,7 +328,7 @@
                                   </v-layout>
                               </v-card-text>
                             </v-card>
-                            <v-btn v-show="vendorsSelect.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
+                            <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
                             <br>
                             <center>
                               <!-- <span class="FilterAndViewBtn"
@@ -436,6 +436,14 @@
             </v-flex>
           </v-layout>
         </v-container>
+
+        <!-- {{ saveSelectedVendors  }}
+        <br>
+        saveSelectedVendors - {{ saveSelectedVendors.length }}
+        <br>
+        multiSelectItems - {{ multiSelectItems.length}}
+        <br>
+        vendorsSelect - {{ vendorsSelect.length }} -->
       </v-app>
     </div>
 
@@ -516,6 +524,10 @@ export default {
       multipleSearchItems:[],
       removeSearchTermFlag: false,
       filterFeed: [],
+      saveSelectedVendorsCount: 0,
+      saveSelectedVendors: [],
+      newSearchFlag: false,
+      lastVendorItem: [],
     }
   },
   watch:{
@@ -524,22 +536,63 @@ export default {
     },
     selectedDisordersListCB: function(){
       this.selectedDisordersList = this.selectedDisordersListCB
+    },
+    vendorsSelect(val) {
+
+      // this.saveSelectedVendors = this.multiSelectItems.length - this.vendorsSelect.length;
+      var diff = this.multiSelectItems.length - this.vendorsSelect.length;
+        console.log("diff", diff)
+      var lastItem = [];
+      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+        // console.log("1")
+        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+        // if(diff===1){
+        //   this.lastVendorItem = [this.vendorsSelect];
+        // }
+      }
+      // else if(diff===0){
+      //   this.saveSelectedVendors = [];
+      // }
+      // else if(this.vendorsSelect.length === 1){
+      //   console.log("11")
+      //   lastItem = [this.vendorsSelect]
+      // }
+      // else if(this.vendorsSelect.length === 0){
+      //   console.log("13")
+      //   console.log("It is required that atleast one vendor is kept selected")
+      //   this.vendorsSelect = lastItem;
+      //   lastItem=[];
+      //   return;
+      // }
+
     }
   },
   mounted(){
+    bus.$on("lastVendor", ()=>{
+      alert("It is required that atleast one vendor is kept selected");
+      this.vendorsSelect = [this.multiSelectItems[0]];
+
+    })
+    bus.$on("newSearch", ()=>{
+      this.newSearchFlag = true;
+    })
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
-      this.vendorsSelect = [];
+      // this.vendorsSelect = [];
+      this.vendorsSelect = this.multiSelectItems;
       this.removeSearchTermFlag = true;
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
     });
     bus.$on("vendorsFilter", ()=>{
-      this.filterFeed.unshift("Vendors")
+      if(this.chartComponent==='Vendors'){
+        this.filterFeed.unshift("Vendors")
+      }
     });
     bus.$on("disordersFilter", ()=>{
-      this.filterFeed.unshift("Disorders")
+      this.filterFeed.unshift("Disorders");
     });
     bus.$on("updateFromGenesHistogram", (data, count)=>{
       if(this.chartComponent==='GeneMembership'){
@@ -616,10 +669,20 @@ export default {
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
-      // console.log("vendor list as callback to home", e);
+      console.log("vendor list as callback to home", e);
       this.vendorList = e;
       this.multiSelectItems = e;
+      this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
+      this.checkForDeselectedVendor();
+    },
+    checkForDeselectedVendor: function(){
+      if(this.saveSelectedVendors.length===0){
+        this.vendorsSelect = this.multiSelectItems;
+      }
+      else if(this.saveSelectedVendors.length>0){
+        this.vendorsSelect = this.multiSelectItems.filter( vendor => !this.saveSelectedVendors.includes(vendor))
+      }
     },
     updateSelectedVendors: function(e){
       // console.log("selected vendors from callback to home", e);
@@ -661,8 +724,9 @@ export default {
     NoOfPanels: function(e){
       this.genePanelsCount = e.length;
     },
-    ClearVendors: function(){
-      this.vendorsSelect=[];
+    SelectAllVendors: function(){
+      this.vendorsSelect=this.multiSelectItems;
+      this.saveSelectedVendors = [];
     },
     scrollDown: function(){
       window.scrollTo(0, 120);
