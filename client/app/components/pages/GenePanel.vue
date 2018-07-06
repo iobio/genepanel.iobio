@@ -133,7 +133,7 @@ var model = new Model();
       },
       selectedVendorsProps: function(){
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
-        console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
+        // console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
         // this.flagForVendorFilter = true;
         this.updatePanelsOnSelectedVendors();
         bus.$emit("vendorsFilter");
@@ -191,13 +191,18 @@ var model = new Model();
           return this.items;
         }
         else if(this.selectedVendorsFromFilterPanel.length===0){
-          this.flagForVendorFilter = false;
-          this.selected = this.tempItems.slice();
-          this.items = this.tempItems
-          // let vendors = model.getGenePanelVendors(mergedGenePanels);
-          // this.vendorList = vendors;
-          // this.$emit('setVendorList', this.vendorList.sort());
-          return this.items
+          // alert("It is required that atleast one vendor is kept selected");
+          this.selected = this.items;
+          bus.$emit("lastVendor")
+          // this.selected = this.items;
+          // this.flagForVendorFilter = false;
+          // this.selected = this.tempItems.slice();
+          // // this.selected = [];
+          // this.items = this.tempItems
+          // // let vendors = model.getGenePanelVendors(mergedGenePanels);
+          // // this.vendorList = vendors;
+          // // this.$emit('setVendorList', this.vendorList.sort());
+          // return this.items
         }
       },
       filterPanelsOnSelectedConditions: function(data){

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div id="app">
+      {{ geneProps.length }}
       <v-app id="inspire" style="background-color:#f9fbff">
         <v-snackbar
           :timeout="snackbarTimeout"
@@ -187,7 +188,7 @@
                                 v-on:click="showChartComponent('PieChartSelector')">
                                View and Filter
                                </span> -->
-                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+                               <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
                                <div>of {{ multiSelectDisorder.length }} selected</div>
                              </div>
@@ -278,7 +279,7 @@
 
                     <br>
                     <div class="d-flex xs12">
-                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
@@ -328,7 +329,7 @@
                                   </v-layout>
                               </v-card-text>
                             </v-card>
-                            <v-btn v-show="vendorsSelect.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
+                            <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
                             <br>
                             <center>
                               <!-- <span class="FilterAndViewBtn"
@@ -436,9 +437,14 @@
             </v-flex>
           </v-layout>
         </v-container>
-        <!-- {{ saveSelectedVendorsCount }}
+
+        {{ saveSelectedVendors  }}
         <br>
-        {{ saveSelectedVendors  }} -->
+        saveSelectedVendors - {{ saveSelectedVendors.length }}
+        <br>
+        multiSelectItems - {{ multiSelectItems.length}}
+        <br>
+        vendorsSelect - {{ vendorsSelect.length }}
       </v-app>
     </div>
 
@@ -522,6 +528,7 @@ export default {
       saveSelectedVendorsCount: 0,
       saveSelectedVendors: [],
       newSearchFlag: false,
+      lastVendorItem: [],
     }
   },
   watch:{
@@ -532,14 +539,42 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
+
       // this.saveSelectedVendors = this.multiSelectItems.length - this.vendorsSelect.length;
-      if(this.multiSelectItems.length - this.vendorsSelect.length!== 0){ //because everytime a new term is searched this difference will be zero.
+      var diff = this.multiSelectItems.length - this.vendorsSelect.length;
+        console.log("diff", diff)
+      var lastItem = [];
+      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+        // console.log("1")
         this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
-        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor))
+        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+        // if(diff===1){
+        //   this.lastVendorItem = [this.vendorsSelect];
+        // }
       }
+      // else if(diff===0){
+      //   this.saveSelectedVendors = [];
+      // }
+      // else if(this.vendorsSelect.length === 1){
+      //   console.log("11")
+      //   lastItem = [this.vendorsSelect]
+      // }
+      // else if(this.vendorsSelect.length === 0){
+      //   console.log("13")
+      //   console.log("It is required that atleast one vendor is kept selected")
+      //   this.vendorsSelect = lastItem;
+      //   lastItem=[];
+      //   return;
+      // }
+
     }
   },
   mounted(){
+    bus.$on("lastVendor", ()=>{
+      alert("It is required that atleast one vendor is kept selected");
+      this.vendorsSelect = [this.multiSelectItems[0]];
+
+    })
     bus.$on("newSearch", ()=>{
       this.newSearchFlag = true;
     })
@@ -553,10 +588,12 @@ export default {
       this.filterFeed.unshift("Mode of inheritance")
     });
     bus.$on("vendorsFilter", ()=>{
-      this.filterFeed.unshift("Vendors")
+      if(this.chartComponent==='Vendors'){
+        this.filterFeed.unshift("Vendors")
+      }
     });
     bus.$on("disordersFilter", ()=>{
-      this.filterFeed.unshift("Disorders")
+      this.filterFeed.unshift("Disorders");
     });
     bus.$on("updateFromGenesHistogram", (data, count)=>{
       if(this.chartComponent==='GeneMembership'){
@@ -688,8 +725,9 @@ export default {
     NoOfPanels: function(e){
       this.genePanelsCount = e.length;
     },
-    ClearVendors: function(){
-      this.vendorsSelect=[];
+    SelectAllVendors: function(){
+      this.vendorsSelect=this.multiSelectItems;
+      this.saveSelectedVendors = [];
     },
     scrollDown: function(){
       window.scrollTo(0, 120);
