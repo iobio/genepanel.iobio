@@ -16,7 +16,6 @@
           <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
         <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button>
-
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
             <v-flex d-flex xs12>
@@ -326,6 +325,15 @@
                                         :items="multiSelectItems"
                                       ></v-select>
                                   </v-layout>
+                                  <br>
+                                  <Alerts
+                                    v-show="vendorsSelect.length<multiSelectItems.length"
+                                    alertType="warning"
+                                    alertOutline=true
+                                    alertTransition="scale-transition"
+                                    alertText="You have deselected some items. Please note your selection will continue in the further analysis. However you can reselect the items from the drop down menu"
+                                  >
+                                  </Alerts>
                               </v-card-text>
                             </v-card>
                             <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
@@ -458,7 +466,8 @@ import ShowGenePanel from './ShowGenePanel.vue';
 import { bus } from '../../routes';
 import PieChartSelector from '../viz/PieChartSelector.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
-import GeneMembership from '../viz/GeneMembership.vue'
+import GeneMembership from '../viz/GeneMembership.vue';
+import Alerts from '../partials/Alerts.vue'
 
 export default {
   components: { //Registering locally for nesting!
@@ -468,7 +477,8 @@ export default {
     'show-gene-panel1': ShowGenePanel,
     'PieChartSelector': PieChartSelector,
     'ConditionsDistribution': ConditionsDistribution,
-    'GeneMembership': GeneMembership
+    'GeneMembership': GeneMembership,
+    'Alerts': Alerts
   },
   name: 'home',
   props: {
@@ -541,7 +551,6 @@ export default {
 
       // this.saveSelectedVendors = this.multiSelectItems.length - this.vendorsSelect.length;
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
-        console.log("diff", diff)
       var lastItem = [];
       if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
         // console.log("1")
@@ -570,7 +579,8 @@ export default {
   },
   mounted(){
     bus.$on("lastVendor", ()=>{
-      alert("It is required that atleast one vendor is kept selected");
+      this.snackbarText = "It is required that atleast one vendor is kept selected";
+      this.snackbar = true;
       this.vendorsSelect = [this.multiSelectItems[0]];
 
     })
