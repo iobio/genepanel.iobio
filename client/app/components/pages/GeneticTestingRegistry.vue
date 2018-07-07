@@ -161,12 +161,12 @@
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
-                                 DISORDERS
+                                 MODES OF INHERITANCE
                                  <v-dialog v-model="dialog" width="600px">
                                    <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
                                    <v-card>
                                      <v-card-title>
-                                       <span class="headline">Disorders</span>
+                                       <span class="headline">Modes of Inheritance</span>
                                      </v-card-title>
                                      <v-card-text>
                                        Help information text
@@ -179,8 +179,9 @@
                                  </v-dialog>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
-                                 <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
-                                 <strong v-else>{{ selectDisorders.length }}</strong>
+                                 <strong>{{ modeOfInheritanceProps.length }}</strong>
+                                 <!-- <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
+                                 <strong v-else>{{ selectDisorders.length }}</strong> -->
                                </span>
                                <!-- <span class="FilterAndViewBtn"
                                 v-on:click="showChartComponent('PieChartSelector')">
@@ -188,7 +189,7 @@
                                </span> -->
                                <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
-                               <div>of {{ multiSelectDisorder.length }} selected</div>
+                               <div>present</div>
                              </div>
                           </v-card-title>
                         <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
@@ -198,20 +199,6 @@
                               :color="chartColor">
                             </PieChartSelector>
                             <br>
-                            <v-card flat >
-                              <v-card-text>
-                                  <v-layout>
-                                      <v-select
-                                        v-model="selectDisorders"
-                                        label="Select Disorders"
-                                        chips
-                                        tags
-                                        :items="multiSelectDisorder"
-                                      ></v-select>
-                                  </v-layout>
-                              </v-card-text>
-                            </v-card>
-                          <!-- </v-card-title> -->
                           <center>
                             <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                           </center>
@@ -220,6 +207,69 @@
                       </v-card>
                     </div>
                   </div>
+
+
+                  <br>
+                  <div class="d-flex mt-1 mb-2 xs12">
+                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
+                      <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox' : '']">
+                        <v-card-title primary-title>
+                           <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
+                             <div style="font-size:16px">
+                               DISORDERS
+                               <v-dialog v-model="dialog" width="600px">
+                                 <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
+                                 <v-card>
+                                   <v-card-title>
+                                     <span class="headline">Disorders</span>
+                                   </v-card-title>
+                                   <v-card-text>
+                                     Help information text
+                                   </v-card-text>
+                                   <v-card-actions>
+                                     <v-spacer></v-spacer>
+                                     <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
+                                   </v-card-actions>
+                                 </v-card>
+                               </v-dialog>
+                             </div>
+                             <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                               <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
+                               <strong v-else>{{ selectDisorders.length }}</strong>
+                             </span>
+                             <!-- <span class="FilterAndViewBtn"
+                              v-on:click="showChartComponent('PieChartSelector')">
+                             View and Filter
+                             </span> -->
+                             <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('disorders')">View & Filter</v-btn>
+
+                             <div>of {{ multiSelectDisorder.length }} selected</div>
+                           </div>
+                        </v-card-title>
+                      <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
+                          <br>
+                          <v-card flat >
+                            <v-card-text>
+                                <v-layout>
+                                    <v-select
+                                      v-model="selectDisorders"
+                                      label="Select Disorders"
+                                      chips
+                                      tags
+                                      :items="multiSelectDisorder"
+                                    ></v-select>
+                                </v-layout>
+                            </v-card-text>
+                          </v-card>
+                        <!-- </v-card-title> -->
+                        <center>
+                          <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                        </center>
+                        <br>
+                      </div>
+                    </v-card>
+                  </div>
+                </div>
 
                   <br>
                     <div class="d-flex mb-2 xs12">
@@ -548,33 +598,20 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
-
-      // this.saveSelectedVendors = this.multiSelectItems.length - this.vendorsSelect.length;
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
       var lastItem = [];
       if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
-        // console.log("1")
         this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
         this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
-        // if(diff===1){
-        //   this.lastVendorItem = [this.vendorsSelect];
-        // }
       }
-      // else if(diff===0){
-      //   this.saveSelectedVendors = [];
-      // }
-      // else if(this.vendorsSelect.length === 1){
-      //   console.log("11")
-      //   lastItem = [this.vendorsSelect]
-      // }
-      // else if(this.vendorsSelect.length === 0){
-      //   console.log("13")
-      //   console.log("It is required that atleast one vendor is kept selected")
-      //   this.vendorsSelect = lastItem;
-      //   lastItem=[];
-      //   return;
-      // }
-
+    },
+    selectDisorders(val) {
+      if(this.chartComponent==="disorders"){
+        bus.$emit("updatedFromDisorders")
+      }
+      if(this.selectDisorders.length > this.multiSelectDisorder.length){
+         this.selectDisorders= this.multiSelectDisorder
+      }
     }
   },
   mounted(){
@@ -602,7 +639,9 @@ export default {
       }
     });
     bus.$on("disordersFilter", ()=>{
-      this.filterFeed.unshift("Disorders");
+      if(this.chartComponent==='disorders'){
+        this.filterFeed.unshift("Disorders");
+      }
     });
     bus.$on("updateFromGenesHistogram", (data, count)=>{
       if(this.chartComponent==='GeneMembership'){
@@ -679,7 +718,7 @@ export default {
       this.$emit("GeneMembershipData", e);
     },
     updateVendorList: function(e){
-      console.log("vendor list as callback to home", e);
+      // console.log("vendor list as callback to home", e);
       this.vendorList = e;
       this.multiSelectItems = e;
       this.vendorsSelect = this.multiSelectItems;
@@ -706,6 +745,7 @@ export default {
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
       this.multiSelectDisorder = e;
+      this.selectDisorders = this.multiSelectDisorder;
       this.$emit("disorderNamesListCB", e)
     },
     updateSelectedDisorders: function(e){
