@@ -210,7 +210,9 @@
 
 
                   <br>
-                  <div class="d-flex mt-1 mb-2 xs12">
+                  <div >
+                    <v-layout wrap>
+            <v-flex xs12>
                     <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                       <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox' : '']">
                         <v-card-title primary-title>
@@ -251,13 +253,46 @@
                           <v-card flat >
                             <v-card-text>
                                 <v-layout>
-                                    <v-select
+                                    <!-- <v-combobox
                                       v-model="selectDisorders"
                                       label="Select Disorders"
                                       chips
-                                      tags
+                                      multiple
                                       :items="multiSelectDisorder"
-                                    ></v-select>
+                                    ></v-combobox> -->
+                                          <v-autocomplete
+                                            v-model="selectDisorders"
+                                            :items="multiSelectDisorder"
+                                            box
+                                            chips
+                                            label="Selected Disorders"
+                                            multiple
+                                          >
+                                            <template
+                                              slot="selection"
+                                              slot-scope="data"
+                                            >
+                                              <v-chip
+                                                :selected="data.selected"
+                                                close
+                                                color="blue-grey darken-3"
+                                                outline
+                                                class="chip--select-multi"
+                                                @input="data.parent.selectItem(data.item)"
+                                              >
+                                                {{ data.item}}
+                                              </v-chip>
+                                            </template>
+                                            <template
+                                              slot="item"
+                                              slot-scope="data"
+                                            >
+                                              <template v-if="typeof data.item !== 'object'">
+                                                <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                                              </template>
+
+                                            </template>
+                                          </v-autocomplete>
                                 </v-layout>
                             </v-card-text>
                           </v-card>
@@ -269,6 +304,8 @@
                       </div>
                     </v-card>
                   </div>
+                </v-flex>
+        </v-layout>
                 </div>
 
                   <br>
@@ -367,13 +404,13 @@
                             <v-card flat v-if="vendorList.length">
                               <v-card-text>
                                   <v-layout>
-                                      <v-select
+                                      <v-combobox
                                         v-model="vendorsSelect"
                                         label="Select Vendors"
                                         chips
-                                        tags
+                                        multiple
                                         :items="multiSelectItems"
-                                      ></v-select>
+                                      ></v-combobox>
                                   </v-layout>
                                   <br>
                                   <Alerts
