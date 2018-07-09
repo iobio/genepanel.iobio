@@ -111,7 +111,6 @@
       dark
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
-      style="background:#4968AD"
     >
       <v-toolbar-title >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
@@ -778,11 +777,11 @@ a:hover {
 }
 
 
-.badge{
+.badge, .v-badge{
   font-weight: 200
 }
 
-.badge__badge, .badge__badge .icon{
+.badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon{
   font-size: 11px;
 }
 
@@ -828,34 +827,36 @@ aside {
 @import ../assets/sass/variables
 
 
-nav.toolbar
+nav.toolbar, nav.v-toolbar
   background-color: $app-color !important
   font-weight: 300 !important
 
   &.clin
     background-color: $app-color-clin !important
 
-  .toolbar__side-icon.btn.btn--icon
+  .toolbar__side-icon.btn.btn--icon, .v-toolbar__side-icon.v-btn.v-btn--icon
     max-width: 40px
     min-width: 40px
 
-  .toolbar__items
+  .toolbar__items, .v-toolbar__items
     width: 60%
 
-  .btn
+  .btn, .v-btn
     margin: 0px
     min-width: 120px
     height: 40px
     font-weight: 600
 
-    .btn__content
+    .btn__content, .v-btn__content
       padding: 0 0px
 
 
   i.material-icons
     margin-right: 2px
 
-  .toolbar__title
+
+
+  .toolbar__title, .v-toolbar__title
     font-size: 24px
     margin-right: 5px
     margin-left: 5px
@@ -866,7 +867,7 @@ nav.toolbar
       font-family: Quicksand !important
       font-weight: 400 !important
 
-.list__tile__title
+.list__tile__title, .v-list__tile__title
   .icon
     font-size: 17px
 

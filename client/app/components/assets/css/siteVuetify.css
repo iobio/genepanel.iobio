@@ -52,6 +52,10 @@ table.table tbody td, table.table tbody th {
   padding-top: 0px !important;
 }
 
+table.v-table tbody td, table.v-table tbody th {
+  height: 28px !important;
+}
+
 table.table tbody td .input-group.input-group--selection-controls {
   margin-top: 1px !important;
   margin-bottom: 1px !important;
