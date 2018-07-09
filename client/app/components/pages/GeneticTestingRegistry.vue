@@ -219,7 +219,7 @@
                         <v-card-title primary-title>
                            <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
                              <div style="font-size:16px">
-                               DISORDERS
+                               ASSOCIATED DISORDERS
                                <v-dialog v-model="dialog" width="600px">
                                  <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
                                  <v-card>
@@ -298,6 +298,8 @@
                                 <!-- </v-layout> -->
                             <!-- </v-card-text> -->
                           </v-card>
+                          <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
+                          <a style="margin-left:5px" v-on:click="resetDisorders"> Reset Filters</a>
                         <!-- </v-card-title> -->
                         <center>
                           <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
@@ -403,7 +405,6 @@
                                View and Filter
                                </span> -->
                                <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
-
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
                           </v-card-title>
@@ -862,6 +863,14 @@ export default {
     SelectAllVendors: function(){
       this.vendorsSelect=this.multiSelectItems;
       this.saveSelectedVendors = [];
+    },
+    SelectAllDisordersButton: function(){
+      this.selectDisorders = this.multiSelectDisorder;
+      bus.$emit("updatedFromDisorders");
+    },
+    resetDisorders: function(){
+      this.selectDisorders = [];
+      bus.$emit("updatedFromDisorders");
     },
     scrollDown: function(){
       window.scrollTo(0, 120);
