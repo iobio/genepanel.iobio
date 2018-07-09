@@ -185,7 +185,7 @@ var model = new Model();
             }
             return this.items;
           }
-          else if(this.selectedDisordersFromFilterPanel.length===0){
+          else if(this.selectedDisordersFromFilterPanel.length===0 && this.pieChartFlag){
             this.flagForDisorderFilter = false;
             this.selected = this.tempDisorders.slice();
             this.items = this.tempDisorders;
@@ -193,6 +193,10 @@ var model = new Model();
             this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
             this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             return this.items;
+          }
+          else if(this.selectedDisordersFromFilterPanel.length===0 && !this.pieChartFlag){
+            this.selected = this.items;
+            bus.$emit("lastDisorder");
           }
 
         },
@@ -263,7 +267,17 @@ var model = new Model();
       });
       bus.$on("newSearch", ()=>{
         this.pieChartFlag = false;
-      })
+      });
+      bus.$on("resetDisordersBus", ()=>{
+        this.pieChartFlag = false;
+        this.flagForDisorderFilter = false;
+        this.selected = this.tempDisorders.slice();
+        this.items = this.tempDisorders;
+        this.getDisorderNames();
+        this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
+        this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
+        return this.items;
+      });
     },
     updated(){
       // console.log("this.selected from showDiseases updated", this.selected );

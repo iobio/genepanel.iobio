@@ -705,8 +705,12 @@ export default {
       this.snackbarText = "It is required that atleast one vendor is kept selected";
       this.snackbar = true;
       this.vendorsSelect = [this.multiSelectItems[0]];
-
-    })
+    });
+    bus.$on("lastDisorder", ()=>{
+      this.snackbarText = "It is required that atleast one disorder is kept selected";
+      this.snackbar = true;
+      this.selectDisorders = [this.multiSelectDisorder[0]];
+    });
     bus.$on("newSearch", ()=>{
       this.newSearchFlag = true;
     })
@@ -870,7 +874,8 @@ export default {
     },
     resetDisorders: function(){
       this.selectDisorders = [];
-      bus.$emit("updatedFromDisorders");
+      bus.$emit("resetDisordersBus");
+      // bus.$emit("updatedFromDisorders");
     },
     scrollDown: function(){
       window.scrollTo(0, 120);
