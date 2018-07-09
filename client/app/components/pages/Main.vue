@@ -111,6 +111,7 @@
       dark
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
+      style="background:#4968AD"
     >
       <v-toolbar-title >
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
@@ -737,6 +738,10 @@ import DisorderSearch from './DisorderSearch.vue';
   padding-top: 5px;
 }
 
+.container {
+  padding: 12px;
+}
+
 
 .toolbar__side-icon{
   /* margin-top: -3px; */
@@ -763,10 +768,12 @@ a:hover {
 
 }
 
-.badge__badge{
+.badge__badge, .v-badge__badge{
   height:23px;
   width: 23px;
   background-color: #66d4ed;
+  top: -16px;
+  right: -25px;
   /* color: black; */
 }
 
@@ -819,6 +826,7 @@ aside {
 <style lang="sass">
 
 @import ../assets/sass/variables
+
 
 nav.toolbar
   background-color: $app-color !important

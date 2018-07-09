@@ -45,7 +45,7 @@ import { bus } from '../../routes';
           radius = Math.min(width, height) / 2;
 
         var arcOver = d3.svg.arc()
-          .outerRadius(radius - 50)
+          .outerRadius(radius - 40)
           .innerRadius(radius - height/2);
 
         var arc = d3.svg.arc().outerRadius(radius- 25).innerRadius(radius - height/2);

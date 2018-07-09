@@ -110,6 +110,7 @@
 
 
                    <v-flex xs4 class="pr-2 pl-1" >
+
                      <div class="d-flex mb-2 xs12">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>
@@ -251,8 +252,8 @@
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
                           <br>
                           <v-card flat >
-                            <v-card-text>
-                                <v-layout>
+                            <!-- <v-card-text> -->
+                                <!-- <v-layout> -->
                                     <!-- <v-combobox
                                       v-model="selectDisorders"
                                       label="Select Disorders"
@@ -278,6 +279,7 @@
                                                 color="blue-grey darken-3"
                                                 outline
                                                 class="chip--select-multi"
+                                                style="font-size:10px"
                                                 @input="data.parent.selectItem(data.item)"
                                               >
                                                 {{ data.item}}
@@ -293,8 +295,8 @@
 
                                             </template>
                                           </v-autocomplete>
-                                </v-layout>
-                            </v-card-text>
+                                <!-- </v-layout> -->
+                            <!-- </v-card-text> -->
                           </v-card>
                         <!-- </v-card-title> -->
                         <center>
@@ -361,9 +363,14 @@
                         </v-card>
                       </div>
                     </div>
+                    <!-- put vendor card here  -->
+
+                    <!-- start vendor cars -->
 
                     <br>
-                    <div class="d-flex xs12">
+                    <div>
+                    <v-layout wrap>
+                    <v-flex xs12>
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
@@ -403,16 +410,52 @@
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
                               <v-card-text>
-                                  <v-layout>
-                                      <v-combobox
+                                  <!-- <v-layout> -->
+                                      <!-- <v-combobox
                                         v-model="vendorsSelect"
                                         label="Select Vendors"
                                         chips
                                         multiple
                                         :items="multiSelectItems"
-                                      ></v-combobox>
-                                  </v-layout>
-                                  <br>
+                                      ></v-combobox> -->
+                                      <v-autocomplete
+                                        v-model="vendorsSelect"
+                                        :items="multiSelectItems"
+                                        box
+                                        chips
+                                        label="Selected Vendors"
+                                        multiple
+                                        style="background:white"
+                                      >
+                                        <template
+                                          slot="selection"
+                                          slot-scope="data"
+                                        >
+                                          <v-chip
+                                            :selected="data.selected"
+                                            close
+                                            color="blue-grey darken-3"
+                                            outline
+                                            class="chip--select-multi"
+                                            style="font-size:10px"
+                                            @input="data.parent.selectItem(data.item)"
+                                          >
+                                            {{ data.item}}
+                                          </v-chip>
+                                        </template>
+                                        <template
+                                          slot="item"
+                                          slot-scope="data"
+                                        >
+                                          <template v-if="typeof data.item !== 'object'">
+                                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                                          </template>
+
+                                        </template>
+                                      </v-autocomplete>
+                                  <!-- </v-layout> -->
+                                    <!-- <br> -->
+
                                   <Alerts
                                     v-show="vendorsSelect.length<multiSelectItems.length"
                                     alertType="warning"
@@ -437,7 +480,12 @@
                           </div>
                         </v-card>
                       </div>
-                    </div>
+                    </v-flex>
+                  </v-layout wrap>
+                </div>
+
+                    <!-- end vendor card -->
+
                     <br>
 
                     <div class="d-flex mb-2 xs12">
