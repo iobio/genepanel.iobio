@@ -133,21 +133,12 @@
                           <div>
                             <div style="font-size:16px">
                               GENES
-                              <v-dialog v-model="dialog" width="600px">
-                                <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                <v-card>
-                                  <v-card-title>
-                                    <span class="headline">Genes</span>
-                                  </v-card-title>
-                                  <v-card-text>
-                                    Help information text
-                                  </v-card-text>
-                                  <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                  </v-card-actions>
-                                </v-card>
-                              </v-dialog>
+                              <Dialogs
+                                id="genesDialog"
+                                class="dialogBox"
+                                :HeadlineText="HelpDialogsData[0].HeadlineText"
+                                :ContentText="HelpDialogsData[0].Content">
+                              </Dialogs>
                             </div>
                             <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
                             <div>of {{ TotalGtrGenes }} selected</div>
@@ -163,31 +154,18 @@
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
                                  MODES OF INHERITANCE
-                                 <v-dialog v-model="dialog" width="600px">
-                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                   <v-card>
-                                     <v-card-title>
-                                       <span class="headline">Modes of Inheritance</span>
-                                     </v-card-title>
-                                     <v-card-text>
-                                       Help information text
-                                     </v-card-text>
-                                     <v-card-actions>
-                                       <v-spacer></v-spacer>
-                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                     </v-card-actions>
-                                   </v-card>
-                                 </v-dialog>
+                                 <Dialogs
+                                   id="modeOfInheritanceDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[1].HeadlineText"
+                                   :ContentText="HelpDialogsData[1].Content">
+                                 </Dialogs>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
                                  <strong>{{ modeOfInheritanceProps.length }}</strong>
                                  <!-- <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
                                  <strong v-else>{{ selectDisorders.length }}</strong> -->
                                </span>
-                               <!-- <span class="FilterAndViewBtn"
-                                v-on:click="showChartComponent('PieChartSelector')">
-                               View and Filter
-                               </span> -->
                                <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
                                <div>present</div>
@@ -220,32 +198,18 @@
                            <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
                              <div style="font-size:16px">
                                ASSOCIATED DISORDERS
-                               <v-dialog v-model="dialog" width="600px">
-                                 <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                 <v-card>
-                                   <v-card-title>
-                                     <span class="headline">Disorders</span>
-                                   </v-card-title>
-                                   <v-card-text>
-                                     Help information text
-                                   </v-card-text>
-                                   <v-card-actions>
-                                     <v-spacer></v-spacer>
-                                     <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                   </v-card-actions>
-                                 </v-card>
-                               </v-dialog>
+                               <Dialogs
+                                 id="disordersDialog"
+                                 class="dialogBox"
+                                 :HeadlineText="HelpDialogsData[2].HeadlineText"
+                                 :ContentText="HelpDialogsData[2].Content">
+                               </Dialogs>
                              </div>
                              <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
                                <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
                                <strong v-else>{{ selectDisorders.length }}</strong>
                              </span>
-                             <!-- <span class="FilterAndViewBtn"
-                              v-on:click="showChartComponent('PieChartSelector')">
-                             View and Filter
-                             </span> -->
                              <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('disorders')">View & Filter</v-btn>
-
                              <div>of {{ multiSelectDisorder.length }} selected</div>
                            </div>
                         </v-card-title>
@@ -320,29 +284,15 @@
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
                                  PANELS
-                                 <v-dialog v-model="dialog" width="600px">
-                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                   <v-card>
-                                     <v-card-title>
-                                       <span class="headline">Panels</span>
-                                     </v-card-title>
-                                     <v-card-text>
-                                       Help information text
-                                     </v-card-text>
-                                     <v-card-actions>
-                                       <v-spacer></v-spacer>
-                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                     </v-card-actions>
-                                   </v-card>
-                                 </v-dialog>
+                                 <Dialogs
+                                   id="GeneMembershipDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[3].HeadlineText"
+                                   :ContentText="HelpDialogsData[3].Content">
+                                 </Dialogs>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
-                               <!-- <span class="FilterAndViewBtn"
-                                v-on:click="showChartComponent('GeneMembership')">
-                               View and Filter
-                               </span> -->
                                <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
-
                                <div>present</div>
                              </div>
                           </v-card-title>
@@ -353,22 +303,15 @@
                               </GeneMembership>
                               <br>
                               <center>
-                                <!-- <span class="FilterAndViewBtn"
-                                  v-on:click="chartComponent=null">
-                                  Exit
-                                </span> -->
                                 <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
-
                               </center>
                               <br>
                           </div>
                         </v-card>
                       </div>
                     </div>
-                    <!-- put vendor card here  -->
 
                     <!-- start vendor cars -->
-
                     <br>
                     <div>
                     <v-layout wrap>
@@ -379,31 +322,18 @@
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
                                  VENDORS
-                                 <v-dialog v-model="dialog" width="600px">
-                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                   <v-card>
-                                     <v-card-title>
-                                       <span class="headline">Vendors</span>
-                                     </v-card-title>
-                                     <v-card-text>
-                                       Help information text
-                                     </v-card-text>
-                                     <v-card-actions>
-                                       <v-spacer></v-spacer>
-                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                     </v-card-actions>
-                                   </v-card>
-                                 </v-dialog>
+                                 <Dialogs
+                                   id="vendorsDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[4].HeadlineText"
+                                   :ContentText="HelpDialogsData[4].Content">
+                                 </Dialogs>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
                                  <strong v-if="vendorsSelect.length===0">{{ vendorList.length }}</strong>
                                  <strong v-else>{{ vendorsSelect.length }}</strong>
                                </span>
                                </span>
-                               <!-- <span class="FilterAndViewBtn"
-                                v-on:click="showChartComponent('Vendors')">
-                               View and Filter
-                               </span> -->
                                <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
@@ -470,12 +400,7 @@
                             <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
                             <br>
                             <center>
-                              <!-- <span class="FilterAndViewBtn"
-                                v-on:click="chartComponent=null">
-                                Exit
-                              </span> -->
                               <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
-
                             </center>
                             <br>
                           </div>
@@ -495,21 +420,12 @@
                          <div>
                            <div style="font-size:16px">
                              FILTERS FEED
-                             <v-dialog v-model="dialog" width="600px">
-                               <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                               <v-card>
-                                 <v-card-title>
-                                   <span class="headline">Genes</span>
-                                 </v-card-title>
-                                 <v-card-text>
-                                   Help information text
-                                 </v-card-text>
-                                 <v-card-actions>
-                                   <v-spacer></v-spacer>
-                                   <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                 </v-card-actions>
-                               </v-card>
-                             </v-dialog>
+                             <Dialogs
+                               id="filtersDialog"
+                               class="dialogBox"
+                               :HeadlineText="HelpDialogsData[5].HeadlineText"
+                               :ContentText="HelpDialogsData[5].Content">
+                             </Dialogs>
                            </div>
                          </div>
                          </v-card-title>
@@ -580,14 +496,6 @@
             </v-flex>
           </v-layout>
         </v-container>
-
-        <!-- {{ saveSelectedVendors  }}
-        <br>
-        saveSelectedVendors - {{ saveSelectedVendors.length }}
-        <br>
-        multiSelectItems - {{ multiSelectItems.length}}
-        <br>
-        vendorsSelect - {{ vendorsSelect.length }} -->
       </v-app>
     </div>
 
@@ -603,7 +511,10 @@ import { bus } from '../../routes';
 import PieChartSelector from '../viz/PieChartSelector.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import GeneMembership from '../viz/GeneMembership.vue';
-import Alerts from '../partials/Alerts.vue'
+import Alerts from '../partials/Alerts.vue';
+import Dialogs from '../partials/Dialogs.vue';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+
 
 export default {
   components: { //Registering locally for nesting!
@@ -614,7 +525,8 @@ export default {
     'PieChartSelector': PieChartSelector,
     'ConditionsDistribution': ConditionsDistribution,
     'GeneMembership': GeneMembership,
-    'Alerts': Alerts
+    'Alerts': Alerts,
+    'Dialogs': Dialogs,
   },
   name: 'home',
   props: {
@@ -674,6 +586,7 @@ export default {
       saveSelectedVendors: [],
       newSearchFlag: false,
       lastVendorItem: [],
+      HelpDialogsData: null,
     }
   },
   watch:{
@@ -701,6 +614,8 @@ export default {
     }
   },
   mounted(){
+    console.log(HelpDialogs)
+    this.HelpDialogsData = HelpDialogs.data;
     bus.$on("lastVendor", ()=>{
       this.snackbarText = "It is required that atleast one vendor is kept selected";
       this.snackbar = true;
@@ -1012,4 +927,7 @@ export default {
 .filterFeed
   height: 175px
   overflow: auto
+
+.dialogBox
+  margin-top: -20px
 </style>
