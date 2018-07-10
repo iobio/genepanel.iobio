@@ -24,7 +24,7 @@
                   <v-flex xs12 sm12 md12 lg8>
                     <!-- {{ multipleSearchTerms }} -->
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
-                      <label>Search Phenotype</label>
+                      <label>Enter Phenotype</label>
                       <input
                         id="phenotype-term"
                         class="form-control"
@@ -44,10 +44,10 @@
                     </div>
 
                     <v-btn
-                        style="margin-top:-0.35px"
+                        style="margin-top:-0.35px; text-transform: none"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
-                      Go
+                      Generate Gene List
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">
@@ -284,21 +284,12 @@
                      <div>
                        <div style="font-size:16px">
                          GENES
-                         <v-dialog v-model="dialog" width="600px">
-                           <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                           <v-card>
-                             <v-card-title>
-                               <span class="headline">Genes</span>
-                             </v-card-title>
-                             <v-card-text>
-                               Help information text
-                             </v-card-text>
-                             <v-card-actions>
-                               <v-spacer></v-spacer>
-                               <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                             </v-card-actions>
-                           </v-card>
-                         </v-dialog>
+                         <Dialogs
+                           id="genesDialog"
+                           class="dialogBox"
+                           :HeadlineText="HelpDialogsData[0].HeadlineText"
+                           :ContentText="HelpDialogsData[0].Content">
+                         </Dialogs>
                        </div>
                        <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selected.length }}</strong></span>
                        <div>of {{ items.length }} selected</div>
@@ -415,10 +406,13 @@ import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
+import Dialogs from '../partials/Dialogs.vue';
+import HelpDialogs from '../../../data/HelpDialogs.json';
 
   export default {
     components: {
       'PhenolyzerPieChart': PhenolyzerPieChart,
+      'Dialogs': Dialogs,
       Typeahead
     },
     data(){
@@ -502,13 +496,16 @@ import IntroductionText from '../../../data/IntroductionText.json'
         genesTopCounts: [5, 10, 30, 50, 80, 100],
         dialog: false,
         IntroductionTextData: null,
+        HelpDialogsData: null,
       }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[1];
     },
+    mounted(){
+      this.HelpDialogsData = HelpDialogs.data;
+    },
     updated(){
-
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";

@@ -15,7 +15,7 @@
       <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
       <div style="display:inline-block; padding-top:5px;">
-        <label>Search Disorder</label>
+        <label>Enter Disorder</label>
         <input
           id="input"
           class="form-control"
@@ -33,10 +33,10 @@
       </div>
 
       <v-btn
-          style="margin-top:-0.35px"
+          style="margin-top:-0.35px; text-transform: none"
           class="btnColor"
           v-on:click.prevent="performSearch">
-        Go
+        Generate Gene List
       </v-btn>
 
       <div v-if="multipleSearchTerms.length">

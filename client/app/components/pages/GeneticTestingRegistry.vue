@@ -321,7 +321,7 @@
                           </v-card-title>
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
-                              <v-card-text>
+                              <v-card-text style="flex-wrap: wrap">
                                   <!-- <v-layout> -->
                                       <!-- <v-combobox
                                         v-model="vendorsSelect"
@@ -349,7 +349,7 @@
                                             color="blue-grey darken-3"
                                             outline
                                             class="chip--select-multi"
-                                            style="font-size:10px"
+                                            style="font-size:9.2px"
                                             @input="data.parent.selectItem(data.item)"
                                           >
                                             {{ data.item}}
@@ -911,4 +911,8 @@ export default {
 
 .dialogBox
   margin-top: -20px
+
+.vendorsCardClass
+  height: 200px
+  overflow: auto
 </style>
