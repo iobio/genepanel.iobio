@@ -16,15 +16,11 @@
           <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
         <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button>
-
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-5px;">
             <v-flex d-flex xs12>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
-                  <!-- <div class="mb-1">
-                    The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                  </div> -->
                   <v-layout row wrap>
                     <v-flex xs12 sm12 md12 lg8>
                       <DisorderSearch
@@ -62,10 +58,7 @@
                         Go
                       </v-btn>
                     </v-flex>
-                    <!-- <v-flex  xs2 >
-                    </v-flex> -->
                   </v-layout>
-
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -74,16 +67,9 @@
               <v-card >
                 <div v-if="!disordersSearchedByUser">
                   <v-card-title>
-                      <h3>What is Genetic Testing Registry?</h3>
+                      <h3>{{ IntroductionTextData.Title }}</h3>
                   </v-card-title>
-                  <v-card-title>
-                      The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers.
-                      <br>
-                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
-                      <br>
-                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                      <br><br>
-                  </v-card-title>
+                  <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
                 </div>
               </v-card>
 
@@ -91,7 +77,6 @@
 
             <v-flex d-flex xs12  >
                   <v-layout row wrap>
-                    <!-- insert here  -->
 
                     <v-flex  xs8 >
                       <v-card>
@@ -111,6 +96,7 @@
 
 
                    <v-flex xs4 class="pr-2 pl-1" >
+
                      <div class="d-flex mb-2 xs12">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>
@@ -125,29 +111,19 @@
                         <br>
                        </v-card>
                      </div>
-                     <br>
 
-                     <div class="d-flex mt-1 mb-2 xs12">
+                     <div class="d-flex mt-1 mb-2 xs12 mt-3">
                        <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="geneProps.length">
                          <v-card-title primary-title>
                           <div>
                             <div style="font-size:16px">
                               GENES
-                              <v-dialog v-model="dialog" width="600px">
-                                <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                <v-card>
-                                  <v-card-title>
-                                    <span class="headline">Genes</span>
-                                  </v-card-title>
-                                  <v-card-text>
-                                    Help information text
-                                  </v-card-text>
-                                  <v-card-actions>
-                                    <v-spacer></v-spacer>
-                                    <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                  </v-card-actions>
-                                </v-card>
-                              </v-dialog>
+                              <Dialogs
+                                id="genesDialog"
+                                class="dialogBox"
+                                :HeadlineText="HelpDialogsData[0].HeadlineText"
+                                :ContentText="HelpDialogsData[0].Content">
+                              </Dialogs>
                             </div>
                             <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
                             <div>of {{ TotalGtrGenes }} selected</div>
@@ -155,41 +131,29 @@
                         </v-card-title>
                        </v-card>
                      </div>
-                    <br>
-                    <div class="d-flex mt-1 mb-2 xs12">
+
+                    <div class="d-flex mt-1 mb-2 xs12 mt-3">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
-                                 DISORDERS
-                                 <v-dialog v-model="dialog" width="600px">
-                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                   <v-card>
-                                     <v-card-title>
-                                       <span class="headline">Disorders</span>
-                                     </v-card-title>
-                                     <v-card-text>
-                                       Help information text
-                                     </v-card-text>
-                                     <v-card-actions>
-                                       <v-spacer></v-spacer>
-                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                     </v-card-actions>
-                                   </v-card>
-                                 </v-dialog>
+                                 MODES OF INHERITANCE
+                                 <Dialogs
+                                   id="modeOfInheritanceDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[1].HeadlineText"
+                                   :ContentText="HelpDialogsData[1].Content">
+                                 </Dialogs>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
-                                 <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
-                                 <strong v-else>{{ selectDisorders.length }}</strong>
+                                 <strong>{{ modeOfInheritanceProps.length }}</strong>
+                                 <!-- <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
+                                 <strong v-else>{{ selectDisorders.length }}</strong> -->
                                </span>
-                               <!-- <span class="FilterAndViewBtn"
-                                v-on:click="showChartComponent('PieChartSelector')">
-                               View and Filter
-                               </span> -->
-                               <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+                               <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
-                               <div>of {{ multiSelectDisorder.length }} selected</div>
+                               <div>present</div>
                              </div>
                           </v-card-title>
                         <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
@@ -199,20 +163,6 @@
                               :color="chartColor">
                             </PieChartSelector>
                             <br>
-                            <v-card flat >
-                              <v-card-text>
-                                  <v-layout>
-                                      <v-select
-                                        v-model="selectDisorders"
-                                        label="Select Disorders"
-                                        chips
-                                        tags
-                                        :items="multiSelectDisorder"
-                                      ></v-select>
-                                  </v-layout>
-                              </v-card-text>
-                            </v-card>
-                          <!-- </v-card-title> -->
                           <center>
                             <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                           </center>
@@ -222,37 +172,109 @@
                     </div>
                   </div>
 
-                  <br>
-                    <div class="d-flex mb-2 xs12">
+                  <div class="mt-3">
+                    <v-layout wrap>
+            <v-flex xs12>
+                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
+                      <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox' : '']">
+                        <v-card-title primary-title>
+                           <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
+                             <div style="font-size:16px">
+                               ASSOCIATED DISORDERS
+                               <Dialogs
+                                 id="disordersDialog"
+                                 class="dialogBox"
+                                 :HeadlineText="HelpDialogsData[2].HeadlineText"
+                                 :ContentText="HelpDialogsData[2].Content">
+                               </Dialogs>
+                             </div>
+                             <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                               <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
+                               <strong v-else>{{ selectDisorders.length }}</strong>
+                             </span>
+                             <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('disorders')">View & Filter</v-btn>
+                             <div>of {{ multiSelectDisorder.length }} selected</div>
+                           </div>
+                        </v-card-title>
+                      <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
+                          <br>
+                          <v-card flat >
+                            <!-- <v-card-text> -->
+                                <!-- <v-layout> -->
+                                    <!-- <v-combobox
+                                      v-model="selectDisorders"
+                                      label="Select Disorders"
+                                      chips
+                                      multiple
+                                      :items="multiSelectDisorder"
+                                    ></v-combobox> -->
+                                          <v-autocomplete
+                                            v-model="selectDisorders"
+                                            :items="multiSelectDisorder"
+                                            box
+                                            chips
+                                            label="Selected Disorders"
+                                            multiple
+                                          >
+                                            <template
+                                              slot="selection"
+                                              slot-scope="data"
+                                            >
+                                              <v-chip
+                                                :selected="data.selected"
+                                                close
+                                                color="blue-grey darken-3"
+                                                outline
+                                                class="chip--select-multi"
+                                                style="font-size:10px"
+                                                @input="data.parent.selectItem(data.item)"
+                                              >
+                                                {{ data.item}}
+                                              </v-chip>
+                                            </template>
+                                            <template
+                                              slot="item"
+                                              slot-scope="data"
+                                            >
+                                              <template v-if="typeof data.item !== 'object'">
+                                                <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                                              </template>
+
+                                            </template>
+                                          </v-autocomplete>
+                                <!-- </v-layout> -->
+                            <!-- </v-card-text> -->
+                          </v-card>
+                          <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
+                          <a style="margin-left:5px" v-on:click="resetDisorders"> Reset Filters</a>
+                        <!-- </v-card-title> -->
+                        <center>
+                          <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                        </center>
+                        <br>
+                      </div>
+                    </v-card>
+                  </div>
+                </v-flex>
+        </v-layout>
+                </div>
+
+                    <div class="d-flex mb-2 xs12 mt-3">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
                                  PANELS
-                                 <v-dialog v-model="dialog" width="600px">
-                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                   <v-card>
-                                     <v-card-title>
-                                       <span class="headline">Panels</span>
-                                     </v-card-title>
-                                     <v-card-text>
-                                       Help information text
-                                     </v-card-text>
-                                     <v-card-actions>
-                                       <v-spacer></v-spacer>
-                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                     </v-card-actions>
-                                   </v-card>
-                                 </v-dialog>
+                                 <Dialogs
+                                   id="GeneMembershipDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[3].HeadlineText"
+                                   :ContentText="HelpDialogsData[3].Content">
+                                 </Dialogs>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ genePanelsCount }}</strong></span>
-                               <!-- <span class="FilterAndViewBtn"
-                                v-on:click="showChartComponent('GeneMembership')">
-                               View and Filter
-                               </span> -->
                                <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('GeneMembership')">View & Filter</v-btn>
-
                                <div>present</div>
                              </div>
                           </v-card-title>
@@ -263,12 +285,7 @@
                               </GeneMembership>
                               <br>
                               <center>
-                                <!-- <span class="FilterAndViewBtn"
-                                  v-on:click="chartComponent=null">
-                                  Exit
-                                </span> -->
                                 <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
-
                               </center>
                               <br>
                           </div>
@@ -276,96 +293,118 @@
                       </div>
                     </div>
 
-                    <br>
-                    <div class="d-flex xs12">
-                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                    <!-- start vendor cars -->
+                    <div class="mt-3">
+                    <v-layout wrap>
+                    <v-flex xs12>
+                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
                                  VENDORS
-                                 <v-dialog v-model="dialog" width="600px">
-                                   <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                                   <v-card>
-                                     <v-card-title>
-                                       <span class="headline">Vendors</span>
-                                     </v-card-title>
-                                     <v-card-text>
-                                       Help information text
-                                     </v-card-text>
-                                     <v-card-actions>
-                                       <v-spacer></v-spacer>
-                                       <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                     </v-card-actions>
-                                   </v-card>
-                                 </v-dialog>
+                                 <Dialogs
+                                   id="vendorsDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[4].HeadlineText"
+                                   :ContentText="HelpDialogsData[4].Content">
+                                 </Dialogs>
                                </div>
                                <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
                                  <strong v-if="vendorsSelect.length===0">{{ vendorList.length }}</strong>
                                  <strong v-else>{{ vendorsSelect.length }}</strong>
                                </span>
                                </span>
-                               <!-- <span class="FilterAndViewBtn"
-                                v-on:click="showChartComponent('Vendors')">
-                               View and Filter
-                               </span> -->
                                <v-btn outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
-
                                <div>of {{ vendorList.length}} selected</div>
                              </div>
                           </v-card-title>
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
                               <v-card-text>
-                                  <v-layout>
-                                      <v-select
+                                  <!-- <v-layout> -->
+                                      <!-- <v-combobox
                                         v-model="vendorsSelect"
                                         label="Select Vendors"
                                         chips
-                                        tags
+                                        multiple
                                         :items="multiSelectItems"
-                                      ></v-select>
-                                  </v-layout>
+                                      ></v-combobox> -->
+                                      <v-autocomplete
+                                        v-model="vendorsSelect"
+                                        :items="multiSelectItems"
+                                        box
+                                        chips
+                                        label="Selected Vendors"
+                                        multiple
+                                        style="background:white"
+                                      >
+                                        <template
+                                          slot="selection"
+                                          slot-scope="data"
+                                        >
+                                          <v-chip
+                                            :selected="data.selected"
+                                            close
+                                            color="blue-grey darken-3"
+                                            outline
+                                            class="chip--select-multi"
+                                            style="font-size:10px"
+                                            @input="data.parent.selectItem(data.item)"
+                                          >
+                                            {{ data.item}}
+                                          </v-chip>
+                                        </template>
+                                        <template
+                                          slot="item"
+                                          slot-scope="data"
+                                        >
+                                          <template v-if="typeof data.item !== 'object'">
+                                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                                          </template>
+
+                                        </template>
+                                      </v-autocomplete>
+                                  <!-- </v-layout> -->
+                                    <!-- <br> -->
+
+                                  <Alerts
+                                    v-show="vendorsSelect.length<multiSelectItems.length"
+                                    alertType="warning"
+                                    alertOutline=true
+                                    alertTransition="scale-transition"
+                                    alertText="You have deselected some items. Please note your selection will continue in the further analysis. However you can reselect the items from the drop down menu"
+                                  >
+                                  </Alerts>
                               </v-card-text>
                             </v-card>
-                            <v-btn v-show="vendorsSelect.length" small v-on:click="ClearVendors">Clear vendors</v-btn>
+                            <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
                             <br>
                             <center>
-                              <!-- <span class="FilterAndViewBtn"
-                                v-on:click="chartComponent=null">
-                                Exit
-                              </span> -->
                               <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
-
                             </center>
                             <br>
                           </div>
                         </v-card>
                       </div>
-                    </div>
-                    <br>
+                    </v-flex>
+                  </v-layout wrap>
+                </div>
+                    <!-- end vendor card -->
 
-                    <div class="d-flex mb-2 xs12">
+
+                    <div class="d-flex mb-2 xs12 mt-3">
                       <v-card v-if="geneProps.length">
                        <v-card-title primary-title>
                          <div>
                            <div style="font-size:16px">
                              FILTERS FEED
-                             <v-dialog v-model="dialog" width="600px">
-                               <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                               <v-card>
-                                 <v-card-title>
-                                   <span class="headline">Genes</span>
-                                 </v-card-title>
-                                 <v-card-text>
-                                   Help information text
-                                 </v-card-text>
-                                 <v-card-actions>
-                                   <v-spacer></v-spacer>
-                                   <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                                 </v-card-actions>
-                               </v-card>
-                             </v-dialog>
+                             <Dialogs
+                               id="filtersDialog"
+                               class="dialogBox"
+                               :HeadlineText="HelpDialogsData[5].HeadlineText"
+                               :ContentText="HelpDialogsData[5].Content">
+                             </Dialogs>
                            </div>
                          </div>
                          </v-card-title>
@@ -450,7 +489,12 @@ import ShowGenePanel from './ShowGenePanel.vue';
 import { bus } from '../../routes';
 import PieChartSelector from '../viz/PieChartSelector.vue';
 import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
-import GeneMembership from '../viz/GeneMembership.vue'
+import GeneMembership from '../viz/GeneMembership.vue';
+import Alerts from '../partials/Alerts.vue';
+import Dialogs from '../partials/Dialogs.vue';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+import IntroductionText from '../../../data/IntroductionText.json';
+
 
 export default {
   components: { //Registering locally for nesting!
@@ -460,7 +504,9 @@ export default {
     'show-gene-panel1': ShowGenePanel,
     'PieChartSelector': PieChartSelector,
     'ConditionsDistribution': ConditionsDistribution,
-    'GeneMembership': GeneMembership
+    'GeneMembership': GeneMembership,
+    'Alerts': Alerts,
+    'Dialogs': Dialogs,
   },
   name: 'home',
   props: {
@@ -516,6 +562,12 @@ export default {
       multipleSearchItems:[],
       removeSearchTermFlag: false,
       filterFeed: [],
+      saveSelectedVendorsCount: 0,
+      saveSelectedVendors: [],
+      newSearchFlag: false,
+      lastVendorItem: [],
+      HelpDialogsData: null,
+      IntroductionTextData: null,
     }
   },
   watch:{
@@ -524,22 +576,57 @@ export default {
     },
     selectedDisordersListCB: function(){
       this.selectedDisordersList = this.selectedDisordersListCB
+    },
+    vendorsSelect(val) {
+      var diff = this.multiSelectItems.length - this.vendorsSelect.length;
+      var lastItem = [];
+      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+      }
+    },
+    selectDisorders(val) {
+      if(this.chartComponent==="disorders"){
+        bus.$emit("updatedFromDisorders")
+      }
+      if(this.selectDisorders.length > this.multiSelectDisorder.length){
+         this.selectDisorders= this.multiSelectDisorder
+      }
     }
   },
   mounted(){
+    this.HelpDialogsData = HelpDialogs.data;
+    bus.$on("lastVendor", ()=>{
+      this.snackbarText = "It is required that atleast one vendor is kept selected";
+      this.snackbar = true;
+      this.vendorsSelect = [this.multiSelectItems[0]];
+    });
+    bus.$on("lastDisorder", ()=>{
+      this.snackbarText = "It is required that atleast one disorder is kept selected";
+      this.snackbar = true;
+      this.selectDisorders = [this.multiSelectDisorder[0]];
+    });
+    bus.$on("newSearch", ()=>{
+      this.newSearchFlag = true;
+    })
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
-      this.vendorsSelect = [];
+      // this.vendorsSelect = [];
+      this.vendorsSelect = this.multiSelectItems;
       this.removeSearchTermFlag = true;
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
     });
     bus.$on("vendorsFilter", ()=>{
-      this.filterFeed.unshift("Vendors")
+      if(this.chartComponent==='Vendors'){
+        this.filterFeed.unshift("Vendors")
+      }
     });
     bus.$on("disordersFilter", ()=>{
-      this.filterFeed.unshift("Disorders")
+      if(this.chartComponent==='disorders'){
+        this.filterFeed.unshift("Disorders");
+      }
     });
     bus.$on("updateFromGenesHistogram", (data, count)=>{
       if(this.chartComponent==='GeneMembership'){
@@ -548,6 +635,7 @@ export default {
     });
   },
   created () {
+    this.IntroductionTextData = IntroductionText.data[0];
     window.addEventListener('scroll', this.handleScroll);
   },
   destroyed () {
@@ -619,7 +707,17 @@ export default {
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
       this.multiSelectItems = e;
+      this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
+      this.checkForDeselectedVendor();
+    },
+    checkForDeselectedVendor: function(){
+      if(this.saveSelectedVendors.length===0){
+        this.vendorsSelect = this.multiSelectItems;
+      }
+      else if(this.saveSelectedVendors.length>0){
+        this.vendorsSelect = this.multiSelectItems.filter( vendor => !this.saveSelectedVendors.includes(vendor))
+      }
     },
     updateSelectedVendors: function(e){
       // console.log("selected vendors from callback to home", e);
@@ -633,6 +731,7 @@ export default {
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
       this.multiSelectDisorder = e;
+      this.selectDisorders = this.multiSelectDisorder;
       this.$emit("disorderNamesListCB", e)
     },
     updateSelectedDisorders: function(e){
@@ -661,8 +760,18 @@ export default {
     NoOfPanels: function(e){
       this.genePanelsCount = e.length;
     },
-    ClearVendors: function(){
-      this.vendorsSelect=[];
+    SelectAllVendors: function(){
+      this.vendorsSelect=this.multiSelectItems;
+      this.saveSelectedVendors = [];
+    },
+    SelectAllDisordersButton: function(){
+      this.selectDisorders = this.multiSelectDisorder;
+      bus.$emit("updatedFromDisorders");
+    },
+    resetDisorders: function(){
+      this.selectDisorders = [];
+      bus.$emit("resetDisordersBus");
+      // bus.$emit("updatedFromDisorders");
     },
     scrollDown: function(){
       window.scrollTo(0, 120);
@@ -799,4 +908,7 @@ export default {
 .filterFeed
   height: 175px
   overflow: auto
+
+.dialogBox
+  margin-top: -20px
 </style>

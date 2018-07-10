@@ -113,14 +113,9 @@
             <v-card >
               <div v-if="!phenotypeSearchedByUser">
                 <v-card-title>
-                    <h3>What is Phenolyzer?</h3>
+                    <h3>{{ IntroductionTextData.Title }}</h3>
                 </v-card-title>
-                <v-card-title>
-                    Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
-                    <br>
-                    Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes.
-                    <br>
-                </v-card-title>
+                <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
               </div>
             </v-card>
           </v-flex>
@@ -419,6 +414,7 @@ import { Typeahead, Btn } from 'uiv';
 import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
+import IntroductionText from '../../../data/IntroductionText.json'
 
   export default {
     components: {
@@ -505,7 +501,11 @@ var geneModel = new GeneModel();
         chartComponent: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
         dialog: false,
+        IntroductionTextData: null,
       }
+    },
+    created(){
+      this.IntroductionTextData = IntroductionText.data[1];
     },
     updated(){
 
@@ -985,15 +985,11 @@ var geneModel = new GeneModel();
   stroke: #4e7ad3;
   stroke-width: 2;
 }
-
-
-
 </style>
 
 <style lang="sass" scoped>
 
   @import ../assets/sass/variables
-
 
   .btnColor
     color: white
