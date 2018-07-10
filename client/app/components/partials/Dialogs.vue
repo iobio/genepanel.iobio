@@ -7,7 +7,7 @@
           <span>{{ HeadlineText }}</span>
         </v-card-title>
         <v-card-text>
-          {{ ContentText }}
+            <p v-html="ContentText"></p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

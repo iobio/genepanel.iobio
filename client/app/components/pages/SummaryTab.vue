@@ -10,12 +10,9 @@
               <v-card>
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0">
                   <v-card-title>
-                      <h3>Summary</h3>
+                      <h3>{{ IntroductionTextData.Title }}</h3>
                   </v-card-title>
-                  <v-card-title>
-                    This page summaries the genes from both the sources: Genetic Testing Registry and phenolyzer.
-                      <br><br>
-                  </v-card-title>
+                  <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
                 </div>
               </v-card>
             </v-flex>
@@ -62,21 +59,12 @@
                        <div>
                          <div style="font-size:16px">
                            GENES
-                           <v-dialog v-model="dialog" width="600px">
-                             <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                             <v-card>
-                               <v-card-title>
-                                 <span class="headline">Genes</span>
-                               </v-card-title>
-                               <v-card-text>
-                                 Help information text
-                               </v-card-text>
-                               <v-card-actions>
-                                 <v-spacer></v-spacer>
-                                 <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                               </v-card-actions>
-                             </v-card>
-                           </v-dialog>
+                           <Dialogs
+                             id="genesDialog"
+                             class="dialogBox"
+                             :HeadlineText="HelpDialogsData[0].HeadlineText"
+                             :ContentText="HelpDialogsData[0].Content">
+                           </Dialogs>
                          </div>
                          <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selectedGenes }}</strong></span>
                          <div>of {{ totalGenes }} selected</div>
@@ -112,12 +100,18 @@
 import SummaryPieChart from '../viz/SummaryPieChart.vue';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
-import FilterSummary from './FilterSummary.vue'
+import FilterSummary from './FilterSummary.vue';
+import IntroductionText from '../../../data/IntroductionText.json';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+import Dialogs from '../partials/Dialogs.vue';
+
+
   export default {
     components: {
       'SummaryPieChart': SummaryPieChart,
       'SummaryDataTable': SummaryDataTable,
-      'FilterSummary': FilterSummary
+      'FilterSummary': FilterSummary,
+      'Dialogs': Dialogs,
     },
     props:{
       NumberOfGtrGenes:{
@@ -154,6 +148,8 @@ import FilterSummary from './FilterSummary.vue'
       totalGenes: 0,
       chartComponent: null,
       dialog: false,
+      IntroductionTextData: null,
+      HelpDialogsData: null,
     }),
     watch: {
       GtrGenesForSummary:function(){
@@ -167,7 +163,11 @@ import FilterSummary from './FilterSummary.vue'
         this.performSetOperations();
       }
     },
+    created(){
+      this.IntroductionTextData = IntroductionText.data[2];
+    },
     mounted(){
+      this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
       this.performSetOperations();

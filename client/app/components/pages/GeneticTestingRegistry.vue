@@ -21,9 +21,6 @@
             <v-flex d-flex xs12>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
-                  <!-- <div class="mb-1">
-                    The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                  </div> -->
                   <v-layout row wrap>
                     <v-flex xs12 sm12 md12 lg8>
                       <DisorderSearch
@@ -61,10 +58,7 @@
                         Go
                       </v-btn>
                     </v-flex>
-                    <!-- <v-flex  xs2 >
-                    </v-flex> -->
                   </v-layout>
-
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -73,16 +67,9 @@
               <v-card >
                 <div v-if="!disordersSearchedByUser">
                   <v-card-title>
-                      <h3>What is Genetic Testing Registry?</h3>
+                      <h3>{{ IntroductionTextData.Title }}</h3>
                   </v-card-title>
-                  <v-card-title>
-                      The Genetic Testing Registry (GTR®) provides a central location for voluntary submission of genetic test information by providers.
-                      <br>
-                      The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials.
-                      <br>
-                      The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease.
-                      <br><br>
-                  </v-card-title>
+                  <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
                 </div>
               </v-card>
 
@@ -90,7 +77,6 @@
 
             <v-flex d-flex xs12  >
                   <v-layout row wrap>
-                    <!-- insert here  -->
 
                     <v-flex  xs8 >
                       <v-card>
@@ -125,9 +111,8 @@
                         <br>
                        </v-card>
                      </div>
-                     <br>
 
-                     <div class="d-flex mt-1 mb-2 xs12">
+                     <div class="d-flex mt-1 mb-2 xs12 mt-3">
                        <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="geneProps.length">
                          <v-card-title primary-title>
                           <div>
@@ -146,8 +131,8 @@
                         </v-card-title>
                        </v-card>
                      </div>
-                    <br>
-                    <div class="d-flex mt-1 mb-2 xs12">
+
+                    <div class="d-flex mt-1 mb-2 xs12 mt-3">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
@@ -187,9 +172,7 @@
                     </div>
                   </div>
 
-
-                  <br>
-                  <div >
+                  <div class="mt-3">
                     <v-layout wrap>
             <v-flex xs12>
                     <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
@@ -276,8 +259,7 @@
         </v-layout>
                 </div>
 
-                  <br>
-                    <div class="d-flex mb-2 xs12">
+                    <div class="d-flex mb-2 xs12 mt-3">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
                           <v-card-title primary-title>
@@ -312,8 +294,7 @@
                     </div>
 
                     <!-- start vendor cars -->
-                    <br>
-                    <div>
+                    <div class="mt-3">
                     <v-layout wrap>
                     <v-flex xs12>
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
@@ -409,12 +390,10 @@
                     </v-flex>
                   </v-layout wrap>
                 </div>
-
                     <!-- end vendor card -->
 
-                    <br>
 
-                    <div class="d-flex mb-2 xs12">
+                    <div class="d-flex mb-2 xs12 mt-3">
                       <v-card v-if="geneProps.length">
                        <v-card-title primary-title>
                          <div>
@@ -514,6 +493,7 @@ import GeneMembership from '../viz/GeneMembership.vue';
 import Alerts from '../partials/Alerts.vue';
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
+import IntroductionText from '../../../data/IntroductionText.json';
 
 
 export default {
@@ -587,6 +567,7 @@ export default {
       newSearchFlag: false,
       lastVendorItem: [],
       HelpDialogsData: null,
+      IntroductionTextData: null,
     }
   },
   watch:{
@@ -614,7 +595,6 @@ export default {
     }
   },
   mounted(){
-    console.log(HelpDialogs)
     this.HelpDialogsData = HelpDialogs.data;
     bus.$on("lastVendor", ()=>{
       this.snackbarText = "It is required that atleast one vendor is kept selected";
@@ -655,6 +635,7 @@ export default {
     });
   },
   created () {
+    this.IntroductionTextData = IntroductionText.data[0];
     window.addEventListener('scroll', this.handleScroll);
   },
   destroyed () {
