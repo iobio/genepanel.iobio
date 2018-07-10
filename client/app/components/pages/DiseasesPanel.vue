@@ -113,6 +113,7 @@ var model = new Model();
           selectedDisordersFromFilterPanel: [],
           tempDisorders: [],
           flagForDisorderFilter: false,
+          pieChartFlag: false,
         }
       },
     methods:{
@@ -153,7 +154,9 @@ var model = new Model();
 
         },
         getDisorderNames(){
-          this.disorderNamesList = model.filterItemsForDisorderNames(this.items);
+          var namesOfDisorders = model.filterItemsForDisorderNames(this.items);
+          this.disorderNamesList = Array.from(new Set(namesOfDisorders))
+          console.log("this.disorderNamesList" , this.disorderNamesList)
           this.$emit('setDisorderNamesList', this.disorderNamesList)
         },
         selectAllDisorders: function(){
@@ -176,11 +179,13 @@ var model = new Model();
             }
             this.items = tempArray;
             this.selected = this.items.slice();
-            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
-            this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
+            if(this.pieChartFlag===false){
+              this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
+              this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
+            }
             return this.items;
           }
-          else if(this.selectedDisordersFromFilterPanel.length===0){
+          else if(this.selectedDisordersFromFilterPanel.length===0 && this.pieChartFlag){
             this.flagForDisorderFilter = false;
             this.selected = this.tempDisorders.slice();
             this.items = this.tempDisorders;
@@ -188,6 +193,10 @@ var model = new Model();
             this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
             this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             return this.items;
+          }
+          else if(this.selectedDisordersFromFilterPanel.length===0 && !this.pieChartFlag){
+            this.selected = this.items;
+            bus.$emit("lastDisorder");
           }
 
         },
@@ -247,11 +256,28 @@ var model = new Model();
         this.sendModeOfInheritanceData();
       });
       bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
-        this.updateFromPieChart(modeOfInheritance, selection)
+        this.updateFromPieChart(modeOfInheritance, selection);
+        this.pieChartFlag = true
       });
       bus.$on("removeSearchTerm", ()=>{
         this.flagForDisorderFilter = false; //Sets the flag to false because removing a terms clears the selection.
-      })
+      });
+      bus.$on("updatedFromDisorders", ()=>{
+        this.pieChartFlag = false;
+      });
+      bus.$on("newSearch", ()=>{
+        this.pieChartFlag = false;
+      });
+      bus.$on("resetDisordersBus", ()=>{
+        this.pieChartFlag = false;
+        this.flagForDisorderFilter = false;
+        this.selected = this.tempDisorders.slice();
+        this.items = this.tempDisorders;
+        this.getDisorderNames();
+        this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
+        this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
+        return this.items;
+      });
     },
     updated(){
       // console.log("this.selected from showDiseases updated", this.selected );

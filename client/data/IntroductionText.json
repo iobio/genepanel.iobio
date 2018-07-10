@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "Page": "Genetic Testing Registry",
+      "Title": "What is Genetic Testing Registry?",
+      "Content": "<strong>The Genetic Testing Registry (GTR®)</strong> &nbsp;provides a central location for voluntary submission of genetic test information by providers.<br> The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. <br>The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease. <br>"
+    },
+    {
+      "Page": "Phenolyzer",
+      "Title": "What is Phenolyzer?",
+      "Content": "<strong>Phenolyzer </strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <br> Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes. <a href='http://phenolyzer.wglab.org/'> Read More </a> <br>"
+    },
+    {
+      "Page": "Summary",
+      "Title": "Summary",
+      "Content": "This page summaries the genes from both the sources: Genetic Testing Registry and phenolyzer.<br> "
+    }
+  ]
+}
