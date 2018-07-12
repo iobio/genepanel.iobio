@@ -166,7 +166,14 @@ var model = new Model();
         })
 
         this.filteredDiseasesItems = temp;
-        this.$emit('showDiseases', this.filteredDiseasesItems);
+        if(!this.checked){
+          console.log("Send from remove")
+          this.$emit('showDiseases', this.filteredDiseasesItems);
+        }
+        else if(this.checked){
+          this.checked = false;
+        }
+
 
 
 
@@ -229,18 +236,25 @@ var model = new Model();
                 this.alert= true;
               }
               this.checked=false;
-              filteredDiseases.map(x=>{
-                // console.log(this.multipleSearchTerms.findIndex())
-                x["searchTerm"]="ip"+searchTerm+"ip";
-                // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
-                x["searchTermArray"] = [searchTerm];
-                x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
-                // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
-                this.filteredDiseasesItems.push(x);
-              });
+              if(this.multipleSearchTerms.includes(searchTerm)){ //this avoids adding an index when the term is deleted
+                filteredDiseases.map(x=>{
+                  // console.log(this.multipleSearchTerms.findIndex())
+                  x["searchTerm"]="ip"+searchTerm+"ip";
+                  // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
+                  x["searchTermArray"] = [searchTerm];
+                  x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
+                  // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
+                  this.filteredDiseasesItems.push(x);
+                });
+              }
+
               // console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
-              bus.$emit("newSearch")
-              this.$emit('showDiseases', this.filteredDiseasesItems)
+              if(this.multipleSearchTerms.includes(searchTerm)){
+                console.log("Send")
+                bus.$emit("newSearch")
+                this.$emit('showDiseases', this.filteredDiseasesItems)
+              }
+
             }
 
           }

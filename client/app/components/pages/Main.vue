@@ -677,7 +677,7 @@ aside {
 
 @media screen and (max-width: 1270px){
   aside {
-    margin-top: 60px !important;
+    margin-top: 64px !important;
     max-height: calc(100% - 0px) !important;
   }
 }
