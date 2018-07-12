@@ -915,7 +915,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
 }
 
 #phenotype-term{
-  width: 680px;
+  width: 600px;
   height:40px;
   margin-top: 4px;
   background-color: #F4F4F4;
@@ -942,7 +942,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
 
 @media screen and (max-width: 1620px){
   #phenotype-term{
-    width: 470px;
+    width: 420px;
     height:40px;
     margin-top: 4px;
   }
@@ -958,7 +958,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
 
 @media screen and (max-width: 950px){
   #phenotype-term{
-    width: 350px;
+    width: 290px;
     height:40px;
     margin-top: 4px;
   }

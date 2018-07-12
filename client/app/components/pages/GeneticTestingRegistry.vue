@@ -321,7 +321,7 @@
                           </v-card-title>
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
-                              <v-card-text style="flex-wrap: wrap">
+                              <v-card-text>
                                   <!-- <v-layout> -->
                                       <!-- <v-combobox
                                         v-model="vendorsSelect"

@@ -273,7 +273,7 @@ var model = new Model();
    font-size: 15px;
  }
 #input{
-  width: 680px;
+  width: 600px;
   height:40px;
   margin-top: 4px;
   background-color: #F4F4F4;
@@ -284,7 +284,7 @@ var model = new Model();
 
 @media screen and (max-width: 1620px){
   #input{
-    width: 470px;
+    width: 420px;
     height:40px;
     margin-top: 4px;
   }
@@ -300,7 +300,7 @@ var model = new Model();
 
 @media screen and (max-width: 950px){
   #input{
-    width: 350px;
+    width: 290px;
     height:40px;
     margin-top: 4px;
   }
