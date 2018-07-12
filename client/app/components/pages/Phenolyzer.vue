@@ -22,7 +22,6 @@
               <v-card-text style="margin-bottom:-5px">
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8>
-                    <!-- {{ multipleSearchTerms }} -->
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Enter Phenotype</label>
                       <input
@@ -33,7 +32,6 @@
                         autocomplete="off"
                         placeholder="Search phenotype (E.g. lactic acidosis)"
                         v-model="phenotypeTermEntered">
-
                       <typeahead
                         v-model="phenotypeTerm"
                         hide-details="false"
@@ -505,6 +503,17 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
     },
     mounted(){
       this.HelpDialogsData = HelpDialogs.data;
+      bus.$on("newAnalysis", ()=>{
+        this.multipleSearchTerms = [];
+        this.items = [];
+        this.selected = [];
+        this.dictionaryArr = [];
+        this.phenotypeTerm = "";
+        this.phenotypeTermEntered = "";
+        this.$emit("SelectedPhenolyzerGenesToCopy", []);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
+        this.phenotypeSearchedByUser = false;
+      });
     },
     updated(){
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{

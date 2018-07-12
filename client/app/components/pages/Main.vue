@@ -164,10 +164,13 @@
         </v-list>
       </v-menu>
       <span>
-        <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
+        <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn>
       </span>
+      <!-- <span>
+        <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
+      </span> -->
       <span>
-        <v-btn flat v-on:click="forceReload"><v-icon>help</v-icon> Help</v-btn>
+        <v-btn flat><v-icon>help</v-icon> Help</v-btn>
       </span>
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator"
@@ -380,7 +383,6 @@ import IntroductionText from '../../../data/IntroductionText.json';
 
       },
       updateGtrGenes: function(e){
-        console.log(e.length)
         this.selectedGtrGenes = e;
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name

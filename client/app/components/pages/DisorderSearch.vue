@@ -117,10 +117,11 @@ var model = new Model();
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
-       // bus.$on("newAnalysis", ()=>{
-       //   this.multipleSearchTerms = [];
-       //   this.$emit('showDiseases', [])
-       // })
+       bus.$on("newAnalysis", ()=>{
+         this.multipleSearchTerms = [];
+         this.$emit('showDiseases', []);
+         this.search = ""
+       });
     },
     computed:  {
 

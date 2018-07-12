@@ -633,6 +633,9 @@ export default {
         this.filterFeed.unshift("Gene Membership")
       }
     });
+    bus.$on("newAnalysis", ()=>{
+      this.disordersSearchedByUser= false;
+    });
   },
   created () {
     this.IntroductionTextData = IntroductionText.data[0];
