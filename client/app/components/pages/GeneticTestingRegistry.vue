@@ -349,7 +349,7 @@
                                             color="blue-grey darken-3"
                                             outline
                                             class="chip--select-multi"
-                                            style="font-size:10px"
+                                            style="font-size:9.2px"
                                             @input="data.parent.selectItem(data.item)"
                                           >
                                             {{ data.item}}
@@ -633,6 +633,9 @@ export default {
         this.filterFeed.unshift("Gene Membership")
       }
     });
+    bus.$on("newAnalysis", ()=>{
+      this.disordersSearchedByUser= false;
+    });
   },
   created () {
     this.IntroductionTextData = IntroductionText.data[0];
@@ -654,6 +657,7 @@ export default {
       }
     },
     addDiseases: function(e){
+      console.log("addDiseases", e)
       this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       // console.log("E", e);
@@ -691,7 +695,8 @@ export default {
         this.vendorList=[];
         this.disorderNamesList=[];
         this.modeOfInheritanceProps=[];
-        this.selectedGenesText = ""
+        this.selectedGenesText = "";
+        this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
     },
     selectDiseases: function(e){
@@ -911,4 +916,8 @@ export default {
 
 .dialogBox
   margin-top: -20px
+
+.vendorsCardClass
+  height: 200px
+  overflow: auto
 </style>

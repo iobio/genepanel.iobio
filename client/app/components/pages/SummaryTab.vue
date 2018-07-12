@@ -153,6 +153,7 @@ import Dialogs from '../partials/Dialogs.vue';
     }),
     watch: {
       GtrGenesForSummary:function(){
+        console.log("this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.GtrGenes = this.GtrGenesForSummary;
         this.summaryTableArray=[];
         this.performSetOperations();
@@ -167,6 +168,7 @@ import Dialogs from '../partials/Dialogs.vue';
       this.IntroductionTextData = IntroductionText.data[2];
     },
     mounted(){
+      console.log("mounted summary")
       this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;

@@ -164,8 +164,11 @@
         </v-list>
       </v-menu>
       <span>
-        <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
+        <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn>
       </span>
+      <!-- <span>
+        <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
+      </span> -->
       <span>
         <v-btn flat><v-icon>help</v-icon> Help</v-btn>
       </span>
@@ -334,6 +337,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
     updated(){
     },
     methods: {
+      forceReload: function(){
+        bus.$emit("newAnalysis")
+      },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
       },
@@ -550,7 +556,7 @@ import IntroductionText from '../../../data/IntroductionText.json';
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.launchedFromClin = true;
@@ -677,7 +683,7 @@ aside {
 
 @media screen and (max-width: 1270px){
   aside {
-    margin-top: 0px !important;
+    margin-top: 64px !important;
     max-height: calc(100% - 0px) !important;
   }
 }

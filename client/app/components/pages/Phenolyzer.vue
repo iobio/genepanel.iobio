@@ -22,17 +22,16 @@
               <v-card-text style="margin-bottom:-5px">
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8>
-                    <!-- {{ multipleSearchTerms }} -->
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
-                      <label>Search Phenotype</label>
+                      <label>Enter Phenotype</label>
                       <input
+                        :disabled="checked"
                         id="phenotype-term"
                         class="form-control"
                         type="text"
                         autocomplete="off"
                         placeholder="Search phenotype (E.g. lactic acidosis)"
                         v-model="phenotypeTermEntered">
-
                       <typeahead
                         v-model="phenotypeTerm"
                         hide-details="false"
@@ -44,10 +43,10 @@
                     </div>
 
                     <v-btn
-                        style="margin-top:-0.35px"
+                        style="margin-top:-0.35px; text-transform: none"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
-                      Go
+                      Generate Gene List
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">
@@ -284,21 +283,12 @@
                      <div>
                        <div style="font-size:16px">
                          GENES
-                         <v-dialog v-model="dialog" width="600px">
-                           <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                           <v-card>
-                             <v-card-title>
-                               <span class="headline">Genes</span>
-                             </v-card-title>
-                             <v-card-text>
-                               Help information text
-                             </v-card-text>
-                             <v-card-actions>
-                               <v-spacer></v-spacer>
-                               <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                             </v-card-actions>
-                           </v-card>
-                         </v-dialog>
+                         <Dialogs
+                           id="genesDialog"
+                           class="dialogBox"
+                           :HeadlineText="HelpDialogsData[0].HeadlineText"
+                           :ContentText="HelpDialogsData[0].Content">
+                         </Dialogs>
                        </div>
                        <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selected.length }}</strong></span>
                        <div>of {{ items.length }} selected</div>
@@ -415,10 +405,13 @@ import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
+import Dialogs from '../partials/Dialogs.vue';
+import HelpDialogs from '../../../data/HelpDialogs.json';
 
   export default {
     components: {
       'PhenolyzerPieChart': PhenolyzerPieChart,
+      'Dialogs': Dialogs,
       Typeahead
     },
     data(){
@@ -502,13 +495,27 @@ import IntroductionText from '../../../data/IntroductionText.json'
         genesTopCounts: [5, 10, 30, 50, 80, 100],
         dialog: false,
         IntroductionTextData: null,
+        HelpDialogsData: null,
       }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[1];
     },
+    mounted(){
+      this.HelpDialogsData = HelpDialogs.data;
+      bus.$on("newAnalysis", ()=>{
+        this.multipleSearchTerms = [];
+        this.items = [];
+        this.selected = [];
+        this.dictionaryArr = [];
+        this.phenotypeTerm = "";
+        this.phenotypeTermEntered = "";
+        this.$emit("SelectedPhenolyzerGenesToCopy", []);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
+        this.phenotypeSearchedByUser = false;
+      });
+    },
     updated(){
-
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -622,7 +629,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
       getPhenotypeData(){
         let self = this;
         self.phenotypeSearchedByUser = true;
-        if(self.phenotypeTerm.value.length>1){
+        if(self.phenotypeTerm.value.length>1 && !this.checked){
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){
@@ -798,52 +805,52 @@ import IntroductionText from '../../../data/IntroductionText.json'
           })
         }
       },
-      onSearchPhenolyzerGenes: function() {
-        let self = this;
-        self.multipleSearchTerms.push(self.phenotypeTerm.value);
-        self.items = [];
-        self.checked = true;
-        self.alert = false;
-        self.selectedGenesText = "";
-        self.phenolyzerStatus = null;
-        self.genesToApply = "";
-        self.selected = [];
-        self.NoOfGenesSelectedFromPhenolyzer = 0;
-        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-        var searchTerm = self.phenotypeTerm.value;
-        self.phenotypeTermEntered = self.phenotypeTerm.value;
-        geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
-        function(status, error) {
-          if (status == 'done') {
-            if (geneModel.phenolyzerGenes.length == 0) {
-              self.phenolyzerStatus = "no genes found."
-              self.genesToApply = "";
-              self.checked = false;
-              self.alert = true;
-            } else {
-              self.tempItems = geneModel.phenolyzerGenes;
-              self.addSearchTermProperty();
-              self.checked = false;
-              if(self.multipleSearchTerms.length===1){
-                self.multipleSearchArray = self.tempItems;
-              }
-              else if(self.multipleSearchTerms.length>1){
-                self.multipleSearchArray = [...self.multipleSearchArray, ...self.tempItems]
-              }
-              let data = self.drawSvgBars(self.multipleSearchArray);
-              self.items = data;
-              self.selected = self.items.slice(0,50);
-              self.phenolyzerStatus = null;
-              self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-              self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-              self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-              self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-            }
-          } else {
-            self.phenolyzerStatus = status;
-          }
-        });
-      },
+      // onSearchPhenolyzerGenes: function() {
+      //   let self = this;
+      //   self.multipleSearchTerms.push(self.phenotypeTerm.value);
+      //   self.items = [];
+      //   self.checked = true;
+      //   self.alert = false;
+      //   self.selectedGenesText = "";
+      //   self.phenolyzerStatus = null;
+      //   self.genesToApply = "";
+      //   self.selected = [];
+      //   self.NoOfGenesSelectedFromPhenolyzer = 0;
+      //   this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      //   var searchTerm = self.phenotypeTerm.value;
+      //   self.phenotypeTermEntered = self.phenotypeTerm.value;
+      //   geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
+      //   function(status, error) {
+      //     if (status == 'done') {
+      //       if (geneModel.phenolyzerGenes.length == 0) {
+      //         self.phenolyzerStatus = "no genes found."
+      //         self.genesToApply = "";
+      //         self.checked = false;
+      //         self.alert = true;
+      //       } else {
+      //         self.tempItems = geneModel.phenolyzerGenes;
+      //         self.addSearchTermProperty();
+      //         self.checked = false;
+      //         if(self.multipleSearchTerms.length===1){
+      //           self.multipleSearchArray = self.tempItems;
+      //         }
+      //         else if(self.multipleSearchTerms.length>1){
+      //           self.multipleSearchArray = [...self.multipleSearchArray, ...self.tempItems]
+      //         }
+      //         let data = self.drawSvgBars(self.multipleSearchArray);
+      //         self.items = data;
+      //         self.selected = self.items.slice(0,50);
+      //         self.phenolyzerStatus = null;
+      //         self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+      //         self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+      //         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+      //         self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+      //       }
+      //     } else {
+      //       self.phenolyzerStatus = status;
+      //     }
+      //   });
+      // },
       drawSvgBars: function(tempItems){
         var svgWidth = 350;
         //<stop offset="5%"  stop-color="#36D1DC"/>
@@ -918,7 +925,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 }
 
 #phenotype-term{
-  width: 680px;
+  width: 600px;
   height:40px;
   margin-top: 4px;
   background-color: #F4F4F4;
@@ -945,7 +952,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 
 @media screen and (max-width: 1620px){
   #phenotype-term{
-    width: 470px;
+    width: 420px;
     height:40px;
     margin-top: 4px;
   }
@@ -961,7 +968,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 
 @media screen and (max-width: 950px){
   #phenotype-term{
-    width: 350px;
+    width: 290px;
     height:40px;
     margin-top: 4px;
   }
