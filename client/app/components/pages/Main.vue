@@ -167,7 +167,7 @@
         <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
       </span>
       <span>
-        <v-btn flat><v-icon>help</v-icon> Help</v-btn>
+        <v-btn flat v-on:click="forceReload"><v-icon>help</v-icon> Help</v-btn>
       </span>
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator"
@@ -334,6 +334,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
     updated(){
     },
     methods: {
+      forceReload: function(){
+        bus.$emit("newAnalysis")
+      },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
       },
@@ -377,6 +380,7 @@ import IntroductionText from '../../../data/IntroductionText.json';
 
       },
       updateGtrGenes: function(e){
+        console.log(e.length)
         this.selectedGtrGenes = e;
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
@@ -550,7 +554,7 @@ import IntroductionText from '../../../data/IntroductionText.json';
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.launchedFromClin = true;

@@ -654,6 +654,7 @@ export default {
       }
     },
     addDiseases: function(e){
+      console.log("addDiseases", e)
       this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       // console.log("E", e);
@@ -691,7 +692,8 @@ export default {
         this.vendorList=[];
         this.disorderNamesList=[];
         this.modeOfInheritanceProps=[];
-        this.selectedGenesText = ""
+        this.selectedGenesText = "";
+        this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
     },
     selectDiseases: function(e){

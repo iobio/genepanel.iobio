@@ -117,6 +117,10 @@ var model = new Model();
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
+       // bus.$on("newAnalysis", ()=>{
+       //   this.multipleSearchTerms = [];
+       //   this.$emit('showDiseases', [])
+       // })
     },
     computed:  {
 
@@ -167,15 +171,11 @@ var model = new Model();
 
         this.filteredDiseasesItems = temp;
         if(!this.checked){
-          console.log("Send from remove")
           this.$emit('showDiseases', this.filteredDiseasesItems);
         }
         else if(this.checked){
           this.checked = false;
         }
-
-
-
 
       },
       performSearch: function(){
