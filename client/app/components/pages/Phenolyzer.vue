@@ -26,6 +26,7 @@
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Enter Phenotype</label>
                       <input
+                        :disabled="checked"
                         id="phenotype-term"
                         class="form-control"
                         type="text"
@@ -619,7 +620,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
       getPhenotypeData(){
         let self = this;
         self.phenotypeSearchedByUser = true;
-        if(self.phenotypeTerm.value.length>1){
+        if(self.phenotypeTerm.value.length>1 && !this.checked){
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){

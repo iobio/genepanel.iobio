@@ -17,6 +17,7 @@
       <div style="display:inline-block; padding-top:5px;">
         <label>Enter Disorder</label>
         <input
+          :disabled="checked"
           id="input"
           class="form-control"
           type="text"
@@ -172,8 +173,6 @@ var model = new Model();
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
-
-
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
@@ -182,7 +181,7 @@ var model = new Model();
           searchTerm = this.search;
         }
 
-        if(searchTerm.length>1){
+        if(searchTerm.length>1 && !this.checked){
           this.checked = true;
           this.alert=false;
 
