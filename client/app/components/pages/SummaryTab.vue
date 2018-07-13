@@ -168,7 +168,7 @@ import Dialogs from '../partials/Dialogs.vue';
       this.IntroductionTextData = IntroductionText.data[2];
     },
     mounted(){
-      console.log("mounted summary")
+      console.log("this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary)
       this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;

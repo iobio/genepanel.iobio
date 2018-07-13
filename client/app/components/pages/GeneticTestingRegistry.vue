@@ -127,8 +127,7 @@
                              </Dialogs>
                            </center>
                            <v-divider></v-divider>
-                           <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
-                           <div>of {{ TotalGtrGenes }} selected</div>
+                           <span style="margin-top:0px; margin-bottom:0px; "><strong style="font-size:26px">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected</span>
                          </v-card-text>
                        </v-card>
                      </div>
@@ -210,6 +209,7 @@
                                       :items="multiSelectDisorder"
                                     ></v-combobox> -->
                                           <v-autocomplete
+                                            background-color="white"
                                             v-model="selectDisorders"
                                             :items="multiSelectDisorder"
                                             box
@@ -238,7 +238,7 @@
                                               slot-scope="data"
                                             >
                                               <template v-if="typeof data.item !== 'object'">
-                                                <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                                                <v-list-tile-content v-text="data.item"><v-checkbox  ></v-checkbox></v-list-tile-content>
                                               </template>
 
                                             </template>
@@ -333,6 +333,7 @@
                                       ></v-combobox> -->
                                       <v-autocomplete
                                         v-model="vendorsSelect"
+                                        background-color="white"
                                         :items="multiSelectItems"
                                         box
                                         chips
@@ -350,10 +351,14 @@
                                             color="blue-grey darken-3"
                                             outline
                                             class="chip--select-multi"
-                                            style="font-size:9.2px"
+                                            style="font-size:9.2px; "
                                             @input="data.parent.selectItem(data.item)"
                                           >
-                                            {{ data.item}}
+                                            <span style="max-width: 300px; ">
+                                              <span style="overflow-wrap: break-word; word-break: break-word; max-width: 300px; overflow-x:hidden; display:inline-block; text-overflow: ellipsis; ">
+                                                {{ data.item}}
+                                              </span>
+                                            </span>
                                           </v-chip>
                                         </template>
                                         <template
@@ -361,7 +366,8 @@
                                           slot-scope="data"
                                         >
                                           <template v-if="typeof data.item !== 'object'">
-                                            <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                                            <v-list-tile-content v-text="data.item">
+                                            </v-list-tile-content>
                                           </template>
 
                                         </template>
