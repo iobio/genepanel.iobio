@@ -113,10 +113,10 @@
                      </div>
 
                      <div class="d-flex mt-1 mb-2 xs12 mt-3">
-                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
-                             <span style="font-size:20px; font-weight:400">
+                             <span style="font-size: 18px;font-weight: 550;">
                              GENES
                              </span>
                              <Dialogs
@@ -125,16 +125,23 @@
                                :HeadlineText="HelpDialogsData[0].HeadlineText"
                                :ContentText="HelpDialogsData[0].Content">
                              </Dialogs>
+
+                           <v-divider style="margin-top:10px;margin-bottom: 10px;"></v-divider>
+                           <span style="margin-top:0px; margin-bottom:0px; font-size:16px;"><strong style="font-size:26px">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected</span>
                            </center>
-                           <v-divider></v-divider>
-                           <span style="margin-top:0px; margin-bottom:0px; "><strong style="font-size:26px">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected</span>
+                           <SvgBar
+                            class="SvgBarClass"
+                            id="genesSvgBox"
+                            :selectedNumber="GtrGenesTabNumber"
+                            :totalNumber="TotalGtrGenes">
+                           </SvgBar>
                          </v-card-text>
                        </v-card>
                      </div>
 
                     <div class="d-flex mt-1 mb-2 xs12 mt-3">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
-                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox' : '']">
+                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
@@ -176,7 +183,7 @@
                     <v-layout wrap>
             <v-flex xs12>
                     <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
-                      <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox' : '']">
+                      <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                         <v-card-title primary-title>
                            <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
                              <div style="font-size:16px">
@@ -262,7 +269,7 @@
 
                     <div class="d-flex mb-2 xs12 mt-3">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
-                        <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox' : '']">
+                        <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
@@ -299,7 +306,7 @@
                     <v-layout wrap>
                     <v-flex xs12>
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
-                        <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox' : '']">
+                        <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <div style="font-size:16px">
@@ -501,6 +508,7 @@ import Alerts from '../partials/Alerts.vue';
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import IntroductionText from '../../../data/IntroductionText.json';
+import SvgBar from '../viz/SvgBar.vue'
 
 
 export default {
@@ -514,6 +522,7 @@ export default {
     'GeneMembership': GeneMembership,
     'Alerts': Alerts,
     'Dialogs': Dialogs,
+    'SvgBar': SvgBar
   },
   name: 'home',
   props: {
@@ -914,8 +923,14 @@ export default {
 //   background-color: $search-button-color !important
   // border-radius: 5px
 
+.rightbarCard
+  border-top-right-radius: 8px
+  border-top-left-radius: 8px
+
 .activeCardBox
     border-bottom: 6px solid $activeCard-border
+    border-top-right-radius: 8px
+    border-top-left-radius: 8px
 
 .filterFeed
   height: 175px
@@ -927,4 +942,8 @@ export default {
 .vendorsCardClass
   height: 200px
   overflow: auto
+
+.SvgBarClass
+  margin-top: 5px
+
 </style>
