@@ -114,21 +114,22 @@
 
                      <div class="d-flex mt-1 mb-2 xs12 mt-3">
                        <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="geneProps.length">
-                         <v-card-title primary-title>
-                          <div>
-                            <div style="font-size:16px">
-                              GENES
-                              <Dialogs
-                                id="genesDialog"
-                                class="dialogBox"
-                                :HeadlineText="HelpDialogsData[0].HeadlineText"
-                                :ContentText="HelpDialogsData[0].Content">
-                              </Dialogs>
-                            </div>
-                            <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
-                            <div>of {{ TotalGtrGenes }} selected</div>
-                          </div>
-                        </v-card-title>
+                         <v-card-text>
+                           <center>
+                             <span style="font-size:20px; font-weight:400">
+                             GENES
+                             </span>
+                             <Dialogs
+                               id="genesDialog"
+                               class="dialogBox"
+                               :HeadlineText="HelpDialogsData[0].HeadlineText"
+                               :ContentText="HelpDialogsData[0].Content">
+                             </Dialogs>
+                           </center>
+                           <v-divider></v-divider>
+                           <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ GtrGenesTabNumber }}</strong></span>
+                           <div>of {{ TotalGtrGenes }} selected</div>
+                         </v-card-text>
                        </v-card>
                      </div>
 
@@ -393,7 +394,7 @@
                     <!-- end vendor card -->
 
 
-                    <div class="d-flex mb-2 xs12 mt-3">
+                    <!-- <div class="d-flex mb-2 xs12 mt-3">
                       <v-card v-if="geneProps.length">
                        <v-card-title primary-title>
                          <div>
@@ -422,7 +423,7 @@
                          </div>
                        <br>
                       </v-card>
-                    </div>
+                    </div> -->
 
                     <!-- <div class="d-flex xs12">
 
