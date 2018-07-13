@@ -21,7 +21,7 @@
           id="input"
           class="form-control"
           type="text"
-          autocomplete="off"
+          autocomplete="false"
           placeholder="Treacher Collins Syndrome">
         <typeahead
           match-start
