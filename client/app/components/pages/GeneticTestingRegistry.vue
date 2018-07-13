@@ -112,7 +112,7 @@
                        </v-card>
                      </div>
 
-                     <div class="d-flex mt-1 mb-2 xs12 mt-3">
+                     <div class="d-flex mt-1 mb-2 xs12 mt-4">
                        <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
@@ -139,7 +139,7 @@
                        </v-card>
                      </div>
 
-                    <div class="d-flex mt-1 mb-2 xs12 mt-3">
+                    <div class="d-flex mt-1 mb-2 xs12 mt-4">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
@@ -179,30 +179,33 @@
                     </div>
                   </div>
 
-                  <div class="mt-3">
+                  <div class="mt-4">
                     <v-layout wrap>
             <v-flex xs12>
                     <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                       <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
-                        <v-card-title primary-title>
+                        <v-card-text>
+                          <center>
                            <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
-                             <div style="font-size:16px">
+                             <span style="font-size: 16px;font-weight: 550;">
                                ASSOCIATED DISORDERS
-                               <Dialogs
-                                 id="disordersDialog"
-                                 class="dialogBox"
-                                 :HeadlineText="HelpDialogsData[2].HeadlineText"
-                                 :ContentText="HelpDialogsData[2].Content">
-                               </Dialogs>
-                             </div>
-                             <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
-                               <strong v-if="selectDisorders.length===0">{{ multiSelectDisorder.length }}</strong>
-                               <strong v-else>{{ selectDisorders.length }}</strong>
+                             </span>
+                             <Dialogs
+                               id="disordersDialog"
+                               class="dialogBox"
+                               :HeadlineText="HelpDialogsData[2].HeadlineText"
+                               :ContentText="HelpDialogsData[2].Content">
+                             </Dialogs>
+                             <v-divider style="margin-top:10px;margin-bottom: 10px;"></v-divider>
+
+
+                             <span style="margin-top:0px; margin-bottom:0px; font-size:16px">
+                               <strong style="font-size:26px">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} selected
                              </span>
                              <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('disorders')">View & Filter</v-btn>
-                             <div>of {{ multiSelectDisorder.length }} selected</div>
-                           </div>
-                        </v-card-title>
+                         </div>
+                       </center>
+                        </v-card-text>
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
                           <br>
                           <v-card flat >
@@ -267,7 +270,7 @@
         </v-layout>
                 </div>
 
-                    <div class="d-flex mb-2 xs12 mt-3">
+                    <div class="d-flex mb-2 xs12 mt-4">
                       <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
@@ -302,7 +305,7 @@
                     </div>
 
                     <!-- start vendor cars -->
-                    <div class="mt-3">
+                    <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
@@ -407,7 +410,7 @@
                     <!-- end vendor card -->
 
 
-                    <!-- <div class="d-flex mb-2 xs12 mt-3">
+                    <!-- <div class="d-flex mb-2 xs12 mt-4">
                       <v-card v-if="geneProps.length">
                        <v-card-title primary-title>
                          <div>

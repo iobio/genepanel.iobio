@@ -52,9 +52,9 @@ var model = new Model();
 
         this.bars = `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
                       <rect class="genepanelsRect"
-                            x="10" y="1" rx="5" width="${selectedgenesWidth}" height="16"/>
+                            x="10" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
                       <rect class="grayRect"
-                            x="${selectedgenesWidth+10}" y="1" rx="5" width="${grayBarWidth}" height="16"/>
+                            x="${selectedgenesWidth+10}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
                   </svg>`
       }
     }
@@ -65,5 +65,12 @@ var model = new Model();
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.genepanelsRect{
+  fill: #4e7ad3;
+  pointer-events: all;
+  stroke: white;
+  stroke-width: 2;
+}
 
 </style>
