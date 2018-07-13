@@ -699,7 +699,7 @@ nav.toolbar, nav.v-toolbar
   font-weight: 300 !important
 
   &.clin
-    background-color: $app-color-clin !important
+    background-color: $app-color !important
 
   .toolbar__side-icon.btn.btn--icon, .v-toolbar__side-icon.v-btn.v-btn--icon
     max-width: 40px
