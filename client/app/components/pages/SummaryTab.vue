@@ -54,24 +54,34 @@
                   </div>
                   <br>
                   <div class="d-flex mt-1 mb-2 xs12">
-                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
-                      <v-card-title primary-title>
-                       <div>
-                         <div style="font-size:16px">
-                           GENES
-                           <Dialogs
-                             id="genesDialog"
-                             class="dialogBox"
-                             :HeadlineText="HelpDialogsData[0].HeadlineText"
-                             :ContentText="HelpDialogsData[0].Content">
-                           </Dialogs>
-                         </div>
-                         <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selectedGenes }}</strong></span>
-                         <div>of {{ totalGenes }} selected</div>
-                       </div>
-                     </v-card-title>
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <v-card-text>
+                      <center>
+                        <span class="Rightbar_CardHeading">
+                        GENES
+                        </span>
+                        <Dialogs
+                          id="genesDialog"
+                          class="dialogBox"
+                          :HeadlineText="HelpDialogsData[0].HeadlineText"
+                          :ContentText="HelpDialogsData[0].Content">
+                        </Dialogs>
+                        <v-divider class="Rightbar_card_divider"></v-divider>
+
+
+                         <span class="Rightbar_card_content_subheading">
+                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} selected</span>
+                       </center>
+                       <SvgBar
+                        class="SvgBarClass"
+                        id="genesSvgBox"
+                        :selectedNumber="selectedGenes"
+                        :totalNumber="totalGenes">
+                       </SvgBar>
+                     </v-card-text>
                     </v-card>
-                  </div>
+                       </div>
+
                   <br>
                   <div class="d-flex mb-2 xs12">
                       <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
@@ -104,6 +114,8 @@ import FilterSummary from './FilterSummary.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import Dialogs from '../partials/Dialogs.vue';
+import SvgBar from '../viz/SvgBar.vue'
+
 
 
   export default {
@@ -112,6 +124,7 @@ import Dialogs from '../partials/Dialogs.vue';
       'SummaryDataTable': SummaryDataTable,
       'FilterSummary': FilterSummary,
       'Dialogs': Dialogs,
+      'SvgBar': SvgBar,
     },
     props:{
       NumberOfGtrGenes:{

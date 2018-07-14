@@ -278,22 +278,30 @@
                 <br>
 
                 <div class="d-flex mt-1 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="multipleSearchTerms.length">
-                    <v-card-title primary-title>
-                     <div>
-                       <div style="font-size:16px">
-                         GENES
-                         <Dialogs
-                           id="genesDialog"
-                           class="dialogBox"
-                           :HeadlineText="HelpDialogsData[0].HeadlineText"
-                           :ContentText="HelpDialogsData[0].Content">
-                         </Dialogs>
-                       </div>
-                       <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selected.length }}</strong></span>
-                       <div>of {{ items.length }} selected</div>
-                     </div>
-                   </v-card-title>
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                    <v-card-text>
+                      <center>
+                        <span class="Rightbar_CardHeading">
+                        GENES
+                        </span>
+                        <Dialogs
+                          id="genesDialog"
+                          class="dialogBox"
+                          :HeadlineText="HelpDialogsData[0].HeadlineText"
+                          :ContentText="HelpDialogsData[0].Content">
+                        </Dialogs>
+
+                      <v-divider class="Rightbar_card_divider"></v-divider>
+                      <span class="Rightbar_card_content_subheading">
+                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} selected</span>
+                      </center>
+                      <SvgBar
+                       class="SvgBarClass"
+                       id="genesSvgBox"
+                       :selectedNumber="selected.length"
+                       :totalNumber="items.length">
+                      </SvgBar>
+                    </v-card-text>
                   </v-card>
                 </div>
 
@@ -407,11 +415,14 @@ var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
+import SvgBar from '../viz/SvgBar.vue'
+
 
   export default {
     components: {
       'PhenolyzerPieChart': PhenolyzerPieChart,
       'Dialogs': Dialogs,
+      'SvgBar': SvgBar,
       Typeahead
     },
     data(){
