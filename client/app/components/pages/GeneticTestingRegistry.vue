@@ -208,9 +208,10 @@
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
                           <br>
                           <v-card flat >
-                            <!-- <v-card-text> -->
+                            <v-card-text>
+                            <v-checkbox v-for="(item, i) in multiSelectDisorder" :key="i" :label="item" :value="item" v-model="selectDisorders"></v-checkbox>
 
-                                          <v-autocomplete
+                                          <!-- <v-autocomplete
                                             background-color="white"
                                             v-model="selectDisorders"
                                             :items="multiSelectDisorder"
@@ -244,9 +245,9 @@
                                               </template>
 
                                             </template>
-                                          </v-autocomplete>
+                                          </v-autocomplete> -->
                                 <!-- </v-layout> -->
-                            <!-- </v-card-text> -->
+                            </v-card-text>
                           </v-card>
                           <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
                           <a style="margin-left:5px" v-on:click="resetDisorders"> Reset Filters</a>
