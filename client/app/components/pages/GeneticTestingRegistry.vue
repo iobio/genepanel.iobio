@@ -209,7 +209,12 @@
                           <br>
                           <v-card flat >
                             <v-card-text>
-                            <v-checkbox v-for="(item, i) in multiSelectDisorder" :key="i" :label="item" :value="item" v-model="selectDisorders"></v-checkbox>
+                            <v-checkbox
+                              v-for="(item, i) in multiSelectDisorder"
+                              :key="i" :label="item" :value="item"
+                              style="margin-top:0px"
+                              v-model="selectDisorders">
+                            </v-checkbox>
 
                                           <!-- <v-autocomplete
                                             background-color="white"
@@ -247,10 +252,11 @@
                                             </template>
                                           </v-autocomplete> -->
                                 <!-- </v-layout> -->
+                                <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
+                                <a style="margin-left:5px" v-on:click="resetDisorders"> Reset Filters</a>
+
                             </v-card-text>
                           </v-card>
-                          <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
-                          <a style="margin-left:5px" v-on:click="resetDisorders"> Reset Filters</a>
                         <!-- </v-card-title> -->
                         <center>
                           <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>

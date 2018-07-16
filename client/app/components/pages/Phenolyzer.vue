@@ -195,7 +195,7 @@
                           </div>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
                           <td>
-                            <span v-for="x in props.item.searchTermIndex">
+                            <span v-for="x in props.item.searchTermIndexSVG">
                               <span v-html="x"></span>
                             </span>
                           </td>
@@ -460,7 +460,7 @@ import SvgBar from '../viz/SvgBar.vue'
             align: 'left',
             value: 'geneName'
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
 
             // {
             //   text: 'Matched search terms',
@@ -600,7 +600,7 @@ import SvgBar from '../viz/SvgBar.vue'
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.dictionaryArr = this.dictionaryArr.filter(term=>term.name!==item);
-
+        this.$emit('phenotypeSearchTermArray', this.multipleSearchTerms);
         var combinedList = this.combineList(this.dictionaryArr);
         var createdObj = this.createObj(combinedList);
         var averagedData = this.performMeanOperation(combinedList, createdObj);
@@ -608,6 +608,7 @@ import SvgBar from '../viz/SvgBar.vue'
 
         let data = this.drawSvgBars(sortedPhenotypeData);
         this.items = data;
+        this.noOfSourcesSvg();
         this.selected = this.items.slice(0,50);
         this.phenolyzerStatus = null;
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -645,6 +646,7 @@ import SvgBar from '../viz/SvgBar.vue'
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){
             self.$emit('search-phenotype', self.phenotypeTerm);
+            self.$emit('phenotypeSearchTermArray', self.multipleSearchTerms);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             self.selectedGenesText = "";
             self.phenolyzerStatus = null;
@@ -895,7 +897,7 @@ import SvgBar from '../viz/SvgBar.vue'
       },
       noOfSourcesSvg: function(){
         this.items.map(x=>{
-          x.searchTermIndex = x.searchTermIndex.map(y=>{
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
                   <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />

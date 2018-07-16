@@ -14,6 +14,30 @@
                   </v-card-title>
                   <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
                 </div>
+                <div v-else>
+                  <v-flex  d-flex xs12 >
+                    <v-layout row wrap>
+                      <v-flex xs6>
+                        <v-card-text>
+                          <strong>Disorders:</strong>
+                          <br>
+                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
+                            {{ i+1 }}. {{ searchItem }}
+                          </v-chip>
+                        </v-card-text>
+                      </v-flex>
+                      <v-flex xs6>
+                        <v-card-text>
+                          <strong>Phenotypes:</strong>
+                          <br>
+                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
+                            {{ i+1 }}. {{ searchItem }}
+                          </v-chip>
+                        </v-card-text>
+                      </v-flex>
+                    </v-layout>
+                  </v-flex>
+                </div>
               </v-card>
             </v-flex>
             <!-- End description -->
@@ -139,6 +163,12 @@ import SvgBar from '../viz/SvgBar.vue'
       PhenolyzerGenesForSummary:{
         type:Array
       },
+      searchTermGTR: {
+        type:Array
+      },
+      onSearchPhenotype: {
+        type: Array
+      },
       chartColor: null
     },
     data: () => ({
@@ -163,6 +193,8 @@ import SvgBar from '../viz/SvgBar.vue'
       dialog: false,
       IntroductionTextData: null,
       HelpDialogsData: null,
+      GtrSearchTerms: [],
+      PhenolyzerSearchTerms: [],
     }),
     watch: {
       GtrGenesForSummary:function(){
@@ -175,17 +207,26 @@ import SvgBar from '../viz/SvgBar.vue'
         this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
         this.summaryTableArray=[];
         this.performSetOperations();
+      },
+      searchTermGTR: function(){
+        this.GtrSearchTerms = this.searchTermGTR;
+      },
+      onSearchPhenotype: function(){
+        this.PhenolyzerSearchTerms = this.onSearchPhenotype;
       }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[2];
     },
     mounted(){
-      console.log("this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary)
+      console.log("this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary);
+      console.log("GtrSearchTerms", this.onSearchPhenotype)
       this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
       this.performSetOperations();
+      this.GtrSearchTerms = this.searchTermGTR;
+      this.PhenolyzerSearchTerms = this.onSearchPhenotype;
     },
     methods: {
       TotalSummaryGenes: function(e){
