@@ -229,14 +229,17 @@
                 v-if="component==='Phenolyzer'"
                 v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
                 v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-                @search-phenotype="onSearchPhenotype">
+                @search-phenotype="onSearchPhenotype"
+                @phenotypeSearchTermArray="phenotypeSearchTermArray">
               </Phenolyzer>
               <SummaryTab
                 v-else-if="component==='SummaryTab'"
                 v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
                 v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
                 v-bind:GtrGenesForSummary="selectedGtrGenes"
+                v-bind:searchTermGTR="searchTermGTR"
                 v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+                v-bind:onSearchPhenotype="phenotypeSearches"
                 :chartColor="ordinalColor">
               </SummaryTab>
             </keep-alive>
@@ -298,7 +301,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
         showDisclaimer: false,
         showVersion: false,
         searchTermGTR: null,
-        searchTermPhenotype: null,
+        searchTermPhenotype: [],
+        phenotypeSearches: [],
         modeOfInheritanceProps: [],
         GeneMembershipProps: [],
         IntroductionTextData: null,
@@ -576,7 +580,11 @@ import IntroductionText from '../../../data/IntroductionText.json';
         this.searchTermGTR = searchTerm;
       },
       onSearchPhenotype: function(searchTermObject)  {
-        this.searchTermPhenotype = searchTermObject.label;
+        // this.searchTermPhenotype = searchTermObject.label;
+        this.searchTermPhenotype.push(searchTermObject.label);
+      },
+      phenotypeSearchTermArray: function(searchTerms){
+        this.phenotypeSearches = searchTerms;
       }
 
     }

@@ -14,7 +14,8 @@ export default class Model {
         obj[x._modeOfInheritance] = x._geneCount;
       }
       else if(obj[x._modeOfInheritance]!== undefined){
-        obj[x._modeOfInheritance] = obj[x._modeOfInheritance]+x._geneCount;
+        // obj[x._modeOfInheritance] = obj[x._modeOfInheritance]+x._geneCount;
+        obj[x._modeOfInheritance] = obj[x._modeOfInheritance]>x._geneCount? obj[x._modeOfInheritance] : x._geneCount;
       }
     });
 
@@ -32,6 +33,7 @@ export default class Model {
   }
 
   filterItemsForModeOfInheritance(items){
+    console.log("filterItemsForModeOfInheritance", items)
     var arr =[];
     var obj= {};
     var tempArr = [];
@@ -41,6 +43,7 @@ export default class Model {
       }
       else if(x._modeOfInheritance.includes(",")) {
          tempArr = x._modeOfInheritance.split(", ");
+         console.log(x._modeOfInheritance.split(", ").length)
          tempArr.map(y=> {
            arr.push({_modeOfInheritance: y, _geneCount: x._geneCount})
          });

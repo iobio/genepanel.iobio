@@ -195,7 +195,7 @@
                           </div>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
                           <td>
-                            <span v-for="x in props.item.searchTermIndex">
+                            <span v-for="x in props.item.searchTermIndexSVG">
                               <span v-html="x"></span>
                             </span>
                           </td>
@@ -278,22 +278,30 @@
                 <br>
 
                 <div class="d-flex mt-1 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="multipleSearchTerms.length">
-                    <v-card-title primary-title>
-                     <div>
-                       <div style="font-size:16px">
-                         GENES
-                         <Dialogs
-                           id="genesDialog"
-                           class="dialogBox"
-                           :HeadlineText="HelpDialogsData[0].HeadlineText"
-                           :ContentText="HelpDialogsData[0].Content">
-                         </Dialogs>
-                       </div>
-                       <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selected.length }}</strong></span>
-                       <div>of {{ items.length }} selected</div>
-                     </div>
-                   </v-card-title>
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                    <v-card-text>
+                      <center>
+                        <span class="Rightbar_CardHeading">
+                        GENES
+                        </span>
+                        <Dialogs
+                          id="genesDialog"
+                          class="dialogBox"
+                          :HeadlineText="HelpDialogsData[0].HeadlineText"
+                          :ContentText="HelpDialogsData[0].Content">
+                        </Dialogs>
+
+                      <v-divider class="Rightbar_card_divider"></v-divider>
+                      <span class="Rightbar_card_content_subheading">
+                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} selected</span>
+                      </center>
+                      <SvgBar
+                       class="SvgBarClass"
+                       id="genesSvgBox"
+                       :selectedNumber="selected.length"
+                       :totalNumber="items.length">
+                      </SvgBar>
+                    </v-card-text>
                   </v-card>
                 </div>
 
@@ -407,11 +415,14 @@ var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
+import SvgBar from '../viz/SvgBar.vue'
+
 
   export default {
     components: {
       'PhenolyzerPieChart': PhenolyzerPieChart,
       'Dialogs': Dialogs,
+      'SvgBar': SvgBar,
       Typeahead
     },
     data(){
@@ -449,7 +460,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
             align: 'left',
             value: 'geneName'
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
 
             // {
             //   text: 'Matched search terms',
@@ -589,7 +600,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.dictionaryArr = this.dictionaryArr.filter(term=>term.name!==item);
-
+        this.$emit('phenotypeSearchTermArray', this.multipleSearchTerms);
         var combinedList = this.combineList(this.dictionaryArr);
         var createdObj = this.createObj(combinedList);
         var averagedData = this.performMeanOperation(combinedList, createdObj);
@@ -597,6 +608,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
 
         let data = this.drawSvgBars(sortedPhenotypeData);
         this.items = data;
+        this.noOfSourcesSvg();
         this.selected = this.items.slice(0,50);
         this.phenolyzerStatus = null;
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -634,6 +646,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){
             self.$emit('search-phenotype', self.phenotypeTerm);
+            self.$emit('phenotypeSearchTermArray', self.multipleSearchTerms);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             self.selectedGenesText = "";
             self.phenolyzerStatus = null;
@@ -884,7 +897,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
       },
       noOfSourcesSvg: function(){
         this.items.map(x=>{
-          x.searchTermIndex = x.searchTermIndex.map(y=>{
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
                   <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />

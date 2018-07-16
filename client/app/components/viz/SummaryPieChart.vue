@@ -25,7 +25,6 @@
 
     },
     mounted(){
-      console.log("this.summaryPieChartData", this.summaryPieChartData)
       this.summaryData = this.summaryPieChartData;
       this.draw();
     },
