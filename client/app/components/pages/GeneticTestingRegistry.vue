@@ -113,7 +113,7 @@
                      </div>
 
                      <div class="d-flex mt-1 mb-2 xs12 mt-4">
-                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
                              <span class="Rightbar_CardHeading">
@@ -304,7 +304,8 @@
                           </v-card-text>
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
-                              <v-card-text>
+                              <v-card-text >
+                                <div class="vendorsCardClass">
                                   <!-- <v-layout> -->
                                       <!-- <v-combobox
                                         v-model="vendorsSelect"
@@ -333,13 +334,10 @@
                                             color="blue-grey darken-3"
                                             outline
                                             class="chip--select-multi"
-                                            style="font-size:9.8px; "
                                             @input="data.parent.selectItem(data.item)"
                                           >
-                                            <span style="max-width: 300px; ">
-                                              <span style="overflow-wrap: break-word; word-break: break-word; max-width: 300px; overflow-x:hidden; display:inline-block; text-overflow: ellipsis; ">
-                                                {{ data.item}}
-                                              </span>
+                                            <span class="chip_fontSize">
+                                              {{ data.item}}
                                             </span>
                                           </v-chip>
                                         </template>
@@ -354,6 +352,8 @@
 
                                         </template>
                                       </v-autocomplete>
+                                    </div>
+                                    <br>
                                   <!-- </v-layout> -->
                                     <!-- <br> -->
 
@@ -897,6 +897,67 @@ export default {
    border-color: #F4F4F4;
  }
 
+
+
+ .chip_fontSize{
+   overflow-wrap: break-word;
+   word-break: break-word;
+   overflow-x:hidden;
+   display:inline-block;
+   text-overflow: ellipsis;
+   max-width: 370px;
+   font-size: 11px;
+ }
+
+ @media screen and (max-width:1700px){
+   .chip_fontSize{
+     overflow-wrap: break-word;
+     word-break: break-word;
+     overflow-x:hidden;
+     display:inline-block;
+     text-overflow: ellipsis;
+     max-width: 300px;
+     font-size:10.5px;
+   }
+ }
+
+ @media screen and (max-width:1520px){
+   .chip_fontSize{
+     overflow-wrap: break-word;
+     word-break: break-word;
+     overflow-x:hidden;
+     display:inline-block;
+     text-overflow: ellipsis;
+     max-width: 250px;
+     font-size:10.5px;
+   }
+ }
+
+ @media screen and (max-width:1210px){
+   .chip_fontSize{
+     overflow-wrap: break-word;
+     word-break: break-word;
+     overflow-x:hidden;
+     display:inline-block;
+     text-overflow: ellipsis;
+     max-width: 150px;
+     font-size:10.5px;
+   }
+ }
+
+ @media screen and (max-width:1000px){
+   .chip_fontSize{
+     overflow-wrap: break-word;
+     word-break: break-word;
+     overflow-x:hidden;
+     display:inline-block;
+     text-overflow: ellipsis;
+     max-width: 100px;
+     font-size:9px;
+   }
+ }
+
+
  @media screen and (max-width:1600px){
    #top-genes-input{
      width: 120px;
@@ -904,7 +965,6 @@ export default {
      margin-top: 4px;
    }
  }
-
 </style>
 
 <style lang="sass">
@@ -952,8 +1012,10 @@ export default {
   margin-top: -20px
 
 .vendorsCardClass
-  height: 200px
-  overflow: auto
+  height: 355px
+  overflow: scroll
+
+
 
 .SvgBarClass
   margin-top: 5px
