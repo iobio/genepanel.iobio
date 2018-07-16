@@ -182,7 +182,9 @@ import SvgBar from '../viz/SvgBar.vue'
       AllSourcesGenes:[],
       commonGtrPhenoGenes:[],
       uniqueGtrGenes:[],
+      uniqueGtrData: [],
       uniquePhenoGenes:[],
+      UniquePhenoData: [],
       pieChartdataArr:[],
       uniqueGenes: [],
       summaryTableArray:[],
@@ -257,8 +259,34 @@ import SvgBar from '../viz/SvgBar.vue'
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
 
+        this.uniqueGtrGenes.map(x=>{
+          this.GtrGenes.map(y=>{
+            if(x===y.name){
+              this.uniqueGtrData.push({
+                name: y.name,
+                sourceGTR: y.searchTermIndexSVG,
+                searchTermArrayGTR: y.searchTermArray,
+                searchTermIndexGTR: y.searchTermIndex,
+              })
+            }
+          })
+        })
+
         var uniquePheno = new Set([...phenolyzerSet].filter(x => !gtrSet.has(x)));
         this.uniquePheno = [...uniquePheno];
+
+        this.uniquePheno.map(x=>{
+          this.PhenolyzerGenes.map(y=>{
+            if(x===y.geneName){
+              this.UniquePhenoData.push({
+                name:y.geneName,
+                sourcePheno: y.searchTermIndexSVG,
+                searchTermPheno: y.searchTerm,
+                searchTermIndex: y.searchTermIndex,
+              })
+            }
+          })
+        })
 
         this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
 
@@ -290,6 +318,7 @@ import SvgBar from '../viz/SvgBar.vue'
               tempA.push({
                 name:this.PhenolyzerGenes[j].geneName,
                 rank: parseInt(this.PhenolyzerGenes[j].rank),
+                sourcePheno: this.PhenolyzerGenes[j].searchTermIndexSVG,
                 omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${this.PhenolyzerGenes[j].geneName}`,
                 medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${this.PhenolyzerGenes[j].geneName}`,
                 geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
@@ -303,6 +332,15 @@ import SvgBar from '../viz/SvgBar.vue'
           return a.rank - b.rank;
         });
 
+        for(var i=0; i<tempA.length; i++){
+          for(var j=0; j<this.GtrGenes.length; j++){
+            if(tempA[i].name===this.GtrGenes[j].name){
+              tempA[i].sourceGTR = this.GtrGenes[j].searchTermIndexSVG
+            }
+          }
+        }
+
+
         var arr=[];
         arr.push(tempA.map(x=>{
           return {
@@ -310,28 +348,34 @@ import SvgBar from '../viz/SvgBar.vue'
             isGtr: true,
             isPheno: true,
             sources: "GTR and Phenolyzer",
-            noOfSources: 2
+            noOfSources: 2,
+            sourceGTR: x.sourceGTR,
+            sourcePheno: x.sourcePheno,
           }
         }))
 
-        arr.push(this.uniqueGtrGenes.map(x=>{
+        arr.push(this.uniqueGtrData.map(x=>{
           return {
-            name: x,
+            name: x.name,
             isGtr: true,
             isPheno: false,
             sources: "GTR",
-            noOfSources: 1
+            noOfSources: 1,
+            sourceGTR: x.sourceGTR,
+            sourcePheno: []
           }
         }))
 
 
-        arr.push(this.uniquePheno.map(x=>{
+        arr.push(this.UniquePhenoData.map(x=>{
           return {
-            name: x,
+            name: x.name,
             isGtr: false,
             isPheno: true,
             sources: "Phenolyzer",
-            noOfSources: 1
+            noOfSources: 1,
+            sourcePheno: x.sourcePheno,
+            sourceGTR: []
           }
         }))
 
