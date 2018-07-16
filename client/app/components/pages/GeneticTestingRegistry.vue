@@ -140,42 +140,7 @@
                        </v-card>
                      </div>
 
-                    <!-- <div class="d-flex mt-1 mb-2 xs12 mt-4">
-                      <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
-                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
-                          <v-card-title primary-title>
-                             <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
-                               <div style="font-size:16px">
-                                 MODES OF INHERITANCE
-                                 <Dialogs
-                                   id="modeOfInheritanceDialog"
-                                   class="dialogBox"
-                                   :HeadlineText="HelpDialogsData[1].HeadlineText"
-                                   :ContentText="HelpDialogsData[1].Content">
-                                 </Dialogs>
-                               </div>
-                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
-                                 <strong>{{ modeOfInheritanceProps.length }}</strong>
-                               </span>
-                               <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
 
-                               <div>present</div>
-                             </div>
-                          </v-card-title>
-                        <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
-                            <PieChartSelector
-                              v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                              :color="chartColor">
-                            </PieChartSelector>
-                            <br>
-                          <center>
-                            <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
-                          </center>
-                          <br>
-                        </div>
-                      </v-card>
-                    </div>
-                  </div> -->
 
                   <div class="mt-4">
                     <v-layout wrap>
@@ -415,6 +380,43 @@
                   </v-layout wrap>
                 </div>
                     <!-- end vendor card -->
+
+                    <div class="d-flex mt-1 mb-2 xs12 mt-4">
+                      <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
+                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
+                          <v-card-title primary-title>
+                             <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
+                               <div style="font-size:16px">
+                                 MODES OF INHERITANCE
+                                 <Dialogs
+                                   id="modeOfInheritanceDialog"
+                                   class="dialogBox"
+                                   :HeadlineText="HelpDialogsData[1].HeadlineText"
+                                   :ContentText="HelpDialogsData[1].Content">
+                                 </Dialogs>
+                               </div>
+                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
+                                 <strong>{{ modeOfInheritanceProps.length }}</strong>
+                               </span>
+                               <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
+
+                               <div>present</div>
+                             </div>
+                          </v-card-title>
+                        <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
+                            <PieChartSelector
+                              v-bind:modeOfInheritanceData="modeOfInheritanceProps"
+                              :color="chartColor">
+                            </PieChartSelector>
+                            <br>
+                          <center>
+                            <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                          </center>
+                          <br>
+                        </div>
+                      </v-card>
+                    </div>
+                  </div>
 
 
                     <!-- <div class="d-flex mb-2 xs12 mt-4">
