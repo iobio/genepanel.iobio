@@ -1,6 +1,6 @@
 export default class GeneModel {
   constructor() {
-
+    this.preventSearchCB = false;
     this.geneSource = null;
     this.refseqOnly = {};
     this.gencodeOnly = {};
@@ -635,49 +635,60 @@ export default class GeneModel {
     });
   }
 
+  StopAjaxCall(){
+    this.preventSearchCB = true;
+  }
+
+  newSearchCall(){
+    this.preventSearchCB = false;
+  }
+
   searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback) {
+    console.log(this.preventSearchCB)
     var me = this;
     var phenolyzerServer = "https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/";
     var url = phenolyzerServer + '?term=' + phenotypeTerm;
     console.log("url is ", url)
     var status = null;
 
-    $.ajax({
-      url: url,
-      type: "GET",
-      dataType: "json",
-      success: ( data )=> {
-      if (data == "") {
-      } else if (data.record == 'queued') {
-        if (statusCallback) {
-          statusCallback('queued');
-        }
-        setTimeout(()=> {
-            me.searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback);
-          }, 5000);
-      } else if (data.record == 'pending') {
-        if (statusCallback) {
-          statusCallback('running');
-        }
-        setTimeout(()=> {
-            me.searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback);
-          }, 5000);
-      } else {
-        me.parsePhenolyzerGenes(data.record, selectGeneCount, me.NUMBER_PHENOLYZER_GENES);
-        if (statusCallback) {
-          statusCallback('done');
+    if(!this.preventSearchCB){
+      $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        success: ( data )=> {
+        if (data == "") {
+        } else if (data.record == 'queued') {
+          if (statusCallback) {
+            statusCallback('queued');
+          }
+          setTimeout(()=> {
+              me.searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback);
+            }, 5000);
+        } else if (data.record == 'pending') {
+          if (statusCallback) {
+            statusCallback('running');
+          }
+          setTimeout(()=> {
+              me.searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback);
+            }, 5000);
+        } else {
+          me.parsePhenolyzerGenes(data.record, selectGeneCount, me.NUMBER_PHENOLYZER_GENES);
+          if (statusCallback) {
+            statusCallback('done');
+          }
+
         }
 
-      }
-
-      },
-      fail: ()=> {
-        alert("An error occurred in Phenolyzer iobio services. " + thrownError);
-        if (statusCallback) {
-          statusCallback('error', thrownError)
+        },
+        fail: ()=> {
+          alert("An error occurred in Phenolyzer iobio services. " + thrownError);
+          if (statusCallback) {
+            statusCallback('error', thrownError)
+          }
         }
-      }
-    });
+      });
+    }
 
   }
 

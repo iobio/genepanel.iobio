@@ -521,9 +521,14 @@ import SvgBar from '../viz/SvgBar.vue'
         this.dictionaryArr = [];
         this.phenotypeTerm = "";
         this.phenotypeTermEntered = "";
+        this.phenolyzerStatus = null;
+        this.checked = false;
         this.$emit("SelectedPhenolyzerGenesToCopy", []);
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
+        geneModel.StopAjaxCall();
+        // geneModel.searchPhenolyzerGenes("", 50, "exit");
+        this.$forceUpdate();
       });
     },
     updated(){
@@ -654,6 +659,7 @@ import SvgBar from '../viz/SvgBar.vue'
             self.NoOfGenesSelectedFromPhenolyzer = 0;
             this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
+            geneModel.newSearchCall(); 
             geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
             (status, error)=> {
               if (status == 'done') {
@@ -818,52 +824,7 @@ import SvgBar from '../viz/SvgBar.vue'
           })
         }
       },
-      // onSearchPhenolyzerGenes: function() {
-      //   let self = this;
-      //   self.multipleSearchTerms.push(self.phenotypeTerm.value);
-      //   self.items = [];
-      //   self.checked = true;
-      //   self.alert = false;
-      //   self.selectedGenesText = "";
-      //   self.phenolyzerStatus = null;
-      //   self.genesToApply = "";
-      //   self.selected = [];
-      //   self.NoOfGenesSelectedFromPhenolyzer = 0;
-      //   this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-      //   var searchTerm = self.phenotypeTerm.value;
-      //   self.phenotypeTermEntered = self.phenotypeTerm.value;
-      //   geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
-      //   function(status, error) {
-      //     if (status == 'done') {
-      //       if (geneModel.phenolyzerGenes.length == 0) {
-      //         self.phenolyzerStatus = "no genes found."
-      //         self.genesToApply = "";
-      //         self.checked = false;
-      //         self.alert = true;
-      //       } else {
-      //         self.tempItems = geneModel.phenolyzerGenes;
-      //         self.addSearchTermProperty();
-      //         self.checked = false;
-      //         if(self.multipleSearchTerms.length===1){
-      //           self.multipleSearchArray = self.tempItems;
-      //         }
-      //         else if(self.multipleSearchTerms.length>1){
-      //           self.multipleSearchArray = [...self.multipleSearchArray, ...self.tempItems]
-      //         }
-      //         let data = self.drawSvgBars(self.multipleSearchArray);
-      //         self.items = data;
-      //         self.selected = self.items.slice(0,50);
-      //         self.phenolyzerStatus = null;
-      //         self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-      //         self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-      //         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-      //         self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-      //       }
-      //     } else {
-      //       self.phenolyzerStatus = status;
-      //     }
-      //   });
-      // },
+
       drawSvgBars: function(tempItems){
         var svgWidth = 350;
         //<stop offset="5%"  stop-color="#36D1DC"/>

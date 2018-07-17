@@ -342,7 +342,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
     },
     methods: {
       forceReload: function(){
-        bus.$emit("newAnalysis")
+        bus.$emit("newAnalysis");
+        window.scrollTo(0,0);
       },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
