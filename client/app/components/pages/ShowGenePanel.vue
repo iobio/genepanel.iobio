@@ -509,7 +509,6 @@ var model = new Model();
         this.items.map((x, i)=>{
           x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
-            // console.log(y)
             return `<svg height="30" width="30">
                   <circle class="sourceIndicator"  />
                   <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>

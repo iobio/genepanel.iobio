@@ -169,7 +169,7 @@
                           ></v-checkbox>
                         </td>
                         <!-- <td></td> -->
-                        <!-- <td>{{ props.item.rank }}</td> -->
+                        <td>{{ props.item.indexVal }}</td>
                         <td >
                           <div id="app">
                             <div>
@@ -450,11 +450,11 @@ import SvgBar from '../viz/SvgBar.vue'
         search: '',
         selected: [],
         headers: [
-          // {
-          //   text: 'Rank',
-          //   align: 'left',
-          //   value: 'rank'
-          // },
+          {
+            text: 'Index',
+            align: 'left',
+            value: 'indexVal'
+          },
           {
             text: 'Gene',
             align: 'left',
@@ -659,7 +659,7 @@ import SvgBar from '../viz/SvgBar.vue'
             self.NoOfGenesSelectedFromPhenolyzer = 0;
             this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
-            geneModel.newSearchCall(); 
+            geneModel.newSearchCall();
             geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
             (status, error)=> {
               if (status == 'done') {
@@ -857,9 +857,9 @@ import SvgBar from '../viz/SvgBar.vue'
         return tempItems
       },
       noOfSourcesSvg: function(){
-        this.items.map(x=>{
+        this.items.map((x, i)=>{
+          x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
-            // console.log(y)
             return `<svg height="30" width="30">
                   <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />
                   <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
