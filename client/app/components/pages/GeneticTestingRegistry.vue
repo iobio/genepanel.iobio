@@ -381,7 +381,7 @@
                 </div>
                     <!-- end vendor card -->
 
-                    <div class="d-flex mt-1 mb-2 xs12 mt-4">
+                    <!-- <div class="d-flex mt-1 mb-2 xs12 mt-4">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
@@ -416,7 +416,7 @@
                         </div>
                       </v-card>
                     </div>
-                  </div>
+                  </div> -->
 
 
                     <!-- <div class="d-flex mb-2 xs12 mt-4">
