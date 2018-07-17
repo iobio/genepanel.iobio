@@ -43,7 +43,7 @@ export default class Model {
       }
       else if(x._modeOfInheritance.includes(",")) {
          tempArr = x._modeOfInheritance.split(", ");
-         console.log(x._modeOfInheritance.split(", ").length)
+         // console.log(x._modeOfInheritance.split(", ").length)
          tempArr.map(y=> {
            arr.push({_modeOfInheritance: y, _geneCount: x._geneCount})
          });
