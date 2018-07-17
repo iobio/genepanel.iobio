@@ -431,7 +431,7 @@ import SvgBar from '../viz/SvgBar.vue'
         enterCount: 0,
         genesToApply: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
-        genesTop: 50,
+        genesTop: null,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -528,7 +528,7 @@ import SvgBar from '../viz/SvgBar.vue'
         this.phenotypeSearchedByUser = false;
         geneModel.StopAjaxCall();
         // geneModel.searchPhenolyzerGenes("", 50, "exit");
-        this.$forceUpdate();
+        this.genesTop = null;
       });
     },
     updated(){

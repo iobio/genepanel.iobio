@@ -171,15 +171,14 @@
                        </center>
                         </v-card-text>
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
-                          <br>
                           <v-card flat >
-                            <v-card-text>
-                            <v-checkbox
-                              v-for="(item, i) in multiSelectDisorder"
-                              :key="i" :label="item" :value="item"
-                              style="margin-top:0px"
-                              v-model="selectDisorders">
-                            </v-checkbox>
+                            <v-card-text style="margin-left:5px">
+                              <v-checkbox
+                                v-for="(item, i) in multiSelectDisorder"
+                                :key="i" :label="item" :value="item"
+                                style="margin-top:-5px"
+                                v-model="selectDisorders">
+                              </v-checkbox>
 
                                           <!-- <v-autocomplete
                                             background-color="white"
@@ -663,6 +662,7 @@ export default {
     });
     bus.$on("newAnalysis", ()=>{
       this.disordersSearchedByUser= false;
+      this.NumberOfTopGenes = null;
     });
   },
   created () {
@@ -1039,4 +1039,9 @@ export default {
 .Rightbar_card_divider
   margin-top: 10px
   margin-bottom: 10px
+
+.disordersCheckbox
+  margin-top: 0px
+  font-size: 14px
+  font-weight: 200
 </style>
