@@ -33,7 +33,7 @@ export default class Model {
   }
 
   filterItemsForModeOfInheritance(items){
-    console.log("filterItemsForModeOfInheritance", items)
+    // console.log("filterItemsForModeOfInheritance", items)
     var arr =[];
     var obj= {};
     var tempArr = [];

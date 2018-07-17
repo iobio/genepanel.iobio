@@ -62,7 +62,7 @@
                 :input-value="props.selected"
               ></v-checkbox>
             </td>
-            <!-- <td style="font-weight:600">{{ (props.item.key + 1) }}</td> -->
+            <td>{{ props.item.indexVal }}</td>
             <td>
               <div id="app">
                 <div>
@@ -179,8 +179,8 @@ var model = new Model();
         GenesToDisplay: [],
         genesTopCounts: [5, 10, 30, 50, 80, 100],
         pagination: {
-          sortBy: 'value',
-          descending: true, //Sorts the column in descending order
+          sortBy: 'indexVal',
+          // descending: true, //Sorts the column in descending order
           rowsPerPage: 25 //Sets the number of rows per page
 
         },
@@ -195,6 +195,7 @@ var model = new Model();
           //   value: 'key',
           //   helpText: 'Information'
           // },
+          { text: 'Index', align: 'left', value: 'indexVal' },
           {
             text: 'Name',
             align: 'left',
@@ -505,7 +506,8 @@ var model = new Model();
 
       },
       noOfSourcesSvg: function(){
-        this.items.map(x=>{
+        this.items.map((x, i)=>{
+          x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             // console.log(y)
             return `<svg height="30" width="30">
