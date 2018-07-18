@@ -133,23 +133,39 @@ var model = new Model();
           }
         },
         showDiseasesData: function(){
-          if(!this.flagForDisorderFilter){
-            this.items = this.DiseasePanelData;
-            this.tempItems = this.DiseasePanelData;
-            this.tempDisorders = this.DiseasePanelData;
-            this.getDisorderNames();
-            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-            // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
-            this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
-                                              // the mode of Inheritance back to parent so it can be used as props in summary panel
-            this.selected = this.items.slice()
-          }
-          else if(this.flagForDisorderFilter){ //Keeps track if the disorder name is selected when new disorder is searched
-            this.items = this.DiseasePanelData;
-            this.tempItems = this.DiseasePanelData;
-            this.getDisorderNames();
-            this.updateDisordersTableOnSelectedDisorders();
-          }
+
+          //New code that updates the data properly.
+          this.items = this.DiseasePanelData;
+          this.tempItems = this.DiseasePanelData;
+          this.tempDisorders = this.DiseasePanelData;
+          this.getDisorderNames();
+          this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
+          this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
+                                            // the mode of Inheritance back to parent so it can be used as props in summary panel
+          this.selected = this.items.slice()
+
+
+
+          // if(!this.flagForDisorderFilter){
+          //   console.log("if statement ")
+          //   this.items = this.DiseasePanelData;
+          //   this.tempItems = this.DiseasePanelData;
+          //   this.tempDisorders = this.DiseasePanelData;
+          //   this.getDisorderNames();
+          //   this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
+          //   // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
+          //   this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
+          //                                     // the mode of Inheritance back to parent so it can be used as props in summary panel
+          //   this.selected = this.items.slice()
+          // }
+          // else if(this.flagForDisorderFilter){ //Keeps track if the disorder name is selected when new disorder is searched
+          //   console.log("else if  ")
+          //   this.items = this.DiseasePanelData;
+          //   console.log("items length in else if ", this.items.length)
+          //   this.tempItems = this.DiseasePanelData;
+          //   this.getDisorderNames();
+          //   this.updateDisordersTableOnSelectedDisorders();
+          // }
 
 
         },
@@ -177,13 +193,14 @@ var model = new Model();
                 }
               }
             }
-            this.items = tempArray;
-            this.selected = this.items.slice();
+            this.selected = tempArray;
+            // this.items = tempArray;
+            // this.selected = this.items.slice();
             if(this.pieChartFlag===false){
               this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
               this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             }
-            return this.items;
+            // return this.items;
           }
           else if(this.selectedDisordersFromFilterPanel.length===0 && this.pieChartFlag){
             this.flagForDisorderFilter = false;

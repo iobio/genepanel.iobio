@@ -36,7 +36,7 @@
 
        <v-list-tile
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
-          @click="component='GeneticTestingRegistry'">
+          @click="selectComponent('GeneticTestingRegistry')">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
            <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
@@ -53,7 +53,7 @@
 
        <v-list-tile
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
-          @click="component='Phenolyzer'">
+          @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
            <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
@@ -71,7 +71,7 @@
 
        <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
-          @click="component='SummaryTab'">
+          @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
            <span v-if="component==='SummaryTab'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
@@ -280,6 +280,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
     data(){
       return{
         component: 'GeneticTestingRegistry',
+        GtrScrollY:0,
+        PhenolyzerScrollY:0,
+        SummaryScrollY:0,
         drawer: false,
         vendorList:[],
         selectedVendorsList:[],
@@ -327,7 +330,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
       }
     },
     created(){
-      this.IntroductionTextData = IntroductionText.data
+      this.IntroductionTextData = IntroductionText.data;
+      window.addEventListener('scroll', this.handleScroll);
     },
     mounted(){
       bus.$on("updateAllGenes", (data)=>{
@@ -341,8 +345,38 @@ import IntroductionText from '../../../data/IntroductionText.json';
     updated(){
     },
     methods: {
+      handleScroll (event) {
+        console.log(this.GtrScrollY);
+        console.log(this.PhenolyzerScrollY);
+        console.log(this.SummaryScrollY);
+        if(this.component === 'GeneticTestingRegistry'){
+          this.GtrScrollY = window.scrollY;
+        }
+        else if(this.component === 'Phenolyzer'){
+          this.PhenolyzerScrollY = window.scrollY;
+        }
+        else if(this.component === 'SummaryTab'){
+          this.SummaryScrollY = window.scrollY;
+        }
+      },
+      selectComponent(componentName){
+        this.component = componentName;
+        if(componentName === 'GeneticTestingRegistry'){
+          console.log("this.GtrScrollY",this.GtrScrollY)
+          window.scrollTo(0,this.GtrScrollY);
+        }
+        else if(componentName === 'Phenolyzer'){
+          console.log("this.PhenolyzerScrollY", this.PhenolyzerScrollY)
+          window.scrollTo(0,this.PhenolyzerScrollY);
+        }
+        else if(componentName === 'SummaryTab'){
+          console.log("this.SummaryScrollY", this.SummaryScrollY)
+          window.scrollTo(0,this.SummaryScrollY);
+        }
+      },
       forceReload: function(){
-        bus.$emit("newAnalysis")
+        bus.$emit("newAnalysis");
+        window.scrollTo(0,0);
       },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;

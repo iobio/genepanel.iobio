@@ -169,7 +169,7 @@
                           ></v-checkbox>
                         </td>
                         <!-- <td></td> -->
-                        <!-- <td>{{ props.item.rank }}</td> -->
+                        <td>{{ props.item.indexVal }}</td>
                         <td >
                           <div id="app">
                             <div>
@@ -431,7 +431,7 @@ import SvgBar from '../viz/SvgBar.vue'
         enterCount: 0,
         genesToApply: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
-        genesTop: 50,
+        genesTop: null,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -450,11 +450,11 @@ import SvgBar from '../viz/SvgBar.vue'
         search: '',
         selected: [],
         headers: [
-          // {
-          //   text: 'Rank',
-          //   align: 'left',
-          //   value: 'rank'
-          // },
+          {
+            text: 'Index',
+            align: 'left',
+            value: 'indexVal'
+          },
           {
             text: 'Gene',
             align: 'left',
@@ -521,9 +521,14 @@ import SvgBar from '../viz/SvgBar.vue'
         this.dictionaryArr = [];
         this.phenotypeTerm = "";
         this.phenotypeTermEntered = "";
+        this.phenolyzerStatus = null;
+        this.checked = false;
         this.$emit("SelectedPhenolyzerGenesToCopy", []);
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
+        geneModel.StopAjaxCall();
+        // geneModel.searchPhenolyzerGenes("", 50, "exit");
+        this.genesTop = null;
       });
     },
     updated(){
@@ -654,6 +659,7 @@ import SvgBar from '../viz/SvgBar.vue'
             self.NoOfGenesSelectedFromPhenolyzer = 0;
             this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
+            geneModel.newSearchCall();
             geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
             (status, error)=> {
               if (status == 'done') {
@@ -818,52 +824,7 @@ import SvgBar from '../viz/SvgBar.vue'
           })
         }
       },
-      // onSearchPhenolyzerGenes: function() {
-      //   let self = this;
-      //   self.multipleSearchTerms.push(self.phenotypeTerm.value);
-      //   self.items = [];
-      //   self.checked = true;
-      //   self.alert = false;
-      //   self.selectedGenesText = "";
-      //   self.phenolyzerStatus = null;
-      //   self.genesToApply = "";
-      //   self.selected = [];
-      //   self.NoOfGenesSelectedFromPhenolyzer = 0;
-      //   this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-      //   var searchTerm = self.phenotypeTerm.value;
-      //   self.phenotypeTermEntered = self.phenotypeTerm.value;
-      //   geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
-      //   function(status, error) {
-      //     if (status == 'done') {
-      //       if (geneModel.phenolyzerGenes.length == 0) {
-      //         self.phenolyzerStatus = "no genes found."
-      //         self.genesToApply = "";
-      //         self.checked = false;
-      //         self.alert = true;
-      //       } else {
-      //         self.tempItems = geneModel.phenolyzerGenes;
-      //         self.addSearchTermProperty();
-      //         self.checked = false;
-      //         if(self.multipleSearchTerms.length===1){
-      //           self.multipleSearchArray = self.tempItems;
-      //         }
-      //         else if(self.multipleSearchTerms.length>1){
-      //           self.multipleSearchArray = [...self.multipleSearchArray, ...self.tempItems]
-      //         }
-      //         let data = self.drawSvgBars(self.multipleSearchArray);
-      //         self.items = data;
-      //         self.selected = self.items.slice(0,50);
-      //         self.phenolyzerStatus = null;
-      //         self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-      //         self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-      //         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-      //         self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-      //       }
-      //     } else {
-      //       self.phenolyzerStatus = status;
-      //     }
-      //   });
-      // },
+
       drawSvgBars: function(tempItems){
         var svgWidth = 350;
         //<stop offset="5%"  stop-color="#36D1DC"/>
@@ -896,9 +857,9 @@ import SvgBar from '../viz/SvgBar.vue'
         return tempItems
       },
       noOfSourcesSvg: function(){
-        this.items.map(x=>{
+        this.items.map((x, i)=>{
+          x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
-            // console.log(y)
             return `<svg height="30" width="30">
                   <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />
                   <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>

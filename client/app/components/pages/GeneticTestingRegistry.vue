@@ -140,8 +140,6 @@
                        </v-card>
                      </div>
 
-
-
                   <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
@@ -171,15 +169,14 @@
                        </center>
                         </v-card-text>
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
-                          <br>
                           <v-card flat >
-                            <v-card-text>
-                            <v-checkbox
-                              v-for="(item, i) in multiSelectDisorder"
-                              :key="i" :label="item" :value="item"
-                              style="margin-top:0px"
-                              v-model="selectDisorders">
-                            </v-checkbox>
+                            <v-card-text style="margin-left:5px">
+                              <v-checkbox
+                                v-for="(item, i) in multiSelectDisorder"
+                                :key="i" :label="item" :value="item"
+                                style="margin-top:-5px"
+                                v-model="selectDisorders">
+                              </v-checkbox>
 
                                           <!-- <v-autocomplete
                                             background-color="white"
@@ -306,6 +303,15 @@
                             <v-card flat v-if="vendorList.length">
                               <v-card-text >
                                 <div class="vendorsCardClass">
+                                  <v-checkbox
+                                    v-for="(item, i) in multiSelectItems"
+                                    :key="i" :label="item" :value="item"
+                                    style="margin-top:-5px"
+                                    v-model="vendorsSelect">
+                                  </v-checkbox>
+                                </div>
+
+                                <!-- <div class="vendorsCardClass"> -->
                                   <!-- <v-layout> -->
                                       <!-- <v-combobox
                                         v-model="vendorsSelect"
@@ -314,7 +320,7 @@
                                         multiple
                                         :items="multiSelectItems"
                                       ></v-combobox> -->
-                                      <v-autocomplete
+                                      <!-- <v-autocomplete
                                         v-model="vendorsSelect"
                                         background-color="white"
                                         :items="multiSelectItems"
@@ -353,18 +359,18 @@
                                         </template>
                                       </v-autocomplete>
                                     </div>
-                                    <br>
+                                    <br> -->
                                   <!-- </v-layout> -->
                                     <!-- <br> -->
 
-                                  <Alerts
+                                  <!-- <Alerts
                                     v-show="vendorsSelect.length<multiSelectItems.length"
                                     alertType="warning"
                                     alertOutline=true
                                     alertTransition="scale-transition"
                                     alertText="You have deselected some items. Please note your selection will continue in the further analysis. However you can reselect the items from the drop down menu"
                                   >
-                                  </Alerts>
+                                  </Alerts> -->
                               </v-card-text>
                             </v-card>
                             <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
@@ -381,7 +387,7 @@
                 </div>
                     <!-- end vendor card -->
 
-                    <div class="d-flex mt-1 mb-2 xs12 mt-4">
+                    <!-- <div class="d-flex mt-1 mb-2 xs12 mt-4">
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
                         <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-title primary-title>
@@ -416,7 +422,7 @@
                         </div>
                       </v-card>
                     </div>
-                  </div>
+                  </div> -->
 
 
                     <!-- <div class="d-flex mb-2 xs12 mt-4">
@@ -465,7 +471,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -483,7 +489,7 @@
             <br>
 <!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -608,18 +614,18 @@ export default {
     vendorsSelect(val) {
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
       var lastItem = [];
-      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
-        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
-        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
-      }
+      // if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+      //   this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+      //   this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+      // }
     },
     selectDisorders(val) {
       if(this.chartComponent==="disorders"){
         bus.$emit("updatedFromDisorders")
       }
-      if(this.selectDisorders.length > this.multiSelectDisorder.length){
-         this.selectDisorders= this.multiSelectDisorder
-      }
+      // if(this.selectDisorders.length > this.multiSelectDisorder.length){
+      //    this.selectDisorders= this.multiSelectDisorder
+      // }
     }
   },
   mounted(){
@@ -663,6 +669,7 @@ export default {
     });
     bus.$on("newAnalysis", ()=>{
       this.disordersSearchedByUser= false;
+      this.NumberOfTopGenes = null;
     });
   },
   created () {
@@ -742,7 +749,7 @@ export default {
       this.multiSelectItems = e;
       this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
-      this.checkForDeselectedVendor();
+      // this.checkForDeselectedVendor();
     },
     checkForDeselectedVendor: function(){
       if(this.saveSelectedVendors.length===0){
@@ -1039,4 +1046,9 @@ export default {
 .Rightbar_card_divider
   margin-top: 10px
   margin-bottom: 10px
+
+.disordersCheckbox
+  margin-top: 0px
+  font-size: 14px
+  font-weight: 200
 </style>
