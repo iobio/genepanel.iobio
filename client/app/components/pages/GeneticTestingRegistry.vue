@@ -128,7 +128,8 @@
 
                            <v-divider class="Rightbar_card_divider"></v-divider>
                            <span class="Rightbar_card_content_subheading">
-                             <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected</span>
+                             <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected
+                           </span>
                            </center>
                            <SvgBar
                             class="SvgBarClass"
@@ -148,7 +149,7 @@
                         <v-card-text>
                           <center>
                             <span class="Rightbar_CardHeading">
-                              ASSOCIATED DISORDERS
+                              ASSOCIATED DISORDERS & MODES OF INHERITANCE
                             </span>
                             <Dialogs
                               id="disordersDialog"
@@ -160,8 +161,25 @@
 
                            <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
                              <span class="Rightbar_card_content_subheading">
-                               <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} selected
+                               <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} disorders selected
                              </span>
+                             <SvgBar
+                              class="SvgBarClass"
+                              id="disordersSvgBox"
+                              :selectedNumber="selectDisorders.length"
+                              :totalNumber="multiSelectDisorder.length">
+                             </SvgBar>
+                             <br>
+                             <span class="Rightbar_card_content_subheading">
+                               <strong class="Rightbar_card_content_heading">{{ selectedModesOfInheritance.length }}</strong> of {{ modeOfInheritanceProps.length }} modes of inheritance selected
+                             </span>
+                             <SvgBar
+                              class="SvgBarClass"
+                              id="ModesOfInheritanceSvgBox"
+                              :selectedNumber="selectedModesOfInheritance.length"
+                              :totalNumber="modeOfInheritanceProps.length">
+                             </SvgBar>
+                             <br>
                              <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('disorders')">
                                View & Filter
                              </v-btn>
