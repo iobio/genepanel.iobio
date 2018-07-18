@@ -134,7 +134,7 @@ var model = new Model();
         },
         showDiseasesData: function(){
 
-          //New code that updates the data properly. 
+          //New code that updates the data properly.
           this.items = this.DiseasePanelData;
           this.tempItems = this.DiseasePanelData;
           this.tempDisorders = this.DiseasePanelData;
@@ -193,13 +193,14 @@ var model = new Model();
                 }
               }
             }
-            this.items = tempArray;
-            this.selected = this.items.slice();
+            this.selected = tempArray;
+            // this.items = tempArray;
+            // this.selected = this.items.slice();
             if(this.pieChartFlag===false){
               this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
               this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             }
-            return this.items;
+            // return this.items;
           }
           else if(this.selectedDisordersFromFilterPanel.length===0 && this.pieChartFlag){
             this.flagForDisorderFilter = false;
