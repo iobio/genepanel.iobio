@@ -170,58 +170,29 @@
                         </v-card-text>
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
                           <v-card flat >
-                            <v-card-text style="margin-left:5px">
+                            <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='disorders'">
                               <v-checkbox
                                 v-for="(item, i) in multiSelectDisorder"
-                                :key="i" :label="item" :value="item"
+                                :key="i" :label="item" :value="item" id="disordersBox"
                                 style="margin-top:-5px"
                                 v-model="selectDisorders">
                               </v-checkbox>
+                            </v-card-text>
+                              <br>
+                            <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='modes'">
+                              <v-checkbox
+                                v-for="(item, j) in modeOfInheritanceProps"
+                                :key="j" :label="item._modeOfInheritance" :value="item" id="modeBox"
+                                style="margin-top:-5px"
+                                v-model="selectedModesOfInheritance">
+                              </v-checkbox>
 
-                                          <!-- <v-autocomplete
-                                            background-color="white"
-                                            v-model="selectDisorders"
-                                            :items="multiSelectDisorder"
-                                            box
-                                            chips
-                                            label="Selected Disorders"
-                                            multiple
-                                          >
-                                            <template
-                                              slot="selection"
-                                              slot-scope="data"
-                                            >
-                                              <v-chip
-                                                :selected="data.selected"
-                                                close
-                                                color="blue-grey darken-3"
-                                                outline
-                                                class="chip--select-multi"
-                                                style="font-size:10px"
-                                                @input="data.parent.selectItem(data.item)"
-                                              >
-                                                {{ data.item}}
-                                              </v-chip>
-                                            </template>
-                                            <template
-                                              slot="item"
-                                              slot-scope="data"
-                                            >
-                                              <template v-if="typeof data.item !== 'object'">
-                                                <v-list-tile-content v-text="data.item"><v-checkbox  ></v-checkbox></v-list-tile-content>
-                                              </template>
-
-                                            </template>
-                                          </v-autocomplete> -->
-                                <!-- </v-layout> -->
                                 <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
-                                <a style="margin-left:5px" v-on:click="resetDisorders"> Reset Filters</a>
-
                             </v-card-text>
                           </v-card>
                         <!-- </v-card-title> -->
                         <center>
-                          <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                          <v-btn color="primary darken-1" flat="flat" v-on:click="closeComponent">Close</v-btn>
                         </center>
                         <br>
                       </div>
@@ -311,66 +282,6 @@
                                   </v-checkbox>
                                 </div>
 
-                                <!-- <div class="vendorsCardClass"> -->
-                                  <!-- <v-layout> -->
-                                      <!-- <v-combobox
-                                        v-model="vendorsSelect"
-                                        label="Select Vendors"
-                                        chips
-                                        multiple
-                                        :items="multiSelectItems"
-                                      ></v-combobox> -->
-                                      <!-- <v-autocomplete
-                                        v-model="vendorsSelect"
-                                        background-color="white"
-                                        :items="multiSelectItems"
-                                        box
-                                        chips
-                                        label="Selected Vendors"
-                                        multiple
-                                        style="background:white"
-                                      >
-                                        <template
-                                          slot="selection"
-                                          slot-scope="data"
-                                        >
-                                          <v-chip
-                                            :selected="data.selected"
-                                            close
-                                            color="blue-grey darken-3"
-                                            outline
-                                            class="chip--select-multi"
-                                            @input="data.parent.selectItem(data.item)"
-                                          >
-                                            <span class="chip_fontSize">
-                                              {{ data.item}}
-                                            </span>
-                                          </v-chip>
-                                        </template>
-                                        <template
-                                          slot="item"
-                                          slot-scope="data"
-                                        >
-                                          <template v-if="typeof data.item !== 'object'">
-                                            <v-list-tile-content v-text="data.item">
-                                            </v-list-tile-content>
-                                          </template>
-
-                                        </template>
-                                      </v-autocomplete>
-                                    </div>
-                                    <br> -->
-                                  <!-- </v-layout> -->
-                                    <!-- <br> -->
-
-                                  <!-- <Alerts
-                                    v-show="vendorsSelect.length<multiSelectItems.length"
-                                    alertType="warning"
-                                    alertOutline=true
-                                    alertTransition="scale-transition"
-                                    alertText="You have deselected some items. Please note your selection will continue in the further analysis. However you can reselect the items from the drop down menu"
-                                  >
-                                  </Alerts> -->
                               </v-card-text>
                             </v-card>
                             <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
@@ -387,91 +298,11 @@
                 </div>
                     <!-- end vendor card -->
 
-                    <!-- <div class="d-flex mt-1 mb-2 xs12 mt-4">
-                      <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
-                        <v-card v-bind:class="[chartComponent==='PieChartSelector' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
-                          <v-card-title primary-title>
-                             <div v-bind:class="[chartComponent==='PieChartSelector' ? 'disabledClass' : 'activeClass']">
-                               <div style="font-size:16px">
-                                 MODES OF INHERITANCE
-                                 <Dialogs
-                                   id="modeOfInheritanceDialog"
-                                   class="dialogBox"
-                                   :HeadlineText="HelpDialogsData[1].HeadlineText"
-                                   :ContentText="HelpDialogsData[1].Content">
-                                 </Dialogs>
-                               </div>
-                               <span style="margin-top:0px; margin-bottom:0px; font-size:26px">
-                                 <strong>{{ modeOfInheritanceProps.length }}</strong>
-                               </span>
-                               <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark style="height:30px" v-on:click="showChartComponent('PieChartSelector')">View & Filter</v-btn>
-
-                               <div>present</div>
-                             </div>
-                          </v-card-title>
-                        <div v-bind:class="[chartComponent==='PieChartSelector' ? 'activeClass' : 'disabledClass']">
-                            <PieChartSelector
-                              v-bind:modeOfInheritanceData="modeOfInheritanceProps"
-                              :color="chartColor">
-                            </PieChartSelector>
-                            <br>
-                          <center>
-                            <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
-                          </center>
-                          <br>
-                        </div>
-                      </v-card>
-                    </div>
-                  </div> -->
-
-
-                    <!-- <div class="d-flex mb-2 xs12 mt-4">
-                      <v-card v-if="geneProps.length">
-                       <v-card-title primary-title>
-                         <div>
-                           <div style="font-size:16px">
-                             FILTERS FEED
-                             <Dialogs
-                               id="filtersDialog"
-                               class="dialogBox"
-                               :HeadlineText="HelpDialogsData[5].HeadlineText"
-                               :ContentText="HelpDialogsData[5].Content">
-                             </Dialogs>
-                           </div>
-                         </div>
-                         </v-card-title>
-                         <div class="filterFeed">
-                           <v-card-text>
-                              <div v-if="filterFeed.length>0">
-                                <p v-for="(filter, i) in filterFeed">
-                                  <v-icon>chevron_right</v-icon> &nbsp; {{ filter }}
-                                </p>
-                              </div>
-                              <div v-else>
-                                <center><i>No filters selected</i></center>
-                              </div>
-                           </v-card-text>
-                         </div>
-                       <br>
-                      </v-card>
-                    </div> -->
-
-                    <!-- <div class="d-flex xs12">
-
-                      <ConditionsDistribution
-                          v-if="geneProps.length && diseasesProps.length"
-                          v-bind:distributionData="geneProps"
-                          :color="barColor">
-                      </ConditionsDistribution>
-
-                    </div> -->
                    </v-flex>
-
-
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex d-flex xs12 sm12 md12 >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -481,7 +312,10 @@
                     v-on:selectedDiseases="selectDiseases($event)"
                     v-on:setDisorderNamesList="updateDisorderNamesList($event)"
                     v-on:PieChartSelectorData="PieChartSelectorData($event)"
-                    v-bind:selectedDisordersProps="selectDisorders">
+                    v-bind:selectedDisordersProps="selectDisordersProps"
+                    v-bind:selectedModesOfInheritance="selectedModesOfInheritanceProps"
+                    v-on:ModesSelectedData="ModesSelectedData($event)"
+                    v-on:disordersSelectedData="disordersSelectedData($event)">
                   </disease-panel>
                 </v-card-text>
               </v-card>
@@ -580,6 +414,7 @@ export default {
       Genes: [],  //multiselect
       disordersDataList: [],
       selectDisorders: [],
+      selectDisordersProps:[],
       multiSelectDisorder: [],
       snackbar: false,
       snackbarText: "",
@@ -602,6 +437,9 @@ export default {
       lastVendorItem: [],
       HelpDialogsData: null,
       IntroductionTextData: null,
+      selectedModesOfInheritance: [],
+      selectedModesOfInheritanceProps: [],
+      DisordersAndModesComponent: "",
     }
   },
   watch:{
@@ -614,18 +452,26 @@ export default {
     vendorsSelect(val) {
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
       var lastItem = [];
-      // if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
-      //   this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
-      //   this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
-      // }
+      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+      }
     },
     selectDisorders(val) {
-      if(this.chartComponent==="disorders"){
-        bus.$emit("updatedFromDisorders")
+      if(this.DisordersAndModesComponent==="disorders"){
+        this.selectDisordersProps = this.selectDisorders;
       }
+      // if(this.chartComponent==="disorders"){
+      //   bus.$emit("updatedFromDisorders")
+      // }
       // if(this.selectDisorders.length > this.multiSelectDisorder.length){
       //    this.selectDisorders= this.multiSelectDisorder
       // }
+    },
+    selectedModesOfInheritance(val){
+      if(this.DisordersAndModesComponent==="modes"){
+        this.selectedModesOfInheritanceProps = this.selectedModesOfInheritance;
+      }
     }
   },
   mounted(){
@@ -749,7 +595,7 @@ export default {
       this.multiSelectItems = e;
       this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
-      // this.checkForDeselectedVendor();
+      this.checkForDeselectedVendor();
     },
     checkForDeselectedVendor: function(){
       if(this.saveSelectedVendors.length===0){
@@ -765,7 +611,12 @@ export default {
     },
     PieChartSelectorData: function(e){
       this.modeOfInheritanceProps = e;
+      var x = e;
+      this.selectedModesOfInheritance = e;
       this.$emit("modeOfInheritanceData", e);
+    },
+    ModesSelectedData:function(e){
+      this.selectedModesOfInheritance = e;
     },
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
@@ -773,6 +624,9 @@ export default {
       this.multiSelectDisorder = e;
       this.selectDisorders = this.multiSelectDisorder;
       this.$emit("disorderNamesListCB", e)
+    },
+    disordersSelectedData:function(e){
+      this.selectDisorders = e;
     },
     updateSelectedDisorders: function(e){
       // console.log("selected disorders from callback to home ", e)
@@ -830,6 +684,10 @@ export default {
     },
     multipleSearchData: function(e){
       this.multipleSearchItems = e;
+    },
+    closeComponent: function(){
+      this.chartComponent=null;
+      this.DisordersAndModesComponent = "";
     }
   }
 }
