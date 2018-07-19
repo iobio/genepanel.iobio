@@ -148,7 +148,7 @@
                       <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                         <v-card-text>
                           <center>
-                            <span class="Rightbar_CardHeading">
+                            <span class="Rightbar_CardHeading" style="font-size:14px">
                               ASSOCIATED DISORDERS & MODES OF INHERITANCE
                             </span>
                             <Dialogs
@@ -189,6 +189,17 @@
                       <div v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
                           <v-card flat >
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='disorders'">
+                              <center>
+                                <span class="Rightbar_card_content_subheading">
+                                  <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} disorders selected
+                                </span>
+                                <SvgBar
+                                 class="SvgBarClass"
+                                 id="disordersSvgBoxInside"
+                                 :selectedNumber="selectDisorders.length"
+                                 :totalNumber="multiSelectDisorder.length">
+                                </SvgBar>
+                              </center>
                               <v-checkbox
                                 v-for="(item, i) in multiSelectDisorder"
                                 :key="i" :label="item" :value="item" id="disordersBox"
@@ -196,27 +207,43 @@
                                 v-model="selectDisorders">
                               </v-checkbox>
                             </v-card-text>
-                              <br>
+                              <v-divider></v-divider>
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='modes'">
+                              <center>
+                                <span class="Rightbar_card_content_subheading">
+                                  <strong class="Rightbar_card_content_heading">{{ selectedModesOfInheritance.length }}</strong> of {{ modeOfInheritanceProps.length }} modes of inheritance selected
+                                </span>
+                                <SvgBar
+                                 class="SvgBarClass"
+                                 id="ModesOfInheritanceSvgBox"
+                                 :selectedNumber="selectedModesOfInheritance.length"
+                                 :totalNumber="modeOfInheritanceProps.length">
+                                </SvgBar>
+                                <br>
+                              </center>
+                              <span style="font-size13px; font-weight:600">
+                                Each disorder is associated with one or more modes of inheritance. If a mode of inheritance is selected below,
+                                all disorders associated with it will be retained. If a disorder is associated with multiple modes of inheritance,
+                                all must be deselected to remove the disorder.
+                              </span>
+                              <br><br>
                               <v-checkbox
                                 v-for="(item, j) in modeOfInheritanceProps"
                                 :key="j" :label="item" :value="item" id="modeBox"
                                 style="margin-top:-5px"
                                 v-model="selectedModesOfInheritance">
                               </v-checkbox>
-                              <div v-for="x in modeOfInheritanceProps">
+                              <!-- <div v-for="x in modeOfInheritanceProps">
                                 {{x }}
                                 <br>
                               </div>
-                              -----
                               <br>
-                              -----
                               <div v-for="x in selectedModesOfInheritance">
                                 {{x}}
                                 <br>
-                              </div>
+                              </div> -->
 
-                                <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
+                                <!-- <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn> -->
                             </v-card-text>
                           </v-card>
                         <!-- </v-card-title> -->
@@ -331,7 +358,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -352,7 +379,7 @@
             <br>
 <!-- style="visibility:hidden; height:0px" -->
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -390,7 +417,7 @@ import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import IntroductionText from '../../../data/IntroductionText.json';
 import SvgBar from '../viz/SvgBar.vue'
-
+import DisordersModesTable from '../partials/DisordersModesTable.vue';
 
 export default {
   components: { //Registering locally for nesting!
@@ -404,6 +431,7 @@ export default {
     'Alerts': Alerts,
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,
+    'DisordersModesTable': DisordersModesTable,
   },
   name: 'home',
   props: {
