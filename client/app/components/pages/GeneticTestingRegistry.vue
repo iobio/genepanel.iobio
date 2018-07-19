@@ -200,10 +200,21 @@
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='modes'">
                               <v-checkbox
                                 v-for="(item, j) in modeOfInheritanceProps"
-                                :key="j" :label="item._modeOfInheritance" :value="item" id="modeBox"
+                                :key="j" :label="item" :value="item" id="modeBox"
                                 style="margin-top:-5px"
                                 v-model="selectedModesOfInheritance">
                               </v-checkbox>
+                              <div v-for="x in modeOfInheritanceProps">
+                                {{x }}
+                                <br>
+                              </div>
+                              -----
+                              <br>
+                              -----
+                              <div v-for="x in selectedModesOfInheritance">
+                                {{x}}
+                                <br>
+                              </div>
 
                                 <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn>
                             </v-card-text>
@@ -630,11 +641,30 @@ export default {
     PieChartSelectorData: function(e){
       this.modeOfInheritanceProps = e;
       var x = e;
-      this.selectedModesOfInheritance = e;
+      this.selectedModesOfInheritance = this.modeOfInheritanceProps;
       this.$emit("modeOfInheritanceData", e);
+
+      var x = [];
+      e.map(y=>{
+        x.push(y._modeOfInheritance);
+      });
+      this.modeOfInheritanceProps = x;
+      this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+
     },
     ModesSelectedData:function(e){
-      this.selectedModesOfInheritance = e;
+      // this.selectedModesOfInheritance = [];
+      // if(e.length === this.modeOfInheritanceProps){
+      //   this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      // }
+      // else {
+      //   this.selectedModesOfInheritance = e;
+      var x = [];
+      e.map(y=>{
+        x.push(y._modeOfInheritance);
+      });
+      this.selectedModesOfInheritance = x;
+
     },
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);

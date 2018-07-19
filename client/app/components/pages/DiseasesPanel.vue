@@ -194,16 +194,17 @@ var model = new Model();
           var tempA = [];
           var a;
           var b=[];
-          this.selectedModesOfInheritance.forEach(x=>{
-            b.push(x._modeOfInheritance);
-          })
+          // this.selectedModesOfInheritance.forEach(x=>{
+          //   b.push(x._modeOfInheritance);
+          // })
+          b = this.selectedModesOfInheritance
           console.log(b)
           // this.selected = [];
           var tempA = [];
           var a;
           var b;
           this.items.map(x=>{
-            a = x._modeOfInheritance.split(",");
+            a = x._modeOfInheritance.split(", ");
             if(a.some(r=>b.includes(r))){
               tempA.push(x);
             }
@@ -217,8 +218,9 @@ var model = new Model();
         },
         updateDisordersTableOnSelectedDisorders: function(){
           var tempArray =[];
+          var modeData = [];
           this.items = this.tempDisorders;
-          if(this.selectedDisordersFromFilterPanel.length>0){
+          // if(this.selectedDisordersFromFilterPanel.length>0){
             this.selected=[];
             for(var i=0; i<this.selectedDisordersFromFilterPanel.length; i++){
               for(var j=0; j<this.items.length; j++){
@@ -228,8 +230,9 @@ var model = new Model();
               }
             }
             this.selected = tempArray;
-            this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.selected); //Update the select pie chart data when dropdown item selected.
-            this.$emit("ModesSelectedData", this.modeOfInheritanceData);
+            modeData = model.filterItemsForModeOfInheritance(this.selected); //Update the select pie chart data when dropdown item selected.
+            console.log("this.modeOfInheritanceData", modeData)
+            this.$emit("ModesSelectedData", modeData);
 
             // this.items = tempArray;
             // this.selected = this.items.slice();
@@ -238,7 +241,7 @@ var model = new Model();
             //   this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
             // }
             // return this.items;
-          }
+          // }
           // else if(this.selectedDisordersFromFilterPanel.length===0 && this.pieChartFlag){
           //   this.flagForDisorderFilter = false;
           //   this.selected = this.tempDisorders.slice();
