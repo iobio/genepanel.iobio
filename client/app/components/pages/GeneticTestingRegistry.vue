@@ -229,7 +229,7 @@
                               <br><br>
                               <v-checkbox
                                 v-for="(item, j) in modeOfInheritanceProps"
-                                :key="j" :label="item" :value="item" id="modeBox"
+                                :key="j" :label="item" :value="item" id="modeBoxInside"
                                 style="margin-top:-5px"
                                 v-model="selectedModesOfInheritance">
                               </v-checkbox>
@@ -278,6 +278,7 @@
                                <span class="Rightbar_card_content_subheading">
                                  <strong class="Rightbar_card_content_heading">{{ genePanelsCount }}</strong> Present
                                </span>
+                               <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('GeneMembership')">
                                  View & Filter
                                </v-btn>
@@ -322,6 +323,13 @@
                                <span class="Rightbar_card_content_subheading">
                                  <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} selected
                                </span>
+                               <SvgBar
+                                class="SvgBarClass"
+                                id="disordersSvgBoxInside"
+                                :selectedNumber="vendorsSelect.length"
+                                :totalNumber="vendorList.length">
+                               </SvgBar>
+                               <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
                              </div>
                             </center>
@@ -329,6 +337,18 @@
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
                               <v-card-text >
+                                <center>
+                                  <span class="Rightbar_card_content_subheading">
+                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} disorders selected
+                                  </span>
+                                  <SvgBar
+                                   class="SvgBarClass"
+                                   id="disordersSvgBoxInside"
+                                   :selectedNumber="vendorsSelect.length"
+                                   :totalNumber="vendorList.length">
+                                  </SvgBar>
+                                </center>
+                                <br>
                                 <div class="vendorsCardClass">
                                   <v-checkbox
                                     v-for="(item, i) in multiSelectItems"
@@ -964,6 +984,7 @@ export default {
 .viewFilterButton
   height: 30px
   margin-top: -2px
+  border-radius: 6px
 
 .Rightbar_CardHeading
   font-size: 16px
