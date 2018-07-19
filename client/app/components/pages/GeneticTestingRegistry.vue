@@ -437,7 +437,6 @@ import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import IntroductionText from '../../../data/IntroductionText.json';
 import SvgBar from '../viz/SvgBar.vue'
-import DisordersModesTable from '../partials/DisordersModesTable.vue';
 
 export default {
   components: { //Registering locally for nesting!
@@ -451,7 +450,6 @@ export default {
     'Alerts': Alerts,
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,
-    'DisordersModesTable': DisordersModesTable,
   },
   name: 'home',
   props: {

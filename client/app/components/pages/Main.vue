@@ -169,26 +169,11 @@
       <!-- <span>
         <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
       </span> -->
-      <span>
+      <!-- <span>
         <v-btn flat><v-icon>help</v-icon> Help</v-btn>
-      </span>
-      <v-menu bottom offset-y style="color:black">
-        <v-btn flat slot="activator"
-          ><v-icon style="padding-right:4px">apps</v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile >
-            <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile >
-            <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile >
-            <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-
+      </span> -->
+      <HelpMenu></HelpMenu>
+      <AppsMenu></AppsMenu>
 
     </v-toolbar>
 
@@ -264,7 +249,8 @@ import FilterSummary from './FilterSummary.vue';
 var FileSaver = require('file-saver');
 import DisorderSearch from './DisorderSearch.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
-
+import AppsMenu from '../partials/AppsMenu.vue';
+import HelpMenu from '../partials/HelpMenu.vue';
 
   export default {
     components: {
@@ -276,6 +262,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
       'DisorderSearch': DisorderSearch,
       'FilterPhenolyzer': FilterPhenolyzer,
       'FilterSummary': FilterSummary,
+      'AppsMenu': AppsMenu,
+      'HelpMenu': HelpMenu
     },
     data(){
       return{
