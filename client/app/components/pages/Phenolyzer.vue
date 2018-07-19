@@ -53,7 +53,7 @@
                       <br>
                       <center>
                         <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
-                        The phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
                       </center>
                     </div>
                     <div v-if="multipleSearchTerms.length">

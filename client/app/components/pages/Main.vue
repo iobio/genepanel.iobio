@@ -346,9 +346,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
     },
     methods: {
       handleScroll (event) {
-        console.log(this.GtrScrollY);
-        console.log(this.PhenolyzerScrollY);
-        console.log(this.SummaryScrollY);
+        // console.log(this.GtrScrollY);
+        // console.log(this.PhenolyzerScrollY);
+        // console.log(this.SummaryScrollY);
         if(this.component === 'GeneticTestingRegistry'){
           this.GtrScrollY = window.scrollY;
         }
@@ -362,15 +362,15 @@ import IntroductionText from '../../../data/IntroductionText.json';
       selectComponent(componentName){
         this.component = componentName;
         if(componentName === 'GeneticTestingRegistry'){
-          console.log("this.GtrScrollY",this.GtrScrollY)
+          // console.log("this.GtrScrollY",this.GtrScrollY)
           window.scrollTo(0,this.GtrScrollY);
         }
         else if(componentName === 'Phenolyzer'){
-          console.log("this.PhenolyzerScrollY", this.PhenolyzerScrollY)
+          // console.log("this.PhenolyzerScrollY", this.PhenolyzerScrollY)
           window.scrollTo(0,this.PhenolyzerScrollY);
         }
         else if(componentName === 'SummaryTab'){
-          console.log("this.SummaryScrollY", this.SummaryScrollY)
+          // console.log("this.SummaryScrollY", this.SummaryScrollY)
           window.scrollTo(0,this.SummaryScrollY);
         }
       },
