@@ -144,7 +144,7 @@
                   <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
-                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
+                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0 && geneProps.length">
                       <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                         <v-card-text>
                           <center>
@@ -200,12 +200,39 @@
                                  :totalNumber="multiSelectDisorder.length">
                                 </SvgBar>
                               </center>
-                              <v-checkbox
+                              <!-- <v-checkbox
                                 v-for="(item, i) in multiSelectDisorder"
-                                :key="i" :label="item" :value="item" id="disordersBox"
+                                :key="i" :label="item.Title" :value="item" id="disordersBox"
                                 style="margin-top:-5px"
                                 v-model="selectDisorders">
-                              </v-checkbox>
+                              </v-checkbox> -->
+                              <v-layout>
+                                <v-flex xs7>
+                                  <strong>ASSOCIATED DISORDERS</strong>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <strong>GENES</strong>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+                              <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
+                                <v-flex xs7>
+                                  <v-checkbox style="margin-top:-5px" :label="item.Title" :value="item" v-model="selectDisorders">
+                                  </v-checkbox>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <!-- {{ item._geneCount}} -->
+                                  <div>
+                                    <DisordersGeneBar
+                                     v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
+                                     class="SvgBarClass"
+                                     id="disordersGeneBar"
+                                     :selectedNumber="item._geneCount"
+                                     :totalNumber="TotalGtrGenes">
+                                    </DisordersGeneBar>
+                                  </div>
+                                </v-flex>
+                              </v-layout>
                             </v-card-text>
                               <v-divider></v-divider>
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='modes'">
@@ -227,22 +254,29 @@
                                 all must be deselected to remove the disorder.
                               </span>
                               <br><br>
-                              <v-checkbox
+                              <!-- <v-checkbox
                                 v-for="(item, j) in modeOfInheritanceProps"
-                                :key="j" :label="item" :value="item" id="modeBoxInside"
+                                :key="j" :label="item._modeOfInheritance" :value="item._modeOfInheritance" id="modeBoxInside"
                                 style="margin-top:-5px"
                                 v-model="selectedModesOfInheritance">
-                              </v-checkbox>
-                              <!-- <div v-for="x in modeOfInheritanceProps">
-                                {{x }}
-                                <br>
-                              </div>
-                              <br>
-                              <div v-for="x in selectedModesOfInheritance">
-                                {{x}}
-                                <br>
-                              </div> -->
-
+                              </v-checkbox> -->
+                              <v-layout row wrap v-for="(item, i) in modeOfInheritanceProps" :key="i">
+                                <v-flex xs7>
+                                  <v-checkbox style="margin-top:-5px" :label="item._modeOfInheritance" :value="item._modeOfInheritance" v-model="selectedModesOfInheritance">
+                                  </v-checkbox>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <div>
+                                    <ModesSvgBar
+                                     v-if="multiSelectDisorder.length>0 && chartComponent==='disorders'"
+                                     class="SvgBarClass"
+                                     id="ModesGeneBar"
+                                     :selectedNumber="item._numberOfDisorder"
+                                     :totalNumber="multiSelectDisorder.length">
+                                    </ModesSvgBar>
+                                  </div>
+                                </v-flex>
+                              </v-layout>
                                 <!-- <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn> -->
                             </v-card-text>
                           </v-card>
@@ -378,7 +412,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex d-flex xs12 sm12 md12 >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -436,7 +470,9 @@ import Alerts from '../partials/Alerts.vue';
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import IntroductionText from '../../../data/IntroductionText.json';
-import SvgBar from '../viz/SvgBar.vue'
+import SvgBar from '../viz/SvgBar.vue';
+import DisordersGeneBar from '../viz/DisordersGeneBar.vue'
+import ModesSvgBar from '../viz/ModesSvgBar.vue';
 
 export default {
   components: { //Registering locally for nesting!
@@ -450,6 +486,8 @@ export default {
     'Alerts': Alerts,
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,
+    'DisordersGeneBar': DisordersGeneBar,
+    'ModesSvgBar': ModesSvgBar
   },
   name: 'home',
   props: {
@@ -686,16 +724,18 @@ export default {
     },
     PieChartSelectorData: function(e){
       this.modeOfInheritanceProps = e;
-      var x = e;
-      this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      // var x = e;
+      // this.selectedModesOfInheritance = this.modeOfInheritanceProps;
       this.$emit("modeOfInheritanceData", e);
 
       var x = [];
       e.map(y=>{
         x.push(y._modeOfInheritance);
       });
-      this.modeOfInheritanceProps = x;
-      this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      // this.modeOfInheritanceProps = x;
+      // this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      this.selectedModesOfInheritance = x;
+
 
     },
     ModesSelectedData:function(e){

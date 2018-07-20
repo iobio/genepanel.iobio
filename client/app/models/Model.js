@@ -8,24 +8,31 @@ export default class Model {
 }
 
   sumGenesBasedOnModeOfInheritance(items) {
+    console.log(items)
     var obj ={};
     items.map(x=> {
       if(obj[x._modeOfInheritance]===undefined){
-        obj[x._modeOfInheritance] = x._geneCount;
+        // obj[x._modeOfInheritance] = x._geneCount;
+        obj[x._modeOfInheritance] = 1;
       }
       else if(obj[x._modeOfInheritance]!== undefined){
         // obj[x._modeOfInheritance] = obj[x._modeOfInheritance]+x._geneCount;
-        obj[x._modeOfInheritance] = obj[x._modeOfInheritance]>x._geneCount? obj[x._modeOfInheritance] : x._geneCount;
+        // obj[x._modeOfInheritance] = obj[x._modeOfInheritance]>x._geneCount? obj[x._modeOfInheritance] : x._geneCount;
+        obj[x._modeOfInheritance]++;
       }
     });
+
+    console.log("obj", obj)
 
     var newArr = [];
     for(var i in obj){
       newArr.push(
         {
           _modeOfInheritance: i,
-          _geneCount:obj[i],
-          selected: true
+          _geneCount: 10,
+          _numberOfDisorder: obj[i],
+          // _geneCount:obj[i],
+          // selected: true
         }
       )
     }
