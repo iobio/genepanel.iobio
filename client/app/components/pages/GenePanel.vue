@@ -142,7 +142,7 @@ var model = new Model();
         bus.$emit("vendorsFilter");
       },
       selectedPanelsInCheckBox: function(){
-        console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
+        // console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
         this.updateTableOnSelectedPanels();
       }
 
@@ -264,7 +264,6 @@ var model = new Model();
           }
       },
       AddGenePanelData: function(){
-
         //new code
         this.DiseasePanel = this.DiseasePanelData
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
@@ -275,11 +274,12 @@ var model = new Model();
         let vendors = model.getGenePanelVendors(mergedGenePanels);
 
         this.vendorList = vendors;
-        this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
-                            //back to the parent so it can be used as props in filterpanel
 
         this.selected = this.items.slice();
         this.$emit('setPanelsNamesList', this.items);
+        this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
+                            //back to the parent so it can be used as props in filterpanel
+
 
         // if(!this.flagForVendorFilter){
         //   this.DiseasePanel = this.DiseasePanelData
