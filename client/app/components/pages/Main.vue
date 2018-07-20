@@ -410,6 +410,9 @@ import HelpMenu from '../partials/HelpMenu.vue';
       },
       updateGtrGenes: function(e){
         this.selectedGtrGenes = e;
+        if(e.length<=0){
+          this.NumberOfGenesSelectedFromGTR = 0;
+        }
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
         })

@@ -48,7 +48,11 @@ var model = new Model();
     },
     methods:{
       drawBars(){
-        var svgWidth = $('.SvgDiv').innerWidth() - 20;
+        var wdth = $('.SvgDiv').innerWidth();
+        if(wdth<=0){
+          wdth = 400;
+        }
+        var svgWidth = wdth - 20;
         var multiplicationFactor = svgWidth / this.totalNumber;
         var selectedgenesWidth = Math.abs(this.selectedNumber * multiplicationFactor);
         var grayBarWidth = Math.abs(svgWidth - selectedgenesWidth);

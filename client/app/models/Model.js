@@ -8,7 +8,6 @@ export default class Model {
 }
 
   sumGenesBasedOnModeOfInheritance(items) {
-    console.log(items)
     var obj ={};
     items.map(x=> {
       if(obj[x._modeOfInheritance]===undefined){
@@ -21,8 +20,6 @@ export default class Model {
         obj[x._modeOfInheritance]++;
       }
     });
-
-    console.log("obj", obj)
 
     var newArr = [];
     for(var i in obj){

@@ -91,6 +91,9 @@
                           v-bind:multipleSearchItems="multipleSearchItems"
                           v-bind:geneSearch="geneSearch">
                         </show-gene-panel1>
+                        <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
+                          <NoGenesDisplayTable></NoGenesDisplayTable>
+                        </div>
                       </v-card>
                     </v-flex>
 
@@ -106,6 +109,17 @@
                             single-line
                             hide-details
                             v-model="geneSearch"
+                          ></v-text-field>
+                        </v-card-title>
+                        <br>
+                       </v-card>
+                       <v-card v-else-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
+                        <v-card-title primary-title>
+                          <v-text-field
+                            append-icon="search"
+                            label="Search Genes"
+                            single-line
+                            hide-details
                           ></v-text-field>
                         </v-card-title>
                         <br>
@@ -137,6 +151,28 @@
                             :selectedNumber="GtrGenesTabNumber"
                             :totalNumber="TotalGtrGenes">
                            </SvgBar>
+                         </v-card-text>
+                       </v-card>
+
+
+                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-else-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
+                         <v-card-text>
+                           <center>
+                             <span class="Rightbar_CardHeading">
+                             GENES
+                             </span>
+                             <Dialogs
+                               id="genesDialog"
+                               class="dialogBox"
+                               :HeadlineText="HelpDialogsData[0].HeadlineText"
+                               :ContentText="HelpDialogsData[0].Content">
+                             </Dialogs>
+
+                           <v-divider class="Rightbar_card_divider"></v-divider>
+                           <span class="Rightbar_card_content_subheading">
+                             <strong class="Rightbar_card_content_heading">0</strong> of 0 selected
+                           </span>
+                           </center>
                          </v-card-text>
                        </v-card>
                      </div>
@@ -180,7 +216,7 @@
                               :totalNumber="modeOfInheritanceProps.length">
                              </SvgBar>
                              <br>
-                             <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('disorders')">
+                             <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('disorders')">
                                View & Filter
                              </v-btn>
                          </div>
@@ -463,7 +499,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px" >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -524,6 +560,7 @@ import IntroductionText from '../../../data/IntroductionText.json';
 import SvgBar from '../viz/SvgBar.vue';
 import DisordersGeneBar from '../viz/DisordersGeneBar.vue'
 import ModesSvgBar from '../viz/ModesSvgBar.vue';
+import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
 
 export default {
   components: { //Registering locally for nesting!
@@ -538,7 +575,8 @@ export default {
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,
     'DisordersGeneBar': DisordersGeneBar,
-    'ModesSvgBar': ModesSvgBar
+    'ModesSvgBar': ModesSvgBar,
+    'NoGenesDisplayTable': NoGenesDisplayTable,
   },
   name: 'home',
   props: {
@@ -744,9 +782,13 @@ export default {
         this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
     },
-    selectDiseases: function(e){
-    //  console.log("e is from home: ", e)
+    selectDiseases: function(e){ //Gets back the data based on the changes or updates in the disease panel;
+     console.log("e is from home: ", e)
       this.diseasesProps = e;
+      if(e.length<=0){
+        this.geneProps = [];
+        this.$emit("UpdateListOfSelectedGenesGTR", []);
+      }
     },
     selectPanels: function(e){
       this.geneProps = e;
