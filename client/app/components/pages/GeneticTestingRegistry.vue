@@ -91,6 +91,9 @@
                           v-bind:multipleSearchItems="multipleSearchItems"
                           v-bind:geneSearch="geneSearch">
                         </show-gene-panel1>
+                        <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
+                          <NoGenesDisplayTable></NoGenesDisplayTable>
+                        </div>
                       </v-card>
                     </v-flex>
 
@@ -106,6 +109,17 @@
                             single-line
                             hide-details
                             v-model="geneSearch"
+                          ></v-text-field>
+                        </v-card-title>
+                        <br>
+                       </v-card>
+                       <v-card v-else-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
+                        <v-card-title primary-title>
+                          <v-text-field
+                            append-icon="search"
+                            label="Search Genes"
+                            single-line
+                            hide-details
                           ></v-text-field>
                         </v-card-title>
                         <br>
@@ -139,12 +153,34 @@
                            </SvgBar>
                          </v-card-text>
                        </v-card>
+
+
+                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-else-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
+                         <v-card-text>
+                           <center>
+                             <span class="Rightbar_CardHeading">
+                             GENES
+                             </span>
+                             <Dialogs
+                               id="genesDialog"
+                               class="dialogBox"
+                               :HeadlineText="HelpDialogsData[0].HeadlineText"
+                               :ContentText="HelpDialogsData[0].Content">
+                             </Dialogs>
+
+                           <v-divider class="Rightbar_card_divider"></v-divider>
+                           <span class="Rightbar_card_content_subheading">
+                             <strong class="Rightbar_card_content_heading">0</strong> of 0 selected
+                           </span>
+                           </center>
+                         </v-card-text>
+                       </v-card>
                      </div>
 
                   <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
-                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0">
+                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
                       <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                         <v-card-text>
                           <center>
@@ -180,7 +216,7 @@
                               :totalNumber="modeOfInheritanceProps.length">
                              </SvgBar>
                              <br>
-                             <v-btn :disabled="geneProps.length<1" outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('disorders')">
+                             <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('disorders')">
                                View & Filter
                              </v-btn>
                          </div>
@@ -200,13 +236,56 @@
                                  :totalNumber="multiSelectDisorder.length">
                                 </SvgBar>
                               </center>
-                              <v-checkbox
+                              <!-- <v-checkbox
                                 v-for="(item, i) in multiSelectDisorder"
-                                :key="i" :label="item" :value="item" id="disordersBox"
+                                :key="i" :label="item.Title" :value="item" id="disordersBox"
                                 style="margin-top:-5px"
                                 v-model="selectDisorders">
-                              </v-checkbox>
+                              </v-checkbox> -->
+                              <v-layout>
+                                <v-flex xs7>
+                                  <center><strong>ASSOCIATED DISORDERS</strong></center>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <center><strong>GENES</strong></center>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+                              <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
+                                <v-flex xs7>
+                                  <v-checkbox style="margin-top:-5px" :label="item.Title" :value="item" v-model="selectDisorders">
+                                  </v-checkbox>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <!-- {{ item._geneCount}} -->
+                                  <div>
+                                    <DisordersGeneBar
+                                     v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
+                                     class="SvgBarClass"
+                                     id="disordersGeneBar"
+                                     :selectedNumber="item._geneCount"
+                                     :totalNumber="TotalGtrGenes">
+                                    </DisordersGeneBar>
+                                  </div>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+                              <v-layout>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllDisordersButton">SELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllDisordersButton">DESELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+
                             </v-card-text>
+                            <!-- end disorders subcomponent -->
                               <v-divider></v-divider>
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='modes'">
                               <center>
@@ -227,23 +306,51 @@
                                 all must be deselected to remove the disorder.
                               </span>
                               <br><br>
-                              <v-checkbox
+                              <!-- <v-checkbox
                                 v-for="(item, j) in modeOfInheritanceProps"
-                                :key="j" :label="item" :value="item" id="modeBox"
+                                :key="j" :label="item._modeOfInheritance" :value="item._modeOfInheritance" id="modeBoxInside"
                                 style="margin-top:-5px"
                                 v-model="selectedModesOfInheritance">
-                              </v-checkbox>
-                              <!-- <div v-for="x in modeOfInheritanceProps">
-                                {{x }}
-                                <br>
-                              </div>
+                              </v-checkbox> -->
+                              <v-layout>
+                                <v-flex xs7>
+                                  <center><strong>MODE OF INHERITANCE</strong></center>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <center><strong>DISORDERS</strong></center>
+                                </v-flex>
+                              </v-layout>
                               <br>
-                              <div v-for="x in selectedModesOfInheritance">
-                                {{x}}
-                                <br>
-                              </div> -->
-
-                                <!-- <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn> -->
+                              <v-layout row wrap v-for="(item, i) in modeOfInheritanceProps" :key="i">
+                                <v-flex xs7>
+                                  <v-checkbox style="margin-top:-5px" :label="item._modeOfInheritance" :value="item._modeOfInheritance" v-model="selectedModesOfInheritance">
+                                  </v-checkbox>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <div>
+                                    <ModesSvgBar
+                                     v-if="multiSelectDisorder.length>0 && chartComponent==='disorders'"
+                                     class="SvgBarClass"
+                                     id="ModesGeneBar"
+                                     :selectedNumber="item._numberOfDisorder"
+                                     :totalNumber="multiSelectDisorder.length">
+                                    </ModesSvgBar>
+                                  </div>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+                              <v-layout>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllModesButton">SELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllModesButton">DESELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                              </v-layout>
                             </v-card-text>
                           </v-card>
                         <!-- </v-card-title> -->
@@ -278,6 +385,7 @@
                                <span class="Rightbar_card_content_subheading">
                                  <strong class="Rightbar_card_content_heading">{{ genePanelsCount }}</strong> Present
                                </span>
+                               <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('GeneMembership')">
                                  View & Filter
                                </v-btn>
@@ -322,6 +430,13 @@
                                <span class="Rightbar_card_content_subheading">
                                  <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} selected
                                </span>
+                               <SvgBar
+                                class="SvgBarClass"
+                                id="disordersSvgBoxInside"
+                                :selectedNumber="vendorsSelect.length"
+                                :totalNumber="vendorList.length">
+                               </SvgBar>
+                               <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
                              </div>
                             </center>
@@ -329,6 +444,18 @@
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                             <v-card flat v-if="vendorList.length">
                               <v-card-text >
+                                <center>
+                                  <span class="Rightbar_card_content_subheading">
+                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} disorders selected
+                                  </span>
+                                  <SvgBar
+                                   class="SvgBarClass"
+                                   id="disordersSvgBoxInside"
+                                   :selectedNumber="vendorsSelect.length"
+                                   :totalNumber="vendorList.length">
+                                  </SvgBar>
+                                </center>
+                                <br>
                                 <div class="vendorsCardClass">
                                   <v-checkbox
                                     v-for="(item, i) in multiSelectItems"
@@ -337,11 +464,25 @@
                                     v-model="vendorsSelect">
                                   </v-checkbox>
                                 </div>
+                                <br>
+                                <v-layout>
+                                  <v-flex xs6>
+                                    <center>
+                                      <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllVendors">SELECT ALL</v-btn>
+                                    </center>
+                                  </v-flex>
+                                  <v-flex xs6>
+                                    <center>
+                                      <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllVendors">DESELECT ALL</v-btn>
+                                    </center>
+                                  </v-flex>
+                                </v-layout>
+                                <br>
 
                               </v-card-text>
                             </v-card>
-                            <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
-                            <br>
+                            <!-- <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
+                            <br> -->
                             <center>
                               <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                             </center>
@@ -416,8 +557,10 @@ import Alerts from '../partials/Alerts.vue';
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import IntroductionText from '../../../data/IntroductionText.json';
-import SvgBar from '../viz/SvgBar.vue'
-import DisordersModesTable from '../partials/DisordersModesTable.vue';
+import SvgBar from '../viz/SvgBar.vue';
+import DisordersGeneBar from '../viz/DisordersGeneBar.vue'
+import ModesSvgBar from '../viz/ModesSvgBar.vue';
+import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
 
 export default {
   components: { //Registering locally for nesting!
@@ -431,7 +574,9 @@ export default {
     'Alerts': Alerts,
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,
-    'DisordersModesTable': DisordersModesTable,
+    'DisordersGeneBar': DisordersGeneBar,
+    'ModesSvgBar': ModesSvgBar,
+    'NoGenesDisplayTable': NoGenesDisplayTable,
   },
   name: 'home',
   props: {
@@ -637,9 +782,13 @@ export default {
         this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
     },
-    selectDiseases: function(e){
-    //  console.log("e is from home: ", e)
+    selectDiseases: function(e){ //Gets back the data based on the changes or updates in the disease panel;
+     console.log("e is from home: ", e)
       this.diseasesProps = e;
+      if(e.length<=0){
+        this.geneProps = [];
+        this.$emit("UpdateListOfSelectedGenesGTR", []);
+      }
     },
     selectPanels: function(e){
       this.geneProps = e;
@@ -668,16 +817,18 @@ export default {
     },
     PieChartSelectorData: function(e){
       this.modeOfInheritanceProps = e;
-      var x = e;
-      this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      // var x = e;
+      // this.selectedModesOfInheritance = this.modeOfInheritanceProps;
       this.$emit("modeOfInheritanceData", e);
 
       var x = [];
       e.map(y=>{
         x.push(y._modeOfInheritance);
       });
-      this.modeOfInheritanceProps = x;
-      this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      // this.modeOfInheritanceProps = x;
+      // this.selectedModesOfInheritance = this.modeOfInheritanceProps;
+      this.selectedModesOfInheritance = x;
+
 
     },
     ModesSelectedData:function(e){
@@ -693,6 +844,16 @@ export default {
       });
       this.selectedModesOfInheritance = x;
 
+    },
+    SelectAllModesButton: function(){
+      var x = [];
+      this.modeOfInheritanceProps.map(y=>{
+        x.push(y._modeOfInheritance);
+      });
+      this.selectedModesOfInheritance = x;
+    },
+    DeSelectAllModesButton: function(){
+      this.selectedModesOfInheritance = [];
     },
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
@@ -734,8 +895,16 @@ export default {
       this.vendorsSelect=this.multiSelectItems;
       this.saveSelectedVendors = [];
     },
+    DeSelectAllVendors: function(){
+      this.saveSelectedVendors = this.multiSelectItems;
+      this.vendorsSelect = [];
+    },
     SelectAllDisordersButton: function(){
       this.selectDisorders = this.multiSelectDisorder;
+      bus.$emit("updatedFromDisorders");
+    },
+    DeSelectAllDisordersButton:function(){
+      this.selectDisorders = [];
       bus.$emit("updatedFromDisorders");
     },
     resetDisorders: function(){
@@ -964,6 +1133,7 @@ export default {
 .viewFilterButton
   height: 30px
   margin-top: -2px
+  border-radius: 6px
 
 .Rightbar_CardHeading
   font-size: 16px

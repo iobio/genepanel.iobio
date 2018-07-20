@@ -861,8 +861,8 @@ import SvgBar from '../viz/SvgBar.vue'
           x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             return `<svg height="30" width="30">
-                  <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <circle fill="#ffffff00" stroke-width="2" stroke="#455A64" cx="12" cy="15" r="10"  />
+                  <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
         });

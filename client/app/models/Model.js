@@ -11,11 +11,13 @@ export default class Model {
     var obj ={};
     items.map(x=> {
       if(obj[x._modeOfInheritance]===undefined){
-        obj[x._modeOfInheritance] = x._geneCount;
+        // obj[x._modeOfInheritance] = x._geneCount;
+        obj[x._modeOfInheritance] = 1;
       }
       else if(obj[x._modeOfInheritance]!== undefined){
         // obj[x._modeOfInheritance] = obj[x._modeOfInheritance]+x._geneCount;
-        obj[x._modeOfInheritance] = obj[x._modeOfInheritance]>x._geneCount? obj[x._modeOfInheritance] : x._geneCount;
+        // obj[x._modeOfInheritance] = obj[x._modeOfInheritance]>x._geneCount? obj[x._modeOfInheritance] : x._geneCount;
+        obj[x._modeOfInheritance]++;
       }
     });
 
@@ -24,8 +26,10 @@ export default class Model {
       newArr.push(
         {
           _modeOfInheritance: i,
-          _geneCount:obj[i],
-          selected: true
+          _geneCount: 10,
+          _numberOfDisorder: obj[i],
+          // _geneCount:obj[i],
+          // selected: true
         }
       )
     }
@@ -553,7 +557,7 @@ mergeGenesAcrossPanels(genePanels) {
                                   x="10" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
                             <rect class="grayRect"
                                         x="${(gene._genePanelCount * multiplicationFactor)+12}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
-                            <text x="${(firstBarWidth + 28)}" y="14" font-family="Verdana" font-size="13" fill="#D04F4C">${gene._genePanelCount}</text>
+                            <text x="${(firstBarWidth + 28)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${gene._genePanelCount}</text>
                         </svg>`,
 
             };

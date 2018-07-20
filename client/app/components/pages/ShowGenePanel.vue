@@ -511,7 +511,7 @@ var model = new Model();
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             return `<svg height="30" width="30">
                   <circle class="sourceIndicator"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
         });
@@ -680,7 +680,7 @@ div.tooltip {
 
 .sourceIndicator
   fill: #ffffff00
-  stroke: #ffa828
+  stroke: #455A64
   stroke-width: 2
   cx: 12
   cy: 15
