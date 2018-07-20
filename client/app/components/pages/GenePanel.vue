@@ -185,7 +185,7 @@ var model = new Model();
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
         // this.items = this.tempItems;
-        if(this.selectedVendorsFromFilterPanel.length>0){
+        // if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
             for(var j=0; j<this.items.length; j++){
@@ -203,21 +203,21 @@ var model = new Model();
           // this.vendorList = vendors;
           // this.$emit('setVendorList', this.vendorList.sort());
           // return this.items;
-        }
-        else if(this.selectedVendorsFromFilterPanel.length===0){
-          // alert("It is required that atleast one vendor is kept selected");
-          this.selected = this.items;
-          bus.$emit("lastVendor")
-          // this.selected = this.items;
-          // this.flagForVendorFilter = false;
-          // this.selected = this.tempItems.slice();
-          // // this.selected = [];
-          // this.items = this.tempItems
-          // // let vendors = model.getGenePanelVendors(mergedGenePanels);
-          // // this.vendorList = vendors;
-          // // this.$emit('setVendorList', this.vendorList.sort());
-          // return this.items
-        }
+        // }
+        // else if(this.selectedVendorsFromFilterPanel.length===0){
+        //   // alert("It is required that atleast one vendor is kept selected");
+        //   this.selected = this.items;
+        //   bus.$emit("lastVendor")
+        //   // this.selected = this.items;
+        //   // this.flagForVendorFilter = false;
+        //   // this.selected = this.tempItems.slice();
+        //   // // this.selected = [];
+        //   // this.items = this.tempItems
+        //   // // let vendors = model.getGenePanelVendors(mergedGenePanels);
+        //   // // this.vendorList = vendors;
+        //   // // this.$emit('setVendorList', this.vendorList.sort());
+        //   // return this.items
+        // }
       },
       filterPanelsOnSelectedConditions: function(data){
         var tempArrForConditions = [];

@@ -458,7 +458,7 @@
                               <v-card-text >
                                 <center>
                                   <span class="Rightbar_card_content_subheading">
-                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} disorders selected
+                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} vendors selected
                                   </span>
                                   <SvgBar
                                    class="SvgBarClass"
@@ -706,11 +706,11 @@ export default {
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
-    bus.$on("lastVendor", ()=>{
-      this.snackbarText = "It is required that atleast one vendor is kept selected";
-      this.snackbar = true;
-      this.vendorsSelect = [this.multiSelectItems[0]];
-    });
+    // bus.$on("lastVendor", ()=>{
+    //   this.snackbarText = "It is required that atleast one vendor is kept selected";
+    //   this.snackbar = true;
+    //   this.vendorsSelect = [this.multiSelectItems[0]];
+    // });
     bus.$on("lastDisorder", ()=>{
       this.snackbarText = "It is required that atleast one disorder is kept selected";
       this.snackbar = true;
