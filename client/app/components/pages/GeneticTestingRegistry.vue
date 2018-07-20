@@ -144,7 +144,7 @@
                   <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
-                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0 && geneProps.length">
+                    <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
                       <v-card v-bind:class="[chartComponent==='disorders' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                         <v-card-text>
                           <center>
@@ -208,10 +208,10 @@
                               </v-checkbox> -->
                               <v-layout>
                                 <v-flex xs7>
-                                  <strong>ASSOCIATED DISORDERS</strong>
+                                  <center><strong>ASSOCIATED DISORDERS</strong></center>
                                 </v-flex>
                                 <v-flex xs5>
-                                  <strong>GENES</strong>
+                                  <center><strong>GENES</strong></center>
                                 </v-flex>
                               </v-layout>
                               <br>
@@ -233,7 +233,23 @@
                                   </div>
                                 </v-flex>
                               </v-layout>
+                              <br>
+                              <v-layout>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllDisordersButton">SELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllDisordersButton">DESELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+
                             </v-card-text>
+                            <!-- end disorders subcomponent -->
                               <v-divider></v-divider>
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='modes'">
                               <center>
@@ -260,6 +276,15 @@
                                 style="margin-top:-5px"
                                 v-model="selectedModesOfInheritance">
                               </v-checkbox> -->
+                              <v-layout>
+                                <v-flex xs7>
+                                  <center><strong>MODE OF INHERITANCE</strong></center>
+                                </v-flex>
+                                <v-flex xs5>
+                                  <center><strong>DISORDERS</strong></center>
+                                </v-flex>
+                              </v-layout>
+                              <br>
                               <v-layout row wrap v-for="(item, i) in modeOfInheritanceProps" :key="i">
                                 <v-flex xs7>
                                   <v-checkbox style="margin-top:-5px" :label="item._modeOfInheritance" :value="item._modeOfInheritance" v-model="selectedModesOfInheritance">
@@ -277,7 +302,19 @@
                                   </div>
                                 </v-flex>
                               </v-layout>
-                                <!-- <v-btn v-show="selectDisorders.length<multiSelectDisorder.length" small v-on:click="SelectAllDisordersButton">Select All Disorders</v-btn> -->
+                              <br>
+                              <v-layout>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllModesButton">SELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                                <v-flex xs6>
+                                  <center>
+                                    <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllModesButton">DESELECT ALL</v-btn>
+                                  </center>
+                                </v-flex>
+                              </v-layout>
                             </v-card-text>
                           </v-card>
                         <!-- </v-card-title> -->
@@ -391,11 +428,25 @@
                                     v-model="vendorsSelect">
                                   </v-checkbox>
                                 </div>
+                                <br>
+                                <v-layout>
+                                  <v-flex xs6>
+                                    <center>
+                                      <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllVendors">SELECT ALL</v-btn>
+                                    </center>
+                                  </v-flex>
+                                  <v-flex xs6>
+                                    <center>
+                                      <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllVendors">DESELECT ALL</v-btn>
+                                    </center>
+                                  </v-flex>
+                                </v-layout>
+                                <br>
 
                               </v-card-text>
                             </v-card>
-                            <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
-                            <br>
+                            <!-- <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
+                            <br> -->
                             <center>
                               <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                             </center>
@@ -412,7 +463,7 @@
                   </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 >
+            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -752,6 +803,16 @@ export default {
       this.selectedModesOfInheritance = x;
 
     },
+    SelectAllModesButton: function(){
+      var x = [];
+      this.modeOfInheritanceProps.map(y=>{
+        x.push(y._modeOfInheritance);
+      });
+      this.selectedModesOfInheritance = x;
+    },
+    DeSelectAllModesButton: function(){
+      this.selectedModesOfInheritance = [];
+    },
     updateDisorderNamesList: function(e){
       // console.log("disorderNamesList from callback to home", e);
       this.disorderNamesList = e;
@@ -792,8 +853,16 @@ export default {
       this.vendorsSelect=this.multiSelectItems;
       this.saveSelectedVendors = [];
     },
+    DeSelectAllVendors: function(){
+      this.saveSelectedVendors = this.multiSelectItems;
+      this.vendorsSelect = [];
+    },
     SelectAllDisordersButton: function(){
       this.selectDisorders = this.multiSelectDisorder;
+      bus.$emit("updatedFromDisorders");
+    },
+    DeSelectAllDisordersButton:function(){
+      this.selectDisorders = [];
       bus.$emit("updatedFromDisorders");
     },
     resetDisorders: function(){
