@@ -30,7 +30,7 @@ import { bus } from '../../routes';
     methods:{
       draw(dataForModeOfInheritance){
         let self = this;
-        // console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
+        console.log("dataForModeOfInheritance: ", dataForModeOfInheritance)
         var data = dataForModeOfInheritance;
 
         // var dispatch = d3.dispatch("backupEvent");

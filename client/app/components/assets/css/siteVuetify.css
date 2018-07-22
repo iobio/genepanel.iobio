@@ -60,3 +60,14 @@ table.table tbody td .input-group.input-group--selection-controls {
   margin-top: 1px !important;
   margin-bottom: 1px !important;
 }
+
+
+.v-input--selection-controls.v-input .v-label{
+  align-items: center;
+  display: inline-flex;
+  top: 0;
+  height: auto;
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+}

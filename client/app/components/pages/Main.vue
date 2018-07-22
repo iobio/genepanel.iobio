@@ -36,7 +36,7 @@
 
        <v-list-tile
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
-          @click="component='GeneticTestingRegistry'">
+          @click="selectComponent('GeneticTestingRegistry')">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
            <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
@@ -53,7 +53,7 @@
 
        <v-list-tile
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
-          @click="component='Phenolyzer'">
+          @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
            <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
@@ -71,7 +71,7 @@
 
        <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
-          @click="component='SummaryTab'">
+          @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
            <span v-if="component==='SummaryTab'"><v-icon color="primary darken-1">dashboard</v-icon></span>
            <span v-else><v-icon>dashboard</v-icon></span>
@@ -164,28 +164,16 @@
         </v-list>
       </v-menu>
       <span>
+        <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn>
+      </span>
+      <!-- <span>
         <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
-      </span>
-      <span>
+      </span> -->
+      <!-- <span>
         <v-btn flat><v-icon>help</v-icon> Help</v-btn>
-      </span>
-      <v-menu bottom offset-y style="color:black">
-        <v-btn flat slot="activator"
-          ><v-icon style="padding-right:4px">apps</v-icon>
-        </v-btn>
-        <v-list>
-          <v-list-tile >
-            <v-list-tile-title><a href="http://gene.iobio.io/">gene.iobio</a> </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile >
-            <v-list-tile-title><a href="http://bam.iobio.io/">bam.iobio</a> </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile >
-            <v-list-tile-title><a href="http://vcf.iobio.io/">vcf.iobio</a> </v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-
+      </span> -->
+      <HelpMenu></HelpMenu>
+      <AppsMenu></AppsMenu>
 
     </v-toolbar>
 
@@ -226,14 +214,17 @@
                 v-if="component==='Phenolyzer'"
                 v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
                 v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-                @search-phenotype="onSearchPhenotype">
+                @search-phenotype="onSearchPhenotype"
+                @phenotypeSearchTermArray="phenotypeSearchTermArray">
               </Phenolyzer>
               <SummaryTab
                 v-else-if="component==='SummaryTab'"
                 v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
                 v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
                 v-bind:GtrGenesForSummary="selectedGtrGenes"
+                v-bind:searchTermGTR="searchTermGTR"
                 v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+                v-bind:onSearchPhenotype="phenotypeSearches"
                 :chartColor="ordinalColor">
               </SummaryTab>
             </keep-alive>
@@ -258,7 +249,8 @@ import FilterSummary from './FilterSummary.vue';
 var FileSaver = require('file-saver');
 import DisorderSearch from './DisorderSearch.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
-
+import AppsMenu from '../partials/AppsMenu.vue';
+import HelpMenu from '../partials/HelpMenu.vue';
 
   export default {
     components: {
@@ -270,10 +262,15 @@ import IntroductionText from '../../../data/IntroductionText.json';
       'DisorderSearch': DisorderSearch,
       'FilterPhenolyzer': FilterPhenolyzer,
       'FilterSummary': FilterSummary,
+      'AppsMenu': AppsMenu,
+      'HelpMenu': HelpMenu
     },
     data(){
       return{
         component: 'GeneticTestingRegistry',
+        GtrScrollY:0,
+        PhenolyzerScrollY:0,
+        SummaryScrollY:0,
         drawer: false,
         vendorList:[],
         selectedVendorsList:[],
@@ -295,7 +292,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
         showDisclaimer: false,
         showVersion: false,
         searchTermGTR: null,
-        searchTermPhenotype: null,
+        searchTermPhenotype: [],
+        phenotypeSearches: [],
         modeOfInheritanceProps: [],
         GeneMembershipProps: [],
         IntroductionTextData: null,
@@ -320,7 +318,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
       }
     },
     created(){
-      this.IntroductionTextData = IntroductionText.data
+      this.IntroductionTextData = IntroductionText.data;
+      window.addEventListener('scroll', this.handleScroll);
     },
     mounted(){
       bus.$on("updateAllGenes", (data)=>{
@@ -334,6 +333,39 @@ import IntroductionText from '../../../data/IntroductionText.json';
     updated(){
     },
     methods: {
+      handleScroll (event) {
+        // console.log(this.GtrScrollY);
+        // console.log(this.PhenolyzerScrollY);
+        // console.log(this.SummaryScrollY);
+        if(this.component === 'GeneticTestingRegistry'){
+          this.GtrScrollY = window.scrollY;
+        }
+        else if(this.component === 'Phenolyzer'){
+          this.PhenolyzerScrollY = window.scrollY;
+        }
+        else if(this.component === 'SummaryTab'){
+          this.SummaryScrollY = window.scrollY;
+        }
+      },
+      selectComponent(componentName){
+        this.component = componentName;
+        if(componentName === 'GeneticTestingRegistry'){
+          // console.log("this.GtrScrollY",this.GtrScrollY)
+          window.scrollTo(0,this.GtrScrollY);
+        }
+        else if(componentName === 'Phenolyzer'){
+          // console.log("this.PhenolyzerScrollY", this.PhenolyzerScrollY)
+          window.scrollTo(0,this.PhenolyzerScrollY);
+        }
+        else if(componentName === 'SummaryTab'){
+          // console.log("this.SummaryScrollY", this.SummaryScrollY)
+          window.scrollTo(0,this.SummaryScrollY);
+        }
+      },
+      forceReload: function(){
+        bus.$emit("newAnalysis");
+        window.scrollTo(0,0);
+      },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
       },
@@ -378,6 +410,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
       },
       updateGtrGenes: function(e){
         this.selectedGtrGenes = e;
+        if(e.length<=0){
+          this.NumberOfGenesSelectedFromGTR = 0;
+        }
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
         })
@@ -550,7 +585,7 @@ import IntroductionText from '../../../data/IntroductionText.json';
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.launchedFromClin = true;
@@ -570,7 +605,11 @@ import IntroductionText from '../../../data/IntroductionText.json';
         this.searchTermGTR = searchTerm;
       },
       onSearchPhenotype: function(searchTermObject)  {
-        this.searchTermPhenotype = searchTermObject.label;
+        // this.searchTermPhenotype = searchTermObject.label;
+        this.searchTermPhenotype.push(searchTermObject.label);
+      },
+      phenotypeSearchTermArray: function(searchTerms){
+        this.phenotypeSearches = searchTerms;
       }
 
     }
@@ -677,7 +716,7 @@ aside {
 
 @media screen and (max-width: 1270px){
   aside {
-    margin-top: 0px !important;
+    margin-top: 64px !important;
     max-height: calc(100% - 0px) !important;
   }
 }
@@ -693,7 +732,7 @@ nav.toolbar, nav.v-toolbar
   font-weight: 300 !important
 
   &.clin
-    background-color: $app-color-clin !important
+    background-color: $app-color !important
 
   .toolbar__side-icon.btn.btn--icon, .v-toolbar__side-icon.v-btn.v-btn--icon
     max-width: 40px

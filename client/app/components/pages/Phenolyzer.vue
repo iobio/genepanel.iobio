@@ -22,17 +22,16 @@
               <v-card-text style="margin-bottom:-5px">
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8>
-                    <!-- {{ multipleSearchTerms }} -->
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
-                      <label>Search Phenotype</label>
+                      <label>Enter Phenotype</label>
                       <input
+                        :disabled="checked"
                         id="phenotype-term"
                         class="form-control"
                         type="text"
                         autocomplete="off"
                         placeholder="Search phenotype (E.g. lactic acidosis)"
                         v-model="phenotypeTermEntered">
-
                       <typeahead
                         v-model="phenotypeTerm"
                         hide-details="false"
@@ -44,17 +43,17 @@
                     </div>
 
                     <v-btn
-                        style="margin-top:-0.35px"
+                        style="margin-top:-0.35px; text-transform: none"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
-                      Go
+                      Generate Gene List
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">
                       <br>
                       <center>
                         <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
-                        The phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
                       </center>
                     </div>
                     <div v-if="multipleSearchTerms.length">
@@ -170,7 +169,7 @@
                           ></v-checkbox>
                         </td>
                         <!-- <td></td> -->
-                        <!-- <td>{{ props.item.rank }}</td> -->
+                        <td>{{ props.item.indexVal }}</td>
                         <td >
                           <div id="app">
                             <div>
@@ -196,7 +195,7 @@
                           </div>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
                           <td>
-                            <span v-for="x in props.item.searchTermIndex">
+                            <span v-for="x in props.item.searchTermIndexSVG">
                               <span v-html="x"></span>
                             </span>
                           </td>
@@ -279,31 +278,30 @@
                 <br>
 
                 <div class="d-flex mt-1 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : '']" v-if="multipleSearchTerms.length">
-                    <v-card-title primary-title>
-                     <div>
-                       <div style="font-size:16px">
-                         GENES
-                         <v-dialog v-model="dialog" width="600px">
-                           <p style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></p>
-                           <v-card>
-                             <v-card-title>
-                               <span class="headline">Genes</span>
-                             </v-card-title>
-                             <v-card-text>
-                               Help information text
-                             </v-card-text>
-                             <v-card-actions>
-                               <v-spacer></v-spacer>
-                               <v-btn color="green darken-1" flat="flat" @click="dialog = false">Close</v-btn>
-                             </v-card-actions>
-                           </v-card>
-                         </v-dialog>
-                       </div>
-                       <span style="margin-top:0px; margin-bottom:0px; font-size:26px"><strong>{{ selected.length }}</strong></span>
-                       <div>of {{ items.length }} selected</div>
-                     </div>
-                   </v-card-title>
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                    <v-card-text>
+                      <center>
+                        <span class="Rightbar_CardHeading">
+                        GENES
+                        </span>
+                        <Dialogs
+                          id="genesDialog"
+                          class="dialogBox"
+                          :HeadlineText="HelpDialogsData[0].HeadlineText"
+                          :ContentText="HelpDialogsData[0].Content">
+                        </Dialogs>
+
+                      <v-divider class="Rightbar_card_divider"></v-divider>
+                      <span class="Rightbar_card_content_subheading">
+                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} selected</span>
+                      </center>
+                      <SvgBar
+                       class="SvgBarClass"
+                       id="genesSvgBox"
+                       :selectedNumber="selected.length"
+                       :totalNumber="items.length">
+                      </SvgBar>
+                    </v-card-text>
                   </v-card>
                 </div>
 
@@ -415,10 +413,16 @@ import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
+import Dialogs from '../partials/Dialogs.vue';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+import SvgBar from '../viz/SvgBar.vue'
+
 
   export default {
     components: {
       'PhenolyzerPieChart': PhenolyzerPieChart,
+      'Dialogs': Dialogs,
+      'SvgBar': SvgBar,
       Typeahead
     },
     data(){
@@ -427,7 +431,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
         enterCount: 0,
         genesToApply: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
-        genesTop: 50,
+        genesTop: null,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -446,17 +450,17 @@ import IntroductionText from '../../../data/IntroductionText.json'
         search: '',
         selected: [],
         headers: [
-          // {
-          //   text: 'Rank',
-          //   align: 'left',
-          //   value: 'rank'
-          // },
+          {
+            text: 'Index',
+            align: 'left',
+            value: 'indexVal'
+          },
           {
             text: 'Gene',
             align: 'left',
             value: 'geneName'
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndex' },
+          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
 
             // {
             //   text: 'Matched search terms',
@@ -502,13 +506,32 @@ import IntroductionText from '../../../data/IntroductionText.json'
         genesTopCounts: [5, 10, 30, 50, 80, 100],
         dialog: false,
         IntroductionTextData: null,
+        HelpDialogsData: null,
       }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[1];
     },
+    mounted(){
+      this.HelpDialogsData = HelpDialogs.data;
+      bus.$on("newAnalysis", ()=>{
+        this.multipleSearchTerms = [];
+        this.items = [];
+        this.selected = [];
+        this.dictionaryArr = [];
+        this.phenotypeTerm = "";
+        this.phenotypeTermEntered = "";
+        this.phenolyzerStatus = null;
+        this.checked = false;
+        this.$emit("SelectedPhenolyzerGenesToCopy", []);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
+        this.phenotypeSearchedByUser = false;
+        geneModel.StopAjaxCall();
+        // geneModel.searchPhenolyzerGenes("", 50, "exit");
+        this.genesTop = null;
+      });
+    },
     updated(){
-
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -582,7 +605,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.dictionaryArr = this.dictionaryArr.filter(term=>term.name!==item);
-
+        this.$emit('phenotypeSearchTermArray', this.multipleSearchTerms);
         var combinedList = this.combineList(this.dictionaryArr);
         var createdObj = this.createObj(combinedList);
         var averagedData = this.performMeanOperation(combinedList, createdObj);
@@ -590,6 +613,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 
         let data = this.drawSvgBars(sortedPhenotypeData);
         this.items = data;
+        this.noOfSourcesSvg();
         this.selected = this.items.slice(0,50);
         this.phenolyzerStatus = null;
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -622,11 +646,12 @@ import IntroductionText from '../../../data/IntroductionText.json'
       getPhenotypeData(){
         let self = this;
         self.phenotypeSearchedByUser = true;
-        if(self.phenotypeTerm.value.length>1){
+        if(self.phenotypeTerm.value.length>1 && !this.checked){
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){
             self.$emit('search-phenotype', self.phenotypeTerm);
+            self.$emit('phenotypeSearchTermArray', self.multipleSearchTerms);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             self.selectedGenesText = "";
             self.phenolyzerStatus = null;
@@ -634,6 +659,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
             self.NoOfGenesSelectedFromPhenolyzer = 0;
             this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
+            geneModel.newSearchCall();
             geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
             (status, error)=> {
               if (status == 'done') {
@@ -798,52 +824,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
           })
         }
       },
-      onSearchPhenolyzerGenes: function() {
-        let self = this;
-        self.multipleSearchTerms.push(self.phenotypeTerm.value);
-        self.items = [];
-        self.checked = true;
-        self.alert = false;
-        self.selectedGenesText = "";
-        self.phenolyzerStatus = null;
-        self.genesToApply = "";
-        self.selected = [];
-        self.NoOfGenesSelectedFromPhenolyzer = 0;
-        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-        var searchTerm = self.phenotypeTerm.value;
-        self.phenotypeTermEntered = self.phenotypeTerm.value;
-        geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
-        function(status, error) {
-          if (status == 'done') {
-            if (geneModel.phenolyzerGenes.length == 0) {
-              self.phenolyzerStatus = "no genes found."
-              self.genesToApply = "";
-              self.checked = false;
-              self.alert = true;
-            } else {
-              self.tempItems = geneModel.phenolyzerGenes;
-              self.addSearchTermProperty();
-              self.checked = false;
-              if(self.multipleSearchTerms.length===1){
-                self.multipleSearchArray = self.tempItems;
-              }
-              else if(self.multipleSearchTerms.length>1){
-                self.multipleSearchArray = [...self.multipleSearchArray, ...self.tempItems]
-              }
-              let data = self.drawSvgBars(self.multipleSearchArray);
-              self.items = data;
-              self.selected = self.items.slice(0,50);
-              self.phenolyzerStatus = null;
-              self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-              self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-              self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-              self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-            }
-          } else {
-            self.phenolyzerStatus = status;
-          }
-        });
-      },
+
       drawSvgBars: function(tempItems){
         var svgWidth = 350;
         //<stop offset="5%"  stop-color="#36D1DC"/>
@@ -876,12 +857,12 @@ import IntroductionText from '../../../data/IntroductionText.json'
         return tempItems
       },
       noOfSourcesSvg: function(){
-        this.items.map(x=>{
-          x.searchTermIndex = x.searchTermIndex.map(y=>{
-            // console.log(y)
+        this.items.map((x, i)=>{
+          x.indexVal = i+1;
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             return `<svg height="30" width="30">
-                  <circle fill="#ffffff00" stroke-width="2" stroke="#ffa828" cx="12" cy="15" r="10"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#ffa828" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <circle fill="#ffffff00" stroke-width="2" stroke="#455A64" cx="12" cy="15" r="10"  />
+                  <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
                 </svg> `
           })
         });
@@ -918,7 +899,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 }
 
 #phenotype-term{
-  width: 680px;
+  width: 600px;
   height:40px;
   margin-top: 4px;
   background-color: #F4F4F4;
@@ -945,7 +926,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 
 @media screen and (max-width: 1620px){
   #phenotype-term{
-    width: 470px;
+    width: 420px;
     height:40px;
     margin-top: 4px;
   }
@@ -961,7 +942,7 @@ import IntroductionText from '../../../data/IntroductionText.json'
 
 @media screen and (max-width: 950px){
   #phenotype-term{
-    width: 350px;
+    width: 290px;
     height:40px;
     margin-top: 4px;
   }

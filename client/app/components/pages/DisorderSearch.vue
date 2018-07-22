@@ -15,8 +15,9 @@
       <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
       <div style="display:inline-block; padding-top:5px;">
-        <label>Search Disorder</label>
+        <label>Enter Disorder</label>
         <input
+          :disabled="checked"
           id="input"
           class="form-control"
           type="text"
@@ -33,10 +34,10 @@
       </div>
 
       <v-btn
-          style="margin-top:-0.35px"
+          style="margin-top:-0.35px; text-transform: none"
           class="btnColor"
           v-on:click.prevent="performSearch">
-        Go
+        Generate Gene List
       </v-btn>
 
       <div v-if="multipleSearchTerms.length">
@@ -116,6 +117,11 @@ var model = new Model();
     mounted: function() {
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
+       bus.$on("newAnalysis", ()=>{
+         this.multipleSearchTerms = [];
+         this.$emit('showDiseases', []);
+         this.search = ""
+       });
     },
     computed:  {
 
@@ -165,15 +171,16 @@ var model = new Model();
         })
 
         this.filteredDiseasesItems = temp;
-        this.$emit('showDiseases', this.filteredDiseasesItems);
-
-
+        if(!this.checked){
+          this.$emit('showDiseases', this.filteredDiseasesItems);
+        }
+        else if(this.checked){
+          this.checked = false;
+        }
 
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
-
-
         var searchTerm =""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
@@ -182,7 +189,7 @@ var model = new Model();
           searchTerm = this.search;
         }
 
-        if(searchTerm.length>1){
+        if(searchTerm.length>1 && !this.checked){
           this.checked = true;
           this.alert=false;
 
@@ -230,18 +237,25 @@ var model = new Model();
                 this.alert= true;
               }
               this.checked=false;
-              filteredDiseases.map(x=>{
-                // console.log(this.multipleSearchTerms.findIndex())
-                x["searchTerm"]="ip"+searchTerm+"ip";
-                // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
-                x["searchTermArray"] = [searchTerm];
-                x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
-                // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
-                this.filteredDiseasesItems.push(x);
-              });
+              if(this.multipleSearchTerms.includes(searchTerm)){ //this avoids adding an index when the term is deleted
+                filteredDiseases.map(x=>{
+                  // console.log(this.multipleSearchTerms.findIndex())
+                  x["searchTerm"]="ip"+searchTerm+"ip";
+                  // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
+                  x["searchTermArray"] = [searchTerm];
+                  x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
+                  // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
+                  this.filteredDiseasesItems.push(x);
+                });
+              }
+
               // console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
-              bus.$emit("newSearch")
-              this.$emit('showDiseases', this.filteredDiseasesItems)
+              if(this.multipleSearchTerms.includes(searchTerm)){
+                console.log("Send")
+                bus.$emit("newSearch")
+                this.$emit('showDiseases', this.filteredDiseasesItems)
+              }
+
             }
 
           }
@@ -273,7 +287,7 @@ var model = new Model();
    font-size: 15px;
  }
 #input{
-  width: 680px;
+  width: 600px;
   height:40px;
   margin-top: 4px;
   background-color: #F4F4F4;
@@ -284,7 +298,7 @@ var model = new Model();
 
 @media screen and (max-width: 1620px){
   #input{
-    width: 470px;
+    width: 420px;
     height:40px;
     margin-top: 4px;
   }
@@ -300,7 +314,7 @@ var model = new Model();
 
 @media screen and (max-width: 950px){
   #input{
-    width: 350px;
+    width: 290px;
     height:40px;
     margin-top: 4px;
   }
