@@ -992,7 +992,8 @@ export default {
       this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
-      console.log("selectVendors ");
+      console.log("selectVendors ", e);
+      this.vendorsSelect = e;
       if(!this.chartComponent==='Vendors'){
         this.vendorsSelect = e;
       }
