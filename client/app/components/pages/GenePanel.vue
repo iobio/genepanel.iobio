@@ -91,6 +91,9 @@ var model = new Model();
       },
       selectedPanelsInCheckBox: {
         type: Array
+      },
+      selectedPanelsInCheckBoxPropsOne: {
+        type: Array
       }
     },
     data(){
@@ -135,15 +138,21 @@ var model = new Model();
         this.AddGenePanelData();
       },
       selectedVendorsProps: function(){
+        console.log("selectedVendorsProps in gene panels  ")
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
         // console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
         // this.flagForVendorFilter = true;
-        this.updatePanelsOnSelectedVendors();
-        bus.$emit("vendorsFilter");
+        // this.updatePanelsOnSelectedVendors();
+        // bus.$emit("vendorsFilter");
       },
       selectedPanelsInCheckBox: function(){
+        console.log("selectedPanelsInCheckBox props in gene panel")
         // console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
         this.updateTableOnSelectedPanels();
+      },
+      selectedPanelsInCheckBoxPropsOne: function(){
+        console.log("hellooo")
+        this.justUpdateTabel();
       }
 
     },
@@ -182,6 +191,9 @@ var model = new Model();
         let vendors = model.getGenePanelVendors(this.selected);
         this.$emit('selectVendors', vendors.sort());
       },
+      justUpdateTabel: function(){
+        this.selected =this.selectedPanelsInCheckBoxPropsOne;
+      },
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
         // this.items = this.tempItems;
@@ -196,7 +208,7 @@ var model = new Model();
             }
           }
           this.selected = tempArr;
-          this.$emit("selectPanelsFromVendorsUpdate", this.selected);
+            // this.$emit("selectPanelsFromVendorsUpdate", this.selected);
           // this.items = tempArr;
           // this.selected = this.items.slice()
           // let vendors = model.getGenePanelVendors(mergedGenePanels);
@@ -276,7 +288,7 @@ var model = new Model();
         this.vendorList = vendors;
 
         this.selected = this.items.slice();
-        this.$emit('setPanelsNamesList', this.items);
+        // this.$emit('setPanelsNamesList', this.items);
         this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
 

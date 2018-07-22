@@ -473,7 +473,7 @@
                     <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
-                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
+                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length && multiSelectItems.length>0">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-text primary-title>
                             <center>
@@ -490,13 +490,13 @@
 
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <span class="Rightbar_card_content_subheading">
-                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} selected
+                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} selected
                                </span>
                                <SvgBar
                                 class="SvgBarClass"
                                 id="disordersSvgBoxInside"
                                 :selectedNumber="vendorsSelect.length"
-                                :totalNumber="vendorList.length">
+                                :totalNumber="multiSelectItems.length">
                                </SvgBar>
                                <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
@@ -504,17 +504,17 @@
                             </center>
                           </v-card-text>
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
-                            <v-card flat v-if="vendorList.length">
+                            <v-card flat v-if="multiSelectItems.length">
                               <v-card-text >
                                 <center>
                                   <span class="Rightbar_card_content_subheading">
-                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} vendors selected
+                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
                                   </span>
                                   <SvgBar
                                    class="SvgBarClass"
                                    id="disordersSvgBoxInside"
                                    :selectedNumber="vendorsSelect.length"
-                                   :totalNumber="vendorList.length">
+                                   :totalNumber="multiSelectItems.length">
                                   </SvgBar>
                                 </center>
                                 <br>
@@ -581,7 +581,7 @@
             </v-flex>
             <br>
 <!-- style="visibility:hidden; height:0px" -->
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -594,6 +594,7 @@
                     v-bind:selectedVendorsProps="vendorsSelectProps"
                     v-on:setPanelsNamesList="setPanelsNamesList($event)"
                     v-bind:selectedPanelsInCheckBox="selectedPanelsInCheckBoxProps"
+                    v-bind:selectedPanelsInCheckBoxPropsOne="selectedPanelsInCheckBoxPropsOne"
                     v-on:selectVendors="selectVendors($event)"
                     v-on:selectPanelsFromVendorsUpdate="selectPanelsFromVendorsUpdate($event)">
                     <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
@@ -626,6 +627,10 @@ import SvgBar from '../viz/SvgBar.vue';
 import DisordersGeneBar from '../viz/DisordersGeneBar.vue'
 import ModesSvgBar from '../viz/ModesSvgBar.vue';
 import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
+var _ = require('lodash');
+import Model from '../../models/Model';
+var model = new Model();
+
 
 export default {
   components: { //Registering locally for nesting!
@@ -712,6 +717,7 @@ export default {
       selectedPanelsInCheckBox: [],
       vendorsSelectProps:[],
       selectedPanelsInCheckBoxProps: [],
+      selectedPanelsInCheckBoxPropsOne: [],
     }
   },
   watch:{
@@ -722,23 +728,56 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
+      console.log("vendor select watching")
+
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
+        var tempArr=[];
+        for(var i=0; i<this.vendorsSelect.length; i++){
+          for(var j=0; j<this.multiSelectPanels.length; j++){
+            if( this.vendorsSelect[i] === this.multiSelectPanels[j].offerer ){
+              tempArr.push(this.multiSelectPanels[j]);
+            }
+          }
+        }
+        this.selectedPanelsInCheckBox = tempArr;
       }
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
       var lastItem = [];
-      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
-        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
-        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors'){
+        if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+          this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+          this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+        }
+        else if(diff===0){
+          this.saveSelectedVendors = [];
+        }
       }
 
     },
     selectedPanelsInCheckBox(val){
+      console.log("selected panels watching ")
       if(this.chartComponent==='GeneMembership'){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
+      else if(this.chartComponent==='Vendors'){
+        this.selectedPanelsInCheckBoxPropsOne = this.selectedPanelsInCheckBox
+      }
       var diff = this.multiSelectPanels.length - this.selectedPanelsInCheckBox.length;
-      var lastItem = [];
+      var temp = [];
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors'){
+        if(diff>0){
+          // this.saveSelectedPanels = this.selectedPanelsInCheckBox
+          this.selectedPanelsInCheckBox.map(x=>{
+            temp.push(x.testname);
+          })
+          this.saveSelectedPanels = temp;
+        }
+        else if(diff===0){
+          this.saveSelectedPanels=[];
+        }
+      }
+
 
     },
     selectDisorders(val) {
@@ -774,12 +813,16 @@ export default {
     });
     bus.$on("newSearch", ()=>{
       this.newSearchFlag = true;
+      this.saveSelectedPanels=[];
+      this.saveSelectedVendors=[];
     })
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
       // this.vendorsSelect = [];
       this.vendorsSelect = this.multiSelectItems;
       this.removeSearchTermFlag = true;
+      this.saveSelectedPanels=[];
+      this.saveSelectedVendors=[];
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
@@ -876,15 +919,67 @@ export default {
     },
     selectPanels: function(e){
       console.log(" selectPanels");
-      this.geneProps = this.selectedPanelsInCheckBox;
-      console.log("gene props", this.geneProps.length)
-      this.geneProps = e;
-      this.$emit("GeneMembershipData", e);
+      console.log("chart component", this.chartComponent)
+      // console.log("this.saveSelectedPanels", this.saveSelectedPanels)
+      // this.geneProps = this.selectedPanelsInCheckBox;
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
+        //set the items in the panels card
+        this.multiSelectPanels = e;
+        // this.selectedPanelsInCheckBox = this.multiSelectPanels;
+
+        //Set vendors in the vendors cardBoxTitle
+        // let vendors = model.getGenePanelVendors(e);
+        // this.multiSelectItems = vendors;
+        // this.vendorList = vendors;
+        // this.vendorsSelect = this.multiSelectItems;
+      }
+
+      var temp = [];
+      if(this.saveSelectedPanels.length===0 && this.chartComponent === 'disorders'){
+        temp = e;
+      }
+      else if(this.saveSelectedPanels.length>0 && this.chartComponent === 'disorders'){
+        console.log("i am here");
+        e.map(x=>{
+          if(this.saveSelectedPanels.includes(x.testname)){
+            temp.push(x);
+          }
+        })
+      }
+      else {
+        temp = e;
+      }
+
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
+        //set the items in the panels card
+        // this.multiSelectPanels = temp;
+        this.selectedPanelsInCheckBox = temp;
+
+        //Set vendors in the vendors cardBoxTitle
+        // let vendors1 = model.getGenePanelVendors(temp);
+        // this.multiSelectItems = vendors;
+        // this.vendorList = vendors;
+        // this.vendorsSelect = vendors1;
+      }
+
+
+
+
+      console.log("temp length",temp.length)
+      this.geneProps = temp;
+      // this.$emit("GeneMembershipData", temp);
     },
     setPanelsNamesList: function(e){
       console.log(" setPanelsNamesList");
-      this.multiSelectPanels = e;
-      this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
+        this.multiSelectPanels = e;
+        this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      }
+      else {
+        this.multiSelectPanels = e;
+        this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      }
+
       // this.checkForDeselectedPanels();
     },
     updateVendorList: function(e){
@@ -894,16 +989,19 @@ export default {
       this.multiSelectItems = e;
       this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
-      // this.checkForDeselectedVendor();
+      this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
       console.log("selectVendors ");
-      this.vendorsSelect = e;
+      if(!this.chartComponent==='Vendors'){
+        this.vendorsSelect = e;
+      }
+      // this.vendorsSelect = e;
       // this.checkForDeselectedPanels();
     },
     selectPanelsFromVendorsUpdate: function(e){
       console.log(" selectPanelsFromVendorsUpdate");
-      this.selectedPanelsInCheckBox = e;
+      // this.selectedPanelsInCheckBox = e;
 
       // this.checkForDeselectedVendor();
     },
