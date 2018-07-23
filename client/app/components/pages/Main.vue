@@ -97,37 +97,25 @@
       fixed
     >
       <v-toolbar-title >
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <!-- <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon> -->
         <span >panel.iobio</span>
       </v-toolbar-title>
 
       <span style="margin-left:130px">
         <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
-          Genetic Testing Registry &nbsp;
-          <v-menu open-on-hover top offset-y>
+          Genetic Testing Registry
+          <!-- <v-menu open-on-hover top offset-y>
             <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
               <v-card>
                 <v-card-text><p v-html="IntroductionTextData[0].Content"></p></v-card-text>
               </v-card>
-          </v-menu>
+          </v-menu> -->
         </v-btn>
         <v-btn flat v-else-if="component==='Phenolyzer'" style="font-size:16px font-width:200 ">
           Phenolyzer
-          <v-menu open-on-hover top offset-y>
-            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-            <v-card>
-              <v-card-text><p v-html="IntroductionTextData[1].Content"></p></v-card-text>
-            </v-card>
-          </v-menu>
         </v-btn>
         <v-btn flat v-else-if="component==='SummaryTab'" style="font-size:16px font-width:200 ">
           Summary
-          <v-menu open-on-hover top offset-y>
-            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-              <v-card>
-                <v-card-text><p v-html="IntroductionTextData[2].Content"></p></v-card-text>
-              </v-card>
-          </v-menu>
         </v-btn>
       </span>
       <v-spacer></v-spacer>
@@ -720,6 +708,8 @@ aside {
     max-height: calc(100% - 0px) !important;
   }
 }
+
+
 </style>
 
 <style lang="sass">
@@ -806,11 +796,13 @@ button.btnColor.blue.darken-1
   font-family: Open sans
 
 .checkbox.input-group.input-group--selection-controls.accent--text
-  color:  $default-cb-accent !important
+  color: $app-gray !important
+  // color:  $default-cb-accent !important
   // color: #9babff !important
 
 .accent--text
-  color: $app-color-primary !important
+  color: $accent-text-color !important
+  // color: $app-color-primary !important
 
 .emphasize
   .input-group--select
@@ -866,4 +858,12 @@ button.btnColor.blue.darken-1
   // width: 80%
   height: 64px
   background: white
+
+// .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover
+
+
+.dropdown-menu
+  .active
+    a
+      background-color: $app-color
 </style>

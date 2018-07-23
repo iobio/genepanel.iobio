@@ -3,7 +3,7 @@
     <div id="app">
       <v-app id="inspire" style="background-color:#f9fbff">
         <v-container fluid grid-list-md>
-          <v-layout row wrap style="margin-top:-5px;">
+          <v-layout row wrap style="margin-top:-20px;">
 
             <!-- show description -->
             <v-flex xs12>

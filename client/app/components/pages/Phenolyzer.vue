@@ -16,7 +16,7 @@
       </v-snackbar>
 
       <v-container fluid grid-list-md>
-        <v-layout row wrap style="margin-top:-5px;">
+        <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text style="margin-bottom:-5px">
@@ -43,7 +43,7 @@
                     </div>
 
                     <v-btn
-                        style="margin-top:-0.35px; text-transform: none"
+                        style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
                       Generate Gene List
@@ -70,7 +70,7 @@
                         {{ searchItem }}
                       </v-chip>
                     </div>
-                    <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
+                    <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
 
                   </v-flex>
                   <v-flex xs12 sm12 md12 lg4 >
@@ -94,10 +94,10 @@
 
                     <v-btn
                         :disabled="multipleSearchTerms.length<1"
-                        style="margin-top:-0.35px"
+                        style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
                         v-on:click.prevent="selectNumberOfTopPhenolyzerGenes">
-                      Go
+                      Select
                     </v-btn>
 
                   </v-flex>
@@ -887,7 +887,7 @@ import SvgBar from '../viz/SvgBar.vue'
 
 
 
-<style scoped>
+<style>
 .btnColor, .btn__content{
   color: white;
 }
@@ -973,14 +973,19 @@ import SvgBar from '../viz/SvgBar.vue'
   stroke: #4e7ad3;
   stroke-width: 2;
 }
+
+
 </style>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
   @import ../assets/sass/variables
 
   .btnColor
     color: white
     background-color: $search-button-color !important
+
+  .accent--text
+    color: $accent-text-color !important
 
 </style>

@@ -666,6 +666,8 @@ div.tooltip {
 <style lang="sass">
 @import ../assets/sass/variables
 
+.accent--text
+  color: $accent-text-color !important
 
 .genepanelsRect
   fill: #4e7ad3

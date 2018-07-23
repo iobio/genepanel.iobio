@@ -17,7 +17,7 @@
         </v-snackbar>
         <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button>
         <v-container fluid grid-list-md>
-          <v-layout row wrap style="margin-top:-5px;">
+          <v-layout row wrap style="margin-top:-20px;">
             <v-flex d-flex xs12>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
@@ -52,10 +52,10 @@
 
                       <v-btn
                           :disabled="geneProps.length<1"
-                          style="margin-top:-0.35px"
+                          style="margin-top:-0.35px; text-transform: none"
                           class="btnColor"
                           v-on:click.prevent="selectNumberOfTopGenes">
-                        Go
+                        Select
                       </v-btn>
                     </v-flex>
                   </v-layout>
@@ -1211,7 +1211,7 @@ export default {
   } */
   .btnColor{
     color: white;
-    background-color: #4e7ad3 !important;
+    background-color: #4267b2 !important;
     /* border-radius: 5px; */
   }
   .btn{
