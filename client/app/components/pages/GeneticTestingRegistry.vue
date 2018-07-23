@@ -434,10 +434,10 @@
                                         </v-checkbox>
                                       </v-flex>
                                       <v-flex xs1>
-                                        <strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong>
+                                        <center><strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong></center>
                                       </v-flex>
                                       <v-flex xs3>
-                                        <strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong>
+                                        <center><strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong></center>
                                       </v-flex>
                                     </v-layout>
                                   </div>
