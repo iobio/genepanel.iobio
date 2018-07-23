@@ -68,6 +68,22 @@ table.table tbody td .input-group.input-group--selection-controls {
   top: 0;
   height: auto;
   font-size: 14px;
-  font-weight: 400;
-  color: black;
+  font-weight: 700;
+  color: rgba(0,0,0,.87) !important;
+}
+
+
+.application .theme--light.v-label, .theme--light .v-label {
+  color: black !important
+}
+
+.v-datatable thead th.column.sortable{
+  cursor: default;
+  color: black !important;
+  font-weight: 500
+}
+
+.v-datatable thead th.column.sortable: hover{
+  cursor: default;
+  color: black !important;
 }

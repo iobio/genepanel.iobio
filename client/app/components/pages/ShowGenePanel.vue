@@ -65,7 +65,9 @@
             <td>
               <div id="app">
                 <div>
-                  <v-menu open-on-hover top offset-y>
+                  <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+
+                  <!-- <v-menu open-on-hover top offset-y>
                     <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
                       <v-card>
                         <div class="conditionsBox">
@@ -86,7 +88,7 @@
                           </v-card-text>
                         </div>
                       </v-card>
-                  </v-menu>
+                  </v-menu> -->
                 </div>
               </div>
             </td>
@@ -103,29 +105,40 @@
             </td>
             <td>
               <v-menu bottom offset-y style="color:black">
-                <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+                <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
+                <v-card>
+                    <div class="conditionsBox">
+                      <v-card-text style="margin-top:-22px">
+                        <center ><h3>{{ props.item.name }}</h3></center>
+                        <hr>
+                        <div><strong>Conditions: </strong></div>
+                        {{props.item.conditions}}
+                        <hr>
+                        <v-list style="width:250px">
+                          <v-list-tile >
+                            <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
+                          </v-list-tile>
+                          <hr>
+                          <v-list-tile >
+                            <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                          </v-list-tile>
+                          <v-list-tile >
+                            <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
+                          </v-list-tile>
+                          <v-list-tile >
+                            <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                          </v-list-tile>
+                          <v-list-tile >
+                            <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                          </v-list-tile>
+                          <v-list-tile >
+                            <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
+                          </v-list-tile>
+                        </v-list>
+                      </v-card-text>
+                      </div>
+                </v-card>
 
-                <v-list style="width:250px">
-                  <v-list-tile >
-                    <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
-                  </v-list-tile>
-                  <hr>
-                  <v-list-tile >
-                    <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile >
-                    <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile >
-                    <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile >
-                    <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
-                  </v-list-tile>
-                  <v-list-tile >
-                    <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
               </v-menu>
             </td>
             <!-- <td style="font-size:0">{{ props.item.value }}</td> -->
@@ -204,7 +217,7 @@ var model = new Model();
           { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
-            text: 'More',
+            text: 'Lnks',
             align: 'left',
             sortable: false,
             value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
@@ -666,6 +679,8 @@ div.tooltip {
 <style lang="sass">
 @import ../assets/sass/variables
 
+.accent--text
+  color: $accent-text-color !important
 
 .genepanelsRect
   fill: #4e7ad3
