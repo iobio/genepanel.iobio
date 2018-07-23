@@ -103,7 +103,7 @@
             </td>
             <td>
               <v-menu bottom offset-y style="color:black">
-                <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+                <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
 
                 <v-list style="width:250px">
                   <v-list-tile >
@@ -204,7 +204,7 @@ var model = new Model();
           { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
-            text: 'More',
+            text: 'Lnks',
             align: 'left',
             sortable: false,
             value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },

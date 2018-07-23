@@ -126,7 +126,7 @@
                        </v-card>
                      </div>
 
-                     <div class="d-flex mt-1 mb-2 xs12 mt-4">
+                     <div class="d-flex mb-2 xs12 mt-3">
                        <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
@@ -177,7 +177,7 @@
                        </v-card>
                      </div>
 
-                  <div class="mt-4">
+                  <div class="mt-3">
                     <v-layout wrap>
                     <v-flex xs12>
                     <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
@@ -367,7 +367,7 @@
         </v-layout>
                 </div>
 
-                    <div class="d-flex mb-2 xs12 mt-4">
+                    <div class="d-flex mb-2 xs12 mt-3">
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-text>
@@ -469,7 +469,7 @@
                     </div>
 
                     <!-- start vendor cars -->
-                    <div class="mt-4">
+                    <div class="mt-3">
                     <v-layout wrap>
                     <v-flex xs12>
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length && multiSelectItems.length>0">

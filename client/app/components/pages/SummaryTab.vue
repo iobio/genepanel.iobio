@@ -6,7 +6,7 @@
           <v-layout row wrap style="margin-top:-20px;">
 
             <!-- show description -->
-            <v-flex xs12>
+            <v-flex xs12 style="margin-bottom:5px">
               <v-card>
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0">
                   <v-card-title>
@@ -109,8 +109,7 @@
                       <br>
                     </v-card>
                   </div>
-                  <br>
-                  <div class="d-flex mt-1 mb-2 xs12">
+                  <div class="d-flex mt-3 mb-2 xs12">
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-text>
                       <center>
@@ -137,10 +136,9 @@
                        </SvgBar>
                      </v-card-text>
                     </v-card>
-                       </div>
+                  </div>
 
-                  <br>
-                  <div class="d-flex mb-2 xs12">
+                  <div class="d-flex mt-3 xs12">
                     <v-card class="rightbarCard" v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                       <v-card-text>
                         <center>

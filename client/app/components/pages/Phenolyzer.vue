@@ -222,7 +222,7 @@
                         <td style="font-size:0px;">{{ props.item.score }}</td>
                         <td>
                           <v-menu bottom offset-y style="color:black">
-                            <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+                            <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
 
                             <v-list style="width:250px">
                               <v-list-tile >
@@ -276,9 +276,8 @@
                     <br>
                   </v-card>
                 </div>
-                <br>
 
-                <div class="d-flex mt-1 mb-2 xs12">
+                <div class="d-flex mt-3 mb-2 xs12">
                   <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
@@ -483,7 +482,7 @@ import SvgBar from '../viz/SvgBar.vue'
               sortable: false,
             },
             {
-              text: 'More',
+              text: 'Links',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
