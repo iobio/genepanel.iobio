@@ -847,6 +847,8 @@ export default {
     bus.$on("newAnalysis", ()=>{
       this.disordersSearchedByUser= false;
       this.NumberOfTopGenes = null;
+      this.saveSelectedPanels = [];
+      this.saveSelectedVendors = [];
     });
   },
   created () {
