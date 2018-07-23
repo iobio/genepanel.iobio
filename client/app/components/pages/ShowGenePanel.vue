@@ -19,7 +19,6 @@
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
-
       <v-data-table
           id="genes-table"
           v-model="selected"

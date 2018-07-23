@@ -127,6 +127,7 @@
               <v-flex xs8>
                 <v-card v-if="multipleSearchTerms.length">
                   <v-data-table
+                      id="genes-table"
                       v-model="selected"
                       v-bind:headers="headers"
                       v-bind:items="items"
@@ -152,7 +153,7 @@
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                           @click="changeSort(header.value)"
                         >
-                          <v-icon>arrow_upward</v-icon>
+                          <!-- <v-icon>arrow_upward</v-icon> -->
                           {{ header.text }}
                         </th>
                       </tr>
@@ -452,15 +453,17 @@ import SvgBar from '../viz/SvgBar.vue'
         headers: [
           {
             text: 'Index',
+            value: 'indexVal',
+            sortable: false,
             align: 'left',
-            value: 'indexVal'
           },
           {
             text: 'Gene',
             align: 'left',
-            value: 'geneName'
+            value: 'geneName',
+            sortable: false,
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
+          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
 
             // {
             //   text: 'Matched search terms',
@@ -470,12 +473,14 @@ import SvgBar from '../viz/SvgBar.vue'
              {
                text: 'Phenolyzer score',
                align: 'left',
-               value: 'score'
+               value: 'score',
+               sortable: false,
               },
             {
               text: '',
               align: 'left',
-              value: 'htmlData'
+              value: 'htmlData',
+              sortable: false,
             },
             {
               text: 'More',
@@ -826,10 +831,12 @@ import SvgBar from '../viz/SvgBar.vue'
       },
 
       drawSvgBars: function(tempItems){
-        var svgWidth = 350;
+
+        console.log("widthOFtable", $('#genes-table').innerWidth())
+        var svgWidth = 250;
         //<stop offset="5%"  stop-color="#36D1DC"/>
         //<stop offset="95%" stop-color="#5B86E5"/>
-        var firstBarWidth = tempItems[0].score * 320;
+        var firstBarWidth = tempItems[0].score * 220;
         tempItems.map(function(gene){
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -840,9 +847,9 @@ import SvgBar from '../viz/SvgBar.vue'
                             </defs>
 
                             <rect fill="#4e7ad3"
-                                  x="10" y="1" rx="5" width="${gene.score * 320}" height="18"/>
+                                  x="1" y="3" rx="5" width="${gene.score * 220}" height="16"/>
                             <rect fill="#e8ebed" stroke="white" stroke-width="2"
-                                  x="${(gene.score * 320)+12}" y="1" rx="5" width="${(firstBarWidth - (gene.score * 320))}" height="16"/>
+                                  x="${(gene.score * 220)+3}" y="3" rx="5" width="${(firstBarWidth - (gene.score * 220))}" height="16"/>
 
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;

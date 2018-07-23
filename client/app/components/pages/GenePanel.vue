@@ -88,6 +88,12 @@ var model = new Model();
       },
       selectedVendorsProps: {
         type: Array
+      },
+      selectedPanelsInCheckBox: {
+        type: Array
+      },
+      selectedPanelsInCheckBoxPropsOne: {
+        type: Array
       }
     },
     data(){
@@ -132,11 +138,21 @@ var model = new Model();
         this.AddGenePanelData();
       },
       selectedVendorsProps: function(){
+        console.log("selectedVendorsProps in gene panels  ")
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
         // console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
         // this.flagForVendorFilter = true;
-        this.updatePanelsOnSelectedVendors();
-        bus.$emit("vendorsFilter");
+        // this.updatePanelsOnSelectedVendors();
+        // bus.$emit("vendorsFilter");
+      },
+      selectedPanelsInCheckBox: function(){
+        console.log("selectedPanelsInCheckBox props in gene panel")
+        // console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
+        this.updateTableOnSelectedPanels();
+      },
+      selectedPanelsInCheckBoxPropsOne: function(){
+        console.log("hellooo")
+        this.justUpdateTabel();
       }
 
     },
@@ -170,10 +186,18 @@ var model = new Model();
     },
 
     methods:{
+      updateTableOnSelectedPanels: function(){
+        this.selected = this.selectedPanelsInCheckBox;
+        let vendors = model.getGenePanelVendors(this.selected);
+        this.$emit('selectVendors', vendors.sort());
+      },
+      justUpdateTabel: function(){
+        this.selected =this.selectedPanelsInCheckBoxPropsOne;
+      },
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
-        this.items = this.tempItems;
-        if(this.selectedVendorsFromFilterPanel.length>0){
+        // this.items = this.tempItems;
+        // if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
             for(var j=0; j<this.items.length; j++){
@@ -183,27 +207,29 @@ var model = new Model();
               }
             }
           }
-          this.items = tempArr;
-          this.selected = this.items.slice()
+          this.selected = tempArr;
+            // this.$emit("selectPanelsFromVendorsUpdate", this.selected);
+          // this.items = tempArr;
+          // this.selected = this.items.slice()
           // let vendors = model.getGenePanelVendors(mergedGenePanels);
           // this.vendorList = vendors;
           // this.$emit('setVendorList', this.vendorList.sort());
-          return this.items;
-        }
-        else if(this.selectedVendorsFromFilterPanel.length===0){
-          // alert("It is required that atleast one vendor is kept selected");
-          this.selected = this.items;
-          bus.$emit("lastVendor")
-          // this.selected = this.items;
-          // this.flagForVendorFilter = false;
-          // this.selected = this.tempItems.slice();
-          // // this.selected = [];
-          // this.items = this.tempItems
-          // // let vendors = model.getGenePanelVendors(mergedGenePanels);
-          // // this.vendorList = vendors;
-          // // this.$emit('setVendorList', this.vendorList.sort());
-          // return this.items
-        }
+          // return this.items;
+        // }
+        // else if(this.selectedVendorsFromFilterPanel.length===0){
+        //   // alert("It is required that atleast one vendor is kept selected");
+        //   this.selected = this.items;
+        //   bus.$emit("lastVendor")
+        //   // this.selected = this.items;
+        //   // this.flagForVendorFilter = false;
+        //   // this.selected = this.tempItems.slice();
+        //   // // this.selected = [];
+        //   // this.items = this.tempItems
+        //   // // let vendors = model.getGenePanelVendors(mergedGenePanels);
+        //   // // this.vendorList = vendors;
+        //   // // this.$emit('setVendorList', this.vendorList.sort());
+        //   // return this.items
+        // }
       },
       filterPanelsOnSelectedConditions: function(data){
         var tempArrForConditions = [];
@@ -250,35 +276,51 @@ var model = new Model();
           }
       },
       AddGenePanelData: function(){
+        //new code
+        this.DiseasePanel = this.DiseasePanelData
+        var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
+        this.mergedGene = mergedGenePanels
+        this.items = mergedGenePanels;
+        this.tempItems = mergedGenePanels;
+        console.log("panels", this.items);
+        let vendors = model.getGenePanelVendors(mergedGenePanels);
 
-        if(!this.flagForVendorFilter){
-          this.DiseasePanel = this.DiseasePanelData
-          var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-          this.mergedGene = mergedGenePanels
-          this.items = mergedGenePanels;
-          this.tempItems = mergedGenePanels;
+        this.vendorList = vendors;
 
-          let vendors = model.getGenePanelVendors(mergedGenePanels);
+        this.selected = this.items.slice();
+        // this.$emit('setPanelsNamesList', this.items);
+        this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
+                            //back to the parent so it can be used as props in filterpanel
 
-          this.vendorList = vendors;
-          this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
-                              //back to the parent so it can be used as props in filterpanel
 
-          this.selected = this.items.slice()
-        }
-        else if(this.flagForVendorFilter){
-          this.DiseasePanel = this.DiseasePanelData
-          var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-          this.mergedGene = mergedGenePanels
-
-          this.items = mergedGenePanels;
-          this.tempItems = mergedGenePanels;
-
-          let vendors = model.getGenePanelVendors(mergedGenePanels);
-          this.vendorList = vendors;
-          this.updatePanelsOnSelectedVendors();
-
-        }
+        // if(!this.flagForVendorFilter){
+        //   this.DiseasePanel = this.DiseasePanelData
+        //   var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
+        //   this.mergedGene = mergedGenePanels
+        //   this.items = mergedGenePanels;
+        //   this.tempItems = mergedGenePanels;
+        //   console.log("panels", this.items);
+        //   let vendors = model.getGenePanelVendors(mergedGenePanels);
+        //
+        //   this.vendorList = vendors;
+        //   this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
+        //                       //back to the parent so it can be used as props in filterpanel
+        //
+        //   this.selected = this.items.slice()
+        // }
+        // else if(this.flagForVendorFilter){
+        //   this.DiseasePanel = this.DiseasePanelData
+        //   var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
+        //   this.mergedGene = mergedGenePanels
+        //
+        //   this.items = mergedGenePanels;
+        //   this.tempItems = mergedGenePanels;
+        //
+        //   let vendors = model.getGenePanelVendors(mergedGenePanels);
+        //   this.vendorList = vendors;
+        //   this.updatePanelsOnSelectedVendors();
+        //
+        // }
 
 
 

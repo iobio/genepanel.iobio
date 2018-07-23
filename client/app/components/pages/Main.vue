@@ -334,7 +334,7 @@ import HelpMenu from '../partials/HelpMenu.vue';
     },
     methods: {
       handleScroll (event) {
-        // console.log(this.GtrScrollY);
+        console.log(this.GtrScrollY);
         // console.log(this.PhenolyzerScrollY);
         // console.log(this.SummaryScrollY);
         if(this.component === 'GeneticTestingRegistry'){

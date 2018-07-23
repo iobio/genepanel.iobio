@@ -251,24 +251,26 @@
                                 </v-flex>
                               </v-layout>
                               <br>
-                              <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
-                                <v-flex xs7>
-                                  <v-checkbox style="margin-top:-5px" :label="item.Title" :value="item" v-model="selectDisorders">
-                                  </v-checkbox>
-                                </v-flex>
-                                <v-flex xs5>
-                                  <!-- {{ item._geneCount}} -->
-                                  <div>
-                                    <DisordersGeneBar
-                                     v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
-                                     class="SvgBarClass"
-                                     id="disordersGeneBar"
-                                     :selectedNumber="item._geneCount"
-                                     :totalNumber="TotalGtrGenes">
-                                    </DisordersGeneBar>
-                                  </div>
-                                </v-flex>
-                              </v-layout>
+                              <div class="vendorsCardClass">
+                                <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
+                                  <v-flex xs7>
+                                    <v-checkbox style="margin-top:-8px" :label="item.Title" :value="item" v-model="selectDisorders">
+                                    </v-checkbox>
+                                  </v-flex>
+                                  <v-flex xs5>
+                                    <!-- {{ item._geneCount}} -->
+                                    <div>
+                                      <DisordersGeneBar
+                                       v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
+                                       class="SvgBarClass"
+                                       id="disordersGeneBar"
+                                       :selectedNumber="item._geneCount"
+                                       :totalNumber="TotalGtrGenes">
+                                      </DisordersGeneBar>
+                                    </div>
+                                  </v-flex>
+                                </v-layout>
+                              </div>
                               <br>
                               <v-layout>
                                 <v-flex xs6>
@@ -366,7 +368,7 @@
                 </div>
 
                     <div class="d-flex mb-2 xs12 mt-4">
-                      <div v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length"">
+                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-text>
                             <center>
@@ -383,8 +385,14 @@
 
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
                                <span class="Rightbar_card_content_subheading">
-                                 <strong class="Rightbar_card_content_heading">{{ genePanelsCount }}</strong> Present
+                                 <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of {{ multiSelectPanels.length }} selected
                                </span>
+                               <SvgBar
+                                class="SvgBarClass"
+                                id="panelssvgbar"
+                                :selectedNumber="selectedPanelsInCheckBox.length"
+                                :totalNumber="multiSelectPanels.length">
+                               </SvgBar>
                                <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('GeneMembership')">
                                  View & Filter
@@ -393,10 +401,66 @@
                            </center>
                           </v-card-text>
                           <div v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
-                              <GeneMembership
-                                v-bind:GeneData="geneProps"
-                                :color="barColor">
-                              </GeneMembership>
+                              <v-card flat v-if="vendorList.length">
+                                <v-card-text >
+                                  <center>
+                                    <span class="Rightbar_card_content_subheading">
+                                      <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of {{ multiSelectPanels.length }} panels selected
+                                    </span>
+                                    <SvgBar
+                                     class="SvgBarClass"
+                                     id="disordersSvgBoxInside"
+                                     :selectedNumber="selectedPanelsInCheckBox.length"
+                                     :totalNumber="multiSelectPanels.length">
+                                    </SvgBar>
+                                  </center>
+                                  <br>
+                                  <v-layout>
+                                    <v-flex xs8>
+                                      <center><strong style="font-size:12px">PANELS</strong></center>
+                                    </v-flex>
+                                    <v-flex xs2>
+                                      <strong style="font-size:12px">GENES</strong>
+                                    </v-flex>
+                                    <v-flex xs2>
+                                      <strong style="font-size:12px">CONDITIONS</strong>
+                                    </v-flex>
+                                  </v-layout>
+                                  <br>
+                                  <div class="vendorsCardClass">
+                                    <v-layout row wrap v-for="(item, i) in multiSelectPanels" :key="i">
+                                      <v-flex xs8>
+                                        <v-checkbox style="margin-top:-8px" :label="item.testname" :value="item" v-model="selectedPanelsInCheckBox">
+                                        </v-checkbox>
+                                      </v-flex>
+                                      <v-flex xs2>
+                                        <strong style="margin-top-6px; font-size:15px">{{ item.genecount }}</strong>
+                                      </v-flex>
+                                      <v-flex xs2>
+                                        <strong style="margin-top-6px; font-size:15px">{{ item._diseaseCount }}</strong>
+                                      </v-flex>
+                                    </v-layout>
+                                  </div>
+                                  <br>
+                                  <br>
+                                  <v-layout>
+                                    <v-flex xs6>
+                                      <center>
+                                        <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllPanels">SELECT ALL</v-btn>
+                                      </center>
+                                    </v-flex>
+                                    <v-flex xs6>
+                                      <center>
+                                        <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="DeSelectAllPanels">DESELECT ALL</v-btn>
+                                      </center>
+                                    </v-flex>
+                                  </v-layout>
+                                  <br>
+
+                                </v-card-text>
+                              </v-card>
+                              <br>
+
                               <br>
                               <center>
                                 <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
@@ -411,7 +475,7 @@
                     <div class="mt-4">
                     <v-layout wrap>
                     <v-flex xs12>
-                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
+                      <div v-if=" diseasesProps.length && modeOfInheritanceProps.length && multiSelectItems.length>0">
                         <v-card v-bind:class="[chartComponent==='Vendors' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-text primary-title>
                             <center>
@@ -428,13 +492,13 @@
 
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <span class="Rightbar_card_content_subheading">
-                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} selected
+                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} selected
                                </span>
                                <SvgBar
                                 class="SvgBarClass"
                                 id="disordersSvgBoxInside"
                                 :selectedNumber="vendorsSelect.length"
-                                :totalNumber="vendorList.length">
+                                :totalNumber="multiSelectItems.length">
                                </SvgBar>
                                <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
@@ -442,17 +506,17 @@
                             </center>
                           </v-card-text>
                           <div v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
-                            <v-card flat v-if="vendorList.length">
+                            <v-card flat v-if="multiSelectItems.length">
                               <v-card-text >
                                 <center>
                                   <span class="Rightbar_card_content_subheading">
-                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ vendorList.length }} disorders selected
+                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
                                   </span>
                                   <SvgBar
                                    class="SvgBarClass"
                                    id="disordersSvgBoxInside"
                                    :selectedNumber="vendorsSelect.length"
-                                   :totalNumber="vendorList.length">
+                                   :totalNumber="multiSelectItems.length">
                                   </SvgBar>
                                 </center>
                                 <br>
@@ -460,7 +524,7 @@
                                   <v-checkbox
                                     v-for="(item, i) in multiSelectItems"
                                     :key="i" :label="item" :value="item"
-                                    style="margin-top:-5px"
+                                    style="margin-top:-8px"
                                     v-model="vendorsSelect">
                                   </v-checkbox>
                                 </div>
@@ -519,8 +583,7 @@
             </v-flex>
             <br>
 <!-- style="visibility:hidden; height:0px" -->
-
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -530,7 +593,12 @@
                     v-on:selectedPanels="selectPanels($event)"
                     v-on:NoOfPanels="NoOfPanels($event)"
                     v-on:setVendorList="updateVendorList($event)"
-                    v-bind:selectedVendorsProps="vendorsSelect">
+                    v-bind:selectedVendorsProps="vendorsSelectProps"
+                    v-on:setPanelsNamesList="setPanelsNamesList($event)"
+                    v-bind:selectedPanelsInCheckBox="selectedPanelsInCheckBoxProps"
+                    v-bind:selectedPanelsInCheckBoxPropsOne="selectedPanelsInCheckBoxPropsOne"
+                    v-on:selectVendors="selectVendors($event)"
+                    v-on:selectPanelsFromVendorsUpdate="selectPanelsFromVendorsUpdate($event)">
                     <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
                   </gene-panel>
                 </v-card-text>
@@ -561,6 +629,10 @@ import SvgBar from '../viz/SvgBar.vue';
 import DisordersGeneBar from '../viz/DisordersGeneBar.vue'
 import ModesSvgBar from '../viz/ModesSvgBar.vue';
 import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
+var _ = require('lodash');
+import Model from '../../models/Model';
+var model = new Model();
+
 
 export default {
   components: { //Registering locally for nesting!
@@ -635,6 +707,7 @@ export default {
       filterFeed: [],
       saveSelectedVendorsCount: 0,
       saveSelectedVendors: [],
+      saveSelectedPanels: [],
       newSearchFlag: false,
       lastVendorItem: [],
       HelpDialogsData: null,
@@ -642,6 +715,11 @@ export default {
       selectedModesOfInheritance: [],
       selectedModesOfInheritanceProps: [],
       DisordersAndModesComponent: "",
+      multiSelectPanels: [],
+      selectedPanelsInCheckBox: [],
+      vendorsSelectProps:[],
+      selectedPanelsInCheckBoxProps: [],
+      selectedPanelsInCheckBoxPropsOne: [],
     }
   },
   watch:{
@@ -652,12 +730,57 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
+      console.log("vendor select watching")
+
+      if(this.chartComponent==='Vendors'){
+        this.vendorsSelectProps = this.vendorsSelect;
+        var tempArr=[];
+        for(var i=0; i<this.vendorsSelect.length; i++){
+          for(var j=0; j<this.multiSelectPanels.length; j++){
+            if( this.vendorsSelect[i] === this.multiSelectPanels[j].offerer ){
+              tempArr.push(this.multiSelectPanels[j]);
+            }
+          }
+        }
+        this.selectedPanelsInCheckBox = tempArr;
+      }
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
       var lastItem = [];
-      if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
-        this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
-        this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors'){
+        if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
+          this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
+          this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
+        }
+        else if(diff===0){
+          this.saveSelectedVendors = [];
+        }
       }
+
+    },
+    selectedPanelsInCheckBox(val){
+      console.log("selected panels watching ")
+      if(this.chartComponent==='GeneMembership'){
+        this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
+      }
+      else if(this.chartComponent==='Vendors'){
+        this.selectedPanelsInCheckBoxPropsOne = this.selectedPanelsInCheckBox
+      }
+      var diff = this.multiSelectPanels.length - this.selectedPanelsInCheckBox.length;
+      var temp = [];
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors'){
+        if(diff>0){
+          // this.saveSelectedPanels = this.selectedPanelsInCheckBox
+          this.selectedPanelsInCheckBox.map(x=>{
+            temp.push(x.testname);
+          })
+          this.saveSelectedPanels = temp;
+        }
+        else if(diff===0){
+          this.saveSelectedPanels=[];
+        }
+      }
+
+
     },
     selectDisorders(val) {
       if(this.DisordersAndModesComponent==="disorders"){
@@ -676,13 +799,15 @@ export default {
       }
     }
   },
+  updated(){
+  },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
-    bus.$on("lastVendor", ()=>{
-      this.snackbarText = "It is required that atleast one vendor is kept selected";
-      this.snackbar = true;
-      this.vendorsSelect = [this.multiSelectItems[0]];
-    });
+    // bus.$on("lastVendor", ()=>{
+    //   this.snackbarText = "It is required that atleast one vendor is kept selected";
+    //   this.snackbar = true;
+    //   this.vendorsSelect = [this.multiSelectItems[0]];
+    // });
     bus.$on("lastDisorder", ()=>{
       this.snackbarText = "It is required that atleast one disorder is kept selected";
       this.snackbar = true;
@@ -690,12 +815,16 @@ export default {
     });
     bus.$on("newSearch", ()=>{
       this.newSearchFlag = true;
+      this.saveSelectedPanels=[];
+      this.saveSelectedVendors=[];
     })
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
       // this.vendorsSelect = [];
       this.vendorsSelect = this.multiSelectItems;
       this.removeSearchTermFlag = true;
+      this.saveSelectedPanels=[];
+      this.saveSelectedVendors=[];
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
@@ -718,6 +847,8 @@ export default {
     bus.$on("newAnalysis", ()=>{
       this.disordersSearchedByUser= false;
       this.NumberOfTopGenes = null;
+      this.saveSelectedPanels = [];
+      this.saveSelectedVendors = [];
     });
   },
   created () {
@@ -740,7 +871,7 @@ export default {
       }
     },
     addDiseases: function(e){
-      console.log("addDiseases", e)
+      // console.log("addDiseases", e)
       this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       // console.log("E", e);
@@ -783,7 +914,7 @@ export default {
       }
     },
     selectDiseases: function(e){ //Gets back the data based on the changes or updates in the disease panel;
-     console.log("e is from home: ", e)
+     // console.log("e is from home: ", e)
       this.diseasesProps = e;
       if(e.length<=0){
         this.geneProps = [];
@@ -791,11 +922,72 @@ export default {
       }
     },
     selectPanels: function(e){
-      this.geneProps = e;
-      // this.scrollDown();
-      this.$emit("GeneMembershipData", e);
+      console.log(" selectPanels");
+      console.log("chart component", this.chartComponent)
+      // console.log("this.saveSelectedPanels", this.saveSelectedPanels)
+      // this.geneProps = this.selectedPanelsInCheckBox;
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
+        //set the items in the panels card
+        this.multiSelectPanels = e;
+        // this.selectedPanelsInCheckBox = this.multiSelectPanels;
+
+        //Set vendors in the vendors cardBoxTitle
+        // let vendors = model.getGenePanelVendors(e);
+        // this.multiSelectItems = vendors;
+        // this.vendorList = vendors;
+        // this.vendorsSelect = this.multiSelectItems;
+      }
+
+      var temp = [];
+      if(this.saveSelectedPanels.length===0 && this.chartComponent === 'disorders'){
+        temp = e;
+      }
+      else if(this.saveSelectedPanels.length>0 && this.chartComponent === 'disorders'){
+        console.log("i am here");
+        e.map(x=>{
+          if(this.saveSelectedPanels.includes(x.testname)){
+            temp.push(x);
+          }
+        })
+      }
+      else {
+        temp = e;
+      }
+
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
+        //set the items in the panels card
+        // this.multiSelectPanels = temp;
+        this.selectedPanelsInCheckBox = temp;
+
+        //Set vendors in the vendors cardBoxTitle
+        // let vendors1 = model.getGenePanelVendors(temp);
+        // this.multiSelectItems = vendors;
+        // this.vendorList = vendors;
+        // this.vendorsSelect = vendors1;
+      }
+
+
+
+
+      console.log("temp length",temp.length)
+      this.geneProps = temp;
+      // this.$emit("GeneMembershipData", temp);
+    },
+    setPanelsNamesList: function(e){
+      console.log(" setPanelsNamesList");
+      if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
+        this.multiSelectPanels = e;
+        this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      }
+      else {
+        this.multiSelectPanels = e;
+        this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      }
+
+      // this.checkForDeselectedPanels();
     },
     updateVendorList: function(e){
+      console.log("updateVendorList ");
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
       this.multiSelectItems = e;
@@ -803,12 +995,35 @@ export default {
       this.$emit("vendorListCB", e);
       this.checkForDeselectedVendor();
     },
+    selectVendors: function(e){
+      console.log("selectVendors ", e);
+      this.vendorsSelect = e;
+      if(!this.chartComponent==='Vendors'){
+        this.vendorsSelect = e;
+      }
+      // this.vendorsSelect = e;
+      // this.checkForDeselectedPanels();
+    },
+    selectPanelsFromVendorsUpdate: function(e){
+      console.log(" selectPanelsFromVendorsUpdate");
+      // this.selectedPanelsInCheckBox = e;
+
+      // this.checkForDeselectedVendor();
+    },
     checkForDeselectedVendor: function(){
       if(this.saveSelectedVendors.length===0){
         this.vendorsSelect = this.multiSelectItems;
       }
       else if(this.saveSelectedVendors.length>0){
         this.vendorsSelect = this.multiSelectItems.filter( vendor => !this.saveSelectedVendors.includes(vendor))
+      }
+    },
+    checkForDeselectedPanels: function(){
+      if(this.saveSelectedPanels.length===0){
+        this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      }
+      else if(this.saveSelectedPanels.length>0){
+        this.selectedPanelsInCheckBox = this.multiSelectPanels.filter( panel => !this.saveSelectedPanels.includes(panel))
       }
     },
     updateSelectedVendors: function(e){
@@ -907,6 +1122,12 @@ export default {
       this.selectDisorders = [];
       bus.$emit("updatedFromDisorders");
     },
+    SelectAllPanels: function(){
+      this.selectedPanelsInCheckBox = this.multiSelectPanels;
+    },
+    DeSelectAllPanels: function(){
+      this.selectedPanelsInCheckBox = [];
+    },
     resetDisorders: function(){
       this.selectDisorders = [];
       bus.$emit("resetDisordersBus");
@@ -931,8 +1152,10 @@ export default {
       this.multipleSearchItems = e;
     },
     closeComponent: function(){
+      window.scrollTo(0,0);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
+
     }
   }
 }
@@ -1122,9 +1345,8 @@ export default {
   margin-top: -20px
 
 .vendorsCardClass
-  height: 355px
+  max-height: 355px
   overflow: scroll
-
 
 
 .SvgBarClass
@@ -1155,4 +1377,7 @@ export default {
   margin-top: 0px
   font-size: 14px
   font-weight: 200
+
+.v-messages
+  margin-top: -16px
 </style>

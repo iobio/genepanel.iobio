@@ -251,7 +251,7 @@ var model = new Model();
 
               // console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
               if(this.multipleSearchTerms.includes(searchTerm)){
-                console.log("Send")
+                // console.log("Send")
                 bus.$emit("newSearch")
                 this.$emit('showDiseases', this.filteredDiseasesItems)
               }
