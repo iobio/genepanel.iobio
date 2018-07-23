@@ -93,7 +93,7 @@
                 <!-- end data table -->
 
                 <!-- start side bar -->
-                <v-flex xs4 class="pr-2 pl-1">
+                <v-flex xs4 class="pr-2 pl-2">
 
                   <div class="d-flex mb-2 xs12">
                     <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">

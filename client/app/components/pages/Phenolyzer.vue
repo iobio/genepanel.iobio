@@ -172,28 +172,7 @@
                         <!-- <td></td> -->
                         <td>{{ props.item.indexVal }}</td>
                         <td >
-                          <div id="app">
-                            <div>
-                              <v-menu open-on-hover top offset-y>
-                                <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
-                                  <div >
-                                    <v-card>
-                                      <v-card-text style="margin-top:-25px">
-                                        <center ><h3>{{ props.item.geneName }}</h3></center>
-                                        <hr>
-                                        <div style="width:600px"><strong>Resources: </strong></div>
-                                        <ul style="margin-left:25px; margin-top:5px">
-                                          <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                                          <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                                          <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                                          <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                                        </ul>
-                                      </v-card-text>
-                                    </v-card>
-                                  </div>
-                              </v-menu>
-                            </div>
-                          </div>
+                          <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
                           <td>
                             <span v-for="x in props.item.searchTermIndexSVG">
@@ -626,14 +605,16 @@ import SvgBar from '../viz/SvgBar.vue'
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       },
       selectNumberOfTopPhenolyzerGenes: function(){
-        setTimeout(()=>{
-          if(this.genesTop>0){
-            bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
-            this.snackbarText = "Top " + this.genesTop + " genes selected";
-            this.snackbar = true;
-          }
-        }, 1200);
-
+        // setTimeout(()=>{
+        //
+        //     // this.snackbarText = "Top " + this.genesTop + " genes selected";
+        //     // this.snackbar = true;
+        //   }
+        // }, 1200);
+        console.log(typeof this.genesTop)
+        if(this.genesTop>0){
+          bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
+        }
       },
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []

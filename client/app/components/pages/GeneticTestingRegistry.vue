@@ -718,6 +718,9 @@ export default {
     }
   },
   watch:{
+    NumberOfTopGenes: function(){
+      this.selectNumberOfTopGenes()
+    },
     selectedVendorsListCB: function(){
       this.selectedVendorsList = this.selectedVendorsListCB
     },
@@ -859,15 +862,19 @@ export default {
   },
   methods: {
     selectNumberOfTopGenes: function(){
-      if(parseInt(this.NumberOfTopGenes)>0){
+      // if(this.NumberOfTopGenes===""){
+      //   bus.$emit('SelectNumberOfGenes', 50);
+      // }
+       if(parseInt(this.NumberOfTopGenes)>0){
         bus.$emit('SelectNumberOfGenes', parseInt(this.NumberOfTopGenes));
-        this.flagForNumberOfGenesSelected= true;
-        this.snackbarText = "Top " + parseInt(this.NumberOfTopGenes) + " genes selected";
-        this.snackbar = true;
+        // this.flagForNumberOfGenesSelected= true;
+        // this.snackbarText = "Top " + parseInt(this.NumberOfTopGenes) + " genes selected";
+        // this.snackbar = true;
       }
-      else if (parseInt(this.NumberOfTopGenes)<0) {
-        document.getElementById("geneSelection").reset();
-      }
+      // else if (parseInt(this.NumberOfTopGenes)<=0) {
+      //   bus.$emit('SelectNumberOfGenes', 0);
+      //
+      // }
     },
     addDiseases: function(e){
       // console.log("addDiseases", e)
