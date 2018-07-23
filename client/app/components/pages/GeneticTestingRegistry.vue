@@ -385,7 +385,7 @@
 
                              <div v-bind:class="[chartComponent==='GeneMembership' ? 'disabledClass' : 'activeClass']">
                                <span class="Rightbar_card_content_subheading">
-                                 <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of {{ multiSelectPanels.length }} selected
+                                 <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of panels {{ multiSelectPanels.length }} selected
                                </span>
                                <SvgBar
                                 class="SvgBarClass"
@@ -417,13 +417,13 @@
                                   <br>
                                   <v-layout>
                                     <v-flex xs8>
-                                      <center><strong style="font-size:12px">PANELS</strong></center>
+                                    <strong style="font-size:11px">PANELS</strong>
                                     </v-flex>
-                                    <v-flex xs2>
-                                      <strong style="font-size:12px">GENES</strong>
+                                    <v-flex xs1>
+                                      <strong style="font-size:11px">GENES</strong>
                                     </v-flex>
-                                    <v-flex xs2>
-                                      <strong style="font-size:12px">CONDITIONS</strong>
+                                    <v-flex x3>
+                                      <center><strong style="font-size:11px">CONDITIONS</strong></center>
                                     </v-flex>
                                   </v-layout>
                                   <br>
@@ -433,11 +433,11 @@
                                         <v-checkbox style="margin-top:-8px" :label="item.testname" :value="item" v-model="selectedPanelsInCheckBox">
                                         </v-checkbox>
                                       </v-flex>
-                                      <v-flex xs2>
-                                        <strong style="margin-top-6px; font-size:15px">{{ item.genecount }}</strong>
+                                      <v-flex xs1>
+                                        <strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong>
                                       </v-flex>
-                                      <v-flex xs2>
-                                        <strong style="margin-top-6px; font-size:15px">{{ item._diseaseCount }}</strong>
+                                      <v-flex xs3>
+                                        <strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong>
                                       </v-flex>
                                     </v-layout>
                                   </div>
@@ -459,9 +459,6 @@
 
                                 </v-card-text>
                               </v-card>
-                              <br>
-
-                              <br>
                               <center>
                                 <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
                               </center>
@@ -492,7 +489,7 @@
 
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
                                <span class="Rightbar_card_content_subheading">
-                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} selected
+                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
                                </span>
                                <SvgBar
                                 class="SvgBarClass"
@@ -541,8 +538,6 @@
                                     </center>
                                   </v-flex>
                                 </v-layout>
-                                <br>
-
                               </v-card-text>
                             </v-card>
                             <!-- <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
@@ -817,6 +812,8 @@ export default {
       this.newSearchFlag = true;
       this.saveSelectedPanels=[];
       this.saveSelectedVendors=[];
+      this.chartComponent= null;
+      this.DisordersAndModesComponent="";
     })
     bus.$on("removeSearchTerm", ()=>{
       this.selectDisorders = [];
@@ -825,6 +822,8 @@ export default {
       this.removeSearchTermFlag = true;
       this.saveSelectedPanels=[];
       this.saveSelectedVendors=[];
+      this.chartComponent= null;
+      this.DisordersAndModesComponent="";
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")

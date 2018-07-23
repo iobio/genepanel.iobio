@@ -52,10 +52,17 @@ var model = new Model();
         if(wdth<=0){
           wdth = 400;
         }
+        if(this.totalNumber>1200){
+          this.totalNumber = this.totalNumber/1.5
+        }
         var svgWidth = wdth - 20;
         var multiplicationFactor = svgWidth / this.totalNumber;
-        var selectedgenesWidth = Math.abs(this.selectedNumber * multiplicationFactor);
-        var grayBarWidth = Math.abs(svgWidth - selectedgenesWidth);
+        var selectedgenesWidth = Math.abs(this.selectedNumber * multiplicationFactor-10);
+        var grayBarWidth = Math.abs(svgWidth - selectedgenesWidth-10);
+
+        if(grayBarWidth<1){
+          grayBarWidth = 0;
+        }
 
         this.bars = `<svg viewBox="0 0 ${svgWidth} 18" xmlns="http://www.w3.org/2000/svg">
                       <rect class="genepanelsRect"
