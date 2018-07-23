@@ -512,7 +512,9 @@ mergeGenesAcrossPanels(genePanels) {
 
 
   getGeneBarChartData(genes, width) {
-
+    if(width===undefined){
+      width = 850;
+    }
     // Sort genes by gene panel count (descending order)
     // Sort genes by gene panel count (descending order)
     var sortedGenes = genes.sort(function(a,b) {
