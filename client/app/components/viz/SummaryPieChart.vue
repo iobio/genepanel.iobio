@@ -19,12 +19,14 @@
     }),
     watch: {
       summaryPieChartData: function(){
+        console.log("this.summaryPieChartData", this.summaryPieChartData)
         this.summaryData = this.summaryPieChartData;
         this.draw();
       },
 
     },
     mounted(){
+      console.log("this.summaryPieChartData", this.summaryPieChartData)
       this.summaryData = this.summaryPieChartData;
       this.draw();
     },

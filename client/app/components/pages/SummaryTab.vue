@@ -141,13 +141,43 @@
 
                   <br>
                   <div class="d-flex mb-2 xs12">
+                    <v-card class="rightbarCard" v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                      <v-card-text>
+                        <center>
+                          <span class="Rightbar_CardHeading">
+                          GENES SUMMARY
+                          </span>
+                          <v-divider class="Rightbar_card_divider"></v-divider>
+                        </center>
+                        <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
+                          <v-flex xs6>
+                            <div class="Rightbar_card_content_subheading">
+                              {{ item.name }}
+                            </div>
+                          </v-flex>
+                          <v-flex xs6>
+                            <div>
+                              <SummarySvgBar
+                               class="SvgBarClass"
+                               id="genesbar"
+                               :selectedNumber="item.count"
+                               :totalNumber="totalGenes">
+                              </SummarySvgBar>
+                            </div>
+                          </v-flex>
+                        </v-layout>
+                      </v-card-text>
+                    </v-card>
+                  </div>
+                  <br>
+                  <!-- <div class="d-flex mb-2 xs12">
                       <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                         <SummaryPieChart
                           v-bind:summaryPieChartData="pieChartdataArr"
                           :color="chartColor">
                         </SummaryPieChart>
                       </v-card>
-                  </div>
+                  </div> -->
 
                 </v-flex>
 
@@ -173,7 +203,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
 import Dialogs from '../partials/Dialogs.vue';
 import SvgBar from '../viz/SvgBar.vue'
 import Alerts from '../partials/Alerts.vue';
-
+import SummarySvgBar from '../viz/SummarySvgBar.vue';
 
 
   export default {
@@ -184,6 +214,7 @@ import Alerts from '../partials/Alerts.vue';
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       'Alerts': Alerts,
+      'SummarySvgBar': SummarySvgBar
     },
     props:{
       NumberOfGtrGenes:{

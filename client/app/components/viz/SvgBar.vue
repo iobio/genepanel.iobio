@@ -63,6 +63,9 @@ var model = new Model();
         if(grayBarWidth<1){
           grayBarWidth = 0;
         }
+        else if(this.selectedNumber===0){
+          selectedgenesWidth = 0;
+        }
 
         this.bars = `<svg viewBox="0 0 ${svgWidth} 18" xmlns="http://www.w3.org/2000/svg">
                       <rect class="genepanelsRect"
