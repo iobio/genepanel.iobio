@@ -251,24 +251,26 @@
                                 </v-flex>
                               </v-layout>
                               <br>
-                              <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
-                                <v-flex xs7>
-                                  <v-checkbox style="margin-top:-5px" :label="item.Title" :value="item" v-model="selectDisorders">
-                                  </v-checkbox>
-                                </v-flex>
-                                <v-flex xs5>
-                                  <!-- {{ item._geneCount}} -->
-                                  <div>
-                                    <DisordersGeneBar
-                                     v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
-                                     class="SvgBarClass"
-                                     id="disordersGeneBar"
-                                     :selectedNumber="item._geneCount"
-                                     :totalNumber="TotalGtrGenes">
-                                    </DisordersGeneBar>
-                                  </div>
-                                </v-flex>
-                              </v-layout>
+                              <div class="vendorsCardClass">
+                                <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
+                                  <v-flex xs7>
+                                    <v-checkbox style="margin-top:-8px" :label="item.Title" :value="item" v-model="selectDisorders">
+                                    </v-checkbox>
+                                  </v-flex>
+                                  <v-flex xs5>
+                                    <!-- {{ item._geneCount}} -->
+                                    <div>
+                                      <DisordersGeneBar
+                                       v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
+                                       class="SvgBarClass"
+                                       id="disordersGeneBar"
+                                       :selectedNumber="item._geneCount"
+                                       :totalNumber="TotalGtrGenes">
+                                      </DisordersGeneBar>
+                                    </div>
+                                  </v-flex>
+                                </v-layout>
+                              </div>
                               <br>
                               <v-layout>
                                 <v-flex xs6>
@@ -1148,8 +1150,10 @@ export default {
       this.multipleSearchItems = e;
     },
     closeComponent: function(){
+      window.scrollTo(0,0);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
+
     }
   }
 }
@@ -1339,9 +1343,8 @@ export default {
   margin-top: -20px
 
 .vendorsCardClass
-  height: 355px
+  max-height: 355px
   overflow: scroll
-
 
 
 .SvgBarClass
@@ -1372,4 +1375,7 @@ export default {
   margin-top: 0px
   font-size: 14px
   font-weight: 200
+
+.v-messages
+  margin-top: -16px
 </style>
