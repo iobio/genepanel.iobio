@@ -48,29 +48,34 @@ var model = new Model();
     },
     methods:{
       drawBars(){
-        var svgWidth = $('.SvgDisordersDiv').innerWidth() - 20;
+        var svgWidth = $('.SvgDisordersDiv').innerWidth() ;
         var absWidth = Math.abs(svgWidth)
         // console.log(absWidth)
         var multiplicationFactor = absWidth / this.totalNumber;
-        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-12);
-        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -12);
+        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-40);
+        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -40);
         var selected_Number = this.selectedNumber;
 
+        if(selectedgenesWidth+4+grayBarWidth+20 > absWidth){
+          selectedgenesWidth = selectedgenesWidth-10;
+          grayBarWidth = grayBarWidth-20;
+        }
+
         this.bars = `<svg viewBox="0 0 ${absWidth} 18" xmlns="http://www.w3.org/2000/svg">
-                      <rect class="genepanelsRect"
-                            x="1" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
-                      <rect class="grayRect"
-                            x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
-                      <text x="${selectedgenesWidth+5+grayBarWidth}" y="12" font-family="Verdana" font-size="13" fill="#4267b2">${selected_Number}</text>
-                  </svg>`
+                        <rect class="genepanelsRect"
+                              x="1" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
+                        <rect class="grayRect"
+                              x="${selectedgenesWidth}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
+                        <text x="${selectedgenesWidth+7+grayBarWidth}" y="12" font-family="Verdana" font-size="10" fill="#4267b2">${selected_Number}</text>
+                    </svg>`
 
         // this.bars = `<svg width="${absWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
-        //               <rect class="genepanelsRect"
-        //                     x="1" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
-        //               <rect class="grayRect"
-        //                     x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
-        //               <text x="${selectedgenesWidth+5+grayBarWidth}" y="12" font-family="Verdana" font-size="13" fill="#4267b2">${selected_Number}</text>
-        //           </svg>`
+                  //     <rect class="genepanelsRect"
+                  //           x="1" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
+                  //     <rect class="grayRect"
+                  //           x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
+                  //     <text x="${selectedgenesWidth+5+grayBarWidth}" y="12" font-family="Verdana" font-size="13" fill="#4267b2">${selected_Number}</text>
+                  // </svg>`
       }
     }
   }
