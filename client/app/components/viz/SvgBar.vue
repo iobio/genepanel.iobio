@@ -48,8 +48,9 @@ var model = new Model();
     },
     methods:{
       drawBars(){
+        console.log("$('.SvgDiv').innerWidth()", $('.SvgDiv').innerWidth())
         var wdth = $('.SvgDiv').innerWidth();
-        if(wdth<=0){
+        if(wdth<=0 || wdth===undefined){
           wdth = 400;
         }
         if(this.totalNumber>1200){
