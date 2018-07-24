@@ -23,7 +23,7 @@
     >
     <br>
      <v-list dense class="pt-0">
-       <v-list-tile>
+       <v-list-tile @click="selectComponent('OverviewPage')">
          <v-list-tile-action >
            <span><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
@@ -180,6 +180,8 @@
         <div style="background:white; height:auto">
           <keep-alive>
 
+              <Overview v-if="component==='OverviewPage'"></Overview>
+
               <GeneticTestingRegistry
                 v-if="component==='GeneticTestingRegistry'"
                 v-on:vendorListCB="updateVendors($event)"
@@ -239,6 +241,7 @@ import DisorderSearch from './DisorderSearch.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
 import AppsMenu from '../partials/AppsMenu.vue';
 import HelpMenu from '../partials/HelpMenu.vue';
+import Overview from './Overview.vue'
 
   export default {
     components: {
@@ -251,7 +254,8 @@ import HelpMenu from '../partials/HelpMenu.vue';
       'FilterPhenolyzer': FilterPhenolyzer,
       'FilterSummary': FilterSummary,
       'AppsMenu': AppsMenu,
-      'HelpMenu': HelpMenu
+      'HelpMenu': HelpMenu,
+      'Overview':Overview
     },
     data(){
       return{
