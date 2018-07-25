@@ -23,12 +23,15 @@
     >
     <br>
      <v-list dense class="pt-0">
-       <v-list-tile @click="selectComponent('OverviewPage')">
-         <v-list-tile-action >
-           <span><v-icon>dashboard</v-icon></span>
+       <v-list-tile
+         v-bind:class="[component==='OverviewPage' ? 'activeTab' : '']"
+         @click="selectComponent('OverviewPage')">
+         <v-list-tile-action v-bind:class="[component==='OverviewPage' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='OverviewPage'"><v-icon color="primary darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon>dashboard</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
-           <v-list-tile-title >
+           <v-list-tile-title v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTabText' : '']">
              Overview
            </v-list-tile-title>
          </v-list-tile-content>
@@ -259,7 +262,7 @@ import Overview from './Overview.vue'
     },
     data(){
       return{
-        component: 'GeneticTestingRegistry',
+        component: 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
