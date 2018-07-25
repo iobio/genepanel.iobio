@@ -27,11 +27,11 @@
          v-bind:class="[component==='OverviewPage' ? 'activeTab' : '']"
          @click="selectComponent('OverviewPage')">
          <v-list-tile-action v-bind:class="[component==='OverviewPage' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='OverviewPage'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <span v-if="component==='OverviewPage'"><v-icon color="primary darken-1">library_books</v-icon></span>
+           <span v-else color="blue-grey darken-2"><v-icon>library_books</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
-           <v-list-tile-title v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTabText' : '']">
+           <v-list-tile-title v-bind:class="[component==='OverviewPage' ? 'activeTabText' : '']">
              Overview
            </v-list-tile-title>
          </v-list-tile-content>
@@ -41,8 +41,8 @@
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="selectComponent('GeneticTestingRegistry')">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">sort</v-icon></span>
+           <span v-else><v-icon color="blue-grey darken-2">sort</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTabText' : '']">
@@ -58,8 +58,11 @@
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <!-- <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span> -->
+           <span v-if="component==='Phenolyzer'">
+             <img src="../assets/images/phenolyzer2.svg" alt="" height="28px" width="28px" >
+           </span>
+           <span v-else><img src="../assets/images/phenolyzer1.svg" height="28px" width="28px" style="margin-left:-4px"></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='Phenolyzer' ? 'activeTabText' : '']">
@@ -76,8 +79,8 @@
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='SummaryTab'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <span v-if="component==='SummaryTab'"><v-icon style="transform: rotate(90deg)" color="primary darken-1">merge_type</v-icon></span>
+           <span v-else><v-icon style="transform: rotate(90deg)" color="blue-grey darken-2">merge_type</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='SummaryTab' ? 'activeTabText' : '']">
@@ -716,6 +719,9 @@ aside {
   }
 }
 
+.v-list--dense .v-list__tile .v-icon {
+  font-size: 24px;
+}
 
 </style>
 

@@ -29,7 +29,7 @@
                   <v-flex xs5>
                     <v-flex text-xs-center>
                       <!-- <div class="polaroid"> -->
-                        <img class="elevation-19" style="margin-top:68px; width:590px; height:350px" src="../assets/images/bg2.png" alt="bg">
+                        <img class="elevation-19" style="margin-top:68px; right: 0; width:590px; height:350px" src="../assets/images/bg2.png" alt="bg">
                       <!-- </div> -->
 
                     </v-flex>

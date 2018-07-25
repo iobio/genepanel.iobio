@@ -51,7 +51,7 @@
                       </v-flex>
                       <v-flex xs6>
                         <v-card-text>
-                          <strong>Phenotypes:</strong>
+                          <strong>Phenolyzer:</strong>
                           <div v-if="PhenolyzerSearchTerms.length>0">
                           <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
@@ -126,7 +126,7 @@
 
 
                          <span class="Rightbar_card_content_subheading">
-                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} selected</span>
+                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} genes selected</span>
                        </center>
                        <SvgBar
                         class="SvgBarClass"
@@ -134,11 +134,31 @@
                         :selectedNumber="selectedGenes"
                         :totalNumber="totalGenes">
                        </SvgBar>
+                       <br>
+                       <div v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                         <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
+                           <v-flex xs6>
+                             <div class="Rightbar_card_content_subheading" style="margin-left:10px">
+                               {{ item.name }}
+                             </div>
+                           </v-flex>
+                           <v-flex xs6>
+                             <div>
+                               <SummarySvgBar
+                                class="SvgBarClass"
+                                id="genesbar"
+                                :selectedNumber="item.count"
+                                :totalNumber="totalGenes">
+                               </SummarySvgBar>
+                             </div>
+                           </v-flex>
+                         </v-layout>
+                       </div>
                      </v-card-text>
                     </v-card>
                   </div>
 
-                  <div class="d-flex mt-3 xs12">
+                  <!-- <div class="d-flex mt-3 xs12">
                     <v-card class="rightbarCard" v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                       <v-card-text>
                         <center>
@@ -166,7 +186,7 @@
                         </v-layout>
                       </v-card-text>
                     </v-card>
-                  </div>
+                  </div> -->
                   <br>
                   <!-- <div class="d-flex mb-2 xs12">
                       <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">

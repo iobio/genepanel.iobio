@@ -239,7 +239,7 @@
               <!-- End data table -->
 
               <!-- start sidebar -->
-              <v-flex xs4 class="pr-2 pl-1">
+              <v-flex xs4 class="pr-2 pl-2" >
 
                 <div class="d-flex mb-2 xs12">
                   <v-card v-if="multipleSearchTerms.length">
@@ -257,7 +257,7 @@
                 </div>
 
                 <div class="d-flex mt-3 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
@@ -272,7 +272,7 @@
 
                       <v-divider class="Rightbar_card_divider"></v-divider>
                       <span class="Rightbar_card_content_subheading">
-                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} selected</span>
+                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected</span>
                       </center>
                       <SvgBar
                        class="SvgBarClass"

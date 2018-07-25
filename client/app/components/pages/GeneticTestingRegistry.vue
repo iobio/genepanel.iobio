@@ -142,7 +142,7 @@
 
                            <v-divider class="Rightbar_card_divider"></v-divider>
                            <span class="Rightbar_card_content_subheading">
-                             <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected
+                             <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
                            </span>
                            </center>
                            <SvgBar
@@ -265,7 +265,7 @@
                                        class="SvgBarClass"
                                        id="disordersGeneBar"
                                        :selectedNumber="item._geneCount"
-                                       :totalNumber="TotalGtrGenes">
+                                       :totalNumber="maxGenes">
                                       </DisordersGeneBar>
                                     </div>
                                   </v-flex>
@@ -415,6 +415,19 @@
                                     </SvgBar>
                                   </center>
                                   <br>
+
+                                  <v-layout>
+                                    <v-flex xs4>
+                                      <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                      <v-checkbox v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
+                                    </v-flex>
+                                    <v-flex x4>
+                                      <v-checkbox v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
+                                    </v-flex>
+                                  </v-layout>
+                                  <br>
                                   <v-layout>
                                     <v-flex xs8>
                                     <strong style="font-size:11px">PANELS</strong>
@@ -434,10 +447,36 @@
                                         </v-checkbox>
                                       </v-flex>
                                       <v-flex xs1>
-                                        <center><strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong></center>
+                                        <!-- <center><strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong></center> -->
+                                        <center>
+                                          <span v-if="item.filter==='specific'">
+                                            <strong style="margin-top-6px; font-size:14px; color:green; ">
+                                              {{ item.genecount }}
+                                            </strong>
+                                          </span>
+                                          <span v-else-if="item.filter==='moderate'">
+                                            <strong style="margin-top-6px; font-size:14px; color:#FFAB00; ">
+                                              {{ item.genecount }}
+                                            </strong>
+                                          </span>
+                                          <span v-else-if="item.filter==='general'">
+                                            <strong style="margin-top-6px; font-size:14px; color:red; ">
+                                              {{ item.genecount }}
+                                            </strong>
+                                          </span>
+                                        </center>
+
                                       </v-flex>
                                       <v-flex xs3>
-                                        <center><strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong></center>
+                                        <!-- <center><strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong></center> -->
+                                        <center>
+                                          <PanelsConditions
+                                          v-if="chartComponent==='GeneMembership'"
+                                           :selectedNumber="item._diseaseCount"
+                                           :totalNumber="multiSelectDisorder.length">
+                                         </PanelsConditions>
+                                        </center>
+
                                       </v-flex>
                                     </v-layout>
                                   </div>
@@ -518,13 +557,25 @@
                                 </center>
                                 <br>
                                 <div class="vendorsCardClass">
+                                  <v-layout row wrap v-for="(item, i) in multiSelectItems" :key="i">
+                                    <v-flex xs8>
+                                      <v-checkbox style="margin-top:-8px" :label="item" :value="item" v-model="vendorsSelect">
+                                      </v-checkbox>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                    </v-flex>
+                                  </v-layout>
+                                </div>
+
+
+                                <!-- <div class="vendorsCardClass">
                                   <v-checkbox
                                     v-for="(item, i) in multiSelectItems"
                                     :key="i" :label="item" :value="item"
                                     style="margin-top:-8px"
                                     v-model="vendorsSelect">
                                   </v-checkbox>
-                                </div>
+                                </div> -->
                                 <br>
                                 <v-layout>
                                   <v-flex xs6>
@@ -627,6 +678,7 @@ import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
 var _ = require('lodash');
 import Model from '../../models/Model';
 var model = new Model();
+import PanelsConditions from '../viz/PanelsConditions.vue';
 
 
 export default {
@@ -644,6 +696,7 @@ export default {
     'DisordersGeneBar': DisordersGeneBar,
     'ModesSvgBar': ModesSvgBar,
     'NoGenesDisplayTable': NoGenesDisplayTable,
+    'PanelsConditions': PanelsConditions
   },
   name: 'home',
   props: {
@@ -675,6 +728,7 @@ export default {
       chartComponent: null,
       isActive: true,
       TotalGtrGenes: 0,
+      maxGenes: 0,
       genePanelsCount:0,
       loading: false, //multiselect
       multiSelectItems: [],   //multiselect
@@ -715,9 +769,14 @@ export default {
       vendorsSelectProps:[],
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
+      panelFilters: ["specific", "moderate", "general"],
+      selectedPanelFilters: ["specific", "moderate", "general"],
     }
   },
   watch:{
+    selectedPanelFilters: function(){
+      this.filterPanelsOnselectedPanelFilters();
+    },
     NumberOfTopGenes: function(){
       this.selectNumberOfTopGenes()
     },
@@ -817,8 +876,10 @@ export default {
       this.saveSelectedVendors=[];
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     })
     bus.$on("removeSearchTerm", ()=>{
+      this.maxGenes = 0;
       this.selectDisorders = [];
       // this.vendorsSelect = [];
       this.vendorsSelect = this.multiSelectItems;
@@ -827,6 +888,7 @@ export default {
       this.saveSelectedVendors=[];
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
@@ -861,6 +923,22 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    // specificPanels: function(){
+    //   console.log(this.multiSelectPanels)
+    //   this.selectedPanelsInCheckBox = [this.multiSelectPanels[0]]
+    // },
+    filterPanelsOnselectedPanelFilters: function(){
+      console.log("selectedPanelFilters", this.selectedPanelFilters);
+      var temp = [];
+      this.selectedPanelFilters.map(x=>{
+        this.multiSelectPanels.map(y=>{
+          if(x === y.filter){
+            temp.push(y);
+          }
+        })
+      })
+      this.selectedPanelsInCheckBox = temp;
+    },
     selectNumberOfTopGenes: function(){
       // if(this.NumberOfTopGenes===""){
       //   bus.$emit('SelectNumberOfGenes', 50);
@@ -1108,6 +1186,7 @@ export default {
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
+      this.maxGenes = this.maxGenes>this.TotalGtrGenes?this.maxGenes:this.TotalGtrGenes;
     },
     NoOfPanels: function(e){
       this.genePanelsCount = e.length;
@@ -1130,9 +1209,11 @@ export default {
     },
     SelectAllPanels: function(){
       this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     },
     DeSelectAllPanels: function(){
       this.selectedPanelsInCheckBox = [];
+      this.selectedPanelFilters = [];
     },
     resetDisorders: function(){
       this.selectDisorders = [];

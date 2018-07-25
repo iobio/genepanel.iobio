@@ -283,6 +283,17 @@ var model = new Model();
         this.items = mergedGenePanels;
         this.tempItems = mergedGenePanels;
         console.log("panels", this.items);
+        this.items.map(x=>{
+          if(x.genecount<10){
+            x.filter = "specific";
+          }
+          else if(x.genecount>=10 && x.genecount<35){
+            x.filter = "moderate";
+          }
+          else if(x.genecount>=35){
+            x.filter = "general"
+          }
+        })
         let vendors = model.getGenePanelVendors(mergedGenePanels);
 
         this.vendorList = vendors;

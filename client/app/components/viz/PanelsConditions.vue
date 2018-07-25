@@ -1,5 +1,5 @@
 <template>
-  <div class="summaryDiv">
+  <div class="SvgPanelsConditions">
     <span v-html="bars"></span>
   </div>
 </template>
@@ -48,26 +48,21 @@ var model = new Model();
     },
     methods:{
       drawBars(){
-
-        var svgWidth = $('.summaryDiv').innerWidth() ;
+        var svgWidth = $('.SvgPanelsConditions').innerWidth() ;
         var absWidth = Math.abs(svgWidth)
         var multiplicationFactor = Math.round(absWidth / this.totalNumber);
-        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-30);
-        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -30);
+        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-10);
+        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -10);
         var selected_Number = this.selectedNumber;
 
-        if(this.selectedNumber===0){
-          selectedgenesWidth = 0;
-        }
+        this.bars = `<svg viewBox="0 0 ${absWidth} 18" xmlns="http://www.w3.org/2000/svg">
+                        <rect class="genepanelsRect"
+                              x="1" y="1" rx="5" width="${selectedgenesWidth}" height="10"/>
+                        <rect class="grayRect"
+                              x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="10"/>
 
-
-          this.bars = `<svg viewBox="0 0 ${absWidth} 18" xmlns="http://www.w3.org/2000/svg">
-                          <rect class="genepanelsRect"
-                                x="1" y="1" rx="5" width="${selectedgenesWidth}" height="16"/>
-                          <rect class="grayRect"
-                                x="${selectedgenesWidth}" y="1" rx="5" width="${grayBarWidth}" height="16"/>
-                          <text x="${selectedgenesWidth+7+grayBarWidth}" y="12" font-family="Verdana" font-size="12" fill="#4267b2">${selected_Number}</text>
-                      </svg>`
+                        <text x="${absWidth-6}" y="12" font-family="Verdana" font-size="10" fill="#4267b2">${selected_Number}</text>
+                    </svg>`
       }
     }
   }
