@@ -415,6 +415,19 @@
                                     </SvgBar>
                                   </center>
                                   <br>
+
+                                  <v-layout>
+                                    <v-flex xs4>
+                                      <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                      <v-checkbox v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
+                                    </v-flex>
+                                    <v-flex x4>
+                                      <v-checkbox v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
+                                    </v-flex>
+                                  </v-layout>
+                                  <br>
                                   <v-layout>
                                     <v-flex xs8>
                                     <strong style="font-size:11px">PANELS</strong>
@@ -434,7 +447,25 @@
                                         </v-checkbox>
                                       </v-flex>
                                       <v-flex xs1>
-                                        <center><strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong></center>
+                                        <!-- <center><strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong></center> -->
+                                        <center>
+                                          <span v-if="item.filter==='specific'">
+                                            <strong style="margin-top-6px; font-size:14px; color:green; ">
+                                              {{ item.genecount }}
+                                            </strong>
+                                          </span>
+                                          <span v-else-if="item.filter==='moderate'">
+                                            <strong style="margin-top-6px; font-size:14px; color:#FFAB00; ">
+                                              {{ item.genecount }}
+                                            </strong>
+                                          </span>
+                                          <span v-else-if="item.filter==='general'">
+                                            <strong style="margin-top-6px; font-size:14px; color:red; ">
+                                              {{ item.genecount }}
+                                            </strong>
+                                          </span>
+                                        </center>
+
                                       </v-flex>
                                       <v-flex xs3>
                                         <center><strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong></center>
@@ -716,9 +747,14 @@ export default {
       vendorsSelectProps:[],
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
+      panelFilters: ["specific", "moderate", "general"],
+      selectedPanelFilters: ["specific", "moderate", "general"],
     }
   },
   watch:{
+    selectedPanelFilters: function(){
+      this.filterPanelsOnselectedPanelFilters();
+    },
     NumberOfTopGenes: function(){
       this.selectNumberOfTopGenes()
     },
@@ -818,6 +854,7 @@ export default {
       this.saveSelectedVendors=[];
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     })
     bus.$on("removeSearchTerm", ()=>{
       this.maxGenes = 0;
@@ -829,6 +866,7 @@ export default {
       this.saveSelectedVendors=[];
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
@@ -863,6 +901,22 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    // specificPanels: function(){
+    //   console.log(this.multiSelectPanels)
+    //   this.selectedPanelsInCheckBox = [this.multiSelectPanels[0]]
+    // },
+    filterPanelsOnselectedPanelFilters: function(){
+      console.log("selectedPanelFilters", this.selectedPanelFilters);
+      var temp = [];
+      this.selectedPanelFilters.map(x=>{
+        this.multiSelectPanels.map(y=>{
+          if(x === y.filter){
+            temp.push(y);
+          }
+        })
+      })
+      this.selectedPanelsInCheckBox = temp;
+    },
     selectNumberOfTopGenes: function(){
       // if(this.NumberOfTopGenes===""){
       //   bus.$emit('SelectNumberOfGenes', 50);
@@ -1133,9 +1187,11 @@ export default {
     },
     SelectAllPanels: function(){
       this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     },
     DeSelectAllPanels: function(){
       this.selectedPanelsInCheckBox = [];
+      this.selectedPanelFilters = [];
     },
     resetDisorders: function(){
       this.selectDisorders = [];
