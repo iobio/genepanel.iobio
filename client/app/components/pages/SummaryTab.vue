@@ -51,7 +51,7 @@
                       </v-flex>
                       <v-flex xs6>
                         <v-card-text>
-                          <strong>Phenotypes:</strong>
+                          <strong>Phenolyzer:</strong>
                           <div v-if="PhenolyzerSearchTerms.length>0">
                           <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}

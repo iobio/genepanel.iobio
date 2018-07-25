@@ -265,7 +265,7 @@
                                        class="SvgBarClass"
                                        id="disordersGeneBar"
                                        :selectedNumber="item._geneCount"
-                                       :totalNumber="TotalGtrGenes">
+                                       :totalNumber="maxGenes">
                                       </DisordersGeneBar>
                                     </div>
                                   </v-flex>
@@ -675,6 +675,7 @@ export default {
       chartComponent: null,
       isActive: true,
       TotalGtrGenes: 0,
+      maxGenes: 0,
       genePanelsCount:0,
       loading: false, //multiselect
       multiSelectItems: [],   //multiselect
@@ -819,6 +820,7 @@ export default {
       this.DisordersAndModesComponent="";
     })
     bus.$on("removeSearchTerm", ()=>{
+      this.maxGenes = 0;
       this.selectDisorders = [];
       // this.vendorsSelect = [];
       this.vendorsSelect = this.multiSelectItems;
@@ -1108,6 +1110,7 @@ export default {
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
+      this.maxGenes = this.maxGenes>this.TotalGtrGenes?this.maxGenes:this.TotalGtrGenes;
     },
     NoOfPanels: function(e){
       this.genePanelsCount = e.length;
