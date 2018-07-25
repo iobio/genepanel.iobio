@@ -25,6 +25,7 @@
           v-bind:headers="headers"
           v-bind:items="items"
           select-all
+          class="elevation-1"
           v-bind:pagination.sync="pagination"
           item-key="name"
           v-bind:search="search"
