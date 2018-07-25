@@ -468,7 +468,15 @@
 
                                       </v-flex>
                                       <v-flex xs3>
-                                        <center><strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong></center>
+                                        <!-- <center><strong style="margin-top-6px; font-size:14px">{{ item._diseaseCount }}</strong></center> -->
+                                        <center>
+                                          <PanelsConditions
+                                          v-if="chartComponent==='GeneMembership'"
+                                           :selectedNumber="item._diseaseCount"
+                                           :totalNumber="multiSelectDisorder.length">
+                                         </PanelsConditions>
+                                        </center>
+
                                       </v-flex>
                                     </v-layout>
                                   </div>
@@ -658,6 +666,7 @@ import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
 var _ = require('lodash');
 import Model from '../../models/Model';
 var model = new Model();
+import PanelsConditions from '../viz/PanelsConditions.vue';
 
 
 export default {
@@ -675,6 +684,7 @@ export default {
     'DisordersGeneBar': DisordersGeneBar,
     'ModesSvgBar': ModesSvgBar,
     'NoGenesDisplayTable': NoGenesDisplayTable,
+    'PanelsConditions': PanelsConditions
   },
   name: 'home',
   props: {
