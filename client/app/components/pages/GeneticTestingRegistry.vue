@@ -142,7 +142,7 @@
 
                            <v-divider class="Rightbar_card_divider"></v-divider>
                            <span class="Rightbar_card_content_subheading">
-                             <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} selected
+                             <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
                            </span>
                            </center>
                            <SvgBar
@@ -557,13 +557,25 @@
                                 </center>
                                 <br>
                                 <div class="vendorsCardClass">
+                                  <v-layout row wrap v-for="(item, i) in multiSelectItems" :key="i">
+                                    <v-flex xs8>
+                                      <v-checkbox style="margin-top:-8px" :label="item" :value="item" v-model="vendorsSelect">
+                                      </v-checkbox>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                    </v-flex>
+                                  </v-layout>
+                                </div>
+
+
+                                <!-- <div class="vendorsCardClass">
                                   <v-checkbox
                                     v-for="(item, i) in multiSelectItems"
                                     :key="i" :label="item" :value="item"
                                     style="margin-top:-8px"
                                     v-model="vendorsSelect">
                                   </v-checkbox>
-                                </div>
+                                </div> -->
                                 <br>
                                 <v-layout>
                                   <v-flex xs6>

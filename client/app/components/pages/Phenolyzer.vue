@@ -272,7 +272,7 @@
 
                       <v-divider class="Rightbar_card_divider"></v-divider>
                       <span class="Rightbar_card_content_subheading">
-                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} selected</span>
+                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected</span>
                       </center>
                       <SvgBar
                        class="SvgBarClass"

@@ -51,10 +51,9 @@ var model = new Model();
 
         var svgWidth = $('.summaryDiv').innerWidth() ;
         var absWidth = Math.abs(svgWidth)
-        console.log(absWidth)
-        var multiplicationFactor = absWidth / this.totalNumber;
-        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-40);
-        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -40);
+        var multiplicationFactor = Math.round(absWidth / this.totalNumber);
+        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-30);
+        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -30);
         var selected_Number = this.selectedNumber;
 
         if(this.selectedNumber===0){
