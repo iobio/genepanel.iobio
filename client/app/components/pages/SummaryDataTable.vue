@@ -128,8 +128,8 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         // { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
-        { text: 'GTR ', align: 'left', sortable: false, value: 'sourceGTR' },
-        { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
+        { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
+        { text: 'Phenotypes', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: 'Links', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
 
       ],
