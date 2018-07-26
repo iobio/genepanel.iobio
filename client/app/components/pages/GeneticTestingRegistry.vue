@@ -859,8 +859,6 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
-      console.log("vendor select watching")
-
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -887,7 +885,6 @@ export default {
 
     },
     selectedPanelsInCheckBox(val){
-      console.log("selected panels watching ")
       if(this.chartComponent==='GeneMembership'){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
@@ -985,6 +982,11 @@ export default {
       this.NumberOfTopGenes = null;
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
+      this.lowerLimitInput = 10;
+      this.lowerLimitProps = 10;
+      this.upperLimitInput = 35;
+      this.upperLimitProps = 35;
     });
   },
   created () {
@@ -1000,7 +1002,6 @@ export default {
     //   this.selectedPanelsInCheckBox = [this.multiSelectPanels[0]]
     // },
     filterPanelsOnselectedPanelFilters: function(){
-      console.log("selectedPanelFilters", this.selectedPanelFilters);
       var temp = [];
       this.selectedPanelFilters.map(x=>{
         this.multiSelectPanels.map(y=>{
@@ -1078,8 +1079,8 @@ export default {
       }
     },
     selectPanels: function(e){
-      console.log(" selectPanels");
-      console.log("chart component", this.chartComponent)
+      // console.log(" selectPanels");
+      // console.log("chart component", this.chartComponent)
       // console.log("this.saveSelectedPanels", this.saveSelectedPanels)
       // this.geneProps = this.selectedPanelsInCheckBox;
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
@@ -1099,7 +1100,6 @@ export default {
         temp = e;
       }
       else if(this.saveSelectedPanels.length>0 && this.chartComponent === 'disorders'){
-        console.log("i am here");
         e.map(x=>{
           if(this.saveSelectedPanels.includes(x.testname)){
             temp.push(x);
@@ -1123,14 +1123,10 @@ export default {
       }
 
 
-
-
-      console.log("temp length",temp.length)
       this.geneProps = temp;
       // this.$emit("GeneMembershipData", temp);
     },
     setPanelsNamesList: function(e){
-      console.log(" setPanelsNamesList");
       if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
         this.multiSelectPanels = e;
         this.selectedPanelsInCheckBox = this.multiSelectPanels;
@@ -1143,7 +1139,6 @@ export default {
       // this.checkForDeselectedPanels();
     },
     updateVendorList: function(e){
-      console.log("updateVendorList ");
       // console.log("vendor list as callback to home", e);
       this.vendorList = e;
       this.multiSelectItems = e;
@@ -1152,7 +1147,7 @@ export default {
       this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
-      console.log("selectVendors ", e);
+      // console.log("selectVendors ", e);
       this.vendorsSelect = e;
       if(!this.chartComponent==='Vendors'){
         this.vendorsSelect = e;
@@ -1161,7 +1156,7 @@ export default {
       // this.checkForDeselectedPanels();
     },
     selectPanelsFromVendorsUpdate: function(e){
-      console.log(" selectPanelsFromVendorsUpdate");
+      // console.log(" selectPanelsFromVendorsUpdate");
       // this.selectedPanelsInCheckBox = e;
 
       // this.checkForDeselectedVendor();
@@ -1317,12 +1312,14 @@ export default {
 
     },
     ChangePanelsDefinition: function(){
-      if(this.upperLimitInput<=this.lowerLimitInput){
+      if(parseInt(this.upperLimitInput)<=parseInt(this.lowerLimitInput)){
+        console.log("sdgjhasfed")
         this.panelsAlert = true;
         this.panelAlertText = "Upper limit should be greater than lower limit";
         setTimeout(()=>{ this.panelsAlert=false; }, 3000);
       }
-      else {
+      else if(parseInt(this.upperLimitInput)>parseInt(this.lowerLimitInput)){
+        console.log("reight")
         this.selectedPanelFilters = ["specific", "moderate", "general"];
         this.upperLimitProps = this.upperLimitInput;
         this.lowerLimitProps = this.lowerLimitInput;

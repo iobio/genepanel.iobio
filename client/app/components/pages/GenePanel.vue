@@ -146,7 +146,7 @@ var model = new Model();
         this.AddGenePanelData();
       },
       selectedVendorsProps: function(){
-        console.log("selectedVendorsProps in gene panels  ")
+        // console.log("selectedVendorsProps in gene panels  ")
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
         // console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
         // this.flagForVendorFilter = true;
