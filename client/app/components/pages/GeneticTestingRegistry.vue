@@ -448,19 +448,19 @@
                                       </v-flex>
                                       <v-flex xs1>
                                         <!-- <center><strong style="margin-top-6px; font-size:14px">{{ item.genecount }}</strong></center> -->
-                                        <center>
+                                        <center style="margin-top:-6px">
                                           <span v-if="item.filter==='specific'">
-                                            <strong style="margin-top-6px; font-size:14px; color:green; ">
+                                            <strong style="margin-top:-6px; font-size:14px; color:green; ">
                                               {{ item.genecount }}
                                             </strong>
                                           </span>
                                           <span v-else-if="item.filter==='moderate'">
-                                            <strong style="margin-top-6px; font-size:14px; color:#FFAB00; ">
+                                            <strong style="margin-top:-6px; font-size:14px; color:#FFAB00; ">
                                               {{ item.genecount }}
                                             </strong>
                                           </span>
                                           <span v-else-if="item.filter==='general'">
-                                            <strong style="margin-top-6px; font-size:14px; color:red; ">
+                                            <strong style="margin-top:-6px; font-size:14px; color:red; ">
                                               {{ item.genecount }}
                                             </strong>
                                           </span>
