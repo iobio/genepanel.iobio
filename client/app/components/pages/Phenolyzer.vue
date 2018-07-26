@@ -174,7 +174,7 @@
                         <td >
                           <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
-                          <td>
+                          <td v-if="multipleSearchTerms.length>1">
                             <span v-for="x in props.item.searchTermIndexSVG">
                               <span v-html="x"></span>
                             </span>
@@ -441,7 +441,7 @@ import SvgBar from '../viz/SvgBar.vue'
             value: 'geneName',
             sortable: false,
           },
-          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
+          // { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
 
             // {
             //   text: 'Matched search terms',
@@ -547,6 +547,77 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     methods: {
+      updateTableHeaders(){
+        if(this.multipleSearchTerms.length>1){
+          this.headers = [
+            {
+              text: 'Index',
+              value: 'indexVal',
+              sortable: false,
+              align: 'left',
+            },
+            {
+              text: 'Gene',
+              align: 'left',
+              value: 'geneName',
+              sortable: false,
+            },
+            { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
+             {
+               text: 'Phenolyzer score',
+               align: 'left',
+               value: 'score',
+               sortable: false,
+              },
+            {
+              text: '',
+              align: 'left',
+              value: 'htmlData',
+              sortable: false,
+            },
+            {
+              text: 'Links',
+              align: 'left',
+              sortable: false,
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+            }
+          ];
+        }
+        else if(this.multipleSearchTerms.length<=1){
+          this.headers = [
+            {
+              text: 'Index',
+              value: 'indexVal',
+              sortable: false,
+              align: 'left',
+            },
+            {
+              text: 'Gene',
+              align: 'left',
+              value: 'geneName',
+              sortable: false,
+            },
+               {
+                 text: 'Phenolyzer score',
+                 align: 'left',
+                 value: 'score',
+                 sortable: false,
+                },
+              {
+                text: '',
+                align: 'left',
+                value: 'htmlData',
+                sortable: false,
+              },
+              {
+                text: 'Links',
+                align: 'left',
+                sortable: false,
+                value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+              }
+          ]
+        }
+      },
       SelectAllPhenolyzerGenes(data){
         this.selected = this.items.slice();
       },
@@ -657,7 +728,8 @@ import SvgBar from '../viz/SvgBar.vue'
                 } else {
                   self.tempItems = geneModel.phenolyzerGenes;
 
-                  self.multipleSearchTerms.push(searchTerm)
+                  self.multipleSearchTerms.push(searchTerm);
+                  self.updateTableHeaders();
                   self.checked = false;
                   self.alert = false;
                   self.dictionaryArr.push(({
