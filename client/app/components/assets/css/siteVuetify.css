@@ -61,22 +61,24 @@ table.table tbody td .input-group.input-group--selection-controls {
   margin-bottom: 1px !important;
 }
 
-
+/* checkbox labels */
 .v-input--selection-controls.v-input .v-label{
   align-items: center;
   display: inline-flex;
   top: 0;
   height: auto;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
   color: rgba(0,0,0,.87) !important;
 }
 
-
+/* search gene label  */
 .application .theme--light.v-label, .theme--light .v-label {
-  color: black !important
+  color: rgba(58, 57, 57, 0.87) !important;
+  font-weight: 300 !important;
 }
 
+/* Table column headers */
 .v-datatable thead th.column.sortable{
   cursor: default;
   color: black !important;

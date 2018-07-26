@@ -50,9 +50,9 @@
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">
-                      <br>
+                      <!-- <br> -->
                       <center>
-                        <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
+                        <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
                         Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
                       </center>
                     </div>

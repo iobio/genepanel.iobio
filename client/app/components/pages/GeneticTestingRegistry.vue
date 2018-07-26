@@ -254,8 +254,20 @@
                               <div class="vendorsCardClass">
                                 <v-layout row wrap v-for="(item, i) in multiSelectDisorder" :key="i">
                                   <v-flex xs7>
-                                    <v-checkbox style="margin-top:-8px" :label="item.Title" :value="item" v-model="selectDisorders">
-                                    </v-checkbox>
+                                    <v-tooltip left nudge-right="180">
+                                      <v-checkbox slot="activator" style="margin-top:-8px" :label="item.Title" :value="item" v-model="selectDisorders">
+                                      </v-checkbox>
+                                      <span >
+                                        <center><strong>{{ item.Title}}</strong></center>
+                                        <br>
+                                        Mode of inheritance: {{ item._modeOfInheritance}}
+                                        <br>
+                                        OMIM: {{ item._omim}}
+                                        <br>
+                                        Gene Panels: {{ item._genePanelCount}}
+                                        <br>
+                                      </span>
+                                    </v-tooltip>
                                   </v-flex>
                                   <v-flex xs5>
                                     <!-- {{ item._geneCount}} -->
