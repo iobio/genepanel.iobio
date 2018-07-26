@@ -94,10 +94,18 @@ var model = new Model();
       },
       selectedPanelsInCheckBoxPropsOne: {
         type: Array
-      }
+      },
+      // upperLimitProps: {
+      //   type: Number
+      // },
+      // lowerLimitProps: {
+      //   type: Number
+      // }
     },
     data(){
       return {
+        lowerLimit: 10,
+        upperLimit: 35,
         loading: false, //multiselect
         multiSelectItems: [],   //multiselect
         search: null,  //multiselect
@@ -146,23 +154,45 @@ var model = new Model();
         // bus.$emit("vendorsFilter");
       },
       selectedPanelsInCheckBox: function(){
-        console.log("selectedPanelsInCheckBox props in gene panel")
         // console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
         this.updateTableOnSelectedPanels();
       },
       selectedPanelsInCheckBoxPropsOne: function(){
-        console.log("hellooo")
         this.justUpdateTabel();
-      }
-
+      },
+      // lowerLimitProps: function(){
+      //   this.lowerLimit = this.lowerLimitProps;
+      // },
+      // upperLimitProps: function(){
+      //   this.upperLimit = this.upperLimitProps;
+      // }
     },
     mounted(){
+      // this.lowerLimit = this.lowerLimitProps;
+      // this.upperLimit = this.upperLimitProps;
       this.AddGenePanelData();
       bus.$on("removeSearchTerm", ()=>{
         this.flagForVendorFilter = false; //Sets the flag to false because removing a terms clears the selection.
+      });
+      bus.$on("ChangeDefinition", (upper, lower)=>{
+        this.upperLimit = upper;
+        this.lowerLimit = lower;
+        this.items.map(x=>{
+          if(x.genecount<this.lowerLimit){
+            x.filter = "specific";
+          }
+          else if(x.genecount>=this.lowerLimit && x.genecount<this.upperLimit){
+            x.filter = "moderate";
+          }
+          else if(x.genecount>=this.upperLimit){
+            x.filter = "general"
+          }
+        })
+        this.selected = this.items.slice();
       })
     },
     updated(){
+      console.log(" i am updated")
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
       this.$emit('NoOfPanels', this.items);
@@ -284,13 +314,13 @@ var model = new Model();
         this.tempItems = mergedGenePanels;
         console.log("panels", this.items);
         this.items.map(x=>{
-          if(x.genecount<10){
+          if(x.genecount<this.lowerLimit){
             x.filter = "specific";
           }
-          else if(x.genecount>=10 && x.genecount<35){
+          else if(x.genecount>=this.lowerLimit && x.genecount<this.upperLimit){
             x.filter = "moderate";
           }
-          else if(x.genecount>=35){
+          else if(x.genecount>=this.upperLimit){
             x.filter = "general"
           }
         })

@@ -427,7 +427,52 @@
                                     </SvgBar>
                                   </center>
                                   <br>
+                                  <div>
+                                    <v-layout row>
+                                      <v-flex xs4>
+                                        <strong>Upper limit:</strong>
+                                      </v-flex>
+                                      <v-flex xs3>
+                                        <v-text-field
+                                        style="margin-top:-12px;"
+                                          v-model="upperLimitProps"
+                                        ></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs5>
+                                    </v-flex>
+                                  </v-layout>
+                                  <v-layout row>
+                                    <v-flex xs4>
+                                      <strong>Lower limit:</strong>
+                                    </v-flex>
+                                    <v-flex xs3>
+                                      <v-text-field
+                                      style="margin-top:-12px;"
+                                        v-model="lowerLimitProps"
+                                      ></v-text-field>
+                                  </v-flex>
+                                  <v-flex xs5>
+                                  </v-flex>
+                                </v-layout>
+                                <br>
+                                <v-layout>
+                                  <v-flex xs4>
+                                    <center>
+                                      <v-btn outline color="primary darken-1" dark v-on:click="ChangePanelsDefinition" >SAVE</v-btn>
+                                    </center>
+                                  </v-flex>
+                                  <v-flex xs3>
+                                    <center>
+                                      <v-btn color="primary darken-1" flat="flat" >CANCEL</v-btn>
+                                    </center>
+                                  </v-flex>
+                                  <v-flex xs5>
+                                  </v-flex>
+                                </v-layout>
+                                <br>
 
+
+                                  </div>
                                   <v-layout>
                                     <v-flex xs4>
                                       <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
@@ -656,7 +701,9 @@
                     v-bind:selectedPanelsInCheckBox="selectedPanelsInCheckBoxProps"
                     v-bind:selectedPanelsInCheckBoxPropsOne="selectedPanelsInCheckBoxPropsOne"
                     v-on:selectVendors="selectVendors($event)"
-                    v-on:selectPanelsFromVendorsUpdate="selectPanelsFromVendorsUpdate($event)">
+                    v-on:selectPanelsFromVendorsUpdate="selectPanelsFromVendorsUpdate($event)"
+                    v-bind:lowerLimitProps="lowerLimitProps"
+                    v-bind:upperLimitProps="upperLimitProps">
                     <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
                   </gene-panel>
                 </v-card-text>
@@ -783,6 +830,8 @@ export default {
       selectedPanelsInCheckBoxPropsOne: [],
       panelFilters: ["specific", "moderate", "general"],
       selectedPanelFilters: ["specific", "moderate", "general"],
+      upperLimitProps: 35,
+      lowerLimitProps: 10,
     }
   },
   watch:{
@@ -1255,6 +1304,10 @@ export default {
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
 
+    },
+    ChangePanelsDefinition: function(){
+      this.selectedPanelFilters = ["specific", "moderate", "general"];
+      bus.$emit("ChangeDefinition", parseInt(this.upperLimitProps), parseInt(this.lowerLimitProps));
     }
   }
 }
