@@ -27,6 +27,7 @@ var model = new Model();
     data(){
       return {
         bars: null,
+        totalNumberValue: null,
       }
     },
     mounted(){
@@ -48,16 +49,16 @@ var model = new Model();
     },
     methods:{
       drawBars(){
-        console.log("$('.SvgDiv').innerWidth()", $('.SvgDiv').innerWidth())
+        this.totalNumberValue = this.totalNumber; 
         var wdth = $('.SvgDiv').innerWidth();
         if(wdth<=0 || wdth===undefined){
           wdth = 400;
         }
-        if(this.totalNumber>1200){
-          this.totalNumber = this.totalNumber/1.5
+        if(this.totalNumberValue>1200){
+          this.totalNumberValue = this.totalNumberValue/1.5
         }
         var svgWidth = wdth - 20;
-        var multiplicationFactor = svgWidth / this.totalNumber;
+        var multiplicationFactor = svgWidth / this.totalNumberValue;
         var selectedgenesWidth = Math.abs(this.selectedNumber * multiplicationFactor-10);
         var grayBarWidth = Math.abs(svgWidth - selectedgenesWidth-10);
 
