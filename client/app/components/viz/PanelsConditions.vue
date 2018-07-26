@@ -57,11 +57,11 @@ var model = new Model();
 
         this.bars = `<svg viewBox="0 0 ${absWidth} 18" xmlns="http://www.w3.org/2000/svg">
                         <rect class="genepanelsRect"
-                              x="1" y="1" rx="5" width="${selectedgenesWidth}" height="10"/>
+                              x="1" y="-1" rx="5" width="${selectedgenesWidth}" height="10"/>
                         <rect class="grayRect"
-                              x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="10"/>
+                              x="${selectedgenesWidth+1}" y="-1" rx="5" width="${grayBarWidth}" height="10"/>
 
-                        <text x="${absWidth-6}" y="12" font-family="Verdana" font-size="10" fill="#4267b2">${selected_Number}</text>
+                        <text x="${absWidth-6}" y="8" font-family="Verdana" font-size="11" fill="#4267b2">${selected_Number}</text>
                     </svg>`
       }
     }

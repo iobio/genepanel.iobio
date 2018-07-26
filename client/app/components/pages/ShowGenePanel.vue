@@ -94,7 +94,7 @@
               </div>
             </td>
             <!-- <td>{{ props.item.searchTermIndex }}</span></td> -->
-            <td>
+            <td v-if="multipleSearchDisorders.length>1">
               <span v-for="x in props.item.searchTermIndexSVG">
                 <span v-html="x"></span>
               </span>
@@ -215,7 +215,7 @@ var model = new Model();
             sortable: false,
             value: 'name'
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
+          // { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
             text: 'Lnks',
@@ -317,6 +317,45 @@ var model = new Model();
       },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
+        console.log("this.multipleSearchItems", this.multipleSearchItems.length)
+        if(this.multipleSearchItems.length>=2){
+          console.log("wjsdbjhasb")
+          this.headers = [
+            { text: 'Index', align: 'left', value: 'indexVal' },
+            {
+              text: 'Name',
+              align: 'left',
+              sortable: false,
+              value: 'name'
+            },
+            { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
+            { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+            {
+              text: 'Lnks',
+              align: 'left',
+              sortable: false,
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+          ]
+        }
+        else if(this.multipleSearchItems.length<=1){
+          console.log("poipouiyuy")
+          this.headers = [
+            { text: 'Index', align: 'left', value: 'indexVal' },
+            {
+              text: 'Name',
+              align: 'left',
+              sortable: false,
+              value: 'name'
+            },
+            { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+            {
+              text: 'Lnks',
+              align: 'left',
+              sortable: false,
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+          ]
+        }
+
       }
     },
     methods:{
