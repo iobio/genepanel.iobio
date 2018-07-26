@@ -427,33 +427,36 @@
                                     </SvgBar>
                                   </center>
                                   <br>
-                                  <div>
+                                  <span v-if="!editPanelDefinition" style="cursor:pointer" v-on:click="editPanelDefinition=true"><v-icon>settings</v-icon>  &nbsp; Edit definition <br></span>
+
+                                  <Alerts
+                                    v-if="panelsAlert"
+                                    alertType="warning"
+                                    alertTransition="scale-transition"
+                                    :alertText="panelAlertText"
+                                  >
+                                  </Alerts>
+                                  <div v-if="editPanelDefinition">
+                                    <v-layout row>
+                                      <v-flex xs4>
+                                        <strong>Lower limit:</strong>
+                                      </v-flex>
+                                      <v-flex xs3>
+                                        <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
+                                    </v-flex>
+                                    <v-flex xs5>
+                                    </v-flex>
+                                  </v-layout>
                                     <v-layout row>
                                       <v-flex xs4>
                                         <strong>Upper limit:</strong>
                                       </v-flex>
                                       <v-flex xs3>
-                                        <v-text-field
-                                        style="margin-top:-12px;"
-                                          v-model="upperLimitProps"
-                                        ></v-text-field>
+                                        <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
                                     </v-flex>
                                     <v-flex xs5>
                                     </v-flex>
                                   </v-layout>
-                                  <v-layout row>
-                                    <v-flex xs4>
-                                      <strong>Lower limit:</strong>
-                                    </v-flex>
-                                    <v-flex xs3>
-                                      <v-text-field
-                                      style="margin-top:-12px;"
-                                        v-model="lowerLimitProps"
-                                      ></v-text-field>
-                                  </v-flex>
-                                  <v-flex xs5>
-                                  </v-flex>
-                                </v-layout>
                                 <br>
                                 <v-layout>
                                   <v-flex xs4>
@@ -463,7 +466,7 @@
                                   </v-flex>
                                   <v-flex xs3>
                                     <center>
-                                      <v-btn color="primary darken-1" flat="flat" >CANCEL</v-btn>
+                                      <v-btn color="primary darken-1" flat="flat" v-on:click="closePanelsDefinitionEdit" >CANCEL</v-btn>
                                     </center>
                                   </v-flex>
                                   <v-flex xs5>
@@ -476,15 +479,18 @@
                                   <v-layout>
                                     <v-flex xs4>
                                       <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
+                                        <center><i><small>Less than {{ lowerLimitProps}} genes</small></i></center>
                                     </v-flex>
                                     <v-flex xs4>
                                       <v-checkbox v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
+                                      <center><i><small>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</small></i></center>
                                     </v-flex>
                                     <v-flex x4>
                                       <v-checkbox v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
+                                      <center><i><small>More than {{ upperLimitProps}} genes</small></i></center>
                                     </v-flex>
                                   </v-layout>
-                                  <br>
+                                  <hr>
                                   <v-layout>
                                     <v-flex xs8>
                                     <strong style="font-size:11px">PANELS</strong>
@@ -832,6 +838,11 @@ export default {
       selectedPanelFilters: ["specific", "moderate", "general"],
       upperLimitProps: 35,
       lowerLimitProps: 10,
+      panelsAlert: false,
+      panelAlertText: "",
+      editPanelDefinition: false,
+      upperLimitInput: 35,
+      lowerLimitInput: 10,
     }
   },
   watch:{
@@ -1306,8 +1317,24 @@ export default {
 
     },
     ChangePanelsDefinition: function(){
-      this.selectedPanelFilters = ["specific", "moderate", "general"];
-      bus.$emit("ChangeDefinition", parseInt(this.upperLimitProps), parseInt(this.lowerLimitProps));
+      if(this.upperLimitInput<=this.lowerLimitInput){
+        this.panelsAlert = true;
+        this.panelAlertText = "Upper limit should be greater than lower limit";
+        setTimeout(()=>{ this.panelsAlert=false; }, 3000);
+      }
+      else {
+        this.selectedPanelFilters = ["specific", "moderate", "general"];
+        this.upperLimitProps = this.upperLimitInput;
+        this.lowerLimitProps = this.lowerLimitInput;
+        bus.$emit("ChangeDefinition", parseInt(this.upperLimitProps), parseInt(this.lowerLimitProps));
+        this.snackbarText = "Panels Definition changed";
+        this.snackbar = true;
+      }
+    },
+    closePanelsDefinitionEdit: function(){
+      this.editPanelDefinition = false;
+      this.upperLimitInput = this.upperLimitProps;
+      this.lowerLimitInput = this.lowerLimitProps;
     }
   }
 }
