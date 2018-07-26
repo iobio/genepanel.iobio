@@ -23,12 +23,15 @@
     >
     <br>
      <v-list dense class="pt-0">
-       <v-list-tile>
-         <v-list-tile-action >
-           <span><v-icon>dashboard</v-icon></span>
+       <v-list-tile
+         v-bind:class="[component==='OverviewPage' ? 'activeTab' : '']"
+         @click="selectComponent('OverviewPage')">
+         <v-list-tile-action v-bind:class="[component==='OverviewPage' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='OverviewPage'"><v-icon color="primary darken-1">library_books</v-icon></span>
+           <span v-else color="blue-grey darken-2"><v-icon>library_books</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
-           <v-list-tile-title >
+           <v-list-tile-title v-bind:class="[component==='OverviewPage' ? 'activeTabText' : '']">
              Overview
            </v-list-tile-title>
          </v-list-tile-content>
@@ -38,8 +41,8 @@
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="selectComponent('GeneticTestingRegistry')">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <span v-if="component==='GeneticTestingRegistry'"><v-icon color="primary darken-1">sort</v-icon></span>
+           <span v-else><v-icon color="blue-grey darken-2">sort</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTabText' : '']">
@@ -55,8 +58,11 @@
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <!-- <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span> -->
+           <span v-if="component==='Phenolyzer'">
+             <img src="../assets/images/phenolyzer2.svg" alt="" height="28px" width="28px" >
+           </span>
+           <span v-else><img src="../assets/images/phenolyzer1.svg" height="28px" width="28px" style="margin-left:-4px"></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='Phenolyzer' ? 'activeTabText' : '']">
@@ -73,8 +79,8 @@
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='SummaryTab'"><v-icon color="primary darken-1">dashboard</v-icon></span>
-           <span v-else><v-icon>dashboard</v-icon></span>
+           <span v-if="component==='SummaryTab'"><v-icon style="transform: rotate(90deg)" color="primary darken-1">merge_type</v-icon></span>
+           <span v-else><v-icon style="transform: rotate(90deg)" color="blue-grey darken-2">merge_type</v-icon></span>
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='SummaryTab' ? 'activeTabText' : '']">
@@ -97,37 +103,25 @@
       fixed
     >
       <v-toolbar-title >
-        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <!-- <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon> -->
         <span >panel.iobio</span>
       </v-toolbar-title>
 
       <span style="margin-left:130px">
         <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
-          Genetic Testing Registry &nbsp;
-          <v-menu open-on-hover top offset-y>
+          Genetic Testing Registry
+          <!-- <v-menu open-on-hover top offset-y>
             <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
               <v-card>
                 <v-card-text><p v-html="IntroductionTextData[0].Content"></p></v-card-text>
               </v-card>
-          </v-menu>
+          </v-menu> -->
         </v-btn>
         <v-btn flat v-else-if="component==='Phenolyzer'" style="font-size:16px font-width:200 ">
           Phenolyzer
-          <v-menu open-on-hover top offset-y>
-            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-            <v-card>
-              <v-card-text><p v-html="IntroductionTextData[1].Content"></p></v-card-text>
-            </v-card>
-          </v-menu>
         </v-btn>
         <v-btn flat v-else-if="component==='SummaryTab'" style="font-size:16px font-width:200 ">
           Summary
-          <v-menu open-on-hover top offset-y>
-            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-              <v-card>
-                <v-card-text><p v-html="IntroductionTextData[2].Content"></p></v-card-text>
-              </v-card>
-          </v-menu>
         </v-btn>
       </span>
       <v-spacer></v-spacer>
@@ -192,6 +186,8 @@
         <div style="background:white; height:auto">
           <keep-alive>
 
+              <Overview v-if="component==='OverviewPage'"></Overview>
+
               <GeneticTestingRegistry
                 v-if="component==='GeneticTestingRegistry'"
                 v-on:vendorListCB="updateVendors($event)"
@@ -251,6 +247,7 @@ import DisorderSearch from './DisorderSearch.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
 import AppsMenu from '../partials/AppsMenu.vue';
 import HelpMenu from '../partials/HelpMenu.vue';
+import Overview from './Overview.vue'
 
   export default {
     components: {
@@ -263,11 +260,12 @@ import HelpMenu from '../partials/HelpMenu.vue';
       'FilterPhenolyzer': FilterPhenolyzer,
       'FilterSummary': FilterSummary,
       'AppsMenu': AppsMenu,
-      'HelpMenu': HelpMenu
+      'HelpMenu': HelpMenu,
+      'Overview':Overview
     },
     data(){
       return{
-        component: 'GeneticTestingRegistry',
+        component: 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -720,6 +718,11 @@ aside {
     max-height: calc(100% - 0px) !important;
   }
 }
+
+.v-list--dense .v-list__tile .v-icon {
+  font-size: 24px;
+}
+
 </style>
 
 <style lang="sass">
@@ -806,11 +809,13 @@ button.btnColor.blue.darken-1
   font-family: Open sans
 
 .checkbox.input-group.input-group--selection-controls.accent--text
-  color:  $default-cb-accent !important
+  color: $app-gray !important
+  // color:  $default-cb-accent !important
   // color: #9babff !important
 
 .accent--text
-  color: $app-color-primary !important
+  color: $accent-text-color !important
+  // color: $app-color-primary !important
 
 .emphasize
   .input-group--select
@@ -866,4 +871,12 @@ button.btnColor.blue.darken-1
   // width: 80%
   height: 64px
   background: white
+
+// .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover
+
+
+.dropdown-menu
+  .active
+    a
+      background-color: $app-color
 </style>

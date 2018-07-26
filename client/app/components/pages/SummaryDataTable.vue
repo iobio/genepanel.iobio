@@ -45,28 +45,7 @@
 
           <td>{{ props.item.indexVal}}</td>
           <td>
-            <div id="app">
-              <div>
-                <v-menu open-on-hover top offset-y>
-                  <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
-                    <div >
-                      <v-card>
-                        <v-card-text style="margin-top:-25px">
-                          <center ><h3>{{ props.item.name }}</h3></center>
-                          <hr>
-                          <div style="width:600px"><strong>Resources: </strong></div>
-                          <ul style="margin-left:25px; margin-top:5px">
-                            <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                            <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                            <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                            <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                          </ul>
-                        </v-card-text>
-                      </v-card>
-                    </div>
-                </v-menu>
-              </div>
-            </div>
+            <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
           </td>
           <!-- <td>
             <span v-if="props.item.isGtr"><v-icon >check_circle</v-icon></span>
@@ -84,7 +63,7 @@
           </td>
           <td>
             <v-menu bottom offset-y style="color:black">
-              <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+              <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
 
               <v-list style="width:250px">
                 <v-list-tile >
@@ -149,9 +128,9 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
         // { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
-        { text: 'GTR ', align: 'left', sortable: false, value: 'sourceGTR' },
+        { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: 'More', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
+        { text: 'Links', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
 
       ],
       items: [],

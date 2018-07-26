@@ -512,7 +512,9 @@ mergeGenesAcrossPanels(genePanels) {
 
 
   getGeneBarChartData(genes, width) {
-
+    if(width===undefined){
+      width = 850;
+    }
     // Sort genes by gene panel count (descending order)
     // Sort genes by gene panel count (descending order)
     var sortedGenes = genes.sort(function(a,b) {
@@ -554,10 +556,10 @@ mergeGenesAcrossPanels(genePanels) {
                             </defs>
 
                             <rect class="genepanelsRect"
-                                  x="10" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
+                                  x="1" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
                             <rect class="grayRect"
-                                        x="${(gene._genePanelCount * multiplicationFactor)+12}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
-                            <text x="${(firstBarWidth + 28)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${gene._genePanelCount}</text>
+                                        x="${(gene._genePanelCount * multiplicationFactor)+3}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
+                            <text x="${(firstBarWidth + 19)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${gene._genePanelCount}</text>
                         </svg>`,
 
             };

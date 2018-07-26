@@ -3,10 +3,10 @@
     <div id="app">
       <v-app id="inspire" style="background-color:#f9fbff">
         <v-container fluid grid-list-md>
-          <v-layout row wrap style="margin-top:-5px;">
+          <v-layout row wrap style="margin-top:-20px;">
 
             <!-- show description -->
-            <v-flex xs12>
+            <v-flex xs12 style="margin-bottom:5px">
               <v-card>
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0">
                   <v-card-title>
@@ -19,7 +19,7 @@
                     <v-layout row wrap>
                       <v-flex xs6>
                         <v-card-text>
-                          <strong>Disorders:</strong>
+                          <strong>GTR Disorders:</strong>
                           <br>
                           <div v-if="GtrGenesArr.length===0">
                             <v-chip
@@ -51,7 +51,7 @@
                       </v-flex>
                       <v-flex xs6>
                         <v-card-text>
-                          <strong>Phenotypes:</strong>
+                          <strong>Phenolyzer:</strong>
                           <div v-if="PhenolyzerSearchTerms.length>0">
                           <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
@@ -93,7 +93,7 @@
                 <!-- end data table -->
 
                 <!-- start side bar -->
-                <v-flex xs4 class="pr-2 pl-1">
+                <v-flex xs4 class="pr-2 pl-2">
 
                   <div class="d-flex mb-2 xs12">
                     <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
@@ -109,8 +109,7 @@
                       <br>
                     </v-card>
                   </div>
-                  <br>
-                  <div class="d-flex mt-1 mb-2 xs12">
+                  <div class="d-flex mt-3 mb-2 xs12">
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-text>
                       <center>
@@ -127,7 +126,7 @@
 
 
                          <span class="Rightbar_card_content_subheading">
-                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} selected</span>
+                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} genes selected</span>
                        </center>
                        <SvgBar
                         class="SvgBarClass"
@@ -135,19 +134,68 @@
                         :selectedNumber="selectedGenes"
                         :totalNumber="totalGenes">
                        </SvgBar>
+                       <br>
+                       <div v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                         <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
+                           <v-flex xs6>
+                             <div class="Rightbar_card_content_subheading" style="margin-left:10px">
+                               {{ item.name }}
+                             </div>
+                           </v-flex>
+                           <v-flex xs6>
+                             <div>
+                               <SummarySvgBar
+                                class="SvgBarClass"
+                                id="genesbar"
+                                :selectedNumber="item.count"
+                                :totalNumber="totalGenes">
+                               </SummarySvgBar>
+                             </div>
+                           </v-flex>
+                         </v-layout>
+                       </div>
                      </v-card-text>
                     </v-card>
-                       </div>
+                  </div>
 
+                  <!-- <div class="d-flex mt-3 xs12">
+                    <v-card class="rightbarCard" v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                      <v-card-text>
+                        <center>
+                          <span class="Rightbar_CardHeading">
+                          GENES SUMMARY
+                          </span>
+                          <v-divider class="Rightbar_card_divider"></v-divider>
+                        </center>
+                        <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
+                          <v-flex xs6>
+                            <div class="Rightbar_card_content_subheading">
+                              {{ item.name }}
+                            </div>
+                          </v-flex>
+                          <v-flex xs6>
+                            <div>
+                              <SummarySvgBar
+                               class="SvgBarClass"
+                               id="genesbar"
+                               :selectedNumber="item.count"
+                               :totalNumber="totalGenes">
+                              </SummarySvgBar>
+                            </div>
+                          </v-flex>
+                        </v-layout>
+                      </v-card-text>
+                    </v-card>
+                  </div> -->
                   <br>
-                  <div class="d-flex mb-2 xs12">
+                  <!-- <div class="d-flex mb-2 xs12">
                       <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                         <SummaryPieChart
                           v-bind:summaryPieChartData="pieChartdataArr"
                           :color="chartColor">
                         </SummaryPieChart>
                       </v-card>
-                  </div>
+                  </div> -->
 
                 </v-flex>
 
@@ -173,7 +221,7 @@ import HelpDialogs from '../../../data/HelpDialogs.json';
 import Dialogs from '../partials/Dialogs.vue';
 import SvgBar from '../viz/SvgBar.vue'
 import Alerts from '../partials/Alerts.vue';
-
+import SummarySvgBar from '../viz/SummarySvgBar.vue';
 
 
   export default {
@@ -184,6 +232,7 @@ import Alerts from '../partials/Alerts.vue';
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       'Alerts': Alerts,
+      'SummarySvgBar': SummarySvgBar
     },
     props:{
       NumberOfGtrGenes:{

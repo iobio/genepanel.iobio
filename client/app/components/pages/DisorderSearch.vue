@@ -47,7 +47,7 @@
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>
-    <p v-if="checked" ><v-progress-linear height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
+    <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
         Sorry, the following search term returns no data!
@@ -251,7 +251,7 @@ var model = new Model();
 
               // console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
               if(this.multipleSearchTerms.includes(searchTerm)){
-                console.log("Send")
+                // console.log("Send")
                 bus.$emit("newSearch")
                 this.$emit('showDiseases', this.filteredDiseasesItems)
               }

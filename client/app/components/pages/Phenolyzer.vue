@@ -16,7 +16,7 @@
       </v-snackbar>
 
       <v-container fluid grid-list-md>
-        <v-layout row wrap style="margin-top:-5px;">
+        <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text style="margin-bottom:-5px">
@@ -43,16 +43,16 @@
                     </div>
 
                     <v-btn
-                        style="margin-top:-0.35px; text-transform: none"
+                        style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
                       Generate Gene List
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">
-                      <br>
+                      <!-- <br> -->
                       <center>
-                        <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular>
+                        <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
                         Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
                       </center>
                     </div>
@@ -70,7 +70,7 @@
                         {{ searchItem }}
                       </v-chip>
                     </div>
-                    <p v-if="checked"><v-progress-linear  height="3" color="cyan darken-2" :indeterminate="true"></v-progress-linear></p>
+                    <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
 
                   </v-flex>
                   <v-flex xs12 sm12 md12 lg4 >
@@ -94,10 +94,10 @@
 
                     <v-btn
                         :disabled="multipleSearchTerms.length<1"
-                        style="margin-top:-0.35px"
+                        style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
                         v-on:click.prevent="selectNumberOfTopPhenolyzerGenes">
-                      Go
+                      Select
                     </v-btn>
 
                   </v-flex>
@@ -127,6 +127,7 @@
               <v-flex xs8>
                 <v-card v-if="multipleSearchTerms.length">
                   <v-data-table
+                      id="genes-table"
                       v-model="selected"
                       v-bind:headers="headers"
                       v-bind:items="items"
@@ -152,7 +153,7 @@
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                           @click="changeSort(header.value)"
                         >
-                          <v-icon>arrow_upward</v-icon>
+                          <!-- <v-icon>arrow_upward</v-icon> -->
                           {{ header.text }}
                         </th>
                       </tr>
@@ -171,30 +172,9 @@
                         <!-- <td></td> -->
                         <td>{{ props.item.indexVal }}</td>
                         <td >
-                          <div id="app">
-                            <div>
-                              <v-menu open-on-hover top offset-y>
-                                <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
-                                  <div >
-                                    <v-card>
-                                      <v-card-text style="margin-top:-25px">
-                                        <center ><h3>{{ props.item.geneName }}</h3></center>
-                                        <hr>
-                                        <div style="width:600px"><strong>Resources: </strong></div>
-                                        <ul style="margin-left:25px; margin-top:5px">
-                                          <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                                          <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                                          <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                                          <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                                        </ul>
-                                      </v-card-text>
-                                    </v-card>
-                                  </div>
-                              </v-menu>
-                            </div>
-                          </div>
+                          <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.geneName }}</span>
                           <!-- <span style="font-size:13px; margin-top:2px" >{{ props.item.geneName }}</span></td> -->
-                          <td>
+                          <td v-if="multipleSearchTerms.length>1">
                             <span v-for="x in props.item.searchTermIndexSVG">
                               <span v-html="x"></span>
                             </span>
@@ -221,7 +201,7 @@
                         <td style="font-size:0px;">{{ props.item.score }}</td>
                         <td>
                           <v-menu bottom offset-y style="color:black">
-                            <v-icon slot="activator" style="padding-right:4px">more_horiz</v-icon>
+                            <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
 
                             <v-list style="width:250px">
                               <v-list-tile >
@@ -259,7 +239,7 @@
               <!-- End data table -->
 
               <!-- start sidebar -->
-              <v-flex xs4 class="pr-2 pl-1">
+              <v-flex xs4 class="pr-2 pl-2" >
 
                 <div class="d-flex mb-2 xs12">
                   <v-card v-if="multipleSearchTerms.length">
@@ -275,10 +255,9 @@
                     <br>
                   </v-card>
                 </div>
-                <br>
 
-                <div class="d-flex mt-1 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                <div class="d-flex mt-3 mb-2 xs12">
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
@@ -293,7 +272,7 @@
 
                       <v-divider class="Rightbar_card_divider"></v-divider>
                       <span class="Rightbar_card_content_subheading">
-                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} selected</span>
+                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected</span>
                       </center>
                       <SvgBar
                        class="SvgBarClass"
@@ -452,15 +431,17 @@ import SvgBar from '../viz/SvgBar.vue'
         headers: [
           {
             text: 'Index',
+            value: 'indexVal',
+            sortable: false,
             align: 'left',
-            value: 'indexVal'
           },
           {
             text: 'Gene',
             align: 'left',
-            value: 'geneName'
+            value: 'geneName',
+            sortable: false,
           },
-          { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
+          // { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
 
             // {
             //   text: 'Matched search terms',
@@ -470,15 +451,17 @@ import SvgBar from '../viz/SvgBar.vue'
              {
                text: 'Phenolyzer score',
                align: 'left',
-               value: 'score'
+               value: 'score',
+               sortable: false,
               },
             {
               text: '',
               align: 'left',
-              value: 'htmlData'
+              value: 'htmlData',
+              sortable: false,
             },
             {
-              text: 'More',
+              text: 'Links',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
@@ -564,6 +547,77 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     methods: {
+      updateTableHeaders(){
+        if(this.multipleSearchTerms.length>1){
+          this.headers = [
+            {
+              text: 'Index',
+              value: 'indexVal',
+              sortable: false,
+              align: 'left',
+            },
+            {
+              text: 'Gene',
+              align: 'left',
+              value: 'geneName',
+              sortable: false,
+            },
+            { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
+             {
+               text: 'Phenolyzer score',
+               align: 'left',
+               value: 'score',
+               sortable: false,
+              },
+            {
+              text: '',
+              align: 'left',
+              value: 'htmlData',
+              sortable: false,
+            },
+            {
+              text: 'Links',
+              align: 'left',
+              sortable: false,
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+            }
+          ];
+        }
+        else if(this.multipleSearchTerms.length<=1){
+          this.headers = [
+            {
+              text: 'Index',
+              value: 'indexVal',
+              sortable: false,
+              align: 'left',
+            },
+            {
+              text: 'Gene',
+              align: 'left',
+              value: 'geneName',
+              sortable: false,
+            },
+               {
+                 text: 'Phenolyzer score',
+                 align: 'left',
+                 value: 'score',
+                 sortable: false,
+                },
+              {
+                text: '',
+                align: 'left',
+                value: 'htmlData',
+                sortable: false,
+              },
+              {
+                text: 'Links',
+                align: 'left',
+                sortable: false,
+                value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+              }
+          ]
+        }
+      },
       SelectAllPhenolyzerGenes(data){
         this.selected = this.items.slice();
       },
@@ -622,14 +676,16 @@ import SvgBar from '../viz/SvgBar.vue'
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       },
       selectNumberOfTopPhenolyzerGenes: function(){
-        setTimeout(()=>{
-          if(this.genesTop>0){
-            bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
-            this.snackbarText = "Top " + this.genesTop + " genes selected";
-            this.snackbar = true;
-          }
-        }, 1200);
-
+        // setTimeout(()=>{
+        //
+        //     // this.snackbarText = "Top " + this.genesTop + " genes selected";
+        //     // this.snackbar = true;
+        //   }
+        // }, 1200);
+        console.log(typeof this.genesTop)
+        if(this.genesTop>0){
+          bus.$emit('SelectNumberOfPhenolyzerGenes', this.genesTop);
+        }
       },
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []
@@ -672,7 +728,8 @@ import SvgBar from '../viz/SvgBar.vue'
                 } else {
                   self.tempItems = geneModel.phenolyzerGenes;
 
-                  self.multipleSearchTerms.push(searchTerm)
+                  self.multipleSearchTerms.push(searchTerm);
+                  self.updateTableHeaders();
                   self.checked = false;
                   self.alert = false;
                   self.dictionaryArr.push(({
@@ -826,10 +883,12 @@ import SvgBar from '../viz/SvgBar.vue'
       },
 
       drawSvgBars: function(tempItems){
-        var svgWidth = 350;
+
+        console.log("widthOFtable", $('#genes-table').innerWidth())
+        var svgWidth = 250;
         //<stop offset="5%"  stop-color="#36D1DC"/>
         //<stop offset="95%" stop-color="#5B86E5"/>
-        var firstBarWidth = tempItems[0].score * 320;
+        var firstBarWidth = tempItems[0].score * 220;
         tempItems.map(function(gene){
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -840,9 +899,9 @@ import SvgBar from '../viz/SvgBar.vue'
                             </defs>
 
                             <rect fill="#4e7ad3"
-                                  x="10" y="1" rx="5" width="${gene.score * 320}" height="18"/>
+                                  x="1" y="3" rx="5" width="${gene.score * 220}" height="16"/>
                             <rect fill="#e8ebed" stroke="white" stroke-width="2"
-                                  x="${(gene.score * 320)+12}" y="1" rx="5" width="${(firstBarWidth - (gene.score * 320))}" height="16"/>
+                                  x="${(gene.score * 220)+3}" y="3" rx="5" width="${(firstBarWidth - (gene.score * 220))}" height="16"/>
 
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
@@ -880,7 +939,7 @@ import SvgBar from '../viz/SvgBar.vue'
 
 
 
-<style scoped>
+<style>
 .btnColor, .btn__content{
   color: white;
 }
@@ -966,14 +1025,19 @@ import SvgBar from '../viz/SvgBar.vue'
   stroke: #4e7ad3;
   stroke-width: 2;
 }
+
+
 </style>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
   @import ../assets/sass/variables
 
   .btnColor
     color: white
     background-color: $search-button-color !important
+
+  .accent--text
+    color: $accent-text-color !important
 
 </style>
