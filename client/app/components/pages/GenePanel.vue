@@ -192,7 +192,6 @@ var model = new Model();
       })
     },
     updated(){
-      console.log(" i am updated")
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanels', this.selected);
       this.$emit('NoOfPanels', this.items);
@@ -312,7 +311,6 @@ var model = new Model();
         this.mergedGene = mergedGenePanels
         this.items = mergedGenePanels;
         this.tempItems = mergedGenePanels;
-        console.log("panels", this.items);
         this.items.map(x=>{
           if(x.genecount<this.lowerLimit){
             x.filter = "specific";
