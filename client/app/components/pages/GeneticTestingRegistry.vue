@@ -478,16 +478,30 @@
                                   </div>
                                   <v-layout>
                                     <v-flex xs4>
-                                      <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
-                                        <center><i><small>Less than {{ lowerLimitProps}} genes</small></i></center>
+                                      <v-tooltip bottom>
+                                        <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
+                                        <span>
+                                          <center><i>Less than {{ lowerLimitProps}} genes</i></center>
+                                        </span>
+                                      </v-tooltip>
+                                      <!-- <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox> -->
                                     </v-flex>
                                     <v-flex xs4>
-                                      <v-checkbox v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
-                                      <center><i><small>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</small></i></center>
+                                      <v-tooltip bottom>
+                                        <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
+                                          <span>
+                                            <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
+                                          </span>
+                                      </v-tooltip>
+                                      <!-- <center><i><small>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</small></i></center> -->
                                     </v-flex>
                                     <v-flex x4>
-                                      <v-checkbox v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
-                                      <center><i><small>More than {{ upperLimitProps}} genes</small></i></center>
+                                      <v-tooltip bottom>
+                                        <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
+                                        <span>
+                                          <center><i>More than {{ upperLimitProps}} genes</i></center>
+                                        </span>
+                                      </v-tooltip>
                                     </v-flex>
                                   </v-layout>
                                   <hr>
