@@ -4,13 +4,13 @@
       <v-layout row wrap style="margin-top:-10px;">
         <v-flex d-flex xs12>
           <v-card>
-            <v-jumbotron style="height: 430px;" :gradient="gradient" dark>
+            <v-jumbotron style="height: 410px;" :gradient="gradient" dark>
               <v-container fill-height>
                 <v-layout row wrap>
                   <v-flex xs6>
                     <v-flex text-xs-center style="margin-top:50px">
                       <h1 class="display-3 font-weight-light mb-3">panel.iobio</h1>
-                      <h4  class="subheading" style="font-size:15px">Generate lists of genes based on suspected disorders and phenotypes.</h4>
+                      <h4  class="subheading" style="font-size:15px">Generate list of genes based on suspected disorders and phenotypes.</h4>
                       <br>
                       <v-btn color="white" style="color:#0D47A1">
                       Learn More
@@ -29,7 +29,7 @@
                   <v-flex xs5>
                     <v-flex text-xs-center>
                       <!-- <div class="polaroid"> -->
-                        <img class="elevation-19" style="margin-top:68px; right: 0; width:590px; height:350px" src="../assets/images/bg2.png" alt="bg">
+                        <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/bg8.svg" alt="bg">
                       <!-- </div> -->
 
                     </v-flex>
@@ -106,5 +106,8 @@ div.polaroid {
   text-align: center;
 }
 
+.abc {
+  border-radius: 10px
+}
 
 </style>
