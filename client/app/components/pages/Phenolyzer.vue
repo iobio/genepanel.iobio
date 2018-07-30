@@ -71,7 +71,7 @@
                       </v-chip>
                     </div>
                     <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
-
+                    <p></p>
                   </v-flex>
                   <v-flex xs12 sm12 md12 lg4 >
                     <div style="display:inline-block; padding-top:5px;">
@@ -104,7 +104,6 @@
 
                 </v-layout>
               </v-card-text>
-              <br>
             </v-card>
           </v-flex>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div id="app">
-      <v-app id="inspire" style="background-color:#f9fbff">
+    <div style="background-color:#f9fbff">
+      <!-- <v-app id="inspire" style="background-color:#f9fbff"> -->
         <v-snackbar
           :timeout="snackbarTimeout"
           :top="y === 'top'"
@@ -15,7 +15,7 @@
           {{ snackbarText }}
           <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
-        <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button>
+        <!-- <button v-on:click="scrollToTop" v-if="GoToTop" id="GoToTopBtn">Top</button> -->
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-20px;">
             <v-flex d-flex xs12>
@@ -731,7 +731,7 @@
             </v-flex>
           </v-layout>
         </v-container>
-      </v-app>
+      <!-- </v-app> -->
     </div>
 
 </div>
