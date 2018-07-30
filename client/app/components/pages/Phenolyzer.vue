@@ -137,6 +137,7 @@
                       class="elevation-1"
                       v-bind:search="search"
                       no-data-text="No pheotype genes Available Currently"
+                      :custom-filter="filterItemsOnSearchPhenolyzer"
                     >
                     <template slot="headers" slot-scope="props">
                       <tr>
@@ -547,6 +548,10 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     methods: {
+      filterItemsOnSearchPhenolyzer(items, search, filter) {
+        search = search.toString().toLowerCase()
+        return items.filter(row => filter(row["geneName"], search));
+      },
       updateTableHeaders(){
         if(this.multipleSearchTerms.length>1){
           this.headers = [

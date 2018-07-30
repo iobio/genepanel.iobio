@@ -9,6 +9,7 @@
         item-key="name"
         v-bind:search="search"
         no-data-text="No Genes Available Currently"
+        :custom-filter="filterItemsOnSearch"
       >
       <template slot="headers" slot-scope="props">
         <tr>
@@ -178,6 +179,10 @@ import { bus } from '../../routes';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      filterItemsOnSearch(items, search, filter) {
+        search = search.toString().toLowerCase()
+        return items.filter(row => filter(row["name"], search));
+      },
       selectCommonGenes(){
         var tempSelected = [];
         for(var i=0; i<this.items.length; i++){
