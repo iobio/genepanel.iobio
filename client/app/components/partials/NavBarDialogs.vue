@@ -2,7 +2,7 @@
   <div>
     <v-dialog
        v-model="dialog"
-       width="500px"
+       width="650px"
      >
        <v-card>
          <v-card-title class="headline"><span>{{ HeadlineText }}</span></v-card-title>

@@ -11,7 +11,7 @@
         <v-list-tile @click="showAbout=true">
           <v-list-tile-title>About</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="">
+        <v-list-tile @click="showSoftwareResources=true">
           <v-list-tile-title>Software and resources</v-list-tile-title>
         </v-list-tile>
         <v-divider style="height:2px"></v-divider>
@@ -48,6 +48,14 @@
       :ContentText="NavBarDialogData[1].Content"
       id="AboutDialog">
     </NavBarDialogs>
+
+    <NavBarDialogs
+      v-if="showSoftwareResources"
+      v-on:closeDialog="closeDisclaimer($event)"
+      :HeadlineText="NavBarDialogData[2].HeadlineText"
+      :ContentText="NavBarDialogData[2].Content"
+      id="SoftwareResourcesDialog">
+    </NavBarDialogs>
   </span>
 </template>
 
@@ -71,6 +79,7 @@ var model = new Model();
         NavBarDialogData: null,
         showDisclaimer: false,
         showAbout: false,
+        showSoftwareResources: false,
       }
     },
     mounted(){
@@ -85,6 +94,7 @@ var model = new Model();
       closeDisclaimer(){
         this.showDisclaimer = false;
         this.showAbout = false;
+        this.showSoftwareResources = false;
       }
     }
   }
@@ -128,5 +138,15 @@ var model = new Model();
       clear: none
       font-size: 14px !important
 
+#credits
+  font-size: 12px
+
+.citation-title
+  margin-bottom: 0px !important
+  margin-top: 5px !important
+  font-size: 12px
+  color: #717171
+  font-weight: 600
+  clear: both
 
 </style>

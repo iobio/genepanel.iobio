@@ -6,7 +6,11 @@
     },
     {
       "HeadlineText": "panel.iobio 1.0",
-      "Content": "<div id='versions'><div><div class='version-label'>Phenolyzer</div><div class='number'>1.0.5 (02-21-2015)</div></div>"
+      "Content": "<div id='versions'><div><div class='version-label'>Phenolyzer</div><div class='number'>1.0.5 (02-21-2015)</div></div><div id='versions'><div><div class='version-label'>GTR: Genetic Testing Registry</div><div class='number'><a target='_blank' href='https://www.ncbi.nlm.nih.gov/gtr/'>NCBI</a></div></div>"
+    },
+    {
+      "HeadlineText": "Software and Resources",
+      "Content": "<div id='credits'><div class='citation-title'>GTR: Genetic Testing Registry</div>Wendy S. Rubinstein, Donna R. Maglott, Jennifer M. Lee, Brandi L. Kattman, Adriana J. Malheiro, et al. The NIH genetic testing registry: a new, centralized database of genetic tests to enable access to comprehensive information and improve transparency <a href='http://nar.oxfordjournals.org/content/41/D1/D925.full' target='_new'>Nucliec Acids Res. (1 January 2013) 41 (D1): D925–D935 doi.org/10.1093/nar/gks1173</a> <br><ul><li>PubMed ID: 23193275</li><li>PubMed Central ID: PMC3531155</li></ul> Link: <a target='_new' href='https://www.ncbi.nlm.nih.gov/gtr/'> https://www.ncbi.nlm.nih.gov/gtr/</a><br><br><div class='citation-title'>Phenolyzer</div>Yang, Hui, Peter N. Robinson, and Kai Wang. Phenolyzer: phenotype-based prioritization of candidate genes for human diseases.<a href='http://www.nature.com/nmeth/journal/v12/n9/abs/nmeth.3484.html' target='_new'>Nature Methods (2015).</a><br>Link: <a target='_new' href='http://phenolyzer.wglab.org/'> http://phenolyzer.wglab.org/</a></div>"
     }
   ]
 }
