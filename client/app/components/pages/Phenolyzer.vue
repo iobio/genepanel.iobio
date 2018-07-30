@@ -71,7 +71,7 @@
                       </v-chip>
                     </div>
                     <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
-
+                    <p></p>
                   </v-flex>
                   <v-flex xs12 sm12 md12 lg4 >
                     <div style="display:inline-block; padding-top:5px;">
@@ -104,7 +104,6 @@
 
                 </v-layout>
               </v-card-text>
-              <br>
             </v-card>
           </v-flex>
 
@@ -137,6 +136,7 @@
                       class="elevation-1"
                       v-bind:search="search"
                       no-data-text="No pheotype genes Available Currently"
+                      :custom-filter="filterItemsOnSearchPhenolyzer"
                     >
                     <template slot="headers" slot-scope="props">
                       <tr>
@@ -547,6 +547,10 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     methods: {
+      filterItemsOnSearchPhenolyzer(items, search, filter) {
+        search = search.toString().toLowerCase()
+        return items.filter(row => filter(row["geneName"], search));
+      },
       updateTableHeaders(){
         if(this.multipleSearchTerms.length>1){
           this.headers = [

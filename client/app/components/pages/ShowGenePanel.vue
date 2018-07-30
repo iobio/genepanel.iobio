@@ -28,7 +28,8 @@
           class="elevation-1"
           v-bind:pagination.sync="pagination"
           item-key="name"
-          v-bind:search="search"
+          :search="search"
+          :custom-filter="filterItemsOnSearch"
           no-data-text="No Genes Available Currently"
         >
         <template slot="headers" slot-scope="props">
@@ -313,6 +314,7 @@ var model = new Model();
         this.selectNumberOfTopGenes();
       },
       geneSearch: function(){
+        console.log(this.geneSearch)
         this.search = this.geneSearch;
       },
       multipleSearchItems: function(){
@@ -338,7 +340,6 @@ var model = new Model();
           ]
         }
         else if(this.multipleSearchItems.length<=1){
-          console.log("poipouiyuy")
           this.headers = [
             { text: 'Index', align: 'left', value: 'indexVal' },
             {
@@ -359,7 +360,10 @@ var model = new Model();
       }
     },
     methods:{
-
+      filterItemsOnSearch(items, search, filter) {
+        search = search.toString().toLowerCase()
+        return items.filter(row => filter(row["name"], search));
+      },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
         this.flagForNumberOfGenesSelected = true;

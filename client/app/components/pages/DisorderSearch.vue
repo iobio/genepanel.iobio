@@ -1,5 +1,5 @@
 <template>
-  <div style="">
+  <div>
     <!-- <span style="padding-right:4px">Disorder</span> -->
     <v-snackbar
       :timeout="snackbarTimeout"
