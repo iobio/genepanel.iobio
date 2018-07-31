@@ -4,58 +4,92 @@
       <v-layout row wrap style="margin-top:-10px;">
         <v-flex d-flex xs12>
           <v-card>
-            <v-jumbotron style="height: 410px;" :gradient="gradient" dark>
+            <v-jumbotron style="height: 310px;" :gradient="gradient" dark>
               <v-container fill-height>
                 <v-layout row wrap>
-                  <v-flex xs6>
+                  <v-flex xs12>
                     <v-flex text-xs-center style="margin-top:50px">
-                      <h1 class="display-3 font-weight-light mb-3">panel.iobio</h1>
+                      <h1 style="color:white" class="display-2 font-weight-thin mb-3">panel.iobio</h1>
                       <h4  class="subheading" style="font-size:15px">Generate list of genes based on suspected disorders and phenotypes.</h4>
                       <br>
                       <v-btn color="white" style="color:#0D47A1">
                       Learn More
                       </v-btn>
-                      <v-btn outline color="white" style="color:#0D47A1">
-                        Genetic Testing Registry
-                      </v-btn>
-                      <v-btn outline color="white" style="color:#0D47A1">
-                        Phenolyzer
-                      </v-btn>
-                    </v-flex>
-                  </v-flex>
-                  <v-flex xs1>
+                      <a href="#gtr">
+                        <v-btn outline color="white" style="color:#0D47A1">
+                          Genetic Testing Registry
+                        </v-btn>
+                      </a>
 
-                  </v-flex>
-                  <v-flex xs5>
-                    <v-flex text-xs-center>
-                      <!-- <div class="polaroid"> -->
-                        <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/bg8.svg" alt="bg">
-                      <!-- </div> -->
+                      <a href="#phenolyzer">
+                        <v-btn outline color="white" style="color:#0D47A1">
+                          Phenolyzer
+                        </v-btn>
+                      </a>
 
                     </v-flex>
                   </v-flex>
-
                 </v-layout>
               </v-container>
             </v-jumbotron>
-            <v-parallax
-              dark
-            >
-              <v-layout
-                align-center
-                column
-                justify-center
-              >
-                <h1 style="color:black" class="display-2 font-weight-thin mb-3">NCBI's Genetic Testing Registry</h1>
-                <h4  style="color:black" class="subheading">Explanation of GTR resources with links/ citation!</h4>
-                <br>
-                <v-btn outline color="blue darken-3" style="color:#0D47A1">
-                  Get Started
-                </v-btn>
-              </v-layout>
-            </v-parallax>
           </v-card>
         </v-flex>
+      </v-layout>
+      <v-layout row wrap style="margin-left:15px; margin-right:15px;" id="gtr">
+        <v-flex xs6>
+          <v-flex  style="margin-top:40px">
+            <v-container >
+              <h2  text-xs-center class="font-weight-thin mb-3">Genetic Testing Registry</h2>
+              <p   style="font-size:14px">
+                The Genetic Testing Registry (GTR®) is an NCBI resource that compiles genetic test information that has been voluntarily submitted by multiple providers. <br>
+                Panel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.
+              </p>
+              <br>
+              <v-btn color="white" style="color:#0D47A1">
+              Learn More
+              </v-btn>
+              <v-btn color="primary" @click="getStarted('gtr')">
+                Get Started
+              </v-btn>
+
+            </v-container>
+          </v-flex>
+        </v-flex>
+
+        <v-flex xs6>
+          <v-flex text-xs-center>
+              <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/bg9.svg" alt="bg">
+          </v-flex>
+        </v-flex>
+
+      </v-layout>
+      <v-divider></v-divider>
+      <v-layout row wrap style="margin-left:15px; margin-right:15px;" id="phenolyzer">
+        <v-flex xs6>
+          <v-flex text-xs-center>
+              <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/phenolyzer1bg.svg" alt="bg">
+          </v-flex>
+        </v-flex>
+        <v-flex xs6>
+          <v-flex  style="margin-top:40px">
+            <v-container >
+              <h2  text-xs-center class="font-weight-thin mb-3">Phenolyzer</h2>
+              <p   style="font-size:14px">
+                Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
+                Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes              </p>
+              <br>
+              <v-btn color="white" style="color:#0D47A1">
+              Learn More
+              </v-btn>
+              <v-btn color="primary" @click="getStarted('phenolyzer')">
+                Get Started
+              </v-btn>
+            </v-container>
+          </v-flex>
+        </v-flex>
+
+
+
       </v-layout>
     <!-- </v-container> -->
   </div>
@@ -90,7 +124,14 @@ var model = new Model();
     watch: {
     },
     methods:{
-
+      getStarted: function(component){
+        if(component==='gtr'){
+          bus.$emit('openGtrComponent');
+        }
+        else if(component==='phenolyzer'){
+          bus.$emit('openPhenolyzer')
+        }
+      }
     }
   }
 
@@ -99,6 +140,10 @@ var model = new Model();
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+center, span, h1, h2, h3, h4{
+  font-family: 'Open Sans', sans-serif;
+}
 
 div.polaroid {
   width: 400px;
