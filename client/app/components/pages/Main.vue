@@ -320,6 +320,14 @@ import Overview from './Overview.vue'
       window.addEventListener('scroll', this.handleScroll);
     },
     mounted(){
+      bus.$on("openGtrComponent", ()=>{
+        window.scrollTo(0,0);
+        this.component = "GeneticTestingRegistry";
+      })
+      bus.$on("openPhenolyzer", ()=>{
+        window.scrollTo(0,0);
+        this.component = "Phenolyzer";
+      })
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });

@@ -99,8 +99,14 @@
 
 
                    <v-flex xs4 class="pr-2 pl-2" >
+                     <!-- <div  style="display: none; " > -->
+                       <div id="activeFilterCard" >
+                       </div>
+                     <!-- </div> -->
 
-                     <div class="d-flex mb-2 xs12">
+
+
+                     <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>
                           <v-text-field
@@ -126,7 +132,7 @@
                        </v-card>
                      </div>
 
-                     <div class="d-flex mb-2 xs12 mt-3">
+                     <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
@@ -177,7 +183,8 @@
                        </v-card>
                      </div>
 
-                  <div class="mt-3">
+                <div  id="inActiveDisordersAndModesFilterCard">
+                  <div id="activeDisordersAndModesFilterCard" class="mb-3">
                     <v-layout wrap>
                     <v-flex xs12>
                     <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
@@ -378,8 +385,10 @@
                 </v-flex>
         </v-layout>
                 </div>
+              </div>
 
-                    <div class="d-flex mb-2 xs12 mt-3">
+              <div id="inActivePanelsFilterCard">
+                    <div id="activePanelsFilterCard" class="d-flex mb-2 xs12 mb-3">
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length"">
                         <v-card v-bind:class="[chartComponent==='GeneMembership' ? 'activeCardBox elevation-5' : 'rightbarCard ']">
                           <v-card-text>
@@ -576,16 +585,18 @@
                                 </v-card-text>
                               </v-card>
                               <center>
-                                <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                                <v-btn color="primary darken-1" flat="flat" v-on:click="closeComponent">Close</v-btn>
                               </center>
                               <br>
                           </div>
                         </v-card>
                       </div>
                     </div>
+                  </div>
 
                     <!-- start vendor cars -->
-                    <div class="mt-3">
+                  <div id="inActiveVendorsCard">
+                    <div id="activeVendorsCard" class="mb-3">
                     <v-layout wrap>
                     <v-flex xs12>
                       <div v-if=" diseasesProps.length && modeOfInheritanceProps.length && multiSelectItems.length>0">
@@ -671,7 +682,7 @@
                             <!-- <v-btn v-show="vendorsSelect.length<multiSelectItems.length" small v-on:click="SelectAllVendors">Select All vendors</v-btn>
                             <br> -->
                             <center>
-                              <v-btn color="primary darken-1" flat="flat" v-on:click="chartComponent=null">Close</v-btn>
+                              <v-btn color="primary darken-1" flat="flat" v-on:click="closeComponent">Close</v-btn>
                             </center>
                             <br>
                           </div>
@@ -680,6 +691,7 @@
                     </v-flex>
                   </v-layout wrap>
                 </div>
+              </div>
                     <!-- end vendor card -->
 
                    </v-flex>
@@ -1264,6 +1276,31 @@ export default {
     },
     showChartComponent: function(chart_component){
       this.chartComponent = chart_component;
+      $("#activeFilterCard").fadeIn("slow", function() {
+        $(this).addClass("activeFilterCardBackground");
+      });
+
+      setTimeout(function(){$("#activeFilterCard").removeClass("activeFilterCardBackground");}, 5500);
+
+      if(chart_component==='disorders'){
+        $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
+        $('#activeDisordersAndModesFilterCard').appendTo('#activeFilterCard');
+        $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
+
+      }
+      else if(chart_component==='GeneMembership'){
+        $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
+        $('#activePanelsFilterCard').appendTo('#activeFilterCard');
+        $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
+
+      }
+      else if(chart_component==='Vendors'){
+        $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
+        $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
+        $('#activeVendorsCard').appendTo('#activeFilterCard');
+      }
+
+      window.scrollTo(0,0);
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
@@ -1320,6 +1357,17 @@ export default {
       this.multipleSearchItems = e;
     },
     closeComponent: function(){
+      $("#activeFilterCard").removeClass("activeFilterCardBackground");
+
+      if(this.chartComponent==='disorders'){
+        $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
+      }
+      else if(this.chartComponent==='GeneMembership'){
+        $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
+      }
+      else if(this.chartComponent==='Vendors'){
+        $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
+      }
       window.scrollTo(0,0);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
@@ -1488,6 +1536,20 @@ export default {
      margin-top: 4px;
    }
  }
+
+ .activeFilterCardBackground{
+   /* box-shadow: 0 0 12px 6px #ededed; */
+   /* transition: 3s ease-in-out; */
+   animation: hideBoxShadow 5s;
+   animation-fill-mode: forwards;
+   border-top-right-radius: 6px;
+   border-top-left-radius: 6px;
+ }
+
+ @keyframes hideBoxShadow {
+  0% {box-shadow: 0 0 12px 6px #d3d3d3;}
+  100% {box-shadow: 0 0 0 0 white;}
+}
 </style>
 
 <style lang="sass">
