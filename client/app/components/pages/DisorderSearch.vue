@@ -27,7 +27,7 @@
           match-start
           v-model="search"
           target="#input"
-          :data="conditions"
+          :data="DiseaseNames"
           :limit="parseInt(100)"
           item-key="DiseaseName"/>
 
@@ -61,6 +61,7 @@
 
 import { Typeahead, Btn } from 'uiv';
 import conditions from '../../../data/conditions.json';
+import DiseaseNames from '../../../data/DiseaseNames.json'
 import geneData from '../../../data/genes.json';
 
 import { bus } from '../../routes';
@@ -135,6 +136,17 @@ var model = new Model();
             return 0;
           }
         });
+      },
+      DiseaseNames: function() {
+        return DiseaseNames.data.sort(function(a,b) {
+          if (a.DiseaseName < b.DiseaseName) {
+            return -1;
+          } else if (a.DiseaseName > b.DiseaseName) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
       }
     },
     methods:{
@@ -181,9 +193,12 @@ var model = new Model();
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
-        var searchTerm =""
+        console.log("this search", this.search)
+        var searchTerm ="";
+        var conceptId = ""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
+          conceptId = this.search.ConceptID;
         }
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
@@ -201,9 +216,9 @@ var model = new Model();
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
-            model.promiseGetDiseases(searchTerm)
+            model.promiseGetDiseases(searchTerm, conceptId)
             .then(function(data){
-              // console.log("data got from promise : " , data)
+              console.log("data got from promise : " , data)
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
@@ -224,7 +239,7 @@ var model = new Model();
 
               Promise.all(promises).then(function(){
                  filteredDiseases = model.processDiseaseData(diseases);
-                 // console.log("filteredDiseases",filteredDiseases)
+                 console.log("filteredDiseases",filteredDiseases)
 
                 addFilteredDiseases(filteredDiseases);
               })
