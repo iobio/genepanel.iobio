@@ -63,6 +63,9 @@ import { Typeahead, Btn } from 'uiv';
 import conditions from '../../../data/conditions.json';
 import DiseaseNames from '../../../data/DiseaseNames.json'
 import geneData from '../../../data/genes.json';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+import HierarchyData from '../../../data/HierarchyData.json';
+import HierarchyParentIds from '../../../data/HierarchyParentIds';
 
 import { bus } from '../../routes';
 import jQuery from 'jquery';
@@ -101,6 +104,9 @@ var model = new Model();
         x: null,
         mode: '',
         snackbarTimeout: 4000,
+        HelpDialogsData: null,
+        HierarchyRelations: null,
+        HierarchyParentData: null,
       }
     },
     watch: {
@@ -116,6 +122,11 @@ var model = new Model();
     },
 
     mounted: function() {
+      console.log("HierarchyParentIds", HierarchyParentIds.length);
+      this.HierarchyParentData = HierarchyParentIds;
+      this.HierarchyRelations = HierarchyData;
+      console.log("HierarchyData", HierarchyData.length)
+      this.HelpDialogsData = HelpDialogs.data;
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
        bus.$on("newAnalysis", ()=>{
@@ -216,7 +227,7 @@ var model = new Model();
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
-            model.promiseGetDiseases(searchTerm, conceptId)
+            model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
               console.log("data got from promise : " , data)
               diseases = data.diseases;

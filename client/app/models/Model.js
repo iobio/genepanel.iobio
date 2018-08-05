@@ -68,31 +68,28 @@ export default class Model {
     return disorderNames;
   }
 
-  promiseGetDiseases(searchTerm, conceptId) {
+  promiseGetDiseases(searchTerm, conceptId, HierarchyRelations, HierarchyParentIds) {
   var me = this;
   return new Promise(function(resolve, reject) {
-
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
     //                 + '&usehistory=y&retmode=json'
     //                 + '&term='
     //                 + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
-
-                    var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
-                                    + '&usehistory=y&retmode=json'
-                                    + '&term='
-                                    + '(((' + conceptId +'[ConceptId]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
-
+    var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
+                    + '&usehistory=y&retmode=json'
+                    + '&term='
+                    + '(((' + conceptId +'[ConceptId]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
 
-                    console.log("searchUrl", searchUrl)
+
+    console.log("searchUrl", searchUrl)
 
   // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&usehistory=y&retmode=json&term=C0795864"
 
     $.ajax( searchUrl )
     .done(function(data) {
-      console.log("data level 1 ", data)
 
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "disease search error: " + data["esearchresult"]["ERROR"];
@@ -102,21 +99,16 @@ export default class Model {
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
-        console.log("summaryUrl", summaryUrl);
         $.ajax( summaryUrl )
         .done(function(data) {
-          console.log("data from summary url", data)
           if (data.childNodes.length < 2) {
             if (data.esummaryresult && data.esummaryresult.length > 0) {
               sumData.esummaryresult.forEach( function(message) {
-                console.log("message", message)
               });
             }
-            console.log("a", {'searchTerm': searchTerm, 'diseases': []})
             resolve({'searchTerm': searchTerm, 'diseases': []})
           } else {
             var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
-            console.log("results", results)
             if (results.ERROR) {
               if (results.ERROR == 'Empty result - nothing todo') {
                 resolve({'searchTerm': searchTerm, 'diseases': []});
@@ -127,7 +119,59 @@ export default class Model {
             } else {
               var diseases = [];
               diseases.push(results.DocumentSummarySet.DocumentSummary)
-              console.log("diseases", diseases)
+
+              // var parents = ["C0242387"]
+              // var data = [
+              //   {
+              //     id: "C0242387",
+              //     children: [
+              //       {
+              //         id: "C1855433",
+              //         name: "Mandibulofacial dysostosis, Treacher Collins type, autosomal recessive",
+              //         ConceptMeta: {
+              //           ModesOfInheritance: {
+              //             ModeOfInheritance: [{Name:"Autosomal recessive inheritance"},{Name:"Autosomal dominant inheritance"}]
+              //           }
+              //         }
+              //       },
+              //       {
+              //         id: "C3150983",
+              //         name: "Treacher Collins syndrome 1",
+              //         ConceptMeta: {
+              //           ModesOfInheritance: {
+              //             ModeOfInheritance: [{Name: ""}]
+              //           }
+              //         }
+              //       }
+              //     ]
+              //   }
+              // ]
+
+              console.log("HierarchyRelations", HierarchyRelations);
+              console.log("HierarchyParentIds", HierarchyParentIds);
+              console.log("conceptId", conceptId)
+              if(HierarchyParentIds.includes(conceptId)){
+                console.log("yes includes")
+                var i = HierarchyParentIds.indexOf(conceptId);
+                HierarchyRelations[i].children.map(x=>{
+                  diseases.push({
+                    ConceptId: x.id,
+                    Title: x.name,
+                    ConceptMeta: x.ConceptMeta
+                  })
+                })
+              }
+
+              // if(true){ //check if the concept id is present in the parents array
+              //   //find the index of the concept id in the parent's array.
+              //   data[0].children.map(x=>{
+              //     diseases.push({
+              //       ConceptId: x.id,
+              //       Title: x.name,
+              //       ConceptMeta: x.ConceptMeta
+              //     })
+              //   })
+              // }
               // diseases.push({ConceptId:"C1855433", Title:"Mandibulofacial dysostosis, Treacher Collins type, autosomal recessive"})
               resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : diseases});
               // resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : [diseases]});
@@ -151,7 +195,6 @@ export default class Model {
 }
 
 promiseGetGenePanels(disease) {
-  console.log("disease in promiseGetGenePanels", disease);
   var me = this;
   return new Promise(function(resolve, reject) {
 
@@ -162,11 +205,9 @@ promiseGetGenePanels(disease) {
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&usehistory=y&retmode=json&term=C0795864[DISCUI]"
-    console.log("searchUrl in promiseGetGenePanels", searchUrl)
 
     $.ajax( searchUrl )
     .done(function(data) {
-      console.log("data in promiseGetGenePanels", data);
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
         reject(msg);
@@ -175,10 +216,8 @@ promiseGetGenePanels(disease) {
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
-        console.log("summary url from promise get gene panels", summaryUrl)
         $.ajax( summaryUrl )
         .done(function(sumData) {
-          console.log("sumData", sumData)
           if (sumData.result == null) {
             if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
               sumData.esummaryresult.forEach( function(message) {
@@ -239,7 +278,6 @@ processGenePanelData(genePanels) {
   var filteredGenePanels = genePanels.filter(function(genePanel) {
     return genePanel._genes.length > 0;
   });
-  console.log("filteredGenePanels", filteredGenePanels)
   return filteredGenePanels
 
 }
@@ -247,6 +285,7 @@ processGenePanelData(genePanels) {
 
 
 processDiseaseData(diseases) {
+  console.log("processDiseaseData",diseases)
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
     return disease.genePanels.length > 0;
