@@ -67,7 +67,15 @@
             <td>
               <div id="app">
                 <div>
-                  <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+                  <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">
+                    {{ props.item.name }}
+                  </span>
+                  <span v-if="props.item.isAssociatedGene===true">
+                    <svg height="30" width="30">
+                      <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">A.G</text>
+                    </svg>
+                  </span>
+
 
                   <!-- <v-menu open-on-hover top offset-y>
                     <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
@@ -225,7 +233,7 @@ var model = new Model();
             text: 'Lnks',
             align: 'left',
             sortable: false,
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene'] },
           // {
           //   text: '',
           //   value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
@@ -450,7 +458,8 @@ var model = new Model();
             x.geneCardsSrc= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
             x.ghrSrc= `https://ghr.nlm.nih.gov/gene/${x.name}`;
             x.clinGenLink= `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
-            x.htmlData = "<i>Associated Gene</i>"
+            x.htmlData = "<i>Associated Gene</i>";
+            x.isAssociatedGene = true;
           })
         }
         console.log("associatedGenes", this.associatedGenesData)
@@ -478,6 +487,26 @@ var model = new Model();
         // console.log("this.GenesToDisplay", this.GenesToDisplay);
 
         this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay)
+        if(this.associatedGenesData.length){
+          this.associatedGenesData.map(x=>{
+            var checkIfAssociatedGeneExist = obj => obj.name === x.name;
+            console.log("checkIfAssociatedGeneExist", data.some(checkIfAssociatedGeneExist))
+            if(data.some(checkIfAssociatedGeneExist)){
+              var genes = [];
+              data.map(y=>{
+                genes.push(y.name);
+              });
+              var i = genes.indexOf(x.name);
+              x.htmlData = data[i].htmlData;
+              x.value = data[i].value;
+              x.conditions = data[i].conditions;
+              x.diseases = data[i].diseases;
+
+              data.splice(i, 1);
+              data = [...data];
+            }
+          })
+        }
         if(this.associatedGenesData.length){
           this.items = [...this.associatedGenesData, ...data];
         }

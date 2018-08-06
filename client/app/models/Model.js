@@ -600,6 +600,7 @@ mergeGenesAcrossPanels(genePanels) {
               // searchTerm: gene.searchTerm,
               searchTermArray: gene.searchTermArray,
               searchTermIndex: gene.searchTermIndex,
+              isAssociatedGene: false, 
               omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
               medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
               geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
