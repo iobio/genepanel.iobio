@@ -89,7 +89,8 @@
                           v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
                           v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
                           v-bind:multipleSearchItems="multipleSearchItems"
-                          v-bind:geneSearch="geneSearch">
+                          v-bind:geneSearch="geneSearch"
+                          v-bind:associatedGenes="associatedGenes">
                         </show-gene-panel1>
                         <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
                           <NoGenesDisplayTable></NoGenesDisplayTable>
@@ -99,12 +100,6 @@
 
 
                    <v-flex xs4 class="pr-2 pl-2" >
-                     <!-- <div  style="display: none; " > -->
-                       <div id="activeFilterCard" >
-                       </div>
-                     <!-- </div> -->
-
-
 
                      <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
@@ -130,6 +125,9 @@
                         </v-card-title>
                         <br>
                        </v-card>
+                     </div>
+
+                     <div id="activeFilterCard" >
                      </div>
 
                      <div class="d-flex mb-2 xs12 mb-3">
@@ -869,6 +867,7 @@ export default {
       editPanelDefinition: false,
       upperLimitInput: 35,
       lowerLimitInput: 10,
+      associatedGenes: [],
     }
   },
   watch:{
@@ -931,7 +930,6 @@ export default {
           this.saveSelectedPanels=[];
         }
       }
-
 
     },
     selectDisorders(val) {
@@ -1096,6 +1094,21 @@ export default {
         this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
     },
+    checkForAssociatedGenes: function(){
+      console.log("checkForAssociatedGenes", this.diseasesProps);
+      var temp = [];
+      this.diseasesProps.map(x=>{
+        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!==""){
+          temp.push({
+            name: x.ConceptMeta.AssociatedGenes.Gene.__text,
+            searchTermIndex: x.searchTermIndex,
+            searchTermArray: x.searchTermArray
+          })
+        }
+      })
+      console.log("associated gene", temp)
+      this.associatedGenes = temp;
+    },
     selectDiseases: function(e){ //Gets back the data based on the changes or updates in the disease panel;
      // console.log("e is from home: ", e)
       this.diseasesProps = e;
@@ -1103,6 +1116,7 @@ export default {
         this.geneProps = [];
         this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
+      this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
       // console.log(" selectPanels");
@@ -1300,7 +1314,7 @@ export default {
         $('#activeVendorsCard').appendTo('#activeFilterCard');
       }
 
-      window.scrollTo(0,0);
+      window.scrollTo(0,120);
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
@@ -1368,7 +1382,7 @@ export default {
       else if(this.chartComponent==='Vendors'){
         $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
       }
-      window.scrollTo(0,0);
+      window.scrollTo(0,120);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
 

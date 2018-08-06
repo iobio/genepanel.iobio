@@ -27,7 +27,7 @@
           match-start
           v-model="search"
           target="#input"
-          :data="conditions"
+          :data="DiseaseNames"
           :limit="parseInt(100)"
           item-key="DiseaseName"/>
 
@@ -61,7 +61,11 @@
 
 import { Typeahead, Btn } from 'uiv';
 import conditions from '../../../data/conditions.json';
+import DiseaseNames from '../../../data/DiseaseNames.json'
 import geneData from '../../../data/genes.json';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+import HierarchyData from '../../../data/HierarchyData.json';
+import HierarchyParentIds from '../../../data/HierarchyParentIds';
 
 import { bus } from '../../routes';
 import jQuery from 'jquery';
@@ -100,6 +104,9 @@ var model = new Model();
         x: null,
         mode: '',
         snackbarTimeout: 4000,
+        HelpDialogsData: null,
+        HierarchyRelations: null,
+        HierarchyParentData: null,
       }
     },
     watch: {
@@ -115,6 +122,11 @@ var model = new Model();
     },
 
     mounted: function() {
+      console.log("HierarchyParentIds", HierarchyParentIds.length);
+      this.HierarchyParentData = HierarchyParentIds;
+      this.HierarchyRelations = HierarchyData;
+      console.log("HierarchyData", HierarchyData.length)
+      this.HelpDialogsData = HelpDialogs.data;
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
        bus.$on("newAnalysis", ()=>{
@@ -127,6 +139,17 @@ var model = new Model();
 
       conditions: function() {
         return conditions.data.sort(function(a,b) {
+          if (a.DiseaseName < b.DiseaseName) {
+            return -1;
+          } else if (a.DiseaseName > b.DiseaseName) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+      },
+      DiseaseNames: function() {
+        return DiseaseNames.data.sort(function(a,b) {
           if (a.DiseaseName < b.DiseaseName) {
             return -1;
           } else if (a.DiseaseName > b.DiseaseName) {
@@ -181,9 +204,12 @@ var model = new Model();
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
-        var searchTerm =""
+        console.log("this search", this.search)
+        var searchTerm ="";
+        var conceptId = ""
         if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
+          conceptId = this.search.ConceptID;
         }
         else if(this.search.DiseaseName===undefined) {
           searchTerm = this.search;
@@ -201,9 +227,9 @@ var model = new Model();
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
-            model.promiseGetDiseases(searchTerm)
+            model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
-              // console.log("data got from promise : " , data)
+              console.log("data got from promise : " , data)
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
@@ -224,7 +250,7 @@ var model = new Model();
 
               Promise.all(promises).then(function(){
                  filteredDiseases = model.processDiseaseData(diseases);
-                 // console.log("filteredDiseases",filteredDiseases)
+                 console.log("filteredDiseases",filteredDiseases)
 
                 addFilteredDiseases(filteredDiseases);
               })

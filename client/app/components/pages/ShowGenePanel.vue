@@ -181,6 +181,9 @@ var model = new Model();
       },
       multipleSearchItems: {
         type: Array
+      },
+      associatedGenes: {
+        type: Array
       }
     },
     data(){
@@ -251,6 +254,7 @@ var model = new Model();
         multipleSearchDisorders: [],
         DataToIncludeSearchTerms: [],
         arrangedSearchData: [],
+        associatedGenesData: [],
 
       }
     },
@@ -321,7 +325,6 @@ var model = new Model();
         this.multipleSearchDisorders = this.multipleSearchItems;
         console.log("this.multipleSearchItems", this.multipleSearchItems.length)
         if(this.multipleSearchItems.length>=2){
-          console.log("wjsdbjhasb")
           this.headers = [
             { text: 'Index', align: 'left', value: 'indexVal' },
             {
@@ -439,6 +442,19 @@ var model = new Model();
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
         // console.log("this.GetGeneData", this.GetGeneData);
+        this.associatedGenesData = this.associatedGenes;
+        if(this.associatedGenesData.length){
+          this.associatedGenesData.map(x=>{
+            x.omimSrc= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
+            x.medGenSrc= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
+            x.geneCardsSrc= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
+            x.ghrSrc= `https://ghr.nlm.nih.gov/gene/${x.name}`;
+            x.clinGenLink= `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
+            x.htmlData = "<i>Associated Gene</i>"
+          })
+        }
+        console.log("associatedGenes", this.associatedGenesData)
+
         this.modeOfInheritanceList = this.modeOfInheritanceData;
         // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
         this.DataToIncludeSearchTerms = this.GeneData;
@@ -462,13 +478,18 @@ var model = new Model();
         // console.log("this.GenesToDisplay", this.GenesToDisplay);
 
         this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay)
+        if(this.associatedGenesData.length){
+          this.items = [...this.associatedGenesData, ...data];
+        }
+        else{
+          this.items = data;
+        }
 
-        this.items = data;
         this.noOfSourcesSvg();
-        // console.log(this.items)
+        console.log(this.items)
         // let dataWithClinGenFlag = model.getClinGenFlag(data);
         // this.items = dataWithClinGenFlag;
-        this.selected = data.slice(0,50);
+        this.selected = this.items.slice(0,50);
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
