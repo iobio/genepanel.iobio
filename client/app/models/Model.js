@@ -147,11 +147,11 @@ export default class Model {
               //   }
               // ]
 
-              console.log("HierarchyRelations", HierarchyRelations);
-              console.log("HierarchyParentIds", HierarchyParentIds);
-              console.log("conceptId", conceptId)
+              // console.log("HierarchyRelations", HierarchyRelations);
+              // console.log("HierarchyParentIds", HierarchyParentIds);
+              // console.log("conceptId", conceptId)
               if(HierarchyParentIds.includes(conceptId)){
-                console.log("yes includes")
+                // console.log("yes includes")
                 var i = HierarchyParentIds.indexOf(conceptId);
                 HierarchyRelations[i].children.map(x=>{
                   diseases.push({

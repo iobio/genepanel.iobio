@@ -89,7 +89,8 @@
                           v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
                           v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
                           v-bind:multipleSearchItems="multipleSearchItems"
-                          v-bind:geneSearch="geneSearch">
+                          v-bind:geneSearch="geneSearch"
+                          v-bind:associatedGenes="associatedGenes">
                         </show-gene-panel1>
                         <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
                           <NoGenesDisplayTable></NoGenesDisplayTable>
@@ -869,6 +870,7 @@ export default {
       editPanelDefinition: false,
       upperLimitInput: 35,
       lowerLimitInput: 10,
+      associatedGenes: [],
     }
   },
   watch:{
@@ -1096,6 +1098,21 @@ export default {
         this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
     },
+    checkForAssociatedGenes: function(){
+      console.log("checkForAssociatedGenes", this.diseasesProps);
+      var temp = [];
+      this.diseasesProps.map(x=>{
+        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!==""){
+          temp.push({
+            name: x.ConceptMeta.AssociatedGenes.Gene.__text,
+            searchTermIndex: x.searchTermIndex,
+            searchTermArray: x.searchTermArray
+          })
+        }
+      })
+      console.log("associated gene", temp)
+      this.associatedGenes = temp;
+    },
     selectDiseases: function(e){ //Gets back the data based on the changes or updates in the disease panel;
      // console.log("e is from home: ", e)
       this.diseasesProps = e;
@@ -1103,6 +1120,7 @@ export default {
         this.geneProps = [];
         this.$emit("UpdateListOfSelectedGenesGTR", []);
       }
+      this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
       // console.log(" selectPanels");
