@@ -108,21 +108,21 @@
       </v-toolbar-title>
 
       <span style="margin-left:130px">
-        <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
+        <!-- <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
           Genetic Testing Registry
-          <!-- <v-menu open-on-hover top offset-y>
+          <v-menu open-on-hover top offset-y>
             <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
               <v-card>
                 <v-card-text><p v-html="IntroductionTextData[0].Content"></p></v-card-text>
               </v-card>
-          </v-menu> -->
+          </v-menu>
         </v-btn>
         <v-btn flat v-else-if="component==='Phenolyzer'" style="font-size:16px font-width:200 ">
           Phenolyzer
         </v-btn>
         <v-btn flat v-else-if="component==='SummaryTab'" style="font-size:16px font-width:200 ">
           Summary
-        </v-btn>
+        </v-btn> -->
       </span>
       <v-spacer></v-spacer>
       <v-menu bottom offset-y style="color:black">

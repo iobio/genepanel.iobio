@@ -20,6 +20,7 @@
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text style="margin-bottom:-5px">
+                <center><h3>Phenolyzer</h3></center>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8>
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">

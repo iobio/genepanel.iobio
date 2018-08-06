@@ -21,6 +21,9 @@
             <v-flex d-flex xs12>
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
+                  <center><h3>Genetic Testing Registry</h3></center>
+
+                  <!-- <span><strong style="font-size:24.5px font-width:400">GENETIC TESTING REGISTRY</strong></span> -->
                   <v-layout row wrap>
                     <v-flex xs12 sm12 md12 lg8>
                       <DisorderSearch
