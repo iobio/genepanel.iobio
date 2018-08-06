@@ -71,9 +71,11 @@
                     {{ props.item.name }}
                   </span>
                   <span v-if="props.item.isAssociatedGene===true">
-                    <svg height="30" width="30">
+                    <img style="height:25px; margin-top:-10px; margin-left:5px" src="../assets/images/associatedGenesGlyph.svg">
+                    <!-- <svg height="30" width="30">
+                        <circle class="sourceIndicator"  />
                       <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">A.G</text>
-                    </svg>
+                    </svg> -->
                   </span>
 
 
@@ -446,6 +448,18 @@ var model = new Model();
           this.pagination.descending = false
         }
       },
+      drawHtmlData: function(width){
+        if(width===undefined){
+          width = 850;
+        }
+        console.log("tableWidth", width);
+        var svgWidth = Math.abs(width -770)+30 ;
+        var barWidth = Math.abs(width-770);
+        return `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
+                      <rect class="genepanelsRect"
+                            x="1" y="1" rx="5" width="${svgWidth}" height="16"/>
+                  </svg>`;
+      },
       AddGeneData: function(){
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
@@ -458,7 +472,8 @@ var model = new Model();
             x.geneCardsSrc= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
             x.ghrSrc= `https://ghr.nlm.nih.gov/gene/${x.name}`;
             x.clinGenLink= `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
-            x.htmlData = "<i>Associated Gene</i>";
+            // x.htmlData = "<i>Associated Gene</i>";
+             x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
             x.isAssociatedGene = true;
           })
         }
@@ -718,8 +733,6 @@ div.tooltip {
   font-weight: 300;
 }
 
-
-
 /*                      */
 /*  Any svg chart       */
 /*                      */
@@ -798,7 +811,4 @@ div.tooltip {
   fill: #e8ebed
   stroke: white
   stroke-width: 2
-
-
-
 </style>
