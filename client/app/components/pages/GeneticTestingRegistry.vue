@@ -970,6 +970,7 @@ export default {
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
       this.selectedPanelFilters= ["specific", "moderate", "general"];
+      this.closeComponentForNewResults();
     })
     bus.$on("removeSearchTerm", ()=>{
       this.maxGenes = 0;
@@ -982,6 +983,7 @@ export default {
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
       this.selectedPanelFilters= ["specific", "moderate", "general"];
+      this.closeComponentForNewResults();
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
       this.filterFeed.unshift("Mode of inheritance")
@@ -1011,6 +1013,7 @@ export default {
       this.lowerLimitProps = 10;
       this.upperLimitInput = 35;
       this.upperLimitProps = 35;
+      this.closeComponentForNewResults();
     });
   },
   created () {
@@ -1385,7 +1388,12 @@ export default {
       window.scrollTo(0,120);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
-
+    },
+    closeComponentForNewResults: function(){
+      $("#activeFilterCard").removeClass("activeFilterCardBackground");
+      $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
+      $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
+      $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
     },
     ChangePanelsDefinition: function(){
       if(parseInt(this.upperLimitInput)<=parseInt(this.lowerLimitInput)){

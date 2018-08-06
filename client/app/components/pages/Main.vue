@@ -158,7 +158,20 @@
         </v-list>
       </v-menu>
       <span>
-        <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn>
+        <!-- <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn> -->
+        <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
+          <!-- <v-btn flat slot="activator" color="primary" >Open Dialog</v-btn> -->
+          <v-btn flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-card>
+            <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
+            <v-card-text>Clicking "Agree" would clear all the search result from both "Genetic Testing Registry" and "Phenolyzer" for the new analysis.</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click.native="forceReload">Agree</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="newAnalysisDialog = false">Cancel</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </span>
       <!-- <span>
         <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
@@ -270,6 +283,7 @@ import Overview from './Overview.vue'
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
         drawer: false,
+        newAnalysisDialog: false,
         vendorList:[],
         selectedVendorsList:[],
         disorderList:[],
@@ -369,6 +383,7 @@ import Overview from './Overview.vue'
         }
       },
       forceReload: function(){
+        this.newAnalysisDialog = false;
         bus.$emit("newAnalysis");
         window.scrollTo(0,0);
       },
