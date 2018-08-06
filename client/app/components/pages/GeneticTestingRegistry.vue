@@ -100,12 +100,6 @@
 
 
                    <v-flex xs4 class="pr-2 pl-2" >
-                     <!-- <div  style="display: none; " > -->
-                       <div id="activeFilterCard" >
-                       </div>
-                     <!-- </div> -->
-
-
 
                      <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
@@ -131,6 +125,9 @@
                         </v-card-title>
                         <br>
                        </v-card>
+                     </div>
+
+                     <div id="activeFilterCard" >
                      </div>
 
                      <div class="d-flex mb-2 xs12 mb-3">
@@ -934,7 +931,6 @@ export default {
         }
       }
 
-
     },
     selectDisorders(val) {
       if(this.DisordersAndModesComponent==="disorders"){
@@ -1318,7 +1314,7 @@ export default {
         $('#activeVendorsCard').appendTo('#activeFilterCard');
       }
 
-      window.scrollTo(0,0);
+      window.scrollTo(0,120);
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
@@ -1386,7 +1382,7 @@ export default {
       else if(this.chartComponent==='Vendors'){
         $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
       }
-      window.scrollTo(0,0);
+      window.scrollTo(0,120);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
 
