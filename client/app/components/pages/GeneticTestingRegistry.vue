@@ -724,7 +724,7 @@
             </v-flex>
             <br>
 <!-- style="visibility:hidden; height:0px" -->
-            <v-flex d-flex xs12 sm12 md12  style="visibility:hidden; height:0px">
+            <v-flex d-flex xs12 sm12 md12 >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -880,6 +880,7 @@ export default {
   },
   watch:{
     selectedPanelFilters: function(){
+      console.log("watching selectedPanelFilters");
       this.filterPanelsOnselectedPanelFilters();
     },
     NumberOfTopGenes: function(){
@@ -892,6 +893,7 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
+      console.log("Vendors watching");
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -918,6 +920,7 @@ export default {
 
     },
     selectedPanelsInCheckBox(val){
+      console.log("watching selectedPanelsInCheckBox")
       if(this.chartComponent==='GeneMembership'){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
@@ -944,12 +947,6 @@ export default {
       if(this.DisordersAndModesComponent==="disorders"){
         this.selectDisordersProps = this.selectDisorders;
       }
-      // if(this.chartComponent==="disorders"){
-      //   bus.$emit("updatedFromDisorders")
-      // }
-      // if(this.selectDisorders.length > this.multiSelectDisorder.length){
-      //    this.selectDisorders= this.multiSelectDisorder
-      // }
     },
     selectedModesOfInheritance(val){
       if(this.DisordersAndModesComponent==="modes"){
@@ -961,11 +958,6 @@ export default {
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
-    // bus.$on("lastVendor", ()=>{
-    //   this.snackbarText = "It is required that atleast one vendor is kept selected";
-    //   this.snackbar = true;
-    //   this.vendorsSelect = [this.multiSelectItems[0]];
-    // });
     bus.$on("lastDisorder", ()=>{
       this.snackbarText = "It is required that atleast one disorder is kept selected";
       this.snackbar = true;
@@ -1032,10 +1024,6 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
-    // specificPanels: function(){
-    //   console.log(this.multiSelectPanels)
-    //   this.selectedPanelsInCheckBox = [this.multiSelectPanels[0]]
-    // },
     filterPanelsOnselectedPanelFilters: function(){
       var temp = [];
       this.selectedPanelFilters.map(x=>{
@@ -1048,19 +1036,9 @@ export default {
       this.selectedPanelsInCheckBox = temp;
     },
     selectNumberOfTopGenes: function(){
-      // if(this.NumberOfTopGenes===""){
-      //   bus.$emit('SelectNumberOfGenes', 50);
-      // }
        if(parseInt(this.NumberOfTopGenes)>0){
         bus.$emit('SelectNumberOfGenes', parseInt(this.NumberOfTopGenes));
-        // this.flagForNumberOfGenesSelected= true;
-        // this.snackbarText = "Top " + parseInt(this.NumberOfTopGenes) + " genes selected";
-        // this.snackbar = true;
       }
-      // else if (parseInt(this.NumberOfTopGenes)<=0) {
-      //   bus.$emit('SelectNumberOfGenes', 0);
-      //
-      // }
     },
     addDiseases: function(e){
       // console.log("addDiseases", e)
@@ -1130,20 +1108,9 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
-      // console.log(" selectPanels");
-      // console.log("chart component", this.chartComponent)
-      // console.log("this.saveSelectedPanels", this.saveSelectedPanels)
-      // this.geneProps = this.selectedPanelsInCheckBox;
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
         //set the items in the panels card
         this.multiSelectPanels = e;
-        // this.selectedPanelsInCheckBox = this.multiSelectPanels;
-
-        //Set vendors in the vendors cardBoxTitle
-        // let vendors = model.getGenePanelVendors(e);
-        // this.multiSelectItems = vendors;
-        // this.vendorList = vendors;
-        // this.vendorsSelect = this.multiSelectItems;
       }
 
       var temp = [];
@@ -1162,20 +1129,10 @@ export default {
       }
 
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
-        //set the items in the panels card
-        // this.multiSelectPanels = temp;
         this.selectedPanelsInCheckBox = temp;
-
-        //Set vendors in the vendors cardBoxTitle
-        // let vendors1 = model.getGenePanelVendors(temp);
-        // this.multiSelectItems = vendors;
-        // this.vendorList = vendors;
-        // this.vendorsSelect = vendors1;
       }
 
-
       this.geneProps = temp;
-      // this.$emit("GeneMembershipData", temp);
     },
     setPanelsNamesList: function(e){
       if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
@@ -1198,6 +1155,7 @@ export default {
       this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
+      console.log("receiving vendors list")
       // console.log("selectVendors ", e);
       this.vendorsSelect = e;
       if(!this.chartComponent==='Vendors'){
@@ -1207,10 +1165,6 @@ export default {
       // this.checkForDeselectedPanels();
     },
     selectPanelsFromVendorsUpdate: function(e){
-      // console.log(" selectPanelsFromVendorsUpdate");
-      // this.selectedPanelsInCheckBox = e;
-
-      // this.checkForDeselectedVendor();
     },
     checkForDeselectedVendor: function(){
       if(this.saveSelectedVendors.length===0){
@@ -1337,10 +1291,12 @@ export default {
     SelectAllVendors: function(){
       this.vendorsSelect=this.multiSelectItems;
       this.saveSelectedVendors = [];
+      this.selectedPanelFilters= ["specific", "moderate", "general"];
     },
     DeSelectAllVendors: function(){
       this.saveSelectedVendors = this.multiSelectItems;
       this.vendorsSelect = [];
+      this.selectedPanelFilters = [];
     },
     SelectAllDisordersButton: function(){
       this.selectDisorders = this.multiSelectDisorder;

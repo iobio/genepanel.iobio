@@ -326,11 +326,14 @@ processDiseaseData(diseases) {
 
 
 getGenePanelVendors(genePanels) {
+  console.log(" inside getGenePanelVendors in model")
+  console.log("genePanels", genePanels)
   let vendors = {};
   genePanels.forEach(function(gp) {
     vendors[gp.offerer] = true;
   })
 
+  console.log("vendors  object in model", vendors)
   return Object.keys(vendors).sort();
 }
 
