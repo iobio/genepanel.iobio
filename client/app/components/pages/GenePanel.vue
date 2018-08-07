@@ -209,7 +209,7 @@ var model = new Model();
       updateTableOnSelectedPanels: function(){
         console.log("inside updateTableOnSelectedPanels")
         this.selected = this.selectedPanelsInCheckBox;
-        console.log("items length in gene panel", this.items.length)
+
         var nonSelectedItems = [];
         this.items.map(x=>{
           var checkIfExists = obj => obj.testname === x.testname;
@@ -222,9 +222,9 @@ var model = new Model();
         nonSelectedItems.map(x=>{
           nonSelectedVendors.push(x.offerer);
         })
-        console.log("non selected items ;length", nonSelectedVendors);
+        // console.log("non selected items ;length", nonSelectedVendors);
         let vendors = model.getGenePanelVendors(this.selected);
-        console.log("vendors", vendors)
+        // console.log("vendors", vendors)
 
         var vendorsToBeSentBack = [];
         vendors.map(x=>{
@@ -232,6 +232,7 @@ var model = new Model();
             vendorsToBeSentBack.push(x);
           }
         })
+        console.log("items length in gene panel", this.items.length)
         this.$emit('selectVendors', vendorsToBeSentBack.sort());
 
         // this.$emit('selectVendors', vendors.sort());

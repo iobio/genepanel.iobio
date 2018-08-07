@@ -60,6 +60,36 @@
                           v-on:click.prevent="selectNumberOfTopGenes">
                         Select
                       </v-btn>
+                      <!-- <br> {{ chartComponent }} -->
+                      <br>
+                      <v-layout v-on:click="clickedTopPanelFilters">
+                        <v-flex xs4>
+                          <v-tooltip bottom>
+                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
+                            <span>
+                              <center><i>Less than {{ lowerLimitProps}} genes</i></center>
+                            </span>
+                          </v-tooltip>
+                          <!-- <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox> -->
+                        </v-flex>
+                        <v-flex xs4>
+                          <v-tooltip bottom>
+                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
+                              <span>
+                                <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
+                              </span>
+                          </v-tooltip>
+                          <!-- <center><i><small>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</small></i></center> -->
+                        </v-flex>
+                        <v-flex x4>
+                          <v-tooltip bottom>
+                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
+                            <span>
+                              <center><i>More than {{ upperLimitProps}} genes</i></center>
+                            </span>
+                          </v-tooltip>
+                        </v-flex>
+                      </v-layout>
                     </v-flex>
                   </v-layout>
                 </v-card-text>
@@ -880,7 +910,8 @@ export default {
   },
   watch:{
     selectedPanelFilters: function(){
-      console.log("watching selectedPanelFilters");
+      console.log("watching selectedPanelFilters and this.multiSelectPanels.length", this.multiSelectPanels.length);
+      console.log("chartComponent", this.chartComponent)
       this.filterPanelsOnselectedPanelFilters();
     },
     NumberOfTopGenes: function(){
@@ -894,6 +925,8 @@ export default {
     },
     vendorsSelect(val) {
       console.log("Vendors watching");
+      console.log("this.multiSelectPanels.length in vendors watch 1", this.multiSelectPanels.length)
+
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -908,7 +941,7 @@ export default {
       }
       var diff = this.multiSelectItems.length - this.vendorsSelect.length;
       var lastItem = [];
-      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors'){
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors' || this.chartComponent===null){
         if(diff>0 ){ //because everytime a new term is searched this difference will be zero.
           this.saveSelectedVendorsCount = this.multiSelectItems.length - this.vendorsSelect.length;
           this.saveSelectedVendors = this.multiSelectItems.filter( vendor => !this.vendorsSelect.includes(vendor));
@@ -917,11 +950,11 @@ export default {
           this.saveSelectedVendors = [];
         }
       }
-
+      console.log("this.multiSelectPanels.length in vendors watch 2", this.multiSelectPanels.length)
     },
     selectedPanelsInCheckBox(val){
-      console.log("watching selectedPanelsInCheckBox")
-      if(this.chartComponent==='GeneMembership'){
+      console.log("watching selectedPanelsInCheckBox and this.multiSelectPanels.length", this.multiSelectPanels.length)
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==="PanelFilters"){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
       else if(this.chartComponent==='Vendors'){
@@ -929,7 +962,7 @@ export default {
       }
       var diff = this.multiSelectPanels.length - this.selectedPanelsInCheckBox.length;
       var temp = [];
-      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors'){
+      if(this.chartComponent==='GeneMembership' || this.chartComponent==='Vendors' || this.chartComponent===null){
         if(diff>0){
           // this.saveSelectedPanels = this.selectedPanelsInCheckBox
           this.selectedPanelsInCheckBox.map(x=>{
@@ -955,6 +988,7 @@ export default {
     }
   },
   updated(){
+    console.log("updated - this.multiSelectPanels.length", this.multiSelectPanels.length)
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
@@ -1024,7 +1058,11 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    clickedTopPanelFilters: function(){
+      this.chartComponent = "PanelFilters"
+    },
     filterPanelsOnselectedPanelFilters: function(){
+      console.log("inside filterPanelsOnselectedPanelFilters and multiSelectPanels length", this.multiSelectPanels.length )
       var temp = [];
       this.selectedPanelFilters.map(x=>{
         this.multiSelectPanels.map(y=>{
@@ -1120,11 +1158,11 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
-      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
-        //set the items in the panels card
-        this.multiSelectPanels = e;
+      console.log("selectPanels", e)
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'){
+          //set the items in the panels card
+          this.multiSelectPanels = e;
       }
-
       var temp = [];
       if(this.saveSelectedPanels.length===0 && this.chartComponent === 'disorders'){
         temp = e;
@@ -1147,6 +1185,7 @@ export default {
       this.geneProps = temp;
     },
     setPanelsNamesList: function(e){
+      console.log("inside setPanelsNamesList")
       if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
         this.multiSelectPanels = e;
         this.selectedPanelsInCheckBox = this.multiSelectPanels;
