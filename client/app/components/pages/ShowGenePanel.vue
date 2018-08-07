@@ -449,16 +449,17 @@ var model = new Model();
         }
       },
       drawHtmlData: function(width){
-        if(width===undefined){
-          width = 850;
-        }
-        console.log("tableWidth", width);
-        var svgWidth = Math.abs(width -770)+30 ;
-        var barWidth = Math.abs(width-770);
-        return `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
-                      <rect class="genepanelsRect"
-                            x="1" y="1" rx="5" width="${svgWidth}" height="16"/>
-                  </svg>`;
+        return "<span style='color:#4e7ad3'><i>Not on any panels </i><span>"
+        // if(width===undefined){
+        //   width = 850;
+        // }
+        // console.log("tableWidth", width);
+        // var svgWidth = Math.abs(width -770)+30 ;
+        // var barWidth = Math.abs(width-770-10);
+        // return `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
+        //               <rect stroke="#4e7ad3" stroke-width="2" fill="#ffffff00"
+        //                     x="1" y="1" rx="5" width="${svgWidth}" height="16"/>
+        //           </svg>`;
       },
       AddGeneData: function(){
         bus.$emit("openNavDrawer");
@@ -475,6 +476,7 @@ var model = new Model();
             // x.htmlData = "<i>Associated Gene</i>";
              x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
             x.isAssociatedGene = true;
+            x.value = 0;
           })
         }
         console.log("associatedGenes", this.associatedGenesData)
@@ -501,11 +503,12 @@ var model = new Model();
         this.GenesToDisplay = data;
         // console.log("this.GenesToDisplay", this.GenesToDisplay);
 
-        this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay)
+        this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay);
+
         if(this.associatedGenesData.length){
           this.associatedGenesData.map(x=>{
             var checkIfAssociatedGeneExist = obj => obj.name === x.name;
-            console.log("checkIfAssociatedGeneExist", data.some(checkIfAssociatedGeneExist))
+            // console.log("checkIfAssociatedGeneExist", data.some(checkIfAssociatedGeneExist))
             if(data.some(checkIfAssociatedGeneExist)){
               var genes = [];
               data.map(y=>{
@@ -522,7 +525,12 @@ var model = new Model();
             }
           })
         }
+
         if(this.associatedGenesData.length){
+          this.associatedGenesData.sort(function(a, b){
+            return a.value < b.value;
+          });
+
           this.items = [...this.associatedGenesData, ...data];
         }
         else{
