@@ -724,7 +724,7 @@
             </v-flex>
             <br>
 <!-- style="visibility:hidden; height:0px" -->
-            <v-flex d-flex xs12 sm12 md12 >
+            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -1088,11 +1088,23 @@ export default {
       var temp = [];
       this.diseasesProps.map(x=>{
         if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!==""){
-          temp.push({
-            name: x.ConceptMeta.AssociatedGenes.Gene.__text,
-            searchTermIndex: x.searchTermIndex,
-            searchTermArray: x.searchTermArray
-          })
+          console.log("x.ConceptMeta.AssociatedGenes.Gene.__text", x.ConceptMeta.AssociatedGenes.Gene.__text);
+          if(x.ConceptMeta.AssociatedGenes.Gene.__text!==undefined){
+            temp.push({
+              name: x.ConceptMeta.AssociatedGenes.Gene.__text,
+              searchTermIndex: x.searchTermIndex,
+              searchTermArray: x.searchTermArray
+            })
+          }
+          else if(x.ConceptMeta.AssociatedGenes.Gene.__text===undefined){
+            x.ConceptMeta.AssociatedGenes.Gene.map(y=>{
+              temp.push({
+                name: y.__text,
+                searchTermIndex: x.searchTermIndex,
+                searchTermArray: x.searchTermArray
+              })
+            })
+          }
         }
       })
       console.log("associated gene", temp)
