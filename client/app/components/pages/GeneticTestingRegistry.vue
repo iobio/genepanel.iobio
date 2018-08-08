@@ -1483,7 +1483,7 @@ export default {
         setTimeout(()=>{ this.panelsAlert=false; }, 3000);
       }
       else if(parseInt(this.upperLimitInput)>parseInt(this.lowerLimitInput)){
-        this.selectedPanelFilters = ["specific", "moderate", "general"];
+        // this.selectedPanelFilters = ["specific", "moderate", "general"];
         this.upperLimitProps = this.upperLimitInput;
         this.lowerLimitProps = this.lowerLimitInput;
         bus.$emit("ChangeDefinition", parseInt(this.upperLimitProps), parseInt(this.lowerLimitProps));
