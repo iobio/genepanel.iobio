@@ -148,10 +148,6 @@ var model = new Model();
       selectedVendorsProps: function(){
         // console.log("selectedVendorsProps in gene panels  ")
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
-        // console.log(" selectedVendorsProps from gene panel", this.selectedVendorsProps)
-        // this.flagForVendorFilter = true;
-        // this.updatePanelsOnSelectedVendors();
-        // bus.$emit("vendorsFilter");
       },
       selectedPanelsInCheckBox: function(){
         // console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
@@ -160,12 +156,7 @@ var model = new Model();
       selectedPanelsInCheckBoxPropsOne: function(){
         this.justUpdateTabel();
       },
-      // lowerLimitProps: function(){
-      //   this.lowerLimit = this.lowerLimitProps;
-      // },
-      // upperLimitProps: function(){
-      //   this.upperLimit = this.upperLimitProps;
-      // }
+
     },
     mounted(){
       // this.lowerLimit = this.lowerLimitProps;
@@ -216,17 +207,42 @@ var model = new Model();
 
     methods:{
       updateTableOnSelectedPanels: function(){
+        console.log("inside updateTableOnSelectedPanels")
         this.selected = this.selectedPanelsInCheckBox;
+
+        var nonSelectedItems = [];
+        this.items.map(x=>{
+          var checkIfExists = obj => obj.testname === x.testname;
+          // console.log(x.testname , " - checkIfExists", this.selected.some(checkIfExists))
+          if(!this.selected.some(checkIfExists)){
+            nonSelectedItems.push(x)
+          }
+        })
+        var nonSelectedVendors = [];
+        nonSelectedItems.map(x=>{
+          nonSelectedVendors.push(x.offerer);
+        })
+        // console.log("non selected items ;length", nonSelectedVendors);
         let vendors = model.getGenePanelVendors(this.selected);
-        this.$emit('selectVendors', vendors.sort());
+        // console.log("vendors", vendors)
+
+        var vendorsToBeSentBack = [];
+        vendors.map(x=>{
+          if(!nonSelectedVendors.includes(x)){
+            vendorsToBeSentBack.push(x);
+          }
+        })
+        console.log("items length in gene panel", this.items.length)
+        this.$emit('selectVendors', vendorsToBeSentBack.sort());
+
+        // this.$emit('selectVendors', vendors.sort());
       },
       justUpdateTabel: function(){
         this.selected =this.selectedPanelsInCheckBoxPropsOne;
+        // this.updateTableOnSelectedPanels();
       },
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
-        // this.items = this.tempItems;
-        // if(this.selectedVendorsFromFilterPanel.length>0){
           this.selected = [];
           for(var i=0; i<this.selectedVendorsFromFilterPanel.length; i++){
             for(var j=0; j<this.items.length; j++){
@@ -237,28 +253,7 @@ var model = new Model();
             }
           }
           this.selected = tempArr;
-            // this.$emit("selectPanelsFromVendorsUpdate", this.selected);
-          // this.items = tempArr;
-          // this.selected = this.items.slice()
-          // let vendors = model.getGenePanelVendors(mergedGenePanels);
-          // this.vendorList = vendors;
-          // this.$emit('setVendorList', this.vendorList.sort());
-          // return this.items;
-        // }
-        // else if(this.selectedVendorsFromFilterPanel.length===0){
-        //   // alert("It is required that atleast one vendor is kept selected");
-        //   this.selected = this.items;
-        //   bus.$emit("lastVendor")
-        //   // this.selected = this.items;
-        //   // this.flagForVendorFilter = false;
-        //   // this.selected = this.tempItems.slice();
-        //   // // this.selected = [];
-        //   // this.items = this.tempItems
-        //   // // let vendors = model.getGenePanelVendors(mergedGenePanels);
-        //   // // this.vendorList = vendors;
-        //   // // this.$emit('setVendorList', this.vendorList.sort());
-        //   // return this.items
-        // }
+
       },
       filterPanelsOnSelectedConditions: function(data){
         var tempArrForConditions = [];
@@ -330,36 +325,6 @@ var model = new Model();
         // this.$emit('setPanelsNamesList', this.items);
         this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
-
-
-        // if(!this.flagForVendorFilter){
-        //   this.DiseasePanel = this.DiseasePanelData
-        //   var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-        //   this.mergedGene = mergedGenePanels
-        //   this.items = mergedGenePanels;
-        //   this.tempItems = mergedGenePanels;
-        //   console.log("panels", this.items);
-        //   let vendors = model.getGenePanelVendors(mergedGenePanels);
-        //
-        //   this.vendorList = vendors;
-        //   this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
-        //                       //back to the parent so it can be used as props in filterpanel
-        //
-        //   this.selected = this.items.slice()
-        // }
-        // else if(this.flagForVendorFilter){
-        //   this.DiseasePanel = this.DiseasePanelData
-        //   var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-        //   this.mergedGene = mergedGenePanels
-        //
-        //   this.items = mergedGenePanels;
-        //   this.tempItems = mergedGenePanels;
-        //
-        //   let vendors = model.getGenePanelVendors(mergedGenePanels);
-        //   this.vendorList = vendors;
-        //   this.updatePanelsOnSelectedVendors();
-        //
-        // }
 
 
 

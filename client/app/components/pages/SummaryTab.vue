@@ -9,10 +9,10 @@
             <v-flex xs12 style="margin-bottom:5px">
               <v-card>
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0">
-                  <v-card-title>
-                      <h3>{{ IntroductionTextData.Title }}</h3>
-                  </v-card-title>
-                  <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
+                  <v-card-text>
+                      <center><h3>{{ IntroductionTextData.Title }}</h3></center>
+                  </v-card-text>
+                  <center><v-card-text v-html="IntroductionTextData.Content"></v-card-text></center>
                 </div>
                 <div v-else>
                   <v-flex  d-flex xs12 >

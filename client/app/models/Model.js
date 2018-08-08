@@ -326,11 +326,14 @@ processDiseaseData(diseases) {
 
 
 getGenePanelVendors(genePanels) {
+  console.log(" inside getGenePanelVendors in model")
+  console.log("genePanels", genePanels)
   let vendors = {};
   genePanels.forEach(function(gp) {
     vendors[gp.offerer] = true;
   })
 
+  console.log("vendors  object in model", vendors)
   return Object.keys(vendors).sort();
 }
 
@@ -574,6 +577,7 @@ mergeGenesAcrossPanels(genePanels) {
 
 
   getGeneBarChartData(genes, width) {
+    console.log("width in model", width)
     if(width===undefined){
       width = 850;
     }
@@ -600,6 +604,7 @@ mergeGenesAcrossPanels(genePanels) {
               // searchTerm: gene.searchTerm,
               searchTermArray: gene.searchTermArray,
               searchTermIndex: gene.searchTermIndex,
+              isAssociatedGene: false,
               omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
               medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
               geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
