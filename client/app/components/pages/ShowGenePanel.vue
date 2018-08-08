@@ -28,7 +28,7 @@
         outline
         style="width:65%; border-style:none; border-color:white !important; border:0px !important"
       >
-        The icon in the table indicates an associated genes for the disorder.
+        The icon in the table indicates associated genes for the disorder.
       </v-alert>
 
       <v-data-table
