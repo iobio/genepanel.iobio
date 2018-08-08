@@ -19,6 +19,18 @@
     <v-alert style="width:85%" outline color="info" icon="check_circle" dismissible v-model="alert">
       {{ alertText }}
     </v-alert>
+    <v-alert
+        v-if="associatedGenesData.length"
+        v-model="alertAssociatedInfo"
+        dismissible
+        color="blue darken-1"
+        icon="verified_user"
+        outline
+        style="width:65%; border-style:none; border-color:white !important; border:0px !important"
+      >
+        The icon in the table indicates an associated genes for the disorder.
+      </v-alert>
+
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -266,6 +278,7 @@ var model = new Model();
         DataToIncludeSearchTerms: [],
         arrangedSearchData: [],
         associatedGenesData: [],
+        alertAssociatedInfo: true,
 
       }
     },
