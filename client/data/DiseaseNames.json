@@ -1,10 +1,6 @@
 {
   "data": [
  {
-   "DiseaseName": "#DiseaseName",
-   "ConceptID": "ConceptID"
- },
- {
    "DiseaseName": "10 pairs of ribs",
    "ConceptID": "C4022526"
  },
@@ -35447,10 +35443,6 @@
  {
    "DiseaseName": "disease-free survival",
    "ConceptID": "CN186048"
- },
- {
-   "DiseaseName": "#DiseaseName",
-   "ConceptID": "ConceptID"
  },
  {
    "DiseaseName": "Disharmonious carpal bone",

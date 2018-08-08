@@ -69,52 +69,52 @@
                           <span style="cursor:pointer" v-on:click="editPanelDefinition=true" slot="activator"><v-icon>settings</v-icon> </span>
                           <span>Edit Panels Definition</span>
                         </v-tooltip>
-                        <Alerts
-                          v-if="panelsAlert"
-                          alertType="warning"
-                          alertTransition="scale-transition"
-                          :alertText="panelAlertText"
-                        >
-                        </Alerts>
-                        <div v-if="editPanelDefinition" style="margin-left:8px">
-                          <v-divider style="margin-top:-1px"></v-divider>
-                          <v-layout row>
-                            <v-flex xs4>
-                              <strong>Lower limit:</strong>
-                            </v-flex>
-                            <v-flex xs3>
-                              <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
-                          </v-flex>
-                          <v-flex xs5>
-                          </v-flex>
-                        </v-layout>
-                          <v-layout row>
-                            <v-flex xs4>
-                              <strong>Upper limit:</strong>
-                            </v-flex>
-                            <v-flex xs3>
-                              <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
-                          </v-flex>
-                          <v-flex xs5>
-                          </v-flex>
-                        </v-layout>
-                        <v-layout>
-                          <v-flex xs4>
-                            <center>
-                              <v-btn outline color="primary darken-1" dark v-on:click="ChangePanelsDefinition" >SAVE</v-btn>
-                            </center>
-                          </v-flex>
-                          <v-flex xs3>
-                            <center>
-                              <v-btn color="primary darken-1" flat="flat" v-on:click="closePanelsDefinitionEdit" >CANCEL</v-btn>
-                            </center>
-                          </v-flex>
-                          <v-flex xs5>
-                          </v-flex>
-                        </v-layout>
-                        <v-divider style="margin-bottom:-1px"></v-divider>
 
-                      </div>
+                        <span>
+                          <v-dialog v-model="editPanelDefinition" persistent max-width="400">
+                            <v-card>
+                              <v-card-title class="headline">Edit Panels Definition</v-card-title>
+                              <v-divider style="margin-top:-4px"></v-divider>
+                              <Alerts
+                                v-if="panelsAlert"
+                                alertType="warning"
+                                alertTransition="scale-transition"
+                                :alertText="panelAlertText"
+                              >
+                              </Alerts>
+                              <v-card-text style="margin-left:20px">
+                                <v-layout row>
+                                  <v-flex xs4>
+                                    <strong>Lower limit:</strong>
+                                  </v-flex>
+                                  <v-flex xs3>
+                                    <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
+                                </v-flex>
+                                <v-flex xs5>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+                                <v-layout row>
+                                  <v-flex xs4>
+                                    <strong>Upper limit:</strong>
+                                  </v-flex>
+                                  <v-flex xs3>
+                                    <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
+                                </v-flex>
+                                <v-flex xs5>
+                                </v-flex>
+                              </v-layout>
+                              </v-card-text>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
+                                <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
+                              </v-card-actions>
+                              <br>
+                            </v-card>
+                          </v-dialog>
+                        </span>
+
                         <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
                           <v-flex xs4>
                             <v-tooltip bottom>
@@ -596,7 +596,7 @@
                                           </v-tooltip>
                                         </v-flex>
                                       </v-layout>
-                                      <hr>
+                                      <hr>-->
                                       <v-layout>
                                         <v-flex xs8>
                                         <strong style="font-size:11px">PANELS</strong>
@@ -607,7 +607,7 @@
                                         <v-flex x3>
                                           <center><strong style="font-size:11px">CONDITIONS</strong></center>
                                         </v-flex>
-                                      </v-layout> -->
+                                      </v-layout>
                                       <br>
                                       <div class="vendorsCardClass">
                                         <v-layout row wrap v-for="(item, i) in multiSelectPanels" :key="i">
@@ -740,16 +740,6 @@
                                     </v-flex>
                                   </v-layout>
                                 </div>
-
-
-                                <!-- <div class="vendorsCardClass">
-                                  <v-checkbox
-                                    v-for="(item, i) in multiSelectItems"
-                                    :key="i" :label="item" :value="item"
-                                    style="margin-top:-8px"
-                                    v-model="vendorsSelect">
-                                  </v-checkbox>
-                                </div> -->
                                 <br>
                                 <v-layout>
                                   <v-flex xs6>
@@ -947,7 +937,7 @@ export default {
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
       panelFilters: ["specific", "moderate", "general"],
-      selectedPanelFilters: ["specific", "moderate", "general"],
+      selectedPanelFilters: ["specific", "moderate"],
       upperLimitProps: 35,
       lowerLimitProps: 10,
       panelsAlert: false,
@@ -960,7 +950,6 @@ export default {
   },
   watch:{
     selectedPanelFilters: function(){
-      console.log("watching selectedPanelFilters and this.multiSelectPanels.length", this.multiSelectPanels.length);
       console.log("chartComponent", this.chartComponent)
       this.filterPanelsOnselectedPanelFilters();
     },
@@ -1053,7 +1042,7 @@ export default {
       this.saveSelectedVendors=[];
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
-      this.selectedPanelFilters= ["specific", "moderate", "general"];
+      // this.selectedPanelFilters= ["specific", "moderate", "general"];
       this.closeComponentForNewResults();
     })
     bus.$on("removeSearchTerm", ()=>{
@@ -1066,7 +1055,7 @@ export default {
       this.saveSelectedVendors=[];
       this.chartComponent= null;
       this.DisordersAndModesComponent="";
-      this.selectedPanelFilters= ["specific", "moderate", "general"];
+      // this.selectedPanelFilters= ["specific", "moderate", "general"];
       this.closeComponentForNewResults();
     });
     bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
@@ -1092,7 +1081,7 @@ export default {
       this.NumberOfTopGenes = null;
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
-      this.selectedPanelFilters= ["specific", "moderate", "general"];
+      this.selectedPanelFilters= ["specific", "moderate"];
       this.lowerLimitInput = 10;
       this.lowerLimitProps = 10;
       this.upperLimitInput = 35;
@@ -1109,7 +1098,8 @@ export default {
   },
   methods: {
     clickedTopPanelFilters: function(){
-      this.chartComponent = "PanelFilters"
+      this.chartComponent = "PanelFilters";
+      this.closeComponentForNewResults();
     },
     filterPanelsOnselectedPanelFilters: function(){
       console.log("inside filterPanelsOnselectedPanelFilters and multiSelectPanels length", this.multiSelectPanels.length )
@@ -1225,25 +1215,51 @@ export default {
         })
       }
       else {
-        temp = e;
+        // temp = e;
+
+        if(this.chartComponent!=='PanelFilters'){
+          var tempArr = [];
+          tempArr = e;
+          this.selectedPanelFilters.map(x=>{
+            tempArr.map(y=>{
+              if(x === y.filter){
+                temp.push(y);
+              }
+            })
+          })
+        }
+        else {
+          temp = e;
+        }
       }
 
-      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors'){
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'){
         this.selectedPanelsInCheckBox = temp;
+        //Add condition to keep the panels filters in track and select accordingly:
+        // var tempArr = [];
+        // this.selectedPanelFilters.map(x=>{
+        //   temp.map(y=>{
+        //     if(x === y.filter){
+        //       tempArr.push(y);
+        //     }
+        //   })
+        // })
+        // this.selectedPanelsInCheckBox = tempArr;
+        // temp = tempArr
       }
-
+      console.log("temp in select panels ", temp)
       this.geneProps = temp;
     },
     setPanelsNamesList: function(e){
       console.log("inside setPanelsNamesList")
-      if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
-        this.multiSelectPanels = e;
-        this.selectedPanelsInCheckBox = this.multiSelectPanels;
-      }
-      else {
-        this.multiSelectPanels = e;
-        this.selectedPanelsInCheckBox = this.multiSelectPanels;
-      }
+      // if(this.chartComponent!=='disorders' && this.saveSelectedPanels.length>0){
+      //   this.multiSelectPanels = e;
+      //   this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      // }
+      // else {
+      //   this.multiSelectPanels = e;
+      //   this.selectedPanelsInCheckBox = this.multiSelectPanels;
+      // }
 
       // this.checkForDeselectedPanels();
     },
@@ -1467,7 +1483,7 @@ export default {
         setTimeout(()=>{ this.panelsAlert=false; }, 3000);
       }
       else if(parseInt(this.upperLimitInput)>parseInt(this.lowerLimitInput)){
-        this.selectedPanelFilters = ["specific", "moderate", "general"];
+        // this.selectedPanelFilters = ["specific", "moderate", "general"];
         this.upperLimitProps = this.upperLimitInput;
         this.lowerLimitProps = this.lowerLimitInput;
         bus.$emit("ChangeDefinition", parseInt(this.upperLimitProps), parseInt(this.lowerLimitProps));

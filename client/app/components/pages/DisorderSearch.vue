@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <span style="padding-right:4px">Disorder</span> -->
     <v-snackbar
       :timeout="snackbarTimeout"
       :top="y === 'top'"
@@ -116,7 +115,6 @@ var model = new Model();
         }
       },
       DisordersPropsBackArr: function() {
-        // console.log("this.DisordersPropsBackArr", this.DisordersPropsBackArr)
         this.filteredDiseasesItems = this.DisordersPropsBackArr;
       }
     },
@@ -202,6 +200,16 @@ var model = new Model();
         }
 
       },
+      getConcpetId: function(term){
+        var cleanTerm = term.trim().toLowerCase();
+        var cID =""
+        this.DiseaseNames.map(x=>{
+          if(cleanTerm===x.DiseaseName.toLowerCase()){
+            cID =  x.ConceptID
+          }
+        });
+        return cID;
+      },
       performSearch: function(){
         // this.$emit('showDiseases', []);
         console.log("this search", this.search)
@@ -212,7 +220,8 @@ var model = new Model();
           conceptId = this.search.ConceptID;
         }
         else if(this.search.DiseaseName===undefined) {
-          searchTerm = this.search;
+          searchTerm = this.search.trim();
+          conceptId = this.getConcpetId(this.search);
         }
 
         if(searchTerm.length>1 && !this.checked){
@@ -265,19 +274,14 @@ var model = new Model();
               this.checked=false;
               if(this.multipleSearchTerms.includes(searchTerm)){ //this avoids adding an index when the term is deleted
                 filteredDiseases.map(x=>{
-                  // console.log(this.multipleSearchTerms.findIndex())
                   x["searchTerm"]="ip"+searchTerm+"ip";
-                  // x["searchTermIndex"] = this.multipleSearchTerms.indexOf(searchTerm)+1;
                   x["searchTermArray"] = [searchTerm];
                   x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
-                  // x["searchTerm"]=this.multipleSearchTerms.indexOf(searchTerm)+1;
                   this.filteredDiseasesItems.push(x);
                 });
               }
 
-              // console.log("this.filteredDiseasesItems",this.filteredDiseasesItems)
               if(this.multipleSearchTerms.includes(searchTerm)){
-                // console.log("Send")
                 bus.$emit("newSearch")
                 this.$emit('showDiseases', this.filteredDiseasesItems)
               }
@@ -287,7 +291,6 @@ var model = new Model();
           }
           else if(this.multipleSearchTerms.includes(searchTerm)){
             this.checked = false;
-            // alert("This disorder is already searched before")
             this.snackbarText = "This disorder is already searched before"
             this.snackbar = true;
           }

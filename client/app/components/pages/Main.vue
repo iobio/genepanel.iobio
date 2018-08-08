@@ -164,11 +164,11 @@
           <v-btn flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
-            <v-card-text>Clicking "Agree" would clear all the search result from both "Genetic Testing Registry" and "Phenolyzer" for a New Analysis.</v-card-text>
+            <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" flat @click.native="forceReload">Agree</v-btn>
-              <v-btn color="blue darken-1" flat @click.native="newAnalysisDialog = false">Cancel</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="forceReload">Yes</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="newAnalysisDialog = false">No</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

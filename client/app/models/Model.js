@@ -119,39 +119,7 @@ export default class Model {
             } else {
               var diseases = [];
               diseases.push(results.DocumentSummarySet.DocumentSummary)
-
-              // var parents = ["C0242387"]
-              // var data = [
-              //   {
-              //     id: "C0242387",
-              //     children: [
-              //       {
-              //         id: "C1855433",
-              //         name: "Mandibulofacial dysostosis, Treacher Collins type, autosomal recessive",
-              //         ConceptMeta: {
-              //           ModesOfInheritance: {
-              //             ModeOfInheritance: [{Name:"Autosomal recessive inheritance"},{Name:"Autosomal dominant inheritance"}]
-              //           }
-              //         }
-              //       },
-              //       {
-              //         id: "C3150983",
-              //         name: "Treacher Collins syndrome 1",
-              //         ConceptMeta: {
-              //           ModesOfInheritance: {
-              //             ModeOfInheritance: [{Name: ""}]
-              //           }
-              //         }
-              //       }
-              //     ]
-              //   }
-              // ]
-
-              // console.log("HierarchyRelations", HierarchyRelations);
-              // console.log("HierarchyParentIds", HierarchyParentIds);
-              // console.log("conceptId", conceptId)
               if(HierarchyParentIds.includes(conceptId)){
-                // console.log("yes includes")
                 var i = HierarchyParentIds.indexOf(conceptId);
                 HierarchyRelations[i].children.map(x=>{
                   diseases.push({
@@ -162,16 +130,6 @@ export default class Model {
                 })
               }
 
-              // if(true){ //check if the concept id is present in the parents array
-              //   //find the index of the concept id in the parent's array.
-              //   data[0].children.map(x=>{
-              //     diseases.push({
-              //       ConceptId: x.id,
-              //       Title: x.name,
-              //       ConceptMeta: x.ConceptMeta
-              //     })
-              //   })
-              // }
               // diseases.push({ConceptId:"C1855433", Title:"Mandibulofacial dysostosis, Treacher Collins type, autosomal recessive"})
               resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : diseases});
               // resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : [diseases]});
