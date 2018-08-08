@@ -202,6 +202,16 @@ var model = new Model();
         }
 
       },
+      getConcpetId: function(term){
+        var cleanTerm = term.trim();
+        var cID =""
+        this.DiseaseNames.map(x=>{
+          if(cleanTerm===x.DiseaseName){
+            cID =  x.ConceptID
+          }
+        });
+        return cID;
+      },
       performSearch: function(){
         // this.$emit('showDiseases', []);
         console.log("this search", this.search)
@@ -212,7 +222,8 @@ var model = new Model();
           conceptId = this.search.ConceptID;
         }
         else if(this.search.DiseaseName===undefined) {
-          searchTerm = this.search;
+          searchTerm = this.search.trim();
+          conceptId = this.getConcpetId(this.search);
         }
 
         if(searchTerm.length>1 && !this.checked){

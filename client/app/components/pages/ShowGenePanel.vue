@@ -71,7 +71,8 @@
                     {{ props.item.name }}
                   </span>
                   <span v-if="props.item.isAssociatedGene===true">
-                    <img style="height:25px; margin-top:-10px; margin-left:5px" src="../assets/images/associatedGenesGlyph.svg">
+                    <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
+                    <!-- <img style="height:25px; margin-top:-10px; margin-left:5px" src="../assets/images/associatedGenesGlyph.svg"> -->
                     <!-- <svg height="30" width="30">
                         <circle class="sourceIndicator"  />
                       <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">A.G</text>

@@ -69,7 +69,53 @@
                           <span style="cursor:pointer" v-on:click="editPanelDefinition=true" slot="activator"><v-icon>settings</v-icon> </span>
                           <span>Edit Panels Definition</span>
                         </v-tooltip>
-                        <Alerts
+
+                        <span>
+                          <v-dialog v-model="editPanelDefinition" persistent max-width="400">
+                            <v-card>
+                              <v-card-title class="headline">Edit Panels Definition</v-card-title>
+                              <v-divider style="margin-top:-4px"></v-divider>
+                              <v-card-text style="margin-left:20px">
+                                <Alerts
+                                  v-if="panelsAlert"
+                                  alertType="warning"
+                                  alertTransition="scale-transition"
+                                  :alertText="panelAlertText"
+                                >
+                                </Alerts>
+                                <v-layout row>
+                                  <v-flex xs4>
+                                    <strong>Lower limit:</strong>
+                                  </v-flex>
+                                  <v-flex xs3>
+                                    <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
+                                </v-flex>
+                                <v-flex xs5>
+                                </v-flex>
+                              </v-layout>
+                              <br>
+                                <v-layout row>
+                                  <v-flex xs4>
+                                    <strong>Upper limit:</strong>
+                                  </v-flex>
+                                  <v-flex xs3>
+                                    <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
+                                </v-flex>
+                                <v-flex xs5>
+                                </v-flex>
+                              </v-layout>
+                              </v-card-text>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
+                                <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
+                              </v-card-actions>
+                              <br>
+                            </v-card>
+                          </v-dialog>
+                        </span>
+
+                        <!-- <Alerts
                           v-if="panelsAlert"
                           alertType="warning"
                           alertTransition="scale-transition"
@@ -114,7 +160,7 @@
                         </v-layout>
                         <v-divider style="margin-bottom:-1px"></v-divider>
 
-                      </div>
+                      </div> -->
                         <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
                           <v-flex xs4>
                             <v-tooltip bottom>
