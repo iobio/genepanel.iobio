@@ -216,7 +216,7 @@
                      </div>
 
                      <div class="d-flex mb-2 xs12 mb-3">
-                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' || chartComponent==='PanelsDefinition' ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
                              <span class="Rightbar_CardHeading">
@@ -937,14 +937,14 @@ export default {
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
       panelFilters: ["specific", "moderate", "general"],
-      selectedPanelFilters: ["specific", "moderate"],
-      upperLimitProps: 35,
-      lowerLimitProps: 10,
+      selectedPanelFilters: ["specific"],
+      upperLimitProps: 45,
+      lowerLimitProps: 20,
       panelsAlert: false,
       panelAlertText: "",
       editPanelDefinition: false,
-      upperLimitInput: 35,
-      lowerLimitInput: 10,
+      upperLimitInput: 45,
+      lowerLimitInput: 20,
       associatedGenes: [],
     }
   },
@@ -1081,7 +1081,7 @@ export default {
       this.NumberOfTopGenes = null;
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
-      this.selectedPanelFilters= ["specific", "moderate"];
+      this.selectedPanelFilters= ["specific"];
       this.lowerLimitInput = 10;
       this.lowerLimitProps = 10;
       this.upperLimitInput = 35;
@@ -1198,8 +1198,9 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
+      console.log("inside selectPanels and the component is - ", this.chartComponent)
       console.log("selectPanels", e)
-      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'){
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
           //set the items in the panels card
           this.multiSelectPanels = e;
       }
@@ -1233,7 +1234,7 @@ export default {
         }
       }
 
-      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'){
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
         this.selectedPanelsInCheckBox = temp;
         //Add condition to keep the panels filters in track and select accordingly:
         // var tempArr = [];
@@ -1477,6 +1478,7 @@ export default {
       $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
     },
     ChangePanelsDefinition: function(){
+      this.chartComponent = "PanelsDefinition";
       if(parseInt(this.upperLimitInput)<=parseInt(this.lowerLimitInput)){
         this.panelsAlert = true;
         this.panelAlertText = "Upper limit should be greater than lower limit";

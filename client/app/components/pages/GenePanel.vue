@@ -104,8 +104,8 @@ var model = new Model();
     },
     data(){
       return {
-        lowerLimit: 10,
-        upperLimit: 35,
+        lowerLimit: 20,
+        upperLimit: 45,
         loading: false, //multiselect
         multiSelectItems: [],   //multiselect
         search: null,  //multiselect
