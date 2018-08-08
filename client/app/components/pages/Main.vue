@@ -108,21 +108,21 @@
       </v-toolbar-title>
 
       <span style="margin-left:130px">
-        <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
+        <!-- <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
           Genetic Testing Registry
-          <!-- <v-menu open-on-hover top offset-y>
+          <v-menu open-on-hover top offset-y>
             <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
               <v-card>
                 <v-card-text><p v-html="IntroductionTextData[0].Content"></p></v-card-text>
               </v-card>
-          </v-menu> -->
+          </v-menu>
         </v-btn>
         <v-btn flat v-else-if="component==='Phenolyzer'" style="font-size:16px font-width:200 ">
           Phenolyzer
         </v-btn>
         <v-btn flat v-else-if="component==='SummaryTab'" style="font-size:16px font-width:200 ">
           Summary
-        </v-btn>
+        </v-btn> -->
       </span>
       <v-spacer></v-spacer>
       <v-menu bottom offset-y style="color:black">
@@ -158,7 +158,20 @@
         </v-list>
       </v-menu>
       <span>
-        <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn>
+        <!-- <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn> -->
+        <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
+          <!-- <v-btn flat slot="activator" color="primary" >Open Dialog</v-btn> -->
+          <v-btn flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-card>
+            <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
+            <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click.native="forceReload">Yes</v-btn>
+              <v-btn color="blue darken-1" flat @click.native="newAnalysisDialog = false">No</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </span>
       <!-- <span>
         <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
@@ -270,6 +283,7 @@ import Overview from './Overview.vue'
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
         drawer: false,
+        newAnalysisDialog: false,
         vendorList:[],
         selectedVendorsList:[],
         disorderList:[],
@@ -320,6 +334,14 @@ import Overview from './Overview.vue'
       window.addEventListener('scroll', this.handleScroll);
     },
     mounted(){
+      bus.$on("openGtrComponent", ()=>{
+        window.scrollTo(0,0);
+        this.component = "GeneticTestingRegistry";
+      })
+      bus.$on("openPhenolyzer", ()=>{
+        window.scrollTo(0,0);
+        this.component = "Phenolyzer";
+      })
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });
@@ -361,6 +383,7 @@ import Overview from './Overview.vue'
         }
       },
       forceReload: function(){
+        this.newAnalysisDialog = false;
         bus.$emit("newAnalysis");
         window.scrollTo(0,0);
       },

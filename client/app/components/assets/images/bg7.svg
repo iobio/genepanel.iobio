@@ -1,0 +1,863 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 659.27 422.563">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #aaa;
+      }
+
+      .cls-2 {
+        fill: #dad9da;
+      }
+
+      .cls-3 {
+        fill: #f7f7f7;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-5 {
+        fill: url(#linear-gradient-2);
+      }
+
+      .cls-6 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-7 {
+        fill: #747474;
+      }
+
+      .cls-8 {
+        fill: url(#linear-gradient-4);
+      }
+
+      .cls-9 {
+        fill: url(#linear-gradient-5);
+      }
+
+      .cls-10 {
+        fill: #737373;
+      }
+
+      .cls-11 {
+        fill: gray;
+      }
+
+      .cls-12 {
+        font-size: 9.5px;
+      }
+
+      .cls-12, .cls-24, .cls-32, .cls-35, .cls-36, .cls-38, .cls-42, .cls-43 {
+        font-family: OpenSans, Open Sans;
+      }
+
+      .cls-13 {
+        fill: #bfbfbf;
+      }
+
+      .cls-14 {
+        fill: #27c940;
+        stroke: #13ad2d;
+      }
+
+      .cls-15 {
+        fill: #ffbd2e;
+        stroke: #e0a218;
+      }
+
+      .cls-16 {
+        fill: #ff5f57;
+        stroke: #e14842;
+      }
+
+      .cls-17 {
+        fill: #f9fbff;
+        stroke: #707070;
+        stroke-width: 0.3px;
+      }
+
+      .cls-18, .cls-26, .cls-39 {
+        fill: #fff;
+      }
+
+      .cls-18, .cls-20, .cls-21 {
+        stroke: #b7b7b7;
+        stroke-width: 0.5px;
+      }
+
+      .cls-19 {
+        fill: #4267b2;
+      }
+
+      .cls-20 {
+        fill: #fcfcfc;
+      }
+
+      .cls-21 {
+        fill: #fafafa;
+      }
+
+      .cls-22 {
+        fill: none;
+      }
+
+      .cls-23 {
+        fill: rgba(0,0,0,0.54);
+      }
+
+      .cls-24, .cls-25, .cls-32 {
+        fill: rgba(0,0,0,0.87);
+      }
+
+      .cls-24, .cls-25, .cls-29, .cls-44 {
+        font-size: 11px;
+      }
+
+      .cls-25, .cls-29, .cls-40, .cls-44, .cls-46 {
+        font-family: OpenSans-SemiBold, Open Sans;
+        font-weight: 600;
+      }
+
+      .cls-26 {
+        stroke: #455a64;
+      }
+
+      .cls-27, .cls-31 {
+        fill: rgba(69,90,100,0.87);
+      }
+
+      .cls-27, .cls-36, .cls-38, .cls-43 {
+        font-size: 8px;
+      }
+
+      .cls-27, .cls-31, .cls-33 {
+        font-family: OpenSans-Bold, Open Sans;
+        font-weight: 700;
+      }
+
+      .cls-28 {
+        fill: #4e7ad3;
+        stroke: #efefef;
+      }
+
+      .cls-29 {
+        fill: rgba(78,122,211,0.87);
+      }
+
+      .cls-30 {
+        fill: #e8ebed;
+        stroke: #fff;
+      }
+
+      .cls-31, .cls-40, .cls-42 {
+        font-size: 7px;
+      }
+
+      .cls-32, .cls-46 {
+        font-size: 10px;
+      }
+
+      .cls-33, .cls-35 {
+        fill: #272727;
+        font-size: 9px;
+      }
+
+      .cls-33, .cls-35, .cls-36, .cls-38, .cls-40, .cls-42, .cls-43, .cls-44, .cls-46 {
+        stroke: rgba(55,71,79,0);
+        stroke-width: 2px;
+      }
+
+      .cls-34 {
+        fill: #f4f4f4;
+        stroke: #eaeaea;
+      }
+
+      .cls-36 {
+        fill: #3c4346;
+      }
+
+      .cls-37 {
+        fill: #4e71b9;
+      }
+
+      .cls-38, .cls-42 {
+        fill: #efefef;
+      }
+
+      .cls-39 {
+        stroke: #37474f;
+        stroke-width: 0.6px;
+      }
+
+      .cls-40 {
+        fill: #37474f;
+        opacity: 0.91;
+      }
+
+      .cls-41 {
+        fill: #a5a5a5;
+        fill-rule: evenodd;
+      }
+
+      .cls-43 {
+        fill: #4e5558;
+      }
+
+      .cls-44, .cls-46 {
+        fill: rgba(255,255,255,0.87);
+      }
+
+      .cls-45 {
+        fill: #f0f0f0;
+      }
+
+      .cls-47 {
+        stroke: none;
+      }
+
+      .cls-48 {
+        filter: url(#Rectangle_32-2);
+      }
+
+      .cls-49 {
+        filter: url(#Rectangle_32);
+      }
+
+      .cls-50 {
+        filter: url(#Rectangle_5);
+      }
+
+      .cls-51 {
+        filter: url(#Rectangle_38);
+      }
+
+      .cls-52 {
+        filter: url(#Rectangle_37);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ececec"/>
+      <stop offset="1" stop-color="#d8d9d8"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#b3b3b3"/>
+      <stop offset="1" stop-color="#a5a5a5"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.5" y1="1" x2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#bfbfbf"/>
+      <stop offset="1" stop-color="#ccc"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="0.5" y1="0.75" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#dadada"/>
+      <stop offset="1" stop-color="#babbba"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#f3f2f2"/>
+    </linearGradient>
+    <filter id="Rectangle_37" x="17.189" y="46.221" width="625.869" height="104.49" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_38" x="0" y="15.464" width="659.27" height="46.257" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_5" x="17.189" y="149.506" width="625.869" height="273.058" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_32" x="249.49" y="73.504" width="114.414" height="30.436" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur-4"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_32-2" x="577.446" y="73.504" width="48.928" height="30.436" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur-5"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_14" data-name="Group 14" transform="translate(9 -4.937)">
+    <g id="Safari_1280x720" data-name="Safari 1280x720" transform="translate(395 149.937)">
+      <g id="head" transform="translate(-395 -145)">
+        <g id="bg">
+          <rect id="line" class="cls-1" width="641.27" height="0.546" transform="translate(0 20.73)"/>
+          <path id="fill-three" class="cls-2" d="M6,0H635.27a6,6,0,0,1,6,6V20.73a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V6A6,6,0,0,1,6,0Z"/>
+          <path id="fill-two" class="cls-3" d="M6,0H635.27a6,6,0,0,1,6,6V20.185a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V6A6,6,0,0,1,6,0Z" transform="translate(0 0.546)"/>
+          <path id="fill-one" class="cls-4" d="M6,0H635.27a6,6,0,0,1,6,6V19.639a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V6A6,6,0,0,1,6,0Z" transform="translate(0 1.091)"/>
+        </g>
+        <g id="add-tab" transform="translate(629.246 8.183)">
+          <g id="bg-2" data-name="bg">
+            <rect id="border" class="cls-5" width="12.024" height="12.547"/>
+            <rect id="fill" class="cls-6" width="11.523" height="12.002" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-plus" class="cls-7" d="M3570.505,6V3.273H3568V2.728h2.505V0h.5V2.728h2.5v.545h-2.5V6Z" transform="translate(-3564.493 3.819)"/>
+        </g>
+        <g id="button-tabs" transform="translate(605.198 4.364)">
+          <g id="bg-3" data-name="bg" transform="translate(0)">
+            <rect id="border-2" data-name="border" class="cls-8" width="20.04" height="13.093" rx="4"/>
+            <rect id="fill-2" data-name="fill" class="cls-9" width="19.038" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-tabs" class="cls-10" d="M0,2.182V6a.5.5,0,0,0,.5.546H4.008A.5.5,0,0,0,4.509,6V2.182a.5.5,0,0,0-.5-.546H.5A.5.5,0,0,0,0,2.182ZM3.757,6H.751A.248.248,0,0,1,.5,5.728V2.455a.248.248,0,0,1,.25-.273H3.757a.248.248,0,0,1,.25.273V5.728A.248.248,0,0,1,3.757,6ZM6.012.546V4.364a.5.5,0,0,1-.5.546h-.5V4.364h.25a.248.248,0,0,0,.25-.273V.818A.248.248,0,0,0,5.26.546H2.254A.248.248,0,0,0,2,.818v.273H1.5V.546A.5.5,0,0,1,2,0H5.511A.5.5,0,0,1,6.012.546Z" transform="translate(7.014 3.273)"/>
+        </g>
+        <g id="button-share" transform="translate(582.153 4.364)">
+          <g id="bg-4" data-name="bg" transform="translate(0)">
+            <rect id="border-3" data-name="border" class="cls-8" width="20.04" height="13.093" rx="4"/>
+            <rect id="fill-3" data-name="fill" class="cls-9" width="19.038" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-share" class="cls-10" d="M5.511,3.11V7.474a.5.5,0,0,1-.5.546H.5A.5.5,0,0,1,0,7.474V3.11a.5.5,0,0,1,.5-.546H2V3.11H.751a.248.248,0,0,0-.25.273V7.2a.248.248,0,0,0,.25.273H4.759A.248.248,0,0,0,5.01,7.2V3.382a.248.248,0,0,0-.25-.273H3.507V2.564h1.5A.5.5,0,0,1,5.511,3.11ZM2.5.927v4.31h.5V.927l1.1.982.3-.436L2.755,0,1.1,1.528l.3.436Z" transform="translate(7.515 2.182)"/>
+        </g>
+        <g id="button-downloads" transform="translate(559.107 4.364)">
+          <g id="bg-5" data-name="bg" transform="translate(0)">
+            <rect id="border-4" data-name="border" class="cls-8" width="20.04" height="13.093" rx="4"/>
+            <rect id="fill-4" data-name="fill" class="cls-9" width="19.038" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-downloads" class="cls-10" d="M3.507,0A3.718,3.718,0,0,0,0,3.819,3.718,3.718,0,0,0,3.507,7.638,3.718,3.718,0,0,0,7.014,3.819,3.718,3.718,0,0,0,3.507,0Zm0,6-2-2.182h1.5V1.637h1V3.819h1.5Z" transform="translate(6.513 2.728)"/>
+        </g>
+        <g id="input" transform="translate(189.375 4.364)">
+          <g id="bg-6" data-name="bg" transform="translate(0)">
+            <rect id="border-5" data-name="border" class="cls-8" width="262.52" height="13.093" rx="4"/>
+            <rect id="fill-5" data-name="fill" class="cls-9" width="261.518" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-refresh" class="cls-11" d="M5.511,3.819v.273a2.912,2.912,0,0,1-2.755,3A2.912,2.912,0,0,1,0,4.092a2.934,2.934,0,0,1,2.5-3V0l2,1.364-2,1.364V1.691a2.356,2.356,0,0,0-2,2.4A2.351,2.351,0,0,0,2.755,6.546,2.351,2.351,0,0,0,5.01,4.092V3.819Z" transform="translate(253.502 2.728)"/>
+          <text id="panel.iobio.io" class="cls-12" transform="translate(15.03 -0.727)"><tspan x="86.246" y="10">panel.iobio.io</tspan></text>
+        </g>
+        <g id="button-sidemenu" transform="translate(68.135 4.364)">
+          <g id="bg-7" data-name="bg">
+            <rect id="border-6" data-name="border" class="cls-8" width="20.04" height="13.093" rx="4"/>
+            <rect id="fill-6" data-name="fill" class="cls-9" width="19.038" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-sidemenu" class="cls-10" d="M7.014,0H.5A.5.5,0,0,0,0,.546V6a.5.5,0,0,0,.5.546H7.014A.5.5,0,0,0,7.515,6V.546A.5.5,0,0,0,7.014,0ZM.751,6A.248.248,0,0,1,.5,5.728V.818A.248.248,0,0,1,.751.546H2.5V6Zm6.262-.273A.248.248,0,0,1,6.763,6H3.006V.546H6.763a.248.248,0,0,1,.25.273ZM1,1.091H2v.546H1ZM1,2.182H2v.546H1ZM1,3.273H2v.546H1Z" transform="translate(6.513 3.273)"/>
+        </g>
+        <g id="button-forward" transform="translate(51.101 4.364)">
+          <g id="bg-8" data-name="bg" transform="translate(0)">
+            <rect id="border-7" data-name="border" class="cls-8" width="13.026" height="13.093" rx="4"/>
+            <rect id="fill-7" data-name="fill" class="cls-9" width="12.024" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-back" class="cls-13" d="M3.106,6.336a.367.367,0,0,1-.25-.109L.1,3.5A.486.486,0,0,1,0,3.172a.62.62,0,0,1,.1-.327L2.856.117a.34.34,0,0,1,.551.055.454.454,0,0,1,0,.6L.952,3.172l2.455,2.4a.531.531,0,0,1,.05.6A.438.438,0,0,1,3.106,6.336Z" transform="translate(8.517 9.711) rotate(180)"/>
+        </g>
+        <g id="button-back" transform="translate(38.576 4.364)">
+          <g id="bg-9" data-name="bg" transform="translate(0)">
+            <rect id="border-8" data-name="border" class="cls-8" width="13.026" height="13.093" rx="4"/>
+            <rect id="fill-8" data-name="fill" class="cls-9" width="12.024" height="12.002" rx="3" transform="translate(0.501 0.546)"/>
+          </g>
+          <path id="icon-back-2" data-name="icon-back" class="cls-11" d="M3.106,6.222a.367.367,0,0,1-.25-.109L.1,3.385A.486.486,0,0,1,0,3.058a.62.62,0,0,1,.1-.327L2.856,0a.34.34,0,0,1,.551.055.454.454,0,0,1,0,.6L.952,3.058l2.455,2.4a.531.531,0,0,1,.05.6A.438.438,0,0,1,3.106,6.222Z" transform="translate(4.509 3.496)"/>
+        </g>
+        <g id="button-round" transform="translate(6.513 7.638)">
+          <g id="maximize" class="cls-14" transform="translate(20.04)">
+            <circle class="cls-47" cx="2.832" cy="2.832" r="2.832"/>
+            <circle class="cls-22" cx="2.832" cy="2.832" r="2.332"/>
+          </g>
+          <g id="down" class="cls-15" transform="translate(10.02)">
+            <circle class="cls-47" cx="2.832" cy="2.832" r="2.832"/>
+            <circle class="cls-22" cx="2.832" cy="2.832" r="2.332"/>
+          </g>
+          <g id="close" class="cls-16">
+            <circle class="cls-47" cx="2.832" cy="2.832" r="2.832"/>
+            <circle class="cls-22" cx="2.832" cy="2.832" r="2.332"/>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g id="screen1" transform="translate(-257 -628.599)">
+      <g id="Rectangle_36" data-name="Rectangle 36" class="cls-17" transform="translate(257 655)">
+        <rect class="cls-47" width="641.27" height="395.599"/>
+        <rect class="cls-22" x="0.15" y="0.15" width="640.97" height="395.299"/>
+      </g>
+      <g class="cls-52" transform="matrix(1, 0, 0, 1, 248, 633.54)">
+        <g id="Rectangle_37-2" data-name="Rectangle 37" class="cls-18" transform="translate(21.69 49.72)">
+          <rect class="cls-47" width="616.868" height="95.49"/>
+          <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="94.99"/>
+        </g>
+      </g>
+      <g id="Group_13" data-name="Group 13" transform="translate(257 655)">
+        <g class="cls-51" transform="matrix(1, 0, 0, 1, -9, -21.46)">
+          <rect id="Rectangle_38-2" data-name="Rectangle 38" class="cls-19" width="641.27" height="28.257" transform="translate(9 21.46)"/>
+        </g>
+      </g>
+      <g id="Group_12" data-name="Group 12" transform="translate(269.689 786.542)">
+        <g class="cls-50" transform="matrix(1, 0, 0, 1, -21.69, -153.01)">
+          <g id="Rectangle_5-2" data-name="Rectangle 5" class="cls-20" transform="translate(21.69 153.01)">
+            <rect class="cls-47" width="616.868" height="264.058"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="263.558"/>
+          </g>
+        </g>
+        <g id="Group_1" data-name="Group 1" transform="translate(0 26.308)">
+          <g id="Rectangle_11" data-name="Rectangle 11" class="cls-21" transform="translate(0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_1" data-name="1" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">1</tspan></text>
+          <text id="TCOF1" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">TCOF1</tspan></text>
+          <g id="svg_cricles" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4" data-name="Ellipse 4" class="cls-26" transform="translate(0 0)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-2" data-name="1" class="cls-27" transform="translate(6.672 11.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5" data-name="Ellipse 5" class="cls-26" transform="translate(26.739 0)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2" data-name="2" class="cls-27" transform="translate(33.221 11.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6" data-name="Ellipse 6" class="cls-26" transform="translate(54.289 0)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3" data-name="3" class="cls-27" transform="translate(60.771 11.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_12" data-name="Rectangle 12" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="163.002" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="162.002" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_45" data-name="45" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">45</tspan></text>
+          <g id="more_vert" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+        </g>
+        <g id="Group_2" data-name="Group 2" transform="translate(0 52.617)">
+          <g id="Rectangle_13" data-name="Rectangle 13" class="cls-21" transform="translate(0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-2" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-2" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-2" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_2-2" data-name="2" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">2</tspan></text>
+          <text id="POLR1D" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">POLR1D</tspan></text>
+          <g id="svg_cricles-2" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-2" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-3" data-name="1" class="cls-27" transform="translate(6.672 11.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-2" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-3" data-name="2" class="cls-27" transform="translate(33.221 10.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-2" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-2" data-name="3" class="cls-27" transform="translate(60.771 10.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_14" data-name="Rectangle 14" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="120.055" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="119.055" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_38" data-name="38" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">38</tspan></text>
+          <g id="more_vert-2" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-2" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-2" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_15" data-name="Rectangle 15" class="cls-30" transform="translate(461.675 5.846)">
+            <rect class="cls-47" width="43.923" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="42.923" height="13.616" rx="4.5"/>
+          </g>
+          <g id="svg_cricles-3" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-3" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-4" data-name="1" class="cls-27" transform="translate(6.672 11.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-3" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-4" data-name="2" class="cls-27" transform="translate(33.221 11.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-3" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-3" data-name="3" class="cls-27" transform="translate(60.771 11.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+        </g>
+        <g id="Group_3" data-name="Group 3" transform="translate(0 78.925)">
+          <g id="Rectangle_13-2" data-name="Rectangle 13" class="cls-21" transform="translate(0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-3" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-3" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-3" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_3-4" data-name="3" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">3</tspan></text>
+          <text id="POLR1C" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">POLR1C</tspan></text>
+          <g id="svg_cricles-4" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-4" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-5" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-4" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-5" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-4" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-5" data-name="3" class="cls-31" transform="translate(60.771 8.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_14-2" data-name="Rectangle 14" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="120.055" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="119.055" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_38-2" data-name="38" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">38</tspan></text>
+          <g id="more_vert-3" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-3" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-3" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_15-2" data-name="Rectangle 15" class="cls-30" transform="translate(461.675 5.846)">
+            <rect class="cls-47" width="43.923" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="42.923" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_4" data-name="Group 4" transform="translate(0 105.233)">
+          <g id="Rectangle_16" data-name="Rectangle 16" class="cls-21" transform="translate(0 0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-4" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-4" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-4" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_4" data-name="4" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">4</tspan></text>
+          <text id="SF3B4" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">SF3B4</tspan></text>
+          <g id="svg_cricles-5" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-5" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-6" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-5" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-6" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-5" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-6" data-name="3" class="cls-31" transform="translate(60.771 8.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_17" data-name="Rectangle 17" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="71.252" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="70.252" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_20" data-name="20" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">20</tspan></text>
+          <g id="more_vert-4" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-4" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-4" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_18" data-name="Rectangle 18" class="cls-30" transform="translate(410.92 5.846)">
+            <rect class="cls-47" width="94.678" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="93.678" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_5" data-name="Group 5" transform="translate(0 131.542)">
+          <g id="Rectangle_19" data-name="Rectangle 19" class="cls-21" transform="translate(0 0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-5" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-5" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-5" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_5" data-name="5" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">5</tspan></text>
+          <text id="DHODH" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">DHODH</tspan></text>
+          <g id="svg_cricles-6" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-6" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-7" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-6" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-7" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-6" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-7" data-name="3" class="cls-31" transform="translate(60.771 8.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_20" data-name="Rectangle 20" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="60.516" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="59.516" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_14" data-name="14" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">14</tspan></text>
+          <g id="more_vert-5" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-5" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-5" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_21" data-name="Rectangle 21" class="cls-30" transform="translate(402.136 5.846)">
+            <rect class="cls-47" width="103.462" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="102.462" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_6" data-name="Group 6" transform="translate(0 157.85)">
+          <g id="Rectangle_19-2" data-name="Rectangle 19" class="cls-21" transform="translate(0 0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-6" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-6" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-6" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_6" data-name="6" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">6</tspan></text>
+          <text id="DHODH-2" data-name="DHODH" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">DHODH</tspan></text>
+          <g id="svg_cricles-7" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-7" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-8" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-7" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-8" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-7" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-8" data-name="3" class="cls-31" transform="translate(60.771 8.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_20-2" data-name="Rectangle 20" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="60.516" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="59.516" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_14-2" data-name="14" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">14</tspan></text>
+          <g id="more_vert-6" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-6" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-6" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_21-2" data-name="Rectangle 21" class="cls-30" transform="translate(402.136 5.846)">
+            <rect class="cls-47" width="103.462" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="102.462" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_7" data-name="Group 7" transform="translate(0 184.158)">
+          <g id="Rectangle_22" data-name="Rectangle 22" class="cls-21" transform="translate(0 0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-7" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-7" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-7" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_7" data-name="7" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">7</tspan></text>
+          <text id="SALL1" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">SALL1</tspan></text>
+          <g id="svg_cricles-8" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-8" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-9" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-8" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-9" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-8" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-9" data-name="3" class="cls-31" transform="translate(60.771 8.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_23" data-name="Rectangle 23" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="46.851" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="45.851" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_11" data-name="11" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">11</tspan></text>
+          <g id="more_vert-7" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-7" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-7" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_24" data-name="Rectangle 24" class="cls-30" transform="translate(387.495 5.846)">
+            <rect class="cls-47" width="118.103" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="117.103" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_8" data-name="Group 8" transform="translate(0 210.467)">
+          <g id="Rectangle_22-2" data-name="Rectangle 22" class="cls-21" transform="translate(0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-8" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-8" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-8" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_8" data-name="8" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">8</tspan></text>
+          <text id="COL2A1" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">COL2A1</tspan></text>
+          <g id="svg_cricles-9" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-9" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-10" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-9" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-10" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+            <g id="Ellipse_6-9" data-name="Ellipse 6" class="cls-26" transform="translate(54.289)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_3-10" data-name="3" class="cls-31" transform="translate(60.771 8.565)"><tspan x="0" y="0">3</tspan></text>
+          </g>
+          <g id="Rectangle_23-2" data-name="Rectangle 23" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="46.851" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="45.851" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_11-2" data-name="11" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">11</tspan></text>
+          <g id="more_vert-8" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-8" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-8" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_24-2" data-name="Rectangle 24" class="cls-30" transform="translate(387.495 5.846)">
+            <rect class="cls-47" width="118.103" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="117.103" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_9" data-name="Group 9" transform="translate(0 236.775)">
+          <g id="Rectangle_22-3" data-name="Rectangle 22" class="cls-21" transform="translate(0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-9" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-9" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-9" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="_9" data-name="9" class="cls-24" transform="translate(73.204 16.872)"><tspan x="0" y="0">9</tspan></text>
+          <text id="CHD7" class="cls-25" transform="translate(122.007 17.846)"><tspan x="0" y="0">CHD7</tspan></text>
+          <g id="svg_cricles-10" data-name="svg cricles" transform="translate(213.033 4.872)">
+            <g id="Ellipse_4-10" data-name="Ellipse 4" class="cls-26">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_1-11" data-name="1" class="cls-31" transform="translate(5.672 9.347)"><tspan x="0" y="0">1</tspan></text>
+            <g id="Ellipse_5-10" data-name="Ellipse 5" class="cls-26" transform="translate(26.739)">
+              <ellipse class="cls-47" cx="8.913" cy="8.606" rx="8.913" ry="8.606"/>
+              <ellipse class="cls-22" cx="8.913" cy="8.606" rx="8.413" ry="8.106"/>
+            </g>
+            <text id="_2-11" data-name="2" class="cls-31" transform="translate(33.221 8.565)"><tspan x="0" y="0">2</tspan></text>
+          </g>
+          <g id="Rectangle_23-3" data-name="Rectangle 23" class="cls-28" transform="translate(342.596 5.846)">
+            <rect class="cls-47" width="35.138" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="34.138" height="13.616" rx="4.5"/>
+          </g>
+          <text id="_10" data-name="10" class="cls-29" transform="translate(520.239 17.846)"><tspan x="0" y="0">10</tspan></text>
+          <g id="more_vert-9" data-name="more vert" transform="translate(575.874 3.898)">
+            <path id="Path_3-9" data-name="Path 3" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_4-9" data-name="Path 4" class="cls-23" d="M11.627,7.248A1.624,1.624,0,1,0,10,5.624,1.63,1.63,0,0,0,11.627,7.248Zm0,1.624A1.624,1.624,0,1,0,13.254,10.5,1.63,1.63,0,0,0,11.627,8.872Zm0,4.872a1.624,1.624,0,1,0,1.627,1.624A1.63,1.63,0,0,0,11.627,13.744Z" transform="translate(-1.866 -0.752)"/>
+          </g>
+          <g id="Rectangle_24-3" data-name="Rectangle 24" class="cls-30" transform="translate(375.782 5.846)">
+            <rect class="cls-47" width="129.816" height="14.616" rx="5"/>
+            <rect class="cls-22" x="0.5" y="0.5" width="128.816" height="13.616" rx="4.5"/>
+          </g>
+        </g>
+        <g id="Group_10" data-name="Group 10">
+          <g id="Rectangle_25" data-name="Rectangle 25" class="cls-18" transform="translate(0 0)">
+            <rect class="cls-47" width="616.868" height="26.308"/>
+            <rect class="cls-22" x="0.25" y="0.25" width="616.368" height="25.808"/>
+          </g>
+          <g id="checkbox-10" data-name="checkbox" transform="translate(12.689 2.923)">
+            <path id="Path_1-10" data-name="Path 1" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+            <path id="Path_2-10" data-name="Path 2" class="cls-23" d="M16.014,3H4.627A1.625,1.625,0,0,0,3,4.624V15.992a1.625,1.625,0,0,0,1.627,1.624H16.014a1.625,1.625,0,0,0,1.627-1.624V4.624A1.625,1.625,0,0,0,16.014,3ZM8.694,14.368l-4.067-4.06L5.774,9.163l2.92,2.907,6.174-6.163L16.014,7.06Z" transform="translate(-0.56 -0.564)"/>
+          </g>
+          <text id="Index" class="cls-32" transform="translate(66.372 17.821)"><tspan x="0" y="0">Index</tspan></text>
+          <text id="Gene" class="cls-32" transform="translate(129.816 17.821)"><tspan x="0" y="0">Gene</tspan></text>
+          <text id="Search_Terms" data-name="Search Terms" class="cls-32" transform="translate(212.781 17.821)"><tspan x="0" y="0">Search Terms</tspan></text>
+          <text id="Gene_Panels" data-name="Gene Panels" class="cls-32" transform="translate(360.165 17.821)"><tspan x="0" y="0">Gene Panels</tspan></text>
+          <text id="Links" class="cls-32" transform="translate(570.994 17.821)"><tspan x="0" y="0">Links</tspan></text>
+        </g>
+      </g>
+      <text id="Enter_Disorders_" data-name="Enter Disorders
+" class="cls-33" transform="translate(289.21 702.027)"><tspan x="0" y="0">Enter Disorders</tspan><tspan x="0" y="13"></tspan></text>
+      <g id="Rectangle_39" data-name="Rectangle 39" class="cls-34" transform="translate(289.21 710.54)">
+        <rect class="cls-47" width="206.924" height="21.436" rx="4"/>
+        <rect class="cls-22" x="0.5" y="0.5" width="205.924" height="20.436" rx="3.5"/>
+      </g>
+      <text id="Disorders_Searched:_" data-name="Disorders Searched: " class="cls-35" transform="translate(289.21 760.49)"><tspan x="0" y="0">Disorders Searched: </tspan></text>
+      <text id="Craniodiaphyseal_dysplasia" data-name="Craniodiaphyseal dysplasia" class="cls-36" transform="translate(297.994 723.437)"><tspan x="0" y="0">Craniodiaphyseal dysplasia</tspan></text>
+      <g id="button1" transform="translate(501.99 710.54)">
+        <g class="cls-49" transform="matrix(1, 0, 0, 1, -253.99, -77)">
+          <rect id="Rectangle_32-3" data-name="Rectangle 32" class="cls-37" width="105.414" height="21.436" rx="2" transform="translate(253.99 77)"/>
+        </g>
+        <text id="Generate_Gene_List" data-name="Generate Gene List" class="cls-38" transform="translate(13.665 13.872)"><tspan x="0" y="0">Generate Gene List</tspan></text>
+      </g>
+      <g id="CHIPS" transform="translate(385.84 747.082)">
+        <g id="Rectangle_28" data-name="Rectangle 28" class="cls-39" transform="translate(0 0)">
+          <rect class="cls-47" width="137.155" height="19.972" rx="9.986"/>
+          <rect class="cls-22" x="0.3" y="0.3" width="136.555" height="19.372" rx="9.686"/>
+        </g>
+        <text id="name" class="cls-40" transform="translate(6.633 11.506)"><tspan x="0" y="0">1. Treacher Collins Syndrome</tspan></text>
+        <g id="ic_cancel_white" transform="translate(120.442 5.798)">
+          <path id="ic_cancel_white-2" data-name="ic_cancel_white" class="cls-41" d="M6.88-22A4.89,4.89,0,0,0,2-17.128a4.89,4.89,0,0,0,4.88,4.872,4.89,4.89,0,0,0,4.88-4.872A4.89,4.89,0,0,0,6.88-22Zm2.44,6.626-.683.682L6.88-16.446,5.123-14.692l-.683-.682L6.2-17.128,4.44-18.882l.683-.682L6.88-17.81l1.757-1.754.683.682L7.564-17.128,9.32-15.374Z" transform="translate(-2 22)"/>
+        </g>
+        <g id="Rectangle_33" data-name="Rectangle 33" class="cls-39" transform="translate(142.504 0.974)">
+          <rect class="cls-47" width="99.089" height="19.972" rx="9.986"/>
+          <rect class="cls-22" x="0.3" y="0.3" width="98.489" height="19.372" rx="9.686"/>
+        </g>
+        <text id="name-2" data-name="name" class="cls-40" transform="translate(149.137 12.48)"><tspan x="0" y="0">2. Nager Syndrome</tspan></text>
+        <g id="ic_cancel_white-3" data-name="ic_cancel_white" transform="translate(225.856 6.773)">
+          <path id="ic_cancel_white-4" data-name="ic_cancel_white" class="cls-41" d="M6.88-22A4.89,4.89,0,0,0,2-17.128a4.89,4.89,0,0,0,4.88,4.872,4.89,4.89,0,0,0,4.88-4.872A4.89,4.89,0,0,0,6.88-22Zm2.44,6.626-.683.682L6.88-16.446,5.123-14.692l-.683-.682L6.2-17.128,4.44-18.882l.683-.682L6.88-17.81l1.757-1.754.683.682L7.564-17.128,9.32-15.374Z" transform="translate(-2 22)"/>
+        </g>
+        <g id="Rectangle_34" data-name="Rectangle 34" class="cls-39" transform="translate(247.919 0)">
+          <rect class="cls-47" width="137.155" height="19.972" rx="9.986"/>
+          <rect class="cls-22" x="0.3" y="0.3" width="136.555" height="19.372" rx="9.686"/>
+        </g>
+        <text id="name-3" data-name="name" class="cls-40" transform="translate(254.552 11.506)"><tspan x="0" y="0">3. Craniodiaphyseal dysplasia</tspan></text>
+        <g id="ic_cancel_white-5" data-name="ic_cancel_white" transform="translate(368.361 5.798)">
+          <path id="ic_cancel_white-6" data-name="ic_cancel_white" class="cls-41" d="M6.88-22A4.89,4.89,0,0,0,2-17.128a4.89,4.89,0,0,0,4.88,4.872,4.89,4.89,0,0,0,4.88-4.872A4.89,4.89,0,0,0,6.88-22Zm2.44,6.626-.683.682L6.88-16.446,5.123-14.692l-.683-.682L6.2-17.128,4.44-18.882l.683-.682L6.88-17.81l1.757-1.754.683.682L7.564-17.128,9.32-15.374Z" transform="translate(-2 22)"/>
+        </g>
+      </g>
+      <text id="Genes" class="cls-33" transform="translate(767.478 701.052)"><tspan x="0" y="0">Genes</tspan></text>
+      <g id="Rectangle_40" data-name="Rectangle 40" class="cls-34" transform="translate(767.478 710.54)">
+        <rect class="cls-47" width="56.611" height="21.436" rx="4"/>
+        <rect class="cls-22" x="0.5" y="0.5" width="55.611" height="20.436" rx="3.5"/>
+      </g>
+      <g id="button1-2" data-name="button1" transform="translate(829.946 710.54)">
+        <g class="cls-48" transform="matrix(1, 0, 0, 1, -581.95, -77)">
+          <rect id="Rectangle_32-4" data-name="Rectangle 32" class="cls-37" width="39.928" height="21.436" rx="2" transform="translate(581.95 77)"/>
+        </g>
+        <text id="Select" class="cls-42" transform="translate(9.698 12.846)"><tspan x="0" y="0">Select</tspan></text>
+      </g>
+      <text id="_50" data-name="50" class="cls-43" transform="translate(775.287 724.412)"><tspan x="0" y="0">50</tspan></text>
+      <text id="Genetic_Testing_Registry" data-name="Genetic Testing Registry" class="cls-44" transform="translate(269.689 672.846)"><tspan x="0" y="0">Genetic Testing Registry</tspan></text>
+      <g id="baseline-input-24px" transform="translate(747.957 659.872)">
+        <path id="Path_5" data-name="Path 5" class="cls-22" d="M0,0H19.521V19.488H0Z"/>
+        <path id="Path_6" data-name="Path 6" class="cls-45" d="M12.535,3.01H2.154A1.3,1.3,0,0,0,1,4.419V7.23H2.154V4.4H12.535v9.884H2.154V11.457H1v2.825a1.29,1.29,0,0,0,1.154,1.395H12.535a1.29,1.29,0,0,0,1.154-1.395V4.419A1.3,1.3,0,0,0,12.535,3.01ZM6.768,12.162,9.075,9.343,6.768,6.525V8.639H1v1.409H6.768Z" transform="translate(70.09 1.383)"/>
+      </g>
+      <text id="EXPORT" class="cls-46" transform="translate(836.778 673.795)"><tspan x="0" y="0">EXPORT</tspan></text>
+    </g>
+  </g>
+</svg>

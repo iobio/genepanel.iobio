@@ -80,19 +80,13 @@ const routes = [
   {
     path: '/',
     component: Main,
-  },
-  {
-    path: '/app',
-    component: App
-  },
-  {
-    path: '/phenolyzer',
-    component: phenolyzer
   }
 ]
 
 const router = new VueRouter({
-  routes,
+  'mode':  'history',
+  'base': '/',
+  'routes': routes
 })
 
 //Registering component globally for nesting.
