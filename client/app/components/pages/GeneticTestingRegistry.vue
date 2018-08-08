@@ -61,35 +61,87 @@
                         Select
                       </v-btn>
                       <!-- <br> {{ chartComponent }} -->
-                      <br>
-                      <v-layout v-on:click="clickedTopPanelFilters">
-                        <v-flex xs4>
-                          <v-tooltip bottom>
-                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
-                            <span>
-                              <center><i>Less than {{ lowerLimitProps}} genes</i></center>
-                            </span>
-                          </v-tooltip>
-                          <!-- <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox> -->
-                        </v-flex>
-                        <v-flex xs4>
-                          <v-tooltip bottom>
-                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
+                      <br> <br>
+                      <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
+                        <label>Panels Selection</label>
+                        <!-- <span v-if="!editPanelDefinition" style="cursor:pointer" v-on:click="editPanelDefinition=true"><v-icon>settings</v-icon>  &nbsp; Edit definition <br></span> -->
+                        <v-tooltip bottom v-if="!editPanelDefinition">
+                          <span style="cursor:pointer" v-on:click="editPanelDefinition=true" slot="activator"><v-icon>settings</v-icon> </span>
+                          <span>Edit Panels Definition</span>
+                        </v-tooltip>
+                        <Alerts
+                          v-if="panelsAlert"
+                          alertType="warning"
+                          alertTransition="scale-transition"
+                          :alertText="panelAlertText"
+                        >
+                        </Alerts>
+                        <div v-if="editPanelDefinition" style="margin-left:8px">
+                          <v-divider style="margin-top:-1px"></v-divider>
+                          <v-layout row>
+                            <v-flex xs4>
+                              <strong>Lower limit:</strong>
+                            </v-flex>
+                            <v-flex xs3>
+                              <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
+                          </v-flex>
+                          <v-flex xs5>
+                          </v-flex>
+                        </v-layout>
+                          <v-layout row>
+                            <v-flex xs4>
+                              <strong>Upper limit:</strong>
+                            </v-flex>
+                            <v-flex xs3>
+                              <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
+                          </v-flex>
+                          <v-flex xs5>
+                          </v-flex>
+                        </v-layout>
+                        <v-layout>
+                          <v-flex xs4>
+                            <center>
+                              <v-btn outline color="primary darken-1" dark v-on:click="ChangePanelsDefinition" >SAVE</v-btn>
+                            </center>
+                          </v-flex>
+                          <v-flex xs3>
+                            <center>
+                              <v-btn color="primary darken-1" flat="flat" v-on:click="closePanelsDefinitionEdit" >CANCEL</v-btn>
+                            </center>
+                          </v-flex>
+                          <v-flex xs5>
+                          </v-flex>
+                        </v-layout>
+                        <v-divider style="margin-bottom:-1px"></v-divider>
+
+                      </div>
+                        <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
+                          <v-flex xs4>
+                            <v-tooltip bottom>
+                              <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific" value="specific"></v-checkbox>
                               <span>
-                                <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
+                                <center><i>Less than {{ lowerLimitProps}} genes</i></center>
                               </span>
-                          </v-tooltip>
-                          <!-- <center><i><small>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</small></i></center> -->
-                        </v-flex>
-                        <v-flex x4>
-                          <v-tooltip bottom>
-                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
-                            <span>
-                              <center><i>More than {{ upperLimitProps}} genes</i></center>
-                            </span>
-                          </v-tooltip>
-                        </v-flex>
-                      </v-layout>
+                            </v-tooltip>
+                          </v-flex>
+                          <v-flex xs4>
+                            <v-tooltip bottom>
+                              <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate" value="moderate"></v-checkbox>
+                                <span>
+                                  <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
+                                </span>
+                            </v-tooltip>
+                          </v-flex>
+                          <v-flex x4>
+                            <v-tooltip bottom>
+                              <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General" value="general"></v-checkbox>
+                              <span>
+                                <center><i>More than {{ upperLimitProps}} genes</i></center>
+                              </span>
+                            </v-tooltip>
+                          </v-flex>
+                        </v-layout>
+                      </div>
                     </v-flex>
                   </v-layout>
                 </v-card-text>
@@ -164,7 +216,7 @@
                      </div>
 
                      <div class="d-flex mb-2 xs12 mb-3">
-                       <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
                              <span class="Rightbar_CardHeading">
@@ -468,7 +520,7 @@
                                          :totalNumber="multiSelectPanels.length">
                                         </SvgBar>
                                       </center>
-                                      <br>
+                                      <!-- <br>
                                       <span v-if="!editPanelDefinition" style="cursor:pointer" v-on:click="editPanelDefinition=true"><v-icon>settings</v-icon>  &nbsp; Edit definition <br></span>
 
                                       <Alerts
@@ -526,7 +578,6 @@
                                               <center><i>Less than {{ lowerLimitProps}} genes</i></center>
                                             </span>
                                           </v-tooltip>
-                                          <!-- <v-checkbox v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox> -->
                                         </v-flex>
                                         <v-flex xs4>
                                           <v-tooltip bottom>
@@ -535,7 +586,6 @@
                                                 <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
                                               </span>
                                           </v-tooltip>
-                                          <!-- <center><i><small>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</small></i></center> -->
                                         </v-flex>
                                         <v-flex x4>
                                           <v-tooltip bottom>
@@ -557,7 +607,7 @@
                                         <v-flex x3>
                                           <center><strong style="font-size:11px">CONDITIONS</strong></center>
                                         </v-flex>
-                                      </v-layout>
+                                      </v-layout> -->
                                       <br>
                                       <div class="vendorsCardClass">
                                         <v-layout row wrap v-for="(item, i) in multiSelectPanels" :key="i">
@@ -1412,19 +1462,18 @@ export default {
     },
     ChangePanelsDefinition: function(){
       if(parseInt(this.upperLimitInput)<=parseInt(this.lowerLimitInput)){
-        console.log("sdgjhasfed")
         this.panelsAlert = true;
         this.panelAlertText = "Upper limit should be greater than lower limit";
         setTimeout(()=>{ this.panelsAlert=false; }, 3000);
       }
       else if(parseInt(this.upperLimitInput)>parseInt(this.lowerLimitInput)){
-        console.log("reight")
         this.selectedPanelFilters = ["specific", "moderate", "general"];
         this.upperLimitProps = this.upperLimitInput;
         this.lowerLimitProps = this.lowerLimitInput;
         bus.$emit("ChangeDefinition", parseInt(this.upperLimitProps), parseInt(this.lowerLimitProps));
         this.snackbarText = "Panels Definition changed";
         this.snackbar = true;
+        this.editPanelDefinition = false;
       }
     },
     closePanelsDefinitionEdit: function(){
