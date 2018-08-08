@@ -60,7 +60,6 @@
                           v-on:click.prevent="selectNumberOfTopGenes">
                         Select
                       </v-btn>
-                      <!-- <br> {{ chartComponent }} -->
                       <br> <br>
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
                         <label>Panels Selection</label>
@@ -1082,10 +1081,10 @@ export default {
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
       this.selectedPanelFilters= ["specific"];
-      this.lowerLimitInput = 10;
-      this.lowerLimitProps = 10;
-      this.upperLimitInput = 35;
-      this.upperLimitProps = 35;
+      this.lowerLimitInput = 20;
+      this.lowerLimitProps = 20;
+      this.upperLimitInput = 45;
+      this.upperLimitProps = 45;
       this.closeComponentForNewResults();
     });
   },
