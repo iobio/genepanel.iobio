@@ -100,29 +100,6 @@
                                 <br>
                                   <span style="margin-left:20px">Contains less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
                               </v-card-text>
-                              <!-- <v-card-text style="margin-left:20px">
-                                <v-layout row>
-                                  <v-flex xs4>
-                                    <strong>Lower limit:</strong>
-                                  </v-flex>
-                                  <v-flex xs3>
-                                    <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
-                                </v-flex>
-                                <v-flex xs5>
-                                </v-flex>
-                              </v-layout>
-                              <br>
-                                <v-layout row>
-                                  <v-flex xs4>
-                                    <strong>Upper limit:</strong>
-                                  </v-flex>
-                                  <v-flex xs3>
-                                    <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
-                                </v-flex>
-                                <v-flex xs5>
-                                </v-flex>
-                              </v-layout>
-                              </v-card-text> -->
                               <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
@@ -538,83 +515,6 @@
                                          :totalNumber="multiSelectPanels.length">
                                         </SvgBar>
                                       </center>
-                                      <!-- <br>
-                                      <span v-if="!editPanelDefinition" style="cursor:pointer" v-on:click="editPanelDefinition=true"><v-icon>settings</v-icon>  &nbsp; Edit definition <br></span>
-
-                                      <Alerts
-                                        v-if="panelsAlert"
-                                        alertType="warning"
-                                        alertTransition="scale-transition"
-                                        :alertText="panelAlertText"
-                                      >
-                                      </Alerts>
-                                      <div v-if="editPanelDefinition">
-                                        <v-layout row>
-                                          <v-flex xs4>
-                                            <strong>Lower limit:</strong>
-                                          </v-flex>
-                                          <v-flex xs3>
-                                            <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control">
-                                        </v-flex>
-                                        <v-flex xs5>
-                                        </v-flex>
-                                      </v-layout>
-                                        <v-layout row>
-                                          <v-flex xs4>
-                                            <strong>Upper limit:</strong>
-                                          </v-flex>
-                                          <v-flex xs3>
-                                            <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control">
-                                        </v-flex>
-                                        <v-flex xs5>
-                                        </v-flex>
-                                      </v-layout>
-                                    <br>
-                                    <v-layout>
-                                      <v-flex xs4>
-                                        <center>
-                                          <v-btn outline color="primary darken-1" dark v-on:click="ChangePanelsDefinition" >SAVE</v-btn>
-                                        </center>
-                                      </v-flex>
-                                      <v-flex xs3>
-                                        <center>
-                                          <v-btn color="primary darken-1" flat="flat" v-on:click="closePanelsDefinitionEdit" >CANCEL</v-btn>
-                                        </center>
-                                      </v-flex>
-                                      <v-flex xs5>
-                                      </v-flex>
-                                    </v-layout>
-                                    <br>
-
-
-                                      </div>
-                                      <v-layout>
-                                        <v-flex xs4>
-                                          <v-tooltip bottom>
-                                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific panels" value="specific"></v-checkbox>
-                                            <span>
-                                              <center><i>Less than {{ lowerLimitProps}} genes</i></center>
-                                            </span>
-                                          </v-tooltip>
-                                        </v-flex>
-                                        <v-flex xs4>
-                                          <v-tooltip bottom>
-                                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate panels" value="moderate"></v-checkbox>
-                                              <span>
-                                                <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
-                                              </span>
-                                          </v-tooltip>
-                                        </v-flex>
-                                        <v-flex x4>
-                                          <v-tooltip bottom>
-                                            <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General panels" value="general"></v-checkbox>
-                                            <span>
-                                              <center><i>More than {{ upperLimitProps}} genes</i></center>
-                                            </span>
-                                          </v-tooltip>
-                                        </v-flex>
-                                      </v-layout>
-                                      <hr>-->
                                       <v-layout>
                                         <v-flex xs8>
                                         <strong style="font-size:11px">PANELS</strong>

@@ -24,11 +24,10 @@
         v-model="alertAssociatedInfo"
         dismissible
         color="blue darken-1"
-        icon="verified_user"
         outline
-        style="width:65%; border-style:none; border-color:white !important; border:0px !important"
+        style="width:90%; border-style:none; border-color:white !important; border:0px !important"
       >
-        The icon in the table indicates associated genes for the disorder.
+        Genes marked with the <v-icon style="font-size:20px">verified_user</v-icon> icon are reported to be associated with the condition; it is possible that they do not appear on any panels that test for the condition. These genes will always appear at the top of the gene list.
       </v-alert>
 
       <v-data-table
