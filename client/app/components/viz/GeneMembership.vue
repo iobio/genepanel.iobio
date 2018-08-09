@@ -66,7 +66,6 @@ var model = new Model();
         this.AddGeneData();
       },
       modeOfInheritanceData: function(){
-        // console.log("Watch modeOfInheritanceData from show-gene-panel1: ", this.modeOfInheritanceData)
       }
     },
     methods:{
@@ -83,12 +82,10 @@ var model = new Model();
             .xAxisLabel( "# of Panels" )
             .color(self.color)
             .on("barselect", function(selectedGeneNames){
-              // console.log("bars selected ", selectedGeneNames);
               addSelectedFromHistogramChart(selectedGeneNames);
             })
         var addSelectedFromHistogramChart = (data)=>{
           this.CountBrushSelection++;
-          //alert(this.CountBrushSelection)
           this.selected = data;
           bus.$emit("updateFromGenesHistogram", data, this.CountBrushSelection)
         }
@@ -96,36 +93,25 @@ var model = new Model();
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;
-        // console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
-
 
       AddGeneData: function(){
         this.GetGeneData = this.GeneData;
-        // console.log("this.GetGeneData", this.GetGeneData);
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        // console.log("mergedGenes", mergedGenes);
 
         this.GenesToDisplay = mergedGenes;
-        // console.log("GenesToDisplay",this.GenesToDisplay);
 
         var selection = d3.select('#gene-histogram-chart1').datum(model.mergedGenes);
         this.geneHistogramChart(selection, {'logScale': true, 'descendingX': true, 'selectTop': 50});
 
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth());
-        // console.log("model.getGeneBarChartData(mergedGenes)", model.getGeneBarChartData(mergedGenes).slice(0,50));
-        // console.log("bar char", this.geneBarChart)
         this.items = data;
         this.selected = data.slice(0,50);
 
-        // console.log("this.selected from Show Genes ", this.selected )
-       // this.geneBarChart(d3.select('#gene-bar-chart'), data);
-        // console.log("bar chart1", this.geneBarChart)
         this.dataForTables = data.slice(0,10);
-        // console.log("dataForTables: ", this.dataForTables)
 
       },
       selectAllGenes: function(){

@@ -1,5 +1,4 @@
 <template>
-  <!-- <div > -->
     <v-dialog v-model="dialog" width="600px">
       <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
       <v-card>
@@ -15,7 +14,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  <!-- </div> -->
 </template>
 
 

@@ -1,5 +1,4 @@
 <template>
-  <!-- <div > -->
   <v-data-table
     :headers="headers"
     hide-actions
@@ -12,7 +11,6 @@
       </v-alert>
     </template>
   </v-data-table>
-  <!-- </div> -->
 </template>
 
 

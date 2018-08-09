@@ -377,7 +377,5 @@ var model = new Model();
   .btnColor
     color: white
     background-color: $search-button-color !important
-    // border-radius: 5px
-
 
 </style>

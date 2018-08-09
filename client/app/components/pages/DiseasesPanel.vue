@@ -72,7 +72,6 @@ var model = new Model();
 
 
   export default {
-    // props: ['DiseasePanelData'],
     props: {
       DiseasePanelData: {
         type: Array
@@ -153,36 +152,10 @@ var model = new Model();
                                             // the mode of Inheritance back to parent so it can be used as props in summary panel
           this.selected = this.items.slice();
           this.$emit('setDisorderNamesList', this.items)
-
-
-
-          // if(!this.flagForDisorderFilter){
-          //   console.log("if statement ")
-          //   this.items = this.DiseasePanelData;
-          //   this.tempItems = this.DiseasePanelData;
-          //   this.tempDisorders = this.DiseasePanelData;
-          //   this.getDisorderNames();
-          //   this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-          //   // console.log(" modeOfInheritanceData from Disease Panel ", this.modeOfInheritanceData);
-          //   this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
-          //                                     // the mode of Inheritance back to parent so it can be used as props in summary panel
-          //   this.selected = this.items.slice()
-          // }
-          // else if(this.flagForDisorderFilter){ //Keeps track if the disorder name is selected when new disorder is searched
-          //   console.log("else if  ")
-          //   this.items = this.DiseasePanelData;
-          //   console.log("items length in else if ", this.items.length)
-          //   this.tempItems = this.DiseasePanelData;
-          //   this.getDisorderNames();
-          //   this.updateDisordersTableOnSelectedDisorders();
-          // }
-
-
         },
         getDisorderNames(){
           var namesOfDisorders = model.filterItemsForDisorderNames(this.items);
           this.disorderNamesList = Array.from(new Set(namesOfDisorders))
-          // console.log("this.disorderNamesList" , this.disorderNamesList)
           this.$emit('setDisorderNamesList', this.disorderNamesList)
         },
         selectAllDisorders: function(){
@@ -196,12 +169,8 @@ var model = new Model();
           var tempA = [];
           var a;
           var b=[];
-          // this.selectedModesOfInheritance.forEach(x=>{
-          //   b.push(x._modeOfInheritance);
-          // })
           b = this.selectedModesOfInheritance
           console.log(b)
-          // this.selected = [];
           var tempA = [];
           var a;
           var b;
@@ -212,58 +181,15 @@ var model = new Model();
             }
           })
           this.selected = tempA;
-          console.log(this.selected)
           this.$emit('disordersSelectedData', this.selected)
-          // var namesOfDisorders = model.filterItemsForDisorderNames(this.selected);
-          // this.disorderNamesList = Array.from(new Set(namesOfDisorders))
-          // var disordersUnique = Array.from(new Set(namesOfDisorders));
-          // console.log("disordersUnique", disordersUnique)
-          // this.$emit('disordersSelectedData', disordersUnique)
         },
         updateDisordersTableOnSelectedDisorders: function(){
-          // var tempArray =[];
           var modeData = [];
-          // this.items = this.tempDisorders;
-          // // if(this.selectedDisordersFromFilterPanel.length>0){
-          //   this.selected=[];
-          //   for(var i=0; i<this.selectedDisordersFromFilterPanel.length; i++){
-          //     for(var j=0; j<this.items.length; j++){
-          //       if(this.selectedDisordersFromFilterPanel[i] === this.items[j].Title){
-          //         tempArray.push(this.items[j])
-          //       }
-          //     }
-          //   }
-            // this.selected = tempArray;
             this.selected = this.selectedDisordersFromFilterPanel;
             modeData = model.filterItemsForModeOfInheritance(this.selected); //Update the select pie chart data when dropdown item selected.
-            console.log("this.modeOfInheritanceData", modeData)
             this.$emit("ModesSelectedData", modeData);
-
-            // this.items = tempArray;
-            // this.selected = this.items.slice();
-            // if(this.pieChartFlag===false){
-            //   this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items); //Update the select pie chart data when dropdown item selected.
-            //   this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
-            // }
-            // return this.items;
-          // }
-          // else if(this.selectedDisordersFromFilterPanel.length===0 && this.pieChartFlag){
-          //   this.flagForDisorderFilter = false;
-          //   this.selected = this.tempDisorders.slice();
-          //   this.items = this.tempDisorders;
-          //   this.getDisorderNames();
-          //   this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
-          //   this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
-          //   return this.items;
-          // }
-          // else if(this.selectedDisordersFromFilterPanel.length===0 && !this.pieChartFlag){
-          //   this.selected = this.items;
-          //   bus.$emit("lastDisorder");
-          // }
-
         },
         sendModeOfInheritanceData(){
-          // alert(this.modeOfInheritanceData.length)
           bus.$emit("PieChartSelectorData");
         },
         updateFromPieChart(modeOfInheritance, selection){
@@ -279,7 +205,6 @@ var model = new Model();
                 tempArr.push(this.items[i])
               }
               else if(this.items[i]._modeOfInheritance.split(", ").length >1){
-                // console.log("splitter array ", this.items[i]._modeOfInheritance.split(", "))
                 splitHelperArr = this.items[i]._modeOfInheritance.split(", ");
                 if(!splitHelperArr.includes(modeOfInheritance)){
                   tempArr.push(this.items[i])
@@ -342,9 +267,6 @@ var model = new Model();
       });
     },
     updated(){
-      // console.log("this.selected from showDiseases updated", this.selected );
-
-      //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedDiseases', this.selected);
 
       bus.$on('deSelectAllDisordersBus', ()=>{
@@ -354,7 +276,6 @@ var model = new Model();
       bus.$on('SelectAllDisordersBus', ()=>{
         this.selectAllDisorders();
       });
-      // this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
 
     },
     watch: {

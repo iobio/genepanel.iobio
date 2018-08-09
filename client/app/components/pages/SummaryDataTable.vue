@@ -26,14 +26,12 @@
             :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
 
           >
-            <!-- <v-icon>arrow_upward</v-icon> -->
             {{ header.text }}
           </th>
 
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
         <tr :active="props.selected">
           <td>
             <v-checkbox
@@ -48,10 +46,6 @@
           <td>
             <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
           </td>
-          <!-- <td>
-            <span v-if="props.item.isGtr"><v-icon >check_circle</v-icon></span>
-            <span v-else></span>
-          </td> -->
           <td>
             <span v-for="x in props.item.sourceGTR">
               <span v-html="x"></span>
@@ -89,16 +83,9 @@
               </v-list>
             </v-menu>
           </td>
-          <!-- <td>
-            <span v-if="props.item.isPheno"><v-icon >check_circle</v-icon></span>
-            <span v-else></span>
-          </td> -->
         </tr>
       </template>
       <template slot="footer">
-      <!-- <td colspan="100%">
-        <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
-      </td> -->
     </template>
     </v-data-table>
   </div>
@@ -127,8 +114,6 @@ import { bus } from '../../routes';
       headers: [
         { text: 'Index', align: 'left', sortable: false, value:'indexVal' },
         { text: 'Name', align: 'left', sortable: false, value:'name' },
-        // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
-        // { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
         { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: 'Links', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },

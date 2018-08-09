@@ -77,12 +77,6 @@ import { bus } from '../../routes';
                           .bins(20)
                           (data)
         }
-
-        // var histogram = d3.layout.histogram()
-        //                   .bins(40)
-        //                   (data)
-
-        // console.log("histogram data ", histogram)
         var yDomainArrayLengths=[]
         histogram.map(x=>{
           yDomainArrayLengths.push(x.length)
