@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <v-container fluid grid-list-md> -->
       <v-layout row wrap style="margin-top:-10px;">
         <v-flex d-flex xs12>
           <v-card>
@@ -39,8 +38,8 @@
         <v-flex xs6>
           <v-flex  style="margin-top:40px">
             <v-container >
-              <h2  text-xs-center class="font-weight-thin mb-3">Genetic Testing Registry</h2>
-              <p   style="font-size:14px">
+              <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/ncbi.png" alt="NCBI logo" style="height:65px; width:55px;"> Genetic Testing Registry</h2>
+              <p style="text-align: justify; font-size:14px">
                 The Genetic Testing Registry (GTR®) is an NCBI resource that compiles genetic test information that has been voluntarily submitted by multiple providers. <br>
                 Panel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.
               </p>
@@ -73,8 +72,8 @@
         <v-flex xs6>
           <v-flex  style="margin-top:40px">
             <v-container >
-              <h2  text-xs-center class="font-weight-thin mb-3">Phenolyzer</h2>
-              <p   style="font-size:14px">
+              <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/phenolyzer_icon_active.svg" alt="NCBI logo" style="height:65px; width:55px;"> Phenolyzer</h2>
+              <p   style="text-align: justify; font-size:14px">
                 Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
                 Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes              </p>
               <br>
