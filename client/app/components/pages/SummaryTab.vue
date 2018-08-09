@@ -295,6 +295,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
         var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
         this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
+        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
 
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
@@ -307,6 +308,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 sourceGTR: y.searchTermIndexSVG,
                 searchTermArrayGTR: y.searchTermArray,
                 searchTermIndexGTR: y.searchTermIndex,
+                isAssociatedGene: y.isAssociatedGene,
               })
             }
           })
@@ -376,6 +378,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           for(var j=0; j<this.GtrGenes.length; j++){
             if(tempA[i].name===this.GtrGenes[j].name){
               tempA[i].sourceGTR = this.GtrGenes[j].searchTermIndexSVG
+              tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene
             }
           }
         }
@@ -390,6 +393,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             noOfSources: 2,
             sourceGTR: x.sourceGTR,
             sourcePheno: x.sourcePheno,
+            isAssociatedGene: x.isAssociatedGene,
           }
         }))
 
@@ -401,7 +405,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sources: "GTR",
             noOfSources: 1,
             sourceGTR: x.sourceGTR,
-            sourcePheno: []
+            sourcePheno: [],
+            isAssociatedGene: x.isAssociatedGene,
           }
         }))
 
