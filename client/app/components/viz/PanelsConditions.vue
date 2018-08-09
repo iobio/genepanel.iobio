@@ -30,9 +30,6 @@ var model = new Model();
       }
     },
     mounted(){
-      // if(typeof this.selectedNumber===Number && typeof this.totalNumber === Number){
-      //   this.drawBars();
-      // }
       this.drawBars();
     },
     updated(){

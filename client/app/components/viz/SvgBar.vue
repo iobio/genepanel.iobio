@@ -31,9 +31,6 @@ var model = new Model();
       }
     },
     mounted(){
-      // if(typeof this.selectedNumber===Number && typeof this.totalNumber === Number){
-      //   this.drawBars();
-      // }
       this.drawBars();
     },
     updated(){
@@ -78,13 +75,6 @@ var model = new Model();
                       <rect class="grayRect"
                             x="${selectedgenesWidth+10}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
                   </svg>`
-
-        // this.bars = `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
-        //               <rect class="genepanelsRect"
-        //                     x="10" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
-        //               <rect class="grayRect"
-        //                     x="${selectedgenesWidth+10}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
-        //           </svg>`
       }
     }
   }

@@ -1,5 +1,3 @@
-<!-- https://repl.it/@adityaekawade/HeartfeltScientificRooster  for filter multi select-->
-
 <template>
   <div>
     <v-data-table
@@ -189,7 +187,6 @@ var model = new Model();
 
       bus.$on('SelectNumberOfPanel', (data)=> {
         this.filterGenePanelsOnSelectedNumber(data);
-        //this.selected = [];
       })
 
       bus.$on('selectNumberOfConditionsInPanel', (data)=>{
@@ -213,7 +210,6 @@ var model = new Model();
         var nonSelectedItems = [];
         this.items.map(x=>{
           var checkIfExists = obj => obj.testname === x.testname;
-          // console.log(x.testname , " - checkIfExists", this.selected.some(checkIfExists))
           if(!this.selected.some(checkIfExists)){
             nonSelectedItems.push(x)
           }
@@ -222,9 +218,7 @@ var model = new Model();
         nonSelectedItems.map(x=>{
           nonSelectedVendors.push(x.offerer);
         })
-        // console.log("non selected items ;length", nonSelectedVendors);
         let vendors = model.getGenePanelVendors(this.selected);
-        // console.log("vendors", vendors)
 
         var vendorsToBeSentBack = [];
         vendors.map(x=>{
@@ -232,14 +226,10 @@ var model = new Model();
             vendorsToBeSentBack.push(x);
           }
         })
-        console.log("items length in gene panel", this.items.length)
         this.$emit('selectVendors', vendorsToBeSentBack.sort());
-
-        // this.$emit('selectVendors', vendors.sort());
       },
       justUpdateTabel: function(){
         this.selected =this.selectedPanelsInCheckBoxPropsOne;
-        // this.updateTableOnSelectedPanels();
       },
       updatePanelsOnSelectedVendors: function(){
         var tempArr = [];
@@ -248,7 +238,6 @@ var model = new Model();
             for(var j=0; j<this.items.length; j++){
               if( this.selectedVendorsFromFilterPanel[i] === this.items[j].offerer ){
                 tempArr.push(this.items[j]);
-
               }
             }
           }
@@ -287,11 +276,9 @@ var model = new Model();
               for(var j=0; j<items.length; j++){
                 if( this.select[i] === items[j].offerer ){
                   tempArr.push(items[j]);
-
                 }
               }
             }
-
             items = tempArr;
             return items;
           }
@@ -320,9 +307,7 @@ var model = new Model();
         let vendors = model.getGenePanelVendors(mergedGenePanels);
 
         this.vendorList = vendors;
-
         this.selected = this.items.slice();
-        // this.$emit('setPanelsNamesList', this.items);
         this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
 
@@ -332,7 +317,6 @@ var model = new Model();
       addGenes: function(d){
         d.genePanels.map(x=>{
            x._genes.map(y=>{
-             // console.log("y is" , y.name)
              this.Genes.push(y.name)
            })
         })
@@ -371,3 +355,4 @@ var model = new Model();
     height: 600px;
   }
 </style>
+<!-- https://repl.it/@adityaekawade/HeartfeltScientificRooster  for filter multi select-->

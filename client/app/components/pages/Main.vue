@@ -1,8 +1,6 @@
 <template>
   <div id="app">
   <v-app id="inspire">
-    <!-- <back-to-top text="Back to top" visibleoffset="500"></back-to-top> -->
-
     <v-snackbar
         :timeout="snackbarTimeout"
         :top="y === 'top'"
@@ -103,26 +101,10 @@
       fixed
     >
       <v-toolbar-title >
-        <!-- <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon> -->
         <span >panel.iobio</span>
       </v-toolbar-title>
 
       <span style="margin-left:130px">
-        <!-- <v-btn flat v-if="component==='GeneticTestingRegistry'" style="font-size:17.5px font-width:400">
-          Genetic Testing Registry
-          <v-menu open-on-hover top offset-y>
-            <p style="font-size:13px;" slot="activator"><v-icon small  >help</v-icon></p>
-              <v-card>
-                <v-card-text><p v-html="IntroductionTextData[0].Content"></p></v-card-text>
-              </v-card>
-          </v-menu>
-        </v-btn>
-        <v-btn flat v-else-if="component==='Phenolyzer'" style="font-size:16px font-width:200 ">
-          Phenolyzer
-        </v-btn>
-        <v-btn flat v-else-if="component==='SummaryTab'" style="font-size:16px font-width:200 ">
-          Summary
-        </v-btn> -->
       </span>
       <v-spacer></v-spacer>
       <v-menu bottom offset-y style="color:black">
@@ -158,9 +140,7 @@
         </v-list>
       </v-menu>
       <span>
-        <!-- <v-btn flat v-on:click="forceReload"><v-icon>autorenew</v-icon> New Analysis</v-btn> -->
         <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
-          <!-- <v-btn flat slot="activator" color="primary" >Open Dialog</v-btn> -->
           <v-btn flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
@@ -173,12 +153,6 @@
           </v-card>
         </v-dialog>
       </span>
-      <!-- <span>
-        <v-btn flat><v-icon>settings</v-icon> Settings</v-btn>
-      </span> -->
-      <!-- <span>
-        <v-btn flat><v-icon>help</v-icon> Help</v-btn>
-      </span> -->
       <HelpMenu></HelpMenu>
       <AppsMenu></AppsMenu>
 
@@ -186,59 +160,48 @@
 
     <div>
       <v-content>
-            <div class="header-nav-bar" >
-              <v-card-text>
-
-                <p></p>
-              </v-card-text>
-
-            </div>
-          <!-- </v-card>
-
-        </v-flex> -->
+        <div class="header-nav-bar" >
+          <v-card-text>
+            <p></p>
+          </v-card-text>
+        </div>
         <div style="background:white; height:auto">
           <keep-alive>
-
-              <Overview v-if="component==='OverviewPage'"></Overview>
-
-              <GeneticTestingRegistry
-                v-if="component==='GeneticTestingRegistry'"
-                v-on:vendorListCB="updateVendors($event)"
-                v-bind:selectedVendorsListCB="selectedVendorsList"
-                v-on:diseasesCB=addDiseases($event)
-                v-on:disorderNamesListCB="updateDisorderNames($event)"
-                v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
-                v-on:GeneMembershipData="GeneMembershipData($event)"
-                v-bind:selectedDisordersListCB="selectedDisordersList"
-                v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-                v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
-                :chartColor="ordinalColor"
-                :barColor="barColor"
-                @search-gtr="onSearchGTR">
-              </GeneticTestingRegistry>
-            <!--
-              <HomePage v-else-if="component==='HomePage'"></HomePage>
-            -->
-              <Phenolyzer
-                v-if="component==='Phenolyzer'"
-                v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-                v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-                @search-phenotype="onSearchPhenotype"
-                @phenotypeSearchTermArray="phenotypeSearchTermArray">
-              </Phenolyzer>
-              <SummaryTab
-                v-else-if="component==='SummaryTab'"
-                v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-                v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
-                v-bind:GtrGenesForSummary="selectedGtrGenes"
-                v-bind:searchTermGTR="searchTermGTR"
-                v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
-                v-bind:onSearchPhenotype="phenotypeSearches"
-                :chartColor="ordinalColor">
-              </SummaryTab>
-            </keep-alive>
+            <Overview v-if="component==='OverviewPage'"></Overview>
+            <GeneticTestingRegistry
+              v-if="component==='GeneticTestingRegistry'"
+              v-on:vendorListCB="updateVendors($event)"
+              v-bind:selectedVendorsListCB="selectedVendorsList"
+              v-on:diseasesCB=addDiseases($event)
+              v-on:disorderNamesListCB="updateDisorderNames($event)"
+              v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
+              v-on:GeneMembershipData="GeneMembershipData($event)"
+              v-bind:selectedDisordersListCB="selectedDisordersList"
+              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
+              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+              :chartColor="ordinalColor"
+              :barColor="barColor"
+              @search-gtr="onSearchGTR">
+            </GeneticTestingRegistry>
+            <Phenolyzer
+              v-if="component==='Phenolyzer'"
+              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
+              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+              @search-phenotype="onSearchPhenotype"
+              @phenotypeSearchTermArray="phenotypeSearchTermArray">
+            </Phenolyzer>
+            <SummaryTab
+              v-else-if="component==='SummaryTab'"
+              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+              v-bind:GtrGenesForSummary="selectedGtrGenes"
+              v-bind:searchTermGTR="searchTermGTR"
+              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+              v-bind:onSearchPhenotype="phenotypeSearches"
+              :chartColor="ordinalColor">
+            </SummaryTab>
+          </keep-alive>
         </div>
-
       </v-content>
     </div>
 
@@ -252,9 +215,6 @@ import GeneticTestingRegistry from './GeneticTestingRegistry.vue';
 import Phenolyzer from './Phenolyzer.vue';
 // import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
-import FilterGTR from './FilterGTR.vue';
-import FilterPhenolyzer from './FilterPhenolyzer.vue';
-import FilterSummary from './FilterSummary.vue';
 var FileSaver = require('file-saver');
 import DisorderSearch from './DisorderSearch.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
@@ -266,12 +226,8 @@ import Overview from './Overview.vue'
     components: {
       'GeneticTestingRegistry': GeneticTestingRegistry,
       'Phenolyzer': Phenolyzer,
-      // 'HomePage': HomePage,
       'SummaryTab': SummaryTab,
-      'FilterGTR': FilterGTR,
       'DisorderSearch': DisorderSearch,
-      'FilterPhenolyzer': FilterPhenolyzer,
-      'FilterSummary': FilterSummary,
       'AppsMenu': AppsMenu,
       'HelpMenu': HelpMenu,
       'Overview':Overview
@@ -345,18 +301,12 @@ import Overview from './Overview.vue'
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });
-      // bus.$on("openNavDrawer", ()=>{
-      //   this.drawer = true;
-      // })
       window.addEventListener("message", this.receiveClin, false);
     },
     updated(){
     },
     methods: {
       handleScroll (event) {
-        // console.log(this.GtrScrollY);
-        // console.log(this.PhenolyzerScrollY);
-        // console.log(this.SummaryScrollY);
         if(this.component === 'GeneticTestingRegistry'){
           this.GtrScrollY = window.scrollY;
         }
@@ -370,15 +320,12 @@ import Overview from './Overview.vue'
       selectComponent(componentName){
         this.component = componentName;
         if(componentName === 'GeneticTestingRegistry'){
-          // console.log("this.GtrScrollY",this.GtrScrollY)
           window.scrollTo(0,this.GtrScrollY);
         }
         else if(componentName === 'Phenolyzer'){
-          // console.log("this.PhenolyzerScrollY", this.PhenolyzerScrollY)
           window.scrollTo(0,this.PhenolyzerScrollY);
         }
         else if(componentName === 'SummaryTab'){
-          // console.log("this.SummaryScrollY", this.SummaryScrollY)
           window.scrollTo(0,this.SummaryScrollY);
         }
       },
@@ -626,7 +573,6 @@ import Overview from './Overview.vue'
         this.searchTermGTR = searchTerm;
       },
       onSearchPhenotype: function(searchTermObject)  {
-        // this.searchTermPhenotype = searchTermObject.label;
         this.searchTermPhenotype.push(searchTermObject.label);
       },
       phenotypeSearchTermArray: function(searchTerms){
@@ -641,16 +587,9 @@ import Overview from './Overview.vue'
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-/* .activeTab{
-  background-color:#D8D8D8;
-  color:#ED8059;
-  border-left: 8px solid #ED8059;
-} */
-
 .margin_ActiveTab{
   margin-left: -8px
 }
-
 
 .tabs__container{
   height:50px;
@@ -721,19 +660,10 @@ a:hover {
 }
 
 
-
-/* .navigation-drawer .navigation-drawer--clipped .navigation-drawer--fixed .navigation-drawer--open{
-  margin-top: 112px !important;
-} */
-
-
 aside {
   margin-top: 64px !important;
   max-height: calc(100% - 64px) !important;
 }
-/* .btn .btn__content .icon {
-  color:#66d4ed
-} */
 
 @media screen and (max-width: 1270px){
   aside {
@@ -888,14 +818,8 @@ button.btnColor.blue.darken-1
     font-size: 18px
 
 .header-nav-bar
-  // position: fixed
-  // top: 0
-  // z-index: 100
-  // width: 80%
   height: 64px
   background: white
-
-// .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover
 
 
 .dropdown-menu
