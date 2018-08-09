@@ -14,7 +14,7 @@
       <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
       <div style="display:inline-block; padding-top:5px;">
-        <label>Enter Disorder</label>
+        <label>Enter Condition</label>
         <input
           :disabled="checked"
           id="input"
@@ -41,7 +41,7 @@
 
       <div v-if="multipleSearchTerms.length">
         <br>
-          Disorders Searched:
+          Conditions Searched:
         <v-chip disabled outline color="blue-grey darken-3" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>

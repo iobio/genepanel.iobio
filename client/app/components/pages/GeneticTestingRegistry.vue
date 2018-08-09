@@ -70,9 +70,9 @@
                         </v-tooltip>
 
                         <span>
-                          <v-dialog v-model="editPanelDefinition" persistent max-width="400">
+                          <v-dialog v-model="editPanelDefinition" persistent max-width="550">
                             <v-card>
-                              <v-card-title class="headline">Edit Panels Definition</v-card-title>
+                              <v-card-title class="headline">EDIT PANEL DEFINITION</v-card-title>
                               <v-divider style="margin-top:-4px"></v-divider>
                               <Alerts
                                 v-if="panelsAlert"
@@ -81,7 +81,26 @@
                                 :alertText="panelAlertText"
                               >
                               </Alerts>
-                              <v-card-text style="margin-left:20px">
+                              <v-card-text>
+                                <p style="text-align: justify">
+                                  Panels are classified into three categories. <strong><i>Specific</i></strong>  panels typically target specific conditions, and so contain fewer genes.
+                                  <strong><i>General</i> </strong> panels are used to test for many different conditions and consequently contain a relatively large number of genes.
+                                  <strong><i>Moderate</i></strong>  panels are intermediate to these extremes. The panels are defined by the number of genes they cover, and can be edited below.
+                                </p>
+                                <br>
+                                <strong>SPECIFIC PANELS </strong>
+                                <br>
+                                  <span style="margin-left:20px">Contains less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
+                                <br><br>
+                                <strong>MODERATE PANELS </strong>
+                                <br>
+                                  <span style="margin-left:20px">Contains between <strong style="color:rgb(132, 132, 132)">{{ lowerLimitInput }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ upperLimitInput }}</strong> genes</span>
+                                <br><br>
+                                <strong>GENERAL PANELS </strong>
+                                <br>
+                                  <span style="margin-left:20px">Contains less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
+                              </v-card-text>
+                              <!-- <v-card-text style="margin-left:20px">
                                 <v-layout row>
                                   <v-flex xs4>
                                     <strong>Lower limit:</strong>
@@ -103,7 +122,7 @@
                                 <v-flex xs5>
                                 </v-flex>
                               </v-layout>
-                              </v-card-text>
+                              </v-card-text> -->
                               <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
@@ -274,7 +293,7 @@
                         <v-card-text>
                           <center>
                             <span class="Rightbar_CardHeading" style="font-size:14px">
-                              ASSOCIATED DISORDERS & MODES OF INHERITANCE
+                              ASSOCIATED CONDITIONS & MODES OF INHERITANCE
                             </span>
                             <Dialogs
                               id="disordersDialog"
@@ -316,7 +335,7 @@
                             <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='disorders'">
                               <center>
                                 <span class="Rightbar_card_content_subheading">
-                                  <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} disorders selected
+                                  <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} conditions selected
                                 </span>
                                 <SvgBar
                                  class="SvgBarClass"
@@ -333,7 +352,7 @@
                               </v-checkbox> -->
                               <v-layout>
                                 <v-flex xs7>
-                                  <center><strong>ASSOCIATED DISORDERS</strong></center>
+                                  <center><strong>ASSOCIATED CONDITIONS</strong></center>
                                 </v-flex>
                                 <v-flex xs5>
                                   <center><strong>GENES</strong></center>
@@ -404,9 +423,9 @@
                                 <br>
                               </center>
                               <span style="font-size13px; font-weight:600">
-                                Each disorder is associated with one or more modes of inheritance. If a mode of inheritance is selected below,
-                                all disorders associated with it will be retained. If a disorder is associated with multiple modes of inheritance,
-                                all must be deselected to remove the disorder.
+                                Each condition is associated with one or more modes of inheritance. If a mode of inheritance is selected below,
+                                all conditions associated with it will be retained. If a condition is associated with multiple modes of inheritance,
+                                all must be deselected to remove the condition.
                               </span>
                               <br><br>
                               <!-- <v-checkbox
@@ -1480,7 +1499,7 @@ export default {
       this.chartComponent = "PanelsDefinition";
       if(parseInt(this.upperLimitInput)<=parseInt(this.lowerLimitInput)){
         this.panelsAlert = true;
-        this.panelAlertText = "Upper limit should be greater than lower limit";
+        this.panelAlertText = "The value in General Panel's input should be greater than the value in Specific panel";
         setTimeout(()=>{ this.panelsAlert=false; }, 3000);
       }
       else if(parseInt(this.upperLimitInput)>parseInt(this.lowerLimitInput)){
