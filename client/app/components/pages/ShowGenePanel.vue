@@ -112,7 +112,6 @@
                           <v-list-tile >
                             <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
                           </v-list-tile>
-                          <hr>
                           <v-list-tile >
                             <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
                           </v-list-tile>
@@ -200,7 +199,7 @@ var model = new Model();
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
-            text: 'Lnks',
+            text: '',
             align: 'left',
             sortable: false,
             value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene'] },
@@ -299,7 +298,7 @@ var model = new Model();
             { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
             {
-              text: 'Lnks',
+              text: '',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
@@ -316,7 +315,7 @@ var model = new Model();
             },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
             {
-              text: 'Lnks',
+              text: '',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
@@ -414,8 +413,7 @@ var model = new Model();
             x.geneCardsSrc= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
             x.ghrSrc= `https://ghr.nlm.nih.gov/gene/${x.name}`;
             x.clinGenLink= `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
-            // x.htmlData = "<i>Associated Gene</i>";
-             x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
+            x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
             x.isAssociatedGene = true;
             x.value = 0;
           })
@@ -466,6 +464,7 @@ var model = new Model();
 
         this.noOfSourcesSvg();
         this.selected = this.items.slice(0,50);
+        console.log("this.selected", this.selected)
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);

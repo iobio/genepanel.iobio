@@ -85,15 +85,15 @@
                                 <br>
                                 <strong>SPECIFIC PANELS </strong>
                                 <br>
-                                  <span style="margin-left:20px">Contains less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
+                                  <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
                                 <br><br>
                                 <strong>MODERATE PANELS </strong>
                                 <br>
-                                  <span style="margin-left:20px">Contains between <strong style="color:rgb(132, 132, 132)">{{ lowerLimitInput }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ upperLimitInput }}</strong> genes</span>
+                                  <span style="margin-left:20px">Contain between <strong style="color:rgb(132, 132, 132)">{{ lowerLimitInput }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ upperLimitInput }}</strong> genes</span>
                                 <br><br>
                                 <strong>GENERAL PANELS </strong>
                                 <br>
-                                  <span style="margin-left:20px">Contains less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
+                                  <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
                               </v-card-text>
                               <v-card-actions>
                                 <v-spacer></v-spacer>
@@ -276,7 +276,7 @@
 
                            <div v-bind:class="[chartComponent==='disorders' ? 'disabledClass' : 'activeClass']">
                              <span class="Rightbar_card_content_subheading">
-                               <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} disorders selected
+                               <strong class="Rightbar_card_content_heading">{{ selectDisorders.length }}</strong> of {{ multiSelectDisorder.length }} conditions selected
                              </span>
                              <SvgBar
                               class="SvgBarClass"
@@ -396,7 +396,7 @@
                                   <center><strong>MODE OF INHERITANCE</strong></center>
                                 </v-flex>
                                 <v-flex xs5>
-                                  <center><strong>DISORDERS</strong></center>
+                                  <center><strong>CONDITIONS</strong></center>
                                 </v-flex>
                               </v-layout>
                               <br>
