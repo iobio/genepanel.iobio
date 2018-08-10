@@ -119,7 +119,7 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: 'Links', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'isAssociatedGene'] },
+        { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'isAssociatedGene'] },
 
       ],
       items: [],
