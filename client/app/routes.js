@@ -7,7 +7,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import axios from 'axios';
-
+import jQueryUi from 'jquery-ui'
 import App from './App.vue'
 import GeneticTestingRegistry from './components/pages/GeneticTestingRegistry.vue';
 import Main from './components/pages/Main.vue'

@@ -60,7 +60,7 @@
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
                         <label>Panels Selection</label>
                         <v-tooltip bottom v-if="!editPanelDefinition">
-                          <span style="cursor:pointer" v-on:click="editPanelDefinition=true" slot="activator"><v-icon>settings</v-icon> </span>
+                          <span style="cursor:pointer" v-on:click="openEditPanelsDefinitionModal" slot="activator"><v-icon>settings</v-icon> </span>
                           <span>Edit Panels Definition</span>
                         </v-tooltip>
 
@@ -95,6 +95,23 @@
                                 <br>
                                   <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
                               </v-card-text>
+                              {{panelsDefinitionValues[0]}} -- {{panelsDefinitionValues[1]}}
+                      <div style="width:  400px; margin-left:50px">
+                        <v-layout row>
+                          <v-flex class="px-3">
+                            <v-range-slider
+                              v-model="panelsDefinitionValues"
+                              :max="100"
+                              :min="0"
+                              :step="1"
+                              thumb-label="always"
+                              track-color="green"
+                              color="yellow"
+                              thumb-color="blue"
+                            ></v-range-slider>
+                          </v-flex>
+                        </v-layout>
+                      </div>
                               <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
@@ -838,9 +855,15 @@ export default {
       upperLimitInput: 45,
       lowerLimitInput: 20,
       associatedGenes: [],
+      panelsDefinitionValues: [20, 45],
+      SetOrangeSlider: false
     }
   },
   watch:{
+    panelsDefinitionValues: function(){
+      var leftWidth = 100 - this.panelsDefinitionValues[1];
+      $('#generalSlider').css('left', `${this.panelsDefinitionValues[1]}%`)
+    },
     selectedPanelFilters: function(){
       console.log("chartComponent", this.chartComponent)
       this.filterPanelsOnselectedPanelFilters();
@@ -978,6 +1001,8 @@ export default {
       this.lowerLimitProps = 20;
       this.upperLimitInput = 45;
       this.upperLimitProps = 45;
+      this.SetOrangeSlider = false;
+      this.panelsDefinitionValues = [20,45];
       this.closeComponentForNewResults();
     });
   },
@@ -989,6 +1014,13 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    openEditPanelsDefinitionModal: function(){
+      this.editPanelDefinition=true;
+      if(this.SetOrangeSlider===false){
+        $( `<div class='v-slider__track orange' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
+        this.SetOrangeSlider = true;
+      }
+    },
     clickedTopPanelFilters: function(){
       this.chartComponent = "PanelFilters";
       this.closeComponentForNewResults();
@@ -1314,6 +1346,8 @@ export default {
     },
     ChangePanelsDefinition: function(){
       this.chartComponent = "PanelsDefinition";
+      this.upperLimitInput = this.panelsDefinitionValues[1];
+      this.lowerLimitInput = this.panelsDefinitionValues[0]
       if(parseInt(this.upperLimitInput)<=parseInt(this.lowerLimitInput)){
         this.panelsAlert = true;
         this.panelAlertText = "The value in General Panel's input should be greater than the value in Specific panel";
@@ -1342,6 +1376,15 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Quicksand:500');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+
+  .v-slider__track__container, .v-slider__track{
+    height:10px !important;
+    border-radius: 5px
+  }
+
+  .v-slider__track-fill{
+    height:10px !important;
+  }
   .toolbar__title{
     /* color: #66D4ED; */
     font-family: 'Quicksand', sans-serif;
