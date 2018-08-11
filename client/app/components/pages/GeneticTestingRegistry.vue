@@ -106,6 +106,25 @@
                               </v-card-text>
                               <!-- <PanelsDefinitionSelector></PanelsDefinitionSelector> -->
                               {{panelsDefinitionValues[0]}}  {{panelsDefinitionValues[1]}}
+                              <v-flex shrink style="width: 60px">
+                                <v-text-field
+                                  v-model="panelsDefinitionValues[1]"
+                                  class="mt-0"
+                                  hide-details
+                                  single-line
+                                  type="number"
+                                ></v-text-field>
+                              </v-flex>
+
+                              <v-flex shrink style="width: 60px">
+                                <v-text-field
+                                v-model="panelsDefinitionValues[0]"
+                                class="mt-0"
+                                hide-details
+                                single-line
+                                type="number"
+                                ></v-text-field>
+                                </v-flex>
                               <div id="EditCard" style="width: 400px; margin-left:50px">
                                 <v-layout row>
                                   <v-flex class="px-3">
@@ -1028,13 +1047,13 @@ export default {
   methods: {
     openEditPanelsDefinitionModal: function(){
       this.editPanelDefinition=true;
-      this.panelsDefinitionValues[1] = this.upperLimitInput;
-      this.panelsDefinitionValues[0] = this.lowerLimitInput;
+      // this.panelsDefinitionValues[1] = this.upperLimitInput;
+      // this.panelsDefinitionValues[0] = this.lowerLimitInput;
+      this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
       console.log("panelsDefinitionValues", this.panelsDefinitionValues[1])
       if(this.SetOrangeSlider===false){
         $( `<div class='v-slider__track orange' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
         if($('.v-input__slot').parents('#EditCard').length===1){
-          // $( `<div class="orange" style='margin-left:-20px; right: auto; width:50px; height:10px; background:orange; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).prependTo( ".v-slider " );
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
           $( `<div class="orange" style='margin-left:-20px; right: auto; width:50px; height:10px; background:orange; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
         }
@@ -1389,10 +1408,14 @@ export default {
     },
     closePanelsDefinitionEdit: function(){
       this.editPanelDefinition = false;
+      // $("#EditCard").remove();
+      // this.SetOrangeSlider = false;
       this.upperLimitInput = this.upperLimitProps;
       this.lowerLimitInput = this.lowerLimitProps;
-      this.panelsDefinitionValues[1] = this.upperLimitInput;
-      this.panelsDefinitionValues[0] = this.lowerLimitInput;
+      // this.panelsDefinitionValues[1] = this.upperLimitInput;
+      // this.panelsDefinitionValues[0] = this.lowerLimitInput;
+      this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
+
 
     }
   }
