@@ -138,6 +138,8 @@ var model = new Model();
     },
     mounted(){
       $( `<div class='v-slider__track orange' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
+      $( `<div class="orange" style='margin-left:-20px; right: auto; width:50px; height:10px; background:orange; display:inline; border-top-right-radius:5px'></div>` ).appendTo( ".v-input__slot " );
+
     },
     updated(){
 
