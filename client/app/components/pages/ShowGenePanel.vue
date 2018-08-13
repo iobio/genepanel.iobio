@@ -123,7 +123,7 @@
                                     </div> -->
                                   </div>
                                   <a v-bind:href="props.item.medGenSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:32px" @click="">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
                                       <v-list-tile-content style="margin-left:10px">
                                         <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
                                       </v-list-tile-content>
@@ -131,7 +131,7 @@
                                   </a>
 
                                   <a v-bind:href="props.item.omimSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:32px" @click="">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
                                       <v-list-tile-content style="margin-left:10px">
                                         <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
                                       </v-list-tile-content>
@@ -139,7 +139,7 @@
                                     </a>
 
                                   <a v-bind:href="props.item.geneCardsSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:32px" @click="">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
                                       <v-list-tile-content style="margin-left:10px">
                                         <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
                                       </v-list-tile-content>
@@ -147,7 +147,7 @@
                                     </a>
 
                                   <a v-bind:href="props.item.ghrSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:32px" @click="">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
                                       <v-list-tile-content style="margin-left:10px">
                                         <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
                                       </v-list-tile-content>
@@ -161,6 +161,7 @@
                                       </v-list-tile-content>
                                     </v-list-tile>
                                   </a>
+                                  <br>
 
                                 <!-- <v-list-tile style="font-size:20px;">
                                   <v-list-tile-content>
@@ -172,25 +173,25 @@
                                   </v-list-tile-action>
                                 </v-list-tile>
 
-                                <v-list-tile style="font-size:14px; height:32px" @click="">
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
                                   <v-list-tile-content style="margin-left:20px">
                                     <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
                                   </v-list-tile-content>
                                 </v-list-tile>
 
-                                <v-list-tile style="font-size:14px; height:32px" @click="">
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
                                   <v-list-tile-content style="margin-left:20px">
                                     <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
                                   </v-list-tile-content>
                                 </v-list-tile>
 
-                                <v-list-tile style="font-size:14px; height:32px" @click="">
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
                                   <v-list-tile-content style="margin-left:20px">
                                     <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
                                   </v-list-tile-content>
                                 </v-list-tile>
 
-                                <v-list-tile style="font-size:14px; height:32px" @click="">
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
                                   <v-list-tile-content style="margin-left:20px">
                                     <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
                                   </v-list-tile-content>
@@ -697,7 +698,7 @@ var model = new Model();
 
 <style>
 .conditionsBox {
-  width: 280px;
+  width: 285px;
   overflow-wrap: break-word;
 }
 

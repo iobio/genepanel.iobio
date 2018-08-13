@@ -84,8 +84,8 @@
                                 </v-flex>
                               </v-layout>
                               <v-card-text style="padding:30px">
-                                <p style="text-align: justify">
-                                  Panels are classified into three categories.
+                                <p style="text-align: justify; margin-top:-20px">
+                                  Panels are classified into three categories:
                                   <p>
                                     <strong><div style="height:12px; width:12px; display:inline-block; background-color:green"></div> &nbsp; Specific panels </strong>  typically target specific conditions, and so contain fewer genes.
                                   </p>
@@ -126,22 +126,31 @@
                                       color="yellow"
                                       thumb-color="primary"
                                     ></v-range-slider>
+
+                                    <div style="margin-top:-28px">
+                                      <span style="margin-left: -2.4px; color:#a5a5a5">|</span>
+                                      <span style="margin-left: 338px; color:#a5a5a5">|</span>
+                                    </div>
                                   </v-flex>
                                 </v-layout>
                               </div>
-                              <p>
-                              <center><v-btn v-if="!showPanelsDistribution" v-on:click="showPanelsDistribution=true" flat small color="gray darken-4">Show Panels Distribution <v-icon color="gray darken-4">keyboard_arrow_down</v-icon> </v-btn></center>
+                              <div style="margin-top:-10px; display:inline; margin-left:50px">
+                                <span style="font-size: 12px" id="position0">0</span>
+                                <span style="margin-left:330px; font-size: 12px">100</span>
+                                <span style="margin-left:27px">&infin;</span>
+                              </div>
+                              <p v-if="!showPanelsDistribution">
+                              <center><v-btn  v-on:click="showPanelsDistribution=true" flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_down</v-icon> Show Panels Distribution <v-icon color="gray darken-4">keyboard_arrow_down</v-icon> </v-btn></center>
                               </p>
                               <v-card-text style="padding:30px" v-if="showPanelsDistribution">
                                 <p style="text-align: justify">
-                                <br>
-                                Spcific panels contain less than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> genes
+                                - Specific panels contain less than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> genes
                                 <br><br>
-                                Moderate panels contain between <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                - Moderate panels contain between <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
                                 <br><br>
-                                General panels contain <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                - General panels contain <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
                                 <br><br>
-                                <center><v-btn v-on:click="showPanelsDistribution=false" flat small color="gray darken-4">Hide Panels Distribution<v-icon color="gray darken-4">keyboard_arrow_up</v-icon> </v-btn></center>
+                                <center><v-btn v-on:click="showPanelsDistribution=false"  flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_up</v-icon> Hide Panels Distribution<v-icon color="gray darken-4">keyboard_arrow_up</v-icon> </v-btn></center>
                                 </p>
                               </v-card-text>
                               <v-layout>
@@ -1070,10 +1079,15 @@ export default {
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
       console.log("panelsDefinitionValues", this.panelsDefinitionValues[1])
       if(this.SetOrangeSlider===false){
-        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
+        // var sliderWidth = $('.v-slider__track__container').width();
+        // console.log("sliderWidth", sliderWidth)
+
+        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( ".v-slider__track-fill " );
+        // $('#position0').append(`<span style='margin-left: ${sliderWidth}%; right: auto;'>100</span>`)
+
         if($('.v-input__slot').parents('#EditCard').length===1){
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
-          $( `<div class="red" style='margin-left:-20px; right: auto; width:50px; height:16px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
+          $( `<div class="red" id="trailingSliderDiv" style='margin-left:-20px; right: auto; width:50px; height:16px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
         }
         else {
           $("#generalSlider").css("left", `${this.panelsDefinitionValues[1]}%`)
