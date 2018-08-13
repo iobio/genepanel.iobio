@@ -65,7 +65,7 @@
                         </v-tooltip>
 
                         <span>
-                          <v-dialog v-model="editPanelDefinition" persistent max-width="550">
+                          <v-dialog v-model="editPanelDefinition" persistent max-width="500">
                             <div>
                             <v-card>
                               <v-card-title class="headline">EDIT PANEL DEFINITION</v-card-title>
@@ -77,19 +77,25 @@
                                 :alertText="panelAlertText"
                               >
                               </Alerts>
-                              <v-card-text>
+                              <v-layout row wrap>
+                                <v-flex xs7 >
+                                </v-flex>
+                                <v-flex xs5 >
+                                </v-flex>
+                              </v-layout>
+                              <v-card-text style="padding:30px">
                                 <p style="text-align: justify">
                                   Panels are classified into three categories.
                                   <p>
-                                    <strong><i>1. Specific</i></strong>  panels typically target specific conditions, and so contain fewer genes.
+                                    <strong><div style="height:12px; width:12px; display:inline-block; background-color:green"></div> &nbsp; Specific panels </strong>  typically target specific conditions, and so contain fewer genes.
                                   </p>
                                   <p>
-                                    <strong><i>2. General</i> </strong> panels are used to test for many different conditions and consequently contain a relatively large number of genes.
+                                    <strong><div style="height:12px; width:12px; display:inline-block; background-color:red"></div> &nbsp; General panels </strong>  are used to test for many different conditions and consequently contain a relatively large number of genes.
                                   </p>
                                   <p>
-                                  <strong><i>3. Moderate</i></strong>  panels are intermediate to these extremes.
+                                  <strong><div style="height:12px; width:12px; display:inline-block; background-color:#FCEA60"></div> &nbsp; Moderate panels </strong>  are intermediate to these extremes.
                                   </p>
-                                  The panels are defined by the number of genes they cover, and can be edited below.
+                                  The panels are defined by the number of genes they cover, and can be edited by using the slider below.
                                 </p>
                                 <!-- <br>
                                 <strong>SPECIFIC PANELS </strong>
@@ -105,26 +111,8 @@
                                   <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span> -->
                               </v-card-text>
                               <!-- <PanelsDefinitionSelector></PanelsDefinitionSelector> -->
-                              {{panelsDefinitionValues[0]}}  {{panelsDefinitionValues[1]}}
-                              <v-flex shrink style="width: 60px">
-                                <v-text-field
-                                  v-model="panelsDefinitionValues[1]"
-                                  class="mt-0"
-                                  hide-details
-                                  single-line
-                                  type="number"
-                                ></v-text-field>
-                              </v-flex>
+                              <!-- {{panelsDefinitionValues[0]}}  {{panelsDefinitionValues[1]}} -->
 
-                              <v-flex shrink style="width: 60px">
-                                <v-text-field
-                                v-model="panelsDefinitionValues[0]"
-                                class="mt-0"
-                                hide-details
-                                single-line
-                                type="number"
-                                ></v-text-field>
-                                </v-flex>
                               <div id="EditCard" style="width: 400px; margin-left:50px">
                                 <v-layout row>
                                   <v-flex class="px-3">
@@ -136,16 +124,45 @@
                                       thumb-label="always"
                                       track-color="green"
                                       color="yellow"
-                                      thumb-color="blue"
+                                      thumb-color="primary"
                                     ></v-range-slider>
                                   </v-flex>
                                 </v-layout>
                               </div>
-                              <v-card-actions>
+                              <p>
+                              <center><v-btn v-if="!showPanelsDistribution" v-on:click="showPanelsDistribution=true" flat small color="gray darken-4">Show Panels Distribution <v-icon color="gray darken-4">keyboard_arrow_down</v-icon> </v-btn></center>
+                              </p>
+                              <v-card-text style="padding:30px" v-if="showPanelsDistribution">
+                                <p style="text-align: justify">
+                                <br>
+                                Spcific panels contain less than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> genes
+                                <br><br>
+                                Moderate panels contain between <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                <br><br>
+                                General panels contain <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                <br><br>
+                                <center><v-btn v-on:click="showPanelsDistribution=false" flat small color="gray darken-4">Hide Panels Distribution<v-icon color="gray darken-4">keyboard_arrow_up</v-icon> </v-btn></center>
+                                </p>
+                              </v-card-text>
+                              <v-layout>
+                                <v-flex xs1></v-flex>
+                                <v-flex xs4>
+                                  <center>
+                                    <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
+                                  </center>
+                                </v-flex>
+                                <v-flex xs4>
+                                  <center>
+                                    <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
+                                  </center>
+                                </v-flex>
+                                <v-flex xs1></v-flex>
+                              </v-layout>
+                              <!-- <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
                                 <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
-                              </v-card-actions>
+                              </v-card-actions> -->
                               <br>
                             </v-card>
                           </div>
@@ -887,7 +904,8 @@ export default {
       lowerLimitInput: 20,
       associatedGenes: [],
       panelsDefinitionValues: [20, 45],
-      SetOrangeSlider: false
+      SetOrangeSlider: false,
+      showPanelsDistribution: false
     }
   },
   watch:{
@@ -1052,10 +1070,10 @@ export default {
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
       console.log("panelsDefinitionValues", this.panelsDefinitionValues[1])
       if(this.SetOrangeSlider===false){
-        $( `<div class='v-slider__track orange' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
+        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
         if($('.v-input__slot').parents('#EditCard').length===1){
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
-          $( `<div class="orange" style='margin-left:-20px; right: auto; width:50px; height:10px; background:orange; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
+          $( `<div class="red" style='margin-left:-20px; right: auto; width:50px; height:16px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
         }
         else {
           $("#generalSlider").css("left", `${this.panelsDefinitionValues[1]}%`)
@@ -1428,12 +1446,12 @@ export default {
 
 
   .v-slider__track__container, .v-slider__track{
-    height:10px !important;
+    height:16px !important;
     /* border-radius: 5px */
   }
 
   .v-slider__track-fill{
-    height:10px !important;
+    height:16px !important;
   }
   .toolbar__title{
     /* color: #66D4ED; */

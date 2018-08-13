@@ -3,27 +3,6 @@
       <v-layout row wrap style="margin-top:-10px;">
         <v-flex d-flex xs12>
           <v-card>
-            <v-card-text>
-              <br><br>
-              {{panelsDefinitionValues[0]}} -- {{panelsDefinitionValues[1]}}
-      <!-- <div style="width:  400px; margin-left:50px">
-        <v-layout row>
-          <v-flex class="px-3">
-            <v-range-slider
-              v-model="panelsDefinitionValues"
-              :max="100"
-              :min="0"
-              :step="1"
-              thumb-label="always"
-              track-color="green"
-              color="yellow"
-              thumb-color="blue"
-            ></v-range-slider>
-          </v-flex>
-        </v-layout>
-      </div> -->
-
-     </v-card-text>
             <v-jumbotron style="height: 310px;" :gradient="gradient" dark>
               <v-container fill-height>
                 <v-layout row wrap>
@@ -136,20 +115,10 @@ var model = new Model();
         panelsDefinitionValues: [20, 45]
       }
     },
-    mounted(){
-      $( `<div class='v-slider__track orange' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto;'></div>` ).insertAfter( ".v-slider__track-fill " );
-      $( `<div class="orange" style='margin-left:-20px; right: auto; width:50px; height:10px; background:orange; display:inline; border-top-right-radius:5px'></div>` ).appendTo( ".v-input__slot " );
-
-    },
     updated(){
 
     },
     watch: {
-      panelsDefinitionValues: function(){
-        console.log("value 3 changed", this.panelsDefinitionValues[1]);
-        var leftWidth = 100 - this.panelsDefinitionValues[1];
-        $('#generalSlider').css('left', `${this.panelsDefinitionValues[1]}%`)
-      }
     },
     methods:{
       getStarted: function(component){
@@ -180,16 +149,16 @@ div.polaroid {
 }
 
 .abc {
-  border-radius: 10px
+  border-radius: 16px
 }
 
 .v-slider__track__container, .v-slider__track{
-  height:10px !important;
+  height:16px !important;
   border-radius: 5px
 }
 
 .v-slider__track-fill{
-  height:10px !important;
+  height:16px !important;
 }
 
 
