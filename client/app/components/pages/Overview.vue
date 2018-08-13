@@ -111,11 +111,9 @@ var model = new Model();
     },
     data(){
       return {
-        gradient: 'to top,  #0D47A1,#42A5F5'
+        gradient: 'to top,  #0D47A1,#42A5F5',
+        panelsDefinitionValues: [20, 45]
       }
-    },
-    mounted(){
-
     },
     updated(){
 
@@ -151,7 +149,17 @@ div.polaroid {
 }
 
 .abc {
-  border-radius: 10px
+  border-radius: 16px
 }
+
+.v-slider__track__container, .v-slider__track{
+  height:16px !important;
+  border-radius: 5px
+}
+
+.v-slider__track-fill{
+  height:16px !important;
+}
+
 
 </style>
