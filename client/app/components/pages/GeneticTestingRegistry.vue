@@ -110,9 +110,6 @@
                                 <br>
                                   <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span> -->
                               </v-card-text>
-                              <!-- <PanelsDefinitionSelector></PanelsDefinitionSelector> -->
-                              <!-- {{panelsDefinitionValues[0]}}  {{panelsDefinitionValues[1]}} -->
-
                               <div id="EditCard" style="width: 400px; margin-left:50px">
                                 <v-layout row>
                                   <v-flex class="px-3">
@@ -169,11 +166,6 @@
                                 </v-flex>
                                 <v-flex xs1></v-flex>
                               </v-layout>
-                              <!-- <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
-                                <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
-                              </v-card-actions> -->
                               <br>
                             </v-card>
                           </div>

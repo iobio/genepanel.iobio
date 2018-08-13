@@ -62,28 +62,59 @@
           <td>
             <v-menu bottom offset-y style="color:black">
               <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
+              <v-card>
+                <div class="conditionsBox">
+                  <v-list>
+                    <div class="v-list__group__header">
+                      <v-list-tile>
+                        <v-list-tile-content>
+                          <v-list-tile-title><strong>  &nbsp;  Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </div>
+                    <a v-bind:href="props.item.medGenSrc" target="_blank">
+                      <v-list-tile style="font-size:14px; height:36px" @click="">
+                        <v-list-tile-content style="margin-left:10px">
+                          <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </a>
 
-              <v-list style="width:250px">
-                <v-list-tile >
-                  <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
-                </v-list-tile>
-                <hr>
-                <v-list-tile >
-                  <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile >
-                  <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile >
-                  <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile >
-                  <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile >
-                  <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
-                </v-list-tile>
-              </v-list>
+                    <a v-bind:href="props.item.omimSrc" target="_blank">
+                      <v-list-tile style="font-size:14px; height:36px" @click="">
+                        <v-list-tile-content style="margin-left:10px">
+                          <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      </a>
+
+                    <a v-bind:href="props.item.geneCardsSrc" target="_blank">
+                      <v-list-tile style="font-size:14px; height:36px" @click="">
+                        <v-list-tile-content style="margin-left:10px">
+                          <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      </a>
+
+                    <a v-bind:href="props.item.ghrSrc" target="_blank">
+                      <v-list-tile style="font-size:14px; height:36px" @click="">
+                        <v-list-tile-content style="margin-left:10px">
+                          <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      </a>
+
+                    <a v-bind:href="props.item.clinGenLink" target="_blank">
+                      <v-list-tile style="font-size:14px; height:38px" @click="">
+                        <v-list-tile-content style="margin-left:10px">
+                          <v-list-tile-title><v-icon>arrow_right</v-icon>ClinGen</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                    </a>
+                    <br>
+                  </v-list>
+                </div>
+              </v-card>
             </v-menu>
           </td>
         </tr>
@@ -119,7 +150,7 @@ import { bus } from '../../routes';
         { text: 'Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'isAssociatedGene'] },
+        { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene'] },
 
       ],
       items: [],

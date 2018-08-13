@@ -587,6 +587,11 @@ import Overview from './Overview.vue'
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+.conditionsBox {
+  width: 285px;
+  overflow-wrap: break-word;
+}
+
 .margin_ActiveTab{
   margin-left: -8px
 }
@@ -682,6 +687,30 @@ aside {
 
 @import ../assets/sass/variables
 
+.Rightbar_CardHeading
+  font-size: 16px
+  font-weight: 550
+
+.Rightbar_card_content_subheading
+  margin-top: 0px
+  margin-bottom: 0px
+  font-size: 16px
+
+.Rightbar_card_content_heading
+  font-size: 26px
+
+.Rightbar_card_divider
+  margin-top: 10px
+  margin-bottom: 10px
+
+.activeCardBox
+    border-bottom: 6px solid $activeCard-border
+    border-top-right-radius: 8px
+    border-top-left-radius: 8px
+
+.rightbarCard
+  border-top-right-radius: 8px
+  border-top-left-radius: 8px
 
 nav.toolbar, nav.v-toolbar
   background-color: $app-color !important

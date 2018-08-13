@@ -365,6 +365,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${this.PhenolyzerGenes[j].geneName}`,
                 geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
                 ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
+                clinGenLink : `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${this.PhenolyzerGenes[j].geneName}`,
+
               })
             }
           }
@@ -432,6 +434,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
           x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
           x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
+          x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
           this.summaryTableArray.push(x);
         })
       }
