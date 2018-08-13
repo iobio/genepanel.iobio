@@ -33,20 +33,6 @@
                           <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
-                          <!-- <div v-if="GtrSearchTerms.length>0">
-                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
-                            {{ i+1 }}. {{ searchItem }}
-                          </v-chip>
-                        </div>
-                        <div v-else>
-                          <v-chip
-                              color="orange"
-                              text-color="white"
-                              disabled>
-                              <v-icon left>error_outline</v-icon>
-                              No disorders searched
-                           </v-chip>
-                        </div> -->
                         </v-card-text>
                       </v-flex>
                       <v-flex xs6>
@@ -157,46 +143,7 @@
                      </v-card-text>
                     </v-card>
                   </div>
-
-                  <!-- <div class="d-flex mt-3 xs12">
-                    <v-card class="rightbarCard" v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
-                      <v-card-text>
-                        <center>
-                          <span class="Rightbar_CardHeading">
-                          GENES SUMMARY
-                          </span>
-                          <v-divider class="Rightbar_card_divider"></v-divider>
-                        </center>
-                        <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
-                          <v-flex xs6>
-                            <div class="Rightbar_card_content_subheading">
-                              {{ item.name }}
-                            </div>
-                          </v-flex>
-                          <v-flex xs6>
-                            <div>
-                              <SummarySvgBar
-                               class="SvgBarClass"
-                               id="genesbar"
-                               :selectedNumber="item.count"
-                               :totalNumber="totalGenes">
-                              </SummarySvgBar>
-                            </div>
-                          </v-flex>
-                        </v-layout>
-                      </v-card-text>
-                    </v-card>
-                  </div> -->
                   <br>
-                  <!-- <div class="d-flex mb-2 xs12">
-                      <v-card v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
-                        <SummaryPieChart
-                          v-bind:summaryPieChartData="pieChartdataArr"
-                          :color="chartColor">
-                        </SummaryPieChart>
-                      </v-card>
-                  </div> -->
-
                 </v-flex>
 
                 <!-- end side bar -->
@@ -215,7 +162,6 @@
 import SummaryPieChart from '../viz/SummaryPieChart.vue';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
-import FilterSummary from './FilterSummary.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import Dialogs from '../partials/Dialogs.vue';
@@ -228,7 +174,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
     components: {
       'SummaryPieChart': SummaryPieChart,
       'SummaryDataTable': SummaryDataTable,
-      'FilterSummary': FilterSummary,
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       'Alerts': Alerts,
@@ -350,6 +295,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
         var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
         this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
+        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
 
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
@@ -362,6 +308,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 sourceGTR: y.searchTermIndexSVG,
                 searchTermArrayGTR: y.searchTermArray,
                 searchTermIndexGTR: y.searchTermIndex,
+                isAssociatedGene: y.isAssociatedGene,
               })
             }
           })
@@ -431,10 +378,10 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           for(var j=0; j<this.GtrGenes.length; j++){
             if(tempA[i].name===this.GtrGenes[j].name){
               tempA[i].sourceGTR = this.GtrGenes[j].searchTermIndexSVG
+              tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene
             }
           }
         }
-
 
         var arr=[];
         arr.push(tempA.map(x=>{
@@ -446,6 +393,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             noOfSources: 2,
             sourceGTR: x.sourceGTR,
             sourcePheno: x.sourcePheno,
+            isAssociatedGene: x.isAssociatedGene,
           }
         }))
 
@@ -457,7 +405,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sources: "GTR",
             noOfSources: 1,
             sourceGTR: x.sourceGTR,
-            sourcePheno: []
+            sourcePheno: [],
+            isAssociatedGene: x.isAssociatedGene,
           }
         }))
 
@@ -485,9 +434,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
           this.summaryTableArray.push(x);
         })
-
-        console.log(this.summaryTableArray)
-
       }
     }
   }

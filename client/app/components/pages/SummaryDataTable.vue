@@ -26,14 +26,12 @@
             :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
 
           >
-            <!-- <v-icon>arrow_upward</v-icon> -->
             {{ header.text }}
           </th>
 
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
         <tr :active="props.selected">
           <td>
             <v-checkbox
@@ -44,14 +42,13 @@
             ></v-checkbox>
           </td>
 
-          <td>{{ props.item.indexVal}}</td>
+          <td>{{ props.item.SummaryIndex}}</td>
           <td>
             <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+            <span v-if="props.item.isAssociatedGene===true">
+              <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
+            </span>
           </td>
-          <!-- <td>
-            <span v-if="props.item.isGtr"><v-icon >check_circle</v-icon></span>
-            <span v-else></span>
-          </td> -->
           <td>
             <span v-for="x in props.item.sourceGTR">
               <span v-html="x"></span>
@@ -89,16 +86,9 @@
               </v-list>
             </v-menu>
           </td>
-          <!-- <td>
-            <span v-if="props.item.isPheno"><v-icon >check_circle</v-icon></span>
-            <span v-else></span>
-          </td> -->
         </tr>
       </template>
       <template slot="footer">
-      <!-- <td colspan="100%">
-        <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
-      </td> -->
     </template>
     </v-data-table>
   </div>
@@ -118,33 +108,31 @@ import { bus } from '../../routes';
     },
     data: () => ({
       pagination: {
-        sortBy: 'indexVal',
+        sortBy: 'SummaryIndex',
         rowsPerPage: 25 //Sets the number of rows per page
       },
       tmp: '',   //For searching the rows in data table
       search: '',  //For searching the rows in data table
       selected: [],
       headers: [
-        { text: 'Index', align: 'left', sortable: false, value:'indexVal' },
+        { text: 'Index', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Name', align: 'left', sortable: false, value:'name' },
-        // { text: 'Sources', align: 'center', sortable: false, value: 'sources' },
-        // { text: 'GTR', align: 'left', sortable: false, value: 'isGtr' },
         { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: 'Links', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc'] },
+        { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'isAssociatedGene'] },
 
       ],
       items: [],
       tableData:[],
-      selectedGenesText: ""
+      selectedGenesText: "",
+      associatedGenesData : [],
     }),
     watch: {
       summaryTableData: function(){
-        this.tableData = this.summaryTableData;
-        console.log("this.summaryTableData", this.summaryTableData)
-        this.items = this.tableData;
-        this.selected = this.items.slice();
-        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        console.log("Watching")
+        // this.tableData = this.summaryTableData;
+        // console.log("this.summaryTableData", this.summaryTableData);
+        this.addTableData();
       },
       geneSearch: function(){
         this.search = this.geneSearch;
@@ -152,12 +140,13 @@ import { bus } from '../../routes';
 
     },
     mounted(){
-      console.log("this.summaryTableData", this.summaryTableData)
-      this.tableData = this.summaryTableData;
-      this.items = this.tableData;
-      this.selected = this.items.slice();
-      this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
-      bus.$emit("updateAllGenes", this.selected);
+      console.log("mounted")
+      // this.tableData = this.summaryTableData;
+      this.addTableData();
+      // this.items = this.tableData;
+      // this.selected = this.items.slice();
+      // this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+      // bus.$emit("updateAllGenes", this.selected);
     },
     updated(){
       bus.$on('deSelectAllSummaryGenesBus', (data)=>{
@@ -179,6 +168,39 @@ import { bus } from '../../routes';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      addTableData(){
+        var xtableData = [];
+        this.tableData = this.summaryTableData;
+        // xtableData = this.tableData;
+        var associatedGenes = [];
+        var nonAssociatedGenes = [];
+
+        this.tableData.map(x=>{
+          if(x.isAssociatedGene===true){
+            associatedGenes.push(x);
+          }
+          else{
+            nonAssociatedGenes.push(x);
+          }
+        })
+        this.associatedGenesData = associatedGenes;
+
+        if(associatedGenes.length){
+          this.items = [...associatedGenes, ...nonAssociatedGenes];
+        }
+        else {
+          this.items = this.tableData;
+        }
+
+        this.items.map((x,i)=>{
+          x.SummaryIndex = i + 1;
+        })
+
+        this.selected = this.items.slice();
+        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        bus.$emit("updateAllGenes", this.selected);
+
+      },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["name"], search));

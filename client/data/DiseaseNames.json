@@ -15849,10 +15849,6 @@
    "ConceptID": "C1510586"
  },
  {
-   "DiseaseName": "Autism specturm disorder",
-   "ConceptID": "CN244028"
- },
- {
    "DiseaseName": "Autism, susceptibility to, 14a",
    "ConceptID": "C3552491"
  },
@@ -90803,10 +90799,6 @@
  {
    "DiseaseName": "Smith-Magenis syndrome",
    "ConceptID": "C0795864"
- },
- {
-   "DiseaseName": "Smith-Magenis Syndrome-like",
-   "ConceptID": "CN238491"
  },
  {
    "DiseaseName": "Smith-McCort dysplasia 1",

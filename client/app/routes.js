@@ -7,7 +7,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import axios from 'axios';
-
+import jQueryUi from 'jquery-ui'
 import App from './App.vue'
 import GeneticTestingRegistry from './components/pages/GeneticTestingRegistry.vue';
 import Main from './components/pages/Main.vue'
@@ -17,13 +17,8 @@ import { Typeahead } from 'uiv';
 
 import * as uiv from 'uiv';
 
-// import BackToTop from 'vue-backtotop'
-
-
 import Clipboard from 'v-clipboard';
 var FileSaver = require('file-saver');
-
-
 
 Vue.use(uiv)
 
@@ -34,18 +29,11 @@ require('../app/components/assets/css/siteVuetify.css');
 //Selectize
 require('../app/components/assets/js/selectize.js')
 
-
-
 //Use vuetify
 // Vue.use(Vuetify)
 
-
-
 //Use typeahead
 Vue.use(Typeahead)
-
-
-
 
 
 //Use router

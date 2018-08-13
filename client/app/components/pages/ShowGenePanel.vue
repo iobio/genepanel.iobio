@@ -24,11 +24,10 @@
         v-model="alertAssociatedInfo"
         dismissible
         color="blue darken-1"
-        icon="verified_user"
         outline
-        style="width:65%; border-style:none; border-color:white !important; border:0px !important"
+        style="width:90%; border-style:none; border-color:white !important; border:0px !important"
       >
-        The icon in the table indicates associated genes for the disorder.
+        Genes marked with the <v-icon style="font-size:20px">verified_user</v-icon> icon are reported to be associated with the condition; it is possible that they do not appear on any panels that test for the condition. These genes will always appear at the top of the gene list.
       </v-alert>
 
       <v-data-table
@@ -84,40 +83,10 @@
                   </span>
                   <span v-if="props.item.isAssociatedGene===true">
                     <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
-                    <!-- <img style="height:25px; margin-top:-10px; margin-left:5px" src="../assets/images/associatedGenesGlyph.svg"> -->
-                    <!-- <svg height="30" width="30">
-                        <circle class="sourceIndicator"  />
-                      <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">A.G</text>
-                    </svg> -->
                   </span>
-
-
-                  <!-- <v-menu open-on-hover top offset-y>
-                    <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
-                      <v-card>
-                        <div class="conditionsBox">
-                          <v-card-text style="margin-top:-22px">
-                            <center ><h3>{{ props.item.name }}</h3></center>
-                            <hr>
-                            <div><strong>Conditions: </strong></div>
-                            {{props.item.conditions}}
-                            <hr>
-                            <div><strong>Resources: </strong></div>
-                            <ul style="margin-left:25px; margin-top:5px">
-                              <li><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></li>
-                              <li><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></li>
-                              <li><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></li>
-                              <li><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></li>
-                              <li><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></li>
-                            </ul>
-                          </v-card-text>
-                        </div>
-                      </v-card>
-                  </v-menu> -->
                 </div>
               </div>
             </td>
-            <!-- <td>{{ props.item.searchTermIndex }}</span></td> -->
             <td v-if="multipleSearchDisorders.length>1">
               <span v-for="x in props.item.searchTermIndexSVG">
                 <span v-html="x"></span>
@@ -133,7 +102,113 @@
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                 <v-card>
                     <div class="conditionsBox">
-                      <v-card-text style="margin-top:-22px">
+                      <!-- <center ><h4><strong></strong></h4></center> -->
+                            <v-list>
+                                <!-- <v-list-tile >
+                                  <v-list-tile-content>
+                                    <v-list-tile-title><v-icon>local_activity</v-icon>Conditions</v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile> -->
+                                <div class="v-list__group__header">
+                                  <!-- <div class="v-list__group__header__prepend-icon">
+                                    <v-icon>link</v-icon>
+                                  </div> -->
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-title><strong>  &nbsp;  Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
+                                    </v-list-tile-content>
+                                    </v-list-tile>
+                                    <!-- <div class="v-list__group__header__append-icon">
+                                      <v-icon>keyboard_arrow_down</v-icon>
+                                    </div> -->
+                                  </div>
+                                  <a v-bind:href="props.item.medGenSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                  </a>
+
+                                  <a v-bind:href="props.item.omimSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    </a>
+
+                                  <a v-bind:href="props.item.geneCardsSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    </a>
+
+                                  <a v-bind:href="props.item.ghrSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    </a>
+
+                                  <a v-bind:href="props.item.clinGenLink" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:38px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>ClinGen</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                  </a>
+                                  <br>
+
+                                <!-- <v-list-tile style="font-size:20px;">
+                                  <v-list-tile-content>
+                                    <v-list-tile-title style="height:40px"><strong> <v-icon medium color="gray darken-3">link</v-icon> &nbsp;  Links </strong></v-list-tile-title>
+                                  </v-list-tile-content>
+
+                                  <v-list-tile-action>
+                                    <v-icon>keyboard_arrow_down</v-icon>
+                                  </v-list-tile-action>
+                                </v-list-tile>
+
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
+                                  <v-list-tile-content style="margin-left:20px">
+                                    <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
+                                  <v-list-tile-content style="margin-left:20px">
+                                    <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
+                                  <v-list-tile-content style="margin-left:20px">
+                                    <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <v-list-tile style="font-size:14px; height:36px" @click="">
+                                  <v-list-tile-content style="margin-left:20px">
+                                    <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <v-list-tile style="font-size:14px; height:38px" @click="">
+                                  <v-list-tile-content style="margin-left:20px">
+                                    <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+ -->
+
+
+
+                            </v-list>
+
+                      <!-- <v-card-text style="margin-top:-22px">
                         <center ><h3>{{ props.item.name }}</h3></center>
                         <hr>
                         <div><strong>Conditions: </strong></div>
@@ -143,7 +218,6 @@
                           <v-list-tile >
                             <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
                           </v-list-tile>
-                          <hr>
                           <v-list-tile >
                             <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
                           </v-list-tile>
@@ -160,20 +234,14 @@
                             <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
                           </v-list-tile>
                         </v-list>
-                      </v-card-text>
+                      </v-card-text> -->
                       </div>
                 </v-card>
 
               </v-menu>
             </td>
-            <!-- <td style="font-size:0">{{ props.item.value }}</td> -->
           </tr>
         </template>
-        <!-- <template slot="footer">
-        <td colspan="100%">
-          <strong>{{ selected.length}} of {{ items.length }} genes selected</strong>
-        </td>
-      </template> -->
       </v-data-table>
   </div>
 </template>
@@ -228,13 +296,6 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
-          // {
-          //   text: 'Index',
-          //   align: 'left',
-          //   sortable: false,
-          //   value: 'key',
-          //   helpText: 'Information'
-          // },
           { text: 'Index', align: 'left', value: 'indexVal' },
           {
             text: 'Name',
@@ -242,21 +303,12 @@ var model = new Model();
             sortable: false,
             value: 'name'
           },
-          // { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
           {
-            text: 'Lnks',
+            text: '',
             align: 'left',
             sortable: false,
             value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene'] },
-          // {
-          //   text: '',
-          //   value: ['haploScore', 'value', 'omimSrc', 'clinGenLink'],
-          //   width: '10%',
-          //   class: 'headerWidth',
-          //   visibility: 'hidden-lg-only'
-          //
-          //  },
         ],
         items: [],
         GenesFromD3Bars: [],
@@ -289,14 +341,7 @@ var model = new Model();
 
     },
     updated(){
-      // console.log("this.selected from Show Genes ", this.selected.map(gene=> {
-      //    var x =  gene.name;
-      //    //.toString().replace(/,/gi , ' ')
-      //    return x.toString() ;
-      // }) );
-
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
-
 
       bus.$on('deSelectAllGenesBus', ()=>{
         this.deSelectAllGenes();
@@ -316,7 +361,6 @@ var model = new Model();
       })
 
       bus.$on("updateFromGenesHistogram", (data, count)=>{
-        // console.log("updateFromGenesHistogram", data);
         if(count>1){
           this.selected = data;
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -360,7 +404,7 @@ var model = new Model();
             { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
             {
-              text: 'Lnks',
+              text: '',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
@@ -377,7 +421,7 @@ var model = new Model();
             },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
             {
-              text: 'Lnks',
+              text: '',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
@@ -435,7 +479,6 @@ var model = new Model();
       },
       addSelectedGenesFromD3(selectedGeneNames){
         this.GenesFromD3Bars = selectedGeneNames;
-        // console.log("this.GenesFromD3Bars", this.GenesFromD3Bars)
       },
       copy () { //Copy to clipboard
         var geneNames = this.selected.map(gene => {
@@ -464,21 +507,10 @@ var model = new Model();
       },
       drawHtmlData: function(width){
         return "<span style='color:#4e7ad3'><i>Not on any panels </i><span>"
-        // if(width===undefined){
-        //   width = 850;
-        // }
-        // console.log("tableWidth", width);
-        // var svgWidth = Math.abs(width -770)+30 ;
-        // var barWidth = Math.abs(width-770-10);
-        // return `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
-        //               <rect stroke="#4e7ad3" stroke-width="2" fill="#ffffff00"
-        //                     x="1" y="1" rx="5" width="${svgWidth}" height="16"/>
-        //           </svg>`;
       },
       AddGeneData: function(){
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
-        // console.log("this.GetGeneData", this.GetGeneData);
         this.associatedGenesData = this.associatedGenes;
         if(this.associatedGenesData.length){
           this.associatedGenesData.map(x=>{
@@ -487,8 +519,7 @@ var model = new Model();
             x.geneCardsSrc= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
             x.ghrSrc= `https://ghr.nlm.nih.gov/gene/${x.name}`;
             x.clinGenLink= `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
-            // x.htmlData = "<i>Associated Gene</i>";
-             x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
+            x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
             x.isAssociatedGene = true;
             x.value = 0;
           })
@@ -496,33 +527,19 @@ var model = new Model();
         console.log("associatedGenes", this.associatedGenesData)
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
-        // console.log("this.multipleSearchDisorders", this.multipleSearchDisorders)
         this.DataToIncludeSearchTerms = this.GeneData;
 
         this.arrangedSearchData = this.searchTermsForGeneId(this.DataToIncludeSearchTerms);
-        // console.log("this.arrangedSearchData", this.arrangedSearchData)
-
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        // console.log("mergedGenes", mergedGenes);
-
-        // this.GenesToDisplay = mergedGenes;
-        // console.log("data is ", this.GenesToDisplay)
-
-
-        // console.log('mergedGenes', mergedGenes)
-
         let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
-        // console.log("data is ", data[50].geneid)
         this.GenesToDisplay = data;
-        // console.log("this.GenesToDisplay", this.GenesToDisplay);
 
         this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay);
 
         if(this.associatedGenesData.length){
           this.associatedGenesData.map(x=>{
             var checkIfAssociatedGeneExist = obj => obj.name === x.name;
-            // console.log("checkIfAssociatedGeneExist", data.some(checkIfAssociatedGeneExist))
             if(data.some(checkIfAssociatedGeneExist)){
               var genes = [];
               data.map(y=>{
@@ -552,10 +569,8 @@ var model = new Model();
         }
 
         this.noOfSourcesSvg();
-        console.log(this.items)
-        // let dataWithClinGenFlag = model.getClinGenFlag(data);
-        // this.items = dataWithClinGenFlag;
         this.selected = this.items.slice(0,50);
+        console.log("this.selected", this.selected)
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
@@ -613,19 +628,9 @@ var model = new Model();
         for(var key in dupsObj){
           newGeneArr.push(dupsObj[key])
         }
-
-        // var obj = {};
-        // for(var i=0; i<newGeneArr.length; i++){
-        //   if(obj[newGeneArr[i].geneid]===undefined){
-        //     obj[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
-        //   }
-        // }
-        //
-
         var obj = {};
         for(var i=0; i<newGeneArr.length; i++){
           if(obj[newGeneArr[i].geneid]===undefined){
-            // obj1[newGeneArr[i].geneid] = newGeneArr[i].searchTermIndex;
             obj[newGeneArr[i].geneid] = {
               index: newGeneArr[i].searchTermIndex,
               terms: newGeneArr[i].searchTermArray
@@ -658,7 +663,6 @@ var model = new Model();
                 </svg> `
           })
         });
-        // console.log(this.items)
       },
       selectAllGenes: function(){
         this.selected = this.items.slice();
@@ -693,17 +697,8 @@ var model = new Model();
 </script>
 
 <style>
-/*
-.genepanelsRect{
-  fill: #ffffff00;
-  pointer-events: all;
-}
-.genepanelsRect:hover{
-  fill: #D04F4C;
-} */
-
 .conditionsBox {
-  width: 380px;
+  width: 285px;
   overflow-wrap: break-word;
 }
 
