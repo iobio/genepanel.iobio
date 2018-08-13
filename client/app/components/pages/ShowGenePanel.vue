@@ -386,12 +386,11 @@ var model = new Model();
         this.selectNumberOfTopGenes();
       },
       geneSearch: function(){
-        console.log(this.geneSearch)
         this.search = this.geneSearch;
       },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
-        console.log("this.multipleSearchItems", this.multipleSearchItems.length)
+        // console.log("this.multipleSearchItems", this.multipleSearchItems.length)
         if(this.multipleSearchItems.length>=2){
           this.headers = [
             { text: 'Index', align: 'left', value: 'indexVal' },
@@ -524,7 +523,6 @@ var model = new Model();
             x.value = 0;
           })
         }
-        console.log("associatedGenes", this.associatedGenesData)
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
         this.DataToIncludeSearchTerms = this.GeneData;
@@ -570,7 +568,7 @@ var model = new Model();
 
         this.noOfSourcesSvg();
         this.selected = this.items.slice(0,50);
-        console.log("this.selected", this.selected)
+        // console.log("this.selected", this.selected)
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
