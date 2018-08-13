@@ -144,11 +144,13 @@
                               </p>
                               <v-card-text style="padding:30px" v-if="showPanelsDistribution">
                                 <p style="text-align: justify">
+                                  <strong>Panels Distribution: </strong>
+                                  <br>
                                 - Specific panels contain less than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> genes
-                                <br><br>
+                                <br>
                                 - Moderate panels contain between <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
-                                <br><br>
-                                - General panels contain <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                <br>
+                                - General panels contain more than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
                                 <br><br>
                                 <center><v-btn v-on:click="showPanelsDistribution=false"  flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_up</v-icon> Hide Panels Distribution<v-icon color="gray darken-4">keyboard_arrow_up</v-icon> </v-btn></center>
                                 </p>
@@ -1466,6 +1468,13 @@ export default {
 
   .v-slider__track-fill{
     height:16px !important;
+    /* transition: 0s !important; */
+    /* transition: .0s cubic-bezier(.25,.8,.5,1) !important; */
+    /* transition-delay: 2s !important; */
+  }
+
+  .v-slider__track, .v-slider__track-fill{
+    transition: none !important;
   }
   .toolbar__title{
     /* color: #66D4ED; */

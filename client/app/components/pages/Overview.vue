@@ -159,7 +159,11 @@ div.polaroid {
 
 .v-slider__track-fill{
   height:16px !important;
+  transition: .0s  !important;
 }
 
+.v-slider__track, .v-slider__track-fill{
+  transition: none !important;
+}
 
 </style>
