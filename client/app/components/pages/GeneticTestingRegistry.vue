@@ -93,7 +93,7 @@
                                     <strong><div style="height:12px; width:12px; display:inline-block; background-color:red"></div> &nbsp; General panels </strong>  are used to test for many different conditions and consequently contain a relatively large number of genes.
                                   </p>
                                   <p>
-                                  <strong><div style="height:12px; width:12px; display:inline-block; background-color:#FCEA60"></div> &nbsp; Moderate panels </strong>  are intermediate to these extremes.
+                                  <strong><div style="height:12px; width:12px; display:inline-block; background-color:#ffab00"></div> &nbsp; Moderate panels </strong>  are intermediate to these extremes.
                                   </p>
                                   The panels are defined by the number of genes they cover, and can be edited by using the slider below.
                                 </p>
@@ -123,7 +123,7 @@
                                       :step="1"
                                       thumb-label="always"
                                       track-color="green"
-                                      color="yellow"
+                                      color="amber accent-4"
                                       thumb-color="primary"
                                     ></v-range-slider>
 
@@ -921,7 +921,6 @@ export default {
   },
   watch:{
     panelsDefinitionValues: function(){
-      console.log("watching panelsDefinitionValues")
       var leftWidth = 100 - this.panelsDefinitionValues[1];
       $('#generalSlider').css('left', `${this.panelsDefinitionValues[1]}%`)
     },
@@ -938,9 +937,6 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
-      console.log("Vendors watching");
-      console.log("this.multiSelectPanels.length in vendors watch 1", this.multiSelectPanels.length)
-
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -964,10 +960,8 @@ export default {
           this.saveSelectedVendors = [];
         }
       }
-      console.log("this.multiSelectPanels.length in vendors watch 2", this.multiSelectPanels.length)
     },
     selectedPanelsInCheckBox(val){
-      console.log("watching selectedPanelsInCheckBox and this.multiSelectPanels.length", this.multiSelectPanels.length)
       if(this.chartComponent==='GeneMembership' || this.chartComponent==="PanelFilters"){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
@@ -1002,7 +996,6 @@ export default {
     }
   },
   updated(){
-    console.log("updated - this.multiSelectPanels.length", this.multiSelectPanels.length)
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
@@ -1076,16 +1069,9 @@ export default {
   methods: {
     openEditPanelsDefinitionModal: function(){
       this.editPanelDefinition=true;
-      // this.panelsDefinitionValues[1] = this.upperLimitInput;
-      // this.panelsDefinitionValues[0] = this.lowerLimitInput;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
-      console.log("panelsDefinitionValues", this.panelsDefinitionValues[1])
       if(this.SetOrangeSlider===false){
-        // var sliderWidth = $('.v-slider__track__container').width();
-        // console.log("sliderWidth", sliderWidth)
-
         $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( ".v-slider__track-fill " );
-        // $('#position0').append(`<span style='margin-left: ${sliderWidth}%; right: auto;'>100</span>`)
 
         if($('.v-input__slot').parents('#EditCard').length===1){
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
@@ -1103,7 +1089,6 @@ export default {
       this.closeComponentForNewResults();
     },
     filterPanelsOnselectedPanelFilters: function(){
-      console.log("inside filterPanelsOnselectedPanelFilters and multiSelectPanels length", this.multiSelectPanels.length )
       var temp = [];
       this.selectedPanelFilters.map(x=>{
         this.multiSelectPanels.map(y=>{
