@@ -102,6 +102,7 @@
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                 <v-card>
                     <div class="conditionsBox">
+                      <!-- <center ><h4><strong></strong></h4></center> -->
                             <v-list>
                                 <!-- <v-list-tile >
                                   <v-list-tile-content>
@@ -109,52 +110,57 @@
                                   </v-list-tile-content>
                                 </v-list-tile> -->
                                 <div class="v-list__group__header">
-                                  <div class="v-list__group__header__prepend-icon">
+                                  <!-- <div class="v-list__group__header__prepend-icon">
                                     <v-icon>link</v-icon>
-                                  </div>
+                                  </div> -->
                                   <v-list-tile>
                                     <v-list-tile-content>
-                                      <v-list-tile-title><strong>  &nbsp;  Links </strong></v-list-tile-title>
+                                      <v-list-tile-title><strong>  &nbsp;  Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
                                     </v-list-tile-content>
                                     </v-list-tile>
-                                    <div class="v-list__group__header__append-icon">
+                                    <!-- <div class="v-list__group__header__append-icon">
                                       <v-icon>keyboard_arrow_down</v-icon>
-                                    </div>
+                                    </div> -->
                                   </div>
-
+                                  <a v-bind:href="props.item.medGenSrc" target="_blank">
                                     <v-list-tile style="font-size:14px; height:32px" @click="">
-                                      <a v-bind:href="props.item.medGenSrc" target="_blank" class="v-list__tile v-list__tile--link">
-                                      <v-list-tile-content style="margin-left:20px">
+                                      <v-list-tile-content style="margin-left:10px">
                                         <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
                                       </v-list-tile-content>
-                                      </a>
                                     </v-list-tile>
+                                  </a>
 
+                                  <a v-bind:href="props.item.omimSrc" target="_blank">
                                     <v-list-tile style="font-size:14px; height:32px" @click="">
-                                      <v-list-tile-content style="margin-left:20px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
                                       </v-list-tile-content>
                                     </v-list-tile>
+                                    </a>
 
+                                  <a v-bind:href="props.item.geneCardsSrc" target="_blank">
                                     <v-list-tile style="font-size:14px; height:32px" @click="">
-                                      <v-list-tile-content style="margin-left:20px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
                                       </v-list-tile-content>
                                     </v-list-tile>
+                                    </a>
 
+                                  <a v-bind:href="props.item.ghrSrc" target="_blank">
                                     <v-list-tile style="font-size:14px; height:32px" @click="">
-                                      <v-list-tile-content style="margin-left:20px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
                                       </v-list-tile-content>
                                     </v-list-tile>
+                                    </a>
 
+                                  <a v-bind:href="props.item.clinGenLink" target="_blank">
                                     <v-list-tile style="font-size:14px; height:38px" @click="">
-                                      <v-list-tile-content style="margin-left:20px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>ClinGen</v-list-tile-title>
                                       </v-list-tile-content>
                                     </v-list-tile>
-
-
+                                  </a>
 
                                 <!-- <v-list-tile style="font-size:20px;">
                                   <v-list-tile-content>
@@ -691,7 +697,7 @@ var model = new Model();
 
 <style>
 .conditionsBox {
-  width: 380px;
+  width: 280px;
   overflow-wrap: break-word;
 }
 
