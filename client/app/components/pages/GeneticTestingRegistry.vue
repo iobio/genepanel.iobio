@@ -535,6 +535,7 @@
                                      <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of panels {{ multiSelectPanels.length }} selected
                                    </span>
                                    <SvgBar
+                                    v-if="multiSelectPanels.length"
                                     class="SvgBarClass"
                                     id="panelssvgbar"
                                     :selectedNumber="selectedPanelsInCheckBox.length"
@@ -555,8 +556,9 @@
                                           <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of {{ multiSelectPanels.length }} panels selected
                                         </span>
                                         <SvgBar
+                                         v-if="multiSelectPanels.length"
                                          class="SvgBarClass"
-                                         id="disordersSvgBoxInside"
+                                         id="panelsSvgBoxInside"
                                          :selectedNumber="selectedPanelsInCheckBox.length"
                                          :totalNumber="multiSelectPanels.length">
                                         </SvgBar>
