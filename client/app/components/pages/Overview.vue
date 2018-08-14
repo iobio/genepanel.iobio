@@ -35,7 +35,7 @@
         </v-flex>
       </v-layout>
       <v-layout row wrap style="margin-left:15px; margin-right:15px;" id="gtr">
-        <v-flex xs6>
+        <v-flex xs12 md12 sm12 lg6 xl6 >
           <v-flex  style="margin-top:40px">
             <v-container >
               <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/ncbi.png" alt="NCBI logo" style="height:65px; width:55px;"> Genetic Testing Registry</h2>
@@ -55,7 +55,7 @@
           </v-flex>
         </v-flex>
 
-        <v-flex xs6>
+        <v-flex xs12 md12 sm12 lg5 xl5>
           <v-flex text-xs-center>
               <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/bg9.svg" alt="bg">
           </v-flex>
@@ -64,12 +64,12 @@
       </v-layout>
       <v-divider></v-divider>
       <v-layout row wrap style="margin-left:15px; margin-right:15px;" id="phenolyzer">
-        <v-flex xs6>
+        <v-flex xs12 md12 sm12 lg6 xl6>
           <v-flex text-xs-center>
               <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/phenolyzer1bg.svg" alt="bg">
           </v-flex>
         </v-flex>
-        <v-flex xs6>
+        <v-flex xs12 md12 sm12 lg5 xl5>
           <v-flex  style="margin-top:40px">
             <v-container >
               <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/phenolyzer_icon_active.svg" alt="NCBI logo" style="height:65px; width:55px;"> Phenolyzer</h2>

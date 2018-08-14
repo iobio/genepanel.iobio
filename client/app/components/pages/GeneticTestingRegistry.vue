@@ -21,7 +21,7 @@
                 <v-card-text style="margin-bottom:-5px">
                   <h3>Genetic Testing Registry</h3>
                   <v-layout row wrap>
-                    <v-flex xs12 sm12 md12 lg8>
+                    <v-flex xs12 sm12 md12 lg8 xl8>
                       <DisorderSearch
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
@@ -30,7 +30,7 @@
                       </DisorderSearch>
                     </v-flex>
 
-                    <v-flex xs12 sm12 md12 lg4 >
+                    <v-flex  >
                       <div style="display:inline-block; padding-top:5px;">
                         <label>Genes</label>
                         <input
@@ -240,7 +240,7 @@
                     </v-flex>
 
 
-                   <v-flex xs4 class="pr-2 pl-2" >
+                   <div v-bind:class="[browser==='Chrome' || browser==='Firefox' ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
 
                      <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
@@ -409,7 +409,7 @@
                                       </span>
                                     </v-tooltip>
                                   </v-flex>
-                                  <v-flex xs5>
+                                  <v-flex >
                                     <div>
                                       <DisordersGeneBar
                                        v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
@@ -472,7 +472,7 @@
                                   <v-checkbox style="margin-top:-5px" :label="item._modeOfInheritance" :value="item._modeOfInheritance" v-model="selectedModesOfInheritance">
                                   </v-checkbox>
                                 </v-flex>
-                                <v-flex xs5>
+                                <v-flex>
                                   <div>
                                     <ModesSvgBar
                                      v-if="multiSelectDisorder.length>0 && chartComponent==='disorders'"
@@ -570,7 +570,7 @@
                                         <v-flex xs1>
                                           <strong style="font-size:11px">GENES</strong>
                                         </v-flex>
-                                        <v-flex x3>
+                                        <v-flex>
                                           <center><strong style="font-size:11px">CONDITIONS</strong></center>
                                         </v-flex>
                                       </v-layout>
@@ -601,7 +601,7 @@
                                             </center>
 
                                           </v-flex>
-                                          <v-flex xs3>
+                                          <v-flex xs>
                                             <center>
                                               <PanelsConditions
                                               v-if="chartComponent==='GeneMembership'"
@@ -732,7 +732,7 @@
               </div>
                     <!-- end vendor card -->
 
-               </v-flex>
+               </div>
               </v-layout>
             </v-flex>
 
@@ -910,7 +910,8 @@ export default {
       associatedGenes: [],
       panelsDefinitionValues: [20, 45],
       SetOrangeSlider: false,
-      showPanelsDistribution: false
+      showPanelsDistribution: false,
+      browser: null,
     }
   },
   watch:{
@@ -1056,11 +1057,29 @@ export default {
   created () {
     this.IntroductionTextData = IntroductionText.data[0];
     window.addEventListener('scroll', this.handleScroll);
+    this.detectBrowser();
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    detectBrowser: function(){
+      if(navigator.userAgent.indexOf('Chrome') > -1){
+        this.browser = "Chrome";
+      }
+      else if(navigator.userAgent.indexOf('Firefox') > -1) {
+        this.browser = "Firefox";
+      }
+      else if(navigator.userAgent.indexOf('Safari') > -1){
+        this.browser = "Safari";
+      }
+      else if(navigator.userAgent.indexOf('MSIE') > -1){
+        this.browser = "IE";
+      }
+      else {
+        this.browser = "Chrome";
+      }
+    },
     openEditPanelsDefinitionModal: function(){
       this.editPanelDefinition=true;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
