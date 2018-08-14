@@ -411,13 +411,14 @@
                                   </v-flex>
                                   <v-flex >
                                     <div>
+                                      <!-- {{item._geneCount}} -->
                                       <DisordersGeneBar
-                                       v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
-                                       class="SvgBarClass"
-                                       id="disordersGeneBar"
-                                       :selectedNumber="item._geneCount"
-                                       :totalNumber="maxGenes">
-                                      </DisordersGeneBar>
+                                      v-if="TotalGtrGenes>0 && chartComponent==='disorders'"
+                                      class="SvgBarClass"
+                                      id="disordersGeneBar"
+                                      :selectedNumber="item._geneCount"
+                                      :totalNumber="maxGenes">
+                                     </DisordersGeneBar>
                                     </div>
                                   </v-flex>
                                 </v-layout>
@@ -920,6 +921,7 @@ export default {
       $('#generalSlider').css('left', `${this.panelsDefinitionValues[1]}%`)
     },
     selectedPanelFilters: function(){
+      this.maxGenes = 0;
       this.filterPanelsOnselectedPanelFilters();
     },
     NumberOfTopGenes: function(){

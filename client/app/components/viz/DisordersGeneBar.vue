@@ -45,13 +45,22 @@ var model = new Model();
     },
     methods:{
       drawBars(){
+        console.log("totalNumber", this.totalNumber) //34
+        console.log("selectedNumber", this.selectedNumber); //418
+        var total_Number = this.totalNumber;
+        var selected_Number = this.selectedNumber;
+        if(this.selectedNumber>=this.totalNumber){
+          selected_Number = this.totalNumber
+        }
+
         var svgWidth = $('.SvgDisordersDiv').innerWidth() ;
         var absWidth = Math.abs(svgWidth)
-        // console.log(absWidth)
+        console.log("absWidth", absWidth) //164.781
         var multiplicationFactor = absWidth / this.totalNumber;
-        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-40);
+        var selectedgenesWidth = Math.abs((selected_Number * multiplicationFactor)-40);
         var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -40);
-        var selected_Number = this.selectedNumber;
+
+        console.log("selectedgenesWidth", selectedgenesWidth);
 
         if(selectedgenesWidth+4+grayBarWidth+20 > absWidth){
           selectedgenesWidth = selectedgenesWidth-10;
