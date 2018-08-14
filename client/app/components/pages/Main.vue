@@ -181,14 +181,18 @@
               v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
               :chartColor="ordinalColor"
               :barColor="barColor"
-              @search-gtr="onSearchGTR">
+              @search-gtr="onSearchGTR"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
             </GeneticTestingRegistry>
             <Phenolyzer
               v-if="component==='Phenolyzer'"
               v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
               @search-phenotype="onSearchPhenotype"
-              @phenotypeSearchTermArray="phenotypeSearchTermArray">
+              @phenotypeSearchTermArray="phenotypeSearchTermArray"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
             </Phenolyzer>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
@@ -198,7 +202,9 @@
               v-bind:searchTermGTR="searchTermGTR"
               v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
               v-bind:onSearchPhenotype="phenotypeSearches"
-              :chartColor="ordinalColor">
+              :chartColor="ordinalColor"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
         </div>
@@ -282,12 +288,16 @@ import Overview from './Overview.vue'
           selected: '#7CA8CF',
           notselected: 'lightgrey'
         },
+        browser: null,
+        isMobile: false,
 
       }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data;
       window.addEventListener('scroll', this.handleScroll);
+      this.detectBrowser();
+      this.checkIfMobile();
     },
     mounted(){
       bus.$on("openGtrComponent", ()=>{
@@ -306,6 +316,26 @@ import Overview from './Overview.vue'
     updated(){
     },
     methods: {
+      checkIfMobile: function(){
+        this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      },
+      detectBrowser: function(){
+        if(navigator.userAgent.indexOf('Chrome') > -1){
+          this.browser = "Chrome";
+        }
+        else if(navigator.userAgent.indexOf('Firefox') > -1) {
+          this.browser = "Firefox";
+        }
+        else if(navigator.userAgent.indexOf('Safari') > -1){
+          this.browser = "Safari";
+        }
+        else if(navigator.userAgent.indexOf('MSIE') > -1){
+          this.browser = "IE";
+        }
+        else {
+          this.browser = "Chrome";
+        }
+      },
       handleScroll (event) {
         if(this.component === 'GeneticTestingRegistry'){
           this.GtrScrollY = window.scrollY;

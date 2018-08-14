@@ -239,8 +239,7 @@
                       </v-card>
                     </v-flex>
 
-
-                   <div v-bind:class="[browser==='Chrome' || browser==='Firefox' ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
+                   <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
 
                      <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
@@ -837,7 +836,13 @@ export default {
       type: Array
     },
     chartColor: null,
-    barColor: null
+    barColor: null,
+    isMobile: {
+      type: Boolean
+    },
+    browser: {
+      type: String
+    }
   },
   data() {
     return {
@@ -912,7 +917,8 @@ export default {
       panelsDefinitionValues: [20, 45],
       SetOrangeSlider: false,
       showPanelsDistribution: false,
-      browser: null,
+      // browser: null,
+      // isMobile: false,
     }
   },
   watch:{
@@ -1059,29 +1065,11 @@ export default {
   created () {
     this.IntroductionTextData = IntroductionText.data[0];
     window.addEventListener('scroll', this.handleScroll);
-    this.detectBrowser();
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
-    detectBrowser: function(){
-      if(navigator.userAgent.indexOf('Chrome') > -1){
-        this.browser = "Chrome";
-      }
-      else if(navigator.userAgent.indexOf('Firefox') > -1) {
-        this.browser = "Firefox";
-      }
-      else if(navigator.userAgent.indexOf('Safari') > -1){
-        this.browser = "Safari";
-      }
-      else if(navigator.userAgent.indexOf('MSIE') > -1){
-        this.browser = "IE";
-      }
-      else {
-        this.browser = "Chrome";
-      }
-    },
     openEditPanelsDefinitionModal: function(){
       this.editPanelDefinition=true;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]

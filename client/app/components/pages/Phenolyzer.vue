@@ -74,7 +74,7 @@
                     <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
                     <p></p>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg4 >
+                  <v-flex >
                     <div style="display:inline-block; padding-top:5px;">
                       <label>Genes</label>
                       <input
@@ -241,7 +241,7 @@
               <!-- End data table -->
 
               <!-- start sidebar -->
-              <v-flex xs4 class="pr-2 pl-2" >
+              <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
                 <div class="d-flex mb-2 xs12">
                   <v-card v-if="multipleSearchTerms.length">
                     <v-card-title primary-title>
@@ -284,7 +284,7 @@
                     </v-card-text>
                   </v-card>
                 </div>
-              </v-flex>
+              </div>
             </v-layout>
           </v-flex>
         </v-layout>
@@ -355,6 +355,14 @@ import SvgBar from '../viz/SvgBar.vue'
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       Typeahead
+    },
+    props: {
+      isMobile: {
+        type: Boolean
+      },
+      browser: {
+        type: String
+      }
     },
     data(){
       return {
