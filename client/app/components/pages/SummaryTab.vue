@@ -115,6 +115,7 @@
                            <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} genes selected</span>
                        </center>
                        <SvgBar
+                       v-if="totalGenes"
                         class="SvgBarClass"
                         id="genesSvgBox"
                         :selectedNumber="selectedGenes"
@@ -131,6 +132,7 @@
                            <v-flex xs6>
                              <div>
                                <SummarySvgBar
+                               v-if="totalGenes"
                                 class="SvgBarClass"
                                 id="genesbar"
                                 :selectedNumber="item.count"

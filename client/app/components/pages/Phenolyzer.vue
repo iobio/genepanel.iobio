@@ -621,15 +621,28 @@ import SvgBar from '../viz/SvgBar.vue'
         var averagedData = this.performMeanOperation(combinedList, createdObj);
         var sortedPhenotypeData = this.sortTheOrder(averagedData);
 
-        let data = this.drawSvgBars(sortedPhenotypeData);
-        this.items = data;
-        this.noOfSourcesSvg();
-        this.selected = this.items.slice(0,50);
-        this.phenolyzerStatus = null;
-        this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
-        this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
-        this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
-        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        if(this.multipleSearchTerms.length>0){
+          let data = this.drawSvgBars(sortedPhenotypeData);
+          this.items = data;
+          this.noOfSourcesSvg();
+          this.selected = this.items.slice(0,50);
+          this.phenolyzerStatus = null;
+          this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+          this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+          this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        }
+        else {
+          this.items = [];
+          this.selected = [];
+          this.phenolyzerStatus = null;
+          this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+          this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+          this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        }
+
+
       },
       selectNumberOfTopPhenolyzerGenes: function(){
         if(this.genesTop>0){
@@ -823,7 +836,6 @@ import SvgBar from '../viz/SvgBar.vue'
       },
 
       drawSvgBars: function(tempItems){
-
         console.log("widthOFtable", $('#genes-table').innerWidth())
         var svgWidth = 250;
         var firstBarWidth = tempItems[0].score * 220;
