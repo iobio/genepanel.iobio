@@ -401,10 +401,10 @@
                                         <br>
                                         Mode of inheritance: {{ item._modeOfInheritance}}
                                         <br>
-                                        OMIM: {{ item._omim}}
-                                        <br>
                                         Gene Panels: {{ item._genePanelCount}}
                                         <br>
+                                        <!-- <span v-show="item._omim!==''">OMIM: {{ item._omim}}</span>
+                                        <br> -->
                                       </span>
                                     </v-tooltip>
                                   </v-flex>

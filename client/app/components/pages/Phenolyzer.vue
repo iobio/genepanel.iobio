@@ -147,7 +147,6 @@
                         </th>
                         <th v-for="header in props.headers" :key="header.text"
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                          @click="changeSort(header.value)"
                         >
                           {{ header.text }}
                         </th>
@@ -532,7 +531,7 @@ import SvgBar from '../viz/SvgBar.vue'
               sortable: false,
             },
             {
-              text: '',
+              text: '  ',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
@@ -566,7 +565,7 @@ import SvgBar from '../viz/SvgBar.vue'
                 sortable: false,
               },
               {
-                text: '',
+                text: '  ',
                 align: 'left',
                 sortable: false,
                 value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
