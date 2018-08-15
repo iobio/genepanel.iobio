@@ -2,7 +2,7 @@
   "data": [
     {
       "HeadlineText": "Genes",
-      "Content": "Content for Genes"
+      "Content": "The Genes card shows the number of genes available and the number of genes selected for the conditions searched. <p><center><img src='https://raw.githubusercontent.com/iobio/genepanel.iobio/dev/client/app/components/assets/images/genescard.png' height='140px' width='400px' ></center></p><br>The image above shows that 50 genes are selected out of the available 58 genes from the table on the left. "
     },
     {
       "HeadlineText": "MODES OF INHERITANCE",
