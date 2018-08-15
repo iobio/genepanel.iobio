@@ -532,7 +532,7 @@ import SvgBar from '../viz/SvgBar.vue'
               sortable: false,
             },
             {
-              text: 'Links',
+              text: '',
               align: 'left',
               sortable: false,
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
@@ -566,7 +566,7 @@ import SvgBar from '../viz/SvgBar.vue'
                 sortable: false,
               },
               {
-                text: 'Links',
+                text: '',
                 align: 'left',
                 sortable: false,
                 value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
