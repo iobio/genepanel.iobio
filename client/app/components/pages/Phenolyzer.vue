@@ -31,6 +31,7 @@
                         class="form-control"
                         type="text"
                         autocomplete="off"
+                        v-on:focus="ClearInputForNewSearch"
                         placeholder="Search phenotype (E.g. lactic acidosis)"
                         v-model="phenotypeTermEntered">
                       <typeahead
@@ -50,7 +51,7 @@
                       Generate Gene List
                     </v-btn>
 
-                    <v-tooltip bottom>
+                    <!-- <v-tooltip bottom>
                       <v-btn
                         v-if="multipleSearchTerms.length"
                         slot="activator"
@@ -61,7 +62,7 @@
                         <v-icon>add_circle</v-icon>
                       </v-btn>
                       <span>Enter New Phenotype</span>
-                    </v-tooltip>
+                    </v-tooltip> -->
 
 
                     <div v-if="phenolyzerStatus!==null">

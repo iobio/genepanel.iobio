@@ -21,6 +21,7 @@
           class="form-control"
           type="text"
           autocomplete="off"
+          v-on:focus="ClearInputForNewSearch"
           placeholder="Treacher Collins Syndrome">
         <typeahead
           match-start
@@ -38,7 +39,7 @@
           v-on:click.prevent="performSearch">
         Generate Gene List
       </v-btn>
-      <v-tooltip bottom>
+      <!-- <v-tooltip bottom>
         <v-btn
           slot="activator"
           v-if="multipleSearchTerms.length"
@@ -49,7 +50,7 @@
           <v-icon>add_circle</v-icon>
         </v-btn>
         <span>Enter New Condition</span>
-      </v-tooltip>
+      </v-tooltip> -->
 
       <div v-if="multipleSearchTerms.length">
         <br>
