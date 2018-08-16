@@ -38,6 +38,18 @@
           v-on:click.prevent="performSearch">
         Generate Gene List
       </v-btn>
+      <v-tooltip bottom>
+        <v-btn
+          slot="activator"
+          v-if="multipleSearchTerms.length"
+          :disabled="checked===true"
+          flat icon color="primary"
+          v-on:click="ClearInputForNewSearch"
+        >
+          <v-icon>add_circle</v-icon>
+        </v-btn>
+        <span>Enter New Condition</span>
+      </v-tooltip>
 
       <div v-if="multipleSearchTerms.length">
         <br>
@@ -209,6 +221,13 @@ var model = new Model();
           }
         });
         return cID;
+      },
+      ClearInputForNewSearch: function(){
+        if(this.checked===false){
+          this.search = "";
+          document.getElementById("input").value="";
+          document.getElementById("input").focus();
+        }
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);

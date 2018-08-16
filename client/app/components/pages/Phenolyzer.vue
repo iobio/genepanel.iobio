@@ -50,8 +50,21 @@
                       Generate Gene List
                     </v-btn>
 
+                    <v-tooltip bottom>
+                      <v-btn
+                        v-if="multipleSearchTerms.length"
+                        slot="activator"
+                        :disabled="checked===true"
+                        flat icon color="primary"
+                        v-on:click="ClearInputForNewSearch"
+                      >
+                        <v-icon>add_circle</v-icon>
+                      </v-btn>
+                      <span>Enter New Phenotype</span>
+                    </v-tooltip>
+
+
                     <div v-if="phenolyzerStatus!==null">
-                      <!-- <br> -->
                       <center>
                         <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
                         Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
@@ -581,6 +594,13 @@ import SvgBar from '../viz/SvgBar.vue'
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0,data)
+      },
+      ClearInputForNewSearch: function(){
+        if(this.checked===false){
+          this.phenotypeTerm = "";
+          document.getElementById("phenotype-term").value="";
+          document.getElementById("phenotype-term").focus();
+        }
       },
       phenotypeLookup: function(term, done) {
         let self = this;
