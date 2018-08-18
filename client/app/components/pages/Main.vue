@@ -240,7 +240,7 @@ import Overview from './Overview.vue'
     },
     data(){
       return{
-        component: null,
+        component: 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
