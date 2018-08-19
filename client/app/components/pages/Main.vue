@@ -240,7 +240,7 @@ import Overview from './Overview.vue'
     },
     data(){
       return{
-        component: 'OverviewPage',
+        component: '',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -290,17 +290,18 @@ import Overview from './Overview.vue'
         },
         browser: null,
         isMobile: false,
+        setDefaultLandingPage: false,
 
       }
     },
     created(){
-      window.addEventListener("message", this.receiveClin, false);
       this.IntroductionTextData = IntroductionText.data;
       window.addEventListener('scroll', this.handleScroll);
       this.detectBrowser();
       this.checkIfMobile();
     },
     mounted(){
+      window.addEventListener("message", this.receiveClin, false);
 
       bus.$on("openGtrComponent", ()=>{
         window.scrollTo(0,0);
@@ -584,12 +585,18 @@ import Overview from './Overview.vue'
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          this.component = 'OverviewPage';
+          if(this.setDefaultLandingPage === false){
+            this.component = 'OverviewPage';
+            this.setDefaultLandingPage = true;
+          }
           // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
+        else {
+          this.component = 'GeneticTestingRegistry';
+          this.setDefaultLandingPage = true;
+        }
         this.launchedFromClin = true;
-        this.component = 'GeneticTestingRegistry';
         this.clinIobioUrl = event.origin;
 
         var clinObject = JSON.parse(event.data);
