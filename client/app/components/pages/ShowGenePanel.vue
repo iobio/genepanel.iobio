@@ -97,6 +97,7 @@
                 v-html="props.item.htmlData">
               </span>
             </td>
+            <td><a v-bind:href="props.item.geneIdLink" target="_blank">{{props.item.geneid}}</a></td>
             <td>
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
@@ -212,19 +213,20 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
-          { text: 'Index', align: 'left', value: 'indexVal' },
+          { text: 'Rank', align: 'left', value: 'indexVal' },
           {
-            text: 'Name',
+            text: 'Gene Name',
             align: 'left',
             sortable: false,
             value: 'name'
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+          { text: 'Gene Id', align: 'left', sortable: false, value: 'geneIdLink'},
           {
             text: '',
             align: 'left',
             sortable: false,
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene'] },
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene', 'geneid'] },
         ],
         items: [],
         GenesFromD3Bars: [],
@@ -309,37 +311,39 @@ var model = new Model();
         // console.log("this.multipleSearchItems", this.multipleSearchItems.length)
         if(this.multipleSearchItems.length>=2){
           this.headers = [
-            { text: 'Index', align: 'left', value: 'indexVal' },
+            { text: 'Rank', align: 'left', value: 'indexVal' },
             {
-              text: 'Name',
+              text: 'Gene Name',
               align: 'left',
               sortable: false,
               value: 'name'
             },
             { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+            { text: 'Gene Id', align: 'left', sortable: false, value: 'geneIdLink'},
             {
               text: '',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid'] },
           ]
         }
         else if(this.multipleSearchItems.length<=1){
           this.headers = [
-            { text: 'Index', align: 'left', value: 'indexVal' },
+            { text: 'Rank', align: 'left', value: 'indexVal' },
             {
-              text: 'Name',
+              text: 'Gene Name',
               align: 'left',
               sortable: false,
               value: 'name'
             },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
+            { text: 'Gene Id', align: 'left', sortable: false, value: 'geneIdLink'},
             {
               text: '',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', ''] },
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid'] },
           ]
         }
 
@@ -464,6 +468,7 @@ var model = new Model();
               x.value = data[i].value;
               x.conditions = data[i].conditions;
               x.diseases = data[i].diseases;
+              x.geneid = data[i].geneid;
 
               data.splice(i, 1);
               data = [...data];
@@ -481,7 +486,6 @@ var model = new Model();
         else{
           this.items = data;
         }
-
         this.noOfSourcesSvg();
         this.selected = this.items.slice(0,50);
         // console.log("this.selected", this.selected)

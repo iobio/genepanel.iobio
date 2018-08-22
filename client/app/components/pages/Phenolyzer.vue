@@ -726,6 +726,8 @@ import SvgBar from '../viz/SvgBar.vue'
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
+                  console.log("data", self.items[0])
+
                   self.noOfSourcesSvg();
                   self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
@@ -748,11 +750,13 @@ import SvgBar from '../viz/SvgBar.vue'
         }
       },
       combineList(arr){
+        console.log("arr", arr)
         var temp =[];
           for(var i=0; i<arr.length; i++){
             for(var j=0; j<arr[i].data.length; j++){
               temp.push({
                 geneName: arr[i].data[j].geneName,
+                geneId: arr[i].data[j].geneId,
                 geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
                 score: Number(arr[i].data[j].score),
                 searchTerm: [arr[i].name],
@@ -788,11 +792,13 @@ import SvgBar from '../viz/SvgBar.vue'
                   sources: 1,
                   searchTerm: arr[j].searchTerm,
                   searchTermIndex: arr[j].searchTermIndex,
+                  geneId: arr[j].geneId,
                 }
               }
               else {
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
+                  geneId: arr[j].geneId,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
                   // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))),
                   score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
