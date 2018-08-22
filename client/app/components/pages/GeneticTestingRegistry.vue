@@ -665,15 +665,41 @@
                               <v-divider class="Rightbar_card_divider"></v-divider>
 
                              <div v-bind:class="[chartComponent==='Vendors' ? 'disabledClass' : 'activeClass']">
-                               <span class="Rightbar_card_content_subheading">
-                                 <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
-                               </span>
-                               <SvgBar
-                                class="SvgBarClass"
-                                id="disordersSvgBoxInside"
-                                :selectedNumber="vendorsSelect.length"
-                                :totalNumber="multiSelectItems.length">
-                               </SvgBar>
+                               <div v-if="multiSelectItems.length>1">
+                                 <span class="Rightbar_card_content_subheading">
+                                   <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
+                                 </span>
+                                 <SvgBar
+                                  class="SvgBarClass"
+                                  id="disordersSvgBoxInside"
+                                  :selectedNumber="vendorsSelect.length"
+                                  :totalNumber="multiSelectItems.length">
+                                 </SvgBar>
+                               </div>
+                               <div v-else-if="multiSelectItems.length<2">
+                                 <div v-if="selectedPanelsInCheckBox.length>0">
+                                   <span class="Rightbar_card_content_subheading">
+                                     <strong class="Rightbar_card_content_heading">1</strong> of 1 vendor selected
+                                   </span>
+                                   <SvgBar
+                                    class="SvgBarClass"
+                                    id="disordersSvgBoxInside"
+                                    :selectedNumber="1"
+                                    :totalNumber="1">
+                                   </SvgBar>
+                                 </div>
+                                 <div v-else-if="selectedPanelsInCheckBox.length<1">
+                                   <span class="Rightbar_card_content_subheading">
+                                     <strong class="Rightbar_card_content_heading">0</strong> of 1 vendor selected
+                                   </span>
+                                   <SvgBar
+                                    class="SvgBarClass"
+                                    id="disordersSvgBoxInside"
+                                    :selectedNumber="0"
+                                    :totalNumber="1">
+                                   </SvgBar>
+                                 </div>
+                               </div>
                                <br>
                                <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="showChartComponent('Vendors')">View & Filter</v-btn>
                              </div>
@@ -683,18 +709,44 @@
                             <v-card flat v-if="multiSelectItems.length">
                               <v-card-text >
                                 <center>
-                                  <span class="Rightbar_card_content_subheading">
-                                    <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
-                                  </span>
-                                  <SvgBar
-                                   class="SvgBarClass"
-                                   id="disordersSvgBoxInside"
-                                   :selectedNumber="vendorsSelect.length"
-                                   :totalNumber="multiSelectItems.length">
-                                  </SvgBar>
+                                  <div v-if="multiSelectItems.length>1">
+                                    <span class="Rightbar_card_content_subheading">
+                                      <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
+                                    </span>
+                                    <SvgBar
+                                     class="SvgBarClass"
+                                     id="disordersSvgBoxInside"
+                                     :selectedNumber="vendorsSelect.length"
+                                     :totalNumber="multiSelectItems.length">
+                                    </SvgBar>
+                                  </div>
+                                  <div v-else-if="multiSelectItems.length<2">
+                                    <div v-if="selectedPanelsInCheckBox.length>0">
+                                      <span class="Rightbar_card_content_subheading">
+                                        <strong class="Rightbar_card_content_heading">1</strong> of 1 vendor selected
+                                      </span>
+                                      <SvgBar
+                                       class="SvgBarClass"
+                                       id="disordersSvgBoxInside"
+                                       :selectedNumber="1"
+                                       :totalNumber="1">
+                                      </SvgBar>
+                                    </div>
+                                    <div v-else-if="selectedPanelsInCheckBox.length<1">
+                                      <span class="Rightbar_card_content_subheading">
+                                        <strong class="Rightbar_card_content_heading">0</strong> of 1 vendor selected
+                                      </span>
+                                      <SvgBar
+                                       class="SvgBarClass"
+                                       id="disordersSvgBoxInside"
+                                       :selectedNumber="0"
+                                       :totalNumber="1">
+                                      </SvgBar>
+                                    </div>
+                                  </div>
                                 </center>
                                 <br>
-                                <div class="vendorsCardClass">
+                                <div class="vendorsCardClass" v-if="multiSelectItems.length>1">
                                   <v-layout row wrap v-for="(item, i) in multiSelectItems" :key="i">
                                     <v-flex xs8>
                                       <v-checkbox style="margin-top:-8px" :label="item" :value="item" v-model="vendorsSelect">
@@ -704,8 +756,18 @@
                                     </v-flex>
                                   </v-layout>
                                 </div>
-                                <br>
-                                <v-layout>
+                                <div class="vendorsCardClass" v-else-if="multiSelectItems.length<2">
+                                  <v-layout row wrap v-for="(item, i) in multiSelectItems" :key="i">
+                                    <v-flex xs10>
+                                      <strong style="margin-left:10px"><p>{{item}}</p></strong>
+                                      <!-- <v-checkbox style="margin-top:-8px" :label="item" :value="item" v-model="vendorsSelect">
+                                      </v-checkbox> -->
+                                    </v-flex>
+                                    <v-flex xs2>
+                                    </v-flex>
+                                  </v-layout>
+                                </div>
+                                <v-layout v-if="multiSelectItems.length>1">
                                   <v-flex xs6>
                                     <center>
                                       <v-btn outline color="primary darken-1" dark class="viewFilterButton" v-on:click="SelectAllVendors">SELECT ALL</v-btn>
