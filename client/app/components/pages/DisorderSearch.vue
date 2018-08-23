@@ -22,7 +22,7 @@
           type="text"
           autocomplete="off"
           v-on:focus="ClearInputForNewSearch"
-          placeholder="Treacher Collins Syndrome">
+          placeholder="Search condition (E.g. Treacher Collins Syndrome)">
         <typeahead
           match-start
           v-model="search"

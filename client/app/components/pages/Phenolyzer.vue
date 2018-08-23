@@ -409,7 +409,7 @@ import SvgBar from '../viz/SvgBar.vue'
         selected: [],
         headers: [
           {
-            text: 'Index',
+            text: 'Rank',
             value: 'indexVal',
             sortable: false,
             align: 'left',
@@ -526,7 +526,7 @@ import SvgBar from '../viz/SvgBar.vue'
         if(this.multipleSearchTerms.length>1){
           this.headers = [
             {
-              text: 'Index',
+              text: 'Rank',
               value: 'indexVal',
               sortable: false,
               align: 'left',
@@ -561,7 +561,7 @@ import SvgBar from '../viz/SvgBar.vue'
         else if(this.multipleSearchTerms.length<=1){
           this.headers = [
             {
-              text: 'Index',
+              text: 'Rank',
               value: 'indexVal',
               sortable: false,
               align: 'left',

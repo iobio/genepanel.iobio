@@ -152,7 +152,7 @@ import { bus } from '../../routes';
       search: '',  //For searching the rows in data table
       selected: [],
       headers: [
-        { text: 'Index', align: 'left', sortable: false, value:'SummaryIndex' },
+        { text: '#', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },

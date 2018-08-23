@@ -219,7 +219,7 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
-          { text: 'Index', align: 'left', value: 'indexVal' },
+          { text: 'Rank', align: 'left', value: 'indexVal' },
           {
             text: 'Gene Name',
             align: 'left',
@@ -316,7 +316,7 @@ var model = new Model();
         // console.log("this.multipleSearchItems", this.multipleSearchItems.length)
         if(this.multipleSearchItems.length>=2){
           this.headers = [
-            { text: 'Index', align: 'left', value: 'indexVal' },
+            { text: 'Rank', align: 'left', value: 'indexVal' },
             {
               text: 'Gene Name',
               align: 'left',
@@ -334,7 +334,7 @@ var model = new Model();
         }
         else if(this.multipleSearchItems.length<=1){
           this.headers = [
-            { text: 'Index', align: 'left', value: 'indexVal' },
+            { text: 'Rank', align: 'left', value: 'indexVal' },
             {
               text: 'Gene Name',
               align: 'left',

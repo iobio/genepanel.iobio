@@ -19,7 +19,7 @@
                     <v-layout row wrap>
                       <v-flex xs6>
                         <v-card-text>
-                          <strong>GTR Disorders:</strong>
+                          <strong>GTR Conditions:</strong>
                           <br>
                           <div v-if="GtrGenesArr.length===0">
                             <v-chip
