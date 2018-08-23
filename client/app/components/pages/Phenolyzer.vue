@@ -238,6 +238,12 @@
                                       </v-list-tile-content>
                                     </v-list-tile>
                                   </a>
+
+                                  <v-list-tile style="font-size:14px; height:38px" @click="">
+                                    <v-list-tile-content style="margin-left:10px">
+                                      <v-list-tile-title><v-icon>arrow_right</v-icon>Gene ID:<a v-bind:href="props.item.geneIdLink" target="_blank"> {{props.item.geneId}} </a></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
                                   <br>
                                 </v-list>
                               </div>
@@ -409,7 +415,7 @@ import SvgBar from '../viz/SvgBar.vue'
             align: 'left',
           },
           {
-            text: 'Gene',
+            text: 'Gene Name',
             align: 'left',
             value: 'geneName',
             sortable: false,
@@ -430,7 +436,7 @@ import SvgBar from '../viz/SvgBar.vue'
             text: '',
             align: 'left',
             sortable: false,
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
           }
         ],
         tempItems: [],
@@ -526,7 +532,7 @@ import SvgBar from '../viz/SvgBar.vue'
               align: 'left',
             },
             {
-              text: 'Gene',
+              text: 'Gene Name',
               align: 'left',
               value: 'geneName',
               sortable: false,
@@ -548,7 +554,7 @@ import SvgBar from '../viz/SvgBar.vue'
               text: '  ',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
             }
           ];
         }
@@ -561,7 +567,7 @@ import SvgBar from '../viz/SvgBar.vue'
               align: 'left',
             },
             {
-              text: 'Gene',
+              text: 'Gene Name',
               align: 'left',
               value: 'geneName',
               sortable: false,
@@ -582,7 +588,7 @@ import SvgBar from '../viz/SvgBar.vue'
                 text: '  ',
                 align: 'left',
                 sortable: false,
-                value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+                value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
               }
           ]
         }
@@ -885,6 +891,7 @@ import SvgBar from '../viz/SvgBar.vue'
           gene.geneCardsSrc = `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.geneName}`;
           gene.ghrSrc = `https://ghr.nlm.nih.gov/gene/${gene.geneName}`;
           gene.clinGenLink = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.geneName}`;
+          gene.geneIdLink = `https://www.ncbi.nlm.nih.gov/gene/${gene.geneId}`;
 
         })
         return tempItems

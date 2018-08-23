@@ -97,7 +97,6 @@
                 v-html="props.item.htmlData">
               </span>
             </td>
-            <td><a v-bind:href="props.item.geneIdLink" target="_blank">{{props.item.geneid}}</a></td>
             <td>
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
@@ -150,6 +149,13 @@
                             </v-list-tile-content>
                           </v-list-tile>
                         </a>
+
+
+                        <v-list-tile style="font-size:14px; height:38px" @click="">
+                          <v-list-tile-content style="margin-left:10px">
+                            <v-list-tile-title><v-icon>arrow_right</v-icon>Gene ID:<a v-bind:href="props.item.geneIdLink" target="_blank"> {{props.item.geneid}} </a></v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
                       <br>
                     </v-list>
                   </div>
@@ -213,7 +219,7 @@ var model = new Model();
         search: '',  //For searching the rows in data table
         selected: [],
         headers: [
-          { text: 'Rank', align: 'left', value: 'indexVal' },
+          { text: 'Index', align: 'left', value: 'indexVal' },
           {
             text: 'Gene Name',
             align: 'left',
@@ -221,12 +227,11 @@ var model = new Model();
             value: 'name'
           },
           { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-          { text: 'Gene Id', align: 'left', sortable: false, value: 'geneIdLink'},
           {
             text: '',
             align: 'left',
             sortable: false,
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene', 'geneid'] },
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'isAssociatedGene', 'geneid', 'geneIdLink'] },
         ],
         items: [],
         GenesFromD3Bars: [],
@@ -311,7 +316,7 @@ var model = new Model();
         // console.log("this.multipleSearchItems", this.multipleSearchItems.length)
         if(this.multipleSearchItems.length>=2){
           this.headers = [
-            { text: 'Rank', align: 'left', value: 'indexVal' },
+            { text: 'Index', align: 'left', value: 'indexVal' },
             {
               text: 'Gene Name',
               align: 'left',
@@ -320,17 +325,16 @@ var model = new Model();
             },
             { text: 'Search Terms', align: 'left', value: 'searchTermIndexSVG' },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-            { text: 'Gene Id', align: 'left', sortable: false, value: 'geneIdLink'},
             {
               text: '',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid'] },
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid', 'geneIdLink'] },
           ]
         }
         else if(this.multipleSearchItems.length<=1){
           this.headers = [
-            { text: 'Rank', align: 'left', value: 'indexVal' },
+            { text: 'Index', align: 'left', value: 'indexVal' },
             {
               text: 'Gene Name',
               align: 'left',
@@ -338,12 +342,11 @@ var model = new Model();
               value: 'name'
             },
             { text: 'Gene Panels', align: 'left', sortable: false, value: 'htmlData' },
-            { text: 'Gene Id', align: 'left', sortable: false, value: 'geneIdLink'},
             {
               text: '',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid'] },
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid', 'geneIdLink'] },
           ]
         }
 

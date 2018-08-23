@@ -111,6 +111,12 @@
                         </v-list-tile-content>
                       </v-list-tile>
                     </a>
+
+                    <v-list-tile style="font-size:14px; height:38px" @click="">
+                      <v-list-tile-content style="margin-left:10px">
+                        <v-list-tile-title><v-icon>arrow_right</v-icon>Gene ID:<a v-bind:href="props.item.geneIdLink" target="_blank"> {{props.item.geneId}} </a></v-list-tile-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
                     <br>
                   </v-list>
                 </div>
@@ -147,10 +153,10 @@ import { bus } from '../../routes';
       selected: [],
       headers: [
         { text: 'Index', align: 'left', sortable: false, value:'SummaryIndex' },
-        { text: 'Name', align: 'left', sortable: false, value:'name' },
-        { text: 'GTR Disorders', align: 'left', sortable: false, value: 'sourceGTR' },
+        { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
+        { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene'] },
+        { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
       ],
       items: [],

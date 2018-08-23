@@ -317,6 +317,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 searchTermArrayGTR: y.searchTermArray,
                 searchTermIndexGTR: y.searchTermIndex,
                 isAssociatedGene: y.isAssociatedGene,
+                geneid: y.geneid,
+                geneIdLink: y.geneIdLink,
               })
             }
           })
@@ -333,6 +335,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 sourcePheno: y.searchTermIndexSVG,
                 searchTermPheno: y.searchTerm,
                 searchTermIndex: y.searchTermIndex,
+                geneId: y.geneId,
+                geneIdLink: y.geneIdLink
               })
             }
           })
@@ -374,7 +378,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
                 ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
                 clinGenLink : `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${this.PhenolyzerGenes[j].geneName}`,
-
+                geneId: this.PhenolyzerGenes[j].geneId,
+                geneIdLink: this.PhenolyzerGenes[j].geneIdLink
               })
             }
           }
@@ -404,6 +409,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sourceGTR: x.sourceGTR,
             sourcePheno: x.sourcePheno,
             isAssociatedGene: x.isAssociatedGene,
+            geneIdLink: x.geneIdLink,
+            geneId: x.geneId
           }
         }))
 
@@ -417,6 +424,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sourceGTR: x.sourceGTR,
             sourcePheno: [],
             isAssociatedGene: x.isAssociatedGene,
+            geneId: x.geneid,
+            geneIdLink: x.geneIdLink
           }
         }))
 
@@ -429,7 +438,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sources: "Phenolyzer",
             noOfSources: 1,
             sourcePheno: x.sourcePheno,
-            sourceGTR: []
+            sourceGTR: [],
+            geneIdLink: x.geneIdLink,
+            geneId: x.geneId
           }
         }))
 
