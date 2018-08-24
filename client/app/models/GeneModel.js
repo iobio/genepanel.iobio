@@ -644,7 +644,6 @@ export default class GeneModel {
   }
 
   searchPhenolyzerGenes(phenotypeTerm, selectGeneCount, statusCallback) {
-    console.log(this.preventSearchCB)
     var me = this;
     var phenolyzerServer = "https://7z68tjgpw4.execute-api.us-east-1.amazonaws.com/dev/phenolyzer/";
     var url = phenolyzerServer + '?term=' + phenotypeTerm;
@@ -702,11 +701,12 @@ export default class GeneModel {
         var geneName               = fields[1];
         if (count < numberPhenolyzerGenes) {
           var rank                 = fields[0];
+          var geneId               = fields[2];
           var score                = fields[3];
           var haploInsuffScore     = fields[5];
           var geneIntoleranceScore = fields[6];
           var selected             = count < selectGeneCount ? true : false;
-          me.phenolyzerGenes.push({rank: rank, geneName: geneName, score: score, haploInsuffScore: haploInsuffScore, geneIntoleranceScore: geneIntoleranceScore, selected: selected});
+          me.phenolyzerGenes.push({rank: rank, geneName: geneName, geneId:geneId, score: score, haploInsuffScore: haploInsuffScore, geneIntoleranceScore: geneIntoleranceScore, selected: selected});
         }
         count++;
 

@@ -181,14 +181,18 @@
               v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
               :chartColor="ordinalColor"
               :barColor="barColor"
-              @search-gtr="onSearchGTR">
+              @search-gtr="onSearchGTR"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
             </GeneticTestingRegistry>
             <Phenolyzer
               v-if="component==='Phenolyzer'"
               v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
               @search-phenotype="onSearchPhenotype"
-              @phenotypeSearchTermArray="phenotypeSearchTermArray">
+              @phenotypeSearchTermArray="phenotypeSearchTermArray"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
             </Phenolyzer>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
@@ -198,7 +202,9 @@
               v-bind:searchTermGTR="searchTermGTR"
               v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
               v-bind:onSearchPhenotype="phenotypeSearches"
-              :chartColor="ordinalColor">
+              :chartColor="ordinalColor"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
         </div>
@@ -282,14 +288,21 @@ import Overview from './Overview.vue'
           selected: '#7CA8CF',
           notselected: 'lightgrey'
         },
+        browser: null,
+        isMobile: false,
+        setDefaultLandingPage: false,
 
       }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data;
       window.addEventListener('scroll', this.handleScroll);
+      this.detectBrowser();
+      this.checkIfMobile();
     },
     mounted(){
+      window.addEventListener("message", this.receiveClin, false);
+
       bus.$on("openGtrComponent", ()=>{
         window.scrollTo(0,0);
         this.component = "GeneticTestingRegistry";
@@ -301,11 +314,30 @@ import Overview from './Overview.vue'
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });
-      window.addEventListener("message", this.receiveClin, false);
     },
     updated(){
     },
     methods: {
+      checkIfMobile: function(){
+        this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      },
+      detectBrowser: function(){
+        if(navigator.userAgent.indexOf('Chrome') > -1){
+          this.browser = "Chrome";
+        }
+        else if(navigator.userAgent.indexOf('Firefox') > -1) {
+          this.browser = "Firefox";
+        }
+        else if(navigator.userAgent.indexOf('Safari') > -1){
+          this.browser = "Safari";
+        }
+        else if(navigator.userAgent.indexOf('MSIE') > -1){
+          this.browser = "IE";
+        }
+        else {
+          this.browser = "Chrome";
+        }
+      },
       handleScroll (event) {
         if(this.component === 'GeneticTestingRegistry'){
           this.GtrScrollY = window.scrollY;
@@ -553,8 +585,16 @@ import Overview from './Overview.vue'
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
+          if(this.setDefaultLandingPage === false){
+            this.component = 'OverviewPage';
+            this.setDefaultLandingPage = true;
+          }
           // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
+        }
+        else {
+          this.component = 'GeneticTestingRegistry';
+          this.setDefaultLandingPage = true;
         }
         this.launchedFromClin = true;
         this.clinIobioUrl = event.origin;
@@ -586,6 +626,11 @@ import Overview from './Overview.vue'
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.conditionsBox {
+  width: 285px;
+  overflow-wrap: break-word;
+}
 
 .margin_ActiveTab{
   margin-left: -8px
@@ -682,6 +727,30 @@ aside {
 
 @import ../assets/sass/variables
 
+.Rightbar_CardHeading
+  font-size: 16px
+  font-weight: 550
+
+.Rightbar_card_content_subheading
+  margin-top: 0px
+  margin-bottom: 0px
+  font-size: 16px
+
+.Rightbar_card_content_heading
+  font-size: 26px
+
+.Rightbar_card_divider
+  margin-top: 10px
+  margin-bottom: 10px
+
+.activeCardBox
+    border-bottom: 6px solid $activeCard-border
+    border-top-right-radius: 8px
+    border-top-left-radius: 8px
+
+.rightbarCard
+  border-top-right-radius: 8px
+  border-top-left-radius: 8px
 
 nav.toolbar, nav.v-toolbar
   background-color: $app-color !important

@@ -19,7 +19,7 @@
                     <v-layout row wrap>
                       <v-flex xs6>
                         <v-card-text>
-                          <strong>GTR Disorders:</strong>
+                          <strong>GTR Conditions:</strong>
                           <br>
                           <div v-if="GtrGenesArr.length===0">
                             <v-chip
@@ -35,7 +35,7 @@
                           </v-chip>
                         </v-card-text>
                       </v-flex>
-                      <v-flex xs6>
+                      <v-flex>
                         <v-card-text>
                           <strong>Phenolyzer:</strong>
                           <div v-if="PhenolyzerSearchTerms.length>0">
@@ -79,7 +79,7 @@
                 <!-- end data table -->
 
                 <!-- start side bar -->
-                <v-flex xs4 class="pr-2 pl-2">
+                <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
 
                   <div class="d-flex mb-2 xs12">
                     <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
@@ -115,6 +115,7 @@
                            <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} genes selected</span>
                        </center>
                        <SvgBar
+                       v-if="totalGenes"
                         class="SvgBarClass"
                         id="genesSvgBox"
                         :selectedNumber="selectedGenes"
@@ -131,6 +132,7 @@
                            <v-flex xs6>
                              <div>
                                <SummarySvgBar
+                               v-if="totalGenes"
                                 class="SvgBarClass"
                                 id="genesbar"
                                 :selectedNumber="item.count"
@@ -144,7 +146,7 @@
                     </v-card>
                   </div>
                   <br>
-                </v-flex>
+                </div>
 
                 <!-- end side bar -->
               </v-layout>
@@ -198,7 +200,13 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       onSearchPhenotype: {
         type: Array
       },
-      chartColor: null
+      chartColor: null,
+      isMobile: {
+        type: Boolean
+      },
+      browser: {
+        type: String
+      }
     },
     data: () => ({
       gradient: 'to top, #7B1FA2, #E1BEE7',
@@ -309,6 +317,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 searchTermArrayGTR: y.searchTermArray,
                 searchTermIndexGTR: y.searchTermIndex,
                 isAssociatedGene: y.isAssociatedGene,
+                geneid: y.geneid,
+                geneIdLink: y.geneIdLink,
               })
             }
           })
@@ -325,6 +335,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 sourcePheno: y.searchTermIndexSVG,
                 searchTermPheno: y.searchTerm,
                 searchTermIndex: y.searchTermIndex,
+                geneId: y.geneId,
+                geneIdLink: y.geneIdLink
               })
             }
           })
@@ -365,6 +377,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${this.PhenolyzerGenes[j].geneName}`,
                 geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
                 ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
+                clinGenLink : `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${this.PhenolyzerGenes[j].geneName}`,
+                geneId: this.PhenolyzerGenes[j].geneId,
+                geneIdLink: this.PhenolyzerGenes[j].geneIdLink
               })
             }
           }
@@ -394,6 +409,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sourceGTR: x.sourceGTR,
             sourcePheno: x.sourcePheno,
             isAssociatedGene: x.isAssociatedGene,
+            geneIdLink: x.geneIdLink,
+            geneId: x.geneId
           }
         }))
 
@@ -407,6 +424,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sourceGTR: x.sourceGTR,
             sourcePheno: [],
             isAssociatedGene: x.isAssociatedGene,
+            geneId: x.geneid,
+            geneIdLink: x.geneIdLink
           }
         }))
 
@@ -419,7 +438,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sources: "Phenolyzer",
             noOfSources: 1,
             sourcePheno: x.sourcePheno,
-            sourceGTR: []
+            sourceGTR: [],
+            geneIdLink: x.geneIdLink,
+            geneId: x.geneId
           }
         }))
 
@@ -432,6 +453,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
           x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
           x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
+          x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
           this.summaryTableArray.push(x);
         })
       }

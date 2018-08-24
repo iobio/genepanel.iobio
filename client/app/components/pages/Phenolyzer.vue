@@ -31,6 +31,7 @@
                         class="form-control"
                         type="text"
                         autocomplete="off"
+                        v-on:focus="ClearInputForNewSearch"
                         placeholder="Search phenotype (E.g. lactic acidosis)"
                         v-model="phenotypeTermEntered">
                       <typeahead
@@ -50,8 +51,21 @@
                       Generate Gene List
                     </v-btn>
 
+                    <!-- <v-tooltip bottom>
+                      <v-btn
+                        v-if="multipleSearchTerms.length"
+                        slot="activator"
+                        :disabled="checked===true"
+                        flat icon color="primary"
+                        v-on:click="ClearInputForNewSearch"
+                      >
+                        <v-icon>add_circle</v-icon>
+                      </v-btn>
+                      <span>Enter New Phenotype</span>
+                    </v-tooltip> -->
+
+
                     <div v-if="phenolyzerStatus!==null">
-                      <!-- <br> -->
                       <center>
                         <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
                         Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
@@ -74,7 +88,7 @@
                     <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
                     <p></p>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg4 >
+                  <v-flex >
                     <div style="display:inline-block; padding-top:5px;">
                       <label>Genes</label>
                       <input
@@ -147,7 +161,6 @@
                         </th>
                         <th v-for="header in props.headers" :key="header.text"
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                          @click="changeSort(header.value)"
                         >
                           {{ header.text }}
                         </th>
@@ -176,28 +189,65 @@
                         <td>
                           <v-menu bottom offset-y style="color:black">
                             <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
+                            <v-card>
+                              <div class="conditionsBox">
+                                <v-list>
+                                  <div class="v-list__group__header">
+                                    <v-list-tile>
+                                      <v-list-tile-content>
+                                        <v-list-tile-title><strong>  &nbsp;  Gene Resource Links &nbsp;<i>( {{ props.item.geneName }} )</i> </strong></v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                  </div>
+                                  <a v-bind:href="props.item.medGenSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                  </a>
 
-                            <v-list style="width:250px">
-                              <v-list-tile >
-                                <v-list-tile-title><strong> Links: </strong></v-list-tile-title>
-                              </v-list-tile>
-                              <hr>
-                              <v-list-tile >
-                                <v-list-tile-title><a v-bind:href="props.item.omimSrc" target="_blank">OMIM</a></v-list-tile-title>
-                              </v-list-tile>
-                              <v-list-tile >
-                                <v-list-tile-title><a v-bind:href="props.item.medGenSrc" target="_blank">MedGen</a></v-list-tile-title>
-                              </v-list-tile>
-                              <v-list-tile >
-                                <v-list-tile-title><a v-bind:href="props.item.geneCardsSrc" target="_blank">Gene Cards</a></v-list-tile-title>
-                              </v-list-tile>
-                              <v-list-tile >
-                                <v-list-tile-title><a v-bind:href="props.item.ghrSrc" target="_blank">Genetics Home Reference</a></v-list-tile-title>
-                              </v-list-tile>
-                              <v-list-tile >
-                                <v-list-tile-title><a v-bind:href="props.item.clinGenLink" target="_blank">ClinGen</a></v-list-tile-title>
-                              </v-list-tile>
-                            </v-list>
+                                  <a v-bind:href="props.item.omimSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    </a>
+
+                                  <a v-bind:href="props.item.geneCardsSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    </a>
+
+                                  <a v-bind:href="props.item.ghrSrc" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:36px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                    </a>
+
+                                  <a v-bind:href="props.item.clinGenLink" target="_blank">
+                                    <v-list-tile style="font-size:14px; height:38px" @click="">
+                                      <v-list-tile-content style="margin-left:10px">
+                                        <v-list-tile-title><v-icon>arrow_right</v-icon>ClinGen</v-list-tile-title>
+                                      </v-list-tile-content>
+                                    </v-list-tile>
+                                  </a>
+
+                                  <v-list-tile style="font-size:14px; height:38px" @click="">
+                                    <v-list-tile-content style="margin-left:10px">
+                                      <v-list-tile-title><v-icon>arrow_right</v-icon>Gene ID:<a v-bind:href="props.item.geneIdLink" target="_blank"> {{props.item.geneId}} </a></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <br>
+                                </v-list>
+                              </div>
+                            </v-card>
                           </v-menu>
                         </td>
                       </tr>
@@ -210,7 +260,7 @@
               <!-- End data table -->
 
               <!-- start sidebar -->
-              <v-flex xs4 class="pr-2 pl-2" >
+              <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
                 <div class="d-flex mb-2 xs12">
                   <v-card v-if="multipleSearchTerms.length">
                     <v-card-title primary-title>
@@ -253,7 +303,7 @@
                     </v-card-text>
                   </v-card>
                 </div>
-              </v-flex>
+              </div>
             </v-layout>
           </v-flex>
         </v-layout>
@@ -325,6 +375,14 @@ import SvgBar from '../viz/SvgBar.vue'
       'SvgBar': SvgBar,
       Typeahead
     },
+    props: {
+      isMobile: {
+        type: Boolean
+      },
+      browser: {
+        type: String
+      }
+    },
     data(){
       return {
         showGenesMenu: null,
@@ -351,13 +409,13 @@ import SvgBar from '../viz/SvgBar.vue'
         selected: [],
         headers: [
           {
-            text: 'Index',
+            text: 'Rank',
             value: 'indexVal',
             sortable: false,
             align: 'left',
           },
           {
-            text: 'Gene',
+            text: 'Gene Name',
             align: 'left',
             value: 'geneName',
             sortable: false,
@@ -378,7 +436,7 @@ import SvgBar from '../viz/SvgBar.vue'
             text: '',
             align: 'left',
             sortable: false,
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
           }
         ],
         tempItems: [],
@@ -468,13 +526,13 @@ import SvgBar from '../viz/SvgBar.vue'
         if(this.multipleSearchTerms.length>1){
           this.headers = [
             {
-              text: 'Index',
+              text: 'Rank',
               value: 'indexVal',
               sortable: false,
               align: 'left',
             },
             {
-              text: 'Gene',
+              text: 'Gene Name',
               align: 'left',
               value: 'geneName',
               sortable: false,
@@ -493,23 +551,23 @@ import SvgBar from '../viz/SvgBar.vue'
               sortable: false,
             },
             {
-              text: 'Links',
+              text: '  ',
               align: 'left',
               sortable: false,
-              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+              value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
             }
           ];
         }
         else if(this.multipleSearchTerms.length<=1){
           this.headers = [
             {
-              text: 'Index',
+              text: 'Rank',
               value: 'indexVal',
               sortable: false,
               align: 'left',
             },
             {
-              text: 'Gene',
+              text: 'Gene Name',
               align: 'left',
               value: 'geneName',
               sortable: false,
@@ -527,10 +585,10 @@ import SvgBar from '../viz/SvgBar.vue'
                 sortable: false,
               },
               {
-                text: 'Links',
+                text: '  ',
                 align: 'left',
                 sortable: false,
-                value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank']
+                value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
               }
           ]
         }
@@ -543,6 +601,13 @@ import SvgBar from '../viz/SvgBar.vue'
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0,data)
+      },
+      ClearInputForNewSearch: function(){
+        if(this.checked===false){
+          this.phenotypeTerm = "";
+          document.getElementById("phenotype-term").value="";
+          document.getElementById("phenotype-term").focus();
+        }
       },
       phenotypeLookup: function(term, done) {
         let self = this;
@@ -582,15 +647,28 @@ import SvgBar from '../viz/SvgBar.vue'
         var averagedData = this.performMeanOperation(combinedList, createdObj);
         var sortedPhenotypeData = this.sortTheOrder(averagedData);
 
-        let data = this.drawSvgBars(sortedPhenotypeData);
-        this.items = data;
-        this.noOfSourcesSvg();
-        this.selected = this.items.slice(0,50);
-        this.phenolyzerStatus = null;
-        this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
-        this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
-        this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
-        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        if(this.multipleSearchTerms.length>0){
+          let data = this.drawSvgBars(sortedPhenotypeData);
+          this.items = data;
+          this.noOfSourcesSvg();
+          this.selected = this.items.slice(0,50);
+          this.phenolyzerStatus = null;
+          this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+          this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+          this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        }
+        else {
+          this.items = [];
+          this.selected = [];
+          this.phenolyzerStatus = null;
+          this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+          this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+          this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        }
+
+
       },
       selectNumberOfTopPhenolyzerGenes: function(){
         if(this.genesTop>0){
@@ -654,6 +732,8 @@ import SvgBar from '../viz/SvgBar.vue'
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
+                  console.log("data", self.items[0])
+
                   self.noOfSourcesSvg();
                   self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
@@ -676,11 +756,13 @@ import SvgBar from '../viz/SvgBar.vue'
         }
       },
       combineList(arr){
+        console.log("arr", arr)
         var temp =[];
           for(var i=0; i<arr.length; i++){
             for(var j=0; j<arr[i].data.length; j++){
               temp.push({
                 geneName: arr[i].data[j].geneName,
+                geneId: arr[i].data[j].geneId,
                 geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
                 score: Number(arr[i].data[j].score),
                 searchTerm: [arr[i].name],
@@ -716,11 +798,13 @@ import SvgBar from '../viz/SvgBar.vue'
                   sources: 1,
                   searchTerm: arr[j].searchTerm,
                   searchTermIndex: arr[j].searchTermIndex,
+                  geneId: arr[j].geneId,
                 }
               }
               else {
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
+                  geneId: arr[j].geneId,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
                   // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))),
                   score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
@@ -784,7 +868,6 @@ import SvgBar from '../viz/SvgBar.vue'
       },
 
       drawSvgBars: function(tempItems){
-
         console.log("widthOFtable", $('#genes-table').innerWidth())
         var svgWidth = 250;
         var firstBarWidth = tempItems[0].score * 220;
@@ -807,6 +890,9 @@ import SvgBar from '../viz/SvgBar.vue'
           gene.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.geneName}`;
           gene.geneCardsSrc = `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.geneName}`;
           gene.ghrSrc = `https://ghr.nlm.nih.gov/gene/${gene.geneName}`;
+          gene.clinGenLink = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.geneName}`;
+          gene.geneIdLink = `https://www.ncbi.nlm.nih.gov/gene/${gene.geneId}`;
+
         })
         return tempItems
       },

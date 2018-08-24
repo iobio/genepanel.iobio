@@ -22,7 +22,8 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
-
+require('../assets/images/genescard.png');
+import image from "../assets/images/genescard.png";
 var model = new Model();
 
   export default {
@@ -39,6 +40,7 @@ var model = new Model();
     data(){
       return {
         dialog: false,
+        image: image
       }
     },
     mounted(){
