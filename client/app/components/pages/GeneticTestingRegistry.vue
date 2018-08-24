@@ -411,7 +411,7 @@
 
                         <!-- start panels filter card -->
                         <div v-else-if="chartComponent==='GeneMembership'" v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
-                            <div v-if="vendorsSelect.length">
+                            <div v-if="vendorList.length">
                               <v-card-text >
                                 <center>
                                   <span class="Rightbar_CardHeading">
@@ -1344,7 +1344,7 @@ export default {
         })
       }
       else {
-        if(this.chartComponent!=='PanelFilters'){
+        if(this.chartComponent!=='PanelFilters' && this.chartComponent!=='GeneMembership' && this.chartComponent!=='Vendors'){
           console.log("B");
           var tempArr = [];
           tempArr = e;
@@ -1365,13 +1365,15 @@ export default {
         console.log("C");
         this.selectedPanelsInCheckBox = temp;
       }
+
       this.geneProps = temp;
+      console.log("geneprops", this.geneProps.length)
     },
     setPanelsNamesList: function(e){
     },
     updateVendorList: function(e){
       console.log("updateVendorList")
-      // this.vendorList = e;
+      this.vendorList = e;
       this.multiSelectItems = e;
       // this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
