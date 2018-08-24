@@ -411,7 +411,7 @@
 
                         <!-- start panels filter card -->
                         <div v-else-if="chartComponent==='GeneMembership'" v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
-                            <div v-if="vendorList.length">
+                            <div v-if="vendorsSelect.length">
                               <v-card-text >
                                 <center>
                                   <span class="Rightbar_CardHeading">
@@ -614,8 +614,6 @@
                           </center>
                           <br>
                         </div>
-
-
                         <!-- end vendors card  -->
                       </v-card>
                     </v-dialog>
@@ -914,7 +912,8 @@
                     v-on:selectVendors="selectVendors($event)"
                     v-on:selectPanelsFromVendorsUpdate="selectPanelsFromVendorsUpdate($event)"
                     v-bind:lowerLimitProps="lowerLimitProps"
-                    v-bind:upperLimitProps="upperLimitProps">
+                    v-bind:upperLimitProps="upperLimitProps"
+                    v-bind:selectedPanelFilters="selectedPanelFilters">
                     <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
                   </gene-panel>
                 </v-card-text>
@@ -1088,6 +1087,7 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
+      console.log("vendorsSelect changing");
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -1113,6 +1113,7 @@ export default {
       }
     },
     selectedPanelsInCheckBox(val){
+      console.log("selectedPanelsInCheckBox changing")
       if(this.chartComponent==='GeneMembership' || this.chartComponent==="PanelFilters"){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
@@ -1324,7 +1325,10 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
+      console.log("selectPanels", e)
+      console.log("selectPanels")
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
+        console.log("A");
           //set the items in the panels card
           this.multiSelectPanels = e;
       }
@@ -1341,6 +1345,7 @@ export default {
       }
       else {
         if(this.chartComponent!=='PanelFilters'){
+          console.log("B");
           var tempArr = [];
           tempArr = e;
           this.selectedPanelFilters.map(x=>{
@@ -1357,6 +1362,7 @@ export default {
       }
 
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
+        console.log("C");
         this.selectedPanelsInCheckBox = temp;
       }
       this.geneProps = temp;
@@ -1364,13 +1370,15 @@ export default {
     setPanelsNamesList: function(e){
     },
     updateVendorList: function(e){
-      this.vendorList = e;
+      console.log("updateVendorList")
+      // this.vendorList = e;
       this.multiSelectItems = e;
-      this.vendorsSelect = this.multiSelectItems;
+      // this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
       this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
+      console.log("selectVendors")
       this.vendorsSelect = e;
       if(!this.chartComponent==='Vendors'){
         this.vendorsSelect = e;

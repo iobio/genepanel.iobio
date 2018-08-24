@@ -93,6 +93,9 @@ var model = new Model();
       selectedPanelsInCheckBoxPropsOne: {
         type: Array
       },
+      selectedPanelFilters: {
+        type: Array
+      }
       // upperLimitProps: {
       //   type: Number
       // },
@@ -288,6 +291,7 @@ var model = new Model();
       },
       AddGenePanelData: function(){
         //new code
+        console.log("selectedPanelFilters", this.selectedPanelFilters)
         this.DiseasePanel = this.DiseasePanelData
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
         this.mergedGene = mergedGenePanels
@@ -304,15 +308,49 @@ var model = new Model();
             x.filter = "general"
           }
         })
+        console.log("items", this.items);
+
+        var temp =[];
+        this.selectedPanelFilters.map(x=>{
+          this.items.map(y=>{
+            if(x === y.filter){
+              temp.push(y);
+            }
+          })
+        })
+        console.log("temp", temp)
         let vendors = model.getGenePanelVendors(mergedGenePanels);
+        var vendorsToBeSelected = this.getVendorsToBeSelected(temp, vendors);
 
         this.vendorList = vendors;
         this.selected = this.items.slice();
         this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
+        this.$emit('selectVendors', vendorsToBeSelected);                    
+      },
+      getVendorsToBeSelected: function(temp, vendorsPara){
+        var nonSelectedItems = [];
+        this.items.map(x=>{
+          var checkIfExists = obj => obj.testname === x.testname;
+          if(!temp.some(checkIfExists)){
+            nonSelectedItems.push(x)
+          }
+        })
+        var nonSelectedVendors = [];
+        nonSelectedItems.map(x=>{
+          nonSelectedVendors.push(x.offerer);
+        })
+        let vendors = model.getGenePanelVendors(temp);
 
-
-
+        var vendorsToBeSentBack = [];
+        vendors.map(x=>{
+          if(!nonSelectedVendors.includes(x)){
+            vendorsToBeSentBack.push(x);
+          }
+        })
+        console.log("vendorsToBeSentBack", vendorsToBeSentBack.sort());
+        return vendorsToBeSentBack.sort();
+        // this.$emit('selectVendors', vendorsToBeSentBack.sort());
       },
       addGenes: function(d){
         d.genePanels.map(x=>{
