@@ -1463,6 +1463,7 @@ export default {
       this.$emit('search-gtr', genes, phenotype)
     },
     showChartComponent: function(chart_component){
+      window.scrollTo(0,150);
       this.chartComponent = chart_component;
       this.openFilterDialog = true
       // $("#activeFilterCard").fadeIn("slow", function() {
@@ -1489,7 +1490,6 @@ export default {
       //   $('#activeVendorsCard').appendTo('#activeFilterCard');
       // }
       //
-      // window.scrollTo(0,120);
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
