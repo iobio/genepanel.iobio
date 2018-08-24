@@ -240,9 +240,11 @@
                     </v-flex>
 
 
+                  <div class="positionModal" >
                     <v-dialog
                       v-model="openFilterDialog"
-                      width="600"
+                      width="450"
+                      content-class="positionModal"
                     >
                       <v-card>
                         <div v-if="chartComponent==='disorders'" v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
@@ -617,6 +619,7 @@
                         <!-- end vendors card  -->
                       </v-card>
                     </v-dialog>
+                  </div>
 
                    <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
 

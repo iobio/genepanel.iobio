@@ -704,7 +704,11 @@ a:hover {
   background-color: #2c3e50;
 }
 
-
+.positionModal {
+  position:absolute !important;
+  right:0 !important;
+  margin-right: -1px;
+}
 aside {
   margin-top: 64px !important;
   max-height: calc(100% - 64px) !important;
