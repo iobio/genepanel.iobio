@@ -415,12 +415,6 @@
                                   <span class="Rightbar_CardHeading">
                                     PANELS
                                   </span>
-                                  <Dialogs
-                                    id="GeneMembershipDialog"
-                                    class="dialogBox"
-                                    :HeadlineText="HelpDialogsData[3].HeadlineText"
-                                    :ContentText="HelpDialogsData[3].Content">
-                                  </Dialogs>
                                   <v-divider class="Rightbar_card_divider"></v-divider>
 
                                   <span class="Rightbar_card_content_subheading">
@@ -523,6 +517,11 @@
                           <v-card flat v-if="multiSelectItems.length">
                             <v-card-text >
                               <center>
+                                <span class="Rightbar_CardHeading">
+                                  VENDORS
+                                </span>
+                                <v-divider class="Rightbar_card_divider"></v-divider>
+
                                 <div v-if="multiSelectItems.length>1">
                                   <span class="Rightbar_card_content_subheading">
                                     <strong class="Rightbar_card_content_heading">{{ vendorsSelect.length }}</strong> of {{ multiSelectItems.length }} vendors selected
@@ -1552,10 +1551,10 @@ export default {
       this.openFilterDialog = false;
     },
     closeComponentForNewResults: function(){
-      $("#activeFilterCard").removeClass("activeFilterCardBackground");
-      $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
-      $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
-      $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
+      // $("#activeFilterCard").removeClass("activeFilterCardBackground");
+      // $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
+      // $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
+      // $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
     },
     ChangePanelsDefinition: function(){
       this.chartComponent = "PanelsDefinition";
