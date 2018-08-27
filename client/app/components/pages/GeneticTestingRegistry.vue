@@ -626,7 +626,7 @@
                         <v-card-title primary-title>
                           <v-text-field
                             append-icon="search"
-                            label="Search Genes"
+                            label="Search for Gene"
                             single-line
                             hide-details
                             v-model="geneSearch"
