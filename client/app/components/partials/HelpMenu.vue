@@ -1,7 +1,7 @@
 <template>
   <span>
     <v-menu bottom offset-y style="color:black">
-      <v-btn flat slot="activator">
+      <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator">
         <v-icon>help</v-icon> Help
       </v-btn>
       <v-list>
@@ -73,6 +73,11 @@ var model = new Model();
   export default {
     components: {
       'NavBarDialogs': NavBarDialogs,
+    },
+    props: {
+      launchedFromClin: {
+        type: Boolean
+      }
     },
     data(){
       return {

@@ -108,7 +108,7 @@
       </span>
       <v-spacer></v-spacer>
       <v-menu bottom offset-y style="color:black">
-        <v-btn flat slot="activator"
+        <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon style="padding-right:4px">input</v-icon>
           <strong>Export</strong>
         </v-btn>
@@ -141,7 +141,7 @@
       </v-menu>
       <span>
         <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
-          <v-btn flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
             <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
@@ -153,8 +153,8 @@
           </v-card>
         </v-dialog>
       </span>
-      <HelpMenu></HelpMenu>
-      <AppsMenu></AppsMenu>
+      <HelpMenu v-bind:launchedFromClin="launchedFromClin"></HelpMenu>
+      <AppsMenu v-show="!launchedFromClin"></AppsMenu>
 
     </v-toolbar>
 
@@ -969,9 +969,6 @@ nav.toolbar, nav.v-toolbar
   background-color: $app-color !important
   font-weight: 300 !important
 
-  &.clin
-    background-color: $app-color !important
-
   .toolbar__side-icon.btn.btn--icon, .v-toolbar__side-icon.v-btn.v-btn--icon
     max-width: 40px
     min-width: 40px
@@ -1004,6 +1001,16 @@ nav.toolbar, nav.v-toolbar
     span
       font-family: Quicksand !important
       font-weight: 400 !important
+
+  &.clin
+    background-color: $nav-color-clin !important
+    color: #486da8 !important
+
+
+    // .toolbar__title
+    //   color: $nav-title-color-clin
+
+// nav.toolbar.clin .toolbar__title
 
 .list__tile__title, .v-list__tile__title
   .icon
@@ -1108,4 +1115,7 @@ button.btnColor.blue.darken-1
   .active
     a
       background-color: $app-color
+
+.clinButtonColor
+  color: #717171 !important
 </style>
