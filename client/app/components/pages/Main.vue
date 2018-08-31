@@ -107,8 +107,9 @@
       <span style="margin-left:130px">
       </span>
       <v-spacer></v-spacer>
+      <!-- <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a> -->
       <v-menu bottom offset-y style="color:black">
-        <v-btn flat slot="activator"
+        <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon style="padding-right:4px">input</v-icon>
           <strong>Export</strong>
         </v-btn>
@@ -141,7 +142,7 @@
       </v-menu>
       <span>
         <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
-          <v-btn flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
             <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
@@ -153,8 +154,8 @@
           </v-card>
         </v-dialog>
       </span>
-      <HelpMenu></HelpMenu>
-      <AppsMenu></AppsMenu>
+      <HelpMenu v-bind:launchedFromClin="launchedFromClin"></HelpMenu>
+      <AppsMenu v-show="!launchedFromClin"></AppsMenu>
 
     </v-toolbar>
 
@@ -182,6 +183,7 @@
               :chartColor="ordinalColor"
               :barColor="barColor"
               @search-gtr="onSearchGTR"
+              v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile">
             </GeneticTestingRegistry>
@@ -191,6 +193,7 @@
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
               @search-phenotype="onSearchPhenotype"
               @phenotypeSearchTermArray="phenotypeSearchTermArray"
+              v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile">
             </Phenolyzer>
@@ -291,7 +294,14 @@ import Overview from './Overview.vue'
         browser: null,
         isMobile: false,
         setDefaultLandingPage: false,
-
+        GtrGenesArr: [],
+        PhenolyzerGenesArr: [],
+        commonGtrPhenoGenes: [],
+        uniqueGtrGenes: [],
+        uniqueGtrData: [],
+        uniquePheno: [],
+        UniquePhenoData: [],
+        summaryClinTableArray: [],
       }
     },
     created(){
@@ -444,6 +454,7 @@ import Overview from './Overview.vue'
         this.NumberOfAllGenes = this.uniqueGenes.length
       },
       copyGtrGenes: function(){
+        // window.open('http://localhost:4000');
         var geneNames = this.selectedGtrGenes.map(gene => {
           return gene.name
         })
@@ -463,6 +474,19 @@ import Overview from './Overview.vue'
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
 
+        // var socket = io.connect('http://localhost:4026');
+        //
+        // socket.emit('geneData', {
+        //     message: "Genes",
+        //     handle: genesToCopy
+        // });
+
+
+        if(this.selectedGtrGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
+        }
+        this.snackbar=true;
+
         this.sendClin({
           'type': 'apply-genes',
           source: 'gtr',
@@ -471,10 +495,6 @@ import Overview from './Overview.vue'
           searchTerms: [this.searchTermGTR]
         });
 
-        if(this.selectedGtrGenes.length>0){
-          this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
-        }
-        this.snackbar=true;
       },
       copyPhenolyzerGenes: function(){
         var geneNames = this.selectedPhenolyzerGenes.map(gene => {
@@ -493,6 +513,11 @@ import Overview from './Overview.vue'
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
 
+        if(this.selectedPhenolyzerGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.selectedPhenolyzerGenes.length + " ";
+        }
+        this.snackbar=true;
+
         this.sendClin({
           'type': 'apply-genes',
           source: 'phenotype-driven',
@@ -501,25 +526,42 @@ import Overview from './Overview.vue'
           searchTerms: [this.searchTermPhenotype]
         });
 
-        if(this.selectedPhenolyzerGenes.length>0){
-          this.snackbarText = " Number of Genes Copied : " + this.selectedPhenolyzerGenes.length + " ";
-        }
-        this.snackbar=true;
+      },
+      sendGenesUsingSocket: function(){
+        // let self = this;
+        var genesToCopy = this.uniqueGenes.toString();
+        console.log("genesToCopy", genesToCopy);
+        var socket = io.connect('http://localhost:4026');
+
+        socket.emit('geneData', {
+            message: "Genes",
+            handle: genesToCopy
+        });
+
       },
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
 
-        var clinData = this.summaryGenes.map(gene=> {
+        this.organizeClinData();
+        var clinData = this.summaryClinTableArray.map(gene=> {
           return {
             name: gene.name,
             source: gene.sources,
-            gtr: gene.isGtr,
-            pheno: gene.isPheno
+            geneId: gene.geneId,
+            score: gene.score,
+            genePanels: gene.value,
+            searchTermsPhenolyzer: gene.searchTermPheno,
+            searchTermsGtr: gene.searchTermArrayGTR
           }
         })
         console.log("clinData", clinData)
         this.$clipboard(genesToCopy);
+
+        if(this.uniqueGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
+        }
+        this.snackbar=true;
 
         this.sendClin({
           type: 'apply-genes',
@@ -529,10 +571,6 @@ import Overview from './Overview.vue'
           searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
         });
 
-        if(this.uniqueGenes.length>0){
-          this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
-        }
-        this.snackbar=true;
       },
       exportGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
@@ -574,6 +612,7 @@ import Overview from './Overview.vue'
           }
       },
       updateAllGenesFromSelection(data){
+        console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
         var allGenes = data.map(x=>{
           return x.name;
@@ -617,7 +656,189 @@ import Overview from './Overview.vue'
       },
       phenotypeSearchTermArray: function(searchTerms){
         this.phenotypeSearches = searchTerms;
-      }
+      },
+      organizeClinData: function(){
+        this.summaryClinTableArray = [];
+        this.GtrGenesArr = [];
+        this.PhenolyzerGenesArr = [];
+        this.commonGtrPhenoGenes = [];
+        this.uniqueGtrGenes = [];
+        this.uniqueGtrData = [];
+        this.uniquePheno = [];
+        this.UniquePhenoData = [];
+
+        var gtrGenes = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+        this.GtrGenesArr = gtrGenes;
+
+        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        this.PhenolyzerGenesArr = phenolyzerGenes;
+
+        var gtrSet = new Set(this.GtrGenesArr);
+        var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
+        var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
+        this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
+        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
+
+        var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
+        this.uniqueGtrGenes = [...uniqueGtr];
+
+        this.uniqueGtrGenes.map(x=>{
+          this.selectedGtrGenes.map(y=>{
+            if(x===y.name){
+              this.uniqueGtrData.push({
+                name: y.name,
+                sourceGTR: y.searchTermIndexSVG,
+                searchTermArrayGTR: y.searchTermArray,
+                searchTermIndexGTR: y.searchTermIndex,
+                isAssociatedGene: y.isAssociatedGene,
+                geneid: y.geneid,
+                geneIdLink: y.geneIdLink,
+                value: y.value
+              })
+            }
+          })
+        })
+
+        var uniquePheno = new Set([...phenolyzerSet].filter(x => !gtrSet.has(x)));
+        this.uniquePheno = [...uniquePheno];
+
+        this.uniquePheno.map(x=>{
+          this.selectedPhenolyzerGenes.map(y=>{
+            if(x===y.geneName){
+              this.UniquePhenoData.push({
+                name:y.geneName,
+                sourcePheno: y.searchTermIndexSVG,
+                searchTermPheno: y.searchTerm,
+                searchTermIndex: y.searchTermIndex,
+                geneId: y.geneId,
+                geneIdLink: y.geneIdLink,
+                score: y.score,
+              })
+            }
+          })
+        })
+
+        var tempA = [];
+
+        for(var i=0; i<this.commonGtrPhenoGenes.length; i++){
+          for(var j=0; j<this.selectedPhenolyzerGenes.length; j++){
+            if(this.commonGtrPhenoGenes[i]===this.selectedPhenolyzerGenes[j].geneName){
+              tempA.push({
+                name:this.selectedPhenolyzerGenes[j].geneName,
+                rank: parseInt(this.selectedPhenolyzerGenes[j].rank),
+                sourcePheno: this.selectedPhenolyzerGenes[j].searchTermIndexSVG,
+                searchTermPheno: this.selectedPhenolyzerGenes[j].searchTerm,
+                geneId: this.selectedPhenolyzerGenes[j].geneId,
+                geneIdLink: this.selectedPhenolyzerGenes[j].geneIdLink,
+                score: this.selectedPhenolyzerGenes[j].score,
+              })
+            }
+          }
+        }
+
+        tempA.sort(function(a, b){
+          return a.rank - b.rank;
+        });
+
+        for(var i=0; i<tempA.length; i++){
+          for(var j=0; j<this.selectedGtrGenes.length; j++){
+            if(tempA[i].name===this.selectedGtrGenes[j].name){
+              tempA[i].sourceGTR = this.selectedGtrGenes[j].searchTermIndexSVG
+              tempA[i].isAssociatedGene = this.selectedGtrGenes[j].isAssociatedGene
+              tempA[i].searchTermArrayGTR = this.selectedGtrGenes[j].searchTermArray
+              tempA[i].value = this.selectedGtrGenes[j].value
+            }
+          }
+        }
+
+        var arr=[];
+        arr.push(tempA.map(x=>{
+          return {
+            name: x.name,
+            isGtr: true,
+            isPheno: true,
+            sources: "GTR and Phenolyzer",
+            noOfSources: 2,
+            sourceGTR: x.sourceGTR,
+            sourcePheno: x.sourcePheno,
+            isAssociatedGene: x.isAssociatedGene,
+            geneIdLink: x.geneIdLink,
+            geneId: x.geneId,
+            searchTermArrayGTR: x.searchTermArrayGTR,
+            searchTermPheno: x.searchTermPheno,
+            value: x.value,
+            score: x.score,
+          }
+        }))
+
+        arr.push(this.uniqueGtrData.map(x=>{
+          return {
+            name: x.name,
+            isGtr: true,
+            isPheno: false,
+            sources: "GTR",
+            noOfSources: 1,
+            sourceGTR: x.sourceGTR,
+            sourcePheno: [],
+            isAssociatedGene: x.isAssociatedGene,
+            geneId: x.geneid,
+            geneIdLink: x.geneIdLink,
+            searchTermArrayGTR: x.searchTermArrayGTR,
+            searchTermPheno: [],
+            value: x.value,
+            score: ""
+          }
+        }))
+
+
+        arr.push(this.UniquePhenoData.map(x=>{
+          return {
+            name: x.name,
+            isGtr: false,
+            isPheno: true,
+            sources: "Phenolyzer",
+            noOfSources: 1,
+            sourcePheno: x.sourcePheno,
+            sourceGTR: [],
+            isAssociatedGene: false,
+            geneIdLink: x.geneIdLink,
+            geneId: x.geneId,
+            searchTermPheno: x.searchTermPheno,
+            searchTermArrayGTR: [],
+            score: x.score,
+            value: ""
+          }
+        }))
+
+        var tempSummaryTableArray = [];
+        tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
+
+        var associatedGenes = [];
+        var nonAssociatedGenes = [];
+
+        tempSummaryTableArray.map(x=>{
+          if(x.isAssociatedGene===true){
+            associatedGenes.push(x);
+          }
+          else{
+            nonAssociatedGenes.push(x);
+          }
+        })
+        this.associatedGenesData = associatedGenes;
+
+        if(associatedGenes.length){
+          this.summaryClinTableArray = [...associatedGenes, ...nonAssociatedGenes];
+        }
+        else {
+          this.summaryClinTableArray = tempSummaryTableArray;
+        }
+        console.log("this.summaryClinTableArray", this.summaryClinTableArray)
+      },
+
 
     }
 
@@ -704,7 +925,11 @@ a:hover {
   background-color: #2c3e50;
 }
 
-
+.positionModal {
+  position:absolute !important;
+  right:0 !important;
+  margin-right: -1px;
+}
 aside {
   margin-top: 64px !important;
   max-height: calc(100% - 64px) !important;
@@ -756,9 +981,6 @@ nav.toolbar, nav.v-toolbar
   background-color: $app-color !important
   font-weight: 300 !important
 
-  &.clin
-    background-color: $app-color !important
-
   .toolbar__side-icon.btn.btn--icon, .v-toolbar__side-icon.v-btn.v-btn--icon
     max-width: 40px
     min-width: 40px
@@ -791,6 +1013,16 @@ nav.toolbar, nav.v-toolbar
     span
       font-family: Quicksand !important
       font-weight: 400 !important
+
+  &.clin
+    background-color: $nav-color-clin !important
+    color: #486da8 !important
+
+
+    // .toolbar__title
+    //   color: $nav-title-color-clin
+
+// nav.toolbar.clin .toolbar__title
 
 .list__tile__title, .v-list__tile__title
   .icon
@@ -895,4 +1127,7 @@ button.btnColor.blue.darken-1
   .active
     a
       background-color: $app-color
+
+.clinButtonColor
+  color: #717171 !important
 </style>

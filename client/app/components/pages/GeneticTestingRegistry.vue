@@ -231,6 +231,7 @@
                           v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
                           v-bind:multipleSearchItems="multipleSearchItems"
                           v-bind:geneSearch="geneSearch"
+                          v-bind:launchedFromClinProps="launchedFromClinProps"
                           v-bind:associatedGenes="associatedGenes">
                         </show-gene-panel1>
                         <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
@@ -240,9 +241,11 @@
                     </v-flex>
 
 
+                  <div class="positionModal" >
                     <v-dialog
                       v-model="openFilterDialog"
-                      width="600"
+                      width="450"
+                      content-class="positionModal"
                     >
                       <v-card>
                         <div v-if="chartComponent==='disorders'" v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
@@ -612,11 +615,10 @@
                           </center>
                           <br>
                         </div>
-
-
                         <!-- end vendors card  -->
                       </v-card>
                     </v-dialog>
+                  </div>
 
                    <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
 
@@ -625,7 +627,7 @@
                         <v-card-title primary-title>
                           <v-text-field
                             append-icon="search"
-                            label="Search Genes"
+                            label="Search for Gene"
                             single-line
                             hide-details
                             v-model="geneSearch"
@@ -911,7 +913,8 @@
                     v-on:selectVendors="selectVendors($event)"
                     v-on:selectPanelsFromVendorsUpdate="selectPanelsFromVendorsUpdate($event)"
                     v-bind:lowerLimitProps="lowerLimitProps"
-                    v-bind:upperLimitProps="upperLimitProps">
+                    v-bind:upperLimitProps="upperLimitProps"
+                    v-bind:selectedPanelFilters="selectedPanelFilters">
                     <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
                   </gene-panel>
                 </v-card-text>
@@ -980,6 +983,9 @@ export default {
     },
     browser: {
       type: String
+    },
+    launchedFromClin: {
+      type: Boolean
     }
   },
   data() {
@@ -1056,6 +1062,7 @@ export default {
       SetOrangeSlider: false,
       showPanelsDistribution: false,
       openFilterDialog: false,
+      launchedFromClinProps: false,
       // browser: null,
       // isMobile: false,
     }
@@ -1085,6 +1092,7 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
+      console.log("vendorsSelect changing");
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -1110,6 +1118,7 @@ export default {
       }
     },
     selectedPanelsInCheckBox(val){
+      console.log("selectedPanelsInCheckBox changing")
       if(this.chartComponent==='GeneMembership' || this.chartComponent==="PanelFilters"){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
@@ -1147,6 +1156,7 @@ export default {
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
+    this.launchedFromClinProps = this.launchedFromClin;
     bus.$on("lastDisorder", ()=>{
       this.snackbarText = "It is required that atleast one disorder is kept selected";
       this.snackbar = true;
@@ -1321,7 +1331,10 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
+      console.log("selectPanels", e)
+      console.log("selectPanels")
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
+        console.log("A");
           //set the items in the panels card
           this.multiSelectPanels = e;
       }
@@ -1337,7 +1350,8 @@ export default {
         })
       }
       else {
-        if(this.chartComponent!=='PanelFilters'){
+        if(this.chartComponent!=='PanelFilters' && this.chartComponent!=='GeneMembership' && this.chartComponent!=='Vendors'){
+          console.log("B");
           var tempArr = [];
           tempArr = e;
           this.selectedPanelFilters.map(x=>{
@@ -1354,20 +1368,25 @@ export default {
       }
 
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
+        console.log("C");
         this.selectedPanelsInCheckBox = temp;
       }
+
       this.geneProps = temp;
+      console.log("geneprops", this.geneProps.length)
     },
     setPanelsNamesList: function(e){
     },
     updateVendorList: function(e){
+      console.log("updateVendorList")
       this.vendorList = e;
       this.multiSelectItems = e;
-      this.vendorsSelect = this.multiSelectItems;
+      // this.vendorsSelect = this.multiSelectItems;
       this.$emit("vendorListCB", e);
       this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
+      console.log("selectVendors")
       this.vendorsSelect = e;
       if(!this.chartComponent==='Vendors'){
         this.vendorsSelect = e;
@@ -1450,6 +1469,7 @@ export default {
       this.$emit('search-gtr', genes, phenotype)
     },
     showChartComponent: function(chart_component){
+      window.scrollTo(0,150);
       this.chartComponent = chart_component;
       this.openFilterDialog = true
       // $("#activeFilterCard").fadeIn("slow", function() {
@@ -1476,7 +1496,6 @@ export default {
       //   $('#activeVendorsCard').appendTo('#activeFilterCard');
       // }
       //
-      // window.scrollTo(0,120);
     },
     TotalNoOfGenesFromGTR: function(e){
       this.TotalGtrGenes = e;
@@ -1534,27 +1553,12 @@ export default {
       this.multipleSearchItems = e;
     },
     closeComponent: function(){
-      // $("#activeFilterCard").removeClass("activeFilterCardBackground");
-      //
-      // if(this.chartComponent==='disorders'){
-      //   $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
-      // }
-      // else if(this.chartComponent==='GeneMembership'){
-      //   $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
-      // }
-      // else if(this.chartComponent==='Vendors'){
-      //   $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
-      // }
       // window.scrollTo(0,120);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
       this.openFilterDialog = false;
     },
     closeComponentForNewResults: function(){
-      // $("#activeFilterCard").removeClass("activeFilterCardBackground");
-      // $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
-      // $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
-      // $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
     },
     ChangePanelsDefinition: function(){
       this.chartComponent = "PanelsDefinition";
@@ -1581,11 +1585,7 @@ export default {
       // this.SetOrangeSlider = false;
       this.upperLimitInput = this.upperLimitProps;
       this.lowerLimitInput = this.lowerLimitProps;
-      // this.panelsDefinitionValues[1] = this.upperLimitInput;
-      // this.panelsDefinitionValues[0] = this.lowerLimitInput;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
-
-
     }
   }
 }
