@@ -107,7 +107,7 @@
       <span style="margin-left:130px">
       </span>
       <v-spacer></v-spacer>
-      <!-- <a @click="copyGtrGenes" href="http://localhost:4030" target="_blank"><v-btn color="primary">Test Socket</v-btn></a> -->
+      <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a>
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon style="padding-right:4px">input</v-icon>
@@ -472,12 +472,12 @@ import Overview from './Overview.vue'
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
 
-        var socket = io.connect('http://localhost:4030');
-
-        socket.emit('geneData', {
-            message: "Genes",
-            handle: genesToCopy
-        });
+        // var socket = io.connect('http://localhost:4026');
+        //
+        // socket.emit('geneData', {
+        //     message: "Genes",
+        //     handle: genesToCopy
+        // });
 
 
         if(this.selectedGtrGenes.length>0){
@@ -522,6 +522,18 @@ import Overview from './Overview.vue'
           genes: geneNames,
           data: clinData,
           searchTerms: [this.searchTermPhenotype]
+        });
+
+      },
+      sendGenesUsingSocket: function(){
+        // let self = this;
+        var genesToCopy = this.uniqueGenes.toString();
+        console.log("genesToCopy", genesToCopy);
+        var socket = io.connect('http://localhost:4026');
+
+        socket.emit('geneData', {
+            message: "Genes",
+            handle: genesToCopy
         });
 
       },
