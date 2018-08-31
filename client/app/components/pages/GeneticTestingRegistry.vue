@@ -231,6 +231,7 @@
                           v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
                           v-bind:multipleSearchItems="multipleSearchItems"
                           v-bind:geneSearch="geneSearch"
+                          v-bind:launchedFromClinProps="launchedFromClinProps"
                           v-bind:associatedGenes="associatedGenes">
                         </show-gene-panel1>
                         <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
@@ -982,6 +983,9 @@ export default {
     },
     browser: {
       type: String
+    },
+    launchedFromClin: {
+      type: Boolean
     }
   },
   data() {
@@ -1058,6 +1062,7 @@ export default {
       SetOrangeSlider: false,
       showPanelsDistribution: false,
       openFilterDialog: false,
+      launchedFromClinProps: false,
       // browser: null,
       // isMobile: false,
     }
@@ -1151,6 +1156,7 @@ export default {
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
+    this.launchedFromClinProps = this.launchedFromClin;
     bus.$on("lastDisorder", ()=>{
       this.snackbarText = "It is required that atleast one disorder is kept selected";
       this.snackbar = true;

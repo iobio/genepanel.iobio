@@ -219,6 +219,9 @@ var model = new Model();
       },
       associatedGenes: {
         type: Array
+      },
+      launchedFromClinProps: {
+        type: Boolean
       }
     },
     data(){
@@ -511,7 +514,12 @@ var model = new Model();
           this.items = data;
         }
         this.noOfSourcesSvg();
-        this.selected = this.items.slice(0,50);
+        if(this.launchedFromClinProps){
+          this.selected = this.items.slice(0,10);
+        }
+        else {
+          this.selected = this.items.slice(0,50);
+        }
         // console.log("this.selected", this.selected)
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);

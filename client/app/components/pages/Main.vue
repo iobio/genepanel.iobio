@@ -107,7 +107,7 @@
       <span style="margin-left:130px">
       </span>
       <v-spacer></v-spacer>
-      <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a>
+      <!-- <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a> -->
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon style="padding-right:4px">input</v-icon>
@@ -183,6 +183,7 @@
               :chartColor="ordinalColor"
               :barColor="barColor"
               @search-gtr="onSearchGTR"
+              v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile">
             </GeneticTestingRegistry>
@@ -192,6 +193,7 @@
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
               @search-phenotype="onSearchPhenotype"
               @phenotypeSearchTermArray="phenotypeSearchTermArray"
+              v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile">
             </Phenolyzer>
@@ -551,8 +553,8 @@ import Overview from './Overview.vue'
             geneId: gene.geneId,
             score: gene.score,
             genePanels: gene.value,
-            PhenolyzerSearchTerms: gene.searchTermPheno,
-            GtrSearchTerms: gene.searchTermArrayGTR
+            searchTermsPhenolyzer: gene.searchTermPheno,
+            searchTermsGtr: gene.searchTermArrayGTR
           }
         })
         console.log("clinData", clinData)

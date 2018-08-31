@@ -381,6 +381,9 @@ import SvgBar from '../viz/SvgBar.vue'
       },
       browser: {
         type: String
+      },
+      launchedFromClin: {
+        type: Array
       }
     },
     data(){
@@ -651,7 +654,12 @@ import SvgBar from '../viz/SvgBar.vue'
           let data = this.drawSvgBars(sortedPhenotypeData);
           this.items = data;
           this.noOfSourcesSvg();
-          this.selected = this.items.slice(0,50);
+          if(this.launchedFromClin){
+            this.selected = this.items.slice(0,10);
+          }
+          else {
+            this.selected = this.items.slice(0,50);
+          }
           this.phenolyzerStatus = null;
           this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
@@ -735,7 +743,13 @@ import SvgBar from '../viz/SvgBar.vue'
                   console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  self.selected = self.items.slice(0,50);
+                  if(self.launchedFromClin){
+                    self.selected = self.items.slice(0,10);
+                  }
+                  else {
+                    self.selected = self.items.slice(0,50);
+                  }
+                  // self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
                   self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
