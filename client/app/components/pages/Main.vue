@@ -107,7 +107,7 @@
       <span style="margin-left:130px">
       </span>
       <v-spacer></v-spacer>
-      <a @click="copyGtrGenes" href="http://localhost:4000" target="_blank"><v-btn color="primary">Test Socket</v-btn></a>
+      <!-- <a @click="copyGtrGenes" href="http://localhost:4030" target="_blank"><v-btn color="primary">Test Socket</v-btn></a> -->
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon style="padding-right:4px">input</v-icon>
@@ -472,7 +472,7 @@ import Overview from './Overview.vue'
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
 
-        var socket = io.connect('http://localhost:4000');
+        var socket = io.connect('http://localhost:4030');
 
         socket.emit('geneData', {
             message: "Genes",
