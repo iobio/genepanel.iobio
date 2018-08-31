@@ -1553,27 +1553,12 @@ export default {
       this.multipleSearchItems = e;
     },
     closeComponent: function(){
-      // $("#activeFilterCard").removeClass("activeFilterCardBackground");
-      //
-      // if(this.chartComponent==='disorders'){
-      //   $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
-      // }
-      // else if(this.chartComponent==='GeneMembership'){
-      //   $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
-      // }
-      // else if(this.chartComponent==='Vendors'){
-      //   $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
-      // }
       // window.scrollTo(0,120);
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
       this.openFilterDialog = false;
     },
     closeComponentForNewResults: function(){
-      // $("#activeFilterCard").removeClass("activeFilterCardBackground");
-      // $('#activeDisordersAndModesFilterCard').appendTo('#inActiveDisordersAndModesFilterCard');
-      // $('#activePanelsFilterCard').appendTo('#inActivePanelsFilterCard');
-      // $('#activeVendorsCard').appendTo('#inActiveVendorsCard');
     },
     ChangePanelsDefinition: function(){
       this.chartComponent = "PanelsDefinition";
@@ -1600,11 +1585,7 @@ export default {
       // this.SetOrangeSlider = false;
       this.upperLimitInput = this.upperLimitProps;
       this.lowerLimitInput = this.lowerLimitProps;
-      // this.panelsDefinitionValues[1] = this.upperLimitInput;
-      // this.panelsDefinitionValues[0] = this.lowerLimitInput;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
-
-
     }
   }
 }

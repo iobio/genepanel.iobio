@@ -543,8 +543,6 @@ import Overview from './Overview.vue'
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
 
-        console.log("this.AllSourcesGenes", this.AllSourcesGenes)
-
         this.organizeClinData();
         var clinData = this.summaryClinTableArray.map(gene=> {
           return {
@@ -574,6 +572,91 @@ import Overview from './Overview.vue'
         });
 
       },
+      exportGtrGenes: function(){
+        var geneNames = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+        var geneNamesToExport = geneNames.toString();
+        if(this.selectedGtrGenes.length>0){
+          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+          FileSaver.saveAs(blob, "GTR Genes.txt");
+        }
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
+      },
+      exportPhenolyzerGenes: function(){
+        var geneNames = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        var geneNamesToExport = geneNames.toString();
+        if(this.selectedPhenolyzerGenes.length>0){
+          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+          FileSaver.saveAs(blob, "Phenolyzer Genes.txt");
+        }
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
+      },
+      exportAllGenes: function(){
+          var geneNamesToExport = this.uniqueGenes.toString();
+          if(this.uniqueGenes.length>0){
+            var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+            FileSaver.saveAs(blob, "All Genes.txt");
+          }
+          else {
+            this.snackbarText = "You need to select genes inorder to use this feature";
+            this.snackbar=true;
+          }
+      },
+      updateAllGenesFromSelection(data){
+        console.log("this.summaryGenes", this.summaryGenes)
+        this.summaryGenes = data;
+        var allGenes = data.map(x=>{
+          return x.name;
+        });
+        this.uniqueGenes = allGenes;
+        this.NumberOfAllGenes = this.uniqueGenes.length
+      },
+      receiveClin: function(event) {
+        // Do we trust the sender of this message?
+        // Do we trust the sender of this message?
+        if (this.clinIobioUrls.indexOf(event.origin) == -1) {
+          if(this.setDefaultLandingPage === false){
+            this.component = 'OverviewPage';
+            this.setDefaultLandingPage = true;
+          }
+          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          return;
+        }
+        else {
+          this.component = 'GeneticTestingRegistry';
+          this.setDefaultLandingPage = true;
+        }
+        this.launchedFromClin = true;
+        this.clinIobioUrl = event.origin;
+
+        var clinObject = JSON.parse(event.data);
+
+        var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
+        window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);
+      },
+      sendClin: function(obj) {
+        var theObject = $.extend({}, obj);
+        theObject.sender = 'genepanel.iobio.io';
+        window.parent.postMessage(JSON.stringify(theObject), this.clinIobioUrl);
+      },
+      onSearchGTR: function(searchTerm)  {
+        this.searchTermGTR = searchTerm;
+      },
+      onSearchPhenotype: function(searchTermObject)  {
+        this.searchTermPhenotype.push(searchTermObject.label);
+      },
+      phenotypeSearchTermArray: function(searchTerms){
+        this.phenotypeSearches = searchTerms;
+      },
       organizeClinData: function(){
         this.summaryClinTableArray = [];
         this.GtrGenesArr = [];
@@ -584,8 +667,6 @@ import Overview from './Overview.vue'
         this.uniquePheno = [];
         this.UniquePhenoData = [];
 
-        // console.log("selectedGtrGenes", this.selectedGtrGenes[0]);
-        // console.log("selectedPhenolyzerGenes", this.selectedPhenolyzerGenes[0]);
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
         })
@@ -595,9 +676,6 @@ import Overview from './Overview.vue'
           return gene.geneName
         })
         this.PhenolyzerGenesArr = phenolyzerGenes;
-
-        // var allGenes = [...gtrGenes, ...phenolyzerGenes];
-        // this.AllSourcesGenes = allGenes;
 
         var gtrSet = new Set(this.GtrGenesArr);
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
@@ -643,8 +721,6 @@ import Overview from './Overview.vue'
             }
           })
         })
-
-        // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
 
         var tempA = [];
 
@@ -760,97 +836,9 @@ import Overview from './Overview.vue'
         else {
           this.summaryClinTableArray = tempSummaryTableArray;
         }
-
-        // tempSummaryTableArray.map((x,i)=>{
-        //   this.summaryClinTableArray.push(x);
-        // })
         console.log("this.summaryClinTableArray", this.summaryClinTableArray)
       },
-      exportGtrGenes: function(){
-        var geneNames = this.selectedGtrGenes.map(gene => {
-          return gene.name
-        })
-        var geneNamesToExport = geneNames.toString();
-        if(this.selectedGtrGenes.length>0){
-          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
-          FileSaver.saveAs(blob, "GTR Genes.txt");
-        }
-        else {
-          this.snackbarText = "You need to select genes inorder to use this feature";
-          this.snackbar=true;
-        }
-      },
-      exportPhenolyzerGenes: function(){
-        var geneNames = this.selectedPhenolyzerGenes.map(gene => {
-          return gene.geneName
-        })
-        var geneNamesToExport = geneNames.toString();
-        if(this.selectedPhenolyzerGenes.length>0){
-          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
-          FileSaver.saveAs(blob, "Phenolyzer Genes.txt");
-        }
-        else {
-          this.snackbarText = "You need to select genes inorder to use this feature";
-          this.snackbar=true;
-        }
-      },
-      exportAllGenes: function(){
-          var geneNamesToExport = this.uniqueGenes.toString();
-          if(this.uniqueGenes.length>0){
-            var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
-            FileSaver.saveAs(blob, "All Genes.txt");
-          }
-          else {
-            this.snackbarText = "You need to select genes inorder to use this feature";
-            this.snackbar=true;
-          }
-      },
-      updateAllGenesFromSelection(data){
-        console.log("this.summaryGenes", this.summaryGenes)
-        this.summaryGenes = data;
-        var allGenes = data.map(x=>{
-          return x.name;
-        });
-        this.uniqueGenes = allGenes;
-        this.NumberOfAllGenes = this.uniqueGenes.length
-      },
-      receiveClin: function(event) {
-        // Do we trust the sender of this message?
-        // Do we trust the sender of this message?
-        if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          if(this.setDefaultLandingPage === false){
-            this.component = 'OverviewPage';
-            this.setDefaultLandingPage = true;
-          }
-          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
-          return;
-        }
-        else {
-          this.component = 'GeneticTestingRegistry';
-          this.setDefaultLandingPage = true;
-        }
-        this.launchedFromClin = true;
-        this.clinIobioUrl = event.origin;
 
-        var clinObject = JSON.parse(event.data);
-
-        var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
-        window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);
-      },
-      sendClin: function(obj) {
-        var theObject = $.extend({}, obj);
-        theObject.sender = 'genepanel.iobio.io';
-        window.parent.postMessage(JSON.stringify(theObject), this.clinIobioUrl);
-      },
-      onSearchGTR: function(searchTerm)  {
-        this.searchTermGTR = searchTerm;
-      },
-      onSearchPhenotype: function(searchTermObject)  {
-        this.searchTermPhenotype.push(searchTermObject.label);
-      },
-      phenotypeSearchTermArray: function(searchTerms){
-        this.phenotypeSearches = searchTerms;
-      }
 
     }
 

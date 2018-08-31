@@ -172,9 +172,6 @@
                         <v-list-tile-content>
                           <v-list-tile-title><strong>Gene ID <i> ( {{props.item.geneid}} )</i> </strong><a v-bind:href="props.item.geneIdLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
                           <br>
-                          <!-- <v-list-tile-sub-title>
-                                    {{props.item.geneid}}               </v-list-tile-sub-title>
-                           <v-list-tile-sub-title><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
                         </v-list-tile-content>
                       </v-list-tile>
                       <br>
