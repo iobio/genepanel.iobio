@@ -98,8 +98,7 @@
                         type="text"
                         v-model="genesTop"
                         autocomplete="off"
-                        list="genes"
-                        placeholder="50">
+                        list="genes">
                         <datalist id="genes">
                           <option v-for="genesCount in genesTopCounts">
                             {{ genesCount }}
@@ -383,16 +382,17 @@ import SvgBar from '../viz/SvgBar.vue'
         type: String
       },
       launchedFromClin: {
-        type: Array
+        type: Boolean
       }
     },
     data(){
+      let self = this;
       return {
         showGenesMenu: null,
         enterCount: 0,
         genesToApply: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
-        genesTop: null,
+        genesTop: self.launchedFromClin ? 10 : 30,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -743,12 +743,8 @@ import SvgBar from '../viz/SvgBar.vue'
                   console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  if(self.launchedFromClin){
-                    self.selected = self.items.slice(0,10);
-                  }
-                  else {
-                    self.selected = self.items.slice(0,50);
-                  }
+                  self.selected = self.items.slice(0, self.genesTop);
+
                   // self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";

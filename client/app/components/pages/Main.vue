@@ -638,7 +638,15 @@ import Overview from './Overview.vue'
         this.launchedFromClin = true;
         this.clinIobioUrl = event.origin;
 
+
         var clinObject = JSON.parse(event.data);
+
+        // Clin is requesting the selected genes, so send them.
+        if (clinObject.type == 'request-genes') {
+          if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+            this.copyAllGenes();
+          }
+        }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
         window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);

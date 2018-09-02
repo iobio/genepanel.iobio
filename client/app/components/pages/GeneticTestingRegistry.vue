@@ -40,8 +40,7 @@
                           type="text"
                           v-model="NumberOfTopGenes"
                           autocomplete="off"
-                          list="genes"
-                          placeholder="50">
+                          list="genes">
                           <datalist id="genes">
                             <option v-for="genesCount in genesTopCounts">
                               {{ genesCount }}
@@ -989,6 +988,7 @@ export default {
     }
   },
   data() {
+    let self = this;
     return {
       diseases: [],
       diseasesProps: [],
@@ -999,7 +999,7 @@ export default {
       disorderNamesList: [],
       selectedDisordersList: [],
       showSummaryComponent: false,
-      NumberOfTopGenes: null,
+      NumberOfTopGenes: self.launchedFromClin ? 10 : 30,
       selectedGenesText: "",
       selectedVendorsListFromFilterCB:[],
       GtrGenesTabNumber: 0,
