@@ -14,8 +14,7 @@ html {
 .theme--light .card,
 .application .theme--light.card,
 .application .theme--light.list,
-.theme--light .list
- {
+.theme--light .list {
   color:  #222;
   fill:  #222;
 }
