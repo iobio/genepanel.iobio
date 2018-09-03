@@ -18,6 +18,7 @@
     <v-navigation-drawer
       permanent
       app
+      :class="launchedFromClin ? 'clin' : '' "
     >
     <br>
      <v-list dense class="pt-0">
@@ -97,6 +98,7 @@
     <v-toolbar
       :class="launchedFromClin ? 'clin' : '' "
       dark
+      :height="launchedFromClin ? 45 : 64"
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
     >
@@ -110,7 +112,7 @@
       <!-- <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a> -->
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
-        ><v-icon style="padding-right:4px">input</v-icon>
+        ><v-icon v-if="!launchedFromClin" style="padding-right:4px">input</v-icon>
           <strong>Export</strong>
         </v-btn>
         <v-list>
@@ -142,7 +144,8 @@
       </v-menu>
       <span>
         <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
-          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator">
+          <v-icon v-if="!launchedFromClin">autorenew</v-icon><strong>Clear All</strong></v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
             <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
@@ -160,7 +163,7 @@
     </v-toolbar>
 
     <div>
-      <v-content>
+      <v-content :class="launchedFromClin ? 'clin' : '' ">
         <div class="header-nav-bar" >
           <v-card-text>
             <p></p>
@@ -854,7 +857,7 @@ import Overview from './Overview.vue'
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins');
 
 .conditionsBox {
   width: 285px;
@@ -1019,18 +1022,39 @@ nav.toolbar, nav.v-toolbar
     min-width: 130px
 
     span
-      font-family: Quicksand !important
+      font-family: $iobio-font  !important
       font-weight: 400 !important
 
   &.clin
     background-color: $nav-color-clin !important
     color: #486da8 !important
+    .v-toolbar__content
+      padding-left: 10px
+    .v-toolbar__title
+      font-size: 18px
+
+    -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
 
 
     // .toolbar__title
     //   color: $nav-title-color-clin
 
 // nav.toolbar.clin .toolbar__title
+
+
+.v-content
+  &.clin
+    .header-nav-bar
+      height: 50px
+      background-color: initial
+
+    .v-card
+      -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+      box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+aside
+  &.clin
+    margin-top: 45px !important
 
 .list__tile__title, .v-list__tile__title
   .icon

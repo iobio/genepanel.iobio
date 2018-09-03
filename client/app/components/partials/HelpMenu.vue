@@ -2,7 +2,7 @@
   <span>
     <v-menu bottom offset-y style="color:black">
       <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator">
-        <v-icon>help</v-icon> Help
+        <v-icon v-if="!launchedFromClin">help</v-icon> Help
       </v-btn>
       <v-list>
         <v-list-tile @click="showDisclaimer=true">
