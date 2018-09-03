@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="overview-panel">
       <v-layout row wrap style="margin-top:-10px;">
         <v-flex d-flex xs12>
           <v-card>
@@ -138,9 +138,6 @@ var model = new Model();
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-center, span, h1, h2, h3, h4{
-  font-family: 'Open Sans', sans-serif;
-}
 
 div.polaroid {
   width: 400px;
@@ -165,5 +162,21 @@ div.polaroid {
 .v-slider__track, .v-slider__track-fill{
   transition: none !important;
 }
+
+</style>
+
+<style lang="sass">
+
+@import ../assets/sass/variables
+
+#overview-panel
+  center, span, h1, h2, h3, h4
+    font-family: $app-font
+
+  h1, h4
+    color: white
+
+  h2, h3
+    color: black
 
 </style>

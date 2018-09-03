@@ -1611,23 +1611,8 @@ export default {
   .v-slider__track, .v-slider__track-fill{
     transition: none !important;
   }
-  .toolbar__title{
-    /* color: #66D4ED; */
-    font-family: 'Quicksand', sans-serif;
-    font-size: 24px;
-  }
 
-  label, strong, th{
-    font-family: 'Open Sans', sans-serif;
-  }
 
-  center, span, h1, h2, h3, h4{
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  .btn__content{
-    font-family: 'Open Sans', sans-serif;
-  }
 
   .btn{
     padding: 0px
@@ -1757,6 +1742,24 @@ export default {
 
 <style lang="sass">
 @import ../assets/sass/variables
+
+
+.toolbar__title
+  font-family: $iobio-font
+  font-size: 24px
+
+
+
+label, strong, th
+  font-family: $app-font
+
+
+center, span, h1, h2, h3, h4
+  font-family: $app-font
+
+
+.btn__content
+  font-family: $app-font
 
 #GoToTopBtn
   position: fixed

@@ -364,10 +364,12 @@ import { bus } from '../../routes';
 </script>
 
 <style lang="sass">
+@import ../assets/sass/variables
+
 .chart-title
   margin-left: 10px
   font-size: 16px
-  font-family:  "Open sans"
+  font-family:  $app-font
   font-weight: 300
 
 </style>

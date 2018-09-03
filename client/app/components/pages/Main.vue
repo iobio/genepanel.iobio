@@ -113,7 +113,7 @@
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon v-if="!launchedFromClin" style="padding-right:4px">input</v-icon>
-          <strong>Export</strong>
+          Export
         </v-btn>
         <v-list>
           <div v-if="component==='GeneticTestingRegistry'">
@@ -145,7 +145,7 @@
       <span>
         <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
           <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator">
-          <v-icon v-if="!launchedFromClin">autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-icon v-if="!launchedFromClin">autorenew</v-icon>Clear All</v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
             <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
@@ -868,11 +868,7 @@ import Overview from './Overview.vue'
   margin-left: -8px
 }
 
-.tabs__container{
-  height:50px;
-  font-family: 'Open Sans', sans-serif;
-  padding-top: 5px;
-}
+
 
 .container {
   padding: 12px;
@@ -883,13 +879,7 @@ import Overview from './Overview.vue'
   /* margin-top: -3px; */
 }
 
-.card__title, .card__text{
-  font-family: 'Open Sans', sans-serif;
-}
 
-.list__tile__title{
-  font-family: 'Open Sans', sans-serif;
-}
 
 .tabs__slider { /* This is for the tabs slider */
   height:4px;
@@ -963,6 +953,19 @@ aside {
 
 @import ../assets/sass/variables
 
+.tabs__container
+  height: 50px
+  font-family: $app-font
+  padding-top: 5px
+
+.card__title, .card__text
+  font-family: $app-font
+
+
+.list__tile__title
+  font-family: $app-font
+
+
 .Rightbar_CardHeading
   font-size: 16px
   font-weight: 550
@@ -1025,36 +1028,12 @@ nav.toolbar, nav.v-toolbar
       font-family: $iobio-font  !important
       font-weight: 400 !important
 
-  &.clin
-    background-color: $nav-color-clin !important
-    color: #486da8 !important
-    .v-toolbar__content
-      padding-left: 10px
-    .v-toolbar__title
-      font-size: 18px
-
-    -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
-    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
-
 
     // .toolbar__title
     //   color: $nav-title-color-clin
 
 // nav.toolbar.clin .toolbar__title
 
-
-.v-content
-  &.clin
-    .header-nav-bar
-      height: 50px
-      background-color: initial
-
-    .v-card
-      -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
-      box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
-aside
-  &.clin
-    margin-top: 45px !important
 
 .list__tile__title, .v-list__tile__title
   .icon
@@ -1092,7 +1071,7 @@ button.btnColor.blue.darken-1
 
   font-size: 15px
   font-weight: bold
-  font-family: Open sans
+  font-family: $app-font
 
 .checkbox.input-group.input-group--selection-controls.accent--text
   color: $app-gray !important
@@ -1162,4 +1141,57 @@ button.btnColor.blue.darken-1
 
 .clinButtonColor
   color: #717171 !important
+
+
+
+//
+// Clin specific styling
+//
+nav.toolbar, nav.v-toolbar
+  &.clin
+    font-family: $app-font-clin !important
+    text-color:  $text-color-clin
+    background-color: $nav-color-clin !important
+    color: #486da8 !important
+    .v-toolbar__content
+      padding-left: 10px
+      .v-btn
+        text-transform:  none !important
+        font-weight: normal
+        font-size: 14px
+
+    .v-toolbar__title
+      font-size: 18px
+
+    -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+
+.v-content
+  &.clin
+    font-family: $app-font-clin !important
+    text-color:  $text-color-clin
+    h1, h2, h3, h4, h5, h6, label
+      color:  $text-color-clin
+      font-family: $app-font-clin !important
+    .v-card__text
+      color: $text-color-clin
+      font-family: $app-font-clin !important
+    .header-nav-bar
+      height: 50px
+      background-color: initial
+
+    .v-card
+      -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+      box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+
+    .v-chip:not(.orange)
+      background-color:  $app-color !important
+      color: white !important
+      border-color: $app-color !important
+aside
+  font-family: $app-font-clin !important
+  text-color:  $text-color-clin
+  &.clin
+    margin-top: 45px !important
+
 </style>
