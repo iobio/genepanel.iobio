@@ -2,9 +2,6 @@ html {
   -webkit-font-smoothing: auto;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-
 .application.theme--light {
   background: #fafafa;
   color:  #222;
