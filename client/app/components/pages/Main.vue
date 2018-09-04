@@ -1025,8 +1025,8 @@ nav.toolbar, nav.v-toolbar
     min-width: 130px
 
     span
-      font-family: $iobio-font  !important
-      font-weight: 400 !important
+      font-family: $iobio-font
+      font-weight: 400
 
 
     // .toolbar__title
@@ -1161,7 +1161,9 @@ nav.toolbar, nav.v-toolbar
         font-size: 14px
 
     .v-toolbar__title
-      font-size: 18px
+      span
+        font-size: 18px
+        font-family: $iobio-font-clin
 
     -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
     box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
@@ -1173,6 +1175,9 @@ nav.toolbar, nav.v-toolbar
     h1, h2, h3, h4, h5, h6, label
       color:  $text-color-clin
       font-family: $app-font-clin !important
+    h3
+      font-size: 16px
+      color: $app-color
     .v-card__text
       color: $text-color-clin
       font-family: $app-font-clin !important
