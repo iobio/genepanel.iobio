@@ -500,7 +500,7 @@ import SvgBar from '../viz/SvgBar.vue'
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
         geneModel.StopAjaxCall();
-        this.genesTop = null;
+        this.genesTop = 30;
       });
     },
     updated(){
