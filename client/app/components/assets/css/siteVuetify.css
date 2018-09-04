@@ -2,27 +2,27 @@ html {
   -webkit-font-smoothing: auto;
 }
 
-.application.theme--light {
+.application .theme--light {
   background: #fafafa;
   color:  #222;
   fill:  #222;
 }
 
 .theme--light .card,
-.application .theme--light.card,
-.application .theme--light.list,
+.application .theme--light .card,
+.application .theme--light .list,
 .theme--light .list {
   color:  #222;
   fill:  #222;
 }
 
-.theme--light .input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active), .application .theme--light.input-group.input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
+.theme--light .input-group .input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active), .application .theme--light .input-group .input-group--dirty .input-group__selections__comma:not(.input-group__selections__comma--active) {
   color:  #222;
   fill:  #222;
 }
 
 .btn {
-  padding: 0px;
+  padding: 0;
   height: 28px;
 }
 
@@ -33,7 +33,7 @@ html {
     height: 25px;
 }
 
-.dropdown.open .dropdown-menu {
+.dropdown .open .dropdown-menu {
   max-height: 400px !important;
   overflow-y: scroll !important
 }
@@ -42,20 +42,20 @@ table.table tbody td, table.table tbody th {
   height: 28px !important;
   line-height: 1.2 !important;
   vertical-align: middle;
-  padding-top: 0px !important;
+  padding-top: 0 !important;
 }
 
 table.v-table tbody td, table.v-table tbody th {
   height: 28px !important;
 }
 
-table.table tbody td .input-group.input-group--selection-controls {
+table.table tbody td .input-group .input-group--selection-controls {
   margin-top: 1px !important;
   margin-bottom: 1px !important;
 }
 
 /* checkbox labels */
-.v-input--selection-controls.v-input .v-label{
+.v-input--selection-controls .v-input .v-label{
   align-items: center;
   display: inline-flex;
   top: 0;
@@ -66,19 +66,19 @@ table.table tbody td .input-group.input-group--selection-controls {
 }
 
 /* search gene label  */
-.application .theme--light.v-label, .theme--light .v-label {
+.application .theme--light .v-label, .theme--light .v-label {
   color: rgba(58, 57, 57, 0.87) !important;
   font-weight: 300 !important;
 }
 
 /* Table column headers */
-.v-datatable thead th.column.sortable{
+.v-datatable thead th.column .sortable{
   cursor: default;
   color: black !important;
-  font-weight: 500
+  font-weight: 500;
 }
 
-.v-datatable thead th.column.sortable: hover{
+.v-datatable thead th.column .sortable: hover{
   cursor: default;
   color: black !important;
 }
