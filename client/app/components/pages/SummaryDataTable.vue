@@ -65,62 +65,81 @@
               <v-card>
                 <div class="conditionsBox">
                   <v-list>
-                    <div class="v-list__group__header">
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title><strong>  &nbsp;  Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
+                          <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
                         </v-list-tile-content>
-                      </v-list-tile>
-                    </div>
-                    <a v-bind:href="props.item.medGenSrc" target="_blank">
-                      <v-list-tile style="font-size:14px; height:36px" @click="">
-                        <v-list-tile-content style="margin-left:10px">
-                          <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </a>
+                        </v-list-tile>
+                      <v-divider class="Rightbar_card_divider"></v-divider>
+                      <v-list-tile >
+                       <v-list-tile-content>
+                         <v-list-tile-title><strong>MedGen</strong><a v-bind:href="props.item.medGenSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                         <br>
+                         <v-list-tile-sub-title>
+                           MedGen organizes information related to human medical genetics, such as attributes of conditions with a genetic contribution.
+                        </v-list-tile-sub-title>
+                       </v-list-tile-content>
+                     </v-list-tile>
 
-                    <a v-bind:href="props.item.omimSrc" target="_blank">
-                      <v-list-tile style="font-size:14px; height:36px" @click="">
-                        <v-list-tile-content style="margin-left:10px">
-                          <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      </a>
+                     <br>
+                     <v-list-tile >
+                      <v-list-tile-content>
+                        <v-list-tile-title><strong>OMIM</strong><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                        <br>
+                        <v-list-tile-sub-title>
+                          OMIM is a comprehensive, authoritative compendium of human genes and genetic phenotypes
+                        </v-list-tile-sub-title>
+                         <!-- <v-list-tile-sub-title><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn block  small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
+                      </v-list-tile-content>
+                    </v-list-tile>
 
-                    <a v-bind:href="props.item.geneCardsSrc" target="_blank">
-                      <v-list-tile style="font-size:14px; height:36px" @click="">
-                        <v-list-tile-content style="margin-left:10px">
-                          <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      </a>
+                    <br>
+                    <v-list-tile >
+                     <v-list-tile-content>
+                       <v-list-tile-title><strong>GeneCards</strong><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                       <br>
+                       <v-list-tile-sub-title>
+                         GeneCards is a searchable, integrative database that provides comprehensive, user-friendly information on all annotated and predicted human genes.
+                       </v-list-tile-sub-title>
+                        <!-- <v-list-tile-sub-title><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
+                     </v-list-tile-content>
+                   </v-list-tile>
 
-                    <a v-bind:href="props.item.ghrSrc" target="_blank">
-                      <v-list-tile style="font-size:14px; height:36px" @click="">
-                        <v-list-tile-content style="margin-left:10px">
-                          <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      </a>
+                   <br>
+                   <v-list-tile >
+                    <v-list-tile-content>
+                      <v-list-tile-title><strong>Genetics Home Reference</strong><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                      <br>
+                      <v-list-tile-sub-title>
+                        Genetics Home Reference provides consumer-friendly information about the effects of genetic variation on human health.
+                      </v-list-tile-sub-title>
+                       <!-- <v-list-tile-sub-title><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
+                    </v-list-tile-content>
+                  </v-list-tile>
 
-                    <a v-bind:href="props.item.clinGenLink" target="_blank">
-                      <v-list-tile style="font-size:14px; height:38px" @click="">
-                        <v-list-tile-content style="margin-left:10px">
-                          <v-list-tile-title><v-icon>arrow_right</v-icon>ClinGen</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </a>
+                  <br>
+                  <v-list-tile >
+                   <v-list-tile-content>
+                     <v-list-tile-title><strong>ClinGen</strong><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                     <br>
+                     <v-list-tile-sub-title>
+                       The Clinical Genome Resource (ClinGen) consortium curates genes and regions of the genome to assess whether there is evidence to support that these genes/regions are dosage sensitive and should be targeted on a cytogenomic array                       </v-list-tile-sub-title>
+                      <!-- <v-list-tile-sub-title><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
+                   </v-list-tile-content>
+                 </v-list-tile>
 
-                    <v-list-tile style="font-size:14px; height:38px" @click="">
-                      <v-list-tile-content style="margin-left:10px">
-                        <v-list-tile-title><v-icon>arrow_right</v-icon>Gene ID:<a v-bind:href="props.item.geneIdLink" target="_blank"> {{props.item.geneId}} </a></v-list-tile-title>
+                     <br>
+                     <v-list-tile >
+                      <v-list-tile-content>
+                        <v-list-tile-title><strong>Gene ID <i> ( {{props.item.geneId}} )</i> </strong><a v-bind:href="props.item.geneIdLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                        <br>
                       </v-list-tile-content>
                     </v-list-tile>
                     <br>
                   </v-list>
                 </div>
               </v-card>
+
             </v-menu>
           </td>
         </tr>

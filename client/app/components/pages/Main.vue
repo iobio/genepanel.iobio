@@ -953,6 +953,13 @@ aside {
 
 @import ../assets/sass/variables
 
+.conditionsBox
+  width: 470px
+  overflow-wrap: break-word
+  height:  370px
+  overflow-y: scroll
+
+
 .tabs__container
   height: 50px
   font-family: $app-font

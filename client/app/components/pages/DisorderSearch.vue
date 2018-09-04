@@ -55,7 +55,7 @@
       <div v-if="multipleSearchTerms.length">
         <br>
           Conditions Searched:
-        <v-chip disabled outline color="blue-grey darken-3" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+        <v-chip disabled  color="primary" text-color="white" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
           {{ i+1 }}. {{ searchItem }}
         </v-chip>
       </div>

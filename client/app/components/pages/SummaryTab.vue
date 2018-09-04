@@ -30,7 +30,8 @@
                                 No disorders searched
                              </v-chip>
                           </div>
-                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
+                          <!-- outline color="blue-grey darken-3" -->
+                          <v-chip disabled color="primary" text-color="white" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
                         </v-card-text>
@@ -39,7 +40,7 @@
                         <v-card-text>
                           <strong>Phenolyzer:</strong>
                           <div v-if="PhenolyzerSearchTerms.length>0">
-                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
+                          <v-chip disabled color="primary" text-color="white" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
                         </div>
