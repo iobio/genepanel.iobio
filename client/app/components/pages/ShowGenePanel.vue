@@ -192,13 +192,11 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
-import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import Model from '../../models/Model';
 var model = new Model();
 
   export default {
     components: {
-      'ConditionsDistribution': ConditionsDistribution
     },
     //props: ['GeneData'],
     props: {

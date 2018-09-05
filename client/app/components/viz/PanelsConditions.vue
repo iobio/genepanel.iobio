@@ -68,20 +68,25 @@ var model = new Model();
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-.genepanelsRect{
-  fill: #4e7ad3;
-  pointer-events: all;
-  stroke: white;
-  stroke-width: 2;
-}
 
-.grayRect{
-  fill: #e8ebed;
-  stroke: white;
-  stroke-width: 2;
-}
 
+</style>
+
+<style lang="sass">
+@import ../assets/sass/variables
+@import url('https://fonts.googleapis.com/css?family=Open+Sans')
+
+.genepanelsRect
+  fill: #4e7ad3
+  pointer-events: all
+  stroke: white
+  stroke-width: 2
+
+
+.grayRect
+  fill: #e8ebed
+  stroke: white
+  stroke-width: 2
 
 </style>

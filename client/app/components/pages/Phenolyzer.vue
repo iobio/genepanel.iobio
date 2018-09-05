@@ -338,10 +338,6 @@
                             <v-flex d-flex xs12 sm12 md4 lg4>
                               <center>
                                 <!-- put the pie chart component here  -->
-                                <PhenolyzerPieChart
-                                  v-if="pieChartdataArr.length"
-                                  v-bind:PhenolyzerPieChartData="pieChartdataArr">
-                                </PhenolyzerPieChart>
                               </center>
                             </v-flex>
 
@@ -373,7 +369,6 @@
 import { bus } from '../../routes';
 
 import { Typeahead, Btn } from 'uiv';
-import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
@@ -384,7 +379,6 @@ import SvgBar from '../viz/SvgBar.vue'
 
   export default {
     components: {
-      'PhenolyzerPieChart': PhenolyzerPieChart,
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       Typeahead

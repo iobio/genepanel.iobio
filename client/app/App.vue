@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./components/assets/sass/site.sass";
+@import "./components/assets/sass/site.sass"
 </style>

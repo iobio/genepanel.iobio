@@ -932,9 +932,6 @@ import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
 import ShowGenePanel from './ShowGenePanel.vue';
 import { bus } from '../../routes';
-import PieChartSelector from '../viz/PieChartSelector.vue';
-import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
-import GeneMembership from '../viz/GeneMembership.vue';
 import Alerts from '../partials/Alerts.vue';
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
@@ -955,9 +952,6 @@ export default {
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
     'show-gene-panel1': ShowGenePanel,
-    'PieChartSelector': PieChartSelector,
-    'ConditionsDistribution': ConditionsDistribution,
-    'GeneMembership': GeneMembership,
     'Alerts': Alerts,
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,

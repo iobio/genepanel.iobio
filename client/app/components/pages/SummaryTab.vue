@@ -162,7 +162,6 @@
 </template>
 
 <script>
-import SummaryPieChart from '../viz/SummaryPieChart.vue';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
 import IntroductionText from '../../../data/IntroductionText.json';
@@ -175,7 +174,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
 
   export default {
     components: {
-      'SummaryPieChart': SummaryPieChart,
       'SummaryDataTable': SummaryDataTable,
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
