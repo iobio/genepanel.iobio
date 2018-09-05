@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="background-color:#f9fbff">
   <v-app id="inspire">
     <v-snackbar
         :timeout="snackbarTimeout"
