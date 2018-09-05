@@ -244,9 +244,13 @@ import Overview from './Overview.vue'
       'HelpMenu': HelpMenu,
       'Overview':Overview
     },
+    props: {
+      paramLaunchedFromClin: null
+    },
     data(){
+      let self = this;
       return{
-        component: 'OverviewPage',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -279,7 +283,7 @@ import Overview from './Overview.vue'
         IntroductionTextData: null,
         clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io"],
         clinIobioUrl: null,
-        launchedFromClin: false,
+        launchedFromClin: self.paramLaunchedFromClin == 'true' ? true : false,
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -627,18 +631,9 @@ import Overview from './Overview.vue'
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          if(this.setDefaultLandingPage === false){
-            this.component = 'OverviewPage';
-            this.setDefaultLandingPage = true;
-          }
           // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
-        else {
-          this.component = 'GeneticTestingRegistry';
-          this.setDefaultLandingPage = true;
-        }
-        this.launchedFromClin = true;
         this.clinIobioUrl = event.origin;
 
 

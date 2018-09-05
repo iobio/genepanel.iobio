@@ -68,6 +68,9 @@ const routes = [
   {
     path: '/',
     component: Main,
+    props: (route) => ({
+        paramLaunchedFromClin:     route.query.launchedFromClin
+    })
   }
 ]
 
