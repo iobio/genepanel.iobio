@@ -47,6 +47,11 @@
               <v-btn color="white" style="color:#0D47A1">
               Learn More
               </v-btn>
+              <a href="https://www.ncbi.nlm.nih.gov/gtr/" target="_blank">
+                <v-btn color="primary">
+                  About GTR
+                </v-btn>
+              </a>
               <v-btn color="primary" @click="getStarted('gtr')">
                 Get Started
               </v-btn>
@@ -83,6 +88,11 @@
               <v-btn color="white" style="color:#0D47A1">
               Learn More
               </v-btn>
+              <a href="http://phenolyzer.wglab.org/" target="_blank">
+                <v-btn color="primary">
+                  About Phenolyzer
+                </v-btn>
+              </a>
               <v-btn color="primary" @click="getStarted('phenolyzer')">
                 Get Started
               </v-btn>
