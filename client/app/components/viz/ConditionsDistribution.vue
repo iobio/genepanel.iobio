@@ -203,20 +203,17 @@ import { bus } from '../../routes';
 
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+  <style lang="sass">
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans')
+  @import ../assets/sass/variables
 
+  .bar
 
-.bar {
-}
+  .bar1
+    stroke-width: .5
+    opacity: .7
+  
+  .brush .extent
+    fill: steelblue
 
-.bar1 {
-  stroke-width: .5;
-  opacity: .7;
-}
-
-.brush .extent {
-  fill: steelblue
-}
-
-</style>
+  </style>

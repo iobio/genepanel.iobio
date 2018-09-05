@@ -103,17 +103,10 @@ var model = new Model();
       }
     }
   }
-
-
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-</style>
-
-
 <style lang="sass">
+@import url('https://fonts.googleapis.com/css?family=Open+Sans')
 @import ../assets/sass/variables
 
 #versions

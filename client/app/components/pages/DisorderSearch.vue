@@ -322,73 +322,6 @@ var model = new Model();
   }
 </script>
 
-<style scoped>
- /* .btnColor{
-   color: white;
-   background-color: #D04F4C !important;
-   border-radius: 5px;
- } */
- .btn{
-   padding: 0px;
-   height:39px;
- }
- .form-control{
-   font-size: 15px;
- }
-#input{
-  width: 600px;
-  height:40px;
-  margin-top: 4px;
-  background-color: #F4F4F4;
-  border-color: #F4F4F4;
-}
-
-/* Media Queries */
-
-@media screen and (max-width: 1620px){
-  #input{
-    width: 420px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 1050px){
-  #input{
-    width: 450px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 950px){
-  #input{
-    width: 290px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 700px){
-  #input{
-    width: 300px;
-    height:40px;
-    margin-top: 4px;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
-  }
-  .btnColor{
-    margin-top: 2px
-  }
-}
-
-.input-box{
-  background: #00ACC1;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.50);
-  height:60px;
-  padding-left: 30px;
-  padding-top: 15px;
-}
-</style>
 
 <style lang="sass" scoped>
 
@@ -398,4 +331,53 @@ var model = new Model();
     color: white
     background-color: $search-button-color !important
 
+  .btn
+    padding: 0px
+    height: 39px
+
+  .form-control
+    font-size: 15px
+
+  #input
+    width: 600px
+    height: 40px
+    margin-top: 4px
+    background-color: #F4F4F4
+    border-color: #F4F4F4
+
+
+  @media screen and (max-width: 1620px)
+    #input
+      width: 420px
+      height: 40px
+      margin-top: 4px
+
+  @media screen and (max-width: 1050px)
+    #input
+      width: 450px
+      height: 40px
+      margin-top: 4px
+
+  @media screen and (max-width: 950px)
+    #input
+      width: 290px
+      height: 40px
+      margin-top: 4px
+
+  @media screen and (max-width: 700px)
+    #input
+      width: 300px
+      height: 40px
+      margin-top: 4px
+      box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+
+    .btnColor
+      margin-top: 2px
+
+  .input-box
+    background: #00ACC1
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.50)
+    height: 60px
+    padding-left: 30px
+    padding-top: 15px
 </style>

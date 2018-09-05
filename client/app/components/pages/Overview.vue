@@ -139,38 +139,36 @@ var model = new Model();
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-
-div.polaroid {
-  width: 400px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
-}
-
-.abc {
-  border-radius: 16px
-}
-
-.v-slider__track__container, .v-slider__track{
-  height:16px !important;
-  border-radius: 5px
-}
-
-.v-slider__track-fill{
-  height:16px !important;
-  transition: .0s  !important;
-}
-
-.v-slider__track, .v-slider__track-fill{
-  transition: none !important;
-}
-
 </style>
 
 <style lang="sass">
 
 @import ../assets/sass/variables
+@import url('https://fonts.googleapis.com/css?family=Open+Sans')
+
+
+div.polaroid 
+  width: 400px
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  text-align: center
+
+
+.abc 
+  border-radius: 16px
+
+
+.v-slider__track__container, .v-slider__track
+  height: 16px !important
+  border-radius: 5px
+
+
+.v-slider__track-fill
+  height: 16px !important
+  transition: .0s  !important
+
+
+.v-slider__track, .v-slider__track-fill
+  transition: none !important
 
 #overview-panel
   center, span, h1, h2, h3, h4

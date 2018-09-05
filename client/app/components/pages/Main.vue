@@ -851,109 +851,83 @@ import Overview from './Overview.vue'
   }
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins');
-
-.conditionsBox {
-  width: 285px;
-  overflow-wrap: break-word;
-}
-
-.margin_ActiveTab{
-  margin-left: -8px
-}
-
-
-
-.container {
-  padding: 12px;
-}
-
-
-.toolbar__side-icon{
-  /* margin-top: -3px; */
-}
-
-
-
-.tabs__slider { /* This is for the tabs slider */
-  height:4px;
-
-}
-
-a{
-  color: #1976d2
-}
-a:hover {
-  text-decoration: none;
-
-}
-
-.badge__badge, .v-badge__badge{
-  height:23px;
-  width: 23px;
-  background-color: #66d4ed;
-  top: -16px;
-  right: -25px;
-  /* color: black; */
-}
-
-
-.badge, .v-badge{
-  font-weight: 200
-}
-
-.badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon{
-  font-size: 11px;
-}
-
-.primary{
-  background-color: #66d4ed !important;
-}
-
-.toolbar__extension{
-  height: 25px !important;
-  background-color: #2c3e50 /* Removes the small line between nav and tabs*/
-}
-
-
-.application .theme--dark.tabs__bar, .theme--dark .tabs__bar{
-  background-color: #2c3e50;
-}
-
-.positionModal {
-  position:absolute !important;
-  right:0 !important;
-  margin-right: -1px;
-}
-aside {
-  margin-top: 64px !important;
-  max-height: calc(100% - 64px) !important;
-}
-
-@media screen and (max-width: 1270px){
-  aside {
-    margin-top: 64px !important;
-    max-height: calc(100% - 0px) !important;
-  }
-}
-
-.v-list--dense .v-list__tile .v-icon {
-  font-size: 24px;
-}
-
-</style>
 
 <style lang="sass">
-
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins')
 @import ../assets/sass/variables
+
+.conditionsBox
+  width: 285px
+  overflow-wrap: break-word
+
+.margin_ActiveTab
+  margin-left: -8px
+
+.container
+  padding: 12px
+
+.toolbar__side-icon
+  /* margin-top: -3px; */
+
+.tabs__slider
+  height: 4px
+
+a
+  color: #1976d2
+
+a:hover
+  text-decoration: none
+
+.badge__badge, .v-badge__badge
+  height: 23px
+  width: 23px
+  background-color: #66d4ed
+  top: -16px
+  right: -25px
+  /* color: black; */
+
+.badge, .v-badge
+  font-weight: 200
+
+
+.badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon
+  font-size: 11px
+
+
+.primary
+  background-color: #66d4ed !important
+
+
+.toolbar__extension
+  height: 25px !important
+  background-color: #2c3e50
+
+.application .theme--dark.tabs__bar, .theme--dark .tabs__bar
+  background-color: #2c3e50
+
+.positionModal
+  position: absolute !important
+  right: 0 !important
+  margin-right: -1px
+
+aside
+  margin-top: 64px !important
+  max-height: calc(100% - 64px) !important
+
+
+@media screen and (max-width: 1270px)
+  aside
+    margin-top: 64px !important
+    max-height: calc(100% - 0px) !important
+
+.v-list--dense .v-list__tile .v-icon
+  font-size: 24px
 
 .conditionsBox
   width: 470px
   overflow-wrap: break-word
   height:  370px
   overflow-y: scroll
-
 
 .tabs__container
   height: 50px
@@ -1029,12 +1003,6 @@ nav.toolbar, nav.v-toolbar
     span
       font-family: $iobio-font
       font-weight: 400
-
-
-    // .toolbar__title
-    //   color: $nav-title-color-clin
-
-// nav.toolbar.clin .toolbar__title
 
 
 .list__tile__title, .v-list__tile__title

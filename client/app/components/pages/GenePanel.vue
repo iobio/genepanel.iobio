@@ -326,7 +326,7 @@ var model = new Model();
         this.selected = this.items.slice();
         this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
-        this.$emit('selectVendors', vendorsToBeSelected);                    
+        this.$emit('selectVendors', vendorsToBeSelected);
       },
       getVendorsToBeSelected: function(temp, vendorsPara){
         var nonSelectedItems = [];
@@ -388,9 +388,4 @@ var model = new Model();
   }
 </script>
 
-<style scoped>
-  #inspire {
-    height: 600px;
-  }
-</style>
 <!-- https://repl.it/@adityaekawade/HeartfeltScientificRooster  for filter multi select-->

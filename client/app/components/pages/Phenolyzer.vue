@@ -944,105 +944,105 @@ import SvgBar from '../viz/SvgBar.vue'
 </script>
 
 <style>
-.btnColor, .btn__content{
-  color: white;
-}
-.btn{
-  padding: 0px;
-  height: 34px;
-}
-.form-control{
-  font-size: 15px;
-}
-
-
-.headerWidth{
-  width: 1%;
-  color: red
-}
-
-.conditionsBox {
-  width: 470px;
-  overflow-wrap: break-word;
-  height:  370px;
-  overflow-y: scroll;
-}
-
-#phenotype-term{
-  width: 600px;
-  height:40px;
-  margin-top: 4px;
-  background-color: #F4F4F4;
-  border-color: #F4F4F4;
-}
-
-#top-genes-input{
-  width: 200px;
-  height:40px;
-  margin-top: 4px;
-  background-color: #F4F4F4;
-  border-color: #F4F4F4;
-}
-
-/* Media Queries */
-
-@media screen and (max-width:1600px){
-  #top-genes-input{
-    width: 120px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 1620px){
-  #phenotype-term{
-    width: 420px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 1050px){
-  #phenotype-term{
-    width: 450px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 950px){
-  #phenotype-term{
-    width: 290px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 700px){
-  #phenotype-term{
-    width: 300px;
-    height:40px;
-    margin-top: 4px;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
-  }
-  .btnColor{
-    margin-top: 2px
-  }
-}
-
-.genepanelsRect{
-  fill: #4e7ad3;
-  pointer-events: all;
-  stroke: #4e7ad3;
-  stroke-width: 2;
-}
-
 
 </style>
 
 <style lang="sass">
 
   @import ../assets/sass/variables
+
+  .btnColor, .btn__content
+    color: white
+
+  .btn
+    padding: 0px
+    height: 34px
+
+  .form-control
+    font-size: 15px
+
+
+
+  .headerWidth
+    width: 1%
+    color: red
+
+
+  .conditionsBox
+    width: 470px
+    overflow-wrap: break-word
+    height:  370px
+    overflow-y: scroll
+
+
+  #phenotype-term
+    width: 600px
+    height: 40px
+    margin-top: 4px
+    background-color: #F4F4F4
+    border-color: #F4F4F4
+
+
+  #top-genes-input
+    width: 200px
+    height: 40px
+    margin-top: 4px
+    background-color: #F4F4F4
+    border-color: #F4F4F4
+
+
+  /* Media Queries */
+
+  @media screen and (max-width:1600px)
+    #top-genes-input
+      width: 120px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 1620px)
+    #phenotype-term
+      width: 420px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 1050px)
+    #phenotype-term
+      width: 450px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 950px)
+    #phenotype-term
+      width: 290px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 700px)
+    #phenotype-term
+      width: 300px
+      height: 40px
+      margin-top: 4px
+      box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+
+    .btnColor
+      margin-top: 2px
+
+
+
+  .genepanelsRect
+    fill: #4e7ad3
+    pointer-events: all
+    stroke: #4e7ad3
+    stroke-width: 2
+
 
   .btnColor
     color: white
