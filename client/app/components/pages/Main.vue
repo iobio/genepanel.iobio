@@ -246,7 +246,7 @@ import Overview from './Overview.vue'
     },
     data(){
       return{
-        component: '',
+        component: 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
