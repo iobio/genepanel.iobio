@@ -49,11 +49,12 @@ var model = new Model();
     methods:{
       drawBars(){
 
-        var svgWidth = $('.summaryDiv').innerWidth() ;
+        var svgWidth = $('.summaryDiv').innerWidth()-20 ;
         var absWidth = Math.abs(svgWidth)
-        var multiplicationFactor = Math.round(absWidth / this.totalNumber);
-        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-30);
-        var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -30);
+        var absWidthPadding = absWidth-20;
+        var multiplicationFactor = absWidthPadding / this.totalNumber;
+        var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor));
+        var grayBarWidth = Math.abs(absWidthPadding - selectedgenesWidth );
         var selected_Number = this.selectedNumber;
 
         if(this.selectedNumber===0){
@@ -66,7 +67,7 @@ var model = new Model();
                                 x="1" y="1" rx="5" width="${selectedgenesWidth}" height="16"/>
                           <rect class="grayRect"
                                 x="${selectedgenesWidth}" y="1" rx="5" width="${grayBarWidth}" height="16"/>
-                          <text x="${selectedgenesWidth+7+grayBarWidth}" y="12" font-family="Verdana" font-size="12" fill="#4267b2">${selected_Number}</text>
+                          <text x="${selectedgenesWidth+5+grayBarWidth}" y="12" font-family="Verdana" font-size="12" fill="#4267b2">${selected_Number}</text>
                       </svg>`
       }
     }
