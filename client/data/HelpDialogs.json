@@ -21,8 +21,8 @@
       "Content": "<p style='text-align: justify; font-size:14px'>Review all test vendors, e.g. the lab that offers the gene panel tests. Any vendors can be removed from consideration, resulting in the removal of their tests, and genes unique to those tests from the final gene list.</p>"
     },
     {
-      "HeadlineText": "FILTERS FEED",
-      "Content": "Content for FILTERS FEED"
+      "HeadlineText": "Genes",
+      "Content": "<p style='text-align: justify; font-size:14px'>The summary gene list combines the gene lists from the independent sources (e.g. GTR, Phenolyzer). This modal reviews how many of these genes are shared or are unique to these sources.</p>"
     }
   ]
 }

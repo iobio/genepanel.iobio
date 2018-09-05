@@ -106,8 +106,8 @@
                         <Dialogs
                           id="genesDialog"
                           class="dialogBox"
-                          :HeadlineText="HelpDialogsData[0].HeadlineText"
-                          :ContentText="HelpDialogsData[0].Content">
+                          :HeadlineText="HelpDialogsData[5].HeadlineText"
+                          :ContentText="HelpDialogsData[5].Content">
                         </Dialogs>
                         <v-divider class="Rightbar_card_divider"></v-divider>
 
