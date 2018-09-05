@@ -91,7 +91,7 @@
          </v-list-tile-content>
        </v-list-tile>
 
-       <v-divider></v-divider>
+       <!-- <v-divider></v-divider> -->
      </v-list>
 
     </v-navigation-drawer>
@@ -246,7 +246,7 @@ import Overview from './Overview.vue'
     },
     data(){
       return{
-        component: 'OverviewPage',
+        component: '',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,

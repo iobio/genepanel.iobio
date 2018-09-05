@@ -74,8 +74,11 @@
             <v-container >
               <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/phenolyzer_icon_active.svg" alt="NCBI logo" style="height:65px; width:55px;"> Phenolyzer</h2>
               <p   style="text-align: justify; font-size:14px">
-                Phenolyzer stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms.
-                Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes              </p>
+                Phenolyzer is a tool from the <a href="http://wglab.org/">Wang Genomics lab</a>, that converts discrete phenotype terms into a list of candidate genes.
+                <br>This is achieved by interpreting the phenolyzer term into a set of disease names.
+                Then, all genes having a reported association with these diseases are found, then expands this list by considering gene-gene relation databases.
+                Finally, all this information is integrated to generate a weighted score for each gene.
+              </p>
               <br>
               <v-btn color="white" style="color:#0D47A1">
               Learn More
