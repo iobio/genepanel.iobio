@@ -19,7 +19,7 @@ html {
 }
 
 .btn {
-  padding: 0px;
+  padding: 0;
   height: 28px;
 }
 
@@ -28,10 +28,6 @@ html {
     height: 25px;
 }
 
-.dropdown.open .dropdown-menu {
-  max-height: 400px !important;
-  overflow-y: scroll !important;
-}
 
 table.table tbody td, table.table tbody th {
   height: 28px !important;
@@ -44,9 +40,10 @@ table.v-table tbody td, table.v-table tbody th {
   height: 28px !important;
 }
 
-table.table tbody td .input-group.input-group--selection-controls {
-  margin-top: 1px !important;
-  margin-bottom: 1px !important;
+.v-datatable thead th.column.sortable{
+  cursor: default;
+  color: black !important;
+  font-weight: 500;
 }
 
 .v-input--selection-controls.v-input .v-label{
@@ -63,15 +60,4 @@ table.table tbody td .input-group.input-group--selection-controls {
   color: rgba(58, 57, 57, 0.87) !important;
   color: #3A3939;
   font-weight: 300 !important;
-}
-
-.v-datatable thead th.column.sortable{
-  cursor: default;
-  color: black !important;
-  font-weight: 500;
-}
-
-.v-datatable thead th.column.sortable: hover{
-  cursor: default;
-  color: black !important;
 }
