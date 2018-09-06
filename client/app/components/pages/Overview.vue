@@ -104,6 +104,49 @@
 
       </v-layout>
     <!-- </v-container> -->
+    <v-footer
+    class="blue-grey lighten-5"
+      style="margin-top:40px; padding-top:20px; paddingm-bottom:10px"
+      height="15"
+    >
+      <v-card
+        class="flex"
+        flat
+        tile
+      >
+        <v-card-title class="blue-grey lighten-5" style="height:25px">
+          <span class="subheading"> &copy; 2018 Iobio.io</span>
+          <v-spacer></v-spacer>
+          <a href="http://iobio.io/blog.html">
+              <v-btn
+              color="blue-grey darken-1"
+              flat
+              round
+             >
+                Blog
+            </v-btn>
+          </a>
+          <a href="http://iobio.io/">
+              <v-btn
+              color="blue-grey darken-1"
+              flat
+              round
+             >
+                Contact
+            </v-btn>
+          </a>
+          <a href="http://iobio.io/">
+              <v-btn
+              color="blue-grey darken-1"
+              flat
+              round
+             >
+                Help
+            </v-btn>
+          </a>
+        </v-card-title>
+        </v-card>
+    </v-footer>
   </div>
 </template>
 
