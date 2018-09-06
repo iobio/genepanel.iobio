@@ -69,12 +69,12 @@
       </v-layout>
       <v-divider></v-divider>
       <v-layout row wrap style="margin-left:5px; margin-right:15px;" id="phenolyzer">
-        <v-flex xs12 md12 sm12 lg7 xl7 order-md2 order-sm2 order-xs2 order-lg1 order-xl1>
+        <v-flex xs12 md12 sm12 lg6 xl6 order-md2 order-sm2 order-xs2 order-lg1 order-xl1>
           <v-flex text-xs-center>
               <img style="margin-top:68px; right: 0; width:600px;" src="../assets/images/phenolyzer1bg.svg" alt="bg">
           </v-flex>
         </v-flex>
-        <v-flex xs12 md12 sm12 lg4 xl4 order-md-1 order-sm1 order-xs1 order-lg2 order-xl2>
+        <v-flex xs12 md12 sm12 lg5 xl5 order-md-1 order-sm1 order-xs1 order-lg2 order-xl2>
           <v-flex  style="margin-top:40px; margin-left:15px">
             <v-container >
               <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/phenolyzer_icon_active.svg" alt="NCBI logo" style="height:65px; width:55px;"> Phenolyzer</h2>
@@ -104,7 +104,7 @@
 
       </v-layout>
     <!-- </v-container> -->
-    <v-footer
+    <!-- <v-footer
     class="blue-grey lighten-5"
       style="margin-top:40px; padding-top:20px; paddingm-bottom:10px"
       height="15"
@@ -146,7 +146,7 @@
           </a>
         </v-card-title>
         </v-card>
-    </v-footer>
+    </v-footer> -->
   </div>
 </template>
 

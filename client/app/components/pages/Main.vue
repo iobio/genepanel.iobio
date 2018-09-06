@@ -95,6 +95,43 @@
      </v-list>
 
     </v-navigation-drawer>
+    <v-footer color="blue-grey lighten-5" class="blue-grey--text" app>
+      <span style="padding-left:30px" class="subheading"> &copy; 2018 Iobio.io</span>
+      <v-spacer></v-spacer>
+      <span>
+        <a href="http://iobio.io/blog.html" target="_blank">
+            <v-btn
+            color="blue-grey darken-1"
+            flat
+            round
+           >
+              Blog
+          </v-btn>
+        </a>
+      </span>
+      <span>
+        <a href="http://iobio.io/" target="_blank">
+            <v-btn
+            color="blue-grey darken-1"
+            flat
+            round
+           >
+              iobio
+          </v-btn>
+        </a>
+      </span>
+      <span>
+        <a href="http://marthlab.org/" target="_blank">
+            <v-btn
+            color="blue-grey darken-1"
+            flat
+            round
+           >
+              MarthLab
+          </v-btn>
+        </a>
+      </span>
+    </v-footer>
     <v-toolbar
       :class="launchedFromClin ? 'clin' : '' "
       dark
