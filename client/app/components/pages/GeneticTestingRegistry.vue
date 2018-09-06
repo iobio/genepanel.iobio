@@ -31,8 +31,46 @@
                     </v-flex>
 
                     <v-flex  >
+                      <!-- <v-layout row wrap>
+                        <v-flex xs3>
+                          <div style="display:inline-block; padding-top:5px;">
+                            <label>Select Genes</label>
+                            <input
+                              :disabled="geneProps.length<1"
+                              id="top-genes-input"
+                              class="form-control"
+                              type="text"
+                              v-model="NumberOfTopGenes"
+                              autocomplete="off"
+                              list="genes">
+                              <datalist id="genes">
+                                <option v-for="genesCount in genesTopCounts">
+                                  {{ genesCount }}
+                                </option>
+                              </datalist>
+                          </div>
+                        </v-flex>
+                        <v-flex >
+                          <div v-if="geneProps.length">
+                            <v-card-text>
+                              <center>
+                                <span class="Rightbar_card_content_subheading">
+                                  <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
+                                </span>
+                              </center>
+                              <SvgBar
+                               class="SvgBarClass"
+                               id="genesSvgBox"
+                               :selectedNumber="GtrGenesTabNumber"
+                               :totalNumber="TotalGtrGenes">
+                              </SvgBar>
+                            </v-card-text>
+                          </div>
+                        </v-flex>
+                      </v-layout> -->
+
                       <div style="display:inline-block; padding-top:5px;">
-                        <label>Genes</label>
+                        <label>Select Genes</label>
                         <input
                           :disabled="geneProps.length<1"
                           id="top-genes-input"
@@ -47,7 +85,6 @@
                             </option>
                           </datalist>
                       </div>
-
                       <v-btn
                         :disabled="geneProps.length<1"
                         style="margin-top:-0.35px; text-transform: none"
