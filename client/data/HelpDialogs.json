@@ -10,7 +10,7 @@
     },
     {
       "HeadlineText": "Associated Conditions",
-      "Content": "<p style='text-align: justify; font-size:14px'>Use this modal to review the conditions, and to select which modes of inheritance to consider when generating the gene list. A single search term may result in multiple conditions, based on the hierarchy of conditions in GTR. <br>For example, the conditions Treacher Collins Syndrome 1 and Treacher Collins Syndrome 2 are considered children of Treacher Collins Syndrome and will be returned on a search for the parent condition.</p>"
+      "Content": "<p style='text-align: justify; font-size:14px'>Use this modal to review the conditions, and to select which modes of inheritance to consider when generating the gene list. A single search term may result in multiple conditions, based on the hierarchy of conditions in GTR. For example, the conditions Treacher Collins Syndrome 1 and Treacher Collins Syndrome 2 are considered children of Treacher Collins Syndrome and will be returned on a search for the parent condition.</p>"
     },
     {
       "HeadlineText": "Panels",

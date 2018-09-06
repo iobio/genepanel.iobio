@@ -166,7 +166,7 @@
     </v-toolbar>
 
     <div>
-      <v-content :class="launchedFromClin ? 'clin' : '' ">
+      <v-content style="padding: 0px 0px 0px 300px" :class="launchedFromClin ? 'clin' : '' ">
         <div class="header-nav-bar" >
           <v-card-text>
             <p></p>

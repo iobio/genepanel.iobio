@@ -465,5 +465,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
 
 .activeCardBox
     border-bottom: 6px solid $activeCard-border
-
+.dialogBox
+  margin-top: -20px
 </style>
