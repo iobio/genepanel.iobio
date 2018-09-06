@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="d-flex mt-3 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">

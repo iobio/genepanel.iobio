@@ -97,7 +97,7 @@
                     </v-card>
                   </div>
                   <div class="d-flex mt-3 mb-2 xs12">
-                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">

@@ -688,7 +688,7 @@
                      </div>
 
                      <div class="d-flex mb-2 xs12 mb-3">
-                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' || chartComponent==='PanelsDefinition' ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' || chartComponent==='PanelsDefinition' ? 'activeCardBox' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
                              <span class="Rightbar_CardHeading">
