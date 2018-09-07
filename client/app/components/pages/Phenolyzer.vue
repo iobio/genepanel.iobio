@@ -74,7 +74,7 @@
                     <div v-if="multipleSearchTerms.length">
                       <br>
                         Phenotypes Searched:
-                      <v-chip disabled outline color="blue-grey darken-3" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+                      <v-chip disabled  color="primary" text-color="white" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
                         {{ i+1 }}. {{ searchItem }}
                       </v-chip>
                     </div>
@@ -98,8 +98,7 @@
                         type="text"
                         v-model="genesTop"
                         autocomplete="off"
-                        list="genes"
-                        placeholder="50">
+                        list="genes">
                         <datalist id="genes">
                           <option v-for="genesCount in genesTopCounts">
                             {{ genesCount }}
@@ -192,62 +191,77 @@
                             <v-card>
                               <div class="conditionsBox">
                                 <v-list>
-                                  <div class="v-list__group__header">
                                     <v-list-tile>
                                       <v-list-tile-content>
-                                        <v-list-tile-title><strong>  &nbsp;  Gene Resource Links &nbsp;<i>( {{ props.item.geneName }} )</i> </strong></v-list-tile-title>
+                                        <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.geneName }} )</i> </strong></v-list-tile-title>
                                       </v-list-tile-content>
-                                    </v-list-tile>
-                                  </div>
-                                  <a v-bind:href="props.item.medGenSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:36px" @click="">
-                                      <v-list-tile-content style="margin-left:10px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon>MedGen</v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                  </a>
+                                      </v-list-tile>
+                                    <v-divider class="Rightbar_card_divider"></v-divider>
+                                    <v-list-tile >
+                                     <v-list-tile-content>
+                                       <v-list-tile-title><strong>MedGen</strong><a v-bind:href="props.item.medGenSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                       <br>
+                                       <v-list-tile-sub-title>
+                                         MedGen organizes information related to human medical genetics, such as attributes of conditions with a genetic contribution.
+                                      </v-list-tile-sub-title>
+                                     </v-list-tile-content>
+                                   </v-list-tile>
 
-                                  <a v-bind:href="props.item.omimSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:36px" @click="">
-                                      <v-list-tile-content style="margin-left:10px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon>OMIM</v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                    </a>
+                                   <br>
+                                   <v-list-tile >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title><strong>OMIM</strong><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                      <br>
+                                      <v-list-tile-sub-title>
+                                        OMIM is a comprehensive, authoritative compendium of human genes and genetic phenotypes
+                                      </v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
 
-                                  <a v-bind:href="props.item.geneCardsSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:36px" @click="">
-                                      <v-list-tile-content style="margin-left:10px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Gene Cards</v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                    </a>
+                                  <br>
+                                  <v-list-tile >
+                                   <v-list-tile-content>
+                                     <v-list-tile-title><strong>GeneCards</strong><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                     <br>
+                                     <v-list-tile-sub-title>
+                                       GeneCards is a searchable, integrative database that provides comprehensive, user-friendly information on all annotated and predicted human genes.
+                                     </v-list-tile-sub-title>
+                                   </v-list-tile-content>
+                                 </v-list-tile>
 
-                                  <a v-bind:href="props.item.ghrSrc" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:36px" @click="">
-                                      <v-list-tile-content style="margin-left:10px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon>Genetics Home Reference</v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                    </a>
+                                 <br>
+                                 <v-list-tile >
+                                  <v-list-tile-content>
+                                    <v-list-tile-title><strong>Genetics Home Reference</strong><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                    <br>
+                                    <v-list-tile-sub-title>
+                                      Genetics Home Reference provides consumer-friendly information about the effects of genetic variation on human health.
+                                    </v-list-tile-sub-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
 
-                                  <a v-bind:href="props.item.clinGenLink" target="_blank">
-                                    <v-list-tile style="font-size:14px; height:38px" @click="">
-                                      <v-list-tile-content style="margin-left:10px">
-                                        <v-list-tile-title><v-icon>arrow_right</v-icon>ClinGen</v-list-tile-title>
-                                      </v-list-tile-content>
-                                    </v-list-tile>
-                                  </a>
+                                <br>
+                                <v-list-tile >
+                                 <v-list-tile-content>
+                                   <v-list-tile-title><strong>ClinGen</strong><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                   <br>
+                                   <v-list-tile-sub-title>
+                                     The Clinical Genome Resource (ClinGen) consortium curates genes and regions of the genome to assess whether there is evidence to support that these genes/regions are dosage sensitive and should be targeted on a cytogenomic array                       </v-list-tile-sub-title>
+                                 </v-list-tile-content>
+                               </v-list-tile>
 
-                                  <v-list-tile style="font-size:14px; height:38px" @click="">
-                                    <v-list-tile-content style="margin-left:10px">
-                                      <v-list-tile-title><v-icon>arrow_right</v-icon>Gene ID:<a v-bind:href="props.item.geneIdLink" target="_blank"> {{props.item.geneId}} </a></v-list-tile-title>
+                                   <br>
+                                   <v-list-tile >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title><strong>Gene ID <i> ( {{props.item.geneId}} )</i> </strong><a v-bind:href="props.item.geneIdLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                      <br>
                                     </v-list-tile-content>
                                   </v-list-tile>
                                   <br>
                                 </v-list>
                               </div>
                             </v-card>
+
                           </v-menu>
                         </td>
                       </tr>
@@ -277,7 +291,7 @@
                 </div>
 
                 <div class="d-flex mt-3 mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
+                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
@@ -324,10 +338,6 @@
                             <v-flex d-flex xs12 sm12 md4 lg4>
                               <center>
                                 <!-- put the pie chart component here  -->
-                                <PhenolyzerPieChart
-                                  v-if="pieChartdataArr.length"
-                                  v-bind:PhenolyzerPieChartData="pieChartdataArr">
-                                </PhenolyzerPieChart>
                               </center>
                             </v-flex>
 
@@ -359,7 +369,6 @@
 import { bus } from '../../routes';
 
 import { Typeahead, Btn } from 'uiv';
-import PhenolyzerPieChart from '../viz/PhenolyzerPieChart.vue';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import IntroductionText from '../../../data/IntroductionText.json'
@@ -370,7 +379,6 @@ import SvgBar from '../viz/SvgBar.vue'
 
   export default {
     components: {
-      'PhenolyzerPieChart': PhenolyzerPieChart,
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       Typeahead
@@ -383,16 +391,17 @@ import SvgBar from '../viz/SvgBar.vue'
         type: String
       },
       launchedFromClin: {
-        type: Array
+        type: Boolean
       }
     },
     data(){
+      let self = this;
       return {
         showGenesMenu: null,
         enterCount: 0,
         genesToApply: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
-        genesTop: null,
+        genesTop: self.launchedFromClin ? 10 : 30,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",
@@ -485,7 +494,7 @@ import SvgBar from '../viz/SvgBar.vue'
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
         geneModel.StopAjaxCall();
-        this.genesTop = null;
+        this.genesTop = 30;
       });
     },
     updated(){
@@ -743,12 +752,8 @@ import SvgBar from '../viz/SvgBar.vue'
                   console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  if(self.launchedFromClin){
-                    self.selected = self.items.slice(0,10);
-                  }
-                  else {
-                    self.selected = self.items.slice(0,50);
-                  }
+                  self.selected = self.items.slice(0, self.genesTop);
+
                   // self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
@@ -933,98 +938,105 @@ import SvgBar from '../viz/SvgBar.vue'
 </script>
 
 <style>
-.btnColor, .btn__content{
-  color: white;
-}
-.btn{
-  padding: 0px;
-  height: 34px;
-}
-.form-control{
-  font-size: 15px;
-}
-
-
-.headerWidth{
-  width: 1%;
-  color: red
-}
-
-#phenotype-term{
-  width: 600px;
-  height:40px;
-  margin-top: 4px;
-  background-color: #F4F4F4;
-  border-color: #F4F4F4;
-}
-
-#top-genes-input{
-  width: 200px;
-  height:40px;
-  margin-top: 4px;
-  background-color: #F4F4F4;
-  border-color: #F4F4F4;
-}
-
-/* Media Queries */
-
-@media screen and (max-width:1600px){
-  #top-genes-input{
-    width: 120px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 1620px){
-  #phenotype-term{
-    width: 420px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 1050px){
-  #phenotype-term{
-    width: 450px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 950px){
-  #phenotype-term{
-    width: 290px;
-    height:40px;
-    margin-top: 4px;
-  }
-}
-
-@media screen and (max-width: 700px){
-  #phenotype-term{
-    width: 300px;
-    height:40px;
-    margin-top: 4px;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
-  }
-  .btnColor{
-    margin-top: 2px
-  }
-}
-
-.genepanelsRect{
-  fill: #4e7ad3;
-  pointer-events: all;
-  stroke: #4e7ad3;
-  stroke-width: 2;
-}
-
 
 </style>
 
 <style lang="sass">
 
   @import ../assets/sass/variables
+
+  .btnColor, .btn__content
+    color: white
+
+  .btn
+    padding: 0px
+    height: 34px
+
+  .form-control
+    font-size: 15px
+
+
+
+  .headerWidth
+    width: 1%
+    color: red
+
+
+  .conditionsBox
+    width: 470px
+    overflow-wrap: break-word
+    height:  370px
+    overflow-y: scroll
+
+
+  #phenotype-term
+    width: 600px
+    height: 40px
+    margin-top: 4px
+    background-color: #F4F4F4
+    border-color: #F4F4F4
+
+
+  #top-genes-input
+    width: 200px
+    height: 40px
+    margin-top: 4px
+    background-color: #F4F4F4
+    border-color: #F4F4F4
+
+
+  /* Media Queries */
+
+  @media screen and (max-width:1600px)
+    #top-genes-input
+      width: 120px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 1620px)
+    #phenotype-term
+      width: 420px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 1050px)
+    #phenotype-term
+      width: 450px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 950px)
+    #phenotype-term
+      width: 290px
+      height: 40px
+      margin-top: 4px
+
+
+
+  @media screen and (max-width: 700px)
+    #phenotype-term
+      width: 300px
+      height: 40px
+      margin-top: 4px
+      box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+
+    .btnColor
+      margin-top: 2px
+
+
+
+  .genepanelsRect
+    fill: #4e7ad3
+    pointer-events: all
+    stroke: #4e7ad3
+    stroke-width: 2
+
 
   .btnColor
     color: white

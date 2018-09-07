@@ -30,7 +30,8 @@
                                 No disorders searched
                              </v-chip>
                           </div>
-                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
+                          <!-- outline color="blue-grey darken-3" -->
+                          <v-chip disabled color="primary" text-color="white" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
                         </v-card-text>
@@ -39,7 +40,7 @@
                         <v-card-text>
                           <strong>Phenolyzer:</strong>
                           <div v-if="PhenolyzerSearchTerms.length>0">
-                          <v-chip disabled outline color="blue-grey darken-3" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
+                          <v-chip disabled color="primary" text-color="white" v-for="(searchItem, i) in PhenolyzerSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
                         </div>
@@ -96,7 +97,7 @@
                     </v-card>
                   </div>
                   <div class="d-flex mt-3 mb-2 xs12">
-                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox elevation-4' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
@@ -105,8 +106,8 @@
                         <Dialogs
                           id="genesDialog"
                           class="dialogBox"
-                          :HeadlineText="HelpDialogsData[0].HeadlineText"
-                          :ContentText="HelpDialogsData[0].Content">
+                          :HeadlineText="HelpDialogsData[5].HeadlineText"
+                          :ContentText="HelpDialogsData[5].Content">
                         </Dialogs>
                         <v-divider class="Rightbar_card_divider"></v-divider>
 
@@ -161,7 +162,6 @@
 </template>
 
 <script>
-import SummaryPieChart from '../viz/SummaryPieChart.vue';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
 import IntroductionText from '../../../data/IntroductionText.json';
@@ -174,7 +174,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
 
   export default {
     components: {
-      'SummaryPieChart': SummaryPieChart,
       'SummaryDataTable': SummaryDataTable,
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
@@ -466,5 +465,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
 
 .activeCardBox
     border-bottom: 6px solid $activeCard-border
-
+.dialogBox
+  margin-top: -20px
 </style>

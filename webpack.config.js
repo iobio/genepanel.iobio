@@ -6,6 +6,7 @@ var inProduction = process.env.NODE_ENV === 'production';
 var inTest = process.env.NODE_ENV === 'test';
 
 
+
 module.exports = {
   entry: {
     app: [
@@ -72,6 +73,26 @@ module.exports = {
   },
   devtool: 'cheap-module-inline-source-map'
 }
+
+new webpack.LoaderOptionsPlugin({
+    options: {
+        postcss: () => {
+            return [
+                /* eslint-disable global-require */
+                require('postcss-cssnext'),
+                // ({
+                //     features: {
+                //         customProperties: {
+                //             variables: reactToolboxVariables,
+                //         },
+                //     },
+                // }),
+                require('postcss-modules-values'),
+                /* eslint-enable global-require */
+            ];
+        }
+    }
+})
 
 if (inTest) {
   module.exports.plugins = [];

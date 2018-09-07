@@ -2,27 +2,27 @@
   "data": [
     {
       "HeadlineText": "Genes",
-      "Content": "The Genes card shows the number of genes available and the number of genes selected for the conditions searched. <p><center><img src='https://raw.githubusercontent.com/iobio/genepanel.iobio/dev/client/app/components/assets/images/genescard.png' height='140px' width='400px' ></center></p><br>The image above shows that 50 genes are selected out of the available 58 genes from the table on the left. "
+      "Content": "<p style='text-align: justify; font-size:14px'>This modal shows the number of total number of genes returned by the search, and how many of these have been selected. <p><center><img src='https://raw.githubusercontent.com/iobio/genepanel.iobio/dev/client/app/components/assets/images/genescard.png' width='300px' ></center></p><br>In the image above, 50 genes are selected out of the available 58 genes. </p>"
     },
     {
       "HeadlineText": "MODES OF INHERITANCE",
       "Content": "Content for MODES OF INHERITANCE"
     },
     {
-      "HeadlineText": "ASSOCIATED DISORDERS",
-      "Content": "Content for ASSOCIATED DISORDERS"
+      "HeadlineText": "Associated Conditions",
+      "Content": "<p style='text-align: justify; font-size:14px'>Use this modal to review the conditions, and to select which modes of inheritance to consider when generating the gene list. A single search term may result in multiple conditions, based on the hierarchy of conditions in GTR. For example, the conditions Treacher Collins Syndrome 1 and Treacher Collins Syndrome 2 are considered children of Treacher Collins Syndrome and will be returned on a search for the parent condition.</p>"
     },
     {
-      "HeadlineText": "PANELS",
-      "Content": "Content for PANELS"
+      "HeadlineText": "Panels",
+      "Content": "<p style='text-align: justify; font-size:14px'>Review gene panels returned for the conditions searched, along with how many genes are included on each panel. Panels can be removed from consideration, ensuring the gene list only includes genes that are covered by selected tests.</p>"
     },
     {
-      "HeadlineText": "VENDORS",
-      "Content": "Content for VENDORS"
+      "HeadlineText": "Vendors",
+      "Content": "<p style='text-align: justify; font-size:14px'>Review all test vendors, e.g. the lab that offers the gene panel tests. Any vendors can be removed from consideration, resulting in the removal of their tests, and genes unique to those tests from the final gene list.</p>"
     },
     {
-      "HeadlineText": "FILTERS FEED",
-      "Content": "Content for FILTERS FEED"
+      "HeadlineText": "Genes",
+      "Content": "<p style='text-align: justify; font-size:14px'>The summary gene list combines the gene lists from the independent sources (e.g. GTR, Phenolyzer). This modal reviews how many of these genes are shared or are unique to these sources.</p>"
     }
   ]
 }

@@ -192,13 +192,11 @@
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
-import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
 import Model from '../../models/Model';
 var model = new Model();
 
   export default {
     components: {
-      'ConditionsDistribution': ConditionsDistribution
     },
     //props: ['GeneData'],
     props: {
@@ -643,123 +641,6 @@ var model = new Model();
 
 </script>
 
-<style>
-
-
-.v-list__tile__sub-title, .v-list__tile__title{
-  white-space: initial;
-  overflow:initial;
-  text-overflow: initial;
-}
-
-.v-list__tile{
-  height:auto
-}
-.conditionsBox {
-  width: 470px;
-  overflow-wrap: break-word;
-  height:  370px;
-  overflow-y: scroll;
-}
-
-#gene-histogram-chart .bar rect {
-    fill:   #7dc2e5;
-    stroke: #1f5d7a;
-    stroke-width: .5;
-}
-
-#gene-histogram-chart .bar.selected rect {
-    fill: #2d8fc1;
-}
-
-#gene-histogram-chart .bar text {
-    font-size: 10px;
-}
-
-#gene-histogram-chart .x.axis {
-  font-size: 10px;
-}
-#gene-histogram-chart .y.axis {
-  font-size: 10px !important;
-}
-#gene-histogram-chart .axis .label {
-  font-size: 12px !important;
-}
-
-
-div.tooltip {
-  position: absolute;
-  text-align: center;
-  z-index:20;
-  color:white;
-  padding: 4px 6px 4px 6px;
-  font: 11px arial;
-  background: rgb(80,80,80);
-  border: 0px;
-  border-radius: 4px;
-  pointer-events: none;
-}
-
-/*                           */
-/* Gene horizontal barchart  */
-/*                           */
-#gene-bar-chart #title {
-  font-size: 20px;
-  padding-bottom: 10px;
-  padding-top: 20px;
-  font-weight: 300;
-}
-
-/*                      */
-/*  Any svg chart       */
-/*                      */
-.y.axis line {
-  fill: none;
-  stroke: #e0e0e0;
-  shape-rendering: crispEdges;
-}
-
-.x.axis line {
-  fill: none;
-  stroke: #e0e0e0;
-  shape-rendering: crispEdges;
-}
-
-.axis path {
-  fill: none;
-  stroke: #848383;
-  shape-rendering: crispEdges;
-}
-
-.axis .label {
-  font-size: 12px;
-}
-
-.brush .extent {
-  fill-opacity: .125;
-  shape-rendering: crispEdges;
-}
-
-.resize {
-  display: inline !important; /* show when empty */
-  fill: #7A7A7A;
-  fill-opacity: 1;
-  stroke: #7A7A7A;
-  stroke-width: 2px;
-}
-
-.input-group__input{
-  min-height: 3px;
-}
-
-
-.headerWidth{
-  width: 1%;
-  color: red
-}
-</style>
-
-
 <style lang="sass">
 @import ../assets/sass/variables
 
@@ -792,4 +673,111 @@ div.tooltip {
 .Rightbar_card_divider
   margin-top: 10px
   margin-bottom: 10px
+
+
+.v-list__tile__sub-title, .v-list__tile__title
+  white-space: initial
+  overflow: initial
+  text-overflow: initial
+
+
+.v-list__tile
+  height: auto
+
+.conditionsBox
+  width: 470px
+  overflow-wrap: break-word
+  height:  370px
+  overflow-y: scroll
+
+
+#gene-histogram-chart .bar rect
+    fill:   #7dc2e5
+    stroke: #1f5d7a
+    stroke-width: .5
+
+
+#gene-histogram-chart .bar.selected rect
+    fill: #2d8fc1
+
+
+#gene-histogram-chart .bar text
+    font-size: 10px
+
+
+#gene-histogram-chart .x.axis
+  font-size: 10px
+
+#gene-histogram-chart .y.axis
+  font-size: 10px !important
+
+#gene-histogram-chart .axis .label
+  font-size: 12px !important
+
+
+
+div.tooltip
+  position: absolute
+  text-align: center
+  z-index: 20
+  color: white
+  padding: 4px 6px 4px 6px
+  font: 11px arial
+  background: rgb(80,80,80)
+  border: 0px
+  border-radius: 4px
+  pointer-events: none
+
+
+/*                           */
+/* Gene horizontal barchart  */
+/*                           */
+#gene-bar-chart #title
+  font-size: 20px
+  padding-bottom: 10px
+  padding-top: 20px
+  font-weight: 300
+
+
+/*                      */
+/*  Any svg chart       */
+/*                      */
+.y.axis line
+  fill: none
+  stroke: #e0e0e0
+  shape-rendering: crispEdges
+
+
+.x.axis line
+  fill: none
+  stroke: #e0e0e0
+  shape-rendering: crispEdges
+
+
+.axis path
+  fill: none
+  stroke: #848383
+  shape-rendering: crispEdges
+
+.axis .label
+  font-size: 12px
+
+.brush .extent
+  fill-opacity: .125
+  shape-rendering: crispEdges
+
+.resize
+  display: inline !important
+  fill: #7A7A7A
+  fill-opacity: 1
+  stroke: #7A7A7A
+  stroke-width: 2px
+
+.input-group__input
+  min-height: 3px
+
+.headerWidth
+  width: 1%
+  color: red
+
 </style>

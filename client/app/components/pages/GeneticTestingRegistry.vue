@@ -31,8 +31,46 @@
                     </v-flex>
 
                     <v-flex  >
+                      <!-- <v-layout row wrap>
+                        <v-flex xs3>
+                          <div style="display:inline-block; padding-top:5px;">
+                            <label>Select Genes</label>
+                            <input
+                              :disabled="geneProps.length<1"
+                              id="top-genes-input"
+                              class="form-control"
+                              type="text"
+                              v-model="NumberOfTopGenes"
+                              autocomplete="off"
+                              list="genes">
+                              <datalist id="genes">
+                                <option v-for="genesCount in genesTopCounts">
+                                  {{ genesCount }}
+                                </option>
+                              </datalist>
+                          </div>
+                        </v-flex>
+                        <v-flex >
+                          <div v-if="geneProps.length">
+                            <v-card-text>
+                              <center>
+                                <span class="Rightbar_card_content_subheading">
+                                  <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
+                                </span>
+                              </center>
+                              <SvgBar
+                               class="SvgBarClass"
+                               id="genesSvgBox"
+                               :selectedNumber="GtrGenesTabNumber"
+                               :totalNumber="TotalGtrGenes">
+                              </SvgBar>
+                            </v-card-text>
+                          </div>
+                        </v-flex>
+                      </v-layout> -->
+
                       <div style="display:inline-block; padding-top:5px;">
-                        <label>Genes</label>
+                        <label>Select Genes</label>
                         <input
                           :disabled="geneProps.length<1"
                           id="top-genes-input"
@@ -40,15 +78,13 @@
                           type="text"
                           v-model="NumberOfTopGenes"
                           autocomplete="off"
-                          list="genes"
-                          placeholder="50">
+                          list="genes">
                           <datalist id="genes">
                             <option v-for="genesCount in genesTopCounts">
                               {{ genesCount }}
                             </option>
                           </datalist>
                       </div>
-
                       <v-btn
                         :disabled="geneProps.length<1"
                         style="margin-top:-0.35px; text-transform: none"
@@ -652,7 +688,7 @@
                      </div>
 
                      <div class="d-flex mb-2 xs12 mb-3">
-                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' || chartComponent==='PanelsDefinition' ? 'activeCardBox elevation-5' : 'rightbarCard ']" v-if="geneProps.length">
+                       <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' || chartComponent==='PanelsDefinition' ? 'activeCardBox' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
                              <span class="Rightbar_CardHeading">
@@ -876,7 +912,7 @@
               </v-layout>
             </v-flex>
 
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex v-if="diseases.length && removeSearchTermFlag===false" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Disorders</v-card-title>
                 <v-card-text>
@@ -896,7 +932,7 @@
             </v-flex>
             <br>
 <!-- style="visibility:hidden; height:0px" -->
-            <v-flex d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+            <v-flex v-if="diseasesProps.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
               <v-card >
                 <v-card-title primary class="title">Panels</v-card-title>
                 <v-card-text>
@@ -933,9 +969,6 @@ import DiseasesPanel from './DiseasesPanel.vue';
 import GenePanel from './GenePanel.vue';
 import ShowGenePanel from './ShowGenePanel.vue';
 import { bus } from '../../routes';
-import PieChartSelector from '../viz/PieChartSelector.vue';
-import ConditionsDistribution from '../viz/ConditionsDistribution.vue';
-import GeneMembership from '../viz/GeneMembership.vue';
 import Alerts from '../partials/Alerts.vue';
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
@@ -956,9 +989,6 @@ export default {
     'disease-panel': DiseasesPanel,
     'gene-panel': GenePanel,
     'show-gene-panel1': ShowGenePanel,
-    'PieChartSelector': PieChartSelector,
-    'ConditionsDistribution': ConditionsDistribution,
-    'GeneMembership': GeneMembership,
     'Alerts': Alerts,
     'Dialogs': Dialogs,
     'SvgBar': SvgBar,
@@ -989,6 +1019,7 @@ export default {
     }
   },
   data() {
+    let self = this;
     return {
       diseases: [],
       diseasesProps: [],
@@ -999,7 +1030,7 @@ export default {
       disorderNamesList: [],
       selectedDisordersList: [],
       showSummaryComponent: false,
-      NumberOfTopGenes: null,
+      NumberOfTopGenes: self.launchedFromClin ? 10 : 30,
       selectedGenesText: "",
       selectedVendorsListFromFilterCB:[],
       GtrGenesTabNumber: 0,
@@ -1092,7 +1123,6 @@ export default {
       this.selectedDisordersList = this.selectedDisordersListCB
     },
     vendorsSelect(val) {
-      console.log("vendorsSelect changing");
       if(this.chartComponent==='Vendors'){
         this.vendorsSelectProps = this.vendorsSelect;
         var tempArr=[];
@@ -1118,7 +1148,6 @@ export default {
       }
     },
     selectedPanelsInCheckBox(val){
-      console.log("selectedPanelsInCheckBox changing")
       if(this.chartComponent==='GeneMembership' || this.chartComponent==="PanelFilters"){
         this.selectedPanelsInCheckBoxProps = this.selectedPanelsInCheckBox
       }
@@ -1331,10 +1360,7 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
-      console.log("selectPanels", e)
-      console.log("selectPanels")
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
-        console.log("A");
           //set the items in the panels card
           this.multiSelectPanels = e;
       }
@@ -1351,7 +1377,6 @@ export default {
       }
       else {
         if(this.chartComponent!=='PanelFilters' && this.chartComponent!=='GeneMembership' && this.chartComponent!=='Vendors'){
-          console.log("B");
           var tempArr = [];
           tempArr = e;
           this.selectedPanelFilters.map(x=>{
@@ -1368,17 +1393,14 @@ export default {
       }
 
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
-        console.log("C");
         this.selectedPanelsInCheckBox = temp;
       }
 
       this.geneProps = temp;
-      console.log("geneprops", this.geneProps.length)
     },
     setPanelsNamesList: function(e){
     },
     updateVendorList: function(e){
-      console.log("updateVendorList")
       this.vendorList = e;
       this.multiSelectItems = e;
       // this.vendorsSelect = this.multiSelectItems;
@@ -1386,7 +1408,6 @@ export default {
       this.checkForDeselectedVendor();
     },
     selectVendors: function(e){
-      console.log("selectVendors")
       this.vendorsSelect = e;
       if(!this.chartComponent==='Vendors'){
         this.vendorsSelect = e;
@@ -1591,172 +1612,93 @@ export default {
 }
 </script>
 
-<style scoped>
-@import url('https://fonts.googleapis.com/css?family=Quicksand:500');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-
-  .v-slider__track__container, .v-slider__track{
-    height:16px !important;
-    /* border-radius: 5px */
-  }
-
-  .v-slider__track-fill{
-    height:16px !important;
-    /* transition: 0s !important; */
-    /* transition: .0s cubic-bezier(.25,.8,.5,1) !important; */
-    /* transition-delay: 2s !important; */
-  }
-
-  .v-slider__track, .v-slider__track-fill{
-    transition: none !important;
-  }
-  .toolbar__title{
-    /* color: #66D4ED; */
-    font-family: 'Quicksand', sans-serif;
-    font-size: 24px;
-  }
-
-  label, strong, th{
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  center, span, h1, h2, h3, h4{
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  .btn__content{
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  .btn{
-    padding: 0px
-  }
-  .cardBoxTitle{
-    font-size: 16px;
-    color: #000000;
-  }
-
-  .activeClass{
-    display: visible;
-  }
-  .disabledClass{
-    display: none;
-  }
-  .FilterAndViewBtn{
-    background: #e0e0e0;
-    color: rgba(68, 68, 68, 0.87);
-    padding:3px 8px;
-    border-radius:8px;
-    cursor: pointer;
-    height:30px;
-    margin-left: 8px;
-  }
-  .btnColor{
-    color: white;
-    background-color: #4267b2 !important;
-  }
-  .btn{
-    padding: 0px;
-    height:39px;
-  }
-  .form-control{
-    font-size: 15px;
-  }
- #top-genes-input{
-   width: 200px;
-   height:40px;
-   margin-top: 4px;
-   background-color: #F4F4F4;
-   border-color: #F4F4F4;
- }
-
-
-
- .chip_fontSize{
-   overflow-wrap: break-word;
-   word-break: break-word;
-   overflow-x:hidden;
-   display:inline-block;
-   text-overflow: ellipsis;
-   max-width: 370px;
-   font-size: 11px;
- }
-
- @media screen and (max-width:1700px){
-   .chip_fontSize{
-     overflow-wrap: break-word;
-     word-break: break-word;
-     overflow-x:hidden;
-     display:inline-block;
-     text-overflow: ellipsis;
-     max-width: 300px;
-     font-size:10.5px;
-   }
- }
-
- @media screen and (max-width:1520px){
-   .chip_fontSize{
-     overflow-wrap: break-word;
-     word-break: break-word;
-     overflow-x:hidden;
-     display:inline-block;
-     text-overflow: ellipsis;
-     max-width: 250px;
-     font-size:10.5px;
-   }
- }
-
- @media screen and (max-width:1210px){
-   .chip_fontSize{
-     overflow-wrap: break-word;
-     word-break: break-word;
-     overflow-x:hidden;
-     display:inline-block;
-     text-overflow: ellipsis;
-     max-width: 150px;
-     font-size:10.5px;
-   }
- }
-
- @media screen and (max-width:1000px){
-   .chip_fontSize{
-     overflow-wrap: break-word;
-     word-break: break-word;
-     overflow-x:hidden;
-     display:inline-block;
-     text-overflow: ellipsis;
-     max-width: 100px;
-     font-size:9px;
-   }
- }
-
-
- @media screen and (max-width:1600px){
-   #top-genes-input{
-     width: 120px;
-     height:40px;
-     margin-top: 4px;
-   }
- }
-
- .activeFilterCardBackground{
-   /* box-shadow: 0 0 12px 6px #ededed; */
-   /* transition: 3s ease-in-out; */
-   animation: hideBoxShadow 5s;
-   animation-fill-mode: forwards;
-   border-top-right-radius: 6px;
-   border-top-left-radius: 6px;
- }
-
- @keyframes hideBoxShadow {
-  0% {box-shadow: 0 0 12px 6px #d3d3d3;}
-  100% {box-shadow: 0 0 0 0 white;}
-}
-</style>
-
-<style lang="sass">
+<style lang="sass" scoped>
+@import url('https://fonts.googleapis.com/css?family=Quicksand:500')
+@import url('https://fonts.googleapis.com/css?family=Open+Sans')
 @import ../assets/sass/variables
+
+@media screen and (max-width:1600px)
+  #top-genes-input
+    width: 120px
+    height: 40px
+    margin-top: 4px
+
+.v-slider__track__container, .v-slider__track
+  height: 16px !important
+
+.v-slider__track-fill
+  height: 16px !important
+
+.v-slider__track, .v-slider__track-fill
+  transition: none !important
+
+.btn
+  padding: 0px
+
+.cardBoxTitle
+  font-size: 16px
+  color: #000000
+
+.activeClass
+  display: visible
+
+.disabledClass
+  display: none
+
+.FilterAndViewBtn
+  background: #e0e0e0
+  color: rgba(68, 68, 68, 0.87)
+  padding: 3px 8px
+  border-radius: 8px
+  cursor: pointer
+  height: 30px
+  margin-left: 8px
+
+.btnColor
+  color: white
+  background-color: #4267b2 !important
+
+.btn
+  padding: 0px
+  height: 39px
+
+.form-control
+  font-size: 15px
+
+#top-genes-input
+ width: 200px
+ height: 40px
+ margin-top: 4px
+ background-color: #F4F4F4
+ border-color: #F4F4F4
+
+.chip_fontSize
+ overflow-wrap: break-word
+ word-break: break-word
+ overflow-x: hidden
+ display: inline-block
+ text-overflow: ellipsis
+ max-width: 370px
+ font-size: 11px
+
+.activeFilterCardBackground
+ animation-fill-mode: forwards
+ border-top-right-radius: 6px
+ border-top-left-radius: 6px
+
+.toolbar__title
+  font-family: $iobio-font
+  font-size: 24px
+
+label, strong, th
+  font-family: $app-font
+
+center, span, h1, h2, h3, h4
+  font-family: $app-font
+
+.btn__content
+  font-family: $app-font
 
 #GoToTopBtn
   position: fixed
@@ -1774,7 +1716,6 @@ export default {
 
 #GoToTopBtn:hover
   background-color: #555
-
 
 .rightbarCard
   border-top-right-radius: 8px
@@ -1795,7 +1736,6 @@ export default {
 .vendorsCardClass
   // max-height: 355px
   // overflow-y: scroll
-
 
 .SvgBarClass
   margin-top: 5px

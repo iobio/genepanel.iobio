@@ -3,12 +3,12 @@
     {
       "Page": "Genetic Testing Registry",
       "Title": "What is Genetic Testing Registry?",
-      "Content": "<strong>The Genetic Testing Registry (GTR®)</strong> &nbsp;provides a central location for voluntary submission of genetic test information by providers.<br> The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. <br>The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease. <br>"
+      "Content": "<p style='text-align: justify; font-size:14px'><strong>The Genetic Testing Registry (GTR®)</strong> &nbsp;from NCBI provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease. <br>Panel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.</P>"
     },
     {
       "Page": "Phenolyzer",
       "Title": "What is Phenolyzer?",
-      "Content": "<strong>Phenolyzer </strong> stands for Phenotype Based Gene Analyzer, a tool focusing on discovering genes based on user-specific disease/phenotype terms. <br> Enter phenotype terms in the search box below to use the Phenolyzer tool to generate list of genes. <a href='http://phenolyzer.wglab.org/'> Read More </a> <br>"
+      "Content": "<p style='text-align: justify; font-size:14px'><strong>Phenolyzer </strong> stands for Phenotype Based Gene Analyzer. It is a tool from the <a href='http://phenolyzer.wglab.org/'> Wang Genomics lab </a> that converts discrete phenotype terms into a list of candidate genes. This is achieved by interpreting the phenolyzer term into a set of disease names. Then, all genes having a reported association with these diseases are found, then expands this list by considering gene-gene relation databases. Finally, all this information is integrated to generate a weighted score for each gene.</p>"
     },
     {
       "Page": "Summary",

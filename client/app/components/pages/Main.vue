@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="background-color:#f9fbff">
   <v-app id="inspire">
     <v-snackbar
         :timeout="snackbarTimeout"
@@ -18,6 +18,7 @@
     <v-navigation-drawer
       permanent
       app
+      :class="launchedFromClin ? 'clin' : '' "
     >
     <br>
      <v-list dense class="pt-0">
@@ -90,13 +91,17 @@
          </v-list-tile-content>
        </v-list-tile>
 
-       <v-divider></v-divider>
+       <!-- <v-divider></v-divider> -->
      </v-list>
 
     </v-navigation-drawer>
+
+    <Footer></Footer>
+
     <v-toolbar
       :class="launchedFromClin ? 'clin' : '' "
       dark
+      :height="launchedFromClin ? 45 : 64"
       :clipped-left="$vuetify.breakpoint.mdAndUp"
       fixed
     >
@@ -110,8 +115,8 @@
       <!-- <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a> -->
       <v-menu bottom offset-y style="color:black">
         <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
-        ><v-icon style="padding-right:4px">input</v-icon>
-          <strong>Export</strong>
+        ><v-icon v-if="!launchedFromClin" style="padding-right:4px">input</v-icon>
+          Export
         </v-btn>
         <v-list>
           <div v-if="component==='GeneticTestingRegistry'">
@@ -142,7 +147,8 @@
       </v-menu>
       <span>
         <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
-          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator"><v-icon>autorenew</v-icon><strong>Clear All</strong></v-btn>
+          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator">
+          <v-icon v-if="!launchedFromClin">autorenew</v-icon>Clear All</v-btn>
           <v-card>
             <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
             <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
@@ -160,7 +166,7 @@
     </v-toolbar>
 
     <div>
-      <v-content>
+      <v-content style="padding: 0px 0px 0px 300px" :class="launchedFromClin ? 'clin' : '' ">
         <div class="header-nav-bar" >
           <v-card-text>
             <p></p>
@@ -229,7 +235,8 @@ import DisorderSearch from './DisorderSearch.vue';
 import IntroductionText from '../../../data/IntroductionText.json';
 import AppsMenu from '../partials/AppsMenu.vue';
 import HelpMenu from '../partials/HelpMenu.vue';
-import Overview from './Overview.vue'
+import Overview from './Overview.vue';
+import Footer from '../partials/Footer.vue'
 
   export default {
     components: {
@@ -239,11 +246,16 @@ import Overview from './Overview.vue'
       'DisorderSearch': DisorderSearch,
       'AppsMenu': AppsMenu,
       'HelpMenu': HelpMenu,
-      'Overview':Overview
+      'Overview':Overview,
+      'Footer': Footer
+    },
+    props: {
+      paramLaunchedFromClin: null
     },
     data(){
+      let self = this;
       return{
-        component: 'OverviewPage',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -276,7 +288,7 @@ import Overview from './Overview.vue'
         IntroductionTextData: null,
         clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io"],
         clinIobioUrl: null,
-        launchedFromClin: false,
+        launchedFromClin: self.paramLaunchedFromClin == 'true' ? true : false,
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -624,21 +636,20 @@ import Overview from './Overview.vue'
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          if(this.setDefaultLandingPage === false){
-            this.component = 'OverviewPage';
-            this.setDefaultLandingPage = true;
-          }
           // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
-        else {
-          this.component = 'GeneticTestingRegistry';
-          this.setDefaultLandingPage = true;
-        }
-        this.launchedFromClin = true;
         this.clinIobioUrl = event.origin;
 
+
         var clinObject = JSON.parse(event.data);
+
+        // Clin is requesting the selected genes, so send them.
+        if (clinObject.type == 'request-genes') {
+          if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+            this.copyAllGenes();
+          }
+        }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
         window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);
@@ -845,112 +856,96 @@ import Overview from './Overview.vue'
   }
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
-.conditionsBox {
-  width: 285px;
-  overflow-wrap: break-word;
-}
-
-.margin_ActiveTab{
-  margin-left: -8px
-}
-
-.tabs__container{
-  height:50px;
-  font-family: 'Open Sans', sans-serif;
-  padding-top: 5px;
-}
-
-.container {
-  padding: 12px;
-}
-
-
-.toolbar__side-icon{
-  /* margin-top: -3px; */
-}
-
-.card__title, .card__text{
-  font-family: 'Open Sans', sans-serif;
-}
-
-.list__tile__title{
-  font-family: 'Open Sans', sans-serif;
-}
-
-.tabs__slider { /* This is for the tabs slider */
-  height:4px;
-
-}
-
-a{
-  color: #1976d2
-}
-a:hover {
-  text-decoration: none;
-
-}
-
-.badge__badge, .v-badge__badge{
-  height:23px;
-  width: 23px;
-  background-color: #66d4ed;
-  top: -16px;
-  right: -25px;
-  /* color: black; */
-}
-
-
-.badge, .v-badge{
-  font-weight: 200
-}
-
-.badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon{
-  font-size: 11px;
-}
-
-.primary{
-  background-color: #66d4ed !important;
-}
-
-.toolbar__extension{
-  height: 25px !important;
-  background-color: #2c3e50 /* Removes the small line between nav and tabs*/
-}
-
-
-.application .theme--dark.tabs__bar, .theme--dark .tabs__bar{
-  background-color: #2c3e50;
-}
-
-.positionModal {
-  position:absolute !important;
-  right:0 !important;
-  margin-right: -1px;
-}
-aside {
-  margin-top: 64px !important;
-  max-height: calc(100% - 64px) !important;
-}
-
-@media screen and (max-width: 1270px){
-  aside {
-    margin-top: 64px !important;
-    max-height: calc(100% - 0px) !important;
-  }
-}
-
-.v-list--dense .v-list__tile .v-icon {
-  font-size: 24px;
-}
-
-</style>
 
 <style lang="sass">
-
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins')
 @import ../assets/sass/variables
+
+.conditionsBox
+  width: 285px
+  overflow-wrap: break-word
+
+.margin_ActiveTab
+  margin-left: -8px
+
+.container
+  padding: 12px
+
+.toolbar__side-icon
+  /* margin-top: -3px; */
+
+.tabs__slider
+  height: 4px
+
+a
+  color: #1976d2
+
+a:hover
+  text-decoration: none
+
+.badge__badge, .v-badge__badge
+  height: 23px
+  width: 23px
+  background-color: #66d4ed
+  top: -16px
+  right: -25px
+  /* color: black; */
+
+.badge, .v-badge
+  font-weight: 200
+
+
+.badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon
+  font-size: 11px
+
+
+.primary
+  background-color: #66d4ed !important
+
+
+.toolbar__extension
+  height: 25px !important
+  background-color: #2c3e50
+
+.application .theme--dark.tabs__bar, .theme--dark .tabs__bar
+  background-color: #2c3e50
+
+.positionModal
+  position: absolute !important
+  right: 0 !important
+  margin-right: -1px
+
+aside
+  margin-top: 64px !important
+  max-height: calc(100% - 64px) !important
+
+
+@media screen and (max-width: 1270px)
+  aside
+    margin-top: 64px !important
+    max-height: calc(100% - 0px) !important
+
+.v-list--dense .v-list__tile .v-icon
+  font-size: 24px
+
+.conditionsBox
+  width: 470px
+  overflow-wrap: break-word
+  height:  370px
+  overflow-y: scroll
+
+.tabs__container
+  height: 50px
+  font-family: $app-font
+  padding-top: 5px
+
+.card__title, .card__text
+  font-family: $app-font
+
+
+.list__tile__title
+  font-family: $app-font
+
 
 .Rightbar_CardHeading
   font-size: 16px
@@ -1011,18 +1006,9 @@ nav.toolbar, nav.v-toolbar
     min-width: 130px
 
     span
-      font-family: Quicksand !important
-      font-weight: 400 !important
+      font-family: $iobio-font
+      font-weight: 400
 
-  &.clin
-    background-color: $nav-color-clin !important
-    color: #486da8 !important
-
-
-    // .toolbar__title
-    //   color: $nav-title-color-clin
-
-// nav.toolbar.clin .toolbar__title
 
 .list__tile__title, .v-list__tile__title
   .icon
@@ -1060,7 +1046,7 @@ button.btnColor.blue.darken-1
 
   font-size: 15px
   font-weight: bold
-  font-family: Open sans
+  font-family: $app-font
 
 .checkbox.input-group.input-group--selection-controls.accent--text
   color: $app-gray !important
@@ -1130,4 +1116,62 @@ button.btnColor.blue.darken-1
 
 .clinButtonColor
   color: #717171 !important
+
+
+
+//
+// Clin specific styling
+//
+nav.toolbar, nav.v-toolbar
+  &.clin
+    font-family: $app-font-clin !important
+    text-color:  $text-color-clin
+    background-color: $nav-color-clin !important
+    color: #486da8 !important
+    .v-toolbar__content
+      padding-left: 10px
+      .v-btn
+        text-transform:  none !important
+        font-weight: normal
+        font-size: 14px
+
+    .v-toolbar__title
+      span
+        font-size: 18px
+        font-family: $iobio-font-clin
+
+    -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+    box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+
+.v-content
+  &.clin
+    font-family: $app-font-clin !important
+    text-color:  $text-color-clin
+    h1, h2, h3, h4, h5, h6, label
+      color:  $text-color-clin
+      font-family: $app-font-clin !important
+    h3
+      font-size: 16px
+      color: $app-color
+    .v-card__text
+      color: $text-color-clin
+      font-family: $app-font-clin !important
+    .header-nav-bar
+      height: 50px
+      background-color: initial
+
+    .v-card
+      -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+      box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
+
+    .v-chip:not(.orange)
+      background-color:  $app-color !important
+      color: white !important
+      border-color: $app-color !important
+aside
+  font-family: $app-font-clin !important
+  text-color:  $text-color-clin
+  &.clin
+    margin-top: 45px !important
+
 </style>
