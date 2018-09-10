@@ -201,7 +201,8 @@
               @phenotypeSearchTermArray="phenotypeSearchTermArray"
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
-              v-bind:isMobile="isMobile">
+              v-bind:isMobile="isMobile"
+              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
             </Phenolyzer>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
@@ -314,6 +315,7 @@ import Footer from '../partials/Footer.vue'
         uniquePheno: [],
         UniquePhenoData: [],
         summaryClinTableArray: [],
+        SearchTheDisorderInPhenolyzer: "",
       }
     },
     created(){
@@ -324,7 +326,10 @@ import Footer from '../partials/Footer.vue'
     },
     mounted(){
       window.addEventListener("message", this.receiveClin, false);
-
+      bus.$on("searchDisorderInPhenolyzer", (disorder) =>{
+        this.SearchTheDisorderInPhenolyzer = disorder;
+        this.component = "Phenolyzer";
+      })
       bus.$on("openGtrComponent", ()=>{
         window.scrollTo(0,0);
         this.component = "GeneticTestingRegistry";
