@@ -63,7 +63,7 @@
     <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
-        Sorry, the following search term returns no data! <a v-on:click="searchInPhenolyzer"> &nbsp;  <strong> Try in Phenolyzer</strong></a>
+        Sorry, the following search term returns no data! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
       </v-alert>
     </p>
   </div>
