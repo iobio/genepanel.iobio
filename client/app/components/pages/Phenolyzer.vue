@@ -707,6 +707,15 @@ import SvgBar from '../viz/SvgBar.vue'
       getPhenotypeData(){
         let self = this;
         self.phenotypeSearchedByUser = true;
+        //If autocomplete is not used and a term is searched by clicking the button. 
+        if(self.phenotypeTerm===undefined && document.getElementById("phenotype-term").value.length>1){
+          self.phenotypeTerm = {
+            id: document.getElementById("phenotype-term").value,
+            label: document.getElementById("phenotype-term").value,
+            value: document.getElementById("phenotype-term").value,
+          }
+        }
+
         if(self.phenotypeTerm.value.length>1 && !this.checked){
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
