@@ -126,6 +126,9 @@
             <v-list-tile @click="exportGtrGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
             </v-list-tile>
+            <v-list-tile @click="saveGtrGenesAsCSV">
+              <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Save GTR genes as CSV</v-list-tile-title>
+            </v-list-tile>
             <hr>
           </div>
           <div v-else-if="component==='Phenolyzer'">
@@ -237,7 +240,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
 import AppsMenu from '../partials/AppsMenu.vue';
 import HelpMenu from '../partials/HelpMenu.vue';
 import Overview from './Overview.vue';
-import Footer from '../partials/Footer.vue'
+import Footer from '../partials/Footer.vue';
+import { ExportToCsv } from 'export-to-csv';
+// var fs = require('fs');
 
   export default {
     components: {
@@ -498,7 +503,6 @@ import Footer from '../partials/Footer.vue'
         //     handle: genesToCopy
         // });
 
-
         if(this.selectedGtrGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
         }
@@ -511,6 +515,31 @@ import Footer from '../partials/Footer.vue'
           genes: geneNames,
           searchTerms: [this.searchTermGTR]
         });
+      },
+      saveGtrGenesAsCSV: function(){
+        var clinData = this.selectedGtrGenes.map(gene => {
+          return {
+            name: gene.name,
+            searchTerms: gene.searchTermArray,
+            conditions: gene.conditions,
+            genePanels: gene.value,
+            geneid: gene.geneid
+          }
+        })
+
+        const options = {
+          fieldSeparator: ',',
+          quoteStrings: '"',
+          decimalseparator: '.',
+          showLabels: true,
+          showTitle: true,
+          title: 'GTR Genes',
+          useBom: true,
+          useKeysAsHeaders: true,
+          filename: 'GTR_Genes'
+        };
+        const csvExporter = new ExportToCsv(options);
+        csvExporter.generateCsv(clinData);
 
       },
       copyPhenolyzerGenes: function(){
