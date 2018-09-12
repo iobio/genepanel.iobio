@@ -1360,6 +1360,7 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
+      console.log("e in selectPanelsEdgeCase", e);
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
           //set the items in the panels card
           this.multiSelectPanels = e;
@@ -1396,7 +1397,30 @@ export default {
         this.selectedPanelsInCheckBox = temp;
       }
 
+      if(temp.length===0 && this.chartComponent===null){
+          if(this.selectedPanelFilters.length===1){
+            this.selectedPanelFilters = ["specific", , "moderate"];
+            temp = this.selectPanelsEdgeCase(e);
+            if(temp.length===0){
+              this.selectedPanelFilters = ["specific", , "moderate", "general"];
+              temp = this.selectPanelsEdgeCase(e);
+            }
+          }
+      }
       this.geneProps = temp;
+    },
+    selectPanelsEdgeCase: function(e){
+      var tempArr = [];
+      tempArr = e;
+      var returnArr = [];
+      this.selectedPanelFilters.map(x=>{
+        tempArr.map(y=>{
+          if(x === y.filter){
+            returnArr.push(y);
+          }
+        })
+      })
+      return returnArr;
     },
     setPanelsNamesList: function(e){
     },
