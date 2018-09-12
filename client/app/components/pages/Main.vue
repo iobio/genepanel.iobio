@@ -177,6 +177,7 @@
         </div>
         <div style="background:white; height:auto">
           <keep-alive>
+            <!-- <AddGenes></AddGenes> -->
             <Overview v-if="component==='OverviewPage'"></Overview>
             <GeneticTestingRegistry
               v-if="component==='GeneticTestingRegistry'"
@@ -207,6 +208,7 @@
               v-bind:isMobile="isMobile"
               v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
             </Phenolyzer>
+            <AddGenes v-if="component==='AddGenes'"></AddGenes>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
@@ -232,6 +234,7 @@
 import { bus } from '../../routes';
 import GeneticTestingRegistry from './GeneticTestingRegistry.vue';
 import Phenolyzer from './Phenolyzer.vue';
+import AddGenes from './AddGenes.vue';
 // import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
 var FileSaver = require('file-saver');
@@ -253,7 +256,8 @@ import { ExportToCsv } from 'export-to-csv';
       'AppsMenu': AppsMenu,
       'HelpMenu': HelpMenu,
       'Overview':Overview,
-      'Footer': Footer
+      'Footer': Footer,
+      'AddGenes': AddGenes
     },
     props: {
       paramLaunchedFromClin: null

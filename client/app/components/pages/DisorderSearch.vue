@@ -22,6 +22,7 @@
           type="text"
           autocomplete="off"
           v-on:focus="ClearInputForNewSearch"
+          v-on:keydown="EnterForSearch"
           placeholder="Search condition (E.g. Treacher Collins Syndrome)">
         <typeahead
           match-start
@@ -120,6 +121,7 @@ var model = new Model();
         HelpDialogsData: null,
         HierarchyRelations: null,
         HierarchyParentData: null,
+        enterPressed: false,
       }
     },
     watch: {
@@ -173,6 +175,11 @@ var model = new Model();
       }
     },
     methods:{
+      EnterForSearch(){
+        if(event.key === 'Enter') {
+          this.enterPressed = true;
+        }
+      },
       searchInPhenolyzer(){
         bus.$emit("searchDisorderInPhenolyzer", this.search.DiseaseName)
       },
@@ -274,9 +281,7 @@ var model = new Model();
                   data.disease.genePanels = filteredGenePanels;
                 },
                 function(error) {
-
                 })
-
                  promises.push(p);
 
               })
