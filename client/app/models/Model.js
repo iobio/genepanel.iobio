@@ -132,6 +132,8 @@ export default class Model {
                 + '&usehistory=y&retmode=json'
                 + '&term='
                 + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
+
+      console.log("search url with text", searchUrl)
       $.ajax( searchUrl )
       .done(function(data) {
 
@@ -182,6 +184,7 @@ export default class Model {
 }
 
 promiseGetGenePanels(disease) {
+  console.log("disease in promiseGetGenePanels", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
@@ -191,6 +194,7 @@ promiseGetGenePanels(disease) {
                     + '&usehistory=y&retmode=json'
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
+                    console.log("url in promiseGetGenePanels", searchUrl)
 
     $.ajax( searchUrl )
     .done(function(data) {
@@ -201,7 +205,9 @@ promiseGetGenePanels(disease) {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y";
+        console.log("summaryUrl in getpanels", summaryUrl)
+
         $.ajax( summaryUrl )
         .done(function(sumData) {
           if (sumData.result == null) {
@@ -239,7 +245,72 @@ promiseGetGenePanels(disease) {
 }
 
 
+promiseGetGenePanelsUsingSearchTerm(disease) {
+  console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
+  var me = this;
+  return new Promise(function(resolve, reject) {
+
+
+
+    var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
+                    + '&usehistory=y&retmode=json'
+                    + '&term='
+                    + disease.Title
+                    +'[5D';
+
+    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
+    console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
+    $.ajax( searchUrl )
+    .done(function(data) {
+      if (data["esearchresult"]["ERROR"] != undefined) {
+        msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
+        reject(msg);
+      } else {
+        var webenv = data["esearchresult"]["webenv"];
+        var queryKey = data["esearchresult"]["querykey"];
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_95161932_130.14.22.32_9001_1536793679_298512565_0MetA0_S_MegaStore&usehistory=y"
+        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
+        console.log("summaryUrl in getpanels", summaryUrl)
+        $.ajax( summaryUrl )
+        .done(function(sumData) {
+          if (sumData.result == null) {
+            if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
+              sumData.esummaryresult.forEach( function(message) {
+              });
+            }
+            resolve({'disease': disease, 'genePanels': []})
+          } else {
+            var genePanels = [];
+            for (var key in sumData.result) {
+              if (key != 'uids') {
+                genePanels.push(sumData.result[key]);
+              }
+            }
+            resolve({'disease': disease, 'genePanels': genePanels});
+          }
+        })
+        .fail(function() {
+          console.log("here!")
+          var msg = "Error in gtr summary. ";
+          console.log(msg);
+          reject(msg);
+        })
+      }
+
+    })
+    .fail(function(data) {
+        var msg = "Error in gtr search. ";
+        console.log(msg)
+        reject(msg);
+    })
+
+  })
+
+}
+
+
 processGenePanelData(genePanels) {
+  console.log("genePanels ", genePanels)
   var me = this;
 
   genePanels.forEach(function(genePanel) {
@@ -269,6 +340,7 @@ processGenePanelData(genePanels) {
 
 
 processDiseaseData(diseases) {
+
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
     return disease.genePanels.length > 0;

@@ -283,10 +283,24 @@ var model = new Model();
               var filteredDiseases;
 
               data.diseases.forEach(function (disease){
+                console.log("disease data", disease)
                 var p = model.promiseGetGenePanels(disease)
+                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                 .then(function (data){
-                  var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                  data.disease.genePanels = filteredGenePanels;
+                  console.log("promise data promiseGetGenePanels", data)
+                  if(data.genePanels.length>1){
+                    var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                    console.log("filteredGenePanels", filteredGenePanels);
+                    console.log("data", data)
+                    console.log("data.disease", data.disease)
+                    data.disease.genePanels = filteredGenePanels;
+                    console.log("data.disease.genePanels", data.disease.genePanels)
+                  }
+                  else {
+                    // var filteredGenePanels = model.promiseGetGenePanelsUsingSearchTerm(searchTerm);
+                    // data.disease.genePanels = filteredGenePanels;
+                  }
+
                 },
                 function(error) {
                 })

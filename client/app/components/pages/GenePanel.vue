@@ -292,6 +292,7 @@ var model = new Model();
       AddGenePanelData: function(){
         //new code
         console.log("selectedPanelFilters", this.selectedPanelFilters)
+        console.log("DiseasePanelData", this.DiseasePanelData)
         this.DiseasePanel = this.DiseasePanelData
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
         this.mergedGene = mergedGenePanels
