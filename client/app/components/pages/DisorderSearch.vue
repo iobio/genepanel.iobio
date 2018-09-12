@@ -30,6 +30,7 @@
           target="#input"
           :data="DiseaseNames"
           :limit="parseInt(100)"
+          :preselect="false"
           item-key="DiseaseName"/>
 
       </div>
@@ -40,6 +41,7 @@
           v-on:click.prevent="performSearch">
         Generate Gene List
       </v-btn>
+      <br>
       <!-- <v-tooltip bottom>
         <v-btn
           slot="activator"
@@ -127,7 +129,7 @@ var model = new Model();
     watch: {
       search: function() {
         if (this.search && this.search.DiseaseName) {
-          this.performSearch();
+          // this.EnterForSearch();
         }
       },
       DisordersPropsBackArr: function() {
@@ -146,7 +148,8 @@ var model = new Model();
        bus.$on("newAnalysis", ()=>{
          this.multipleSearchTerms = [];
          this.$emit('showDiseases', []);
-         this.search = ""
+         this.search = "";
+         this.alert = false;
        });
     },
     computed:  {
@@ -178,6 +181,11 @@ var model = new Model();
       EnterForSearch(){
         if(event.key === 'Enter') {
           this.enterPressed = true;
+          setTimeout(()=>{
+            console.log("this.search", this.search);
+            console.log("this.search.DiseaseName", this.search.DiseaseName);
+            this.performSearch();
+          }, 10)
         }
       },
       searchInPhenolyzer(){
@@ -254,7 +262,7 @@ var model = new Model();
           searchTerm = this.search.trim();
           conceptId = this.getConcpetId(this.search);
         }
-
+        console.log("searchTerm", searchTerm)
         if(searchTerm.length>1 && !this.checked){
           this.checked = true;
           this.alert=false;
