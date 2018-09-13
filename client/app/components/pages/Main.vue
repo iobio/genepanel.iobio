@@ -265,7 +265,7 @@ import { ExportToCsv } from 'export-to-csv';
     data(){
       let self = this;
       return{
-        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'GeneticTestingRegistry',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,

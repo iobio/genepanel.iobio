@@ -150,6 +150,7 @@ var model = new Model();
          this.$emit('showDiseases', []);
          this.search = "";
          this.alert = false;
+         this.checked = false;
        });
     },
     computed:  {
@@ -275,47 +276,115 @@ var model = new Model();
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
+            var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
               console.log("data got from promise : " , data)
+              dataMain = data;
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
-
-              data.diseases.forEach(function (disease){
-                console.log("disease data", disease)
-                var p = model.promiseGetGenePanels(disease)
-                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
-                .then(function (data){
-                  console.log("promise data promiseGetGenePanels", data)
-                  if(data.genePanels.length>1){
-                    var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                    console.log("filteredGenePanels", filteredGenePanels);
-                    console.log("data", data)
-                    console.log("data.disease", data.disease)
-                    data.disease.genePanels = filteredGenePanels;
-                    console.log("data.disease.genePanels", data.disease.genePanels)
-                  }
-                  else {
-                    // var filteredGenePanels = model.promiseGetGenePanelsUsingSearchTerm(searchTerm);
-                    // data.disease.genePanels = filteredGenePanels;
-                  }
-
-                },
-                function(error) {
+              if(diseases.length>0){
+                data.diseases.forEach(function (disease){
+                  console.log("disease data", disease)
+                  // var p = model.promiseGetGenePanels(disease)
+                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                  .then(function (data){
+                    // console.log("promise data promiseGetGenePanels", data)
+                      var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                      // console.log("data", data)
+                      data.disease.genePanels = filteredGenePanels;
+                  },
+                  function(error) {
+                  })
+                   promises.push(p);
                 })
-                 promises.push(p);
+              }
+              else {
+                console.log("data.diseases length is less than 1, so currently I am here!");
+                data.diseases = [
+                  {
+                    ConceptId:"C0795864",
+                    Title:searchTerm,
+                    Definition: "",
+                    Merged: "",
+                    ModificationDate: "",
+                    SemanticId: "",
+                    SemanticType: "Disease or Syndrome",
+                    Suppressed: "",
+                    ConceptMeta: {
+                      AssociatedGenes: "",
+                      ClinicalFeatures: "",
+                      ModesOfInheritance: "",
+                      OMIM: "",
+                      RelatedDisorders: ""
+                    }
+                  }]
+                diseases = data.diseases;
+                // console.log("data", data)
+                // console.log("data.disease", data.diseases)
+                data.diseases.forEach(function (disease){
+                  // console.log("disease data", disease)
+                  // var p = model.promiseGetGenePanels(disease)
+                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                  .then(function (data){
+                    // console.log("promise data promiseGetGenePanels", data)
+                    if(data.genePanels.length>1){
+                      var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                      data.disease.genePanels = filteredGenePanels;
+                      // console.log("filteredGenePanels", filteredGenePanels);
+                      // console.log("data", data)
 
-              })
+                      // console.log("data.disease.genePanels", data.disease.genePanels)
+                    }
+                  },
+                  function(error) {
+                  })
+                   promises.push(p);
+                })
+              }
+
 
               Promise.all(promises).then(function(){
                  filteredDiseases = model.processDiseaseData(diseases);
-                 console.log("filteredDiseases",filteredDiseases)
+                 console.log("filteredDiseases",filteredDiseases);
 
-                addFilteredDiseases(filteredDiseases);
+                 if(filteredDiseases.length<1){
+                   filteredDiseases = tryByUsingConceptId();
+                 }
+                 else {
+                   addFilteredDiseases(filteredDiseases);
+                 }
               })
 
             })
+
+
+
+            var tryByUsingConceptId = () =>{
+              var promises1 = [];
+              dataMain.diseases.forEach(function (disease){
+                console.log("disease data", disease)
+                var p = model.promiseGetGenePanels(disease)
+                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                .then(function (dataMain){
+                    var filteredGenePanels = model.processGenePanelData(dataMain.genePanels);
+                    // console.log("filteredGenePanels", filteredGenePanels);
+                    console.log("data", dataMain)
+                    dataMain.disease.genePanels = filteredGenePanels;
+                },
+                function(error) {
+                })
+                 promises1.push(p);
+              })
+
+              Promise.all(promises1).then(function(){
+                 var a  = model.processDiseaseData(diseases);
+                 console.log("filteredDiseases",a);
+                 addFilteredDiseases(a);
+              })
+            }
+
             var x = [];
 
             var addFilteredDiseases = (filteredDiseases) =>{

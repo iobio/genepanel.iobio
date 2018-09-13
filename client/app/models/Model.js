@@ -250,13 +250,18 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
   var me = this;
   return new Promise(function(resolve, reject) {
 
+  var diseaseTitle = encodeURIComponent(disease.Title.trim());
+  console.log("diseaseTitle ",diseaseTitle)
 
 
-    var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
-                    + '&usehistory=y&retmode=json'
-                    + '&term='
-                    + disease.Title
-                    +'[5D';
+    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
+    //                 + '&usehistory=y&retmode=json'
+    //                 + '&term='
+    //                 + disease.Title
+    //                 +'[5D';
+
+    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerence%5D&retmax=100&usehistory=y"
+    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y`
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
     console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
@@ -268,8 +273,16 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
       } else {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_95161932_130.14.22.32_9001_1536793679_298512565_0MetA0_S_MegaStore&usehistory=y"
-        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
+
+        console.log("webenv", webenv)
+
+        //for gluten intolerence
+        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_97789288_130.14.22.32_9001_1536823160_836253305_0MetA0_S_MegaStore&usehistory=y";
+
+        //for gluten intolerance
+        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_50891271_130.14.18.34_9001_1536823504_60589024_0MetA0_S_MegaStore&usehistory=y"
+
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
         console.log("summaryUrl in getpanels", summaryUrl)
         $.ajax( summaryUrl )
         .done(function(sumData) {
@@ -343,7 +356,7 @@ processDiseaseData(diseases) {
 
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
-    return disease.genePanels.length > 0;
+    return disease.genePanels.length;
   })
 
   let rowNumber = 1;

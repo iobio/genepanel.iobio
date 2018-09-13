@@ -1360,7 +1360,6 @@ export default {
       this.checkForAssociatedGenes();
     },
     selectPanels: function(e){
-      console.log("e in selectPanelsEdgeCase", e);
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
           //set the items in the panels card
           this.multiSelectPanels = e;
