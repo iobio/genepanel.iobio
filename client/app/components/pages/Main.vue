@@ -78,11 +78,9 @@
           v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
           @click="selectComponent('AddGenes')">
          <v-list-tile-action v-bind:class="[component==='AddGenes' ? 'margin_ActiveTab' : '']">
-           <span v-if="component==='AddGenes'">
-             <img src="../assets/images/phenolyzer2.svg" alt="" height="28px" width="28px" >
-           </span>
-           <span v-else><img src="../assets/images/phenolyzer1.svg" height="28px" width="28px" style="margin-left:-4px"></span>
-         </v-list-tile-action>
+           <span v-if="component==='AddGenes'"><v-icon color="primary darken-1">playlist_add</v-icon></span>
+           <span v-else><v-icon color="blue-grey darken-2">playlist_add</v-icon></span>
+        </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='AddGenes' ? 'activeTabText' : '']">
              Add Genes

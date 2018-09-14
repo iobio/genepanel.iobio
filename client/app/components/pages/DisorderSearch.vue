@@ -304,7 +304,7 @@ var model = new Model();
                 console.log("data.diseases length is less than 1, so currently I am here!");
                 data.diseases = [
                   {
-                    ConceptId:"C0795864",
+                    ConceptId:"",
                     Title:searchTerm,
                     Definition: "",
                     Merged: "",
@@ -321,14 +321,12 @@ var model = new Model();
                     }
                   }]
                 diseases = data.diseases;
-                // console.log("data", data)
-                // console.log("data.disease", data.diseases)
+
                 data.diseases.forEach(function (disease){
-                  // console.log("disease data", disease)
+                  console.log("disease data", disease)
                   // var p = model.promiseGetGenePanels(disease)
-                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                   .then(function (data){
-                    // console.log("promise data promiseGetGenePanels", data)
                     if(data.genePanels.length>1){
                       var filteredGenePanels = model.processGenePanelData(data.genePanels);
                       data.disease.genePanels = filteredGenePanels;
@@ -344,21 +342,33 @@ var model = new Model();
                 })
               }
 
-
               Promise.all(promises).then(function(){
-                 filteredDiseases = model.processDiseaseData(diseases);
-                 console.log("filteredDiseases",filteredDiseases);
+                console.log("diseases", diseases)
+                if(diseases.length===1 && diseases[0].genePanels===undefined){
+                  console.log("Stoped it");
+                  comeOutOfPromise();
+                  // this.alert = true;
+                  // this.checked=true;
+                }
+                else {
+                  filteredDiseases = model.processDiseaseData(diseases);
+                  console.log("filteredDiseases",filteredDiseases);
 
-                 if(filteredDiseases.length<1){
-                   filteredDiseases = tryByUsingConceptId();
-                 }
-                 else {
-                   addFilteredDiseases(filteredDiseases);
-                 }
+                  if(filteredDiseases.length<1){
+                    filteredDiseases = tryByUsingConceptId();
+                  }
+                  else {
+                    addFilteredDiseases(filteredDiseases);
+                  }
+                }
               })
-
             })
 
+
+            var comeOutOfPromise =()=>{
+              this.alert = true;
+              this.checked=false;
+            }
 
 
             var tryByUsingConceptId = () =>{

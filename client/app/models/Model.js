@@ -69,7 +69,7 @@ export default class Model {
                       + '&usehistory=y&retmode=json'
                       + '&term='
                       + '(((' + conceptId +'[ConceptId]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
-      console.log("searchUrl", searchUrl)
+      // console.log("searchUrl", searchUrl)
 
       $.ajax( searchUrl )
       .done(function(data) {
@@ -133,7 +133,7 @@ export default class Model {
                 + '&term='
                 + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
-      console.log("search url with text", searchUrl)
+      // console.log("search url with text", searchUrl)
       $.ajax( searchUrl )
       .done(function(data) {
 
@@ -184,7 +184,7 @@ export default class Model {
 }
 
 promiseGetGenePanels(disease) {
-  console.log("disease in promiseGetGenePanels", disease)
+  // console.log("disease in promiseGetGenePanels", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
@@ -194,7 +194,7 @@ promiseGetGenePanels(disease) {
                     + '&usehistory=y&retmode=json'
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
-                    console.log("url in promiseGetGenePanels", searchUrl)
+                    // console.log("url in promiseGetGenePanels", searchUrl)
 
     $.ajax( searchUrl )
     .done(function(data) {
@@ -206,7 +206,7 @@ promiseGetGenePanels(disease) {
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y";
-        console.log("summaryUrl in getpanels", summaryUrl)
+        // console.log("summaryUrl in getpanels", summaryUrl)
 
         $.ajax( summaryUrl )
         .done(function(sumData) {
@@ -246,12 +246,12 @@ promiseGetGenePanels(disease) {
 
 
 promiseGetGenePanelsUsingSearchTerm(disease) {
-  console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
+  // console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
   var diseaseTitle = encodeURIComponent(disease.Title.trim());
-  console.log("diseaseTitle ",diseaseTitle)
+  // console.log("diseaseTitle ",diseaseTitle)
 
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
@@ -264,7 +264,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
     var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y`
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
-    console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
+    // console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
     $.ajax( searchUrl )
     .done(function(data) {
       if (data["esearchresult"]["ERROR"] != undefined) {
@@ -274,7 +274,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
-        console.log("webenv", webenv)
+        // console.log("webenv", webenv)
 
         //for gluten intolerence
         // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_97789288_130.14.22.32_9001_1536823160_836253305_0MetA0_S_MegaStore&usehistory=y";
@@ -283,7 +283,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
         // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_50891271_130.14.18.34_9001_1536823504_60589024_0MetA0_S_MegaStore&usehistory=y"
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
-        console.log("summaryUrl in getpanels", summaryUrl)
+        // console.log("summaryUrl in getpanels", summaryUrl)
         $.ajax( summaryUrl )
         .done(function(sumData) {
           if (sumData.result == null) {
