@@ -60,6 +60,11 @@
             </span>
           </td>
           <td>
+            <span v-if="props.item.isImportedGenes">
+              <v-icon>check</v-icon>
+            </span>
+          </td>
+          <td>
             <v-menu bottom offset-y style="color:black">
               <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
               <v-card>
@@ -175,6 +180,7 @@ import { bus } from '../../routes';
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
+        { text: 'Imported Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
       ],
@@ -185,7 +191,6 @@ import { bus } from '../../routes';
     }),
     watch: {
       summaryTableData: function(){
-        console.log("Watching")
         // this.tableData = this.summaryTableData;
         // console.log("this.summaryTableData", this.summaryTableData);
         this.addTableData();
