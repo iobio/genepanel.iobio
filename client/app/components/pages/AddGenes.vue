@@ -1,28 +1,96 @@
 <template>
   <div>
-    <br>
-    <label>Search Genes</label>
-    <input
-      id="input"
-      class="form-control"
-      type="text"
-      autocomplete="off"
-      v-on:focus="ClearInputForNewSearch"
-      placeholder="Search condition (E.g. Treacher Collins Syndrome)">
-    <typeahead
-      match-start
-      v-model="search"
-      target="#input"
-      :data="genesData"
-      :limit="parseInt(100)"
-      item-key="gene_name"/>
-      <br>
-      Genes:
-      <br>
-      <v-chip disabled  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
-        {{ i+1 }}. {{ gene }}
-      </v-chip>
+    <div style="background-color:#f9fbff">
+      <v-snackbar
+          :timeout="snackbarTimeout"
+          :top="y === 'top'"
+          :bottom="y === 'bottom'"
+          :right="x === 'right'"
+          :left="x === 'left'"
+          :multi-line="mode === 'multi-line'"
+          :vertical="mode === 'vertical'"
+          v-model="snackbar"
+        >
+          {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
 
+      <v-container fluid grid-list-md>
+        <v-layout row wrap style="margin-top:-20px;">
+          <v-flex d-flex xs12>
+            <v-card>
+              <v-card-text style="margin-bottom:-5px">
+                <h3>Add Genes</h3>
+                <v-layout row wrap>
+                  <v-flex xs12 sm12 md12 lg8>
+                    <div id="add-genes-input" style="display:inline-block;padding-top:5px;">
+                      <label>Search Genes</label>
+                      <input
+                        id="input"
+                        class="form-control"
+                        type="text"
+                        autocomplete="off"
+                        v-on:focus="ClearInputForNewSearch"
+                        placeholder="Search gene (E.g. TCOF1)">
+                      <typeahead
+                        match-start
+                        v-model="search"
+                        target="#input"
+                        :data="genesData"
+                        :limit="parseInt(100)"
+                        item-key="gene_name"/>
+                        <br>
+                        <br>
+                        <div id="enter-genes-input">
+                          <v-textarea
+                            id="copy-paste-genes"
+                            multi-line
+                            rows="12"
+                            label="Enter gene names"
+                            v-model="genesToApply"
+                          >
+                        </v-textarea>
+                        </div>
+                        <v-btn style="float:right" @click="onApplyGenes">
+                          Apply
+                        </v-btn>
+                      <br>
+                      {{ genesToApply }}
+                    </div>
+                  </v-flex>
+                </v-layout>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+          <v-flex xs12>
+            <v-card>
+              <div v-if="genes.length===0">
+                <v-card-title>
+                    <h3>{{ IntroductionTextData.Title }}</h3>
+                </v-card-title>
+                <v-card-text v-html="IntroductionTextData.Content"></v-card-text>
+              </div>
+              <div v-else>
+                <v-card-text>
+                  Genes:
+                  <br>
+                  <v-chip disabled  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
+                    {{ i+1 }}. {{ gene }}
+                  </v-chip>
+
+                </v-card-text>
+              </div>
+            </v-card>
+          </v-flex>
+
+        </v-layout>
+
+      </v-container>
+
+
+
+
+    </div>
   </div>
 </template>
 
@@ -33,6 +101,7 @@ import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
 import genes from '../../../data/genes.json';
+import IntroductionText from '../../../data/IntroductionText.json'
 
 var model = new Model();
 
@@ -55,10 +124,24 @@ var model = new Model();
         search: "",
         genesData: null,
         genes:[],
+        snackbar: false,
+        snackbarText: "",
+        multipleSearchTerms: [],
+        multipleSearchArray: [],
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
+        IntroductionTextData: null,
+        genesToApply: null
       }
     },
     mounted(){
       this.genesData = genes;
+    },
+    created(){
+      this.IntroductionTextData = IntroductionText.data[3];
+
     },
     updated(){
 
@@ -76,10 +159,11 @@ var model = new Model();
         if(!this.genes.includes(this.search.gene_name)){
           document.getElementById("input").blur();
           this.genes.push(this.search.gene_name);
-          this.$emit("importedGenes", this.genes); 
+          this.$emit("importedGenes", this.genes);
         }
         else{
-          alert("term already added");
+          this.snackbarText = "This gene is already added.";
+          this.snackbar = true;
         }
       },
       ClearInputForNewSearch: function(){
@@ -90,7 +174,18 @@ var model = new Model();
       remove(gene){
         this.genes.splice(this.genes.indexOf(gene), 1)
         this.genes = [...this.genes];
-
+      },
+      onApplyGenes(){
+        this.genesToApply = this.genesToApply.trim();
+        this.genesToApply =  this.genesToApply.replace(/\n/g, " ");
+        this.genesToApply =  this.genesToApply.replace(/,/g, " ");
+        this.genesToApply = this.genesToApply.replace(/\s+/g, " ");
+        var arr = this.genesToApply.split(" ");
+        arr.map(x=>{
+          if(x!== " "){
+            this.genes.push(x.toUpperCase());
+          }
+        })
       }
     }
   }
@@ -98,7 +193,41 @@ var model = new Model();
 
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+<style lang="sass">
+@import url('https://fonts.googleapis.com/css?family=Open+Sans')
+@import ../assets/sass/variables
+
+#input
+  width: 600px
+  height: 40px
+  margin-top: 4px
+  background-color: #F4F4F4
+  border-color: #F4F4F4
+
+
+@media screen and (max-width: 1620px)
+  #input
+    width: 420px
+    height: 40px
+    margin-top: 4px
+
+@media screen and (max-width: 1050px)
+  #input
+    width: 450px
+    height: 40px
+    margin-top: 4px
+
+@media screen and (max-width: 950px)
+  #input
+    width: 290px
+    height: 40px
+    margin-top: 4px
+
+@media screen and (max-width: 700px)
+  #input
+    width: 300px
+    height: 40px
+    margin-top: 4px
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
 
 </style>
