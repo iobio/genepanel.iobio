@@ -356,7 +356,7 @@ processDiseaseData(diseases) {
 
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
-    return disease.genePanels.length;
+    return disease.genePanels.length>0;
   })
 
   let rowNumber = 1;

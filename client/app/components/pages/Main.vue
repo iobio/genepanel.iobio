@@ -75,6 +75,27 @@
        </v-list-tile>
 
        <v-list-tile
+          v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
+          @click="selectComponent('AddGenes')">
+         <v-list-tile-action v-bind:class="[component==='AddGenes' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='AddGenes'">
+             <img src="../assets/images/phenolyzer2.svg" alt="" height="28px" width="28px" >
+           </span>
+           <span v-else><img src="../assets/images/phenolyzer1.svg" height="28px" width="28px" style="margin-left:-4px"></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title v-bind:class="[component==='AddGenes' ? 'activeTabText' : '']">
+             Add Genes
+             <v-badge color="primary" right class="badge-bg-color">
+              <span slot="badge">{{ manuallyAddedGenes.length }}</span>
+            </v-badge>
+           </v-list-tile-title>
+
+         </v-list-tile-content>
+       </v-list-tile>
+
+
+       <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
@@ -208,7 +229,10 @@
               v-bind:isMobile="isMobile"
               v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
             </Phenolyzer>
-            <AddGenes v-if="component==='AddGenes'"></AddGenes>
+            <AddGenes
+              v-if="component==='AddGenes'"
+              v-on:importedGenes="importedGenes">
+            </AddGenes>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
@@ -217,6 +241,7 @@
               v-bind:searchTermGTR="searchTermGTR"
               v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
               v-bind:onSearchPhenotype="phenotypeSearches"
+              v-bind:manuallyAddedGenes="manuallyAddedGenes"
               :chartColor="ordinalColor"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile">
@@ -325,6 +350,7 @@ import { ExportToCsv } from 'export-to-csv';
         UniquePhenoData: [],
         summaryClinTableArray: [],
         SearchTheDisorderInPhenolyzer: "",
+        manuallyAddedGenes: []
       }
     },
     created(){
@@ -705,6 +731,9 @@ import { ExportToCsv } from 'export-to-csv';
       },
       phenotypeSearchTermArray: function(searchTerms){
         this.phenotypeSearches = searchTerms;
+      },
+      importedGenes: function(genes){
+        this.manuallyAddedGenes = genes;
       },
       organizeClinData: function(){
         this.summaryClinTableArray = [];

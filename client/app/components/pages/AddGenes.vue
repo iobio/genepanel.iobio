@@ -75,7 +75,8 @@ var model = new Model();
       addGeneToList(){
         if(!this.genes.includes(this.search.gene_name)){
           document.getElementById("input").blur();
-          this.genes.push(this.search.gene_name)
+          this.genes.push(this.search.gene_name);
+          this.$emit("importedGenes", this.genes); 
         }
         else{
           alert("term already added");
