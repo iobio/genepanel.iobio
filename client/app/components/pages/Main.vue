@@ -1165,7 +1165,7 @@ nav.toolbar, nav.v-toolbar
     font-family: $app-font-clin !important
     text-color:  $text-color-clin
     background-color: $nav-color-clin !important
-    color: #486da8 !important
+    color: $app-color-clin !important
     .v-toolbar__content
       padding-left: 10px
       .v-btn
@@ -1184,32 +1184,58 @@ nav.toolbar, nav.v-toolbar
 .v-content
   &.clin
     font-family: $app-font-clin !important
-    text-color:  $text-color-clin
+    color:  $text-color-clin
+
+    .container.fluid
+      background-color: $app-background-clin
     h1, h2, h3, h4, h5, h6, label
       color:  $text-color-clin
       font-family: $app-font-clin !important
     h3
       font-size: 16px
-      color: $app-color
+      color: $app-color-clin
     .v-card__text
       color: $text-color-clin
       font-family: $app-font-clin !important
     .header-nav-bar
-      height: 50px
+      height: 45px
       background-color: initial
+
+    .btnColor
+      background-color: $app-color-clin !important
+
+    .genepanelsRect
+      fill:  $app-color-clin !important
+
+    .activeCardBox
+      border-bottom-color:  $active-card-color-clin !important
+      border-bottom-width:  4px !important
+
+    #genes-table
+
+    .v-chip.orange
+      background-color:  $orange-chip-color-clin !important
+      border-color:      $orange-chip-color-clin !important
 
     .v-card
       -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
       box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
 
     .v-chip:not(.orange)
-      background-color:  $app-color !important
+      background-color:  $app-color-clin !important
       color: white !important
-      border-color: $app-color !important
+      border-color: $app-color-clin !important
 aside
   font-family: $app-font-clin !important
   text-color:  $text-color-clin
   &.clin
     margin-top: 45px !important
+
+    .v-badge__badge.primary
+      background-color: $app-color-clin !important
+      border-color: $app-color-clin !important
+
+    .activeTab
+      border-left-color: $app-color-clin !important
 
 </style>
