@@ -22,8 +22,8 @@
               <v-card-text style="margin-bottom:-5px">
                 <h3>Add Genes</h3>
                 <v-layout row wrap>
-                  <v-flex xs12 sm12 md12 lg8>
-                    <div id="add-genes-input" style="display:inline-block;padding-top:5px;">
+                  <v-flex xs12 sm12 md12 lg12>
+                    <div style="display:inline-block;padding-top:5px;">
                       <label>Search Genes</label>
                       <input
                         id="input"
@@ -39,23 +39,32 @@
                         :data="genesData"
                         :limit="parseInt(100)"
                         item-key="gene_name"/>
-                        <br>
-                        <br>
-                        <div id="enter-genes-input">
-                          <v-textarea
-                            id="copy-paste-genes"
-                            multi-line
-                            rows="12"
-                            label="Enter gene names"
-                            v-model="genesToApply"
-                          >
-                        </v-textarea>
-                        </div>
-                        <v-btn style="float:right" @click="onApplyGenes">
-                          Apply
-                        </v-btn>
-                      <br>
                     </div>
+                    <v-btn
+                        style="margin-top:-0.35px; text-transform: none"
+                        class="btnColor"
+                        v-on:click.prevent="addGeneToList">
+                      Add
+                    </v-btn>
+                    Or
+                    <v-btn style="margin-top:-0.35px;" color="primary" @click.native="copyPasteGenes = true">
+                      <v-icon>edit</v-icon>
+                      &nbsp; Paste/ add multiple genes
+                    </v-btn>
+                    <!-- <div id="enter-genes-input">
+                      <v-textarea
+                        id="copy-paste-genes"
+                        multi-line
+                        rows="12"
+                        label="Enter gene names"
+                        v-model="genesToApply"
+                      >
+                    </v-textarea>
+                    </div> -->
+                    <!-- <v-btn style="float:right" @click="onApplyGenes">
+                      Apply
+                    </v-btn> -->
+                  <br>
                   </v-flex>
                 </v-layout>
               </v-card-text>
@@ -84,6 +93,35 @@
         </v-layout>
 
         <v-layout row justify-center>
+          <v-dialog v-model="copyPasteGenes" max-width="400">
+            <v-card>
+              <!-- <v-card-title class="headline">Warning</v-card-title> -->
+              <v-card-text>
+                <div id="enter-genes-input">
+                  <v-textarea
+                    id="copy-paste-genes"
+                    multi-line
+                    rows="12"
+                    label="Enter gene names"
+                    v-model="genesToApply"
+                  >
+                </v-textarea>
+                </div>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn style="float:right" @click.native="onApplyGenes">
+                  Apply
+                </v-btn>
+                <v-btn style="float:right" @click.native="copyPasteGenes = false">
+                  Cancel
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-layout>
+
+        <v-layout row justify-center>
           <v-dialog v-model="dialog" max-width="400">
             <v-card>
               <v-card-title class="headline">Warning</v-card-title>
@@ -105,6 +143,8 @@
           </v-dialog>
         </v-layout>
 
+      </v-container>
+      <v-container fluid grid-list-md style="min-height:500px">
       </v-container>
 
 
@@ -160,7 +200,8 @@ var geneModel = new GeneModel();
         knownGenesData: null,
         dialog: false,
         byPassedGenes: "",
-        dupGenes: ""
+        dupGenes: "",
+        copyPasteGenes: false
       }
     },
     mounted(){
@@ -184,14 +225,16 @@ var geneModel = new GeneModel();
     },
     methods:{
       addGeneToList(){
-        if(!this.genes.includes(this.search.gene_name)){
-          document.getElementById("input").blur();
-          this.genes.push(this.search.gene_name);
-          this.$emit("importedGenes", this.genes);
-        }
-        else{
-          this.snackbarText = "This gene is already added.";
-          this.snackbar = true;
+        if(this.search.gene_name!== undefined){
+          if(!this.genes.includes(this.search.gene_name)){
+            document.getElementById("input").blur();
+            this.genes.push(this.search.gene_name);
+            this.$emit("importedGenes", this.genes);
+          }
+          else{
+            this.snackbarText = "This gene is already added.";
+            this.snackbar = true;
+          }
         }
       },
       ClearInputForNewSearch: function(){
@@ -204,6 +247,7 @@ var geneModel = new GeneModel();
         this.genes = [...this.genes];
       },
       onApplyGenes(){
+        this.copyPasteGenes = false;
         console.log(this.knownGenesData.includes("dbfhjdb"));
         this.genesToApply = this.genesToApply.trim();
         this.genesToApply =  this.genesToApply.replace(/\n/g, " ");
@@ -239,6 +283,7 @@ var geneModel = new GeneModel();
           this.dialog = true;
         }
         this.$emit("importedGenes", this.genes);
+        this.genesToApply = null;
       }
     }
   }
@@ -249,6 +294,10 @@ var geneModel = new GeneModel();
 <style lang="sass">
 @import url('https://fonts.googleapis.com/css?family=Open+Sans')
 @import ../assets/sass/variables
+
+.btnColor
+  color: white !important
+  background-color: $search-button-color !important
 
 #input
   width: 600px
