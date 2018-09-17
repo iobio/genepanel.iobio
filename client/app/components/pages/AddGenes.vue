@@ -55,7 +55,6 @@
                           Apply
                         </v-btn>
                       <br>
-                      {{ genesToApply }}
                     </div>
                   </v-flex>
                 </v-layout>
@@ -82,7 +81,28 @@
               </div>
             </v-card>
           </v-flex>
+        </v-layout>
 
+        <v-layout row justify-center>
+          <v-dialog v-model="dialog" max-width="400">
+            <v-card>
+              <v-card-title class="headline">Warning</v-card-title>
+              <v-card-text>
+                <p v-if="byPassedGenes.length>2">
+                  Bypassing unknown genes: {{ byPassedGenes }}
+                </p>
+                <p v-if="dupGenes.length>2">
+                  Bypassing duplicate genes: {{ dupGenes }}
+                </p>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn style="float:right" @click.native="dialog = false">
+                  OK
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-layout>
 
       </v-container>
@@ -100,10 +120,13 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
+import GeneModel from '../../models/GeneModel'
 import genes from '../../../data/genes.json';
 import IntroductionText from '../../../data/IntroductionText.json'
+import knownGenes from '../../../data/knownGenes'
 
 var model = new Model();
+var geneModel = new GeneModel();
 
   export default {
     components: {
@@ -133,11 +156,16 @@ var model = new Model();
         mode: '',
         snackbarTimeout: 4000,
         IntroductionTextData: null,
-        genesToApply: null
+        genesToApply: null,
+        knownGenesData: null,
+        dialog: false,
+        byPassedGenes: "",
+        dupGenes: ""
       }
     },
     mounted(){
       this.genesData = genes;
+      this.knownGenesData = knownGenes;
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[3];
@@ -176,16 +204,41 @@ var model = new Model();
         this.genes = [...this.genes];
       },
       onApplyGenes(){
+        console.log(this.knownGenesData.includes("dbfhjdb"));
         this.genesToApply = this.genesToApply.trim();
         this.genesToApply =  this.genesToApply.replace(/\n/g, " ");
         this.genesToApply =  this.genesToApply.replace(/,/g, " ");
         this.genesToApply = this.genesToApply.replace(/\s+/g, " ");
         var arr = this.genesToApply.split(" ");
+        var byPassedGenes = "";
+        var byPassedGenesArr = [];
+        var duplicateGenes = [];
+
         arr.map(x=>{
-          if(x!== " "){
+          if(this.knownGenesData.includes(x.toUpperCase()) && !this.genes.includes(x.toUpperCase()) ){
             this.genes.push(x.toUpperCase());
           }
+          else if(this.genes.includes(x.toUpperCase()) && !duplicateGenes.includes()){
+            duplicateGenes.push(x.toUpperCase())
+          }
+          else {
+            byPassedGenesArr.push(x.toUpperCase());
+          }
         })
+
+        if(byPassedGenesArr.length>0){
+          console.log("" + byPassedGenesArr.join(" , ") + "  ");
+          this.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
+        }
+        if(duplicateGenes.length>0){
+          console.log("" + duplicateGenes.join(" , ") + "  ");
+          this.dupGenes = "" + duplicateGenes.join(" , ") + "  ";
+        }
+
+        if(byPassedGenesArr.length>0 || duplicateGenes.length>0){
+          this.dialog = true;
+        }
+        this.$emit("importedGenes", this.genes);
       }
     }
   }

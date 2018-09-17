@@ -59,6 +59,17 @@ export default class GeneModel {
     this.copyPasteGenes(this.ACMG_GENES.join(","));
   }
 
+  AddGenesByCopyPaste(genesString){
+    console.log("genesString", genesString);
+    genesString.map(x=>{
+      if(this.isKnownGene(x)){
+        console.log(x , " is a known genes");
+      }
+      else {
+        console.log(x , " is a unknown genes");
+      }
+    })
+  }
 
   copyPasteGenes(genesString) {
     var me = this;
@@ -729,6 +740,7 @@ export default class GeneModel {
   }
 
   isKnownGene(geneName) {
+    console.log("geneName called", geneName, " true or false : ", this.allKnownGeneNames[geneName] || this.allKnownGeneNames[geneName.toUpperCase()])
     return this.allKnownGeneNames[geneName] || this.allKnownGeneNames[geneName.toUpperCase()]
   }
 
