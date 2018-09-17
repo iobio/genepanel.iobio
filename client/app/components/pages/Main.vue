@@ -145,9 +145,9 @@
             <v-list-tile @click="exportGtrGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
             </v-list-tile>
-            <v-list-tile @click="saveGtrGenesAsCSV">
+            <!-- <v-list-tile @click="saveGtrGenesAsCSV">
               <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Save GTR genes as CSV</v-list-tile-title>
-            </v-list-tile>
+            </v-list-tile> -->
             <hr>
           </div>
           <div v-else-if="component==='Phenolyzer'">
@@ -165,6 +165,10 @@
           <v-list-tile @click="exportAllGenes">
             <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
           </v-list-tile>
+          <v-list-tile v-show="component==='SummaryTab'" @click="exportGenesAsCSV">
+            <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Export genes as CSV</v-list-tile-title>
+          </v-list-tile>
+
         </v-list>
       </v-menu>
       <span>
@@ -570,6 +574,36 @@ import { ExportToCsv } from 'export-to-csv';
         csvExporter.generateCsv(clinData);
 
       },
+      exportGenesAsCSV: function(){
+        var clinData = this.summaryGenes.map(gene => {
+          return {
+            Rank: gene.SummaryIndex,
+            Gene_name: gene.name,
+            sources: gene.sources,
+            GTR_SearchTerms: gene.searchTermArrayGTR.join(),
+            Phenolyzer_searchTerms: gene.searchTermPheno.join(),
+            gene_id: gene.geneId,
+            Gtr: gene.isGtr,
+            Phenolyzer: gene.isPheno,
+            AddedGene: gene.isImportedGenes
+          }
+        })
+
+        const options = {
+          fieldSeparator: ',',
+          quoteStrings: '"',
+          decimalseparator: '.',
+          showLabels: true,
+          showTitle: true,
+          title: 'Genes',
+          useBom: true,
+          useKeysAsHeaders: true,
+          filename: 'Genes'
+        };
+        const csvExporter = new ExportToCsv(options);
+        csvExporter.generateCsv(clinData);
+
+      },
       copyPhenolyzerGenes: function(){
         var geneNames = this.selectedPhenolyzerGenes.map(gene => {
           return gene.geneName
@@ -616,7 +650,8 @@ import { ExportToCsv } from 'export-to-csv';
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-
+        console.log("this.uniqueGenes from copy", this.uniqueGenes);
+        console.log("this.summaryGenes", this.summaryGenes)
         this.organizeClinData();
         var clinData = this.summaryClinTableArray.map(gene=> {
           return {

@@ -419,6 +419,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 name:this.PhenolyzerGenes[j].geneName,
                 rank: parseInt(this.PhenolyzerGenes[j].rank),
                 sourcePheno: this.PhenolyzerGenes[j].searchTermIndexSVG,
+                searchTermPheno: this.PhenolyzerGenes[j].searchTerm,
+                searchTermIndex: this.PhenolyzerGenes[j].searchTermIndex,
                 omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${this.PhenolyzerGenes[j].geneName}`,
                 medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${this.PhenolyzerGenes[j].geneName}`,
                 geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${this.PhenolyzerGenes[j].geneName}`,
@@ -438,8 +440,11 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         for(var i=0; i<tempA.length; i++){
           for(var j=0; j<this.GtrGenes.length; j++){
             if(tempA[i].name===this.GtrGenes[j].name){
-              tempA[i].sourceGTR = this.GtrGenes[j].searchTermIndexSVG
-              tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene
+              tempA[i].sourceGTR = this.GtrGenes[j].searchTermIndexSVG,
+              tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene,
+              tempA[i].searchTermArrayGTR = this.GtrGenes[j].searchTermArray,
+              tempA[i].searchTermIndexGTR = this.GtrGenes[j].searchTermIndex
+
             }
           }
         }
@@ -537,7 +542,11 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               sources: "GTR, Phenolyzer and Added Genes",
               noOfSources: 3,
               sourceGTR: x.sourceGTR,
+              searchTermArrayGTR: x.searchTermArrayGTR,
+              searchTermIndexGTR: x.searchTermIndexGTR,
               sourcePheno: x.sourcePheno,
+              searchTermPheno: x.searchTermPheno,
+              searchTermIndex: x.searchTermIndex,
               isAssociatedGene: x.isAssociatedGene,
               geneIdLink: x.geneIdLink,
               geneId: x.geneId
@@ -554,7 +563,11 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sources: "GTR and Phenolyzer",
             noOfSources: 2,
             sourceGTR: x.sourceGTR,
+            searchTermArrayGTR: x.searchTermArrayGTR,
+            searchTermIndexGTR: x.searchTermIndexGTR,
             sourcePheno: x.sourcePheno,
+            searchTermPheno: x.searchTermPheno,
+            searchTermIndex: x.searchTermIndex,
             isAssociatedGene: x.isAssociatedGene,
             geneIdLink: x.geneIdLink,
             geneId: x.geneId
@@ -570,7 +583,11 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               sources: "GTR and Added Genes",
               noOfSources: 2,
               sourceGTR: x.sourceGTR,
+              searchTermArrayGTR: x.searchTermArrayGTR,
+              searchTermIndexGTR: x.searchTermIndexGTR,
               sourcePheno: [],
+              searchTermPheno: [],
+              searchTermIndex: [],
               isAssociatedGene: x.isAssociatedGene,
               geneId: x.geneid,
               geneIdLink: x.geneIdLink
@@ -588,7 +605,11 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               sources: "Phenolyzer and Added Genes",
               noOfSources: 2,
               sourcePheno: x.sourcePheno,
+              searchTermPheno: x.searchTermPheno,
+              searchTermIndex: x.searchTermIndex,
               sourceGTR: [],
+              searchTermArrayGTR: [],
+              searchTermIndexGTR: [],
               geneIdLink: x.geneIdLink,
               geneId: x.geneId
             }
@@ -604,7 +625,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               sources: "Added Genes",
               noOfSources: 1,
               sourcePheno: [],
-              sourceGTR: []
+              sourceGTR: [],
+              searchTermArrayGTR: [],
+              searchTermIndexGTR: [],
             }
           }))
 
@@ -619,7 +642,13 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             sources: "GTR",
             noOfSources: 1,
             sourceGTR: x.sourceGTR,
+            searchTermArrayGTR: x.searchTermArrayGTR,
+            searchTermIndexGTR: x.searchTermIndexGTR,
             sourcePheno: [],
+            searchTermPheno: [],
+            searchTermIndex: [],
+            searchTermPheno: [],
+            searchTermIndex: [],
             isAssociatedGene: x.isAssociatedGene,
             geneId: x.geneid,
             geneIdLink: x.geneIdLink
@@ -634,8 +663,12 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             isImportedGenes: false,
             sources: "Phenolyzer",
             noOfSources: 1,
+            searchTermPheno: x.searchTermPheno,
+            searchTermIndex: x.searchTermIndex,
             sourcePheno: x.sourcePheno,
             sourceGTR: [],
+            searchTermArrayGTR: [],
+            searchTermIndexGTR: [],
             geneIdLink: x.geneIdLink,
             geneId: x.geneId
           }
