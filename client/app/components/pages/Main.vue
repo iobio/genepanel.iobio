@@ -378,6 +378,9 @@ import { ExportToCsv } from 'export-to-csv';
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });
+      bus.$on("exportSummaryGenesAsCSV", ()=>{
+        this.exportGenesAsCSV(); 
+      })
     },
     updated(){
     },

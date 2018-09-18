@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-card-title>
+      <v-spacer></v-spacer>
+      <v-btn v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes as CSV</v-btn>
+    </v-card-title>
     <v-data-table
         v-model="selected"
         v-bind:headers="headers"
@@ -180,7 +184,7 @@ import { bus } from '../../routes';
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: 'Imported Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
+        { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
       ],
@@ -229,6 +233,9 @@ import { bus } from '../../routes';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      exportGenesCSV: function(){
+        bus.$emit("exportSummaryGenesAsCSV")
+      },
       addTableData(){
         var xtableData = [];
         this.tableData = this.summaryTableData;

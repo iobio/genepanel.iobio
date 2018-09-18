@@ -66,7 +66,7 @@
     <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
-        Sorry, the following search term returns no data! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
+        Sorry, the following search term returns no gene panels! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
       </v-alert>
     </p>
   </div>
@@ -286,7 +286,7 @@ var model = new Model();
               var filteredDiseases;
               if(diseases.length>0){
                 data.diseases.forEach(function (disease){
-                  console.log("disease data", disease)
+                  // console.log("disease data", disease)
                   // var p = model.promiseGetGenePanels(disease)
                     var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                   .then(function (data){
@@ -296,6 +296,7 @@ var model = new Model();
                       data.disease.genePanels = filteredGenePanels;
                   },
                   function(error) {
+                    console.log("error", error)
                   })
                    promises.push(p);
                 })
@@ -337,6 +338,7 @@ var model = new Model();
                     }
                   },
                   function(error) {
+                    console.log("error", error)
                   })
                    promises.push(p);
                 })
@@ -384,6 +386,7 @@ var model = new Model();
                     dataMain.disease.genePanels = filteredGenePanels;
                 },
                 function(error) {
+                  console.log("error", error)
                 })
                  promises1.push(p);
               })

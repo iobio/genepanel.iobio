@@ -81,7 +81,6 @@
 
                 <!-- start side bar -->
                 <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
-
                   <div class="d-flex mb-2 xs12">
                     <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-title primary-title>
