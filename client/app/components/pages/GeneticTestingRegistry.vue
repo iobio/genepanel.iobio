@@ -1265,7 +1265,7 @@ export default {
 
         if($('.v-input__slot').parents('#EditCard').length===1){
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
-          $( `<div class="red" id="trailingSliderDiv" style='margin-left:-20px; right: auto; width:50px; height:16px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
+          $( `<div class="red" id="trailingSliderDiv" style='margin-left:-20px; right: auto; width:50px; height:2px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
         }
         else {
           $("#generalSlider").css("left", `${this.panelsDefinitionValues[1]}%`)

@@ -194,7 +194,7 @@ promiseGetGenePanels(disease) {
                     + '&usehistory=y&retmode=json'
                     + '&term='
                     +  disease.ConceptId +'[DISCUI]';
-                    // console.log("url in promiseGetGenePanels", searchUrl)
+                    console.log("url in promiseGetGenePanels", searchUrl)
 
     $.ajax( searchUrl )
     .done(function(data) {
@@ -206,7 +206,7 @@ promiseGetGenePanels(disease) {
         var queryKey = data["esearchresult"]["querykey"];
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y";
-        // console.log("summaryUrl in getpanels", summaryUrl)
+        console.log("summaryUrl in getpanels", summaryUrl)
 
         $.ajax( summaryUrl )
         .done(function(sumData) {
@@ -264,7 +264,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
     var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y`
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
-    // console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
+    console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
     $.ajax( searchUrl )
     .done(function(data) {
       if (data["esearchresult"]["ERROR"] != undefined) {
@@ -283,7 +283,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
         // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_50891271_130.14.18.34_9001_1536823504_60589024_0MetA0_S_MegaStore&usehistory=y"
 
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
-        // console.log("summaryUrl in getpanels", summaryUrl)
+        console.log("summaryUrl in getpanels", summaryUrl)
         $.ajax( summaryUrl )
         .done(function(sumData) {
           if (sumData.result == null) {
