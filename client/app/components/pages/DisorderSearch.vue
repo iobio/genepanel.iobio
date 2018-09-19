@@ -143,6 +143,7 @@ var model = new Model();
         enterPressed: false,
         alertWarning: false,
         singleItemTypeAhead: false,
+        enterCount: 0
       }
     },
     watch: {
@@ -226,7 +227,30 @@ var model = new Model();
         }
         else if(event.key == 'ArrowDown') {
           console.log("down key");
-          $("#addedterm").removeClass("active")
+          $("#addedterm").removeClass("active");
+          // console.log($(this).is(':first-child'));
+          console.log($("ul.dropdown-menu li").length); //checks how many children are there
+          console.log($("ul.dropdown-menu li")[1]);
+          this.enterCount = 0;
+
+        }
+        else if(event.key == 'ArrowUp') {
+          $("#addedterm").removeClass("active");
+          if($($("ul.dropdown-menu li")[1]).hasClass("active")){
+            console.log("here")
+            this.enterCount++
+            if(this.enterCount>1){
+              $("#addedterm").addClass("active");
+              $($("ul.dropdown-menu li")[1]).removeClass("active");
+            }
+          }
+          else if($($("ul.dropdown-menu li")[0]).hasClass("active")){
+            $($("ul.dropdown-menu li")[1]).removeClass("active");
+            $("#addedterm").addClass("active");
+          }
+          else if(!$($("ul.dropdown-menu li")[1]).hasClass("active") && !$($("ul.dropdown-menu li")[0]).hasClass("active") && this.enterCount!==0){
+            $("#addedterm").addClass("active");
+          }
         }
       },
       searchInPhenolyzer(){
