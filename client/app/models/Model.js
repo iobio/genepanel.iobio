@@ -69,7 +69,7 @@ export default class Model {
                       + '&usehistory=y&retmode=json'
                       + '&term='
                       + '(((' + conceptId +'[ConceptId]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
-      console.log("searchUrl", searchUrl)
+      // console.log("searchUrl", searchUrl)
 
       $.ajax( searchUrl )
       .done(function(data) {
@@ -133,7 +133,7 @@ export default class Model {
                 + '&term='
                 + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
-      console.log("search url with text", searchUrl)
+      // console.log("search url with text", searchUrl)
       $.ajax( searchUrl )
       .done(function(data) {
 
@@ -184,7 +184,7 @@ export default class Model {
 }
 
 promiseGetGenePanels(disease) {
-  console.log("disease in promiseGetGenePanels", disease)
+  // console.log("disease in promiseGetGenePanels", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
@@ -246,12 +246,12 @@ promiseGetGenePanels(disease) {
 
 
 promiseGetGenePanelsUsingSearchTerm(disease) {
-  console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
+  // console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
   var diseaseTitle = encodeURIComponent(disease.Title.trim());
-  console.log("diseaseTitle ",diseaseTitle)
+  // console.log("diseaseTitle ",diseaseTitle)
 
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
@@ -274,7 +274,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
-        console.log("webenv", webenv)
+        // console.log("webenv", webenv)
 
         //for gluten intolerence
         // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_97789288_130.14.22.32_9001_1536823160_836253305_0MetA0_S_MegaStore&usehistory=y";
@@ -356,7 +356,7 @@ processDiseaseData(diseases) {
 
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
-    return disease.genePanels.length;
+    return disease.genePanels.length>0;
   })
 
   let rowNumber = 1;

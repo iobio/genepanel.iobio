@@ -31,6 +31,8 @@
           :data="DiseaseNames"
           :limit="parseInt(100)"
           :preselect="false"
+          v-on:click="typeaheadClicked"
+          v-on:keydown="EnterForSearch"
           item-key="DiseaseName"/>
 
       </div>
@@ -42,6 +44,18 @@
         Generate Gene List
       </v-btn>
       <br>
+      <v-menu  style="box-shadow: 0 6px 12px rgba(0,0,0,.175); border-radius:4px; border:1px solid rgba(0,0,0,.15) " v-model="singleItemTypeAhead" bottom offset-y>
+      <div style="margin-top:-20px" slot="activator"></div>
+      <v-list>
+       <v-list-tile
+         @click=""
+       >
+         <!-- <v-list-tile-title>sdjsagk</v-list-tile-title> -->
+         <span style="font-size:14px; padding-left:10px; padding-right:10px"><strong>Search on:</strong> <i>{{this.search}}"</i></span>
+       </v-list-tile>
+     </v-list>
+     </v-menu>
+
       <!-- <v-tooltip bottom>
         <v-btn
           slot="activator"
@@ -66,7 +80,10 @@
     <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
     <p>
       <v-alert  color="warning" dismissible v-model="alert">
-        Sorry, the following search term returns no data! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
+        Sorry, the following search term returns no gene panels! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
+      </v-alert>
+      <v-alert  color="warning" dismissible v-model="alertWarning">
+        Sorry, we are unable to fetch data for this term! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
       </v-alert>
     </p>
   </div>
@@ -74,7 +91,6 @@
 
 
 <script>
-
 import { Typeahead, Btn } from 'uiv';
 import conditions from '../../../data/conditions.json';
 import DiseaseNames from '../../../data/DiseaseNames.json'
@@ -124,19 +140,34 @@ var model = new Model();
         HierarchyRelations: null,
         HierarchyParentData: null,
         enterPressed: false,
+        alertWarning: false,
+        singleItemTypeAhead: false,
       }
     },
     watch: {
       search: function() {
-        if (this.search && this.search.DiseaseName) {
-          // this.EnterForSearch();
+        this.singleItemTypeAhead = false;
+        if(this.search.length>0){
+          $("#addedterm").remove();
+          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href="#"><span><strong>Search on:</strong> <i>"${this.search}"</i></span></a><hr></li>`);
+          if($('ul li').length===1 && this.search.DiseaseName===undefined){
+            // $(".dropdown").addClass("open")
+            this.singleItemTypeAhead = true;
+          }
+          else {
+            this.singleItemTypeAhead = false;
+          }
         }
+        // if (this.search && this.search.DiseaseName) {
+        //   // this.EnterForSearch();
+        // }
       },
       DisordersPropsBackArr: function() {
         this.filteredDiseasesItems = this.DisordersPropsBackArr;
       }
     },
-
+    updated: function(){
+    },
     mounted: function() {
       console.log("HierarchyParentIds", HierarchyParentIds.length);
       this.HierarchyParentData = HierarchyParentIds;
@@ -179,14 +210,22 @@ var model = new Model();
       }
     },
     methods:{
+      typeaheadClicked(){
+        console.log("typeahead clicked()")
+      },
       EnterForSearch(){
         if(event.key === 'Enter') {
+          console.log("enter key")
           this.enterPressed = true;
           setTimeout(()=>{
             console.log("this.search", this.search);
             console.log("this.search.DiseaseName", this.search.DiseaseName);
             this.performSearch();
           }, 10)
+        }
+        else if(event.key == 'ArrowDown') {
+          console.log("down key");
+          $("#addedterm").removeClass("active")
         }
       },
       searchInPhenolyzer(){
@@ -286,7 +325,7 @@ var model = new Model();
               var filteredDiseases;
               if(diseases.length>0){
                 data.diseases.forEach(function (disease){
-                  console.log("disease data", disease)
+                  // console.log("disease data", disease)
                   // var p = model.promiseGetGenePanels(disease)
                     var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                   .then(function (data){
@@ -296,6 +335,7 @@ var model = new Model();
                       data.disease.genePanels = filteredGenePanels;
                   },
                   function(error) {
+                    console.log("error", error)
                   })
                    promises.push(p);
                 })
@@ -304,7 +344,7 @@ var model = new Model();
                 console.log("data.diseases length is less than 1, so currently I am here!");
                 data.diseases = [
                   {
-                    ConceptId:"C0795864",
+                    ConceptId:"",
                     Title:searchTerm,
                     Definition: "",
                     Merged: "",
@@ -321,14 +361,12 @@ var model = new Model();
                     }
                   }]
                 diseases = data.diseases;
-                // console.log("data", data)
-                // console.log("data.disease", data.diseases)
+
                 data.diseases.forEach(function (disease){
-                  // console.log("disease data", disease)
+                  console.log("disease data", disease)
                   // var p = model.promiseGetGenePanels(disease)
-                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                   .then(function (data){
-                    // console.log("promise data promiseGetGenePanels", data)
                     if(data.genePanels.length>1){
                       var filteredGenePanels = model.processGenePanelData(data.genePanels);
                       data.disease.genePanels = filteredGenePanels;
@@ -339,26 +377,39 @@ var model = new Model();
                     }
                   },
                   function(error) {
+                    console.log("error", error)
                   })
                    promises.push(p);
                 })
               }
 
-
               Promise.all(promises).then(function(){
-                 filteredDiseases = model.processDiseaseData(diseases);
-                 console.log("filteredDiseases",filteredDiseases);
+                console.log("diseases", diseases)
+                if(diseases.length===1 && diseases[0].genePanels===undefined){
+                  console.log("Stoped it");
+                  comeOutOfPromise();
+                  // this.alert = true;
+                  // this.checked=true;
+                }
+                else {
+                  filteredDiseases = model.processDiseaseData(diseases);
+                  console.log("filteredDiseases",filteredDiseases);
 
-                 if(filteredDiseases.length<1){
-                   filteredDiseases = tryByUsingConceptId();
-                 }
-                 else {
-                   addFilteredDiseases(filteredDiseases);
-                 }
+                  if(filteredDiseases.length<1){
+                    filteredDiseases = tryByUsingConceptId();
+                  }
+                  else {
+                    addFilteredDiseases(filteredDiseases);
+                  }
+                }
               })
-
             })
 
+
+            var comeOutOfPromise =()=>{
+              this.alert = true;
+              this.checked=false;
+            }
 
 
             var tryByUsingConceptId = () =>{
@@ -374,6 +425,7 @@ var model = new Model();
                     dataMain.disease.genePanels = filteredGenePanels;
                 },
                 function(error) {
+                  console.log("error", error)
                 })
                  promises1.push(p);
               })

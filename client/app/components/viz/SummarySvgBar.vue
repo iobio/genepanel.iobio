@@ -48,14 +48,21 @@ var model = new Model();
     },
     methods:{
       drawBars(){
-
-        var svgWidth = $('.summaryDiv').innerWidth()-20 ;
+        var svgWidth;
+        svgWidth = $('.summaryDiv').innerWidth()-20 ;
+        if(isNaN(svgWidth)){
+          svgWidth = 220;
+        }
         var absWidth = Math.abs(svgWidth)
         var absWidthPadding = absWidth-20;
         var multiplicationFactor = absWidthPadding / this.totalNumber;
         var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor));
         var grayBarWidth = Math.abs(absWidthPadding - selectedgenesWidth );
         var selected_Number = this.selectedNumber;
+
+        console.log("svgWidth", svgWidth)
+        console.log("this.selectedNumber", this.selectedNumber)
+        console.log("selectedgenesWidth", selectedgenesWidth)
 
         if(this.selectedNumber===0){
           selectedgenesWidth = 0;
