@@ -379,7 +379,7 @@ import { ExportToCsv } from 'export-to-csv';
         this.updateAllGenesFromSelection(data);
       });
       bus.$on("exportSummaryGenesAsCSV", ()=>{
-        this.exportGenesAsCSV(); 
+        this.exportGenesAsCSV();
       })
     },
     updated(){

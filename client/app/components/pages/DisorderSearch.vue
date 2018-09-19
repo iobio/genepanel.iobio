@@ -46,12 +46,13 @@
       <br>
       <v-menu  style="box-shadow: 0 6px 12px rgba(0,0,0,.175); border-radius:4px; border:1px solid rgba(0,0,0,.15) " v-model="singleItemTypeAhead" bottom offset-y>
       <div style="margin-top:-20px" slot="activator"></div>
-      <v-list>
+      <v-list v-if="singleItemTypeAhead">
        <v-list-tile
          @click=""
+         style="background: #4267b2; height:26px; min-width:300px"
        >
          <!-- <v-list-tile-title>sdjsagk</v-list-tile-title> -->
-         <span style="font-size:14px; padding-left:10px; padding-right:10px"><strong>Search on:</strong> <i>{{this.search}}"</i></span>
+         <li class="active" style="font-size:14px; margin-top:-22px; color:white"><span>Search on: <strong>{{search}}</strong></span></li><hr>
        </v-list-tile>
      </v-list>
      </v-menu>
@@ -149,7 +150,7 @@ var model = new Model();
         this.singleItemTypeAhead = false;
         if(this.search.length>0){
           $("#addedterm").remove();
-          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href="#"><span><strong>Search on:</strong> <i>"${this.search}"</i></span></a><hr></li>`);
+          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr></li>`);
           if($('ul li').length===1 && this.search.DiseaseName===undefined){
             // $(".dropdown").addClass("open")
             this.singleItemTypeAhead = true;
