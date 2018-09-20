@@ -116,6 +116,12 @@ var model = new Model();
     props: {
       DisordersPropsBackArr: {
         type: Array
+      },
+      launchedFromClinProps: {
+        type: Boolean
+      },
+      clinSearchedGtr: {
+        type: Array
       }
     },
     data(){
@@ -143,16 +149,23 @@ var model = new Model();
         enterPressed: false,
         alertWarning: false,
         singleItemTypeAhead: false,
-        enterCount: 0
+        enterCount: 0,
+        launchedFromClin: false,
       }
     },
     watch: {
+      launchedFromClinProps: function(){
+        this.launchedFromClin = this.launchedFromClinProps;
+      },
+      clinSearchedGtr: function(){
+        this.initiateSearchForClinSavedTerms();
+      },
       search: function() {
         this.singleItemTypeAhead = false;
         if(this.search.length>0){
           $("#addedterm").remove();
-          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr></li>`);
-          if($('ul li').length===1 && this.search.DiseaseName===undefined){
+          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
+          if($('ul li').length===1 && this.search.DiseaseName===undefined && !this.launchedFromClin){
             // $(".dropdown").addClass("open")
             this.singleItemTypeAhead = true;
           }
@@ -171,10 +184,13 @@ var model = new Model();
     updated: function(){
     },
     mounted: function() {
-      console.log("HierarchyParentIds", HierarchyParentIds.length);
+      this.launchedFromClin = this.launchedFromClinProps;
+      // console.log("clinSearchedGtr", this.clinSearchedGtr)
+      // console.log("this.launchedFromClinProps ", this.launchedFromClinProps)
+      // console.log("HierarchyParentIds", HierarchyParentIds.length);
       this.HierarchyParentData = HierarchyParentIds;
       this.HierarchyRelations = HierarchyData;
-      console.log("HierarchyData", HierarchyData.length)
+      // console.log("HierarchyData", HierarchyData.length)
       this.HelpDialogsData = HelpDialogs.data;
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
@@ -213,31 +229,30 @@ var model = new Model();
     },
     methods:{
       typeaheadClicked(){
-        console.log("typeahead clicked()")
       },
       EnterForSearch(){
         if(event.key === 'Enter') {
-          console.log("enter key")
+          // console.log("enter key")
           this.enterPressed = true;
           setTimeout(()=>{
-            console.log("this.search", this.search);
-            console.log("this.search.DiseaseName", this.search.DiseaseName);
+            // console.log("this.search", this.search);
+            // console.log("this.search.DiseaseName", this.search.DiseaseName);
             this.performSearch();
           }, 10)
         }
         else if(event.key == 'ArrowDown') {
-          console.log("down key");
+          // console.log("down key");
           $("#addedterm").removeClass("active");
           // console.log($(this).is(':first-child'));
-          console.log($("ul.dropdown-menu li").length); //checks how many children are there
-          console.log($("ul.dropdown-menu li")[1]);
+          // console.log($("ul.dropdown-menu li").length); //checks how many children are there
+          // console.log($("ul.dropdown-menu li")[1]);
           this.enterCount = 0;
 
         }
         else if(event.key == 'ArrowUp') {
           $("#addedterm").removeClass("active");
           if($($("ul.dropdown-menu li")[1]).hasClass("active")){
-            console.log("here")
+            // console.log("here")
             this.enterCount++
             if(this.enterCount>1){
               $("#addedterm").addClass("active");
@@ -313,6 +328,12 @@ var model = new Model();
           document.getElementById("input").value="";
           document.getElementById("input").focus();
         }
+      },
+      initiateSearchForClinSavedTerms: function(){
+        this.clinSearchedGtr.map(x=>{
+          this.search = x;
+          this.performSearch();
+        })
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
@@ -557,4 +578,5 @@ var model = new Model();
     height: 60px
     padding-left: 30px
     padding-top: 15px
+
 </style>

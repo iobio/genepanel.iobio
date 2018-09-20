@@ -26,6 +26,8 @@
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
                         v-on:multipleSearchData="multipleSearchData($event)"
+                        v-bind:launchedFromClinProps="launchedFromClinProps"
+                        v-bind:clinSearchedGtr="clinSearchedGtr"
                         @search-gtr="onSearchGTR">
                       </DisorderSearch>
                     </v-flex>
@@ -1019,6 +1021,9 @@ export default {
     },
     launchedFromClin: {
       type: Boolean
+    },
+    clinSearchedGtr: {
+      type: Array
     }
   },
   data() {
@@ -1097,6 +1102,7 @@ export default {
       showPanelsDistribution: false,
       openFilterDialog: false,
       launchedFromClinProps: false,
+      clinSearchedGtrProps: []
       // browser: null,
       // isMobile: false,
     }

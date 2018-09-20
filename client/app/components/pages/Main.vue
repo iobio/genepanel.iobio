@@ -218,6 +218,7 @@
               @search-gtr="onSearchGTR"
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
+              v-bind:clinSearchedGtr="clinSearchedGtr"
               v-bind:isMobile="isMobile">
             </GeneticTestingRegistry>
             <Phenolyzer
@@ -352,7 +353,11 @@ import { ExportToCsv } from 'export-to-csv';
         UniquePhenoData: [],
         summaryClinTableArray: [],
         SearchTheDisorderInPhenolyzer: "",
-        manuallyAddedGenes: []
+        manuallyAddedGenes: [],
+        clinSearchedGtr: [],
+        clinsearchedPhenolyzer: [],
+        clinGenes: [],
+        clinGenesData: []
       }
     },
     created(){
@@ -749,6 +754,16 @@ import { ExportToCsv } from 'export-to-csv';
           if (this.uniqueGenes && this.uniqueGenes.length > 0) {
             this.copyAllGenes();
           }
+        }
+        //Clin is sending data to set the state
+        else if(clinObject.type == 'set-data'){
+          console.log("Clin is sending data to set the state");
+          console.log("clin object: ", clinObject);
+          console.log("clinObject.phenotypes[0]", clinObject.phenotypes[0])
+          this.clinSearchedGtr = clinObject.phenotypes[0];
+          this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
+          this.clinGenes = clinObject.genes;
+          this.clinGenesData = clinObject.genesData;
         }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
