@@ -57,25 +57,35 @@
             <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
             >
-              {{ header.text }}
-              <!-- <span v-if="header.text==='Gene Panels'">
+              <!-- {{ header.text }} -->
+              <span v-if="header.text==='Gene Panels'">
                 <v-layout>
                   <v-flex xs3 style="padding-top:30px">
                     {{header.text}}
                   </v-flex>
-                  Add slider for gene panels selections
                   <v-flex xs7 style="padding-top:12px">
                     <v-slider
+                       v-if="sliderValue>0"
+                       :track-color="color"
+                       thumb-label="always"
+                       :color="sliderColor"
+                       :thumb-color="color"
+                       v-model="sliderValue"
+                       :thumb-size="20"
+                       :max="maxSliderValue"
+                       :min="minSliderValue"
+                    ></v-slider>
+                    <!-- <v-slider
                       v-model="slider"
                       thumb-label="always"
                       :thumb-size="20"
                       inverse-label
-                    ></v-slider>
+                    ></v-slider> -->
                   </v-flex>
                 </v-layout>
 
               </span>
-              <span v-else>{{ header.text }}</span> -->
+              <span v-else>{{ header.text }}</span>
 
             </th>
 
@@ -291,7 +301,11 @@ var model = new Model();
         arrangedSearchData: [],
         associatedGenesData: [],
         alertAssociatedInfo: true,
-        slider: 45,
+        sliderValue: 0,
+        minSliderValue: 0,
+        maxSliderValue: 0,
+        sliderColor: 'grey lighten-1',
+        color: 'blue darken-3',
       }
     },
     mounted(){
@@ -337,6 +351,10 @@ var model = new Model();
 
     },
     watch: {
+      sliderValue: function(){
+        console.log("slider is changing and the value is : ", this.sliderValue);
+        this.updateSelectionOnSliderValue();
+      },
       GeneData: function(){
         this.AddGeneData();
       },
@@ -393,6 +411,14 @@ var model = new Model();
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["name"], search));
+      },
+      updateSelectionOnSliderValue(){
+        this.selected = [];
+        this.items.map(x=>{
+          if(x.value>=this.sliderValue || x.isAssociatedGene){
+            this.selected.push(x);
+          }
+        })
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
@@ -578,6 +604,10 @@ var model = new Model();
           }
         }
 
+        this.sliderValue = this.selected[this.selected.length-1].value;
+        this.minSliderValue = Math.min(...valuesForMedian);
+        this.maxSliderValue = Math.max(...valuesForMedian);
+
         // if(this.launchedFromClinProps){
         //   this.selected = this.items.slice(0,10);
         // }
@@ -710,7 +740,7 @@ var model = new Model();
 
 </script>
 
-<style lang="sass">
+<style lang="sass" >
 @import ../assets/sass/variables
 
 .accent--text

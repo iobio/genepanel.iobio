@@ -71,7 +71,7 @@
                         </v-flex>
                       </v-layout> -->
 
-                      <div style="display:inline-block; padding-top:5px;">
+                      <!-- <div style="display:inline-block; padding-top:5px;">
                         <label>Select Genes</label>
                         <input
                           :disabled="geneProps.length<1"
@@ -93,8 +93,8 @@
                         class="btnColor"
                         v-on:click.prevent="selectNumberOfTopGenes">
                         Select
-                      </v-btn>
-                      <br> <br>
+                      </v-btn> -->
+                      <!-- <br> <br> -->
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
                         <label>Panels Selection</label>
                         <v-tooltip bottom v-if="!editPanelDefinition">
