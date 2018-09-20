@@ -129,7 +129,7 @@ export default class Model {
     }
     else if(conceptId===""){
       var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
-                + '&usehistory=y&retmode=json'
+                + '&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09&usehistory=y&retmode=json'
                 + '&term='
                 + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
 
@@ -144,7 +144,7 @@ export default class Model {
           var webenv = data["esearchresult"]["webenv"];
           var queryKey = data["esearchresult"]["querykey"];
 
-          var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
+          var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
 
           $.ajax( summaryUrl )
           .done(function(data) {
@@ -193,7 +193,7 @@ promiseGetGenePanels(disease) {
     var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
                     + '&usehistory=y&retmode=json'
                     + '&term='
-                    +  disease.ConceptId +'[DISCUI]';
+                    +  disease.ConceptId +'[DISCUI]&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09';
                     // console.log("url in promiseGetGenePanels", searchUrl)
 
     $.ajax( searchUrl )
@@ -205,7 +205,7 @@ promiseGetGenePanels(disease) {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y";
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09";
         // console.log("summaryUrl in getpanels", summaryUrl)
 
         $.ajax( summaryUrl )
@@ -261,7 +261,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
     //                 +'[5D';
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerence%5D&retmax=100&usehistory=y"
-    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y`
+    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
 
     // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
     // console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
@@ -282,7 +282,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
         //for gluten intolerance
         // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_50891271_130.14.18.34_9001_1536823504_60589024_0MetA0_S_MegaStore&usehistory=y"
 
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
         // console.log("summaryUrl in getpanels", summaryUrl)
         $.ajax( summaryUrl )
         .done(function(sumData) {
@@ -691,6 +691,21 @@ mergeGenesAcrossPanels(genePanels) {
   })
 
   return data;
+  }
+
+  calculateMedian(values){
+    values.sort(function(a,b){
+      return a-b;
+      });
+
+      if(values.length ===0) return 0
+
+      var half = Math.floor(values.length / 2);
+
+      if (values.length % 2)
+      return values[half];
+      else
+      return (values[half - 1] + values[half]) / 2.0;
   }
 
   getGeneHistogramData(genes) {

@@ -509,11 +509,31 @@ var model = new Model();
           this.items = data;
         }
         this.noOfSourcesSvg();
-        if(this.launchedFromClinProps){
-          this.selected = this.items.slice(0,10);
+
+        var valuesForMedian = [];
+        this.items.map(x=>{
+          valuesForMedian.push(x.value);
+        })
+
+        var medianValue = model.calculateMedian(valuesForMedian);
+        console.log("this items", valuesForMedian);
+        console.log("medianValue", medianValue);
+        // if(this.launchedFromClinProps){
+        //   this.selected = this.items.slice(0,10);
+        // }
+        // else {
+        //   this.selected = this.items.slice(0,50);
+        // }
+        this.selected = [];
+        if(Math.max(...valuesForMedian)===medianValue){
+          this.selected = this.items.slice();
         }
-        else {
-          this.selected = this.items.slice(0,50);
+        else{
+          this.items.map(x=>{
+            if(x.value>medianValue || x.isAssociatedGene){
+              this.selected.push(x);
+            }
+          })
         }
         // console.log("this.selected", this.selected)
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
