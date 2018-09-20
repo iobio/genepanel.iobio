@@ -56,9 +56,27 @@
             </th>
             <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-
             >
               {{ header.text }}
+              <!-- <span v-if="header.text==='Gene Panels'">
+                <v-layout>
+                  <v-flex xs3 style="padding-top:30px">
+                    {{header.text}}
+                  </v-flex>
+                  Add slider for gene panels selections
+                  <v-flex xs7 style="padding-top:12px">
+                    <v-slider
+                      v-model="slider"
+                      thumb-label="always"
+                      :thumb-size="20"
+                      inverse-label
+                    ></v-slider>
+                  </v-flex>
+                </v-layout>
+
+              </span>
+              <span v-else>{{ header.text }}</span> -->
+
             </th>
 
           </tr>
@@ -273,7 +291,7 @@ var model = new Model();
         arrangedSearchData: [],
         associatedGenesData: [],
         alertAssociatedInfo: true,
-
+        slider: 45,
       }
     },
     mounted(){
@@ -514,28 +532,59 @@ var model = new Model();
         this.items.map(x=>{
           valuesForMedian.push(x.value);
         })
-
         var medianValue = model.calculateMedian(valuesForMedian);
+        var fiftiethGeneValue;
+        if(this.items.length>50){
+          fiftiethGeneValue = this.items[49].value;
+        }
+        var maxValue = Math.max(...valuesForMedian);
         console.log("this items", valuesForMedian);
         console.log("medianValue", medianValue);
+        var selectionTempArr = [];
+        this.selected = [];
+        var cutOffValue;
+        if(this.items.length<=50){
+          cutOffValue = medianValue;
+          if(maxValue===medianValue){
+            this.selected = this.items.slice();
+          }
+          else{
+            this.items.map(x=>{
+              if(x.value>medianValue || x.isAssociatedGene){
+                this.selected.push(x);
+              }
+            })
+          }
+        }
+        else{
+          if(medianValue>fiftiethGeneValue){
+            cutOffValue = medianValue;
+          }
+          else {
+            cutOffValue = fiftiethGeneValue;
+          }
+          if(maxValue===cutOffValue){
+            this.selected = this.items.slice(0, 50);
+          }
+          // else if(cutOffValue===this.items[50].value){ //Al's condition
+          //   this.selected = this.items.slice(0, 50);
+          // }
+          else {
+            this.items.map((x,i)=>{
+              if((x.value>cutOffValue || x.isAssociatedGene) && i<50){
+                this.selected.push(x);
+              }
+            })
+          }
+        }
+
         // if(this.launchedFromClinProps){
         //   this.selected = this.items.slice(0,10);
         // }
         // else {
         //   this.selected = this.items.slice(0,50);
         // }
-        this.selected = [];
-        if(Math.max(...valuesForMedian)===medianValue){
-          this.selected = this.items.slice();
-        }
-        else{
-          this.items.map(x=>{
-            if(x.value>medianValue || x.isAssociatedGene){
-              this.selected.push(x);
-            }
-          })
-        }
-        // console.log("this.selected", this.selected)
+
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
