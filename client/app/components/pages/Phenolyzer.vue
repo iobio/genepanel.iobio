@@ -392,6 +392,9 @@ import SvgBar from '../viz/SvgBar.vue'
       },
       launchedFromClin: {
         type: Boolean
+      },
+      SearchTheDisorderInPhenolyzer: {
+        type: String
       }
     },
     data(){
@@ -408,7 +411,7 @@ import SvgBar from '../viz/SvgBar.vue'
         phenotypeTermEntered: "",
         allPhenotypeTerms: [],
         phenolyzerStatus: null,
-        hpoLookupUrl:  "http://nv-prod.iobio.io/hpo/hot/lookup/?term=",
+        hpoLookupUrl:  "https://nv-prod.iobio.io/hpo/hot/lookup/?term=",
         typeaheadLimit: parseInt(100),
         geneList: [],
         //DataTable
@@ -474,7 +477,10 @@ import SvgBar from '../viz/SvgBar.vue'
         dialog: false,
         IntroductionTextData: null,
         HelpDialogsData: null,
+        DisorderFromGtr: "",
       }
+    },
+    beforeCreate(){
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[1];
@@ -496,6 +502,10 @@ import SvgBar from '../viz/SvgBar.vue'
         geneModel.StopAjaxCall();
         this.genesTop = 30;
       });
+      if(this.SearchTheDisorderInPhenolyzer.length>1){
+        this.DisorderFromGtr = this.SearchTheDisorderInPhenolyzer;
+        this.getPhenotypeData();
+      }
     },
     updated(){
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
@@ -527,6 +537,12 @@ import SvgBar from '../viz/SvgBar.vue'
         if (this.phenotypeTerm && this.phenotypeTerm.label) {
           this.getPhenotypeData();
         }
+      },
+      SearchTheDisorderInPhenolyzer: function(){
+        self.phenotypeTerm = "";
+        document.getElementById("phenotype-term").value = "";
+        this.DisorderFromGtr = this.SearchTheDisorderInPhenolyzer;
+        this.getPhenotypeData();
       }
     },
     methods: {
@@ -707,6 +723,25 @@ import SvgBar from '../viz/SvgBar.vue'
       getPhenotypeData(){
         let self = this;
         self.phenotypeSearchedByUser = true;
+        //If autocomplete is not used and a term is searched by clicking the button.
+        if(self.phenotypeTerm===undefined && document.getElementById("phenotype-term").value.length>1){
+          self.phenotypeTerm = {
+            id: document.getElementById("phenotype-term").value,
+            label: document.getElementById("phenotype-term").value,
+            value: document.getElementById("phenotype-term").value,
+          }
+        }
+
+        //Check phenolyzer for the disorder term when no genes are returned in GTR.
+        if(self.DisorderFromGtr.length>1){
+          self.phenotypeTerm = {
+            id: self.DisorderFromGtr,
+            label: self.DisorderFromGtr,
+            value: self.DisorderFromGtr,
+          }
+          self.DisorderFromGtr = "";
+        }
+
         if(self.phenotypeTerm.value.length>1 && !this.checked){
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;

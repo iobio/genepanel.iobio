@@ -56,9 +56,37 @@
             </th>
             <th v-for="header in props.headers" :key="header.text"
               :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-
             >
-              {{ header.text }}
+              <!-- {{ header.text }} -->
+              <span v-if="header.text==='Gene Panels'">
+                <v-layout>
+                  <v-flex xs3 style="padding-top:30px">
+                    {{header.text}}
+                  </v-flex>
+                  <v-flex xs7 style="padding-top:12px">
+                    <v-slider
+                       v-if="sliderValue>0"
+                       :track-color="color"
+                       thumb-label="always"
+                       :color="sliderColor"
+                       :thumb-color="color"
+                       v-model="sliderValue"
+                       :thumb-size="20"
+                       :max="maxSliderValue"
+                       :min="minSliderValue"
+                    ></v-slider>
+                    <!-- <v-slider
+                      v-model="slider"
+                      thumb-label="always"
+                      :thumb-size="20"
+                      inverse-label
+                    ></v-slider> -->
+                  </v-flex>
+                </v-layout>
+
+              </span>
+              <span v-else>{{ header.text }}</span>
+
             </th>
 
           </tr>
@@ -273,7 +301,11 @@ var model = new Model();
         arrangedSearchData: [],
         associatedGenesData: [],
         alertAssociatedInfo: true,
-
+        sliderValue: 0,
+        minSliderValue: 0,
+        maxSliderValue: 0,
+        sliderColor: 'grey lighten-1',
+        color: 'blue darken-3',
       }
     },
     mounted(){
@@ -319,6 +351,10 @@ var model = new Model();
 
     },
     watch: {
+      sliderValue: function(){
+        console.log("slider is changing and the value is : ", this.sliderValue);
+        this.updateSelectionOnSliderValue();
+      },
       GeneData: function(){
         this.AddGeneData();
       },
@@ -375,6 +411,14 @@ var model = new Model();
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["name"], search));
+      },
+      updateSelectionOnSliderValue(){
+        this.selected = [];
+        this.items.map(x=>{
+          if(x.value>=this.sliderValue || x.isAssociatedGene){
+            this.selected.push(x);
+          }
+        })
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
@@ -509,13 +553,68 @@ var model = new Model();
           this.items = data;
         }
         this.noOfSourcesSvg();
-        if(this.launchedFromClinProps){
-          this.selected = this.items.slice(0,10);
+
+        var valuesForMedian = [];
+        this.items.map(x=>{
+          valuesForMedian.push(x.value);
+        })
+        var medianValue = model.calculateMedian(valuesForMedian);
+        var fiftiethGeneValue;
+        if(this.items.length>50){
+          fiftiethGeneValue = this.items[49].value;
         }
-        else {
-          this.selected = this.items.slice(0,50);
+        var maxValue = Math.max(...valuesForMedian);
+        console.log("this items", valuesForMedian);
+        console.log("medianValue", medianValue);
+        var selectionTempArr = [];
+        this.selected = [];
+        var cutOffValue;
+        if(this.items.length<=50){
+          cutOffValue = medianValue;
+          if(maxValue===medianValue){
+            this.selected = this.items.slice();
+          }
+          else{
+            this.items.map(x=>{
+              if(x.value>medianValue || x.isAssociatedGene){
+                this.selected.push(x);
+              }
+            })
+          }
         }
-        // console.log("this.selected", this.selected)
+        else{
+          if(medianValue>fiftiethGeneValue){
+            cutOffValue = medianValue;
+          }
+          else {
+            cutOffValue = fiftiethGeneValue;
+          }
+          if(maxValue===cutOffValue){
+            this.selected = this.items.slice(0, 50);
+          }
+          // else if(cutOffValue===this.items[50].value){ //Al's condition
+          //   this.selected = this.items.slice(0, 50);
+          // }
+          else {
+            this.items.map((x,i)=>{
+              if((x.value>cutOffValue || x.isAssociatedGene) && i<50){
+                this.selected.push(x);
+              }
+            })
+          }
+        }
+
+        this.sliderValue = this.selected[this.selected.length-1].value;
+        this.minSliderValue = Math.min(...valuesForMedian);
+        this.maxSliderValue = Math.max(...valuesForMedian);
+
+        // if(this.launchedFromClinProps){
+        //   this.selected = this.items.slice(0,10);
+        // }
+        // else {
+        //   this.selected = this.items.slice(0,50);
+        // }
+
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
@@ -641,7 +740,7 @@ var model = new Model();
 
 </script>
 
-<style lang="sass">
+<style lang="sass" >
 @import ../assets/sass/variables
 
 .accent--text

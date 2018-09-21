@@ -14,6 +14,11 @@
       "Page": "Summary",
       "Title": "Summary",
       "Content": "This page summaries the genes from both the sources: Genetic Testing Registry and phenolyzer.<br> "
+    },
+    {
+      "Page": "Add Genes",
+      "Title": "Add Genes",
+      "Content": "<p style='text-align: justify; font-size:14px'>This page provides the option to add your own genes which can be combined with the genes compiled from the Genetic Testing Registry and Phenolyzer.<br> </p>"
     }
   ]
 }

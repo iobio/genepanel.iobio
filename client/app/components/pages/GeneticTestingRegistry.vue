@@ -26,6 +26,8 @@
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
                         v-on:multipleSearchData="multipleSearchData($event)"
+                        v-bind:launchedFromClinProps="launchedFromClinProps"
+                        v-bind:clinSearchedGtr="clinSearchedGtr"
                         @search-gtr="onSearchGTR">
                       </DisorderSearch>
                     </v-flex>
@@ -69,7 +71,7 @@
                         </v-flex>
                       </v-layout> -->
 
-                      <div style="display:inline-block; padding-top:5px;">
+                      <!-- <div style="display:inline-block; padding-top:5px;">
                         <label>Select Genes</label>
                         <input
                           :disabled="geneProps.length<1"
@@ -91,8 +93,8 @@
                         class="btnColor"
                         v-on:click.prevent="selectNumberOfTopGenes">
                         Select
-                      </v-btn>
-                      <br> <br>
+                      </v-btn> -->
+                      <!-- <br> <br> -->
                       <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
                         <label>Panels Selection</label>
                         <v-tooltip bottom v-if="!editPanelDefinition">
@@ -958,6 +960,9 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <v-container fluid grid-list-md style="min-height:500px">
+        </v-container>
+
     </div>
 
 </div>
@@ -1016,6 +1021,9 @@ export default {
     },
     launchedFromClin: {
       type: Boolean
+    },
+    clinSearchedGtr: {
+      type: Array
     }
   },
   data() {
@@ -1094,6 +1102,7 @@ export default {
       showPanelsDistribution: false,
       openFilterDialog: false,
       launchedFromClinProps: false,
+      clinSearchedGtrProps: []
       // browser: null,
       // isMobile: false,
     }
@@ -1258,11 +1267,16 @@ export default {
       this.editPanelDefinition=true;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
       if(this.SetOrangeSlider===false){
-        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( ".v-slider__track-fill " );
+        if($('.v-slider__track-fill').parents("#EditCard").length===1){
+          $("#EditCard").find(".v-slider__track-fill").attr('id', 'sliderTrackFill');
+        }
+        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( "#sliderTrackFill " );
+
+        // $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( ".v-slider__track-fill " );
 
         if($('.v-input__slot').parents('#EditCard').length===1){
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
-          $( `<div class="red" id="trailingSliderDiv" style='margin-left:-20px; right: auto; width:50px; height:16px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
+          $( `<div class="red" id="trailingSliderDiv" style='margin-left:-20px; right: auto; width:50px; height:2px; background:#f44336; display:inline; border-top-right-radius:5px; border-bottom-right-radius:5px'></div>` ).appendTo( "#abcd" );
         }
         else {
           $("#generalSlider").css("left", `${this.panelsDefinitionValues[1]}%`)
@@ -1396,7 +1410,30 @@ export default {
         this.selectedPanelsInCheckBox = temp;
       }
 
+      if(temp.length===0 && this.chartComponent===null){
+          if(this.selectedPanelFilters.length===1){
+            this.selectedPanelFilters = ["specific", , "moderate"];
+            temp = this.selectPanelsEdgeCase(e);
+            if(temp.length===0){
+              this.selectedPanelFilters = ["specific", , "moderate", "general"];
+              temp = this.selectPanelsEdgeCase(e);
+            }
+          }
+      }
       this.geneProps = temp;
+    },
+    selectPanelsEdgeCase: function(e){
+      var tempArr = [];
+      tempArr = e;
+      var returnArr = [];
+      this.selectedPanelFilters.map(x=>{
+        tempArr.map(y=>{
+          if(x === y.filter){
+            returnArr.push(y);
+          }
+        })
+      })
+      return returnArr;
     },
     setPanelsNamesList: function(e){
     },

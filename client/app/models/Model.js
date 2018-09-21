@@ -64,79 +64,127 @@ export default class Model {
   promiseGetDiseases(searchTerm, conceptId, HierarchyRelations, HierarchyParentIds) {
   var me = this;
   return new Promise(function(resolve, reject) {
+    if(conceptId!==""){
+      var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
+                      + '&usehistory=y&retmode=json'
+                      + '&term='
+                      + '(((' + conceptId +'[ConceptId]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
+      // console.log("searchUrl", searchUrl)
 
-    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
-    //                 + '&usehistory=y&retmode=json'
-    //                 + '&term='
-    //                 + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
-
-    var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
-                    + '&usehistory=y&retmode=json'
-                    + '&term='
-                    + '(((' + conceptId +'[ConceptId]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
-    console.log("searchUrl", searchUrl)
-
-    $.ajax( searchUrl )
-    .done(function(data) {
-      if (data["esearchresult"]["ERROR"] != undefined) {
-        msg = "disease search error: " + data["esearchresult"]["ERROR"];
-        reject(msg);
-      } else {
-        var webenv = data["esearchresult"]["webenv"];
-        var queryKey = data["esearchresult"]["querykey"];
-
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
-        $.ajax( summaryUrl )
-        .done(function(data) {
-          if (data.childNodes.length < 2) {
-            if (data.esummaryresult && data.esummaryresult.length > 0) {
-              sumData.esummaryresult.forEach( function(message) {
-              });
-            }
-            resolve({'searchTerm': searchTerm, 'diseases': []})
-          } else {
-            var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
-            if (results.ERROR) {
-              if (results.ERROR == 'Empty result - nothing todo') {
-                resolve({'searchTerm': searchTerm, 'diseases': []});
-                // resolve({'searchTerm': searchTerm, 'diseases': [{ConceptId:"C0795864", Title:"Smith-Magenis syndrome"}]});
-              } else {
-                reject("Unable to parse disease summary results." + results.ERROR);
-              }
-            } else {
-              var diseases = [];
-              diseases.push(results.DocumentSummarySet.DocumentSummary)
-              if(HierarchyParentIds.includes(conceptId)){
-                var i = HierarchyParentIds.indexOf(conceptId);
-                HierarchyRelations[i].children.map(x=>{
-                  diseases.push({
-                    ConceptId: x.id,
-                    Title: x.name,
-                    ConceptMeta: x.ConceptMeta
-                  })
-                })
-              }
-              resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : diseases});
-            }
-          }
-        })
-        .fail(function() {
-          var msg = "Error in medgen disease summary. ";
+      $.ajax( searchUrl )
+      .done(function(data) {
+        if (data["esearchresult"]["ERROR"] != undefined) {
+          msg = "disease search error: " + data["esearchresult"]["ERROR"];
           reject(msg);
-        })
-      }
+        } else {
+          var webenv = data["esearchresult"]["webenv"];
+          var queryKey = data["esearchresult"]["querykey"];
 
-    })
-    .fail(function(data) {
-        var msg = "Error in medgen disease search. ";
-        reject(msg);
-    })
+          var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
+          $.ajax( summaryUrl )
+          .done(function(data) {
+            if (data.childNodes.length < 2) {
+              if (data.esummaryresult && data.esummaryresult.length > 0) {
+                sumData.esummaryresult.forEach( function(message) {
+                });
+              }
+              resolve({'searchTerm': searchTerm, 'diseases': []})
+            } else {
+              var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
+              if (results.ERROR) {
+                if (results.ERROR == 'Empty result - nothing todo') {
+                  resolve({'searchTerm': searchTerm, 'diseases': []});
+                  // resolve({'searchTerm': searchTerm, 'diseases': [{ConceptId:"C0795864", Title:"Smith-Magenis syndrome"}]});
+                } else {
+                  reject("Unable to parse disease summary results." + results.ERROR);
+                }
+              } else {
+                var diseases = [];
+                diseases.push(results.DocumentSummarySet.DocumentSummary)
+                if(HierarchyParentIds.includes(conceptId)){
+                  var i = HierarchyParentIds.indexOf(conceptId);
+                  HierarchyRelations[i].children.map(x=>{
+                    diseases.push({
+                      ConceptId: x.id,
+                      Title: x.name,
+                      ConceptMeta: x.ConceptMeta
+                    })
+                  })
+                }
+                resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : diseases});
+              }
+            }
+          })
+          .fail(function() {
+            var msg = "Error in medgen disease summary. ";
+            reject(msg);
+          })
+        }
 
+      })
+      .fail(function(data) {
+          var msg = "Error in medgen disease search. ";
+          reject(msg);
+      })
+    }
+    else if(conceptId===""){
+      var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=medgen"
+                + '&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09&usehistory=y&retmode=json'
+                + '&term='
+                + '(((' + searchTerm +'[title]) AND "in gtr"[Filter])) AND (("conditions"[Filter] OR "diseases"[Filter]))';
+
+      // console.log("search url with text", searchUrl)
+      $.ajax( searchUrl )
+      .done(function(data) {
+
+        if (data["esearchresult"]["ERROR"] != undefined) {
+          msg = "disease search error: " + data["esearchresult"]["ERROR"];
+          reject(msg);
+        } else {
+          var webenv = data["esearchresult"]["webenv"];
+          var queryKey = data["esearchresult"]["querykey"];
+
+          var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+
+          $.ajax( summaryUrl )
+          .done(function(data) {
+            if (data.childNodes.length < 2) {
+              if (data.esummaryresult && data.esummaryresult.length > 0) {
+                sumData.esummaryresult.forEach( function(message) {
+                });
+              }
+              resolve({'searchTerm': searchTerm, 'diseases': []})
+            } else {
+              var results = me.x2js.xml2js(data.childNodes[1].innerHTML);
+              if (results.ERROR) {
+                if (results.ERROR == 'Empty result - nothing todo') {
+                  resolve({'searchTerm': searchTerm, 'diseases': []});
+                } else {
+                  reject("Unable to parse disease summary results." + results.ERROR);
+                }
+              } else {
+                var diseases = results.DocumentSummarySet.DocumentSummary;
+                resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : [diseases]});
+              }
+            }
+          })
+          .fail(function() {
+            var msg = "Error in medgen disease summary. ";
+            reject(msg);
+          })
+        }
+
+      })
+      .fail(function(data) {
+          var msg = "Error in medgen disease search. ";
+          reject(msg);
+      })
+    }
   })
-
 }
 
 promiseGetGenePanels(disease) {
+  // console.log("disease in promiseGetGenePanels", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
@@ -145,7 +193,8 @@ promiseGetGenePanels(disease) {
     var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
                     + '&usehistory=y&retmode=json'
                     + '&term='
-                    +  disease.ConceptId +'[DISCUI]';
+                    +  disease.ConceptId +'[DISCUI]&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09';
+                    // console.log("url in promiseGetGenePanels", searchUrl)
 
     $.ajax( searchUrl )
     .done(function(data) {
@@ -156,7 +205,9 @@ promiseGetGenePanels(disease) {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
 
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y"
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09";
+        // console.log("summaryUrl in getpanels", summaryUrl)
+
         $.ajax( summaryUrl )
         .done(function(sumData) {
           if (sumData.result == null) {
@@ -194,7 +245,85 @@ promiseGetGenePanels(disease) {
 }
 
 
+promiseGetGenePanelsUsingSearchTerm(disease) {
+  // console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
+  var me = this;
+  return new Promise(function(resolve, reject) {
+
+  var diseaseTitle = encodeURIComponent(disease.Title.trim());
+  // console.log("diseaseTitle ",diseaseTitle)
+
+
+    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
+    //                 + '&usehistory=y&retmode=json'
+    //                 + '&term='
+    //                 + disease.Title
+    //                 +'[5D';
+
+    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerence%5D&retmax=100&usehistory=y"
+    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+
+    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
+    // console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
+    $.ajax( searchUrl )
+    .done(function(data) {
+      if (data["esearchresult"]["ERROR"] != undefined) {
+        msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
+        reject(msg);
+      } else {
+        var webenv = data["esearchresult"]["webenv"];
+        var queryKey = data["esearchresult"]["querykey"];
+
+        // console.log("webenv", webenv)
+
+        //for gluten intolerence
+        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_97789288_130.14.22.32_9001_1536823160_836253305_0MetA0_S_MegaStore&usehistory=y";
+
+        //for gluten intolerance
+        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_50891271_130.14.18.34_9001_1536823504_60589024_0MetA0_S_MegaStore&usehistory=y"
+
+        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+        // console.log("summaryUrl in getpanels", summaryUrl)
+        $.ajax( summaryUrl )
+        .done(function(sumData) {
+          if (sumData.result == null) {
+            if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
+              sumData.esummaryresult.forEach( function(message) {
+              });
+            }
+            resolve({'disease': disease, 'genePanels': []})
+          } else {
+            var genePanels = [];
+            for (var key in sumData.result) {
+              if (key != 'uids') {
+                genePanels.push(sumData.result[key]);
+              }
+            }
+            resolve({'disease': disease, 'genePanels': genePanels});
+          }
+        })
+        .fail(function() {
+          console.log("here!")
+          var msg = "Error in gtr summary. ";
+          console.log(msg);
+          reject(msg);
+        })
+      }
+
+    })
+    .fail(function(data) {
+        var msg = "Error in gtr search. ";
+        console.log(msg)
+        reject(msg);
+    })
+
+  })
+
+}
+
+
 processGenePanelData(genePanels) {
+  console.log("genePanels ", genePanels)
   var me = this;
 
   genePanels.forEach(function(genePanel) {
@@ -224,9 +353,10 @@ processGenePanelData(genePanels) {
 
 
 processDiseaseData(diseases) {
+
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
-    return disease.genePanels.length > 0;
+    return disease.genePanels.length>0;
   })
 
   let rowNumber = 1;
@@ -561,6 +691,21 @@ mergeGenesAcrossPanels(genePanels) {
   })
 
   return data;
+  }
+
+  calculateMedian(values){
+    values.sort(function(a,b){
+      return a-b;
+      });
+
+      if(values.length ===0) return 0
+
+      var half = Math.floor(values.length / 2);
+
+      if (values.length % 2)
+      return values[half];
+      else
+      return (values[half - 1] + values[half]) / 2.0;
   }
 
   getGeneHistogramData(genes) {

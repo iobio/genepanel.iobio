@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-card-title>
+      <v-spacer></v-spacer>
+      <v-btn v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes as CSV</v-btn>
+    </v-card-title>
     <v-data-table
         v-model="selected"
         v-bind:headers="headers"
@@ -57,6 +61,11 @@
           <td>
             <span v-for="x in props.item.sourcePheno">
               <span v-html="x"></span>
+            </span>
+          </td>
+          <td>
+            <span v-if="props.item.isImportedGenes">
+              <v-icon>check</v-icon>
             </span>
           </td>
           <td>
@@ -175,6 +184,7 @@ import { bus } from '../../routes';
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
+        { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
       ],
@@ -185,7 +195,6 @@ import { bus } from '../../routes';
     }),
     watch: {
       summaryTableData: function(){
-        console.log("Watching")
         // this.tableData = this.summaryTableData;
         // console.log("this.summaryTableData", this.summaryTableData);
         this.addTableData();
@@ -224,6 +233,9 @@ import { bus } from '../../routes';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      exportGenesCSV: function(){
+        bus.$emit("exportSummaryGenesAsCSV")
+      },
       addTableData(){
         var xtableData = [];
         this.tableData = this.summaryTableData;

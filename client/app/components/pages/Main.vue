@@ -75,6 +75,25 @@
        </v-list-tile>
 
        <v-list-tile
+          v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
+          @click="selectComponent('AddGenes')">
+         <v-list-tile-action v-bind:class="[component==='AddGenes' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='AddGenes'"><v-icon color="primary darken-1">playlist_add</v-icon></span>
+           <span v-else><v-icon color="blue-grey darken-2">playlist_add</v-icon></span>
+        </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title v-bind:class="[component==='AddGenes' ? 'activeTabText' : '']">
+             Add Genes
+             <v-badge color="primary" right class="badge-bg-color">
+              <span slot="badge">{{ manuallyAddedGenes.length }}</span>
+            </v-badge>
+           </v-list-tile-title>
+
+         </v-list-tile-content>
+       </v-list-tile>
+
+
+       <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
@@ -126,6 +145,9 @@
             <v-list-tile @click="exportGtrGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
             </v-list-tile>
+            <!-- <v-list-tile @click="saveGtrGenesAsCSV">
+              <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Save GTR genes as CSV</v-list-tile-title>
+            </v-list-tile> -->
             <hr>
           </div>
           <div v-else-if="component==='Phenolyzer'">
@@ -143,6 +165,10 @@
           <v-list-tile @click="exportAllGenes">
             <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export all genes to file</v-list-tile-title>
           </v-list-tile>
+          <v-list-tile v-show="component==='SummaryTab'" @click="exportGenesAsCSV">
+            <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Export genes as CSV</v-list-tile-title>
+          </v-list-tile>
+
         </v-list>
       </v-menu>
       <span>
@@ -174,6 +200,7 @@
         </div>
         <div style="background:white; height:auto">
           <keep-alive>
+            <!-- <AddGenes></AddGenes> -->
             <Overview v-if="component==='OverviewPage'"></Overview>
             <GeneticTestingRegistry
               v-if="component==='GeneticTestingRegistry'"
@@ -191,6 +218,7 @@
               @search-gtr="onSearchGTR"
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
+              v-bind:clinSearchedGtr="clinSearchedGtr"
               v-bind:isMobile="isMobile">
             </GeneticTestingRegistry>
             <Phenolyzer
@@ -201,8 +229,13 @@
               @phenotypeSearchTermArray="phenotypeSearchTermArray"
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
-              v-bind:isMobile="isMobile">
+              v-bind:isMobile="isMobile"
+              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
             </Phenolyzer>
+            <AddGenes
+              v-if="component==='AddGenes'"
+              v-on:importedGenes="importedGenes">
+            </AddGenes>
             <SummaryTab
               v-else-if="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
@@ -211,6 +244,7 @@
               v-bind:searchTermGTR="searchTermGTR"
               v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
               v-bind:onSearchPhenotype="phenotypeSearches"
+              v-bind:manuallyAddedGenes="manuallyAddedGenes"
               :chartColor="ordinalColor"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile">
@@ -228,6 +262,7 @@
 import { bus } from '../../routes';
 import GeneticTestingRegistry from './GeneticTestingRegistry.vue';
 import Phenolyzer from './Phenolyzer.vue';
+import AddGenes from './AddGenes.vue';
 // import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
 var FileSaver = require('file-saver');
@@ -236,7 +271,9 @@ import IntroductionText from '../../../data/IntroductionText.json';
 import AppsMenu from '../partials/AppsMenu.vue';
 import HelpMenu from '../partials/HelpMenu.vue';
 import Overview from './Overview.vue';
-import Footer from '../partials/Footer.vue'
+import Footer from '../partials/Footer.vue';
+import { ExportToCsv } from 'export-to-csv';
+// var fs = require('fs');
 
   export default {
     components: {
@@ -247,7 +284,8 @@ import Footer from '../partials/Footer.vue'
       'AppsMenu': AppsMenu,
       'HelpMenu': HelpMenu,
       'Overview':Overview,
-      'Footer': Footer
+      'Footer': Footer,
+      'AddGenes': AddGenes
     },
     props: {
       paramLaunchedFromClin: null
@@ -255,7 +293,7 @@ import Footer from '../partials/Footer.vue'
     data(){
       let self = this;
       return{
-        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'GeneticTestingRegistry',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -314,6 +352,12 @@ import Footer from '../partials/Footer.vue'
         uniquePheno: [],
         UniquePhenoData: [],
         summaryClinTableArray: [],
+        SearchTheDisorderInPhenolyzer: "",
+        manuallyAddedGenes: [],
+        clinSearchedGtr: [],
+        clinsearchedPhenolyzer: [],
+        clinGenes: [],
+        clinGenesData: []
       }
     },
     created(){
@@ -324,7 +368,10 @@ import Footer from '../partials/Footer.vue'
     },
     mounted(){
       window.addEventListener("message", this.receiveClin, false);
-
+      bus.$on("searchDisorderInPhenolyzer", (disorder) =>{
+        this.SearchTheDisorderInPhenolyzer = disorder;
+        this.component = "Phenolyzer";
+      })
       bus.$on("openGtrComponent", ()=>{
         window.scrollTo(0,0);
         this.component = "GeneticTestingRegistry";
@@ -336,6 +383,9 @@ import Footer from '../partials/Footer.vue'
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });
+      bus.$on("exportSummaryGenesAsCSV", ()=>{
+        this.exportGenesAsCSV();
+      })
     },
     updated(){
     },
@@ -493,7 +543,6 @@ import Footer from '../partials/Footer.vue'
         //     handle: genesToCopy
         // });
 
-
         if(this.selectedGtrGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.selectedGtrGenes.length + " ";
         }
@@ -506,6 +555,61 @@ import Footer from '../partials/Footer.vue'
           genes: geneNames,
           searchTerms: [this.searchTermGTR]
         });
+      },
+      saveGtrGenesAsCSV: function(){
+        var clinData = this.selectedGtrGenes.map(gene => {
+          return {
+            name: gene.name,
+            searchTerms: gene.searchTermArray,
+            conditions: gene.conditions,
+            genePanels: gene.value,
+            geneid: gene.geneid
+          }
+        })
+
+        const options = {
+          fieldSeparator: ',',
+          quoteStrings: '"',
+          decimalseparator: '.',
+          showLabels: true,
+          showTitle: true,
+          title: 'GTR Genes',
+          useBom: true,
+          useKeysAsHeaders: true,
+          filename: 'GTR_Genes'
+        };
+        const csvExporter = new ExportToCsv(options);
+        csvExporter.generateCsv(clinData);
+
+      },
+      exportGenesAsCSV: function(){
+        var clinData = this.summaryGenes.map(gene => {
+          return {
+            Rank: gene.SummaryIndex,
+            Gene_name: gene.name,
+            sources: gene.sources,
+            GTR_SearchTerms: gene.searchTermArrayGTR.join(),
+            Phenolyzer_searchTerms: gene.searchTermPheno.join(),
+            gene_id: gene.geneId,
+            Gtr: gene.isGtr,
+            Phenolyzer: gene.isPheno,
+            AddedGene: gene.isImportedGenes
+          }
+        })
+
+        const options = {
+          fieldSeparator: ',',
+          quoteStrings: '"',
+          decimalseparator: '.',
+          showLabels: true,
+          showTitle: true,
+          title: 'Genes',
+          useBom: true,
+          useKeysAsHeaders: true,
+          filename: 'Genes'
+        };
+        const csvExporter = new ExportToCsv(options);
+        csvExporter.generateCsv(clinData);
 
       },
       copyPhenolyzerGenes: function(){
@@ -554,7 +658,8 @@ import Footer from '../partials/Footer.vue'
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-
+        console.log("this.uniqueGenes from copy", this.uniqueGenes);
+        console.log("this.summaryGenes", this.summaryGenes)
         this.organizeClinData();
         var clinData = this.summaryClinTableArray.map(gene=> {
           return {
@@ -650,6 +755,16 @@ import Footer from '../partials/Footer.vue'
             this.copyAllGenes();
           }
         }
+        //Clin is sending data to set the state
+        else if(clinObject.type == 'set-data'){
+          console.log("Clin is sending data to set the state");
+          console.log("clin object: ", clinObject);
+          console.log("clinObject.phenotypes[0]", clinObject.phenotypes[0])
+          this.clinSearchedGtr = clinObject.phenotypes[0];
+          this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
+          this.clinGenes = clinObject.genes;
+          this.clinGenesData = clinObject.genesData;
+        }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
         window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);
@@ -667,6 +782,9 @@ import Footer from '../partials/Footer.vue'
       },
       phenotypeSearchTermArray: function(searchTerms){
         this.phenotypeSearches = searchTerms;
+      },
+      importedGenes: function(genes){
+        this.manuallyAddedGenes = genes;
       },
       organizeClinData: function(){
         this.summaryClinTableArray = [];
@@ -1127,7 +1245,7 @@ nav.toolbar, nav.v-toolbar
     font-family: $app-font-clin !important
     text-color:  $text-color-clin
     background-color: $nav-color-clin !important
-    color: #486da8 !important
+    color: $app-color-clin !important
     .v-toolbar__content
       padding-left: 10px
       .v-btn
@@ -1146,32 +1264,58 @@ nav.toolbar, nav.v-toolbar
 .v-content
   &.clin
     font-family: $app-font-clin !important
-    text-color:  $text-color-clin
+    color:  $text-color-clin
+
+    .container.fluid
+      background-color: $app-background-clin
     h1, h2, h3, h4, h5, h6, label
       color:  $text-color-clin
       font-family: $app-font-clin !important
     h3
       font-size: 16px
-      color: $app-color
+      color: $app-color-clin
     .v-card__text
       color: $text-color-clin
       font-family: $app-font-clin !important
     .header-nav-bar
-      height: 50px
+      height: 45px
       background-color: initial
+
+    .btnColor
+      background-color: $app-color-clin !important
+
+    .genepanelsRect
+      fill:  $app-color-clin !important
+
+    .activeCardBox
+      border-bottom-color:  $active-card-color-clin !important
+      border-bottom-width:  4px !important
+
+    #genes-table
+
+    .v-chip.orange
+      background-color:  $orange-chip-color-clin !important
+      border-color:      $orange-chip-color-clin !important
 
     .v-card
       -webkit-box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
       box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.05), 0px 1px 1px 0px rgba(0,0,0,0.03), 0px 1px 3px 0px rgba(0,0,0,0.01) !important
 
     .v-chip:not(.orange)
-      background-color:  $app-color !important
+      background-color:  $app-color-clin !important
       color: white !important
-      border-color: $app-color !important
+      border-color: $app-color-clin !important
 aside
   font-family: $app-font-clin !important
   text-color:  $text-color-clin
   &.clin
     margin-top: 45px !important
+
+    .v-badge__badge.primary
+      background-color: $app-color-clin !important
+      border-color: $app-color-clin !important
+
+    .activeTab
+      border-left-color: $app-color-clin !important
 
 </style>
