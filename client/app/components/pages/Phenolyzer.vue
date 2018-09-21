@@ -1066,11 +1066,11 @@ import SvgBar from '../viz/SvgBar.vue'
 
 
 
-  .genepanelsRect
-    fill: #4e7ad3
-    pointer-events: all
-    stroke: #4e7ad3
-    stroke-width: 2
+  // .genepanelsRect
+  //   fill: #4e7ad3
+  //   pointer-events: all
+  //   stroke: #4e7ad3
+  //   stroke-width: 2
 
 
   .btnColor

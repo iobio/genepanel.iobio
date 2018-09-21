@@ -101,6 +101,9 @@
         </v-flex>
       </v-layout>
       <br>
+      <v-container fluid grid-list-md style="min-height:200px">
+      </v-container>
+
   </div>
 </template>
 
@@ -164,18 +167,18 @@ div.polaroid
   border-radius: 16px
 
 
-.v-slider__track__container, .v-slider__track
-  height: 16px !important
-  border-radius: 5px
-
-
-.v-slider__track-fill
-  height: 16px !important
-  transition: .0s  !important
-
-
-.v-slider__track, .v-slider__track-fill
-  transition: none !important
+// .v-slider__track__container, .v-slider__track
+//   height: 16px !important
+//   border-radius: 5px
+//
+//
+// .v-slider__track-fill
+//   height: 16px !important
+//   transition: .0s  !important
+//
+//
+// .v-slider__track, .v-slider__track-fill
+//   transition: none !important
 
 #overview-panel
   center, span, h1, h2, h3, h4

@@ -156,6 +156,7 @@
       <template slot="footer">
     </template>
     </v-data-table>
+    <br>
   </div>
 </template>
 
@@ -184,7 +185,7 @@ import Sortable from 'sortablejs';
       selected: [],
       headers: [
         { text: 'Change order', align: 'left', sortable: false },
-        { text: '#', align: 'left', sortable: false, value:'SummaryIndex' },
+        { text: 'Rank', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
@@ -225,8 +226,8 @@ import Sortable from 'sortablejs';
         onEnd({ newIndex, oldIndex}) {
           const rowSelected = _Self.items.splice(oldIndex, 1)[0];
           _Self.items.splice(newIndex, 0, rowSelected);
-          console.log("Updated _Self items", _Self.items)
-          _Self.selected = _Self.items.splice();
+          // _Self.selected = _Self.items.splice();
+          _Self.selected = _Self.items;
         }
       })
       console.log("mounted")

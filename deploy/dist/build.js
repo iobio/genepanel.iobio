@@ -1,1 +1,0 @@
-/Users/adityaekawade/desktop/genepanel/client/dist/build.js
