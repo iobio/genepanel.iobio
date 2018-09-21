@@ -26,6 +26,6 @@ Now open [http://localhost:8080](http://localhost:8080).
 
 `npm run build`
 
-## Building prod
+## Building production
 
 `NODE_ENV=production npm run build`
