@@ -1267,7 +1267,12 @@ export default {
       this.editPanelDefinition=true;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
       if(this.SetOrangeSlider===false){
-        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( ".v-slider__track-fill " );
+        if($('.v-slider__track-fill').parents("#EditCard").length===1){
+          $("#EditCard").find(".v-slider__track-fill").attr('id', 'sliderTrackFill');
+        }
+        $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( "#sliderTrackFill " );
+
+        // $( `<div class='v-slider__track red' id="generalSlider" style='left: ${this.panelsDefinitionValues[1]}%; right: auto; border-top-left-radius:0px; border-bottom-left-radius:0px;'></div>` ).insertAfter( ".v-slider__track-fill " );
 
         if($('.v-input__slot').parents('#EditCard').length===1){
           $("#EditCard").find(".v-input__slot").attr('id', 'abcd');
