@@ -244,6 +244,11 @@ promiseGetGenePanels(disease) {
 
 }
 
+promiseGetGenePanelsUsingSearchTerm1(disease){
+  // setTimeout(()=>{
+    console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
+  // },1000)
+}
 
 promiseGetGenePanelsUsingSearchTerm(disease) {
   // console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)

@@ -364,18 +364,20 @@ var model = new Model();
             var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
-              console.log("data got from promise : " , data)
+              // console.log("data got from promise : " , data)
               dataMain = data;
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
+              // console.log(diseases.length)
+              if(diseases.length>100){
+                diseases = diseases.slice(0, 30)
+              }
               if(diseases.length>0){
-                data.diseases.forEach(function (disease){
-                  // console.log("disease data", disease)
-                  // var p = model.promiseGetGenePanels(disease)
+                // data.diseases.forEach((disease)=>{
+                diseases.forEach((disease)=>{
                     var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
-                  .then(function (data){
-                    // console.log("promise data promiseGetGenePanels", data)
+                  .then((data)=>{
                       var filteredGenePanels = model.processGenePanelData(data.genePanels);
                       // console.log("data", data)
                       data.disease.genePanels = filteredGenePanels;
@@ -387,7 +389,7 @@ var model = new Model();
                 })
               }
               else {
-                console.log("data.diseases length is less than 1, so currently I am here!");
+                // console.log("data.diseases length is less than 1, so currently I am here!");
                 data.diseases = [
                   {
                     ConceptId:"",
