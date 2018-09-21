@@ -12,7 +12,7 @@ if [[ $1 == "prod" ]]; then
   NODE_ENV=production npm run build
 else
   echo "** Building dev **"
-  NODE_ENV=development npm run build
+  npm run build
 fi
 
 # link to files needed for static page

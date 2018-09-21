@@ -11,3 +11,4 @@ client/dist
 .HomeTest.vue
 .GeneDistribution1.vue
 DevTemp
+.package-lock.json

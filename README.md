@@ -21,3 +21,11 @@ Now open [http://localhost:8080](http://localhost:8080).
 ## Running Client-side Tests
 
 `npm test`
+
+## Building dev
+
+`npm run build`
+
+## Building prod
+
+`NODE_ENV=production npm run build`
