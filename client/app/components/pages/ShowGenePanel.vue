@@ -65,7 +65,7 @@
                   </v-flex>
                   <v-flex xs7 style="padding-top:12px">
                     <v-slider
-                       v-if="sliderValue>0"
+                       v-if="sliderValue>=0"
                        :track-color="color"
                        thumb-label="always"
                        :color="sliderColor"

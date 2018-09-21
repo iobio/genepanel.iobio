@@ -29,6 +29,7 @@
     "resolve-url-loader": "^2.3.0",
     "serve-favicon": "^2.4.3",
     "sifter": "^0.5.3",
+    "sortablejs": "^1.7.0",
     "uiv": "^0.17.0",
     "uuid": "^3.3.2",
     "v-clipboard": "^1.0.4",

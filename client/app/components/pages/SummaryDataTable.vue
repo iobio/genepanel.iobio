@@ -16,7 +16,7 @@
         :custom-filter="filterItemsOnSearch"
       >
       <template slot="headers" slot-scope="props">
-        <tr>
+        <tr >
           <th>
             <v-checkbox
               primary
@@ -28,15 +28,15 @@
           </th>
           <th v-for="header in props.headers" :key="header.text"
             :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '', header.visibility, header.class, header.width]"
-
+            v-html="header.text"
           >
-            {{ header.text }}
+            <!-- {{ header.text }} -->
           </th>
 
         </tr>
       </template>
       <template slot="items" slot-scope="props">
-        <tr :active="props.selected">
+        <tr :active="props.selected" :key="props.item.name">
           <td>
             <v-checkbox
               primary
@@ -45,7 +45,7 @@
               :input-value="props.selected"
             ></v-checkbox>
           </td>
-
+          <td><v-btn style="cursor: move" icon class="sortHandle"><v-icon>drag_handle</v-icon></v-btn></td>
           <td>{{ props.item.SummaryIndex}}</td>
           <td>
             <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
@@ -161,6 +161,7 @@
 
 <script>
 import { bus } from '../../routes';
+import Sortable from 'sortablejs';
   export default {
     props:{
       summaryTableData:{
@@ -176,10 +177,13 @@ import { bus } from '../../routes';
         sortBy: 'SummaryIndex',
         rowsPerPage: 25 //Sets the number of rows per page
       },
+      // itemKeys: new WeakMap(),
+      // currentItemKey: 0,
       tmp: '',   //For searching the rows in data table
       search: '',  //For searching the rows in data table
       selected: [],
       headers: [
+        { text: 'Change order', align: 'left', sortable: false },
         { text: '#', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
@@ -205,6 +209,26 @@ import { bus } from '../../routes';
 
     },
     mounted(){
+      // new Sortable(
+      //   this.$refs.sortableTable.$el.getElementsByTagName('tbody')[0],
+      //   {
+      //     draggable: '.sortableRow',
+      //     handle: '.sortHandle',
+      //     onEnd: this.dragReorder
+      //   }
+      // )
+
+      let table = document.querySelector(".v-datatable tbody");
+      const _Self = this;
+      Sortable.create(table, {
+        handle: '.sortHandle',
+        onEnd({ newIndex, oldIndex}) {
+          const rowSelected = _Self.items.splice(oldIndex, 1)[0];
+          _Self.items.splice(newIndex, 0, rowSelected);
+          console.log("Updated _Self items", _Self.items)
+          _Self.selected = _Self.items.splice();
+        }
+      })
       console.log("mounted")
       // this.tableData = this.summaryTableData;
       this.addTableData();
@@ -214,6 +238,8 @@ import { bus } from '../../routes';
       // bus.$emit("updateAllGenes", this.selected);
     },
     updated(){
+      console.log("I am updating");
+      // console.log("Updated items", this.items)
       bus.$on('deSelectAllSummaryGenesBus', (data)=>{
         this.DeSelectAllSummaryGenes(data);
       })
@@ -233,6 +259,14 @@ import { bus } from '../../routes';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      // dragReorder ({oldIndex, newIndex}) {
+      //   const movedItem = this.items.splice(oldIndex, 1)[0]
+      //   this.items.splice(newIndex, 0, movedItem)
+      // },
+      // itemKey (item) {
+      //   if (!this.itemKeys.has(item)) this.itemKeys.set(item, ++this.currentItemKey)
+      //   return this.itemKeys.get(item)
+      // },
       exportGenesCSV: function(){
         bus.$emit("exportSummaryGenesAsCSV")
       },
