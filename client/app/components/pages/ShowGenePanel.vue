@@ -63,6 +63,8 @@
                   <v-flex xs3 style="padding-top:30px">
                     {{header.text}}
                   </v-flex>
+                  <v-flex xs1>
+                  </v-flex>
                   <v-flex xs7 style="padding-top:12px">
                     <v-slider
                        v-if="sliderValue>=0"

@@ -34,7 +34,6 @@
           v-on:click="typeaheadClicked"
           v-on:keydown="EnterForSearch"
           item-key="DiseaseName"/>
-
       </div>
 
       <v-btn
@@ -45,11 +44,11 @@
       </v-btn>
       <br>
       <v-menu  style="box-shadow: 0 6px 12px rgba(0,0,0,.175); border-radius:4px; border:1px solid rgba(0,0,0,.15) " v-model="singleItemTypeAhead" bottom offset-y>
-      <div style="margin-top:-20px" slot="activator"></div>
+      <div style="margin-top:-18px" slot="activator"></div>
       <v-list v-if="singleItemTypeAhead">
        <v-list-tile
          @click=""
-         style="background: #4267b2; height:26px; min-width:300px"
+         style="background: #4267b2; height:26px; min-width:140px"
        >
          <!-- <v-list-tile-title>sdjsagk</v-list-tile-title> -->
          <li class="active" style="font-size:14px; margin-top:-22px; color:white"><span>Search on: <strong>{{search}}</strong></span></li><hr>
@@ -162,9 +161,14 @@ var model = new Model();
       },
       search: function() {
         this.singleItemTypeAhead = false;
+        // console.log("this.DiseaseNames", this.DiseaseNames)
+        // this.DiseaseNames.unshift({
+        //   "DiseaseName": this.search,
+        //   "ConceptID": ""
+        // })
         if(this.search.length>0){
           $("#addedterm").remove();
-          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
+          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href=""><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
           if($('ul li').length===1 && this.search.DiseaseName===undefined && !this.launchedFromClin){
             // $(".dropdown").addClass("open")
             this.singleItemTypeAhead = true;
@@ -251,10 +255,12 @@ var model = new Model();
         }
         else if(event.key == 'ArrowUp') {
           $("#addedterm").removeClass("active");
+          $($("ul.dropdown-menu li")[0]).addClass("");
+          $($("ul.dropdown-menu li")[0]).removeClass("active");
           if($($("ul.dropdown-menu li")[1]).hasClass("active")){
             // console.log("here")
             this.enterCount++
-            if(this.enterCount>1){
+            if(this.enterCount>0){
               $("#addedterm").addClass("active");
               $($("ul.dropdown-menu li")[1]).removeClass("active");
             }
@@ -337,6 +343,7 @@ var model = new Model();
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
+        this.singleItemTypeAhead = false;
         console.log("this search", this.search)
         var searchTerm ="";
         var conceptId = ""

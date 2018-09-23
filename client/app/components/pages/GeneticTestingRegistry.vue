@@ -487,7 +487,7 @@
                                   </v-flex>
                                 </v-layout>
                                 <br>
-                                <div class="vendorsCardClass" style="max-height:  300px;overflow-y: scroll;">
+                                <div v-show="showPanelsCardData" class="vendorsCardClass" style="max-height:  300px;overflow-y: scroll;">
                                   <v-container grid-list-xs,sm,md,lg,xl>
                                     <v-layout row wrap v-for="(item, i) in multiSelectPanels" :key="i">
                                       <v-flex xs6>
@@ -1102,7 +1102,8 @@ export default {
       showPanelsDistribution: false,
       openFilterDialog: false,
       launchedFromClinProps: false,
-      clinSearchedGtrProps: []
+      clinSearchedGtrProps: [],
+      showPanelsCardData: false,
       // browser: null,
       // isMobile: false,
     }
@@ -1529,7 +1530,11 @@ export default {
     showChartComponent: function(chart_component){
       window.scrollTo(0,150);
       this.chartComponent = chart_component;
-      this.openFilterDialog = true
+      this.openFilterDialog = true;
+      if(chart_component==='GeneMembership'){
+        this.showPanelsCardData = true;
+      }
+
       // $("#activeFilterCard").fadeIn("slow", function() {
       //   $(this).addClass("activeFilterCardBackground");
       // });
@@ -1612,6 +1617,7 @@ export default {
     },
     closeComponent: function(){
       // window.scrollTo(0,120);
+      this.showPanelsCardData= false;
       this.chartComponent=null;
       this.DisordersAndModesComponent = "";
       this.openFilterDialog = false;
