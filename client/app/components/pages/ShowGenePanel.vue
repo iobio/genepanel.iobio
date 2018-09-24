@@ -66,17 +66,20 @@
                   <v-flex xs1>
                   </v-flex>
                   <v-flex xs7 style="padding-top:12px">
-                    <v-slider
-                       v-if="sliderValue>=0"
-                       :track-color="color"
-                       thumb-label="always"
-                       :color="sliderColor"
-                       :thumb-color="color"
-                       v-model="sliderValue"
-                       :thumb-size="20"
-                       :max="maxSliderValue"
-                       :min="minSliderValue"
-                    ></v-slider>
+                    <div >
+                      <v-slider
+                         v-if="sliderValue>=0"
+                         :track-color="color"
+                         thumb-label="always"
+                         :color="sliderColor"
+                         :thumb-color="color"
+                         v-model="sliderValue"
+                         :thumb-size="20"
+                         :max="maxSliderValue"
+                         :min="minSliderValue"
+                         v-on:change="sliderClicked"
+                      ></v-slider>
+                    </div>
                     <!-- <v-slider
                       v-model="slider"
                       thumb-label="always"
@@ -311,6 +314,7 @@ var model = new Model();
         maxSliderValue: 0,
         sliderColor: 'grey lighten-1',
         color: 'blue darken-3',
+        includeClinGenes: true
       }
     },
     mounted(){
@@ -318,6 +322,9 @@ var model = new Model();
       this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
       console.log("clinGenes", this.clinGenes);
+      bus.$on("clearClinGenesArray", ()=>{
+        this.includeClinGenes = false;
+      })
 
     },
     updated(){
@@ -418,13 +425,16 @@ var model = new Model();
       }
     },
     methods:{
+      sliderClicked() {
+        this.includeClinGenes = false;
+      },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["name"], search));
       },
       updateSelectionOnSliderValue(){
         this.selected = [];
-        if(this.clinGenes.length>0){
+        if(this.clinGenes.length>0 && this.includeClinGenes){
           this.items.map(x=>{
             if(this.clinGenes.includes(x.name)){
               this.selected.push(x);
@@ -589,7 +599,7 @@ var model = new Model();
         this.selected = [];
         var cutOffValue;
 
-        if(this.clinGenes.length<1){
+        if(this.clinGenes.length<1 || !this.includeClinGenes){
           if(this.items.length<=50){
             cutOffValue = medianValue;
             if(maxValue===medianValue){
@@ -627,7 +637,7 @@ var model = new Model();
         }
 
         //If clin genes have value, set selected accordingly:
-        if(this.clinGenes.length>0){
+        if(this.clinGenes.length>0 && this.includeClinGenes){
           console.log("genes are set")
           this.items.map(x=>{
             if(this.clinGenes.includes(x.name)){

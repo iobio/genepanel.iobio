@@ -625,6 +625,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               sourceGTR: [],
               searchTermArrayGTR: [],
               searchTermIndexGTR: [],
+              searchTermPheno: [],
+              searchTermIndex: [],
             }
           }))
 
@@ -642,8 +644,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             searchTermArrayGTR: x.searchTermArrayGTR,
             searchTermIndexGTR: x.searchTermIndexGTR,
             sourcePheno: [],
-            searchTermPheno: [],
-            searchTermIndex: [],
             searchTermPheno: [],
             searchTermIndex: [],
             isAssociatedGene: x.isAssociatedGene,

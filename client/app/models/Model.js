@@ -328,7 +328,6 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
 
 
 processGenePanelData(genePanels) {
-  console.log("genePanels ", genePanels)
   var me = this;
 
   genePanels.forEach(function(genePanel) {

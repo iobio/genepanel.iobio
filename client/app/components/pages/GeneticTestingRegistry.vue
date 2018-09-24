@@ -1259,6 +1259,9 @@ export default {
       this.panelsDefinitionValues = [20,45];
       this.closeComponentForNewResults();
     });
+    bus.$on("clearClinGenesArray", ()=>{
+      // this.clinGenes = [];
+    })
   },
   created () {
     this.IntroductionTextData = IntroductionText.data[0];

@@ -597,6 +597,7 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       exportGenesAsCSV: function(){
+        console.log("this.summaryGenes", this.summaryGenes)
         var clinData = this.summaryGenes.map(gene => {
           return {
             Rank: gene.SummaryIndex,

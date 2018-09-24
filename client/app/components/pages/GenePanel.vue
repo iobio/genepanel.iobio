@@ -207,7 +207,6 @@ var model = new Model();
 
     methods:{
       updateTableOnSelectedPanels: function(){
-        console.log("inside updateTableOnSelectedPanels")
         this.selected = this.selectedPanelsInCheckBox;
 
         var nonSelectedItems = [];
@@ -291,8 +290,8 @@ var model = new Model();
       },
       AddGenePanelData: function(){
         //new code
-        console.log("selectedPanelFilters", this.selectedPanelFilters)
-        console.log("DiseasePanelData", this.DiseasePanelData)
+        // console.log("selectedPanelFilters", this.selectedPanelFilters)
+        // console.log("DiseasePanelData", this.DiseasePanelData)
         this.DiseasePanel = this.DiseasePanelData
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
         this.mergedGene = mergedGenePanels
