@@ -486,7 +486,6 @@ import SvgBar from '../viz/SvgBar.vue'
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
-      console.log("I am mounted")
       this.HelpDialogsData = HelpDialogs.data;
       bus.$on("newAnalysis", ()=>{
         this.multipleSearchTerms = [];
@@ -786,7 +785,7 @@ import SvgBar from '../viz/SvgBar.vue'
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
-                  console.log("data", self.items[0])
+                  // console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
                   self.selected = self.items.slice(0, self.genesTop);
@@ -812,7 +811,7 @@ import SvgBar from '../viz/SvgBar.vue'
         }
       },
       combineList(arr){
-        console.log("arr", arr)
+        // console.log("arr", arr)
         var temp =[];
           for(var i=0; i<arr.length; i++){
             for(var j=0; j<arr[i].data.length; j++){
@@ -821,6 +820,7 @@ import SvgBar from '../viz/SvgBar.vue'
                 geneId: arr[i].data[j].geneId,
                 geneIntoleranceScore: arr[i].data[j].geneIntoleranceScore,
                 score: Number(arr[i].data[j].score),
+                fullScore: Number(arr[i].data[j].score),
                 searchTerm: [arr[i].name],
                 searchTermIndex: [this.multipleSearchTerms.indexOf(arr[i].name)+1]
               })
@@ -851,6 +851,7 @@ import SvgBar from '../viz/SvgBar.vue'
                   geneName: arr[j].geneName,
                   score: Number(arr[j].score),
                   total: Number(arr[i].score),
+                  fullScore: Number(arr[j].score),
                   sources: 1,
                   searchTerm: arr[j].searchTerm,
                   searchTermIndex: arr[j].searchTermIndex,
@@ -862,8 +863,10 @@ import SvgBar from '../viz/SvgBar.vue'
                   geneName: arr[j].geneName,
                   geneId: arr[j].geneId,
                   total: Number(obj[uniqueGenes[i]].total) + Number(arr[j].Score),
+                  fullScore: Number(Number(obj[uniqueGenes[i]].fullScore + Number(arr[j].fullScore))),
                   // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))),
-                  score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
+                  // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
+                  score: Number(Number(obj[uniqueGenes[i]].fullScore + Number(arr[j].fullScore)))/(Number(obj[uniqueGenes[i]].sources) + 1),
                   sources: Number(obj[uniqueGenes[i]].sources) + 1,
                   searchTerm: [...obj[uniqueGenes[i]].searchTerm, ...arr[j].searchTerm],
                   searchTermIndex: [...obj[uniqueGenes[i]].searchTermIndex, ...arr[j].searchTermIndex]
@@ -924,10 +927,12 @@ import SvgBar from '../viz/SvgBar.vue'
       },
 
       drawSvgBars: function(tempItems){
-        console.log("widthOFtable", $('#genes-table').innerWidth())
-        var svgWidth = 250;
+        // console.log("widthOFtable", $('#genes-table').innerWidth())
+        var svgWidth = 270;
         var firstBarWidth = tempItems[0].score * 220;
+        var score2Decimals;
         tempItems.map(function(gene){
+          score2Decimals = Number(gene.score).toFixed(2);
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <linearGradient id="MyGradient">
@@ -940,6 +945,8 @@ import SvgBar from '../viz/SvgBar.vue'
                                   x="1" y="3" rx="5" width="${gene.score * 220}" height="16"/>
                             <rect fill="#e8ebed" stroke="white" stroke-width="2"
                                   x="${(gene.score * 220)+3}" y="3" rx="5" width="${(firstBarWidth - (gene.score * 220))}" height="16"/>
+                                  <text x="${(firstBarWidth + 15)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${score2Decimals}</text>
+
 
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
