@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div style="background-color:#f9fbff">
+    <div v-show="launchedFromClinProps && clinFetchingGtrData">
+      Please wait while we load your previous saved state!
+    </div>
+    <div v-show="!clinFetchingGtrData" style="background-color:#f9fbff">
         <v-snackbar
           :timeout="snackbarTimeout"
           :top="y === 'top'"
@@ -1028,6 +1031,9 @@ export default {
     },
     clinGenes: {
       type: Array
+    },
+    clinFetchingGtr: {
+      type: Boolean
     }
   },
   data() {
@@ -1108,11 +1114,15 @@ export default {
       launchedFromClinProps: false,
       clinSearchedGtrProps: [],
       showPanelsCardData: false,
+      clinFetchingGtrData: false
       // browser: null,
       // isMobile: false,
     }
   },
   watch:{
+    clinFetchingGtr: function(){
+      this.clinFetchingGtrData = this.clinFetchingGtr;
+    },
     openFilterDialog: function(){
       if(this.openFilterDialog===false){
         this.chartComponent=null;
@@ -1200,6 +1210,7 @@ export default {
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
     this.launchedFromClinProps = this.launchedFromClin;
+    this.clinFetchingGtrData = this.clinFetchingGtr;
     bus.$on("lastDisorder", ()=>{
       this.snackbarText = "It is required that atleast one disorder is kept selected";
       this.snackbar = true;

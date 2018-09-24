@@ -220,7 +220,8 @@
                 @search-gtr="onSearchGTR"
                 v-bind:launchedFromClin="launchedFromClin"
                 v-bind:browser="browser"
-                v-bind:clinSearchedGtr="clinSearchedGtr"
+                v-bind:clinSearchedGtr="clinGtrSearchTerm"
+                v-bind:clinFetchingGtr="clinFetchingGtr"
                 v-bind:clinGenes="clinGenes"
                 v-bind:isMobile="isMobile">
               </GeneticTestingRegistry>
@@ -374,6 +375,8 @@ import { ExportToCsv } from 'export-to-csv';
         clinGenes: [],
         clinGenesData: [],
         clinSearchedGtrIndex: 0,
+        clinGtrSearchTerm: [],
+        clinFetchingGtr: false,
       }
     },
     created(){
@@ -501,6 +504,17 @@ import { ExportToCsv } from 'export-to-csv';
         this.selectedGtrGenes = e;
         if(e.length<=0){
           this.NumberOfGenesSelectedFromGTR = 0;
+        }
+
+        if(this.launchedFromClin){
+          this.clinSearchedGtrIndex++;
+          if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
+            this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
+          }
+          else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
+            bus.$emit("clearClinGenesArray");
+            this.clinFetchingGtr = false;
+          }
         }
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
@@ -786,7 +800,8 @@ import { ExportToCsv } from 'export-to-csv';
           this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
           this.clinGenes = clinObject.genes;
           this.clinGenesData = clinObject.genesData;
-          this.clinGtrSearchTerm = this.clinSearchedGtr[0]
+          this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
+          this.clinFetchingGtr = true;
         }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};

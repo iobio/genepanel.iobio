@@ -353,7 +353,7 @@ var model = new Model();
           this.search = x;
           this.performSearch();
         })
-        this.canClearClinGenes = true;
+        // this.canClearClinGenes = true;
 
       },
       performSearch: function(){
@@ -379,9 +379,9 @@ var model = new Model();
 
           if(!this.multipleSearchTerms.includes(searchTerm)){
             this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
-            if(this.canClearClinGenes){
-              bus.$emit("clearClinGenesArray");
-            }
+            // if(this.canClearClinGenes){
+            //   bus.$emit("clearClinGenesArray");
+            // }
             // this.$emit('search-gtr', searchTerm);
             // console.log("this.multipleSearchTerms", this.multipleSearchTerms);
             this.$emit('multipleSearchData', this.multipleSearchTerms);
