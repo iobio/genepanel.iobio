@@ -50,7 +50,7 @@ var model = new Model();
       drawBars(){
         var svgWidth;
         svgWidth = $('.summaryDiv').innerWidth()-20 ;
-        if(isNaN(svgWidth)){
+        if(isNaN(svgWidth) || svgWidth<0){
           svgWidth = 220;
         }
         var absWidth = Math.abs(svgWidth)

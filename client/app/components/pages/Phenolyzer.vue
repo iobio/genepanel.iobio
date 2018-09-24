@@ -486,6 +486,7 @@ import SvgBar from '../viz/SvgBar.vue'
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
+      console.log("I am mounted")
       this.HelpDialogsData = HelpDialogs.data;
       bus.$on("newAnalysis", ()=>{
         this.multipleSearchTerms = [];
@@ -534,6 +535,7 @@ import SvgBar from '../viz/SvgBar.vue'
         this.selectNumberOfTopPhenolyzerGenes();
       },
       phenotypeTerm: function() {
+        $("#addedterm").remove();
         if (this.phenotypeTerm && this.phenotypeTerm.label) {
           this.getPhenotypeData();
         }

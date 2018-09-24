@@ -26,7 +26,7 @@
                     <div style="display:inline-block;padding-top:5px;">
                       <label>Search Genes</label>
                       <input
-                        id="input"
+                        id="inputAddGenes"
                         class="form-control"
                         type="text"
                         autocomplete="off"
@@ -34,8 +34,8 @@
                         placeholder="Search gene (E.g. TCOF1)">
                       <typeahead
                         match-start
-                        v-model="search"
-                        target="#input"
+                        v-model="searchGenes"
+                        target="#inputAddGenes"
                         :data="genesData"
                         :limit="parseInt(100)"
                         item-key="gene_name"/>
@@ -184,7 +184,7 @@ var geneModel = new GeneModel();
     },
     data(){
       return {
-        search: "",
+        searchGenes: "",
         genesData: null,
         genes:[],
         snackbar: false,
@@ -216,8 +216,8 @@ var geneModel = new GeneModel();
 
     },
     watch: {
-      search: function() {
-        if (this.search && this.search.gene_name) {
+      searchGenes: function() {
+        if (this.searchGenes && this.searchGenes.gene_name) {
           this.addGeneToList();
         }
       },
@@ -225,10 +225,10 @@ var geneModel = new GeneModel();
     },
     methods:{
       addGeneToList(){
-        if(this.search.gene_name!== undefined){
-          if(!this.genes.includes(this.search.gene_name)){
+        if(this.searchGenes.gene_name!== undefined){
+          if(!this.genes.includes(this.searchGenes.gene_name)){
             document.getElementById("input").blur();
-            this.genes.push(this.search.gene_name);
+            this.genes.push(this.searchGenes.gene_name);
             this.$emit("importedGenes", this.genes);
           }
           else{
@@ -238,7 +238,7 @@ var geneModel = new GeneModel();
         }
       },
       ClearInputForNewSearch: function(){
-        this.search = "";
+        this.searchGenes = "";
         document.getElementById("input").value="";
         document.getElementById("input").focus();
       },

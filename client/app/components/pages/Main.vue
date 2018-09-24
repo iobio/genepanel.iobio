@@ -200,56 +200,68 @@
         </div>
         <div style="background:white; height:auto">
           <keep-alive>
-            <!-- <AddGenes></AddGenes> -->
-            <Overview v-if="component==='OverviewPage'"></Overview>
-            <GeneticTestingRegistry
-              v-if="component==='GeneticTestingRegistry'"
-              v-on:vendorListCB="updateVendors($event)"
-              v-bind:selectedVendorsListCB="selectedVendorsList"
-              v-on:diseasesCB=addDiseases($event)
-              v-on:disorderNamesListCB="updateDisorderNames($event)"
-              v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
-              v-on:GeneMembershipData="GeneMembershipData($event)"
-              v-bind:selectedDisordersListCB="selectedDisordersList"
-              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
-              :chartColor="ordinalColor"
-              :barColor="barColor"
-              @search-gtr="onSearchGTR"
-              v-bind:launchedFromClin="launchedFromClin"
-              v-bind:browser="browser"
-              v-bind:clinSearchedGtr="clinSearchedGtr"
-              v-bind:isMobile="isMobile">
-            </GeneticTestingRegistry>
-            <Phenolyzer
-              v-if="component==='Phenolyzer'"
-              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-              @search-phenotype="onSearchPhenotype"
-              @phenotypeSearchTermArray="phenotypeSearchTermArray"
-              v-bind:launchedFromClin="launchedFromClin"
-              v-bind:browser="browser"
-              v-bind:isMobile="isMobile"
-              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
-            </Phenolyzer>
-            <AddGenes
-              v-if="component==='AddGenes'"
-              v-on:importedGenes="importedGenes">
-            </AddGenes>
-            <SummaryTab
-              v-else-if="component==='SummaryTab'"
-              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
-              v-bind:GtrGenesForSummary="selectedGtrGenes"
-              v-bind:searchTermGTR="searchTermGTR"
-              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
-              v-bind:onSearchPhenotype="phenotypeSearches"
-              v-bind:manuallyAddedGenes="manuallyAddedGenes"
-              :chartColor="ordinalColor"
-              v-bind:browser="browser"
-              v-bind:isMobile="isMobile">
-            </SummaryTab>
-          </keep-alive>
+              <!-- <AddGenes></AddGenes> -->
+              <Overview v-show="component==='OverviewPage'"></Overview>
+            </keep-alive>
+            <keep-alive>
+              <GeneticTestingRegistry
+                v-show="component==='GeneticTestingRegistry'"
+                v-on:vendorListCB="updateVendors($event)"
+                v-bind:selectedVendorsListCB="selectedVendorsList"
+                v-on:diseasesCB=addDiseases($event)
+                v-on:disorderNamesListCB="updateDisorderNames($event)"
+                v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
+                v-on:GeneMembershipData="GeneMembershipData($event)"
+                v-bind:selectedDisordersListCB="selectedDisordersList"
+                v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
+                v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+                :chartColor="ordinalColor"
+                :barColor="barColor"
+                @search-gtr="onSearchGTR"
+                v-bind:launchedFromClin="launchedFromClin"
+                v-bind:browser="browser"
+                v-bind:clinSearchedGtr="clinSearchedGtr"
+                v-bind:isMobile="isMobile">
+              </GeneticTestingRegistry>
+            </keep-alive>
+
+            <keep-alive>
+                <Phenolyzer
+                v-show="component==='Phenolyzer'"
+                v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
+                v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+                @search-phenotype="onSearchPhenotype"
+                @phenotypeSearchTermArray="phenotypeSearchTermArray"
+                v-bind:launchedFromClin="launchedFromClin"
+                v-bind:browser="browser"
+                v-bind:isMobile="isMobile"
+                v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
+              </Phenolyzer>
+            </keep-alive>
+
+            <keep-alive>
+              <AddGenes
+                v-show="component==='AddGenes'"
+                v-on:importedGenes="importedGenes">
+              </AddGenes>
+            </keep-alive>
+
+            <keep-alive>
+              <SummaryTab
+                v-show="component==='SummaryTab'"
+                v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+                v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+                v-bind:GtrGenesForSummary="selectedGtrGenes"
+                v-bind:searchTermGTR="searchTermGTR"
+                v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+                v-bind:onSearchPhenotype="phenotypeSearches"
+                v-bind:manuallyAddedGenes="manuallyAddedGenes"
+                :chartColor="ordinalColor"
+                v-bind:browser="browser"
+                v-bind:isMobile="isMobile">
+              </SummaryTab>
+            </keep-alive>
+
         </div>
       </v-content>
     </div>

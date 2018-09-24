@@ -13,7 +13,7 @@
       {{ snackbarText }}
       <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
-      <div style="display:inline-block; padding-top:5px;">
+      <div id="conditionsInput" style="display:inline-block; padding-top:5px;">
         <label>Enter Condition</label>
         <input
           :disabled="checked"
@@ -168,13 +168,18 @@ var model = new Model();
         // })
         if(this.search.length>0){
           $("#addedterm").remove();
-          $(".dropdown-menu").prepend(`<li id='addedterm' class="active"><a href=""><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
-          if($('ul li').length===1 && this.search.DiseaseName===undefined && !this.launchedFromClin){
-            // $(".dropdown").addClass("open")
-            this.singleItemTypeAhead = true;
-          }
-          else {
-            this.singleItemTypeAhead = false;
+          console.log($('.dropdown-menu').parents("#conditionsInput").length===1)
+          if($('.dropdown-menu').parents("#conditionsInput").length===1){
+            $("#conditionsInput").find(".dropdown-menu").attr('id', 'dropdown-menu-gtr');
+            $("#dropdown-menu-gtr").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
+            if($('ul li').length===1 && this.search.DiseaseName===undefined && !this.launchedFromClin){
+              // $(".dropdown").addClass("open")
+              this.singleItemTypeAhead = true;
+            }
+            else {
+              this.singleItemTypeAhead = false;
+            }
+
           }
         }
         // if (this.search && this.search.DiseaseName) {
@@ -344,6 +349,7 @@ var model = new Model();
       performSearch: function(){
         // this.$emit('showDiseases', []);
         this.singleItemTypeAhead = false;
+        $("#addedterm").remove();
         console.log("this search", this.search)
         var searchTerm ="";
         var conceptId = ""
