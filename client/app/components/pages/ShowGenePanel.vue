@@ -335,7 +335,7 @@ var model = new Model();
 
     },
     updated(){
-      console.log("clinGenes", this.clinGenes);
+      // console.log("clinGenes", this.clinGenes);
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
 
       bus.$on('deSelectAllGenesBus', ()=>{

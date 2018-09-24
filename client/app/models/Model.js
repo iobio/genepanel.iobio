@@ -552,7 +552,6 @@ mergeGenesAcrossPanels(genePanels) {
     if(width===undefined || launchedFromClinProps){
       width = 850;
     }
-    console.log("width", width)
     // Sort genes by gene panel count (descending order)
     // Sort genes by gene panel count (descending order)
     var sortedGenes = genes.sort(function(a,b) {

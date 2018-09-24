@@ -395,6 +395,12 @@ import SvgBar from '../viz/SvgBar.vue'
       },
       SearchTheDisorderInPhenolyzer: {
         type: String
+      },
+      clinsearchedPhenolyzer: {
+        type: Array
+      },
+      clinGenes: {
+        type: Array
       }
     },
     data(){
@@ -478,6 +484,7 @@ import SvgBar from '../viz/SvgBar.vue'
         IntroductionTextData: null,
         HelpDialogsData: null,
         DisorderFromGtr: "",
+        includeClinPhenolyzerGenes: true,
       }
     },
     beforeCreate(){
@@ -530,6 +537,9 @@ import SvgBar from '../viz/SvgBar.vue'
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     watch: {
+      clinsearchedPhenolyzer: function(){
+        this.initiatePhenolyzerSearchForClinSavedTerms();
+      },
       genesTop: function() {
         this.selectNumberOfTopPhenolyzerGenes();
       },
@@ -547,6 +557,13 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     methods: {
+      initiatePhenolyzerSearchForClinSavedTerms: function(){
+        this.clinsearchedPhenolyzer.map(X=>{
+          this.phenotypeTerm = x;
+          this.getPhenotypeData();
+        })
+        this.includeClinPhenolyzerGenes = false;
+      },
       filterItemsOnSearchPhenolyzer(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["geneName"], search));
@@ -788,7 +805,17 @@ import SvgBar from '../viz/SvgBar.vue'
                   // console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  self.selected = self.items.slice(0, self.genesTop);
+                  if(self.launchedFromClin && self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+                    self.items.map(x=>{
+                      if(self.clinGenes.includes(x.geneName)){
+                        self.selected.push(x);
+                      }
+                    })
+                  }
+                  else {
+                    self.selected = self.items.slice(0, self.genesTop);
+
+                  }
 
                   // self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;

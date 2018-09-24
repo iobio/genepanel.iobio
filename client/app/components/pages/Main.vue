@@ -236,6 +236,8 @@
                 v-bind:launchedFromClin="launchedFromClin"
                 v-bind:browser="browser"
                 v-bind:isMobile="isMobile"
+                v-bind:clinsearchedPhenolyzer="clinsearchedPhenolyzer"
+                v-bind:clinGenes="clinGenes"
                 v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
               </Phenolyzer>
             </keep-alive>

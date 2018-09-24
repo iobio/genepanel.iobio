@@ -60,9 +60,9 @@ var model = new Model();
         var grayBarWidth = Math.abs(absWidthPadding - selectedgenesWidth );
         var selected_Number = this.selectedNumber;
 
-        console.log("svgWidth", svgWidth)
-        console.log("this.selectedNumber", this.selectedNumber)
-        console.log("selectedgenesWidth", selectedgenesWidth)
+        // console.log("svgWidth", svgWidth)
+        // console.log("this.selectedNumber", this.selectedNumber)
+        // console.log("selectedgenesWidth", selectedgenesWidth)
 
         if(this.selectedNumber===0){
           selectedgenesWidth = 0;
