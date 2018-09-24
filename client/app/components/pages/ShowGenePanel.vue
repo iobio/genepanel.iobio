@@ -65,6 +65,9 @@
                   </v-flex>
                   <v-flex xs1>
                   </v-flex>
+                  <v-flex xs1 style="margin-top:40px; padding-left:20px">
+                    <small >{{minSliderValue}}</small>
+                  </v-flex>
                   <v-flex xs7 style="padding-top:12px">
                     <div >
                       <v-slider
@@ -86,6 +89,10 @@
                       :thumb-size="20"
                       inverse-label
                     ></v-slider> -->
+                  </v-flex>
+                  <v-flex xs1 style="margin-top:40px;">
+                    <small >{{maxSliderValue}}</small>
+
                   </v-flex>
                 </v-layout>
 

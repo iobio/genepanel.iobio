@@ -31,9 +31,19 @@
           :data="DiseaseNames"
           :limit="parseInt(100)"
           :preselect="false"
-          v-on:click="typeaheadClicked"
           v-on:keydown="EnterForSearch"
           item-key="DiseaseName"/>
+
+          <!-- <typeahead v-model="search" :debounce=400 target="#input" :async-data="DiseaseNamesAsync" item-key="DiseaseName">
+            <template slot="item" slot-scope="props">
+              <li v-for="(item, index) in DiseaseNamesAsync" :class="{active:props.activeIndex===index}">
+                <a role="button" @click="props.select(item)">
+                  <span v-html="props.highlight(item)"></span>
+                </a>
+              </li>
+            </template>
+          </typeahead> -->
+
       </div>
 
       <v-btn
@@ -163,10 +173,11 @@ var model = new Model();
       search: function() {
         this.singleItemTypeAhead = false;
         // console.log("this.DiseaseNames", this.DiseaseNames)
-        // this.DiseaseNames.unshift({
-        //   "DiseaseName": this.search,
-        //   "ConceptID": ""
-        // })
+        // this.DiseaseNamesAsync = this.DiseaseNames;
+        // this.DiseaseNamesAsync.unshift({
+        //   ConceptID: "",
+        //   DiseaseName: this.search
+        // });
         if(this.search.length>0){
           $("#addedterm").remove();
           if($('.dropdown-menu').parents("#conditionsInput").length===1){
@@ -237,8 +248,6 @@ var model = new Model();
       }
     },
     methods:{
-      typeaheadClicked(){
-      },
       EnterForSearch(){
         if(event.key === 'Enter') {
           // console.log("enter key")
