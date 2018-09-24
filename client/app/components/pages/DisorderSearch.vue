@@ -357,6 +357,7 @@ var model = new Model();
 
       },
       performSearch: function(){
+        console.log("performSearch called")
         // this.$emit('showDiseases', []);
         this.singleItemTypeAhead = false;
         $("#addedterm").remove();

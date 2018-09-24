@@ -308,7 +308,7 @@ var model = new Model();
             x.filter = "general"
           }
         })
-        console.log("items", this.items);
+        // console.log("items", this.items);
 
         var temp =[];
         this.selectedPanelFilters.map(x=>{
@@ -318,7 +318,7 @@ var model = new Model();
             }
           })
         })
-        console.log("temp", temp)
+        // console.log("temp", temp)
         let vendors = model.getGenePanelVendors(mergedGenePanels);
         var vendorsToBeSelected = this.getVendorsToBeSelected(temp, vendors);
 
@@ -348,7 +348,7 @@ var model = new Model();
             vendorsToBeSentBack.push(x);
           }
         })
-        console.log("vendorsToBeSentBack", vendorsToBeSentBack.sort());
+        // console.log("vendorsToBeSentBack", vendorsToBeSentBack.sort());
         return vendorsToBeSentBack.sort();
         // this.$emit('selectVendors', vendorsToBeSentBack.sort());
       },

@@ -494,6 +494,7 @@ import SvgBar from '../viz/SvgBar.vue'
     },
     mounted(){
       this.HelpDialogsData = HelpDialogs.data;
+      console.log("clinsearchedPhenolyzer in mounted", this.clinsearchedPhenolyzer)
       bus.$on("newAnalysis", ()=>{
         this.multipleSearchTerms = [];
         this.items = [];
@@ -538,6 +539,7 @@ import SvgBar from '../viz/SvgBar.vue'
     },
     watch: {
       clinsearchedPhenolyzer: function(){
+        console.log("clinsearchedPhenolyzer in watch", this.clinsearchedPhenolyzer)
         this.initiatePhenolyzerSearchForClinSavedTerms();
       },
       genesTop: function() {
@@ -557,13 +559,6 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     methods: {
-      initiatePhenolyzerSearchForClinSavedTerms: function(){
-        this.clinsearchedPhenolyzer.map(X=>{
-          this.phenotypeTerm = x;
-          this.getPhenotypeData();
-        })
-        this.includeClinPhenolyzerGenes = false;
-      },
       filterItemsOnSearchPhenolyzer(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["geneName"], search));
@@ -737,6 +732,18 @@ import SvgBar from '../viz/SvgBar.vue'
           this.pagination.sortBy = column
           this.pagination.descending = false
         }
+      },
+      initiatePhenolyzerSearchForClinSavedTerms: function(){
+        this.clinsearchedPhenolyzer.map(x=>{
+          // this.phenotypeTerm = x;
+          this.phenotypeTerm = {
+            id: x,
+            label: x,
+            value: x,
+          }
+          this.getPhenotypeData();
+        })
+        this.includeClinPhenolyzerGenes = false;
       },
       getPhenotypeData(){
         let self = this;

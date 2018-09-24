@@ -372,7 +372,8 @@ import { ExportToCsv } from 'export-to-csv';
         clinSearchedGtr: [],
         clinsearchedPhenolyzer: [],
         clinGenes: [],
-        clinGenesData: []
+        clinGenesData: [],
+        clinSearchedGtrIndex: 0,
       }
     },
     created(){
@@ -675,8 +676,8 @@ import { ExportToCsv } from 'export-to-csv';
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-        console.log("this.uniqueGenes from copy", this.uniqueGenes);
-        console.log("this.summaryGenes", this.summaryGenes)
+        // console.log("this.uniqueGenes from copy", this.uniqueGenes);
+        // console.log("this.summaryGenes", this.summaryGenes)
         this.organizeClinData();
         var clinData = this.summaryClinTableArray.map(gene=> {
           return {
@@ -689,7 +690,9 @@ import { ExportToCsv } from 'export-to-csv';
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        console.log("clinData", clinData)
+        console.log("clinData", clinData);
+        console.log("this.GtrGenesArr", this.GtrGenesArr)
+        console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
         this.$clipboard(genesToCopy);
 
         if(this.uniqueGenes.length>0){
@@ -701,6 +704,8 @@ import { ExportToCsv } from 'export-to-csv';
           type: 'apply-genes',
           source: 'all',
           genes: self.uniqueGenes,
+          gtrClinGenes: this.GtrGenesArr,
+          phenolyzerClinGenes: this.PhenolyzerGenesArr,
           data: clinData,
           searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
         });
@@ -781,6 +786,7 @@ import { ExportToCsv } from 'export-to-csv';
           this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
           this.clinGenes = clinObject.genes;
           this.clinGenesData = clinObject.genesData;
+          this.clinGtrSearchTerm = this.clinSearchedGtr[0]
         }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
