@@ -169,7 +169,6 @@ var model = new Model();
         // })
         if(this.search.length>0){
           $("#addedterm").remove();
-          console.log($('.dropdown-menu').parents("#conditionsInput").length===1)
           if($('.dropdown-menu').parents("#conditionsInput").length===1){
             $("#conditionsInput").find(".dropdown-menu").attr('id', 'dropdown-menu-gtr');
             $("#dropdown-menu-gtr").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
@@ -451,14 +450,14 @@ var model = new Model();
               Promise.all(promises).then(function(){
                 console.log("diseases", diseases)
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
-                  console.log("Stoped it");
+                  // console.log("Stoped it");
                   comeOutOfPromise();
                   // this.alert = true;
                   // this.checked=true;
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-                  console.log("filteredDiseases",filteredDiseases);
+                  // console.log("filteredDiseases",filteredDiseases);
 
                   if(filteredDiseases.length<1){
                     filteredDiseases = tryByUsingConceptId();
@@ -480,13 +479,13 @@ var model = new Model();
             var tryByUsingConceptId = () =>{
               var promises1 = [];
               dataMain.diseases.forEach(function (disease){
-                console.log("disease data", disease)
+                // console.log("disease data", disease)
                 var p = model.promiseGetGenePanels(disease)
                   // var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                 .then(function (dataMain){
                     var filteredGenePanels = model.processGenePanelData(dataMain.genePanels);
                     // console.log("filteredGenePanels", filteredGenePanels);
-                    console.log("data", dataMain)
+                    // console.log("data", dataMain)
                     dataMain.disease.genePanels = filteredGenePanels;
                 },
                 function(error) {
@@ -497,7 +496,7 @@ var model = new Model();
 
               Promise.all(promises1).then(function(){
                  var a  = model.processDiseaseData(diseases);
-                 console.log("filteredDiseases",a);
+                 // console.log("filteredDiseases",a);
                  addFilteredDiseases(a);
               })
             }

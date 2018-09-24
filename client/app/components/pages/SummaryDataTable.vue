@@ -185,6 +185,7 @@ import Sortable from 'sortablejs';
       tmp: '',   //For searching the rows in data table
       search: '',  //For searching the rows in data table
       selected: [],
+      selectedTemp: [],
       headers: [
         { text: 'Change order', align: 'left', sortable: false },
         { text: 'Rank', align: 'left', sortable: false, value:'SummaryIndex' },
@@ -232,10 +233,21 @@ import Sortable from 'sortablejs';
           const rowSelected = _Self.items.splice(oldIndex, 1)[0];
           _Self.items.splice(newIndex, 0, rowSelected);
           // _Self.selected = _Self.items.splice();
-          _Self.selected = _Self.items;
+          // _Self.selected = _Self.items;
+          // _Self.selected = _Self.selectedTemp;
+          var selectedTempArr = [];
+          _Self.selectedTemp.map(x=>{
+            selectedTempArr.push(x.name);
+          })
+          _Self.selected = [];
+
+          _Self.items.map(x=>{
+            if(selectedTempArr.includes(x.name)){
+              _Self.selected.push(x)
+            }
+          })
         }
       })
-      console.log("mounted")
       // this.tableData = this.summaryTableData;
       this.addTableData();
       // this.items = this.tableData;
@@ -244,8 +256,7 @@ import Sortable from 'sortablejs';
       // bus.$emit("updateAllGenes", this.selected);
     },
     updated(){
-      console.log("I am updating");
-      // console.log("Updated items", this.items)
+      this.selectedTemp = this.selected;
       bus.$on('deSelectAllSummaryGenesBus', (data)=>{
         this.DeSelectAllSummaryGenes(data);
       })
@@ -265,14 +276,6 @@ import Sortable from 'sortablejs';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
-      // dragReorder ({oldIndex, newIndex}) {
-      //   const movedItem = this.items.splice(oldIndex, 1)[0]
-      //   this.items.splice(newIndex, 0, movedItem)
-      // },
-      // itemKey (item) {
-      //   if (!this.itemKeys.has(item)) this.itemKeys.set(item, ++this.currentItemKey)
-      //   return this.itemKeys.get(item)
-      // },
       exportGenesCSV: function(){
         bus.$emit("exportSummaryGenesAsCSV")
       },
@@ -305,6 +308,7 @@ import Sortable from 'sortablejs';
         })
 
         this.selected = this.items.slice();
+        this.selectedTemp = this.selected;
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         bus.$emit("updateAllGenes", this.selected);
 
