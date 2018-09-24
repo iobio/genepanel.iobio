@@ -270,6 +270,7 @@
                           v-bind:multipleSearchItems="multipleSearchItems"
                           v-bind:geneSearch="geneSearch"
                           v-bind:launchedFromClinProps="launchedFromClinProps"
+                          v-bind:clinGenes="clinGenes"
                           v-bind:associatedGenes="associatedGenes">
                         </show-gene-panel1>
                         <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
@@ -1023,6 +1024,9 @@ export default {
       type: Boolean
     },
     clinSearchedGtr: {
+      type: Array
+    },
+    clinGenes: {
       type: Array
     }
   },

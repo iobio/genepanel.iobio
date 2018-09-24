@@ -249,7 +249,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
     }),
     watch: {
       GtrGenesForSummary:function(){
-        console.log("watch: this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary);
+        // console.log("watch: this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary);
         this.GtrGenes = [];
         this.uniqueGtrData = [];
         this.UniquePhenoData = [];
@@ -258,7 +258,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         this.performSetOperations();
       },
       PhenolyzerGenesForSummary: function(){
-        console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
+        // console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.PhenolyzerGenes = [];
         this.UniquePhenoData = [];
         this.uniqueGtrData = [];
@@ -267,8 +267,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         this.performSetOperations();
       },
       manuallyAddedGenes: function(){
-        console.log("watching manuallyAddedGenes")
-        console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
+        // console.log("watching manuallyAddedGenes")
+        // console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.summaryTableArray=[];
         this.uniqueGtrData = [];
         this.UniquePhenoData = [];
@@ -290,8 +290,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       this.IntroductionTextData = IntroductionText.data[2];
     },
     mounted(){
-      console.log(" mounted :  this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary);
-      console.log("GtrSearchTerms", this.onSearchPhenotype)
+      // console.log(" mounted :  this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary);
+      // console.log("GtrSearchTerms", this.onSearchPhenotype)
       this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
@@ -329,7 +329,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
         var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
         this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
-        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
+        // console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
 
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
@@ -451,7 +451,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           }
         }
 
-        console.log("AddedGenes", this.AddedGenes)
+        // console.log("AddedGenes", this.AddedGenes)
         // if(this.AddedGenes.length>0){
           var manualGenes = [];
           this.AddedGenes.map(x=>{
@@ -497,10 +497,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           var gtrFinal = [];
           gtrFinal = this.uniqueGtrData.filter(x=> !manualGenes.includes(x.name));
           manualGenes = manualGenes.filter(x=> !this.uniqueGtrGenes.includes(x));
-          console.log("check gtrFinal", gtrFinal)
-          console.log("check this.uniqueGtrData", this.uniqueGtrData.length);
-          console.log("check this.GtrGenes", this.GtrGenes.length);
-          console.log("check this.uniqueGtrGenes", this.uniqueGtrGenes.length);
+          // console.log("check this.uniqueGtrGenes", this.uniqueGtrGenes.length);
           this.GtrFinalGenes = gtrFinal;
           this.GtrAndImported = gtrAndAddedGenes;
 
@@ -531,8 +528,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           this.PhenolyzerFinalGenes = phenoFinal;
           this.PhenolyzerAndImported = phenoAndAddedGenes;
           this.finalManualGenes = manualGenes;
-          console.log("PhenolyzerAndImported", this.PhenolyzerAndImported)
-          console.log("this.finalManualGenes", this.finalManualGenes)
         var arr=[];
 
           arr.push(allSources.map(x=>{
@@ -689,7 +684,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
           this.summaryTableArray.push(x);
         })
-        console.log("tempSummaryTableArray", this.summaryTableArray);
+        // console.log("tempSummaryTableArray", this.summaryTableArray);
         this.setPieChartData()
       },
       setPieChartData(){

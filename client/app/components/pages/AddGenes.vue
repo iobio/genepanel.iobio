@@ -299,7 +299,7 @@ var geneModel = new GeneModel();
   color: white !important
   background-color: $search-button-color !important
 
-#input
+#inputAddGenes
   width: 600px
   height: 40px
   margin-top: 4px
@@ -308,25 +308,25 @@ var geneModel = new GeneModel();
 
 
 @media screen and (max-width: 1620px)
-  #input
+  #inputAddGenes
     width: 420px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 1050px)
-  #input
+  #inputAddGenes
     width: 450px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 950px)
-  #input
+  #inputAddGenes
     width: 290px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 700px)
-  #input
+  #inputAddGenes
     width: 300px
     height: 40px
     margin-top: 4px

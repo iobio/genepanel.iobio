@@ -221,6 +221,7 @@
                 v-bind:launchedFromClin="launchedFromClin"
                 v-bind:browser="browser"
                 v-bind:clinSearchedGtr="clinSearchedGtr"
+                v-bind:clinGenes="clinGenes"
                 v-bind:isMobile="isMobile">
               </GeneticTestingRegistry>
             </keep-alive>
@@ -493,6 +494,7 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       updateGtrGenes: function(e){
+        console.log("selectedGtrGenes", e)
         this.selectedGtrGenes = e;
         if(e.length<=0){
           this.NumberOfGenesSelectedFromGTR = 0;
