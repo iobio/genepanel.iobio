@@ -168,7 +168,7 @@ var model = new Model();
         this.launchedFromClin = this.launchedFromClinProps;
       },
       clinSearchedGtr: function(){
-        console.log("clinSearchedGtr", this.clinSearchedGtr)
+        // console.log("clinSearchedGtr", this.clinSearchedGtr)
         this.initiateSearchForClinSavedTerms();
       },
       search: function() {
@@ -296,6 +296,7 @@ var model = new Model();
 
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
+        this.$emit('search-gtr', this.multipleSearchTerms);
         var temp = [];
         this.filteredDiseasesItems.map(x=>{
           if(x["searchTermArray"].includes(item) && x["searchTermArray"].length>1){
@@ -355,11 +356,11 @@ var model = new Model();
 
       },
       performSearch: function(){
-        console.log("performSearch called")
+        // console.log("performSearch called")
         // this.$emit('showDiseases', []);
         this.singleItemTypeAhead = false;
         $("#addedterm").remove();
-        console.log("this search", this.search)
+        // console.log("this search", this.search)
         var searchTerm ="";
         var conceptId = ""
         if(this.search.DiseaseName!==undefined){

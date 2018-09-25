@@ -222,7 +222,7 @@
                 v-bind:browser="browser"
                 v-bind:clinSearchedGtr="clinGtrSearchTerm"
                 v-bind:clinFetchingGtr="clinFetchingGtr"
-                v-bind:clinGenes="clinGenes"
+                v-bind:clinGenes="clinGenesGtr"
                 v-bind:isMobile="isMobile">
               </GeneticTestingRegistry>
             </keep-alive>
@@ -237,8 +237,8 @@
                 v-bind:launchedFromClin="launchedFromClin"
                 v-bind:browser="browser"
                 v-bind:isMobile="isMobile"
-                v-bind:clinsearchedPhenolyzer="clinsearchedPhenolyzer"
-                v-bind:clinGenes="clinGenes"
+                v-bind:clinsearchedPhenolyzer="clinPhenolyzerSeachTerm"
+                v-bind:clinGenes="clinGenesPhenolyzer"
                 v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
               </Phenolyzer>
             </keep-alive>
@@ -373,15 +373,21 @@ import { ExportToCsv } from 'export-to-csv';
         clinSearchedGtr: [],
         clinsearchedPhenolyzer: [],
         clinGenes: [],
+        clinGenesGtr: [],
+        clinGenesPhenolyzer: [],
+        clinGenesManual: [],
         clinGenesData: [],
         clinSearchedGtrIndex: 0,
+        clinSearchedPhenolyzerIndex: 0,
         clinGtrSearchTerm: [],
+        clinPhenolyzerSeachTerm: [],
         clinFetchingGtr: false,
+        completeClinGtrIteration: false
       }
     },
     watch: {
       selectedGtrGenes: function(){
-        console.log("selectedGtrGenes changing");
+        // console.log("selectedGtrGenes changing");
         if(this.launchedFromClin){
           if(this.clinSearchedGtr.length===1){
             bus.$emit("clearClinGenesArray");
@@ -395,12 +401,38 @@ import { ExportToCsv } from 'export-to-csv';
             else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length || this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
               bus.$emit("clearClinGenesArray");
               this.clinFetchingGtr = false;
+              this.completeClinGtrIteration = true;
             }
-            console.log("clinSearchedGtrIndex", this.clinSearchedGtrIndex)
+            // console.log("clinSearchedGtrIndex", this.clinSearchedGtrIndex)
 
           }
         }
-      }
+      },
+      completeClinGtrIteration: function(){
+        if(this.clinsearchedPhenolyzer.length>0){
+          this.clinPhenolyzerSeachTerm = [this.clinsearchedPhenolyzer[0]]
+        }
+      },
+      selectedPhenolyzerGenes: function(){
+        console.log("selectedPhenolyzerGenes changing")
+        console.log(this.selectedPhenolyzerGenes)
+        if(this.launchedFromClin){
+          if(this.clinsearchedPhenolyzer.length===1){
+            // bus.$emit("clearClinGenesPhenolyzerArray");
+            // this.clinFetchingGtr = false;
+          }
+          else{
+            this.clinSearchedPhenolyzerIndex++;
+            if(this.clinSearchedPhenolyzerIndex<this.clinsearchedPhenolyzer.length){
+              this.clinPhenolyzerSeachTerm=[this.clinsearchedPhenolyzer[this.clinSearchedPhenolyzerIndex]]
+            }
+            else if (this.clinSearchedPhenolyzerIndex===this.clinsearchedPhenolyzer.length || this.clinSearchedPhenolyzerIndex===this.clinsearchedPhenolyzer.length+1) {
+              bus.$emit("clearClinGenesPhenolyzerArray");
+              // this.clinFetchingGtr = false;
+            }
+          }
+        }
+      },
     },
     created(){
       this.IntroductionTextData = IntroductionText.data;
@@ -731,7 +763,8 @@ import { ExportToCsv } from 'export-to-csv';
             geneId: gene.geneId,
             score: gene.score,
             genePanels: gene.value,
-            searchTermsPhenolyzer: gene.searchTermPheno,
+            // searchTermsPhenolyzer: gene.searchTermPheno,
+            searchTermsPhenolyzer: gene.phenotypeSearches,
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
@@ -744,7 +777,7 @@ import { ExportToCsv } from 'export-to-csv';
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
         }
         this.snackbar=true;
-
+        console.log("this.searchTermGTR", this.searchTermGTR)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
@@ -753,7 +786,9 @@ import { ExportToCsv } from 'export-to-csv';
           genesPhenolyzer: this.PhenolyzerGenesArr,
           genesManual: this.manuallyAddedGenes,
           genesReport: clinData,
-          searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+          // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+          searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
+
         });
 
       },
@@ -827,13 +862,18 @@ import { ExportToCsv } from 'export-to-csv';
         else if(clinObject.type == 'set-data'){
           console.log("Clin is sending data to set the state");
           console.log("clin object: ", clinObject);
-          console.log("clinObject.phenotypes[0]", clinObject.phenotypes[0])
+          // console.log("clinObject.phenotypes[0]", clinObject.phenotypes[0])
           this.clinSearchedGtr = clinObject.phenotypes[0];
           this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
           this.clinGenes = clinObject.genes;
+          this.clinGenesGtr = clinObject.genesGtr;
+          this.clinGenesPhenolyzer = clinObject.genesPhenolyzer;
+          this.clinGenesManual = clinObject.genesManual;
           this.clinGenesData = clinObject.genesData;
-          this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
-          this.clinFetchingGtr = true;
+          if(this.clinSearchedGtr.length>0){
+            this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
+            this.clinFetchingGtr = true;
+          }
         }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
@@ -880,7 +920,7 @@ import { ExportToCsv } from 'export-to-csv';
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
         var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
         this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
-        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
+        // console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
 
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
@@ -1035,7 +1075,7 @@ import { ExportToCsv } from 'export-to-csv';
         else {
           this.summaryClinTableArray = tempSummaryTableArray;
         }
-        console.log("this.summaryClinTableArray", this.summaryClinTableArray)
+        // console.log("this.summaryClinTableArray", this.summaryClinTableArray)
       },
 
 

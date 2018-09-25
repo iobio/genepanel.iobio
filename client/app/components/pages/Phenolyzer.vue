@@ -493,8 +493,12 @@ import SvgBar from '../viz/SvgBar.vue'
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
+      console.log("includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       this.HelpDialogsData = HelpDialogs.data;
-      console.log("clinsearchedPhenolyzer in mounted", this.clinsearchedPhenolyzer)
+      console.log("clinsearchedPhenolyzer in mounted", this.clinsearchedPhenolyzer);
+      bus.$on("clearClinGenesPhenolyzerArray", ()=>{
+        this.includeClinPhenolyzerGenes = false;
+      })
       bus.$on("newAnalysis", ()=>{
         this.multipleSearchTerms = [];
         this.items = [];
@@ -516,6 +520,7 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     updated(){
+      console.log("phenolyzer is updating")
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -534,7 +539,9 @@ import SvgBar from '../viz/SvgBar.vue'
 
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
-      this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      if(!this.launchedFromClin){
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     watch: {
@@ -743,9 +750,10 @@ import SvgBar from '../viz/SvgBar.vue'
           }
           this.getPhenotypeData();
         })
-        this.includeClinPhenolyzerGenes = false;
+        // this.includeClinPhenolyzerGenes = false;
       },
       getPhenotypeData(){
+        console.log("clinGenes", this.clinGenes)
         let self = this;
         self.phenotypeSearchedByUser = true;
         //If autocomplete is not used and a term is searched by clicking the button.
@@ -778,7 +786,9 @@ import SvgBar from '../viz/SvgBar.vue'
             self.phenolyzerStatus = null;
             self.genesToApply = "";
             self.NoOfGenesSelectedFromPhenolyzer = 0;
-            this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+            if(!self.launchedFromClin){
+              this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+            }
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             geneModel.newSearchCall();
             geneModel.searchPhenolyzerGenes(searchTerm, this.phenolyzerTop,
@@ -812,7 +822,9 @@ import SvgBar from '../viz/SvgBar.vue'
                   // console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  if(self.launchedFromClin && self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+                  console.log("self.includeClinPhenolyzerGenes", self.includeClinPhenolyzerGenes)
+                  if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+                  // if(self.launchedFromClin && self.clinGenes.length>0){
                     self.items.map(x=>{
                       if(self.clinGenes.includes(x.geneName)){
                         self.selected.push(x);
@@ -823,7 +835,7 @@ import SvgBar from '../viz/SvgBar.vue'
                     self.selected = self.items.slice(0, self.genesTop);
 
                   }
-
+                  console.log("self select", self.selected)
                   // self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
