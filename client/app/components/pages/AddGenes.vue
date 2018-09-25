@@ -207,6 +207,14 @@ var geneModel = new GeneModel();
     mounted(){
       this.genesData = genes;
       this.knownGenesData = knownGenes;
+      bus.$on("newAnalysis", ()=>{
+        this.searchGenes = "";
+        this.genes =[];
+        this.multipleSearchTerms = [];
+        this.multipleSearchArray = [];
+        this.$emit("importedGenes", this.genes);
+      });
+
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[3];
