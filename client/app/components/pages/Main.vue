@@ -749,9 +749,10 @@ import { ExportToCsv } from 'export-to-csv';
           type: 'apply-genes',
           source: 'all',
           genes: self.uniqueGenes,
-          gtrClinGenes: this.GtrGenesArr,
-          phenolyzerClinGenes: this.PhenolyzerGenesArr,
-          data: clinData,
+          genesGtr: this.GtrGenesArr,
+          genesPhenolyzer: this.PhenolyzerGenesArr,
+          genesManual: this.manuallyAddedGenes,
+          genesReport: clinData,
           searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
         });
 
