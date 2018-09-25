@@ -410,7 +410,7 @@ import SvgBar from '../viz/SvgBar.vue'
         enterCount: 0,
         genesToApply: null,
         genesTopCounts: [5, 10, 30, 50, 80, 100],
-        genesTop: self.launchedFromClin ? 10 : 30,
+        genesTop: self.launchedFromClin ? 10 : 25,
         phenolyzerTopCounts: [30, 50, 80, 100],
         phenolyzerTop: 50,
         phenotypeTerm: "",

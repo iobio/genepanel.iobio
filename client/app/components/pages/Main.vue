@@ -379,6 +379,29 @@ import { ExportToCsv } from 'export-to-csv';
         clinFetchingGtr: false,
       }
     },
+    watch: {
+      selectedGtrGenes: function(){
+        console.log("selectedGtrGenes changing");
+        if(this.launchedFromClin){
+          if(this.clinSearchedGtr.length===1){
+            bus.$emit("clearClinGenesArray");
+            this.clinFetchingGtr = false;
+          }
+          else{
+            this.clinSearchedGtrIndex++;
+            if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
+              this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
+            }
+            else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length || this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
+              bus.$emit("clearClinGenesArray");
+              this.clinFetchingGtr = false;
+            }
+            console.log("clinSearchedGtrIndex", this.clinSearchedGtrIndex)
+
+          }
+        }
+      }
+    },
     created(){
       this.IntroductionTextData = IntroductionText.data;
       window.addEventListener('scroll', this.handleScroll);
@@ -506,16 +529,24 @@ import { ExportToCsv } from 'export-to-csv';
           this.NumberOfGenesSelectedFromGTR = 0;
         }
 
-        if(this.launchedFromClin){
-          this.clinSearchedGtrIndex++;
-          if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
-            this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
-          }
-          else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
-            bus.$emit("clearClinGenesArray");
-            this.clinFetchingGtr = false;
-          }
-        }
+        // if(this.launchedFromClin){
+        //   if(this.clinSearchedGtr.length===1){
+        //     bus.$emit("clearClinGenesArray");
+        //     // this.clinFetchingGtr = false;
+        //   }
+        //   else{
+        //     this.clinSearchedGtrIndex++;
+        //     if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
+        //       this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
+        //     }
+        //     else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
+        //       bus.$emit("clearClinGenesArray");
+        //       // this.clinFetchingGtr = false;
+        //     }
+        //     console.log("clinSearchedGtrIndex", this.clinSearchedGtrIndex)
+        //
+        //   }
+        // }
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
         })

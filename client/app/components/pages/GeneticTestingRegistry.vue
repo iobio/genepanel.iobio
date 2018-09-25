@@ -290,7 +290,7 @@
                       content-class="positionModal"
                     >
                       <v-card>
-                        <div v-if="chartComponent==='disorders'" v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
+                        <div v-show="chartComponent==='disorders'" v-bind:class="[chartComponent==='disorders' ? 'activeClass' : 'disabledClass']">
                             <v-card flat >
                               <v-card-text style="margin-left:5px" v-on:click="DisordersAndModesComponent='disorders'">
                                 <center>
@@ -453,7 +453,7 @@
                         <!-- End conditions and modes card  -->
 
                         <!-- start panels filter card -->
-                        <div v-else-if="chartComponent==='GeneMembership'" v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
+                        <div v-show="chartComponent==='GeneMembership'" v-bind:class="[chartComponent==='GeneMembership' ? 'activeClass' : 'disabledClass']">
                             <div v-if="vendorList.length">
                               <v-card-text >
                                 <center>
@@ -558,7 +558,7 @@
 
                         <!-- start vendors card  -->
 
-                        <div v-else-if="chartComponent==='Vendors'" v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
+                        <div v-show="chartComponent==='Vendors'" v-bind:class="[chartComponent==='Vendors' ? 'activeClass' : 'disabledClass']">
                           <v-card flat v-if="multiSelectItems.length">
                             <v-card-text >
                               <center>

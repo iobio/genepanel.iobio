@@ -168,6 +168,7 @@ var model = new Model();
         this.launchedFromClin = this.launchedFromClinProps;
       },
       clinSearchedGtr: function(){
+        console.log("clinSearchedGtr", this.clinSearchedGtr)
         this.initiateSearchForClinSavedTerms();
       },
       search: function() {
@@ -205,9 +206,6 @@ var model = new Model();
     },
     mounted: function() {
       this.launchedFromClin = this.launchedFromClinProps;
-      // console.log("clinSearchedGtr", this.clinSearchedGtr)
-      // console.log("this.launchedFromClinProps ", this.launchedFromClinProps)
-      // console.log("HierarchyParentIds", HierarchyParentIds.length);
       this.HierarchyParentData = HierarchyParentIds;
       this.HierarchyRelations = HierarchyData;
       // console.log("HierarchyData", HierarchyData.length)
@@ -438,16 +436,11 @@ var model = new Model();
 
                 data.diseases.forEach(function (disease){
                   console.log("disease data", disease)
-                  // var p = model.promiseGetGenePanels(disease)
                   var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                   .then(function (data){
                     if(data.genePanels.length>1){
                       var filteredGenePanels = model.processGenePanelData(data.genePanels);
                       data.disease.genePanels = filteredGenePanels;
-                      // console.log("filteredGenePanels", filteredGenePanels);
-                      // console.log("data", data)
-
-                      // console.log("data.disease.genePanels", data.disease.genePanels)
                     }
                   },
                   function(error) {
@@ -460,14 +453,10 @@ var model = new Model();
               Promise.all(promises).then(function(){
                 console.log("diseases", diseases)
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
-                  // console.log("Stoped it");
                   comeOutOfPromise();
-                  // this.alert = true;
-                  // this.checked=true;
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-                  // console.log("filteredDiseases",filteredDiseases);
 
                   if(filteredDiseases.length<1){
                     filteredDiseases = tryByUsingConceptId();
@@ -489,13 +478,9 @@ var model = new Model();
             var tryByUsingConceptId = () =>{
               var promises1 = [];
               dataMain.diseases.forEach(function (disease){
-                // console.log("disease data", disease)
                 var p = model.promiseGetGenePanels(disease)
-                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                 .then(function (dataMain){
                     var filteredGenePanels = model.processGenePanelData(dataMain.genePanels);
-                    // console.log("filteredGenePanels", filteredGenePanels);
-                    // console.log("data", dataMain)
                     dataMain.disease.genePanels = filteredGenePanels;
                 },
                 function(error) {
