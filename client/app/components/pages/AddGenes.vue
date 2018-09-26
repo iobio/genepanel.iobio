@@ -180,6 +180,12 @@ var geneModel = new GeneModel();
       },
       alertText: {
         type: String
+      },
+      launchedFromClin: {
+        type: Boolean
+      },
+      clinGenesManual: {
+        type: Array
       }
     },
     data(){
@@ -214,7 +220,9 @@ var geneModel = new GeneModel();
         this.multipleSearchArray = [];
         this.$emit("importedGenes", this.genes);
       });
-
+      if(this.clinGenesManual.length>0){
+        this.genes = this.clinGenesManual;
+      }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[3];
@@ -229,7 +237,10 @@ var geneModel = new GeneModel();
           this.addGeneToList();
         }
       },
-
+      clinGenesManual: function(){
+        this.genes = this.clinGenesManual;
+        this.$emit("importedGenes", this.genes);
+      }
     },
     methods:{
       addGeneToList(){

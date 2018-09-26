@@ -824,6 +824,7 @@ import SvgBar from '../viz/SvgBar.vue'
                   self.noOfSourcesSvg();
                   console.log("self.includeClinPhenolyzerGenes", self.includeClinPhenolyzerGenes)
                   if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+                    self.selected = [];
                   // if(self.launchedFromClin && self.clinGenes.length>0){
                     self.items.map(x=>{
                       if(self.clinGenes.includes(x.geneName)){

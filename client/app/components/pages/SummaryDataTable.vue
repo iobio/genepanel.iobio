@@ -55,6 +55,11 @@
               </span>
             </td>
             <td>
+              <span v-if="props.item.isImportedGenes">
+                <v-icon>check</v-icon>
+              </span>
+            </td>
+            <td>
               <span v-for="x in props.item.sourceGTR">
                 <span v-html="x"></span>
               </span>
@@ -62,11 +67,6 @@
             <td>
               <span v-for="x in props.item.sourcePheno">
                 <span v-html="x"></span>
-              </span>
-            </td>
-            <td>
-              <span v-if="props.item.isImportedGenes">
-                <v-icon>check</v-icon>
               </span>
             </td>
             <td>
@@ -190,9 +190,9 @@ import Sortable from 'sortablejs';
         { text: 'Change order', align: 'left', sortable: false },
         { text: 'Rank', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
+        { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
-        { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
       ],

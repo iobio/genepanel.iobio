@@ -246,6 +246,8 @@
             <keep-alive>
               <AddGenes
                 v-show="component==='AddGenes'"
+                v-bind:launchedFromClin="launchedFromClin"
+                v-bind:clinGenesManual="clinGenesManual"
                 v-on:importedGenes="importedGenes">
               </AddGenes>
             </keep-alive>
@@ -677,7 +679,7 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       exportGenesAsCSV: function(){
-        console.log("this.summaryGenes", this.summaryGenes)
+        // console.log("this.summaryGenes", this.summaryGenes)
         var clinData = this.summaryGenes.map(gene => {
           return {
             Rank: gene.SummaryIndex,
@@ -832,7 +834,7 @@ import { ExportToCsv } from 'export-to-csv';
           }
       },
       updateAllGenesFromSelection(data){
-        console.log("this.summaryGenes", this.summaryGenes)
+        // console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
         var allGenes = data.map(x=>{
           return x.name;
