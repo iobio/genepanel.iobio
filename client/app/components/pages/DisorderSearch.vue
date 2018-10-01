@@ -78,13 +78,21 @@
         </v-btn>
         <span>Enter New Condition</span>
       </v-tooltip> -->
-
       <div v-if="multipleSearchTerms.length">
         <br>
           Conditions Searched:
-        <v-chip disabled  color="primary" text-color="white" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
-          {{ i+1 }}. {{ searchItem }}
-        </v-chip>
+          <span v-for="(searchItem, i) in multipleSearchTerms">
+            <v-tooltip top :z-index="[tooltipDefinition=== null ? '-1' : '4']">
+              <v-chip disabled slot="activator" color="primary" text-color="white" close :key="i" @input="remove(searchItem)" @mouseover="showTooltip(searchItem)" @mouseout="hideToolTip(searchItem)">
+                {{ i+1 }}. {{ searchItem }}
+              </v-chip>
+              <span v-show="tooltipDefinition!== null">
+                <div style="width:600px" v-model="tooltipDefinition">
+                  {{ tooltipDefinition }}
+                </div>
+              </span>
+            </v-tooltip>
+          </span>
       </div>
 
     <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
@@ -166,6 +174,8 @@ var model = new Model();
         canClearClinGenes: false,
         warningHints: [],
         alertWarningHints: false,
+        definitionObj: {},
+        tooltipDefinition: null,
       }
     },
     watch: {
@@ -303,6 +313,18 @@ var model = new Model();
         bus.$emit("removeSearchTerm");
         this.removeItem(item);
       },
+      showTooltip(item){
+        if(this.definitionObj.hasOwnProperty(item)){
+          this.tooltipDefinition = this.definitionObj[item];
+        }
+        else {
+          this.tooltipDefinition = null;
+        }
+        // console.log("this.tooltipDefinition", this.tooltipDefinition);
+      },
+      hideToolTip(item){
+        this.tooltipDefinition = null;
+      },
       removeItem(item){
 
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
@@ -396,40 +418,14 @@ var model = new Model();
             var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
+              console.log("data", data);
+              createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
               if(diseases.length>30){
                 comeOutOfPromise1(diseases);
-                // diseases = diseases.slice(0, 50)
-                // var counter = 0;
-                //
-                // setInterval(function(){
-                //   if(diseases!==null && counter < diseases.length){
-                //     var p = model.promiseGetGenePanelsUsingSearchTerm(diseases[counter]);
-                //     // console.log("p", p)
-                //       p.then((data)=>{
-                //           // console.log("data", data)
-                //           var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                //           // console.log("filteredGenePanels", filteredGenePanels)
-                //           data.disease.genePanels = filteredGenePanels;
-                //       },
-                //       function(error) {
-                //         console.log("error", error)
-                //       })
-                //       // console.log("p done", p)
-                //        promises.push(p);
-                //        // console.log("promises", promises)
-                //     counter++;
-                //   }
-                //   else if(diseases!==null && counter === diseases.length){
-                //     counter++;
-                //     callAfunction(promises);
-                //   }
-                //   else
-                //     return;
-                // }, 20);
               }
               else {
                 if(diseases.length>0){
@@ -538,6 +534,21 @@ var model = new Model();
               this.remove(this.search)
             }
 
+            var createDefinitionsObj = (data)=>{
+              console.log("data", data)
+              searchTerm = data.searchTerm;
+              if(this.definitionObj[searchTerm]===undefined){
+                if(data.diseases[0].Title === searchTerm){
+                  this.definitionObj[searchTerm] = data.diseases[0].Definition;
+                }
+                // else {
+                //   this.definitionObj[searchTerm] = data.searchTerm;
+                // }
+              }
+              console.log("this.definitionObj", this.definitionObj)
+            }
+
+
 
             var tryByUsingConceptId = () =>{
               var promises1 = [];
@@ -578,6 +589,7 @@ var model = new Model();
 
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
+                console.log("this.filteredDiseasesItems", this.filteredDiseasesItems);
                 this.$emit('showDiseases', this.filteredDiseasesItems);
                 this.filteredDiseasesItems = [];
                 filteredDiseases = null;
