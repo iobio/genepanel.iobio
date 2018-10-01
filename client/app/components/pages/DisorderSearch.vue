@@ -95,6 +95,9 @@
       <v-alert  color="warning" dismissible v-model="alertWarning">
         Sorry, we are unable to fetch data for this term! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
       </v-alert>
+      <v-alert v-if="alertWarningHints && warningHints.length>0"  color="info" outline dismissible v-model="alertWarningHints">
+        Sorry, This search term is too general. Please try a more specific term. <br><br> Example: <li style="cursor: pointer" v-if="warningHints.length>0" v-for="(hint, i) in warningHints" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
+      </v-alert>
     </p>
   </div>
 </template>
@@ -161,6 +164,8 @@ var model = new Model();
         enterCount: 0,
         launchedFromClin: false,
         canClearClinGenes: false,
+        warningHints: [],
+        alertWarningHints: false,
       }
     },
     watch: {
@@ -217,6 +222,7 @@ var model = new Model();
          this.$emit('showDiseases', []);
          this.search = "";
          this.alert = false;
+         this.alertWarningHints = false;
          this.checked = false;
        });
     },
@@ -284,6 +290,11 @@ var model = new Model();
             $("#addedterm").addClass("active");
           }
         }
+      },
+      setInputValueFromHint: function(hint){
+        console.log(hint);
+        document.getElementById("input").value= hint.Title;
+        this.search = hint.Title;
       },
       searchInPhenolyzer(){
         bus.$emit("searchDisorderInPhenolyzer", this.search.DiseaseName)
@@ -375,90 +386,113 @@ var model = new Model();
         if(searchTerm.length>1 && !this.checked){
           this.checked = true;
           this.alert=false;
+          this.alertWarningHints = false;
 
           if(!this.multipleSearchTerms.includes(searchTerm)){
             this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
-            // if(this.canClearClinGenes){
-            //   bus.$emit("clearClinGenesArray");
-            // }
-            // this.$emit('search-gtr', searchTerm);
-            // console.log("this.multipleSearchTerms", this.multipleSearchTerms);
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
             var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
-              // console.log("data got from promise : " , data)
               dataMain = data;
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
-              // console.log(diseases.length)
-              if(diseases.length>100){
-                diseases = diseases.slice(0, 30)
-              }
-              if(diseases.length>0){
-                // data.diseases.forEach((disease)=>{
-                diseases.forEach((disease)=>{
-                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
-                  .then((data)=>{
-                      var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                      // console.log("data", data)
-                      data.disease.genePanels = filteredGenePanels;
-                  },
-                  function(error) {
-                    console.log("error", error)
-                  })
-                   promises.push(p);
-                })
+              if(diseases.length>30){
+                comeOutOfPromise1(diseases);
+                // diseases = diseases.slice(0, 50)
+                // var counter = 0;
+                //
+                // setInterval(function(){
+                //   if(diseases!==null && counter < diseases.length){
+                //     var p = model.promiseGetGenePanelsUsingSearchTerm(diseases[counter]);
+                //     // console.log("p", p)
+                //       p.then((data)=>{
+                //           // console.log("data", data)
+                //           var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                //           // console.log("filteredGenePanels", filteredGenePanels)
+                //           data.disease.genePanels = filteredGenePanels;
+                //       },
+                //       function(error) {
+                //         console.log("error", error)
+                //       })
+                //       // console.log("p done", p)
+                //        promises.push(p);
+                //        // console.log("promises", promises)
+                //     counter++;
+                //   }
+                //   else if(diseases!==null && counter === diseases.length){
+                //     counter++;
+                //     callAfunction(promises);
+                //   }
+                //   else
+                //     return;
+                // }, 20);
               }
               else {
-                // console.log("data.diseases length is less than 1, so currently I am here!");
-                data.diseases = [
-                  {
-                    ConceptId:"",
-                    Title:searchTerm,
-                    Definition: "",
-                    Merged: "",
-                    ModificationDate: "",
-                    SemanticId: "",
-                    SemanticType: "Disease or Syndrome",
-                    Suppressed: "",
-                    ConceptMeta: {
-                      AssociatedGenes: "",
-                      ClinicalFeatures: "",
-                      ModesOfInheritance: "",
-                      OMIM: "",
-                      RelatedDisorders: ""
-                    }
-                  }]
-                diseases = data.diseases;
-
-                data.diseases.forEach(function (disease){
-                  console.log("disease data", disease)
-                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
-                  .then(function (data){
-                    if(data.genePanels.length>1){
-                      var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                      data.disease.genePanels = filteredGenePanels;
-                    }
-                  },
-                  function(error) {
-                    console.log("error", error)
+                if(diseases.length>0){
+                  diseases.forEach((disease)=>{
+                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
+                    p.then((data)=>{
+                        var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                        data.disease.genePanels = filteredGenePanels;
+                    },
+                    function(error) {
+                      console.log("error", error)
+                    })
+                     promises.push(p);
                   })
-                   promises.push(p);
-                })
+                }
+                else {
+                  data.diseases = [
+                    {
+                      ConceptId:"",
+                      Title:searchTerm,
+                      Definition: "",
+                      Merged: "",
+                      ModificationDate: "",
+                      SemanticId: "",
+                      SemanticType: "Disease or Syndrome",
+                      Suppressed: "",
+                      ConceptMeta: {
+                        AssociatedGenes: "",
+                        ClinicalFeatures: "",
+                        ModesOfInheritance: "",
+                        OMIM: "",
+                        RelatedDisorders: ""
+                      }
+                    }]
+                  diseases = data.diseases;
+
+                  data.diseases.forEach(function (disease){
+                    // console.log("disease data", disease)
+                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                    .then(function (data){
+                      if(data.genePanels.length>1){
+                        var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                        data.disease.genePanels = filteredGenePanels;
+                      }
+                    },
+                    function(error) {
+                      console.log("error", error)
+                    })
+                     promises.push(p);
+                  })
+                }
               }
 
+
+
               Promise.all(promises).then(function(){
-                console.log("diseases", diseases)
+                // console.log("diseases", diseases)
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
                   comeOutOfPromise();
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-
+                  // diseases = null;
                   if(filteredDiseases.length<1){
                     filteredDiseases = tryByUsingConceptId();
                   }
@@ -469,10 +503,39 @@ var model = new Model();
               })
             })
 
+            var callAfunction = (promises)=>{
+              console.log("Hollaaaa");
+              var filteredDiseases;
+              Promise.all(promises).then(function(){
+                // console.log("diseases", diseases)
+                if(diseases.length===1 && diseases[0].genePanels===undefined){
+                  comeOutOfPromise();
+                }
+                else {
+                  filteredDiseases = model.processDiseaseData(diseases);
+                  // diseases = null;
+                  if(filteredDiseases.length<1){
+                    filteredDiseases = tryByUsingConceptId();
+                  }
+                  else {
+                    addFilteredDiseases(filteredDiseases);
+                  }
+                }
+              })
+            }
+
 
             var comeOutOfPromise =()=>{
+              console.log("stopped")
               this.alert = true;
               this.checked=false;
+            }
+
+            var comeOutOfPromise1 =(diseases)=>{
+              this.warningHints = diseases.slice(10, 14);
+              this.alertWarningHints = true
+              this.checked=false;
+              this.remove(this.search)
             }
 
 
@@ -516,6 +579,8 @@ var model = new Model();
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
                 this.$emit('showDiseases', this.filteredDiseasesItems);
+                this.filteredDiseasesItems = [];
+                filteredDiseases = null;
               }
 
             }

@@ -244,11 +244,6 @@ promiseGetGenePanels(disease) {
 
 }
 
-promiseGetGenePanelsUsingSearchTerm1(disease){
-  // setTimeout(()=>{
-    console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
-  // },1000)
-}
 
 promiseGetGenePanelsUsingSearchTerm(disease) {
   // console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
@@ -311,7 +306,8 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
           console.log("here!")
           var msg = "Error in gtr summary. ";
           console.log(msg);
-          reject(msg);
+          // reject(msg);
+          resolve({'disease': disease, 'genePanels': []})
         })
       }
 
