@@ -59,12 +59,12 @@
             >
               <!-- {{ header.text }} -->
               <span v-if="header.text==='Gene Panels'">
-                <v-layout>
-                  <v-flex xs3 style="padding-top:30px">
+                <v-layout style="margin-left: -20px">
+                  <!-- <v-flex xs3 style="padding-top:30px">
                     {{header.text}}
                   </v-flex>
                   <v-flex xs1>
-                  </v-flex>
+                  </v-flex> -->
                   <v-flex xs1 style="margin-top:40px; padding-left:20px">
                     <small >{{minSliderValue}}</small>
                   </v-flex>
@@ -83,19 +83,52 @@
                          v-on:change="sliderClicked"
                       ></v-slider>
                     </div>
-                    <!-- <v-slider
-                      v-model="slider"
-                      thumb-label="always"
-                      :thumb-size="20"
-                      inverse-label
-                    ></v-slider> -->
+                    <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
+
                   </v-flex>
                   <v-flex xs1 style="margin-top:40px;">
                     <small >{{maxSliderValue}}</small>
 
                   </v-flex>
                 </v-layout>
+              </span>
+              <span v-else-if="header.text==='Gene Name'">
+               <div v-show="!openSearchBox">
+                 {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
+               </div>
+               <div v-show="openSearchBox">
+                 <v-layout >
+                   <v-flex xs8 style="margin-top:-30px">
+                     <div id="geneSearchBox">
+                       <v-text-field
+                         label="Search for Gene"
+                         prepend-icon="search"
+                         single-line
+                         hide-details
+                         v-model="search"
+                       ></v-text-field>
+                     </div>
+                     <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
+                   </v-flex>
+                   <v-flex xs1>
+                     <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox=false">close</v-icon>
+                   </v-flex>
+                 </v-layout>
+               </div>
+                <!-- <v-layout >
+                  <v-flex xs12 style="padding-top:12px">
+                    <div >
+                      <v-text-field
+                        append-icon="search"
+                        label="Search for Gene"
+                        single-line
+                        hide-details
+                      ></v-text-field>
+                    </div>
+                    <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
 
+                  </v-flex>
+                </v-layout> -->
               </span>
               <span v-else>{{ header.text }}</span>
 
@@ -321,7 +354,8 @@ var model = new Model();
         maxSliderValue: 0,
         sliderColor: 'grey lighten-1',
         color: 'blue darken-3',
-        includeClinGenes: true
+        includeClinGenes: true,
+        openSearchBox: false,
       }
     },
     mounted(){
@@ -607,7 +641,10 @@ var model = new Model();
         var cutOffValue;
 
         if(this.clinGenes.length<1 || !this.includeClinGenes){
-          if(this.items.length<=50){
+          if(this.items.length<=10){
+            this.selected = this.items.slice();
+          }
+          else if(this.items.length>10 && this.items.length<=50){
             cutOffValue = medianValue;
             if(maxValue===medianValue){
               this.selected = this.items.slice();
@@ -930,5 +967,9 @@ div.tooltip
 .headerWidth
   width: 1%
   color: red
+
+#geneSearchBox .v-label
+  font-size: 12px
+
 
 </style>

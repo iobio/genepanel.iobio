@@ -538,7 +538,7 @@ var model = new Model();
               console.log("data", data)
               searchTerm = data.searchTerm;
               if(this.definitionObj[searchTerm]===undefined){
-                if(data.diseases[0].Title === searchTerm){
+                if(data.diseases[0].Title === searchTerm && data.diseases[0].Definition.length>10){
                   this.definitionObj[searchTerm] = data.diseases[0].Definition;
                 }
                 // else {

@@ -98,148 +98,7 @@
                         Select
                       </v-btn> -->
                       <!-- <br> <br> -->
-                      <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
-                        <label>Panels Selection</label>
-                        <v-tooltip bottom v-if="!editPanelDefinition">
-                          <span style="cursor:pointer" v-on:click="openEditPanelsDefinitionModal" slot="activator"><v-icon>settings</v-icon> </span>
-                          <span>Edit Panels Definition</span>
-                        </v-tooltip>
 
-                        <span>
-                          <v-dialog v-model="editPanelDefinition" persistent max-width="500">
-                            <div>
-                            <v-card>
-                              <v-card-title class="headline">EDIT PANEL DEFINITION</v-card-title>
-                              <v-divider style="margin-top:-4px"></v-divider>
-                              <Alerts
-                                v-if="panelsAlert"
-                                alertType="warning"
-                                alertTransition="scale-transition"
-                                :alertText="panelAlertText"
-                              >
-                              </Alerts>
-                              <v-layout row wrap>
-                                <v-flex xs7 >
-                                </v-flex>
-                                <v-flex xs5 >
-                                </v-flex>
-                              </v-layout>
-                              <v-card-text style="padding:30px">
-                                <p style="text-align: justify; margin-top:-20px">
-                                  Panels are classified into three categories:
-                                  <p>
-                                    <strong><div style="height:12px; width:12px; display:inline-block; background-color:green"></div> &nbsp; Specific panels </strong>  typically target specific conditions, and so contain fewer genes.
-                                  </p>
-                                  <p>
-                                    <strong><div style="height:12px; width:12px; display:inline-block; background-color:red"></div> &nbsp; General panels </strong>  are used to test for many different conditions and consequently contain a relatively large number of genes.
-                                  </p>
-                                  <p>
-                                  <strong><div style="height:12px; width:12px; display:inline-block; background-color:#ffab00"></div> &nbsp; Moderate panels </strong>  are intermediate to these extremes.
-                                  </p>
-                                  The panels are defined by the number of genes they cover, and can be edited by using the slider below.
-                                </p>
-                                <!-- <br>
-                                <strong>SPECIFIC PANELS </strong>
-                                <br>
-                                  <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
-                                <br><br>
-                                <strong>MODERATE PANELS </strong>
-                                <br>
-                                  <span style="margin-left:20px">Contain between <strong style="color:rgb(132, 132, 132)">{{ lowerLimitInput }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ upperLimitInput }}</strong> genes</span>
-                                <br><br>
-                                <strong>GENERAL PANELS </strong>
-                                <br>
-                                  <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span> -->
-                              </v-card-text>
-                              <div id="EditCard" style="width: 400px; margin-left:50px">
-                                <v-layout row>
-                                  <v-flex class="px-3">
-                                    <v-range-slider
-                                      v-model="panelsDefinitionValues"
-                                      :max="100"
-                                      :min="0"
-                                      :step="1"
-                                      thumb-label="always"
-                                      track-color="green"
-                                      color="amber accent-4"
-                                      thumb-color="primary"
-                                    ></v-range-slider>
-
-                                    <div style="margin-top:-28px">
-                                      <span style="margin-left: -2.4px; color:#a5a5a5">|</span>
-                                      <span style="margin-left: 338px; color:#a5a5a5">|</span>
-                                    </div>
-                                  </v-flex>
-                                </v-layout>
-                              </div>
-                              <div style="margin-top:-10px; display:inline; margin-left:50px">
-                                <span style="font-size: 12px" id="position0">0</span>
-                                <span style="margin-left:330px; font-size: 12px">100</span>
-                                <span style="margin-left:27px">&infin;</span>
-                              </div>
-                              <p v-if="!showPanelsDistribution">
-                              <center><v-btn  v-on:click="showPanelsDistribution=true" flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_down</v-icon> Show Panels Distribution <v-icon color="gray darken-4">keyboard_arrow_down</v-icon> </v-btn></center>
-                              </p>
-                              <v-card-text style="padding:30px" v-if="showPanelsDistribution">
-                                <p style="text-align: justify">
-                                  <strong>Panels Distribution: </strong>
-                                  <br>
-                                - Specific panels contain less than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> genes
-                                <br>
-                                - Moderate panels contain between <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
-                                <br>
-                                - General panels contain more than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
-                                <br><br>
-                                <center><v-btn v-on:click="showPanelsDistribution=false"  flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_up</v-icon> Hide Panels Distribution<v-icon color="gray darken-4">keyboard_arrow_up</v-icon> </v-btn></center>
-                                </p>
-                              </v-card-text>
-                              <v-layout>
-                                <v-flex xs1></v-flex>
-                                <v-flex xs4>
-                                  <center>
-                                    <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
-                                  </center>
-                                </v-flex>
-                                <v-flex xs4>
-                                  <center>
-                                    <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
-                                  </center>
-                                </v-flex>
-                                <v-flex xs1></v-flex>
-                              </v-layout>
-                              <br>
-                            </v-card>
-                          </div>
-                          </v-dialog>
-                        </span>
-
-                        <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
-                          <v-flex xs4>
-                            <v-tooltip bottom>
-                              <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific" value="specific"></v-checkbox>
-                              <span>
-                                <center><i>Less than {{ lowerLimitProps}} genes</i></center>
-                              </span>
-                            </v-tooltip>
-                          </v-flex>
-                          <v-flex xs4>
-                            <v-tooltip bottom>
-                              <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate" value="moderate"></v-checkbox>
-                                <span>
-                                  <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
-                                </span>
-                            </v-tooltip>
-                          </v-flex>
-                          <v-flex x4>
-                            <v-tooltip bottom>
-                              <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General" value="general"></v-checkbox>
-                              <span>
-                                <center><i>More than {{ upperLimitProps}} genes</i></center>
-                              </span>
-                            </v-tooltip>
-                          </v-flex>
-                        </v-layout>
-                      </div>
                     </v-flex>
                   </v-layout>
                 </v-card-text>
@@ -664,7 +523,7 @@
 
                    <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
 
-                     <div class="d-flex mb-2 xs12 mb-3">
+                     <!-- <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>
                           <v-text-field
@@ -688,7 +547,7 @@
                         </v-card-title>
                         <br>
                        </v-card>
-                     </div>
+                     </div> -->
 
                      <div id="activeFilterCard" >
                      </div>
@@ -816,7 +675,148 @@
                                   :ContentText="HelpDialogsData[3].Content">
                                 </Dialogs>
                                 <v-divider class="Rightbar_card_divider"></v-divider>
+                                <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
+                                  <label>Panels Selection</label>
+                                  <v-tooltip bottom v-if="!editPanelDefinition">
+                                    <span style="cursor:pointer" v-on:click="openEditPanelsDefinitionModal" slot="activator"><v-icon>settings</v-icon> </span>
+                                    <span>Edit Panels Definition</span>
+                                  </v-tooltip>
 
+                                  <span>
+                                    <v-dialog v-model="editPanelDefinition" persistent max-width="500">
+                                      <div>
+                                      <v-card>
+                                        <v-card-title class="headline">EDIT PANEL DEFINITION</v-card-title>
+                                        <v-divider style="margin-top:-4px"></v-divider>
+                                        <Alerts
+                                          v-if="panelsAlert"
+                                          alertType="warning"
+                                          alertTransition="scale-transition"
+                                          :alertText="panelAlertText"
+                                        >
+                                        </Alerts>
+                                        <v-layout row wrap>
+                                          <v-flex xs7 >
+                                          </v-flex>
+                                          <v-flex xs5 >
+                                          </v-flex>
+                                        </v-layout>
+                                        <v-card-text style="padding:30px">
+                                          <p style="text-align: justify; margin-top:-20px">
+                                            Panels are classified into three categories:
+                                            <p>
+                                              <strong><div style="height:12px; width:12px; display:inline-block; background-color:green"></div> &nbsp; Specific panels </strong>  typically target specific conditions, and so contain fewer genes.
+                                            </p>
+                                            <p>
+                                              <strong><div style="height:12px; width:12px; display:inline-block; background-color:red"></div> &nbsp; General panels </strong>  are used to test for many different conditions and consequently contain a relatively large number of genes.
+                                            </p>
+                                            <p>
+                                            <strong><div style="height:12px; width:12px; display:inline-block; background-color:#ffab00"></div> &nbsp; Moderate panels </strong>  are intermediate to these extremes.
+                                            </p>
+                                            The panels are defined by the number of genes they cover, and can be edited by using the slider below.
+                                          </p>
+                                          <!-- <br>
+                                          <strong>SPECIFIC PANELS </strong>
+                                          <br>
+                                            <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="lowerLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span>
+                                          <br><br>
+                                          <strong>MODERATE PANELS </strong>
+                                          <br>
+                                            <span style="margin-left:20px">Contain between <strong style="color:rgb(132, 132, 132)">{{ lowerLimitInput }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ upperLimitInput }}</strong> genes</span>
+                                          <br><br>
+                                          <strong>GENERAL PANELS </strong>
+                                          <br>
+                                            <span style="margin-left:20px">Contain less than <input type="number" onkeydown="javascript: return event.keyCode !== 69"  v-model="upperLimitInput" class="form-control" style="display:inline-block; width:70px">&nbsp; genes</span> -->
+                                        </v-card-text>
+                                        <div id="EditCard" style="width: 400px; margin-left:50px">
+                                          <v-layout row>
+                                            <v-flex class="px-3">
+                                              <v-range-slider
+                                                v-model="panelsDefinitionValues"
+                                                :max="100"
+                                                :min="0"
+                                                :step="1"
+                                                thumb-label="always"
+                                                track-color="green"
+                                                color="amber accent-4"
+                                                thumb-color="primary"
+                                              ></v-range-slider>
+
+                                              <div style="margin-top:-28px">
+                                                <span style="margin-left: -2.4px; color:#a5a5a5">|</span>
+                                                <span style="margin-left: 338px; color:#a5a5a5">|</span>
+                                              </div>
+                                            </v-flex>
+                                          </v-layout>
+                                        </div>
+                                        <div style="margin-top:-10px; display:inline; margin-left:50px">
+                                          <span style="font-size: 12px" id="position0">0</span>
+                                          <span style="margin-left:330px; font-size: 12px">100</span>
+                                          <span style="margin-left:27px">&infin;</span>
+                                        </div>
+                                        <p v-if="!showPanelsDistribution">
+                                        <center><v-btn  v-on:click="showPanelsDistribution=true" flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_down</v-icon> Show Panels Distribution <v-icon color="gray darken-4">keyboard_arrow_down</v-icon> </v-btn></center>
+                                        </p>
+                                        <v-card-text style="padding:30px" v-if="showPanelsDistribution">
+                                          <p style="text-align: justify">
+                                            <strong>Panels Distribution: </strong>
+                                            <br>
+                                          - Specific panels contain less than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> genes
+                                          <br>
+                                          - Moderate panels contain between <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[0] }}</strong> and <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                          <br>
+                                          - General panels contain more than <strong style="color:rgb(132, 132, 132)">{{ panelsDefinitionValues[1] }}</strong> genes
+                                          <br><br>
+                                          <center><v-btn v-on:click="showPanelsDistribution=false"  flat small color="gray darken-4"><v-icon color="gray darken-4">keyboard_arrow_up</v-icon> Hide Panels Distribution<v-icon color="gray darken-4">keyboard_arrow_up</v-icon> </v-btn></center>
+                                          </p>
+                                        </v-card-text>
+                                        <v-layout>
+                                          <v-flex xs1></v-flex>
+                                          <v-flex xs4>
+                                            <center>
+                                              <v-btn color="primary" dark  @click.native="ChangePanelsDefinition">Save</v-btn>
+                                            </center>
+                                          </v-flex>
+                                          <v-flex xs4>
+                                            <center>
+                                              <v-btn color="blue darken-1" flat @click.native="closePanelsDefinitionEdit">Cancel</v-btn>
+                                            </center>
+                                          </v-flex>
+                                          <v-flex xs1></v-flex>
+                                        </v-layout>
+                                        <br>
+                                      </v-card>
+                                    </div>
+                                    </v-dialog>
+                                  </span>
+
+                                  <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
+                                    <v-flex xs4>
+                                      <v-tooltip bottom>
+                                        <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific" value="specific"></v-checkbox>
+                                        <span>
+                                          <center><i>Less than {{ lowerLimitProps}} genes</i></center>
+                                        </span>
+                                      </v-tooltip>
+                                    </v-flex>
+                                    <v-flex xs4>
+                                      <v-tooltip bottom>
+                                        <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate" value="moderate"></v-checkbox>
+                                          <span>
+                                            <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
+                                          </span>
+                                      </v-tooltip>
+                                    </v-flex>
+                                    <v-flex x4>
+                                      <v-tooltip bottom>
+                                        <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General" value="general"></v-checkbox>
+                                        <span>
+                                          <center><i>More than {{ upperLimitProps}} genes</i></center>
+                                        </span>
+                                      </v-tooltip>
+                                    </v-flex>
+                                  </v-layout>
+                                </div>
                                  <div>
                                    <span class="Rightbar_card_content_subheading">
                                      <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of panels {{ multiSelectPanels.length }} selected
@@ -1098,7 +1098,7 @@ export default {
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
       panelFilters: ["specific", "moderate", "general"],
-      selectedPanelFilters: ["specific"],
+      selectedPanelFilters: ["specific", "moderate"],
       upperLimitProps: 45,
       lowerLimitProps: 20,
       panelsAlert: false,
@@ -1261,7 +1261,7 @@ export default {
       this.NumberOfTopGenes = null;
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
-      this.selectedPanelFilters= ["specific"];
+      this.selectedPanelFilters= ["specific", "moderate"];
       this.lowerLimitInput = 20;
       this.lowerLimitProps = 20;
       this.upperLimitInput = 45;
