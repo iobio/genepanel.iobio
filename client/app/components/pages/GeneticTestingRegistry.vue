@@ -23,6 +23,7 @@
               <v-card>
                 <v-card-text style="margin-bottom:-5px">
                   <h3>Genetic Testing Registry</h3>
+                   <!-- <v-chip v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"  text-color="white" label color="primary">{{ GtrGenesTabNumber }} of {{ TotalGtrGenes }} genes selected</v-chip> -->
                   <v-layout row wrap>
                     <v-flex xs12 sm12 md12 lg8 xl8>
                       <DisorderSearch
@@ -34,31 +35,20 @@
                         @search-gtr="onSearchGTR">
                       </DisorderSearch>
                     </v-flex>
+                    <!-- <v-flex xs1>
 
-                    <v-flex  >
-                      <!-- <v-layout row wrap>
-                        <v-flex xs3>
-                          <div style="display:inline-block; padding-top:5px;">
-                            <label>Select Genes</label>
-                            <input
-                              :disabled="geneProps.length<1"
-                              id="top-genes-input"
-                              class="form-control"
-                              type="text"
-                              v-model="NumberOfTopGenes"
-                              autocomplete="off"
-                              list="genes">
-                              <datalist id="genes">
-                                <option v-for="genesCount in genesTopCounts">
-                                  {{ genesCount }}
-                                </option>
-                              </datalist>
-                          </div>
-                        </v-flex>
+                    </v-flex> -->
+                    <v-flex xs3>
+                      <v-layout row wrap>
+
                         <v-flex >
-                          <div v-if="geneProps.length">
+                          <div style="margin-top:-20px" v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3">
+                          <v-card class="" style="margin-left:50px">
                             <v-card-text>
                               <center>
+                                <!-- <label>Genes</label> -->
+                                <!-- <br> -->
+                                <!-- <v-divider class="Rightbar_card_divider"></v-divider> -->
                                 <span class="Rightbar_card_content_subheading">
                                   <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
                                 </span>
@@ -70,9 +60,24 @@
                                :totalNumber="TotalGtrGenes">
                               </SvgBar>
                             </v-card-text>
+                          </v-card>
+                          </div>
+
+                          <div v-else-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3">
+                          <v-card class="activeCardBox">
+                            <v-card-text>
+                              <center>
+                                <label>Genes</label>
+                                <v-divider class="Rightbar_card_divider"></v-divider>
+                                <span class="Rightbar_card_content_subheading">
+                                  <strong class="Rightbar_card_content_heading">0</strong> of 0 genes selected
+                                </span>
+                              </center>
+                            </v-card-text>
+                          </v-card>
                           </div>
                         </v-flex>
-                      </v-layout> -->
+                      </v-layout>
 
                       <!-- <div style="display:inline-block; padding-top:5px;">
                         <label>Select Genes</label>
@@ -98,7 +103,7 @@
                         Select
                       </v-btn> -->
                       <!-- <br> <br> -->
-
+                      <!-- //Original position of panels selection -->
                     </v-flex>
                   </v-layout>
                 </v-card-text>
@@ -552,7 +557,7 @@
                      <div id="activeFilterCard" >
                      </div>
 
-                     <div class="d-flex mb-2 xs12 mb-3">
+                     <!-- <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-bind:class="[chartComponent===null || chartComponent==='PanelFilters' || chartComponent==='PanelsDefinition' ? 'activeCardBox' : 'rightbarCard ']" v-if="geneProps.length">
                          <v-card-text>
                            <center>
@@ -601,7 +606,7 @@
                            </center>
                          </v-card-text>
                        </v-card>
-                     </div>
+                     </div> -->
 
                 <div  id="inActiveDisordersAndModesFilterCard">
                   <div id="activeDisordersAndModesFilterCard" class="mb-3">
@@ -674,9 +679,11 @@
                                   :HeadlineText="HelpDialogsData[3].HeadlineText"
                                   :ContentText="HelpDialogsData[3].Content">
                                 </Dialogs>
+
                                 <v-divider class="Rightbar_card_divider"></v-divider>
+
                                 <div v-if="diseases.length && modeOfInheritanceProps.length > 0 ">
-                                  <label>Panels Selection</label>
+                                  <span class="Rightbar_card_content_subheading"> Selection</span>
                                   <v-tooltip bottom v-if="!editPanelDefinition">
                                     <span style="cursor:pointer" v-on:click="openEditPanelsDefinitionModal" slot="activator"><v-icon>settings</v-icon> </span>
                                     <span>Edit Panels Definition</span>
@@ -791,7 +798,10 @@
                                   </span>
 
                                   <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
-                                    <v-flex xs4>
+                                    <v-flex xs1>
+
+                                    </v-flex>
+                                    <v-flex xs3>
                                       <v-tooltip bottom>
                                         <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific" value="specific"></v-checkbox>
                                         <span>
@@ -799,7 +809,7 @@
                                         </span>
                                       </v-tooltip>
                                     </v-flex>
-                                    <v-flex xs4>
+                                    <v-flex xs3>
                                       <v-tooltip bottom>
                                         <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate" value="moderate"></v-checkbox>
                                           <span>
@@ -817,6 +827,9 @@
                                     </v-flex>
                                   </v-layout>
                                 </div>
+
+                                <v-divider class="Rightbar_card_divider"></v-divider>
+
                                  <div>
                                    <span class="Rightbar_card_content_subheading">
                                      <strong class="Rightbar_card_content_heading">{{ selectedPanelsInCheckBox.length }}</strong> of panels {{ multiSelectPanels.length }} selected
