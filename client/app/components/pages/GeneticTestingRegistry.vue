@@ -38,27 +38,32 @@
                     <!-- <v-flex xs1>
 
                     </v-flex> -->
-                    <v-flex xs3>
+                    <v-flex xs4>
                       <v-layout row wrap>
 
                         <v-flex >
-                          <div style="margin-top:-20px" v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3">
-                          <v-card class="" style="margin-left:50px">
+                          <div style="margin-top:-40px" v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3">
+                          <v-card class="" style="margin-left:20px">
                             <v-card-text>
                               <center>
-                                <!-- <label>Genes</label> -->
+                                <span class="Rightbar_CardHeading" style="font-size:15px">
+                                  GENES
+                                </span>
                                 <!-- <br> -->
-                                <!-- <v-divider class="Rightbar_card_divider"></v-divider> -->
+                                <v-divider class="Rightbar_card_divider"></v-divider>
                                 <span class="Rightbar_card_content_subheading">
                                   <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
                                 </span>
                               </center>
-                              <SvgBar
-                               class="SvgBarClass"
-                               id="genesSvgBox"
-                               :selectedNumber="GtrGenesTabNumber"
-                               :totalNumber="TotalGtrGenes">
-                              </SvgBar>
+                              <div class="text-xs-center">
+                                <progressCircularDonut
+                                  v-if="TotalGtrGenes>0"
+                                  :selectedNumber="GtrGenesTabNumber"
+                                  :totalNumber="TotalGtrGenes"
+                                >
+                                </progressCircularDonut>
+                              </div>
+
                             </v-card-text>
                           </v-card>
                           </div>
@@ -998,7 +1003,8 @@ import IntroductionText from '../../../data/IntroductionText.json';
 import SvgBar from '../viz/SvgBar.vue';
 import DisordersGeneBar from '../viz/DisordersGeneBar.vue'
 import ModesSvgBar from '../viz/ModesSvgBar.vue';
-import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue'
+import NoGenesDisplayTable from '../partials/NoGenesDisplayTable.vue';
+import progressCircularDonut from '../partials/progressCircularDonut.vue';
 var _ = require('lodash');
 import Model from '../../models/Model';
 var model = new Model();
@@ -1018,7 +1024,8 @@ export default {
     'ModesSvgBar': ModesSvgBar,
     'NoGenesDisplayTable': NoGenesDisplayTable,
     'PanelsConditions': PanelsConditions,
-    'PanelsDefinitionSelector': PanelsDefinitionSelector
+    'PanelsDefinitionSelector': PanelsDefinitionSelector,
+    'progressCircularDonut': progressCircularDonut,
   },
   name: 'home',
   props: {
@@ -1111,7 +1118,7 @@ export default {
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
       panelFilters: ["specific", "moderate", "general"],
-      selectedPanelFilters: ["specific", "moderate"],
+      selectedPanelFilters: ["specific"],
       upperLimitProps: 45,
       lowerLimitProps: 20,
       panelsAlert: false,
@@ -1274,7 +1281,7 @@ export default {
       this.NumberOfTopGenes = null;
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
-      this.selectedPanelFilters= ["specific", "moderate"];
+      this.selectedPanelFilters= ["specific"];
       this.lowerLimitInput = 20;
       this.lowerLimitProps = 20;
       this.upperLimitInput = 45;

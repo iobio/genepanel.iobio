@@ -68,7 +68,7 @@
                   <v-flex xs1 style="margin-top:40px; padding-left:20px">
                     <small >{{minSliderValue}}</small>
                   </v-flex>
-                  <v-flex xs7 style="padding-top:12px">
+                  <v-flex xs10 style="padding-top:12px">
                     <div >
                       <v-slider
                          v-if="sliderValue>=0"

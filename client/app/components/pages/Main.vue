@@ -1423,6 +1423,9 @@ nav.toolbar, nav.v-toolbar
       background-color:  $app-color-clin !important
       color: white !important
       border-color: $app-color-clin !important
+
+    .primary--text
+      color: $app-color-clin !important
 aside
   font-family: $app-font-clin !important
   text-color:  $text-color-clin
