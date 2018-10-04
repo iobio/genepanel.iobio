@@ -34,16 +34,6 @@
           v-on:keydown="EnterForSearch"
           item-key="DiseaseName"/>
 
-          <!-- <typeahead v-model="search" :debounce=400 target="#input" :async-data="DiseaseNamesAsync" item-key="DiseaseName">
-            <template slot="item" slot-scope="props">
-              <li v-for="(item, index) in DiseaseNamesAsync" :class="{active:props.activeIndex===index}">
-                <a role="button" @click="props.select(item)">
-                  <span v-html="props.highlight(item)"></span>
-                </a>
-              </li>
-            </template>
-          </typeahead> -->
-
       </div>
 
       <v-btn
@@ -66,18 +56,6 @@
      </v-list>
      </v-menu>
 
-      <!-- <v-tooltip bottom>
-        <v-btn
-          slot="activator"
-          v-if="multipleSearchTerms.length"
-          :disabled="checked===true"
-          flat icon color="primary"
-          v-on:click="ClearInputForNewSearch"
-        >
-          <v-icon>add_circle</v-icon>
-        </v-btn>
-        <span>Enter New Condition</span>
-      </v-tooltip> -->
       <div v-if="multipleSearchTerms.length">
         <br>
           Conditions Searched:
@@ -223,7 +201,7 @@ var model = new Model();
       this.launchedFromClin = this.launchedFromClinProps;
       this.HierarchyParentData = HierarchyParentIds;
       this.HierarchyRelations = HierarchyData;
-      // console.log("HierarchyData", HierarchyData.length)
+
       this.HelpDialogsData = HelpDialogs.data;
        $("#search-gene-name").attr('autocomplete', 'off');
        $("#search-gene-name1").attr('autocomplete', 'off');
@@ -267,15 +245,12 @@ var model = new Model();
           // console.log("enter key")
           this.enterPressed = true;
           setTimeout(()=>{
-            // console.log("this.search", this.search);
-            // console.log("this.search.DiseaseName", this.search.DiseaseName);
             this.performSearch();
           }, 10)
         }
         else if(event.key == 'ArrowDown') {
           // console.log("down key");
           $("#addedterm").removeClass("active");
-          // console.log($(this).is(':first-child'));
           // console.log($("ul.dropdown-menu li").length); //checks how many children are there
           this.enterCount = 0;
 
@@ -302,7 +277,6 @@ var model = new Model();
         }
       },
       setInputValueFromHint: function(hint){
-        console.log(hint);
         document.getElementById("input").value= hint.Title;
         this.search = hint.Title;
       },
@@ -320,7 +294,6 @@ var model = new Model();
         else {
           this.tooltipDefinition = null;
         }
-        // console.log("this.tooltipDefinition", this.tooltipDefinition);
       },
       hideToolTip(item){
         this.tooltipDefinition = null;
@@ -404,7 +377,6 @@ var model = new Model();
           searchTerm = this.search.trim();
           conceptId = this.getConcpetId(this.search);
         }
-        console.log("searchTerm", searchTerm)
         if(searchTerm.length>1 && !this.checked){
           this.checked = true;
           this.alert=false;
@@ -418,7 +390,6 @@ var model = new Model();
             var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
             .then(function(data){
-              console.log("data", data);
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
@@ -503,7 +474,6 @@ var model = new Model();
               console.log("Hollaaaa");
               var filteredDiseases;
               Promise.all(promises).then(function(){
-                // console.log("diseases", diseases)
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
                   comeOutOfPromise();
                 }
@@ -522,7 +492,6 @@ var model = new Model();
 
 
             var comeOutOfPromise =()=>{
-              console.log("stopped")
               this.alert = true;
               this.checked=false;
             }
@@ -535,17 +504,12 @@ var model = new Model();
             }
 
             var createDefinitionsObj = (data)=>{
-              console.log("data", data)
               searchTerm = data.searchTerm;
               if(this.definitionObj[searchTerm]===undefined){
                 if(data.diseases[0].Title === searchTerm && data.diseases[0].Definition.length>10){
                   this.definitionObj[searchTerm] = data.diseases[0].Definition;
                 }
-                // else {
-                //   this.definitionObj[searchTerm] = data.searchTerm;
-                // }
               }
-              console.log("this.definitionObj", this.definitionObj)
             }
 
 
@@ -589,7 +553,7 @@ var model = new Model();
 
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
-                console.log("this.filteredDiseasesItems", this.filteredDiseasesItems);
+                // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems);
                 this.$emit('showDiseases', this.filteredDiseasesItems);
                 this.filteredDiseasesItems = [];
                 filteredDiseases = null;

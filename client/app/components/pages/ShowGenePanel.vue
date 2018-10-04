@@ -362,7 +362,7 @@ var model = new Model();
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
-      console.log("clinGenes", this.clinGenes);
+      // console.log("clinGenes", this.clinGenes);
       bus.$on("clearClinGenesArray", ()=>{
         this.includeClinGenes = false;
       })
@@ -407,7 +407,7 @@ var model = new Model();
     },
     watch: {
       sliderValue: function(){
-        console.log("slider is changing and the value is : ", this.sliderValue);
+        // console.log("slider is changing and the value is : ", this.sliderValue);
         this.updateSelectionOnSliderValue();
       },
       GeneData: function(){
@@ -422,7 +422,7 @@ var model = new Model();
         this.search = this.geneSearch;
       },
       clinGenes: function(){
-        console.log("clinGenes watching")
+        // console.log("clinGenes watching")
       },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
@@ -565,7 +565,6 @@ var model = new Model();
         return "<span style='color:#4e7ad3'><i>Not on any panels </i><span>"
       },
       AddGeneData: function(){
-        console.log("AddGeneData called")
         bus.$emit("openNavDrawer");
         this.GetGeneData = this.GeneData;
         this.associatedGenesData = this.associatedGenes;
@@ -682,7 +681,6 @@ var model = new Model();
 
         //If clin genes have value, set selected accordingly:
         if(this.clinGenes.length>0 && this.includeClinGenes){
-          console.log("genes are set")
           this.items.map(x=>{
             if(this.clinGenes.includes(x.name)){
               this.selected.push(x);
@@ -690,7 +688,6 @@ var model = new Model();
           })
         }
 
-        console.log("Selectd", this.selected)
 
         this.sliderValue = this.selected[this.selected.length-1].value;
         this.minSliderValue = Math.min(...valuesForMedian);

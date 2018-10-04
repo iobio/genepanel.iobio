@@ -291,6 +291,8 @@ import HelpMenu from '../partials/HelpMenu.vue';
 import Overview from './Overview.vue';
 import Footer from '../partials/Footer.vue';
 import { ExportToCsv } from 'export-to-csv';
+import knownGenes from '../../../data/knownGenes'
+
 // var fs = require('fs');
 
   export default {
@@ -416,8 +418,8 @@ import { ExportToCsv } from 'export-to-csv';
         }
       },
       selectedPhenolyzerGenes: function(){
-        console.log("selectedPhenolyzerGenes changing")
-        console.log(this.selectedPhenolyzerGenes)
+        // console.log("selectedPhenolyzerGenes changing")
+        // console.log(this.selectedPhenolyzerGenes)
         if(this.launchedFromClin){
           if(this.clinsearchedPhenolyzer.length===1){
             // bus.$emit("clearClinGenesPhenolyzerArray");
@@ -438,6 +440,7 @@ import { ExportToCsv } from 'export-to-csv';
     },
     created(){
       this.IntroductionTextData = IntroductionText.data;
+      this.knownGenesData = knownGenes;
       window.addEventListener('scroll', this.handleScroll);
       this.detectBrowser();
       this.checkIfMobile();
@@ -557,7 +560,7 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       updateGtrGenes: function(e){
-        console.log("selectedGtrGenes", e)
+        // console.log("selectedGtrGenes", e)
         this.selectedGtrGenes = e;
         if(e.length<=0){
           this.NumberOfGenesSelectedFromGTR = 0;
@@ -627,7 +630,7 @@ import { ExportToCsv } from 'export-to-csv';
           }
         })
 
-        console.log("clinData GTR", clinData)
+        // console.log("clinData GTR", clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
@@ -721,7 +724,6 @@ import { ExportToCsv } from 'export-to-csv';
             score: gene.score,
           }
         })
-        console.log("clinData phenolyzer" , clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
@@ -743,7 +745,7 @@ import { ExportToCsv } from 'export-to-csv';
       sendGenesUsingSocket: function(){
         // let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-        console.log("genesToCopy", genesToCopy);
+        // console.log("genesToCopy", genesToCopy);
         var socket = io.connect('http://localhost:4026');
 
         socket.emit('geneData', {
@@ -770,20 +772,27 @@ import { ExportToCsv } from 'export-to-csv';
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        console.log("clinData", clinData);
-        console.log("this.GtrGenesArr", this.GtrGenesArr)
-        console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
+        // console.log("clinData", clinData);
+        // console.log("this.GtrGenesArr", this.GtrGenesArr)
+        // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
         this.$clipboard(genesToCopy);
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
         }
         this.snackbar=true;
-        console.log("this.searchTermGTR", this.searchTermGTR)
+
+        var filteredKnownGenes = [];
+        self.uniqueGenes.map(x=>{
+          if(self.knownGenesData.includes(x.toUpperCase())) {
+            filteredKnownGenes.push(x)
+          }
+        })
+
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
-          genes: self.uniqueGenes,
+          genes: filteredKnownGenes,
           genesGtr: this.GtrGenesArr,
           genesPhenolyzer: this.PhenolyzerGenesArr,
           genesManual: this.manuallyAddedGenes,
@@ -845,10 +854,7 @@ import { ExportToCsv } from 'export-to-csv';
       receiveClin: function(event) {
         // Do we trust the sender of this message?
         // Do we trust the sender of this message?
-        // console.log("this.clinIobioUrls.indexOf(event.origin)", this.clinIobioUrls.indexOf(event.origin));
-        // console.log("event.origin", event.origin)
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.clinIobioUrl = event.origin;
@@ -864,9 +870,6 @@ import { ExportToCsv } from 'export-to-csv';
         }
         //Clin is sending data to set the state
         else if(clinObject.type == 'set-data'){
-          console.log("Clin is sending data to set the state");
-          console.log("clin object: ", clinObject);
-          // console.log("clinObject.phenotypes[0]", clinObject.phenotypes[0])
           this.clinSearchedGtr = clinObject.phenotypes[0];
           this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
           this.clinGenes = clinObject.genes;
@@ -1079,7 +1082,6 @@ import { ExportToCsv } from 'export-to-csv';
         else {
           this.summaryClinTableArray = tempSummaryTableArray;
         }
-        // console.log("this.summaryClinTableArray", this.summaryClinTableArray)
       },
 
 
