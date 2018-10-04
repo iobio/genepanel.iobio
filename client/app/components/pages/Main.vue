@@ -342,9 +342,11 @@ import { ExportToCsv } from 'export-to-csv';
         modeOfInheritanceProps: [],
         GeneMembershipProps: [],
         IntroductionTextData: null,
-        clinIobioUrls: ["http://localhost:4030", "https://clin.iobio.io"],
+
+        clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io", "https://clin.iobio.io", "https://dev.clin.iobio.io", "http://dev.clin.iobio.io"],
         clinIobioUrl: null,
         launchedFromClin: self.paramLaunchedFromClin == 'true' ? true : false,
+
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -844,11 +846,8 @@ import { ExportToCsv } from 'export-to-csv';
       },
       receiveClin: function(event) {
         // Do we trust the sender of this message?
-        // Do we trust the sender of this message?
-        // console.log("this.clinIobioUrls.indexOf(event.origin)", this.clinIobioUrls.indexOf(event.origin));
-        // console.log("event.origin", event.origin)
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.clinIobioUrl = event.origin;
