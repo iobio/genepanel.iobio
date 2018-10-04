@@ -344,9 +344,11 @@ import knownGenes from '../../../data/knownGenes'
         modeOfInheritanceProps: [],
         GeneMembershipProps: [],
         IntroductionTextData: null,
-        clinIobioUrls: ["http://localhost:4030", "https://clin.iobio.io"],
+
+        clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io", "https://clin.iobio.io", "https://dev.clin.iobio.io", "http://dev.clin.iobio.io"],
         clinIobioUrl: null,
         launchedFromClin: self.paramLaunchedFromClin == 'true' ? true : false,
+
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -853,8 +855,8 @@ import knownGenes from '../../../data/knownGenes'
       },
       receiveClin: function(event) {
         // Do we trust the sender of this message?
-        // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
+          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.clinIobioUrl = event.origin;
