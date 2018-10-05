@@ -881,7 +881,7 @@ import knownGenes from '../../../data/knownGenes'
           }
       },
       updateAllGenesFromSelection(data){
-        console.log("this.summaryGenes", this.summaryGenes)
+        // console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
         var allGenes = data.map(x=>{
           return x.name;
@@ -899,16 +899,22 @@ import knownGenes from '../../../data/knownGenes'
 
 
         var clinObject = JSON.parse(event.data);
-        setInterval(()=>{
-          if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-            this.autoSaveGenes();
-          }
-        },3000)
+        // setInterval(()=>{
+        //   if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+        //     this.autoSaveGenes();
+        //   }
+        // },3000)
 
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
           if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-            this.copyAllGenes();
+            // this.copyAllGenes();
+            setInterval(()=>{
+              if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+                this.autoSaveGenes();
+              }
+            },3000)
+
           }
         }
 

@@ -1,4 +1,4 @@
-<template>
+height="10"<template>
   <div>
     <div v-show="launchedFromClinProps && clinFetchingGtrData">
       Please wait while we load your previous saved state!
@@ -131,6 +131,7 @@
                   <v-layout row wrap>
                     <v-flex  xs8 >
                       <v-card>
+                        <ContentLoaderPlaceholder v-show="contentPlaceHolder"></ContentLoaderPlaceholder>
                         <show-gene-panel1
                         v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"
                           v-bind:GeneData="geneProps"
@@ -532,7 +533,27 @@
                   </div>
 
                    <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
-
+                     <div>
+                       <v-flex xs12>
+                         <v-card v-show="contentPlaceHolder">
+                           <ContentLoaderSidebar ></ContentLoaderSidebar>
+                         </v-card>
+                       </v-flex>
+                     </div>
+                     <div>
+                       <v-flex xs12>
+                         <v-card v-show="contentPlaceHolder">
+                           <ContentLoaderSidebar ></ContentLoaderSidebar>
+                         </v-card>
+                       </v-flex>
+                     </div>
+                     <div>
+                       <v-flex xs12>
+                         <v-card v-show="contentPlaceHolder">
+                           <ContentLoaderSidebar ></ContentLoaderSidebar>
+                         </v-card>
+                       </v-flex>
+                     </div>
                      <!-- <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
                         <v-card-title primary-title>
@@ -1010,6 +1031,8 @@ import Model from '../../models/Model';
 var model = new Model();
 import PanelsConditions from '../viz/PanelsConditions.vue';
 import PanelsDefinitionSelector from './PanelsDefinitionSelector.vue';
+import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
+import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 
 export default {
   components: { //Registering locally for nesting!
@@ -1026,6 +1049,8 @@ export default {
     'PanelsConditions': PanelsConditions,
     'PanelsDefinitionSelector': PanelsDefinitionSelector,
     'progressCircularDonut': progressCircularDonut,
+    'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
+    'ContentLoaderSidebar': ContentLoaderSidebar
   },
   name: 'home',
   props: {
@@ -1134,7 +1159,8 @@ export default {
       launchedFromClinProps: false,
       clinSearchedGtrProps: [],
       showPanelsCardData: false,
-      clinFetchingGtrData: false
+      clinFetchingGtrData: false,
+      contentPlaceHolder: false,
       // browser: null,
       // isMobile: false,
     }
@@ -1290,6 +1316,13 @@ export default {
       this.panelsDefinitionValues = [20,45];
       this.closeComponentForNewResults();
     });
+    bus.$on("showContentLoader", ()=>{
+      this.contentPlaceHolder = true;
+      this.disordersSearchedByUser = true;
+    })
+    bus.$on("hideContentLoader", ()=>{
+      this.contentPlaceHolder = false;
+    })
     bus.$on("clearClinGenesArray", ()=>{
       // this.clinGenes = [];
     });

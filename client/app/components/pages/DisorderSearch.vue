@@ -212,6 +212,7 @@ var model = new Model();
          this.alert = false;
          this.alertWarningHints = false;
          this.checked = false;
+         bus.$emit("hideContentLoader");
        });
     },
     computed:  {
@@ -333,6 +334,7 @@ var model = new Model();
         }
         else if(this.checked){
           this.checked = false;
+          bus.$emit("hideContentLoader");
         }
 
       },
@@ -379,6 +381,9 @@ var model = new Model();
         }
         if(searchTerm.length>1 && !this.checked){
           this.checked = true;
+          if(this.multipleSearchTerms.length<1){
+            bus.$emit("showContentLoader");
+          }
           this.alert=false;
           this.alertWarningHints = false;
 
@@ -471,7 +476,7 @@ var model = new Model();
             })
 
             var callAfunction = (promises)=>{
-              console.log("Hollaaaa");
+              // console.log("Hollaaaa");
               var filteredDiseases;
               Promise.all(promises).then(function(){
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
@@ -494,17 +499,19 @@ var model = new Model();
             var comeOutOfPromise =()=>{
               this.alert = true;
               this.checked=false;
+              bus.$emit("hideContentLoader"); 
             }
 
             var comeOutOfPromise1 =(diseases)=>{
               this.warningHints = diseases.slice(10, 14);
               this.alertWarningHints = true
               this.checked=false;
+              bus.$emit("hideContentLoader");
               this.remove(this.search)
             }
 
             var createDefinitionsObj = (data)=>{
-              console.log(data.diseases)
+              // console.log(data.diseases)
               searchTerm = data.searchTerm;
               if(this.definitionObj[searchTerm]===undefined && data.diseases.length>0){
                 if(data.diseases[0].Title === searchTerm && data.diseases[0].Definition.length>10){
@@ -543,6 +550,7 @@ var model = new Model();
                 this.alert= true;
               }
               this.checked=false;
+              bus.$emit("hideContentLoader");
               if(this.multipleSearchTerms.includes(searchTerm)){ //this avoids adding an index when the term is deleted
                 filteredDiseases.map(x=>{
                   x["searchTerm"]="ip"+searchTerm+"ip";
@@ -565,6 +573,7 @@ var model = new Model();
           }
           else if(this.multipleSearchTerms.includes(searchTerm)){
             this.checked = false;
+            bus.$emit("hideContentLoader");
             this.snackbarText = "This disorder is already searched before"
             this.snackbar = true;
           }

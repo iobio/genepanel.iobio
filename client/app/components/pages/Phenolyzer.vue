@@ -493,9 +493,9 @@ import SvgBar from '../viz/SvgBar.vue'
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
-      console.log("includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
+      // console.log("includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       this.HelpDialogsData = HelpDialogs.data;
-      console.log("clinsearchedPhenolyzer in mounted", this.clinsearchedPhenolyzer);
+      // console.log("clinsearchedPhenolyzer in mounted", this.clinsearchedPhenolyzer);
       bus.$on("clearClinGenesPhenolyzerArray", ()=>{
         this.includeClinPhenolyzerGenes = false;
       })
