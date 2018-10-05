@@ -420,7 +420,6 @@ import knownGenes from '../../../data/knownGenes'
         }
       },
       selectedPhenolyzerGenes: function(){
-        // console.log("selectedPhenolyzerGenes changing")
         // console.log(this.selectedPhenolyzerGenes)
         if(this.launchedFromClin){
           if(this.clinsearchedPhenolyzer.length===1){
@@ -805,6 +804,43 @@ import knownGenes from '../../../data/knownGenes'
         });
 
       },
+      autoSaveGenes(){
+        console.log("autosaving genes")
+        let self = this;
+        var genesToCopy = this.uniqueGenes.toString();
+        this.organizeClinData();
+        var clinData = this.summaryClinTableArray.map(gene=> {
+          return {
+            name: gene.name,
+            source: gene.sources,
+            geneId: gene.geneId,
+            score: gene.score,
+            genePanels: gene.value,
+            // searchTermsPhenolyzer: gene.searchTermPheno,
+            searchTermsPhenolyzer: gene.phenotypeSearches,
+            searchTermsGtr: gene.searchTermArrayGTR
+          }
+        })
+
+          var filteredKnownGenes = [];
+          self.uniqueGenes.map(x=>{
+            if(self.knownGenesData.includes(x.toUpperCase())) {
+              filteredKnownGenes.push(x)
+            }
+          })
+
+          this.sendClin({
+            type: 'apply-genes',
+            source: 'all',
+            genes: filteredKnownGenes,
+            genesGtr: this.GtrGenesArr,
+            genesPhenolyzer: this.PhenolyzerGenesArr,
+            genesManual: this.manuallyAddedGenes,
+            genesReport: clinData,
+            // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+            searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
+          });
+      },
       exportGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
           return gene.name
@@ -845,7 +881,7 @@ import knownGenes from '../../../data/knownGenes'
           }
       },
       updateAllGenesFromSelection(data){
-        // console.log("this.summaryGenes", this.summaryGenes)
+        console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
         var allGenes = data.map(x=>{
           return x.name;
@@ -863,6 +899,11 @@ import knownGenes from '../../../data/knownGenes'
 
 
         var clinObject = JSON.parse(event.data);
+        setInterval(()=>{
+          if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+            this.autoSaveGenes();
+          }
+        },3000)
 
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
@@ -870,6 +911,7 @@ import knownGenes from '../../../data/knownGenes'
             this.copyAllGenes();
           }
         }
+
         //Clin is sending data to set the state
         else if(clinObject.type == 'set-data'){
           this.clinSearchedGtr = clinObject.phenotypes[0];
@@ -882,6 +924,9 @@ import knownGenes from '../../../data/knownGenes'
           if(this.clinSearchedGtr.length>0){
             this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
             this.clinFetchingGtr = true;
+          }
+          if(this.clinsearchedPhenolyzer.length>0){
+            this.clinPhenolyzerSeachTerm = [this.clinsearchedPhenolyzer[0]]
           }
         }
 

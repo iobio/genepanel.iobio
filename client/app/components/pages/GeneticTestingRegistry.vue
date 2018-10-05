@@ -1292,7 +1292,8 @@ export default {
     });
     bus.$on("clearClinGenesArray", ()=>{
       // this.clinGenes = [];
-    })
+    });
+
   },
   created () {
     this.IntroductionTextData = IntroductionText.data[0];
@@ -1688,7 +1689,7 @@ export default {
       this.upperLimitInput = this.upperLimitProps;
       this.lowerLimitInput = this.lowerLimitProps;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
-    }
+    },
   }
 }
 </script>
