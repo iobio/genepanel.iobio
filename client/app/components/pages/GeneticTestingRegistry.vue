@@ -1118,7 +1118,7 @@ export default {
       selectedPanelsInCheckBoxProps: [],
       selectedPanelsInCheckBoxPropsOne: [],
       panelFilters: ["specific", "moderate", "general"],
-      selectedPanelFilters: ["specific"],
+      selectedPanelFilters: ["specific", "moderate"],
       upperLimitProps: 45,
       lowerLimitProps: 20,
       panelsAlert: false,
@@ -1281,7 +1281,7 @@ export default {
       this.NumberOfTopGenes = null;
       this.saveSelectedPanels = [];
       this.saveSelectedVendors = [];
-      this.selectedPanelFilters= ["specific"];
+      this.selectedPanelFilters= ["specific", "moderate"];
       this.lowerLimitInput = 20;
       this.lowerLimitProps = 20;
       this.upperLimitInput = 45;

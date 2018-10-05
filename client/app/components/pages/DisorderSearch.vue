@@ -504,8 +504,9 @@ var model = new Model();
             }
 
             var createDefinitionsObj = (data)=>{
+              console.log(data.diseases)
               searchTerm = data.searchTerm;
-              if(this.definitionObj[searchTerm]===undefined){
+              if(this.definitionObj[searchTerm]===undefined && data.diseases.length>0){
                 if(data.diseases[0].Title === searchTerm && data.diseases[0].Definition.length>10){
                   this.definitionObj[searchTerm] = data.diseases[0].Definition;
                 }
