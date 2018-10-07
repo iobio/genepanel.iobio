@@ -920,19 +920,22 @@ import knownGenes from '../../../data/knownGenes'
 
         //Clin is sending data to set the state
         else if(clinObject.type == 'set-data'){
-          this.clinSearchedGtr = clinObject.phenotypes[0];
-          this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
-          this.clinGenes = clinObject.genes;
-          this.clinGenesGtr = clinObject.genesGtr;
-          this.clinGenesPhenolyzer = clinObject.genesPhenolyzer;
-          this.clinGenesManual = clinObject.genesManual;
-          this.clinGenesData = clinObject.genesData;
-          if(this.clinSearchedGtr.length>0){
-            this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
-            this.clinFetchingGtr = true;
-          }
-          if(this.clinsearchedPhenolyzer.length>0){
-            this.clinPhenolyzerSeachTerm = [this.clinsearchedPhenolyzer[0]]
+          if (clinObject.genes && clinObject.genes.length > 0 && clinObject.phenotypes && clinObject.phenotypes.length > 0) {
+            this.clinSearchedGtr = clinObject.phenotypes[0];
+            this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
+            this.clinGenes = clinObject.genes;
+            this.clinGenesGtr = clinObject.genesGtr;
+            this.clinGenesPhenolyzer = clinObject.genesPhenolyzer;
+            this.clinGenesManual = clinObject.genesManual;
+            this.clinGenesData = clinObject.genesData;
+            if(this.clinSearchedGtr && this.clinSearchedGtr.length>0){
+              this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
+              this.clinFetchingGtr = true;
+            }
+            if(this.clinsearchedPhenolyzer && this.clinsearchedPhenolyzer.length>0){
+              this.clinPhenolyzerSeachTerm = [this.clinsearchedPhenolyzer[0]]
+            }
+
           }
         }
 
