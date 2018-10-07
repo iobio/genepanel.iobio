@@ -8,6 +8,7 @@
 		  secondaryColor="#aeaeae"
   	>
     <rect x="290" y="39" rx="5" ry="5" width="361.8" height="10" />
+        <rect x="0" y="25.18" width="800" height="1" />
     		<rect x="29" y="38.2" rx="0" ry="0" width="24" height="10" />
     		<rect x="67" y="38.2" rx="0" ry="0" width="66" height="10" />
     		<rect x="669" y="38.2" rx="0" ry="0" width="66" height="10" />
@@ -43,15 +44,15 @@
     		<rect x="669" y="280.2" rx="0" ry="0" width="66" height="10" />
     		<rect x="669" y="320.2" rx="0" ry="0" width="66" height="10" />
     		<rect x="670" y="360.2" rx="0" ry="0" width="66" height="10" />
-    		<rect x="147" y="39.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="147" y="158.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="146" y="199.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="147" y="239.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="148" y="278.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="148" y="320.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="150" y="360.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="147" y="79.39" rx="0" ry="0" width="133.98" height="10" />
-    		<rect x="146" y="119.39" rx="0" ry="0" width="133.98" height="10" />
+    		<rect x="147" y="39.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="147" y="158.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="146" y="199.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="147" y="239.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="148" y="278.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="148" y="320.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="150" y="360.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="147" y="79.39" rx="0" ry="0" width="123.98" height="10" />
+    		<rect x="146" y="119.39" rx="0" ry="0" width="123.98" height="10" />
   	</content-loader>
   </div>
 </template>

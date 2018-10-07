@@ -533,26 +533,28 @@ height="10"<template>
                   </div>
 
                    <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
-                     <div>
-                       <v-flex xs12>
-                         <v-card v-show="contentPlaceHolder">
-                           <ContentLoaderSidebar ></ContentLoaderSidebar>
-                         </v-card>
-                       </v-flex>
-                     </div>
-                     <div>
-                       <v-flex xs12>
-                         <v-card v-show="contentPlaceHolder">
-                           <ContentLoaderSidebar ></ContentLoaderSidebar>
-                         </v-card>
-                       </v-flex>
-                     </div>
-                     <div>
-                       <v-flex xs12>
-                         <v-card v-show="contentPlaceHolder">
-                           <ContentLoaderSidebar ></ContentLoaderSidebar>
-                         </v-card>
-                       </v-flex>
+                     <div v-show="contentPlaceHolder">
+                       <div>
+                         <v-flex xs12>
+                           <v-card >
+                             <ContentLoaderSidebar ></ContentLoaderSidebar>
+                           </v-card>
+                         </v-flex>
+                       </div>
+                       <div>
+                         <v-flex xs12>
+                           <v-card >
+                             <ContentLoaderSidebar ></ContentLoaderSidebar>
+                           </v-card>
+                         </v-flex>
+                       </div>
+                       <div>
+                         <v-flex xs12>
+                           <v-card >
+                             <ContentLoaderSidebar ></ContentLoaderSidebar>
+                           </v-card>
+                         </v-flex>
+                       </div>
                      </div>
                      <!-- <div class="d-flex mb-2 xs12 mb-3">
                        <v-card v-if="geneProps.length">
