@@ -806,7 +806,7 @@ import knownGenes from '../../../data/knownGenes'
       },
       autoSaveGenes(){
         console.log("autosaving genes")
-        /*
+
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
         this.organizeClinData();
@@ -841,7 +841,7 @@ import knownGenes from '../../../data/knownGenes'
             // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
             searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
           });
-        */
+
       },
       exportGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
@@ -910,12 +910,12 @@ import knownGenes from '../../../data/knownGenes'
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
           if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-            // this.copyAllGenes();
-            setInterval(()=>{
-              if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-                this.autoSaveGenes();
-              }
-            },3000)
+            this.copyAllGenes();
+            // setInterval(()=>{
+            //   if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+            //     this.autoSaveGenes();
+            //   }
+            // },3000)
 
           }
         }
