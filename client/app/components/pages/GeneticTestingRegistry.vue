@@ -1,4 +1,4 @@
-height="10"<template>
+<template>
   <div>
     <div v-show="launchedFromClinProps && clinFetchingGtrData">
       Please wait while we load your previous saved state!

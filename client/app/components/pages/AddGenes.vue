@@ -267,7 +267,6 @@ var geneModel = new GeneModel();
       },
       onApplyGenes(){
         this.copyPasteGenes = false;
-        console.log(this.knownGenesData.includes("dbfhjdb"));
         this.genesToApply = this.genesToApply.trim();
         this.genesToApply =  this.genesToApply.replace(/\n/g, " ");
         this.genesToApply =  this.genesToApply.replace(/,/g, " ");

@@ -15,6 +15,25 @@
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
 
+      <v-layout row justify-center>
+        <v-dialog v-if="byPassedGenesDialog" v-model="byPassedGenesDialog" max-width="400">
+          <v-card>
+            <v-card-title class="headline">Warning</v-card-title>
+            <v-card-text>
+              <p v-if="byPassedGenes.length>2">
+                Bypassing unknown genes: {{ byPassedGenes }}
+              </p>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn style="float:right" @click.native="byPassedGenesDialog = false">
+                OK
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-layout>
+
     <v-navigation-drawer
       permanent
       app
@@ -388,7 +407,9 @@ import knownGenes from '../../../data/knownGenes'
         clinGtrSearchTerm: [],
         clinPhenolyzerSeachTerm: [],
         clinFetchingGtr: false,
-        completeClinGtrIteration: false
+        completeClinGtrIteration: false,
+        byPassedGenes: "",
+        byPassedGenesDialog: false,
       }
     },
     watch: {
@@ -755,6 +776,35 @@ import knownGenes from '../../../data/knownGenes'
         });
 
       },
+      checkForUnknownGenes: function(){
+        let self = this;
+        var filteredKnownGenes = [];
+        var byPassedGenesArr = [];
+
+        self.uniqueGenes.map(x=>{
+          if(self.knownGenesData.includes(x.toUpperCase())) {
+            filteredKnownGenes.push(x)
+          }
+          else {
+            byPassedGenesArr.push(x.toUpperCase());
+          }
+        })
+
+        if(byPassedGenesArr.length>0){
+          console.log("" + byPassedGenesArr.join(" , ") + "  ");
+          self.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
+          self.byPassedGenesDialog = true;
+          // setTimeout(()=>{
+          //   self.copyAllGenes();
+          //   self.byPassedGenesDialog = false;
+          // }, 5000)
+        }
+        else {
+          self.copyAllGenes();
+        }
+
+
+      },
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
@@ -784,11 +834,24 @@ import knownGenes from '../../../data/knownGenes'
         this.snackbar=true;
 
         var filteredKnownGenes = [];
+        var byPassedGenesArr = [];
+        var duplicateGenes = [];
+
+        console.log("self.knownGenesData", self.knownGenesData)
         self.uniqueGenes.map(x=>{
           if(self.knownGenesData.includes(x.toUpperCase())) {
             filteredKnownGenes.push(x)
           }
+          else {
+            byPassedGenesArr.push(x.toUpperCase());
+          }
         })
+
+        // if(byPassedGenesArr.length>0){
+        //   console.log("" + byPassedGenesArr.join(" , ") + "  ");
+        //   self.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
+        //   self.byPassedGenesDialog = true;
+        // }
 
         this.sendClin({
           type: 'apply-genes',
@@ -910,6 +973,7 @@ import knownGenes from '../../../data/knownGenes'
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
           if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+            // this.checkForUnknownGenes();
             this.copyAllGenes();
             // setInterval(()=>{
             //   if (this.uniqueGenes && this.uniqueGenes.length > 0) {
