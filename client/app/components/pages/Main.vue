@@ -806,6 +806,7 @@ import knownGenes from '../../../data/knownGenes'
       },
       autoSaveGenes(){
         console.log("autosaving genes")
+        /*
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
         this.organizeClinData();
@@ -840,6 +841,7 @@ import knownGenes from '../../../data/knownGenes'
             // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
             searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
           });
+        */
       },
       exportGtrGenes: function(){
         var geneNames = this.selectedGtrGenes.map(gene => {
