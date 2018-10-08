@@ -359,24 +359,18 @@ var model = new Model();
       }
     },
     mounted(){
-      console.log("ShowGenePanel is mounted")
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
-      // console.log("clinGenes", this.clinGenes);
       bus.$on("clearClinGenesArray", ()=>{
-        console.log("I am listening to make includeclingenes false")
         this.includeClinGenes = false;
       });
       bus.$on("includeClinGenesArr", ()=>{
-        // console.log("I am listening to make includeclingenes false")
         this.includeClinGenes = true;
       })
 
     },
     updated(){
-      console.log("this.includeClinGenes in updated", this.includeClinGenes)
-
       // console.log("clinGenes", this.clinGenes);
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
 
@@ -648,7 +642,6 @@ var model = new Model();
         var cutOffValue;
 
         if(this.clinGenes.length<1 || !this.includeClinGenes){
-          console.log("Here....")
           if(this.items.length<=10){
             this.selected = this.items.slice();
           }
@@ -666,7 +659,6 @@ var model = new Model();
             }
           }
           else{
-            console.log("I am hereee")
             if(medianValue>fiftiethGeneValue){
               cutOffValue = medianValue;
             }

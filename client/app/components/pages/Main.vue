@@ -417,18 +417,18 @@ import knownGenes from '../../../data/knownGenes'
         // console.log("selectedGtrGenes changing");
         if(this.launchedFromClin){
           if(this.clinSearchedGtr.length===1){
-            console.log("1")
+            // console.log("1")
             bus.$emit("clearClinGenesArray");
             this.clinFetchingGtr = false;
           }
           else{
             this.clinSearchedGtrIndex++;
             if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
-              console.log("2-1")
+              // console.log("2-1")
               this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
             }
             else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length || this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
-              console.log("2-2")
+              // console.log("2-2")
               bus.$emit("clearClinGenesArray");
               this.clinFetchingGtr = false;
               this.completeClinGtrIteration = true;
@@ -447,7 +447,7 @@ import knownGenes from '../../../data/knownGenes'
         console.log(this.selectedPhenolyzerGenes)
         if(this.launchedFromClin){
           if(this.clinsearchedPhenolyzer.length===1){
-            // bus.$emit("clearClinGenesPhenolyzerArray");
+            bus.$emit("clearClinGenesPhenolyzerArray");
             // this.clinFetchingGtr = false;
           }
           else{
@@ -620,8 +620,8 @@ import knownGenes from '../../../data/knownGenes'
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
 
-        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-        this.NumberOfAllGenes = this.uniqueGenes.length
+        // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+        // this.NumberOfAllGenes = this.uniqueGenes.length
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
@@ -636,8 +636,8 @@ import knownGenes from '../../../data/knownGenes'
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
 
-        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-        this.NumberOfAllGenes = this.uniqueGenes.length
+        // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
+        // this.NumberOfAllGenes = this.uniqueGenes.length
       },
       copyGtrGenes: function(){
         // window.open('http://localhost:4000');
@@ -811,24 +811,18 @@ import knownGenes from '../../../data/knownGenes'
       copyAllGenes: function(){
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-        // console.log("this.uniqueGenes from copy", this.uniqueGenes);
-        // console.log("this.summaryGenes", this.summaryGenes)
-        this.organizeClinData();
-        var clinData = this.summaryClinTableArray.map(gene=> {
+        // this.organizeClinData();
+        var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
             source: gene.sources,
             geneId: gene.geneId,
             score: gene.score,
             genePanels: gene.value,
-            // searchTermsPhenolyzer: gene.searchTermPheno,
-            searchTermsPhenolyzer: gene.phenotypeSearches,
+            searchTermsPhenolyzer: gene.searchTermPheno,
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        // console.log("clinData", clinData);
-        // console.log("this.GtrGenesArr", this.GtrGenesArr)
-        // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
         this.$clipboard(genesToCopy);
 
         if(this.uniqueGenes.length>0){
@@ -849,13 +843,7 @@ import knownGenes from '../../../data/knownGenes'
           }
         })
 
-        // if(byPassedGenesArr.length>0){
-        //   console.log("" + byPassedGenesArr.join(" , ") + "  ");
-        //   self.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
-        //   self.byPassedGenesDialog = true;
-        // }
-
-        console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
+        // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
@@ -875,7 +863,6 @@ import knownGenes from '../../../data/knownGenes'
 
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-        this.organizeClinData();
         var clinData = this.summaryClinTableArray.map(gene=> {
           return {
             name: gene.name,
@@ -967,11 +954,6 @@ import knownGenes from '../../../data/knownGenes'
 
 
         var clinObject = JSON.parse(event.data);
-        // setInterval(()=>{
-        //   if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-        //     this.autoSaveGenes();
-        //   }
-        // },3000)
 
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
@@ -1028,187 +1010,6 @@ import knownGenes from '../../../data/knownGenes'
       importedGenes: function(genes){
         this.manuallyAddedGenes = genes;
       },
-      organizeClinData: function(){
-        this.summaryClinTableArray = [];
-        this.GtrGenesArr = [];
-        this.PhenolyzerGenesArr = [];
-        this.commonGtrPhenoGenes = [];
-        this.uniqueGtrGenes = [];
-        this.uniqueGtrData = [];
-        this.uniquePheno = [];
-        this.UniquePhenoData = [];
-
-        var gtrGenes = this.selectedGtrGenes.map(gene => {
-          return gene.name
-        })
-        this.GtrGenesArr = gtrGenes;
-
-        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-          return gene.geneName
-        })
-        this.PhenolyzerGenesArr = phenolyzerGenes;
-
-        var gtrSet = new Set(this.GtrGenesArr);
-        var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
-        var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
-        this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
-        // console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
-
-        var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
-        this.uniqueGtrGenes = [...uniqueGtr];
-
-        this.uniqueGtrGenes.map(x=>{
-          this.selectedGtrGenes.map(y=>{
-            if(x===y.name){
-              this.uniqueGtrData.push({
-                name: y.name,
-                sourceGTR: y.searchTermIndexSVG,
-                searchTermArrayGTR: y.searchTermArray,
-                searchTermIndexGTR: y.searchTermIndex,
-                isAssociatedGene: y.isAssociatedGene,
-                geneid: y.geneid,
-                geneIdLink: y.geneIdLink,
-                value: y.value
-              })
-            }
-          })
-        })
-
-        var uniquePheno = new Set([...phenolyzerSet].filter(x => !gtrSet.has(x)));
-        this.uniquePheno = [...uniquePheno];
-
-        this.uniquePheno.map(x=>{
-          this.selectedPhenolyzerGenes.map(y=>{
-            if(x===y.geneName){
-              this.UniquePhenoData.push({
-                name:y.geneName,
-                sourcePheno: y.searchTermIndexSVG,
-                searchTermPheno: y.searchTerm,
-                searchTermIndex: y.searchTermIndex,
-                geneId: y.geneId,
-                geneIdLink: y.geneIdLink,
-                score: y.score,
-              })
-            }
-          })
-        })
-
-        var tempA = [];
-
-        for(var i=0; i<this.commonGtrPhenoGenes.length; i++){
-          for(var j=0; j<this.selectedPhenolyzerGenes.length; j++){
-            if(this.commonGtrPhenoGenes[i]===this.selectedPhenolyzerGenes[j].geneName){
-              tempA.push({
-                name:this.selectedPhenolyzerGenes[j].geneName,
-                rank: parseInt(this.selectedPhenolyzerGenes[j].rank),
-                sourcePheno: this.selectedPhenolyzerGenes[j].searchTermIndexSVG,
-                searchTermPheno: this.selectedPhenolyzerGenes[j].searchTerm,
-                geneId: this.selectedPhenolyzerGenes[j].geneId,
-                geneIdLink: this.selectedPhenolyzerGenes[j].geneIdLink,
-                score: this.selectedPhenolyzerGenes[j].score,
-              })
-            }
-          }
-        }
-
-        tempA.sort(function(a, b){
-          return a.rank - b.rank;
-        });
-
-        for(var i=0; i<tempA.length; i++){
-          for(var j=0; j<this.selectedGtrGenes.length; j++){
-            if(tempA[i].name===this.selectedGtrGenes[j].name){
-              tempA[i].sourceGTR = this.selectedGtrGenes[j].searchTermIndexSVG
-              tempA[i].isAssociatedGene = this.selectedGtrGenes[j].isAssociatedGene
-              tempA[i].searchTermArrayGTR = this.selectedGtrGenes[j].searchTermArray
-              tempA[i].value = this.selectedGtrGenes[j].value
-            }
-          }
-        }
-
-        var arr=[];
-        arr.push(tempA.map(x=>{
-          return {
-            name: x.name,
-            isGtr: true,
-            isPheno: true,
-            sources: "GTR and Phenolyzer",
-            noOfSources: 2,
-            sourceGTR: x.sourceGTR,
-            sourcePheno: x.sourcePheno,
-            isAssociatedGene: x.isAssociatedGene,
-            geneIdLink: x.geneIdLink,
-            geneId: x.geneId,
-            searchTermArrayGTR: x.searchTermArrayGTR,
-            searchTermPheno: x.searchTermPheno,
-            value: x.value,
-            score: x.score,
-          }
-        }))
-
-        arr.push(this.uniqueGtrData.map(x=>{
-          return {
-            name: x.name,
-            isGtr: true,
-            isPheno: false,
-            sources: "GTR",
-            noOfSources: 1,
-            sourceGTR: x.sourceGTR,
-            sourcePheno: [],
-            isAssociatedGene: x.isAssociatedGene,
-            geneId: x.geneid,
-            geneIdLink: x.geneIdLink,
-            searchTermArrayGTR: x.searchTermArrayGTR,
-            searchTermPheno: [],
-            value: x.value,
-            score: ""
-          }
-        }))
-
-
-        arr.push(this.UniquePhenoData.map(x=>{
-          return {
-            name: x.name,
-            isGtr: false,
-            isPheno: true,
-            sources: "Phenolyzer",
-            noOfSources: 1,
-            sourcePheno: x.sourcePheno,
-            sourceGTR: [],
-            isAssociatedGene: false,
-            geneIdLink: x.geneIdLink,
-            geneId: x.geneId,
-            searchTermPheno: x.searchTermPheno,
-            searchTermArrayGTR: [],
-            score: x.score,
-            value: ""
-          }
-        }))
-
-        var tempSummaryTableArray = [];
-        tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
-
-        var associatedGenes = [];
-        var nonAssociatedGenes = [];
-
-        tempSummaryTableArray.map(x=>{
-          if(x.isAssociatedGene===true){
-            associatedGenes.push(x);
-          }
-          else{
-            nonAssociatedGenes.push(x);
-          }
-        })
-        this.associatedGenesData = associatedGenes;
-
-        if(associatedGenes.length){
-          this.summaryClinTableArray = [...associatedGenes, ...nonAssociatedGenes];
-        }
-        else {
-          this.summaryClinTableArray = tempSummaryTableArray;
-        }
-      },
-
 
     }
 

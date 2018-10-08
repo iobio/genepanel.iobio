@@ -280,6 +280,7 @@ import Sortable from 'sortablejs';
         bus.$emit("exportSummaryGenesAsCSV")
       },
       addTableData(){
+        console.log("summaryTableData", this.summaryTableData)
         var xtableData = [];
         this.tableData = this.summaryTableData;
         // xtableData = this.tableData;

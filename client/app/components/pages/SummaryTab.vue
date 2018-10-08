@@ -345,6 +345,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 isAssociatedGene: y.isAssociatedGene,
                 geneid: y.geneid,
                 geneIdLink: y.geneIdLink,
+                value: y.value
               })
             }
           })
@@ -362,7 +363,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 searchTermPheno: y.searchTerm,
                 searchTermIndex: y.searchTermIndex,
                 geneId: y.geneId,
-                geneIdLink: y.geneIdLink
+                geneIdLink: y.geneIdLink,
+                score: y.score,
               })
             }
           })
@@ -387,6 +389,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 isAssociatedGene: y.isAssociatedGene,
                 geneid: y.geneid,
                 geneIdLink: y.geneIdLink,
+                value: y.value
               })
             }
           })
@@ -401,7 +404,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 searchTermPheno: y.searchTerm,
                 searchTermIndex: y.searchTermIndex,
                 geneId: y.geneId,
-                geneIdLink: y.geneIdLink
+                geneIdLink: y.geneIdLink,
+                score: y.score,
               })
             }
           })
@@ -429,7 +433,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
                 clinGenLink : `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${this.PhenolyzerGenes[j].geneName}`,
                 geneId: this.PhenolyzerGenes[j].geneId,
-                geneIdLink: this.PhenolyzerGenes[j].geneIdLink
+                geneIdLink: this.PhenolyzerGenes[j].geneIdLink,
+                score: this.PhenolyzerGenes[j].score,
               })
             }
           }
@@ -446,7 +451,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene,
               tempA[i].searchTermArrayGTR = this.GtrGenes[j].searchTermArray,
               tempA[i].searchTermIndexGTR = this.GtrGenes[j].searchTermIndex
-
+              tempA[i].value = this.GtrGenes[j].value
             }
           }
         }
@@ -546,7 +551,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               searchTermIndex: x.searchTermIndex,
               isAssociatedGene: x.isAssociatedGene,
               geneIdLink: x.geneIdLink,
-              geneId: x.geneId
+              geneId: x.geneId,
+              value: x.value,
+              score: x.score,
             }
           }))
 
@@ -567,7 +574,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             searchTermIndex: x.searchTermIndex,
             isAssociatedGene: x.isAssociatedGene,
             geneIdLink: x.geneIdLink,
-            geneId: x.geneId
+            geneId: x.geneId,
+            value: x.value,
+            score: x.score,
           }
         }))
 
@@ -587,7 +596,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               searchTermIndex: [],
               isAssociatedGene: x.isAssociatedGene,
               geneId: x.geneid,
-              geneIdLink: x.geneIdLink
+              geneIdLink: x.geneIdLink,
+              value: x.value,
+              score: ""
             }
           }))
 
@@ -608,7 +619,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               searchTermArrayGTR: [],
               searchTermIndexGTR: [],
               geneIdLink: x.geneIdLink,
-              geneId: x.geneId
+              geneId: x.geneId,
+              score: x.score,
+              value: ""
             }
           }))
 
@@ -627,6 +640,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               searchTermIndexGTR: [],
               searchTermPheno: [],
               searchTermIndex: [],
+              value: "",
+              score: ""
             }
           }))
 
@@ -648,7 +663,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             searchTermIndex: [],
             isAssociatedGene: x.isAssociatedGene,
             geneId: x.geneid,
-            geneIdLink: x.geneIdLink
+            geneIdLink: x.geneIdLink,
+            value: x.value,
+            score: ""
           }
         }))
 
@@ -667,7 +684,9 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             searchTermArrayGTR: [],
             searchTermIndexGTR: [],
             geneIdLink: x.geneIdLink,
-            geneId: x.geneId
+            geneId: x.geneId,
+            score: x.score,
+            value: ""
           }
         }))
 
