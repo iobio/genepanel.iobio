@@ -539,9 +539,9 @@ import SvgBar from '../viz/SvgBar.vue'
 
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
-      if(!this.launchedFromClin){
+      // if(!this.launchedFromClin){
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-      }
+      // }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     watch: {

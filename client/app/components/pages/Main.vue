@@ -417,15 +417,18 @@ import knownGenes from '../../../data/knownGenes'
         // console.log("selectedGtrGenes changing");
         if(this.launchedFromClin){
           if(this.clinSearchedGtr.length===1){
+            console.log("1")
             bus.$emit("clearClinGenesArray");
             this.clinFetchingGtr = false;
           }
           else{
             this.clinSearchedGtrIndex++;
             if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
+              console.log("2-1")
               this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
             }
             else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length || this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
+              console.log("2-2")
               bus.$emit("clearClinGenesArray");
               this.clinFetchingGtr = false;
               this.completeClinGtrIteration = true;
@@ -441,7 +444,7 @@ import knownGenes from '../../../data/knownGenes'
         }
       },
       selectedPhenolyzerGenes: function(){
-        // console.log(this.selectedPhenolyzerGenes)
+        console.log(this.selectedPhenolyzerGenes)
         if(this.launchedFromClin){
           if(this.clinsearchedPhenolyzer.length===1){
             // bus.$emit("clearClinGenesPhenolyzerArray");
@@ -837,7 +840,6 @@ import knownGenes from '../../../data/knownGenes'
         var byPassedGenesArr = [];
         var duplicateGenes = [];
 
-        console.log("self.knownGenesData", self.knownGenesData)
         self.uniqueGenes.map(x=>{
           if(self.knownGenesData.includes(x.toUpperCase())) {
             filteredKnownGenes.push(x)
@@ -853,6 +855,7 @@ import knownGenes from '../../../data/knownGenes'
         //   self.byPassedGenesDialog = true;
         // }
 
+        console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
