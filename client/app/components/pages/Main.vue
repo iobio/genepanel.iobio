@@ -15,7 +15,7 @@
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
 
-      <v-layout row justify-center>
+      <!-- <v-layout row justify-center>
         <v-dialog v-if="byPassedGenesDialog" v-model="byPassedGenesDialog" max-width="400">
           <v-card>
             <v-card-title class="headline">Warning</v-card-title>
@@ -32,7 +32,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-layout>
+      </v-layout> -->
 
     <v-navigation-drawer
       permanent

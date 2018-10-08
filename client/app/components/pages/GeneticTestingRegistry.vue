@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-show="launchedFromClinProps && clinFetchingGtrData">
-      Please wait while we load your previous saved state!
+      <!-- Please wait while we load your previous saved state! -->
+      <LoadingTemplate></LoadingTemplate>
     </div>
     <div v-show="!clinFetchingGtrData" style="background-color:#f9fbff">
         <v-snackbar
@@ -1035,6 +1036,7 @@ import PanelsConditions from '../viz/PanelsConditions.vue';
 import PanelsDefinitionSelector from './PanelsDefinitionSelector.vue';
 import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
+import LoadingTemplate from './LoadingTemplate.vue';
 
 export default {
   components: { //Registering locally for nesting!
@@ -1052,7 +1054,8 @@ export default {
     'PanelsDefinitionSelector': PanelsDefinitionSelector,
     'progressCircularDonut': progressCircularDonut,
     'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
-    'ContentLoaderSidebar': ContentLoaderSidebar
+    'ContentLoaderSidebar': ContentLoaderSidebar,
+    'LoadingTemplate': LoadingTemplate
   },
   name: 'home',
   props: {
