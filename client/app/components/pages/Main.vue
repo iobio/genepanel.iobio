@@ -489,6 +489,9 @@ import knownGenes from '../../../data/knownGenes'
       });
       bus.$on("exportSummaryGenesAsCSV", ()=>{
         this.exportGenesAsCSV();
+      });
+      bus.$on("removeClinGenesArray", ()=>{
+        this.clinGenesGtr = [];
       })
     },
     updated(){
@@ -843,7 +846,18 @@ import knownGenes from '../../../data/knownGenes'
           }
         })
 
-        // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr)
+        var gtrGenes = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+        this.GtrGenesArr = gtrGenes;
+        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        this.PhenolyzerGenesArr = phenolyzerGenes;
+
+
+        console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr);
+        console.log("this.GtrGenesArr", this.GtrGenesArr)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
@@ -974,7 +988,7 @@ import knownGenes from '../../../data/knownGenes'
           if (clinObject.genes && clinObject.genes.length > 0 && clinObject.phenotypes && clinObject.phenotypes.length > 0) {
             this.clinSearchedGtr = clinObject.phenotypes[0];
             this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
-            this.clinGenes = clinObject.genes;
+            this.clinGenes = [...clinObject.genes];
             this.clinGenesGtr = clinObject.genesGtr;
             this.clinGenesPhenolyzer = clinObject.genesPhenolyzer;
             this.clinGenesManual = clinObject.genesManual;

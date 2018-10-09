@@ -300,7 +300,7 @@ var model = new Model();
         this.tooltipDefinition = null;
       },
       removeItem(item){
-        bus.$emit("clearClinGenesArray");
+        bus.$emit("removeClinGenesArray");
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.$emit('search-gtr', this.multipleSearchTerms);

@@ -424,7 +424,8 @@ var model = new Model();
         this.search = this.geneSearch;
       },
       clinGenes: function(){
-        // console.log("clinGenes watching")
+        console.log("clinGenes watching");
+        console.log("clinGenes", this.clinGenes)
       },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
@@ -641,6 +642,7 @@ var model = new Model();
         this.selected = [];
         var cutOffValue;
 
+        console.log("this.clinGenes", this.clinGenes)
         if(this.clinGenes.length<1 || !this.includeClinGenes){
           if(this.items.length<=10){
             this.selected = this.items.slice();
