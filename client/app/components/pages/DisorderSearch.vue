@@ -60,7 +60,7 @@
         <br>
           Conditions Searched:
           <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
-            <v-tooltip top :z-index="[tooltipDefinition=== null ? '-1' : '4']">
+            <v-tooltip bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
               <v-chip disabled slot="activator" color="primary" text-color="white" close :key="i" @input="remove(searchItem)" @mouseover="showTooltip(searchItem)" @mouseout="hideToolTip(searchItem)">
                 {{ i+1 }}. {{ searchItem }}
               </v-chip>
