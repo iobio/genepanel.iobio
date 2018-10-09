@@ -540,8 +540,11 @@ import SvgBar from '../viz/SvgBar.vue'
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
       // if(!this.launchedFromClin){
+      console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
+      if(!this.includeClinPhenolyzerGenes){
+        console.log("I should be caled")
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-      // }
+      }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     watch: {
