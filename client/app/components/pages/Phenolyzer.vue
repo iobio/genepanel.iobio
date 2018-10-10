@@ -577,6 +577,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         return items.filter(row => filter(row["geneName"], search));
       },
       updateTableHeaders(){
+        console.log("updateTableHeaders")
         if(this.multipleSearchTerms.length>1){
           this.headers = [
             {
@@ -612,7 +613,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             }
           ];
         }
-        else if(this.multipleSearchTerms.length<=1){
+        else if(this.multipleSearchTerms.length<2){
           this.headers = [
             {
               text: 'Rank',
@@ -696,10 +697,14 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.dictionaryArr = this.dictionaryArr.filter(term=>term.name!==item);
         this.$emit('phenotypeSearchTermArray', this.multipleSearchTerms);
+        this.updateTableHeaders();
+
         var combinedList = this.combineList(this.dictionaryArr);
         var createdObj = this.createObj(combinedList);
         var averagedData = this.performMeanOperation(combinedList, createdObj);
-        var sortedPhenotypeData = this.sortTheOrder(averagedData);
+        var meanData = this.getMeanData(averagedData, this.multipleSearchTerms.length)
+        var sortedPhenotypeData = this.sortTheOrder(meanData);
+        // var sortedPhenotypeData = this.sortTheOrder(averagedData);
 
         if(this.multipleSearchTerms.length>0){
           let data = this.drawSvgBars(sortedPhenotypeData);
