@@ -542,6 +542,7 @@ import knownGenes from '../../../data/knownGenes'
       },
       forceReload: function(){
         this.newAnalysisDialog = false;
+        this.clinGenesGtr = [];
         bus.$emit("newAnalysis");
         window.scrollTo(0,0);
       },
@@ -856,8 +857,8 @@ import knownGenes from '../../../data/knownGenes'
         this.PhenolyzerGenesArr = phenolyzerGenes;
 
 
-        console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr);
-        console.log("this.GtrGenesArr", this.GtrGenesArr)
+        // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr);
+        // console.log("this.GtrGenesArr", this.GtrGenesArr)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
@@ -866,6 +867,7 @@ import knownGenes from '../../../data/knownGenes'
           genesPhenolyzer: this.PhenolyzerGenesArr,
           genesManual: this.manuallyAddedGenes,
           genesReport: clinData,
+          byPassedGenes: byPassedGenesArr,
           // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
           searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
 
