@@ -356,6 +356,7 @@ var model = new Model();
         color: 'blue darken-3',
         includeClinGenes: true,
         openSearchBox: false,
+        defaultGenesToSelect: this.launchedFromClinProps ? 20 : 50
       }
     },
     mounted(){
@@ -634,8 +635,8 @@ var model = new Model();
         })
         var medianValue = model.calculateMedian(valuesForMedian);
         var fiftiethGeneValue;
-        if(this.items.length>50){
-          fiftiethGeneValue = this.items[49].value;
+        if(this.items.length>this.defaultGenesToSelect){
+          fiftiethGeneValue = this.items[this.defaultGenesToSelect-1].value;
         }
         var maxValue = Math.max(...valuesForMedian);
         var selectionTempArr = [];
@@ -647,7 +648,7 @@ var model = new Model();
           if(this.items.length<=10){
             this.selected = this.items.slice();
           }
-          else if(this.items.length>10 && this.items.length<=50){
+          else if(this.items.length>10 && this.items.length<=this.defaultGenesToSelect){
             cutOffValue = medianValue;
             if(maxValue===medianValue){
               this.selected = this.items.slice();
@@ -668,14 +669,14 @@ var model = new Model();
               cutOffValue = fiftiethGeneValue;
             }
             if(maxValue===cutOffValue){
-              this.selected = this.items.slice(0, 50);
+              this.selected = this.items.slice(0, this.defaultGenesToSelect);
             }
             // else if(cutOffValue===this.items[50].value){ //Al's condition
             //   this.selected = this.items.slice(0, 50);
             // }
             else {
               this.items.map((x,i)=>{
-                if((x.value>cutOffValue || x.isAssociatedGene) && i<50){
+                if((x.value>cutOffValue || x.isAssociatedGene) && i<this.defaultGenesToSelect){
                   this.selected.push(x);
                 }
               })
