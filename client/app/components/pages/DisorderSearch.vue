@@ -39,7 +39,7 @@
       <v-btn
           style="margin-top:-0.35px; text-transform: none"
           class="btnColor"
-          v-on:click.prevent="performSearch">
+          v-on:click.prevent="checkBeforePerformSearch">
         Generate Gene List
       </v-btn>
       <br>
@@ -246,7 +246,7 @@ var model = new Model();
           // console.log("enter key")
           this.enterPressed = true;
           setTimeout(()=>{
-            this.performSearch();
+            this.checkBeforePerformSearch();
           }, 10)
         }
         else if(event.key == 'ArrowDown') {
@@ -358,10 +358,20 @@ var model = new Model();
       initiateSearchForClinSavedTerms: function(){
         this.clinSearchedGtr.map(x=>{
           this.search = x;
-          this.performSearch();
+          this.checkBeforePerformSearch();
         })
         // this.canClearClinGenes = true;
 
+      },
+      checkBeforePerformSearch(){
+        if(this.multipleSearchTerms.length<4){
+          this.performSearch();
+        }
+        else {
+          this.snackbarText = "You can search for maximum 4 conditions";
+          this.snackbar = true;
+
+        }
       },
       performSearch: function(){
         // console.log("performSearch called")
