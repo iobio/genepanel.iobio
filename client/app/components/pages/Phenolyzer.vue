@@ -520,7 +520,6 @@ import SvgBar from '../viz/SvgBar.vue'
       }
     },
     updated(){
-      console.log("phenolyzer is updating")
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -590,7 +589,7 @@ import SvgBar from '../viz/SvgBar.vue'
             },
             { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
              {
-               text: 'Phenolyzer score',
+               text: 'Phenolyzer score (mean)',
                align: 'left',
                value: 'score',
                sortable: false,
@@ -817,7 +816,8 @@ import SvgBar from '../viz/SvgBar.vue'
                   var combinedList = self.combineList(self.dictionaryArr);
                   var createdObj = self.createObj(combinedList);
                   var averagedData = self.performMeanOperation(combinedList, createdObj);
-                  var sortedPhenotypeData = self.sortTheOrder(averagedData);
+                  var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
+                  var sortedPhenotypeData = self.sortTheOrder(meanData);
                   self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
@@ -899,7 +899,7 @@ import SvgBar from '../viz/SvgBar.vue'
               if(obj[uniqueGenes[i]]===undefined){
                 obj[uniqueGenes[i]]= {
                   geneName: arr[j].geneName,
-                  score: Number(arr[j].score),
+                  // score: Number(arr[j].score),
                   total: Number(arr[i].score),
                   fullScore: Number(arr[j].score),
                   sources: 1,
@@ -916,7 +916,7 @@ import SvgBar from '../viz/SvgBar.vue'
                   fullScore: Number(Number(obj[uniqueGenes[i]].fullScore + Number(arr[j].fullScore))),
                   // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))),
                   // score: (Number(Number(obj[uniqueGenes[i]].score + Number(arr[j].score)))/(Number(obj[uniqueGenes[i]].sources) + 1)),
-                  score: Number(Number(obj[uniqueGenes[i]].fullScore + Number(arr[j].fullScore)))/(Number(obj[uniqueGenes[i]].sources) + 1),
+                  // score: Number(Number(obj[uniqueGenes[i]].fullScore + Number(arr[j].fullScore)))/(Number(obj[uniqueGenes[i]].sources) + 1),
                   sources: Number(obj[uniqueGenes[i]].sources) + 1,
                   searchTerm: [...obj[uniqueGenes[i]].searchTerm, ...arr[j].searchTerm],
                   searchTermIndex: [...obj[uniqueGenes[i]].searchTermIndex, ...arr[j].searchTermIndex]
@@ -925,10 +925,16 @@ import SvgBar from '../viz/SvgBar.vue'
             }
           }
         }
-
+        console.log("Object.values(obj)", Object.values(obj))
         var withAvgArr = Object.values(obj);
         return withAvgArr;
         // sortTheOrder(withAvgArr)
+      },
+      getMeanData(arr, n){
+        arr.map(x=>{
+          x.score = Number(x.fullScore/n);
+        })
+        return arr;
       },
       sortTheOrder(arr){
         arr.sort(function(a,b){
