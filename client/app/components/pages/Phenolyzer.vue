@@ -297,23 +297,25 @@
                         <span class="Rightbar_CardHeading">
                         GENES
                         </span>
-                        <Dialogs
-                          id="genesDialog"
-                          class="dialogBox"
-                          :HeadlineText="HelpDialogsData[0].HeadlineText"
-                          :ContentText="HelpDialogsData[0].Content">
-                        </Dialogs>
 
                       <v-divider class="Rightbar_card_divider"></v-divider>
                       <span class="Rightbar_card_content_subheading">
                         <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected</span>
                       </center>
-                      <SvgBar
+                      <!-- <SvgBar
                        class="SvgBarClass"
                        id="genesSvgBox"
                        :selectedNumber="selected.length"
                        :totalNumber="items.length">
-                      </SvgBar>
+                      </SvgBar> -->
+                      <div class="text-xs-center">
+                        <progressCircularDonut
+                          v-if="items.length>0"
+                          :selectedNumber="selected.length"
+                          :totalNumber="items.length"
+                        >
+                        </progressCircularDonut>
+                      </div>
                     </v-card-text>
                   </v-card>
                 </div>
@@ -375,12 +377,14 @@ import IntroductionText from '../../../data/IntroductionText.json'
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import SvgBar from '../viz/SvgBar.vue'
+import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
 
   export default {
     components: {
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
+      'progressCircularDonut': progressCircularDonut,
       Typeahead
     },
     props: {
@@ -539,7 +543,7 @@ import SvgBar from '../viz/SvgBar.vue'
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
       // if(!this.launchedFromClin){
-      console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
+      // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
         console.log("I should be caled")
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
