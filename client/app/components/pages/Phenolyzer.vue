@@ -32,6 +32,7 @@
                         type="text"
                         autocomplete="off"
                         v-on:focus="ClearInputForNewSearch"
+                        v-on:keydown="EnterForSearch"
                         placeholder="Search phenotype (E.g. lactic acidosis)"
                         v-model="phenotypeTermEntered">
                       <typeahead
@@ -516,7 +517,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
         geneModel.StopAjaxCall();
-        this.genesTop = 30;
+        this.genesTop = this.launchedFromClin ? 10 : 25;
       });
       if(this.SearchTheDisorderInPhenolyzer.length>1){
         this.DisorderFromGtr = this.SearchTheDisorderInPhenolyzer;
@@ -560,9 +561,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       },
       phenotypeTerm: function() {
         $("#addedterm").remove();
-        if (this.phenotypeTerm && this.phenotypeTerm.label) {
-          this.getPhenotypeData();
-        }
+        // if (this.phenotypeTerm && this.phenotypeTerm.label) {
+        //   this.getPhenotypeData();
+        // }
       },
       SearchTheDisorderInPhenolyzer: function(){
         self.phenotypeTerm = "";
@@ -572,6 +573,13 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       }
     },
     methods: {
+      EnterForSearch(){
+        if(event.key==='Enter'){
+          setTimeout(()=>{
+            this.getPhenotypeData();
+          }, 10)
+        }
+      },
       filterItemsOnSearchPhenolyzer(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["geneName"], search));
@@ -714,7 +722,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             this.selected = this.items.slice(0,10);
           }
           else {
-            this.selected = this.items.slice(0,50);
+            this.selected = this.items.slice(0,25);
           }
           this.phenolyzerStatus = null;
           this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -764,6 +772,11 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         // this.includeClinPhenolyzerGenes = false;
       },
       getPhenotypeData(){
+        if(!this.checked){
+          this.getPhenotypeDataSearch();
+        }
+      },
+      getPhenotypeDataSearch(){
         console.log("clinGenes", this.clinGenes)
         let self = this;
         self.phenotypeSearchedByUser = true;
@@ -864,7 +877,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           }
           else if(self.multipleSearchTerms.includes(searchTerm)){
             self.checked = false;
-            self.snackbarText = "This phenotype term is already searched.";
+            self.snackbarText = "This search term has already be entered.";
             self.snackbar = true;
           }
         }
