@@ -410,6 +410,7 @@ import knownGenes from '../../../data/knownGenes'
         completeClinGtrIteration: false,
         byPassedGenes: "",
         byPassedGenesDialog: false,
+        genesToCopy: "",
       }
     },
     watch: {
@@ -553,6 +554,11 @@ import knownGenes from '../../../data/knownGenes'
         this.PhenolyzerGenesArr =[];
         this.manuallyAddedGenes = [];
         this.GtrGenesArr = [];
+        this.clinGenesPhenolyzer = [];
+        this.clinGenesManual = [];
+        this.clinsearchedPhenolyzer = [];
+        this.clinSearchedGtr = [];
+        this.clinFetchingGtr = false;
       },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
@@ -791,38 +797,11 @@ import knownGenes from '../../../data/knownGenes'
         });
 
       },
-      checkForUnknownGenes: function(){
-        let self = this;
-        var filteredKnownGenes = [];
-        var byPassedGenesArr = [];
-
-        self.uniqueGenes.map(x=>{
-          if(self.knownGenesData.includes(x.toUpperCase())) {
-            filteredKnownGenes.push(x)
-          }
-          else {
-            byPassedGenesArr.push(x.toUpperCase());
-          }
-        })
-
-        if(byPassedGenesArr.length>0){
-          console.log("" + byPassedGenesArr.join(" , ") + "  ");
-          self.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
-          self.byPassedGenesDialog = true;
-          // setTimeout(()=>{
-          //   self.copyAllGenes();
-          //   self.byPassedGenesDialog = false;
-          // }, 5000)
-        }
-        else {
-          self.copyAllGenes();
-        }
-
-
-      },
       copyAllGenes: function(){
-        let self = this;
-        var genesToCopy = this.uniqueGenes.toString();
+        // let self = this;
+        this.genesToCopy = this.uniqueGenes.toString();
+        console.log("this.uniqueGenes in copy", this.uniqueGenes)
+
         // this.organizeClinData();
         var clinData = this.summaryGenes.map(gene=> {
           return {
@@ -835,19 +814,24 @@ import knownGenes from '../../../data/knownGenes'
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        this.$clipboard(genesToCopy);
+        console.log("clinData", clinData)
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
+          this.snackbar=true;
+          this.$clipboard(this.genesToCopy);
         }
-        this.snackbar=true;
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
 
         var filteredKnownGenes = [];
         var byPassedGenesArr = [];
         var duplicateGenes = [];
 
-        self.uniqueGenes.map(x=>{
-          if(self.knownGenesData.includes(x.toUpperCase())) {
+        this.uniqueGenes.map(x=>{
+          if(this.knownGenesData.includes(x.toUpperCase())) {
             filteredKnownGenes.push(x)
           }
           else {
@@ -859,12 +843,14 @@ import knownGenes from '../../../data/knownGenes'
           return gene.name
         })
         this.GtrGenesArr = gtrGenes;
+
         var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
           return gene.geneName
         })
         this.PhenolyzerGenesArr = phenolyzerGenes;
 
-
+        // console.log("genesToCopy", this.genesToCopy)
+        // console.log("filteredKnownGenes", filteredKnownGenes)
         // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr);
         // console.log("this.GtrGenesArr", this.GtrGenesArr)
         this.sendClin({
@@ -960,12 +946,14 @@ import knownGenes from '../../../data/knownGenes'
           }
       },
       updateAllGenesFromSelection(data){
-        console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
-        var allGenes = data.map(x=>{
+        console.log("this.summaryGenes", this.summaryGenes)
+
+        var allGenes = this.summaryGenes.map(x=>{
           return x.name;
         });
         this.uniqueGenes = allGenes;
+        // console.log("this.uniqueGenes", this.uniqueGenes)
         this.NumberOfAllGenes = this.uniqueGenes.length
       },
       receiveClin: function(event) {
@@ -981,7 +969,7 @@ import knownGenes from '../../../data/knownGenes'
 
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
-          if (this.uniqueGenes && this.uniqueGenes.length > 0) {
+          // if (this.uniqueGenes && this.uniqueGenes.length > 0) {
             // this.checkForUnknownGenes();
             this.copyAllGenes();
             // setInterval(()=>{
@@ -990,7 +978,7 @@ import knownGenes from '../../../data/knownGenes'
             //   }
             // },3000)
 
-          }
+          // }
         }
 
         //Clin is sending data to set the state

@@ -69,7 +69,7 @@
                 <v-flex xs8>
                   <v-card>
                     <SummaryDataTable
-                      v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                      v-show="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
                       v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
                       v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
                       v-bind:geneSearch="geneSearch"

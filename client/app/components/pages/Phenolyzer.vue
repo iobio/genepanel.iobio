@@ -545,7 +545,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       // if(!this.launchedFromClin){
       // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
-        console.log("I should be caled")
+        // console.log("I should be caled")
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
