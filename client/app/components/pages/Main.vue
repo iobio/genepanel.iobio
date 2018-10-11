@@ -546,6 +546,13 @@ import knownGenes from '../../../data/knownGenes'
         this.NumberOfAllGenes = 0;
         bus.$emit("newAnalysis");
         window.scrollTo(0,0);
+        this.summaryGenes = [];
+        this.searchTermGTR = [];
+        this.phenotypeSearches = [];
+        this.uniqueGenes = [];
+        this.PhenolyzerGenesArr =[];
+        this.manuallyAddedGenes = [];
+        this.GtrGenesArr = [];
       },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
