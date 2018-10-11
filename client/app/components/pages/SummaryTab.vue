@@ -302,6 +302,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       bus.$on("newAnalysis", ()=>{
         this.PhenolyzerSearchTerms = [];
         this.GtrSearchTerms = [];
+        this.selected = [];
+        this.items = [];
       });
     },
     methods: {

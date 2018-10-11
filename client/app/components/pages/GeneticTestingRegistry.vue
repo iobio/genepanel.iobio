@@ -158,6 +158,7 @@
                     <v-dialog
                       v-model="openFilterDialog"
                       width="450"
+                      style="height:initial !important"
                       content-class="positionModal"
                     >
                       <v-card>
@@ -1605,9 +1606,15 @@ export default {
       this.$emit('search-gtr', genes, phenotype)
     },
     showChartComponent: function(chart_component){
-      window.scrollTo(0,150);
+      if(!this.launchedFromClin){
+        window.scrollTo(0,150);
+      }
+      else if(this.launchedFromClin){
+        window.scrollTo(0,0);
+      }
       this.chartComponent = chart_component;
       this.openFilterDialog = true;
+
       if(chart_component==='GeneMembership'){
         this.showPanelsCardData = true;
       }
@@ -1888,4 +1895,11 @@ center, span, h1, h2, h3, h4
 
 .v-messages
   margin-top: -16px
+
+.v-dialog__content .v-dialog__content__active
+    height: initial !important
+
+
+.dialog__content .dialog__content__active
+    height: initial !important
 </style>

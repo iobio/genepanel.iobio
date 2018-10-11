@@ -543,6 +543,7 @@ import knownGenes from '../../../data/knownGenes'
       forceReload: function(){
         this.newAnalysisDialog = false;
         this.clinGenesGtr = [];
+        this.NumberOfAllGenes = 0;
         bus.$emit("newAnalysis");
         window.scrollTo(0,0);
       },
@@ -952,7 +953,7 @@ import knownGenes from '../../../data/knownGenes'
           }
       },
       updateAllGenesFromSelection(data){
-        // console.log("this.summaryGenes", this.summaryGenes)
+        console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
         var allGenes = data.map(x=>{
           return x.name;
