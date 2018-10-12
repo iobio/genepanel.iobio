@@ -332,7 +332,7 @@ import knownGenes from '../../../data/knownGenes'
     data(){
       let self = this;
       return{
-        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'GeneticTestingRegistry',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,

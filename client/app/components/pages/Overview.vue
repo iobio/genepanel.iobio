@@ -3,13 +3,52 @@
       <v-layout row wrap style="margin-top:-10px;">
         <v-flex d-flex xs12>
           <v-card>
-            <v-jumbotron style="height: 310px;" :gradient="gradient" dark>
+            <v-jumbotron style="height: 370px;" :gradient="gradient" dark>
               <v-container fill-height>
                 <v-layout row wrap>
                   <v-flex xs12>
                     <v-flex text-xs-center style="margin-top:50px">
-                      <h1 style="color:white" class="display-2 font-weight-thin mb-3">panel.iobio</h1>
-                      <h4  class="subheading" style="font-size:15px">Generate list of genes based on suspected disorders and phenotypes.</h4>
+                      <span><h1 style="color:white; display:inline;font-family: quicksand !important;" class="display-2 font-weight-thin mb-3">panel.iobio</h1> <br><br></span>
+                      <h4  class="subheading" style="font-size:17px !important">Generate list of genes based on suspected disorders and phenotypes.</h4>
+                      <!-- <h4 class="subheading" style="font-size:15px">Generate list of genes based on:</h4> -->
+                      <br><br><br>
+                      <v-layout row wrap>
+                        <v-flex xs3>
+                        </v-flex>
+                        <v-flex xs3>
+                          <v-flex text-xs-center>
+                            <h4 style="color:white; display:inline">Suspected Conditions </h4><span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                            <br><br>
+                            <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('gtr')">
+                              Genetic Testing Registry
+                            </v-btn>
+                          </v-flex>
+                        </v-flex>
+                        <div class="vl"></div>
+
+                        <v-flex xs3>
+                          <v-flex text-xs-center>
+                            <h4 style="color:white; display:inline">Suspected Phenotype </h4><span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                            <br><br>
+                            <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('phenolyzer')">
+                              Phenolyzer
+                            </v-btn>
+                          </v-flex>
+                        </v-flex>
+                        <v-flex xs3>
+                        </v-flex>
+                      </v-layout>
+                      <!-- <br>
+                      <h4  class="subheading" style="font-size:18px !important">Generate list of genes based on suspected
+                        <v-btn round color="white" style="color:#0D47A1">
+                          Conditions
+                        </v-btn>
+                        or
+                        <v-btn round color="white" style="color:#0D47A1">
+                          Phenotypes
+                        </v-btn>
+                      </h4> -->
+                      <!-- <h4  class="subheading" style="font-size:15px">Generate list of genes based on suspected disorders and phenotypes.</h4>
                       <br>
                       <v-btn color="white" style="color:#0D47A1">
                       Learn More
@@ -24,7 +63,7 @@
                         <v-btn outline color="white" style="color:#0D47A1">
                           Phenolyzer
                         </v-btn>
-                      </a>
+                      </a> -->
 
                     </v-flex>
                   </v-flex>
@@ -65,6 +104,7 @@
               <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/bg9.svg" alt="bg">
           </v-flex>
         </v-flex>
+
 
       </v-layout>
       <v-divider></v-divider>
@@ -156,6 +196,9 @@ var model = new Model();
 @import ../assets/sass/variables
 @import url('https://fonts.googleapis.com/css?family=Open+Sans')
 
+.vl
+    border-left: 1px solid #d8d8d8
+    height: 100px
 
 div.polaroid
   width: 400px

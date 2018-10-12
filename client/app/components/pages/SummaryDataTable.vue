@@ -188,7 +188,7 @@ import Sortable from 'sortablejs';
       selectedTemp: [],
       headers: [
         { text: 'Change order', align: 'left', sortable: false },
-        { text: 'Rank', align: 'left', sortable: false, value:'SummaryIndex' },
+        { text: 'Number', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },

@@ -121,6 +121,14 @@
                         :selectedNumber="selectedGenes"
                         :totalNumber="totalGenes">
                        </SvgBar>
+                       <!-- <div class="text-xs-center">
+                         <progressCircularDonut
+                           v-if="totalGenes"
+                           :selectedNumber="selectedGenes"
+                           :totalNumber="totalGenes"
+                         >
+                         </progressCircularDonut>
+                       </div> -->
                        <br>
                        <div v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
@@ -172,6 +180,7 @@ import Dialogs from '../partials/Dialogs.vue';
 import SvgBar from '../viz/SvgBar.vue'
 import Alerts from '../partials/Alerts.vue';
 import SummarySvgBar from '../viz/SummarySvgBar.vue';
+import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
 
   export default {
@@ -180,7 +189,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       'Alerts': Alerts,
-      'SummarySvgBar': SummarySvgBar
+      'SummarySvgBar': SummarySvgBar,
+      'progressCircularDonut': progressCircularDonut,
     },
     props:{
       NumberOfGtrGenes:{
