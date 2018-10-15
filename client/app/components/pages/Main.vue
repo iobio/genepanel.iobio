@@ -445,7 +445,7 @@ import knownGenes from '../../../data/knownGenes'
         }
       },
       selectedPhenolyzerGenes: function(){
-        console.log(this.selectedPhenolyzerGenes)
+        // console.log(this.selectedPhenolyzerGenes)
         if(this.launchedFromClin){
           if(this.clinsearchedPhenolyzer.length===1){
             bus.$emit("clearClinGenesPhenolyzerArray");
@@ -800,7 +800,7 @@ import knownGenes from '../../../data/knownGenes'
       copyAllGenes: function(){
         // let self = this;
         this.genesToCopy = this.uniqueGenes.toString();
-        console.log("this.uniqueGenes in copy", this.uniqueGenes)
+        // console.log("this.uniqueGenes in copy", this.uniqueGenes)
 
         // this.organizeClinData();
         var clinData = this.summaryGenes.map(gene=> {
@@ -814,7 +814,7 @@ import knownGenes from '../../../data/knownGenes'
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        console.log("clinData", clinData)
+        // console.log("clinData", clinData)
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
@@ -869,7 +869,6 @@ import knownGenes from '../../../data/knownGenes'
 
       },
       autoSaveGenes(){
-        console.log("autosaving genes")
 
         let self = this;
         var genesToCopy = this.uniqueGenes.toString();
@@ -947,7 +946,7 @@ import knownGenes from '../../../data/knownGenes'
       },
       updateAllGenesFromSelection(data){
         this.summaryGenes = data;
-        console.log("this.summaryGenes", this.summaryGenes)
+        // console.log("this.summaryGenes", this.summaryGenes)
 
         var allGenes = this.summaryGenes.map(x=>{
           return x.name;

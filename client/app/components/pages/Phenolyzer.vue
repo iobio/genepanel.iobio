@@ -69,7 +69,13 @@
                     <div v-if="phenolyzerStatus!==null">
                       <center>
                         <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
-                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>  <span style="cursor: pointer" v-on:click="stopSearch"> <v-icon>cancel_presentation</v-icon></span>
+                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                        <v-tooltip bottom>
+                          <span slot="activator" style="cursor: pointer" v-on:click="stopSearch">
+                            <v-icon>cancel_presentation</v-icon>
+                          </span>
+                          <span>Cancel this search</span>
+                        </v-tooltip>
                       </center>
                     </div>
                     <div v-if="multipleSearchTerms.length">
@@ -625,6 +631,9 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         geneModel.StopAjaxCall();
         this.phenolyzerStatus = null;
         this.checked = false;
+        this.phenotypeTerm = "";
+        this.phenotypeTermEntered = "";
+
       },
       filterItemsOnSearchPhenolyzer(items, search, filter) {
         search = search.toString().toLowerCase()

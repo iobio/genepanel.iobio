@@ -411,8 +411,8 @@ var model = new Model();
         this.search = this.geneSearch;
       },
       clinGenes: function(){
-        console.log("clinGenes watching");
-        console.log("clinGenes", this.clinGenes)
+        // console.log("clinGenes watching");
+        // console.log("clinGenes", this.clinGenes)
       },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
@@ -629,7 +629,7 @@ var model = new Model();
         this.selected = [];
         var cutOffValue;
 
-        console.log("this.clinGenes", this.clinGenes)
+        // console.log("this.clinGenes", this.clinGenes)
         if(this.clinGenes.length<1 || !this.includeClinGenes){
           if(this.items.length<=10){
             this.selected = this.items.slice();
@@ -670,7 +670,7 @@ var model = new Model();
           }
         }
 
-        console.log("this.includeClinGenes", this.includeClinGenes)
+        // console.log("this.includeClinGenes", this.includeClinGenes)
         //If clin genes have value, set selected accordingly:
         if(this.clinGenes.length>0 && this.includeClinGenes){
           this.items.map(x=>{
