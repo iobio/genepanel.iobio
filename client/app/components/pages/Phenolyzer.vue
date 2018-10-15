@@ -162,7 +162,32 @@
                         <th v-for="header in props.headers" :key="header.text"
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
-                          {{ header.text }}
+                          <!-- {{ header.text }} -->
+                          <span v-if="header.text==='Gene Name'">
+                           <div v-show="!openSearchBox">
+                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
+                           </div>
+                           <div v-show="openSearchBox">
+                             <v-layout >
+                               <v-flex xs8 style="margin-top:-30px">
+                                 <div id="geneSearchBoxPhenolyzer">
+                                   <v-text-field
+                                     label="Search for Gene"
+                                     prepend-icon="search"
+                                     single-line
+                                     hide-details
+                                     v-model="search"
+                                   ></v-text-field>
+                                 </div>
+                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
+                               </v-flex>
+                               <v-flex xs1>
+                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox=false">close</v-icon>
+                               </v-flex>
+                             </v-layout>
+                           </div>
+                          </span>
+                          <span v-else>{{ header.text }}</span>
                         </th>
                       </tr>
                     </template>
@@ -276,7 +301,7 @@
 
               <!-- start sidebar -->
               <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
-                <div class="d-flex mb-2 xs12">
+                <!-- <div class="d-flex mb-2 xs12">
                   <v-card v-if="multipleSearchTerms.length">
                     <v-card-title primary-title>
                       <v-text-field
@@ -289,9 +314,10 @@
                     </v-card-title>
                     <br>
                   </v-card>
-                </div>
+                </div> -->
 
-                <div class="d-flex mt-3 mb-2 xs12">
+                <!-- <div class="d-flex mt-3 mb-2 xs12"> -->
+                <div class="d-flex mb-2 xs12">
                   <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
@@ -490,6 +516,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         HelpDialogsData: null,
         DisorderFromGtr: "",
         includeClinPhenolyzerGenes: true,
+        openSearchBox: false,
       }
     },
     beforeCreate(){
@@ -1159,6 +1186,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
   //   stroke: #4e7ad3
   //   stroke-width: 2
 
+  #geneSearchBoxPhenolyzer .v-label
+    font-size: 12px
 
   .btnColor
     color: white

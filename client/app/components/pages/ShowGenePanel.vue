@@ -115,20 +115,6 @@
                    </v-flex>
                  </v-layout>
                </div>
-                <!-- <v-layout >
-                  <v-flex xs12 style="padding-top:12px">
-                    <div >
-                      <v-text-field
-                        append-icon="search"
-                        label="Search for Gene"
-                        single-line
-                        hide-details
-                      ></v-text-field>
-                    </div>
-                    <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
-
-                  </v-flex>
-                </v-layout> -->
               </span>
               <span v-else>{{ header.text }}</span>
 
