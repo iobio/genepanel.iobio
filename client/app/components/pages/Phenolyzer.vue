@@ -69,7 +69,7 @@
                     <div v-if="phenolyzerStatus!==null">
                       <center>
                         <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
-                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>  <span style="cursor: pointer" v-on:click="stopSearch"> <v-icon>cancel_presentation</v-icon></span>
                       </center>
                     </div>
                     <div v-if="multipleSearchTerms.length">
@@ -134,6 +134,9 @@
             <v-layout row wrap>
               <!-- Start data table  -->
               <v-flex xs8>
+                <v-card>
+                  <ContentLoaderPlaceholder v-show="phenolyzerStatus!==null || checked"></ContentLoaderPlaceholder>
+                </v-card>
                 <v-card v-if="multipleSearchTerms.length">
                   <v-data-table
                       id="genes-table"
@@ -317,7 +320,15 @@
                 </div> -->
 
                 <!-- <div class="d-flex mt-3 mb-2 xs12"> -->
-                <div class="d-flex mb-2 xs12">
+                <div v-if="phenolyzerStatus!==null || checked" class="d-flex mb-2 xs12">
+                  <v-flex xs12>
+                    <v-card >
+                      <ContentLoaderSidebar ></ContentLoaderSidebar>
+                    </v-card>
+                  </v-flex>
+                </div>
+
+                <div v-else class="d-flex mb-2 xs12">
                   <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
                     <v-card-text>
                       <center>
@@ -405,13 +416,16 @@ import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
 import SvgBar from '../viz/SvgBar.vue'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
-
+import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
+import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 
   export default {
     components: {
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       'progressCircularDonut': progressCircularDonut,
+      'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
+      'ContentLoaderSidebar': ContentLoaderSidebar,
       Typeahead
     },
     props: {
@@ -580,7 +594,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
     },
     watch: {
       clinsearchedPhenolyzer: function(){
-        console.log("clinsearchedPhenolyzer in watch", this.clinsearchedPhenolyzer)
+        // console.log("clinsearchedPhenolyzer in watch", this.clinsearchedPhenolyzer)
         this.initiatePhenolyzerSearchForClinSavedTerms();
       },
       genesTop: function() {
@@ -607,12 +621,16 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           }, 10)
         }
       },
+      stopSearch: function(){
+        geneModel.StopAjaxCall();
+        this.phenolyzerStatus = null;
+        this.checked = false;
+      },
       filterItemsOnSearchPhenolyzer(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["geneName"], search));
       },
       updateTableHeaders(){
-        console.log("updateTableHeaders")
         if(this.multipleSearchTerms.length>1){
           this.headers = [
             {
@@ -804,7 +822,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         }
       },
       getPhenotypeDataSearch(){
-        console.log("clinGenes", this.clinGenes)
+        // console.log("clinGenes", this.clinGenes)
         let self = this;
         self.phenotypeSearchedByUser = true;
         //If autocomplete is not used and a term is searched by clicking the button.
@@ -874,7 +892,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                   // console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  console.log("self.includeClinPhenolyzerGenes", self.includeClinPhenolyzerGenes)
+                  // console.log("self.includeClinPhenolyzerGenes", self.includeClinPhenolyzerGenes)
                   if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
                     self.selected = [];
                   // if(self.launchedFromClin && self.clinGenes.length>0){
@@ -888,7 +906,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                     self.selected = self.items.slice(0, self.genesTop);
 
                   }
-                  console.log("self select", self.selected)
                   // self.selected = self.items.slice(0,50);
                   self.phenolyzerStatus = null;
                   self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
@@ -974,7 +991,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             }
           }
         }
-        console.log("Object.values(obj)", Object.values(obj))
+        // console.log("Object.values(obj)", Object.values(obj))
         var withAvgArr = Object.values(obj);
         return withAvgArr;
         // sortTheOrder(withAvgArr)
