@@ -39,7 +39,7 @@
                     <!-- <v-flex xs1>
 
                     </v-flex> -->
-                    <v-flex xs4>
+                    <v-flex>
                       <v-layout row wrap>
 
                         <v-flex >

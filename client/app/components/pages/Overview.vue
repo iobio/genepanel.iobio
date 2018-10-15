@@ -9,7 +9,7 @@
                   <v-flex xs12>
                     <v-flex text-xs-center style="margin-top:50px">
                       <span><h1 style="color:white; display:inline;font-family: quicksand !important;" class="display-2 font-weight-thin mb-3">panel.iobio</h1> <br><br></span>
-                      <h4  class="subheading" style="font-size:17px !important">Generate list of genes based on suspected disorders and phenotypes.</h4>
+                      <h4  class="subheading" style="font-size:17px !important">Generate list of genes based on suspected conditions and phenotypes.</h4>
                       <!-- <h4 class="subheading" style="font-size:15px">Generate list of genes based on:</h4> -->
                       <br><br><br>
                       <v-layout row wrap>
@@ -17,10 +17,14 @@
                         </v-flex>
                         <v-flex xs3>
                           <v-flex text-xs-center>
-                            <h4 style="color:white; display:inline">Suspected Conditions </h4><span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                            <h4 style="color:white; display:inline">Suspected Conditions </h4>
+                            <v-tooltip top>
+                              <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                              <span>Generate a gene list for suspected condition (Eg. Treacher Collins Syndrome)</span>
+                            </v-tooltip>
                             <br><br>
                             <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('gtr')">
-                              Genetic Testing Registry
+                              Genetic Testing Registry <v-icon>play_arrow</v-icon>
                             </v-btn>
                           </v-flex>
                         </v-flex>
@@ -28,10 +32,14 @@
 
                         <v-flex xs3>
                           <v-flex text-xs-center>
-                            <h4 style="color:white; display:inline">Suspected Phenotype </h4><span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                            <h4 style="color:white; display:inline">Suspected Phenotypes </h4>
+                            <v-tooltip top>
+                              <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                              <span>Generate a gene list for suspected phenotype (Eg. Lactic acidosis) using the Phenolyzer. </span>
+                            </v-tooltip>
                             <br><br>
                             <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('phenolyzer')">
-                              Phenolyzer
+                              Phenolyzer <v-icon>play_arrow</v-icon>
                             </v-btn>
                           </v-flex>
                         </v-flex>
