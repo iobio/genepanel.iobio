@@ -69,9 +69,9 @@
                     <div v-if="phenolyzerStatus!==null">
                       <center>
                         <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
-                        Phenolyzer is <strong>{{ phenolyzerStatus }}</strong>
+                        Phenolyzer - <strong>{{ phenolyzerStatus }}</strong>
                         <v-tooltip bottom>
-                          <span slot="activator" style="cursor: pointer" v-on:click="stopSearch">
+                          <span v-show="checked" slot="activator" style="cursor: pointer" v-on:click="stopSearch">
                             <v-icon>cancel_presentation</v-icon>
                           </span>
                           <span>Cancel this search</span>
@@ -141,7 +141,7 @@
               <!-- Start data table  -->
               <v-flex xs8>
                 <v-card>
-                  <ContentLoaderPlaceholder v-show="phenolyzerStatus!==null || checked"></ContentLoaderPlaceholder>
+                  <ContentLoaderPlaceholder v-show="checked===true"></ContentLoaderPlaceholder>
                 </v-card>
                 <v-card v-if="multipleSearchTerms.length">
                   <v-data-table
@@ -326,7 +326,7 @@
                 </div> -->
 
                 <!-- <div class="d-flex mt-3 mb-2 xs12"> -->
-                <div v-if="phenolyzerStatus!==null || checked" class="d-flex mb-2 xs12">
+                <div v-if=" checked===true" class="d-flex mb-2 xs12">
                   <v-flex xs12>
                     <v-card >
                       <ContentLoaderSidebar ></ContentLoaderSidebar>
@@ -556,6 +556,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         this.items = [];
         this.selected = [];
         this.dictionaryArr = [];
+        this.noResultsArr = [];
         this.phenotypeTerm = "";
         this.phenotypeTermEntered = "";
         this.phenolyzerStatus = null;

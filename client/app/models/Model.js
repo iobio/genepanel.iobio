@@ -545,7 +545,8 @@ mergeGenesAcrossPanels(genePanels) {
 
 
   getGeneBarChartData(genes, width, launchedFromClinProps) {
-    if(width===undefined || launchedFromClinProps){
+    console.log("width", width)
+    if(width===undefined || width===0 || launchedFromClinProps){
       width = 850;
     }
     // Sort genes by gene panel count (descending order)
