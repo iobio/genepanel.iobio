@@ -34,9 +34,12 @@ if [[ $1 == "prod" ]]; then
   # aws cloudfront create-invalidation --distribution-id E331YTF25OIVP7 --paths /\*
   echo "** Syncing to prod s3 bucket **"
   aws s3 cp ./deploy/  s3://static.iobio.io/dev/panel.iobio.io/ --recursive
+  # aws s3 cp ./deploy/  s3://static.iobio.io/prod/panel.iobio.io/ --recursive
+
   echo "** Renew cloudfrount cache **"
   aws cloudfront create-invalidation --distribution-id E2ZI10KD8X77ZL --paths /\*
 
+  # aws cloudfront create-invalidation --distribution-id ESCEVE7C90M80 --paths /\*
 
 
 else

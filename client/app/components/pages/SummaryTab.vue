@@ -95,12 +95,42 @@
                       <br>
                     </v-card>
                   </div>
+                  <!-- <div>
+                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <center>
+                        <v-card-text>
+                          <div style="display:inline-block; padding-top:5px;">
+                            <label>Genes Select</label>
+                            <input
+                              id="top-genes-summary"
+                              class="form-control"
+                              type="text"
+                              v-model="genesTop"
+                              placeholder="10"
+                              autocomplete="off"
+                              list="genes">
+                              <datalist id="genes">
+                                <option v-for="genesCount in genesTopCounts">
+                                  {{ genesCount }}
+                                </option>
+                              </datalist>
+                          </div>
+                          <v-btn
+                              style="margin-top:-0.35px; text-transform: none; color:white"
+                              class="btnColor"
+                              v-on:click.prevent="selectNumberOfSummaryGenes">
+                            Select
+                          </v-btn>
+                        </v-card-text>
+                      </center>
+                    </v-card>
+                  </div> -->
                   <div class="d-flex mt-3 mb-2 xs12">
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
-                        GENES
+                        GENES SUMMARY
                         </span>
                         <Dialogs
                           id="genesDialog"
@@ -112,7 +142,45 @@
 
 
                          <span class="Rightbar_card_content_subheading">
-                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} genes selected</span>
+                           <span v-if="!openEditBox"><strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong></span>
+                           <span v-else>
+                             <div style="display:inline-block; padding-top:5px;">
+                               <input
+                                 id="top-genes-summary"
+                                 class="form-control"
+                                 style="margin-bottom:8px; width:82%"
+                                 type="text"
+                                 v-model="genesTop"
+                                 placeholder="10"
+                                 autocomplete="off"
+                                 list="genes">
+                                 <datalist id="genes">
+                                   <option v-for="genesCount in genesTopCounts">
+                                     {{ genesCount }}
+                                   </option>
+                                 </datalist>
+                             </div>
+                           </span>
+                           of {{ totalGenes }} genes selected
+                           <v-tooltip bottom v-if="!openEditBox">
+                            <v-icon
+                              slot="activator"
+                              v-on:click="openEditBox=true"
+                            >
+                              edit
+                            </v-icon>
+                            <span>Edit the number of genes selected</span>
+                          </v-tooltip>
+                          <v-tooltip bottom v-else>
+                           <v-icon
+                             slot="activator"
+                             v-on:click="openEditBox=false"
+                           >
+                             close
+                           </v-icon>
+                           <span>Close the edit box</span>
+                         </v-tooltip>
+                         </span>
                        </center>
                        <SvgBar
                        v-if="totalGenes"
@@ -256,8 +324,14 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       GtrPhenoTempAGenes: [],
       GtrFinalGenes: [],
       PhenolyzerFinalGenes: [],
+      genesTopCounts: [5, 10, 30, 50],
+      genesTop: null,
+      openEditBox: false,
     }),
     watch: {
+      genesTop: function(){
+        this.selectNumberOfSummaryGenes();
+      },
       GtrGenesForSummary:function(){
         // console.log("watch: this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary);
         this.GtrGenes = [];
@@ -317,6 +391,11 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       });
     },
     methods: {
+      selectNumberOfSummaryGenes: function(){
+        if(this.genesTop>0){
+          bus.$emit('SelectedNumberOfSummaryGenes', this.genesTop);
+        }
+      },
       TotalSummaryGenes: function(e){
         this.totalGenes = e;
       },

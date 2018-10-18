@@ -55,19 +55,25 @@
               </span>
             </td>
             <td>
-              <span v-if="props.item.isImportedGenes">
-                <v-icon>check</v-icon>
-              </span>
+              <center>
+                <span v-if="props.item.isImportedGenes">
+                  <v-icon style="color:#455A64">check_circle_outline</v-icon>
+                </span>
+              </center>
             </td>
             <td>
-              <span v-for="x in props.item.sourceGTR">
-                <span v-html="x"></span>
-              </span>
+              <center>
+                <span v-for="x in props.item.sourceGTR">
+                  <span v-html="x"></span>
+                </span>
+              </center>
             </td>
             <td>
-              <span v-for="x in props.item.sourcePheno">
-                <span v-html="x"></span>
-              </span>
+              <center>
+                <span v-for="x in props.item.sourcePheno">
+                  <span v-html="x"></span>
+                </span>
+              </center>
             </td>
             <td>
               <v-menu bottom offset-y style="color:black">
@@ -267,6 +273,10 @@ import Sortable from 'sortablejs';
 
       bus.$on("selectCommonGenesBus", ()=>{
         this.selectCommonGenes();
+      })
+
+      bus.$on("SelectedNumberOfSummaryGenes", (data)=>{
+        this.selected = this.items.slice(0,data);
       })
 
       this.$emit("TotalSummaryGenes", this.items.length);
