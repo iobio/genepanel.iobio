@@ -22,7 +22,7 @@
               <v-card-text style="margin-bottom:-5px">
                 <h3>Phenolyzer</h3>
                 <v-layout row wrap>
-                  <v-flex xs12 sm12 md12 lg8>
+                  <v-flex xs12 sm12 md12 lg8 xl8>
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Enter Phenotype</label>
                       <input
@@ -95,30 +95,95 @@
                     <p v-if="checked"><v-progress-linear  height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
                     <p></p>
                   </v-flex>
+
                   <v-flex >
-                    <div style="display:inline-block; padding-top:5px;">
-                      <label>Genes</label>
-                      <input
-                        :disabled="multipleSearchTerms.length<1"
-                        id="top-genes-input"
-                        class="form-control"
-                        type="text"
-                        v-model="genesTop"
-                        autocomplete="off"
-                        list="genes">
-                        <datalist id="genes">
-                          <option v-for="genesCount in genesTopCounts">
-                            {{ genesCount }}
-                          </option>
-                        </datalist>
-                    </div>
-                    <v-btn
-                        :disabled="multipleSearchTerms.length<1"
-                        style="margin-top:-0.35px; text-transform: none; color:white"
-                        class="btnColor"
-                        v-on:click.prevent="selectNumberOfTopPhenolyzerGenes">
-                      Select
-                    </v-btn>
+                    <v-layout row wrap>
+                      <v-flex >
+                        <div style="margin-top:-40px" v-if="items.length" class="d-flex mb-2 xs12 mb-3">
+                          <v-card>
+                            <v-card-text>
+                              <center>
+                                <span class="Rightbar_CardHeading">
+                                GENES
+                                </span>
+                              <v-divider class="Rightbar_card_divider"></v-divider>
+                              <span class="Rightbar_card_content_subheading">
+                                <span v-if="!openEditBoxPhenolyzer"><strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> </span>
+                                <span v-else>
+                                  <div style="display:inline-block; padding-top:5px;">
+                                    <input
+                                      :disabled="multipleSearchTerms.length<1"
+                                      id="top-genes-phenolyzer"
+                                      class="form-control"
+                                      style="margin-bottom:8px; width:82%"
+                                      type="text"
+                                      v-model="genesTop"
+                                      autocomplete="off"
+                                      list="genes">
+                                      <datalist id="genes">
+                                        <option v-for="genesCount in genesTopCounts">
+                                          {{ genesCount }}
+                                        </option>
+                                      </datalist>
+                                  </div>
+                                </span>
+                                  of {{ items.length }} genes selected
+                                  <v-tooltip bottom v-if="!openEditBoxPhenolyzer">
+                                   <v-icon
+                                     slot="activator"
+                                     v-on:click="openEditBoxPhenolyzer=true"
+                                   >
+                                     edit
+                                   </v-icon>
+                                   <span>Edit the number of genes selected</span>
+                                 </v-tooltip>
+                                 <v-tooltip bottom v-else>
+                                  <v-icon
+                                    slot="activator"
+                                    v-on:click="openEditBoxPhenolyzer=false"
+                                  >
+                                    close
+                                  </v-icon>
+                                  <span>Close the edit box</span>
+                                </v-tooltip>
+                              </span>
+                              </center>
+                              <div class="text-xs-center">
+                                <progressCircularDonut
+                                  v-if="items.length>0"
+                                  :selectedNumber="selected.length"
+                                  :totalNumber="items.length"
+                                >
+                                </progressCircularDonut>
+                              </div>
+                            </v-card-text>
+                          </v-card>
+                          <!-- <div style="display:inline-block; padding-top:5px;">
+                            <label>Genes</label>
+                            <input
+                              :disabled="multipleSearchTerms.length<1"
+                              id="top-genes-input"
+                              class="form-control"
+                              type="text"
+                              v-model="genesTop"
+                              autocomplete="off"
+                              list="genes">
+                              <datalist id="genes">
+                                <option v-for="genesCount in genesTopCounts">
+                                  {{ genesCount }}
+                                </option>
+                              </datalist>
+                          </div>
+                          <v-btn
+                              :disabled="multipleSearchTerms.length<1"
+                              style="margin-top:-0.35px; text-transform: none; color:white"
+                              class="btnColor"
+                              v-on:click.prevent="selectNumberOfTopPhenolyzerGenes">
+                            Select
+                          </v-btn> -->
+                        </div>
+                      </v-flex>
+                    </v-layout>
                   </v-flex>
                 </v-layout>
               </v-card-text>
@@ -143,6 +208,8 @@
                 <v-card>
                   <ContentLoaderPlaceholder v-show="checked===true"></ContentLoaderPlaceholder>
                 </v-card>
+              </v-flex>
+                <v-flex xs12>
                 <v-card v-if="multipleSearchTerms.length">
                   <v-data-table
                       id="genes-table"
@@ -326,7 +393,7 @@
                 </div> -->
 
                 <!-- <div class="d-flex mt-3 mb-2 xs12"> -->
-                <div v-if=" checked===true" class="d-flex mb-2 xs12">
+                <!-- <div v-if=" checked===true" class="d-flex mb-2 xs12">
                   <v-flex xs12>
                     <v-card >
                       <ContentLoaderSidebar ></ContentLoaderSidebar>
@@ -346,12 +413,12 @@
                       <span class="Rightbar_card_content_subheading">
                         <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected</span>
                       </center>
-                      <!-- <SvgBar
+                      <SvgBar
                        class="SvgBarClass"
                        id="genesSvgBox"
                        :selectedNumber="selected.length"
                        :totalNumber="items.length">
-                      </SvgBar> -->
+                      </SvgBar>
                       <div class="text-xs-center">
                         <progressCircularDonut
                           v-if="items.length>0"
@@ -362,7 +429,7 @@
                       </div>
                     </v-card-text>
                   </v-card>
-                </div>
+                </div> -->
               </div>
             </v-layout>
           </v-flex>
@@ -537,6 +604,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         DisorderFromGtr: "",
         includeClinPhenolyzerGenes: true,
         openSearchBox: false,
+        openEditBoxPhenolyzer: false,
       }
     },
     beforeCreate(){
