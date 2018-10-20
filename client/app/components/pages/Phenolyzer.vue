@@ -946,6 +946,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
                   self.genesToApply = "";
                   self.checked = false;
                   self.alert = true;
+                  if(!self.noResultsArr.includes(searchTerm))
                   self.noResultsArr.push(searchTerm);
                 } else {
                   self.tempItems = geneModel.phenolyzerGenes;

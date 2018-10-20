@@ -128,7 +128,7 @@
               <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/phenolyzer_icon_active.svg" alt="NCBI logo" style="height:65px; width:55px;"> Phenolyzer</h2>
               <p   style="text-align: justify; font-size:14px">
                 Phenolyzer is a tool from the <a href="http://wglab.org/" target='_blank'>Wang Genomics lab</a>, that converts discrete phenotype terms into a list of candidate genes.
-                <br>This is achieved by interpreting the phenolyzer term into a set of disease names.
+                <br>This is achieved by interpreting the phenotype term into a set of disease names.
                 Then, all genes having a reported association with these diseases are found, then expands this list by considering gene-gene relation databases.
                 Finally, all this information is integrated to generate a weighted score for each gene.
               </p>
