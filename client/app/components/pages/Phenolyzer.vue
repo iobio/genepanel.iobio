@@ -96,7 +96,7 @@
                     <p></p>
                   </v-flex>
 
-                  <v-flex >
+                  <v-flex xs12 sm12 md12 lg4 xl4>
                     <v-layout row wrap>
                       <v-flex >
                         <div style="margin-top:-40px" v-if="items.length" class="d-flex mb-2 xs12 mb-3">
@@ -629,6 +629,8 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         this.phenotypeTermEntered = "";
         this.phenolyzerStatus = null;
         this.checked = false;
+        this.search = '';
+        this.openSearchBox = false;
         this.$emit("SelectedPhenolyzerGenesToCopy", []);
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
@@ -824,6 +826,8 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       remove (item) {
         this.items = [];
         this.selected = [];
+        this.search = '';
+        this.openSearchBox = false;
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.dictionaryArr = this.dictionaryArr.filter(term=>term.name!==item);
@@ -903,6 +907,8 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         // console.log("clinGenes", this.clinGenes)
         let self = this;
         self.phenotypeSearchedByUser = true;
+        self.search = '';
+        self.openSearchBox = false; 
         //If autocomplete is not used and a term is searched by clicking the button.
         if(self.phenotypeTerm===undefined && document.getElementById("phenotype-term").value.length>1){
           self.phenotypeTerm = {
