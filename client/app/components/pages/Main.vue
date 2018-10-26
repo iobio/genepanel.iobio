@@ -57,7 +57,6 @@
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
-           <!-- <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span> -->
            <span v-if="component==='Phenolyzer'">
              <img src="../assets/images/phenolyzer2.svg" alt="" height="28px" width="28px" >
            </span>
@@ -70,7 +69,6 @@
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             </v-badge>
            </v-list-tile-title>
-
          </v-list-tile-content>
        </v-list-tile>
 
@@ -88,10 +86,8 @@
               <span slot="badge">{{ manuallyAddedGenes.length }}</span>
             </v-badge>
            </v-list-tile-title>
-
          </v-list-tile-content>
        </v-list-tile>
-
 
        <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
@@ -109,8 +105,6 @@
            </v-list-tile-title>
          </v-list-tile-content>
        </v-list-tile>
-
-       <!-- <v-divider></v-divider> -->
      </v-list>
 
     </v-navigation-drawer>
@@ -145,9 +139,6 @@
             <v-list-tile @click="exportGtrGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
             </v-list-tile>
-            <!-- <v-list-tile @click="saveGtrGenesAsCSV">
-              <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Save GTR genes as CSV</v-list-tile-title>
-            </v-list-tile> -->
             <hr>
           </div>
           <div v-else-if="component==='Phenolyzer'">
@@ -188,7 +179,6 @@
       </span>
       <HelpMenu v-bind:launchedFromClin="launchedFromClin"></HelpMenu>
       <AppsMenu v-show="!launchedFromClin"></AppsMenu>
-
     </v-toolbar>
 
     <div>
@@ -200,29 +190,36 @@
         </div>
         <div style="background:white; height:auto">
           <keep-alive>
-            <!-- <AddGenes></AddGenes> -->
-            <Overview v-if="component==='OverviewPage'"></Overview>
-            <GeneticTestingRegistry
-              v-if="component==='GeneticTestingRegistry'"
-              v-on:vendorListCB="updateVendors($event)"
-              v-bind:selectedVendorsListCB="selectedVendorsList"
-              v-on:diseasesCB=addDiseases($event)
-              v-on:disorderNamesListCB="updateDisorderNames($event)"
-              v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
-              v-on:GeneMembershipData="GeneMembershipData($event)"
-              v-bind:selectedDisordersListCB="selectedDisordersList"
-              v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
-              v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
-              :chartColor="ordinalColor"
-              :barColor="barColor"
-              @search-gtr="onSearchGTR"
-              v-bind:launchedFromClin="launchedFromClin"
-              v-bind:browser="browser"
-              v-bind:clinSearchedGtr="clinSearchedGtr"
-              v-bind:isMobile="isMobile">
-            </GeneticTestingRegistry>
+              <!-- <AddGenes></AddGenes> -->
+              <Overview v-show="component==='OverviewPage'"></Overview>
+            </keep-alive>
+            <keep-alive>
+              <GeneticTestingRegistry
+                v-show="component==='GeneticTestingRegistry'"
+                v-on:vendorListCB="updateVendors($event)"
+                v-bind:selectedVendorsListCB="selectedVendorsList"
+                v-on:diseasesCB=addDiseases($event)
+                v-on:disorderNamesListCB="updateDisorderNames($event)"
+                v-on:modeOfInheritanceData="modeOfInheritanceData($event)"
+                v-on:GeneMembershipData="GeneMembershipData($event)"
+                v-bind:selectedDisordersListCB="selectedDisordersList"
+                v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
+                v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+                :chartColor="ordinalColor"
+                :barColor="barColor"
+                @search-gtr="onSearchGTR"
+                v-bind:launchedFromClin="launchedFromClin"
+                v-bind:browser="browser"
+                v-bind:clinSearchedGtr="clinGtrSearchTerm"
+                v-bind:clinFetchingGtr="clinFetchingGtr"
+                v-bind:clinGenes="clinGenesGtr"
+                v-bind:isMobile="isMobile">
+              </GeneticTestingRegistry>
+            </keep-alive>
+
+          <keep-alive>
             <Phenolyzer
-              v-if="component==='Phenolyzer'"
+              v-show="component==='Phenolyzer'"
               v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
               @search-phenotype="onSearchPhenotype"
@@ -230,14 +227,24 @@
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:browser="browser"
               v-bind:isMobile="isMobile"
+              v-bind:clinsearchedPhenolyzer="clinPhenolyzerSeachTerm"
+              v-bind:clinGenes="clinGenesPhenolyzer"
               v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
             </Phenolyzer>
+          </keep-alive>
+
+          <keep-alive>
             <AddGenes
-              v-if="component==='AddGenes'"
+              v-show="component==='AddGenes'"
+              v-bind:launchedFromClin="launchedFromClin"
+              v-bind:clinGenesManual="clinGenesManual"
               v-on:importedGenes="importedGenes">
             </AddGenes>
+          </keep-alive>
+
+          <keep-alive>
             <SummaryTab
-              v-else-if="component==='SummaryTab'"
+              v-show="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
               v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
               v-bind:GtrGenesForSummary="selectedGtrGenes"
@@ -273,6 +280,8 @@ import HelpMenu from '../partials/HelpMenu.vue';
 import Overview from './Overview.vue';
 import Footer from '../partials/Footer.vue';
 import { ExportToCsv } from 'export-to-csv';
+import knownGenes from '../../../data/knownGenes'
+
 // var fs = require('fs');
 
   export default {
@@ -293,7 +302,7 @@ import { ExportToCsv } from 'export-to-csv';
     data(){
       let self = this;
       return{
-        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'GeneticTestingRegistry',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -324,9 +333,11 @@ import { ExportToCsv } from 'export-to-csv';
         modeOfInheritanceProps: [],
         GeneMembershipProps: [],
         IntroductionTextData: null,
-        clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io"],
+
+        clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io", "https://clin.iobio.io", "https://dev.clin.iobio.io", "http://dev.clin.iobio.io"],
         clinIobioUrl: null,
         launchedFromClin: self.paramLaunchedFromClin == 'true' ? true : false,
+
         ordinalColorCyan: d3.scale.ordinal().range([
           '#0097A7',
           '#00ACC1',
@@ -357,11 +368,66 @@ import { ExportToCsv } from 'export-to-csv';
         clinSearchedGtr: [],
         clinsearchedPhenolyzer: [],
         clinGenes: [],
-        clinGenesData: []
+        clinGenesGtr: [],
+        clinGenesPhenolyzer: [],
+        clinGenesManual: [],
+        clinGenesData: [],
+        clinSearchedGtrIndex: 0,
+        clinSearchedPhenolyzerIndex: 0,
+        clinGtrSearchTerm: [],
+        clinPhenolyzerSeachTerm: [],
+        clinFetchingGtr: false,
+        completeClinGtrIteration: false,
+        byPassedGenes: "",
+        byPassedGenesDialog: false,
+        genesToCopy: "",
       }
+    },
+    watch: {
+      selectedGtrGenes: function(){
+        if(this.launchedFromClin){
+          if(this.clinSearchedGtr.length===1){
+            bus.$emit("clearClinGenesArray");
+            this.clinFetchingGtr = false;
+          }
+          else{
+            this.clinSearchedGtrIndex++;
+            if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
+              this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
+            }
+            else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length || this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
+              bus.$emit("clearClinGenesArray");
+              this.clinFetchingGtr = false;
+              this.completeClinGtrIteration = true;
+            }
+          }
+        }
+      },
+      completeClinGtrIteration: function(){
+        if(this.clinsearchedPhenolyzer.length>0){
+          this.clinPhenolyzerSeachTerm = [this.clinsearchedPhenolyzer[0]]
+        }
+      },
+      selectedPhenolyzerGenes: function(){
+        if(this.launchedFromClin){
+          if(this.clinsearchedPhenolyzer.length===1){
+            bus.$emit("clearClinGenesPhenolyzerArray");
+          }
+          else{
+            this.clinSearchedPhenolyzerIndex++;
+            if(this.clinSearchedPhenolyzerIndex<this.clinsearchedPhenolyzer.length){
+              this.clinPhenolyzerSeachTerm=[this.clinsearchedPhenolyzer[this.clinSearchedPhenolyzerIndex]]
+            }
+            else if (this.clinSearchedPhenolyzerIndex===this.clinsearchedPhenolyzer.length || this.clinSearchedPhenolyzerIndex===this.clinsearchedPhenolyzer.length+1) {
+              bus.$emit("clearClinGenesPhenolyzerArray");
+            }
+          }
+        }
+      },
     },
     created(){
       this.IntroductionTextData = IntroductionText.data;
+      this.knownGenesData = knownGenes;
       window.addEventListener('scroll', this.handleScroll);
       this.detectBrowser();
       this.checkIfMobile();
@@ -385,6 +451,9 @@ import { ExportToCsv } from 'export-to-csv';
       });
       bus.$on("exportSummaryGenesAsCSV", ()=>{
         this.exportGenesAsCSV();
+      });
+      bus.$on("removeClinGenesArray", ()=>{
+        this.clinGenesGtr = [];
       })
     },
     updated(){
@@ -435,8 +504,22 @@ import { ExportToCsv } from 'export-to-csv';
       },
       forceReload: function(){
         this.newAnalysisDialog = false;
+        this.clinGenesGtr = [];
+        this.NumberOfAllGenes = 0;
         bus.$emit("newAnalysis");
         window.scrollTo(0,0);
+        this.summaryGenes = [];
+        this.searchTermGTR = [];
+        this.phenotypeSearches = [];
+        this.uniqueGenes = [];
+        this.PhenolyzerGenesArr =[];
+        this.manuallyAddedGenes = [];
+        this.GtrGenesArr = [];
+        this.clinGenesPhenolyzer = [];
+        this.clinGenesManual = [];
+        this.clinsearchedPhenolyzer = [];
+        this.clinSearchedGtr = [];
+        this.clinFetchingGtr = false;
       },
       onShowDisclaimer: function() {
         this.showDisclaimer = true;
@@ -495,9 +578,6 @@ import { ExportToCsv } from 'export-to-csv';
 
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
-
-        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-        this.NumberOfAllGenes = this.uniqueGenes.length
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
@@ -512,8 +592,6 @@ import { ExportToCsv } from 'export-to-csv';
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
 
-        this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-        this.NumberOfAllGenes = this.uniqueGenes.length
       },
       copyGtrGenes: function(){
         // window.open('http://localhost:4000');
@@ -531,7 +609,6 @@ import { ExportToCsv } from 'export-to-csv';
           }
         })
 
-        console.log("clinData GTR", clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
@@ -583,6 +660,7 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       exportGenesAsCSV: function(){
+        // console.log("this.summaryGenes", this.summaryGenes)
         var clinData = this.summaryGenes.map(gene => {
           return {
             Rank: gene.SummaryIndex,
@@ -624,7 +702,6 @@ import { ExportToCsv } from 'export-to-csv';
             score: gene.score,
           }
         })
-        console.log("clinData phenolyzer" , clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
@@ -644,9 +721,7 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       sendGenesUsingSocket: function(){
-        // let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-        console.log("genesToCopy", genesToCopy);
         var socket = io.connect('http://localhost:4026');
 
         socket.emit('geneData', {
@@ -656,12 +731,8 @@ import { ExportToCsv } from 'export-to-csv';
 
       },
       copyAllGenes: function(){
-        let self = this;
-        var genesToCopy = this.uniqueGenes.toString();
-        console.log("this.uniqueGenes from copy", this.uniqueGenes);
-        console.log("this.summaryGenes", this.summaryGenes)
-        this.organizeClinData();
-        var clinData = this.summaryClinTableArray.map(gene=> {
+        this.genesToCopy = this.uniqueGenes.toString();
+        var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
             source: gene.sources,
@@ -672,21 +743,90 @@ import { ExportToCsv } from 'export-to-csv';
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        console.log("clinData", clinData)
-        this.$clipboard(genesToCopy);
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
+          this.snackbar=true;
+          this.$clipboard(this.genesToCopy);
         }
-        this.snackbar=true;
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
+
+        var filteredKnownGenes = [];
+        var byPassedGenesArr = [];
+        var duplicateGenes = [];
+
+        this.uniqueGenes.map(x=>{
+          if(this.knownGenesData.includes(x.toUpperCase())) {
+            filteredKnownGenes.push(x)
+          }
+          else {
+            byPassedGenesArr.push(x.toUpperCase());
+          }
+        })
+
+        var gtrGenes = this.selectedGtrGenes.map(gene => {
+          return gene.name
+        })
+        this.GtrGenesArr = gtrGenes;
+
+        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        this.PhenolyzerGenesArr = phenolyzerGenes;
 
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
-          genes: self.uniqueGenes,
-          data: clinData,
-          searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+          genes: filteredKnownGenes,
+          genesGtr: this.GtrGenesArr,
+          genesPhenolyzer: this.PhenolyzerGenesArr,
+          genesManual: this.manuallyAddedGenes,
+          genesReport: clinData,
+          byPassedGenes: byPassedGenesArr,
+          // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+          searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
+
         });
+
+      },
+      autoSaveGenes(){
+
+        let self = this;
+        var genesToCopy = this.uniqueGenes.toString();
+        var clinData = this.summaryClinTableArray.map(gene=> {
+          return {
+            name: gene.name,
+            source: gene.sources,
+            geneId: gene.geneId,
+            score: gene.score,
+            genePanels: gene.value,
+            // searchTermsPhenolyzer: gene.searchTermPheno,
+            searchTermsPhenolyzer: gene.phenotypeSearches,
+            searchTermsGtr: gene.searchTermArrayGTR
+          }
+        })
+
+          var filteredKnownGenes = [];
+          self.uniqueGenes.map(x=>{
+            if(self.knownGenesData.includes(x.toUpperCase())) {
+              filteredKnownGenes.push(x)
+            }
+          })
+
+          this.sendClin({
+            type: 'apply-genes',
+            source: 'all',
+            genes: filteredKnownGenes,
+            genesGtr: this.GtrGenesArr,
+            genesPhenolyzer: this.PhenolyzerGenesArr,
+            genesManual: this.manuallyAddedGenes,
+            genesReport: clinData,
+            // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
+            searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
+          });
 
       },
       exportGtrGenes: function(){
@@ -729,9 +869,9 @@ import { ExportToCsv } from 'export-to-csv';
           }
       },
       updateAllGenesFromSelection(data){
-        console.log("this.summaryGenes", this.summaryGenes)
         this.summaryGenes = data;
-        var allGenes = data.map(x=>{
+
+        var allGenes = this.summaryGenes.map(x=>{
           return x.name;
         });
         this.uniqueGenes = allGenes;
@@ -739,9 +879,8 @@ import { ExportToCsv } from 'export-to-csv';
       },
       receiveClin: function(event) {
         // Do we trust the sender of this message?
-        // Do we trust the sender of this message?
         if (this.clinIobioUrls.indexOf(event.origin) == -1) {
-          // console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
+          console.log("genepanel.iobio: Message not from trusted sender. Event.origin is " + event.origin );
           return;
         }
         this.clinIobioUrl = event.origin;
@@ -751,19 +890,28 @@ import { ExportToCsv } from 'export-to-csv';
 
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
-          if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-            this.copyAllGenes();
-          }
+          this.copyAllGenes();
         }
+
         //Clin is sending data to set the state
         else if(clinObject.type == 'set-data'){
-          console.log("Clin is sending data to set the state");
-          console.log("clin object: ", clinObject);
-          console.log("clinObject.phenotypes[0]", clinObject.phenotypes[0])
-          this.clinSearchedGtr = clinObject.phenotypes[0];
-          this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
-          this.clinGenes = clinObject.genes;
-          this.clinGenesData = clinObject.genesData;
+          if (clinObject.genes && clinObject.genes.length > 0 && clinObject.phenotypes && clinObject.phenotypes.length > 0) {
+            this.clinSearchedGtr = clinObject.phenotypes[0];
+            this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
+            this.clinGenes = [...clinObject.genes];
+            this.clinGenesGtr = clinObject.genesGtr;
+            this.clinGenesPhenolyzer = clinObject.genesPhenolyzer;
+            this.clinGenesManual = clinObject.genesManual;
+            this.clinGenesData = clinObject.genesData;
+            if(this.clinSearchedGtr && this.clinSearchedGtr.length>0){
+              this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];
+              this.clinFetchingGtr = true;
+            }
+            if(this.clinsearchedPhenolyzer && this.clinsearchedPhenolyzer.length>0){
+              this.clinPhenolyzerSeachTerm = [this.clinsearchedPhenolyzer[0]]
+            }
+
+          }
         }
 
         var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
@@ -786,188 +934,6 @@ import { ExportToCsv } from 'export-to-csv';
       importedGenes: function(genes){
         this.manuallyAddedGenes = genes;
       },
-      organizeClinData: function(){
-        this.summaryClinTableArray = [];
-        this.GtrGenesArr = [];
-        this.PhenolyzerGenesArr = [];
-        this.commonGtrPhenoGenes = [];
-        this.uniqueGtrGenes = [];
-        this.uniqueGtrData = [];
-        this.uniquePheno = [];
-        this.UniquePhenoData = [];
-
-        var gtrGenes = this.selectedGtrGenes.map(gene => {
-          return gene.name
-        })
-        this.GtrGenesArr = gtrGenes;
-
-        var phenolyzerGenes = this.selectedPhenolyzerGenes.map(gene => {
-          return gene.geneName
-        })
-        this.PhenolyzerGenesArr = phenolyzerGenes;
-
-        var gtrSet = new Set(this.GtrGenesArr);
-        var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
-        var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
-        this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
-        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
-
-        var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
-        this.uniqueGtrGenes = [...uniqueGtr];
-
-        this.uniqueGtrGenes.map(x=>{
-          this.selectedGtrGenes.map(y=>{
-            if(x===y.name){
-              this.uniqueGtrData.push({
-                name: y.name,
-                sourceGTR: y.searchTermIndexSVG,
-                searchTermArrayGTR: y.searchTermArray,
-                searchTermIndexGTR: y.searchTermIndex,
-                isAssociatedGene: y.isAssociatedGene,
-                geneid: y.geneid,
-                geneIdLink: y.geneIdLink,
-                value: y.value
-              })
-            }
-          })
-        })
-
-        var uniquePheno = new Set([...phenolyzerSet].filter(x => !gtrSet.has(x)));
-        this.uniquePheno = [...uniquePheno];
-
-        this.uniquePheno.map(x=>{
-          this.selectedPhenolyzerGenes.map(y=>{
-            if(x===y.geneName){
-              this.UniquePhenoData.push({
-                name:y.geneName,
-                sourcePheno: y.searchTermIndexSVG,
-                searchTermPheno: y.searchTerm,
-                searchTermIndex: y.searchTermIndex,
-                geneId: y.geneId,
-                geneIdLink: y.geneIdLink,
-                score: y.score,
-              })
-            }
-          })
-        })
-
-        var tempA = [];
-
-        for(var i=0; i<this.commonGtrPhenoGenes.length; i++){
-          for(var j=0; j<this.selectedPhenolyzerGenes.length; j++){
-            if(this.commonGtrPhenoGenes[i]===this.selectedPhenolyzerGenes[j].geneName){
-              tempA.push({
-                name:this.selectedPhenolyzerGenes[j].geneName,
-                rank: parseInt(this.selectedPhenolyzerGenes[j].rank),
-                sourcePheno: this.selectedPhenolyzerGenes[j].searchTermIndexSVG,
-                searchTermPheno: this.selectedPhenolyzerGenes[j].searchTerm,
-                geneId: this.selectedPhenolyzerGenes[j].geneId,
-                geneIdLink: this.selectedPhenolyzerGenes[j].geneIdLink,
-                score: this.selectedPhenolyzerGenes[j].score,
-              })
-            }
-          }
-        }
-
-        tempA.sort(function(a, b){
-          return a.rank - b.rank;
-        });
-
-        for(var i=0; i<tempA.length; i++){
-          for(var j=0; j<this.selectedGtrGenes.length; j++){
-            if(tempA[i].name===this.selectedGtrGenes[j].name){
-              tempA[i].sourceGTR = this.selectedGtrGenes[j].searchTermIndexSVG
-              tempA[i].isAssociatedGene = this.selectedGtrGenes[j].isAssociatedGene
-              tempA[i].searchTermArrayGTR = this.selectedGtrGenes[j].searchTermArray
-              tempA[i].value = this.selectedGtrGenes[j].value
-            }
-          }
-        }
-
-        var arr=[];
-        arr.push(tempA.map(x=>{
-          return {
-            name: x.name,
-            isGtr: true,
-            isPheno: true,
-            sources: "GTR and Phenolyzer",
-            noOfSources: 2,
-            sourceGTR: x.sourceGTR,
-            sourcePheno: x.sourcePheno,
-            isAssociatedGene: x.isAssociatedGene,
-            geneIdLink: x.geneIdLink,
-            geneId: x.geneId,
-            searchTermArrayGTR: x.searchTermArrayGTR,
-            searchTermPheno: x.searchTermPheno,
-            value: x.value,
-            score: x.score,
-          }
-        }))
-
-        arr.push(this.uniqueGtrData.map(x=>{
-          return {
-            name: x.name,
-            isGtr: true,
-            isPheno: false,
-            sources: "GTR",
-            noOfSources: 1,
-            sourceGTR: x.sourceGTR,
-            sourcePheno: [],
-            isAssociatedGene: x.isAssociatedGene,
-            geneId: x.geneid,
-            geneIdLink: x.geneIdLink,
-            searchTermArrayGTR: x.searchTermArrayGTR,
-            searchTermPheno: [],
-            value: x.value,
-            score: ""
-          }
-        }))
-
-
-        arr.push(this.UniquePhenoData.map(x=>{
-          return {
-            name: x.name,
-            isGtr: false,
-            isPheno: true,
-            sources: "Phenolyzer",
-            noOfSources: 1,
-            sourcePheno: x.sourcePheno,
-            sourceGTR: [],
-            isAssociatedGene: false,
-            geneIdLink: x.geneIdLink,
-            geneId: x.geneId,
-            searchTermPheno: x.searchTermPheno,
-            searchTermArrayGTR: [],
-            score: x.score,
-            value: ""
-          }
-        }))
-
-        var tempSummaryTableArray = [];
-        tempSummaryTableArray = [...arr[0],...arr[1],...arr[2]];
-
-        var associatedGenes = [];
-        var nonAssociatedGenes = [];
-
-        tempSummaryTableArray.map(x=>{
-          if(x.isAssociatedGene===true){
-            associatedGenes.push(x);
-          }
-          else{
-            nonAssociatedGenes.push(x);
-          }
-        })
-        this.associatedGenesData = associatedGenes;
-
-        if(associatedGenes.length){
-          this.summaryClinTableArray = [...associatedGenes, ...nonAssociatedGenes];
-        }
-        else {
-          this.summaryClinTableArray = tempSummaryTableArray;
-        }
-        console.log("this.summaryClinTableArray", this.summaryClinTableArray)
-      },
-
 
     }
 
@@ -978,6 +944,23 @@ import { ExportToCsv } from 'export-to-csv';
 <style lang="sass">
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins')
 @import ../assets/sass/variables
+
+.sourceIndicator
+  fill: $source-Indicator-bg
+  stroke: $source-Indicator-color
+  stroke-width: 2
+  cx: 12
+  cy: 15
+  r: 10
+
+.sourceIndicatorText
+  text-anchor: middle
+  fill: $source-Indicator-color
+  font-family: Arial
+
+.tableRectBarText
+  font-family: Verdana
+  fill: $rect-bar-text-color
 
 .conditionsBox
   width: 285px
@@ -1016,10 +999,8 @@ a:hover
 .badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon
   font-size: 11px
 
-
 .primary
   background-color: #66d4ed !important
-
 
 .toolbar__extension
   height: 25px !important
@@ -1060,10 +1041,8 @@ aside
 .card__title, .card__text
   font-family: $app-font
 
-
 .list__tile__title
   font-family: $app-font
-
 
 .Rightbar_CardHeading
   font-size: 16px
@@ -1113,8 +1092,6 @@ nav.toolbar, nav.v-toolbar
 
   i.material-icons
     margin-right: 2px
-
-
 
   .toolbar__title, .v-toolbar__title
     font-size: 24px
@@ -1305,6 +1282,9 @@ nav.toolbar, nav.v-toolbar
       background-color:  $app-color-clin !important
       color: white !important
       border-color: $app-color-clin !important
+
+    .primary--text
+      color: $app-color-clin !important
 aside
   font-family: $app-font-clin !important
   text-color:  $text-color-clin

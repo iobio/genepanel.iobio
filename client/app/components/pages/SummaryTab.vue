@@ -4,7 +4,6 @@
       <v-app id="inspire" style="background-color:#f9fbff">
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-20px;">
-
             <!-- show description -->
             <v-flex xs12 style="margin-bottom:5px">
               <v-card>
@@ -69,7 +68,7 @@
                 <v-flex xs8>
                   <v-card>
                     <SummaryDataTable
-                      v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                      v-show="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
                       v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
                       v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
                       v-bind:geneSearch="geneSearch"
@@ -95,12 +94,42 @@
                       <br>
                     </v-card>
                   </div>
+                  <!-- <div>
+                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                      <center>
+                        <v-card-text>
+                          <div style="display:inline-block; padding-top:5px;">
+                            <label>Genes Select</label>
+                            <input
+                              id="top-genes-summary"
+                              class="form-control"
+                              type="text"
+                              v-model="genesTop"
+                              placeholder="10"
+                              autocomplete="off"
+                              list="genes">
+                              <datalist id="genes">
+                                <option v-for="genesCount in genesTopCounts">
+                                  {{ genesCount }}
+                                </option>
+                              </datalist>
+                          </div>
+                          <v-btn
+                              style="margin-top:-0.35px; text-transform: none; color:white"
+                              class="btnColor"
+                              v-on:click.prevent="selectNumberOfSummaryGenes">
+                            Select
+                          </v-btn>
+                        </v-card-text>
+                      </center>
+                    </v-card>
+                  </div> -->
                   <div class="d-flex mt-3 mb-2 xs12">
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
                       <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
-                        GENES
+                        GENES SUMMARY
                         </span>
                         <Dialogs
                           id="genesDialog"
@@ -112,7 +141,45 @@
 
 
                          <span class="Rightbar_card_content_subheading">
-                           <strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong>  of {{ totalGenes }} genes selected</span>
+                           <span v-if="!openEditBox"><strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong></span>
+                           <span v-else>
+                             <div style="display:inline-block; padding-top:5px;">
+                               <input
+                                 id="top-genes-summary"
+                                 class="form-control"
+                                 style="margin-bottom:8px; width:82%"
+                                 type="text"
+                                 v-model="genesTop"
+                                 placeholder="10"
+                                 autocomplete="off"
+                                 list="genes">
+                                 <datalist id="genes">
+                                   <option v-for="genesCount in genesTopCounts">
+                                     {{ genesCount }}
+                                   </option>
+                                 </datalist>
+                             </div>
+                           </span>
+                           of {{ totalGenes }} genes selected
+                           <v-tooltip bottom v-if="!openEditBox">
+                            <v-icon
+                              slot="activator"
+                              v-on:click="openEditBox=true"
+                            >
+                              edit
+                            </v-icon>
+                            <span>Edit the number of genes selected</span>
+                          </v-tooltip>
+                          <v-tooltip bottom v-else>
+                           <v-icon
+                             slot="activator"
+                             v-on:click="openEditBox=false"
+                           >
+                             close
+                           </v-icon>
+                           <span>Close the edit box</span>
+                         </v-tooltip>
+                         </span>
                        </center>
                        <SvgBar
                        v-if="totalGenes"
@@ -155,6 +222,9 @@
             <!-- end main content -->
           </v-layout>
         </v-container>
+        <v-container fluid grid-list-md style="min-height:200px">
+        </v-container>
+
        </v-app>
     </div>
   </div>
@@ -169,6 +239,7 @@ import Dialogs from '../partials/Dialogs.vue';
 import SvgBar from '../viz/SvgBar.vue'
 import Alerts from '../partials/Alerts.vue';
 import SummarySvgBar from '../viz/SummarySvgBar.vue';
+import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
 
   export default {
@@ -177,7 +248,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       'Dialogs': Dialogs,
       'SvgBar': SvgBar,
       'Alerts': Alerts,
-      'SummarySvgBar': SummarySvgBar
+      'SummarySvgBar': SummarySvgBar,
+      'progressCircularDonut': progressCircularDonut,
     },
     props:{
       NumberOfGtrGenes:{
@@ -243,10 +315,15 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       GtrPhenoTempAGenes: [],
       GtrFinalGenes: [],
       PhenolyzerFinalGenes: [],
+      genesTopCounts: [5, 10, 30, 50],
+      genesTop: null,
+      openEditBox: false,
     }),
     watch: {
+      genesTop: function(){
+        this.selectNumberOfSummaryGenes();
+      },
       GtrGenesForSummary:function(){
-        console.log("watch: this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary);
         this.GtrGenes = [];
         this.uniqueGtrData = [];
         this.UniquePhenoData = [];
@@ -255,7 +332,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         this.performSetOperations();
       },
       PhenolyzerGenesForSummary: function(){
-        console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.PhenolyzerGenes = [];
         this.UniquePhenoData = [];
         this.uniqueGtrData = [];
@@ -264,8 +340,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         this.performSetOperations();
       },
       manuallyAddedGenes: function(){
-        console.log("watching manuallyAddedGenes")
-        console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.summaryTableArray=[];
         this.uniqueGtrData = [];
         this.UniquePhenoData = [];
@@ -273,8 +347,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
         this.AddedGenes = this.manuallyAddedGenes;
         this.resetUniqueGtrPhenoData();
-        // this.performSetOperations();
-        // this.setSummaryTableData();
       },
       searchTermGTR: function(){
         this.GtrSearchTerms = this.searchTermGTR;
@@ -287,8 +359,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       this.IntroductionTextData = IntroductionText.data[2];
     },
     mounted(){
-      console.log(" mounted :  this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary);
-      console.log("GtrSearchTerms", this.onSearchPhenotype)
       this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
@@ -299,9 +369,16 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
       bus.$on("newAnalysis", ()=>{
         this.PhenolyzerSearchTerms = [];
         this.GtrSearchTerms = [];
+        this.selected = [];
+        this.items = [];
       });
     },
     methods: {
+      selectNumberOfSummaryGenes: function(){
+        if(this.genesTop>0){
+          bus.$emit('SelectedNumberOfSummaryGenes', this.genesTop);
+        }
+      },
       TotalSummaryGenes: function(e){
         this.totalGenes = e;
       },
@@ -326,7 +403,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
         var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
         this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
-        console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
 
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
@@ -342,6 +418,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 isAssociatedGene: y.isAssociatedGene,
                 geneid: y.geneid,
                 geneIdLink: y.geneIdLink,
+                value: y.value
               })
             }
           })
@@ -359,20 +436,17 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 searchTermPheno: y.searchTerm,
                 searchTermIndex: y.searchTermIndex,
                 geneId: y.geneId,
-                geneIdLink: y.geneIdLink
+                geneIdLink: y.geneIdLink,
+                score: y.score,
               })
             }
           })
         })
 
         this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-
         this.setSummaryTableData();
-        // this.setPieChartData();
-
       },
       resetUniqueGtrPhenoData(){
-
         this.uniqueGtrGenes.map(x=>{
           this.GtrGenes.map(y=>{
             if(x===y.name){
@@ -384,6 +458,7 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 isAssociatedGene: y.isAssociatedGene,
                 geneid: y.geneid,
                 geneIdLink: y.geneIdLink,
+                value: y.value
               })
             }
           })
@@ -398,15 +473,14 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 searchTermPheno: y.searchTerm,
                 searchTermIndex: y.searchTermIndex,
                 geneId: y.geneId,
-                geneIdLink: y.geneIdLink
+                geneIdLink: y.geneIdLink,
+                score: y.score,
               })
             }
           })
         })
 
         this.setSummaryTableData();
-
-
       },
       setSummaryTableData(){
         var tempA = [];
@@ -426,7 +500,8 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
                 ghrSrc: `https://ghr.nlm.nih.gov/gene/${this.PhenolyzerGenes[j].geneName}`,
                 clinGenLink : `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${this.PhenolyzerGenes[j].geneName}`,
                 geneId: this.PhenolyzerGenes[j].geneId,
-                geneIdLink: this.PhenolyzerGenes[j].geneIdLink
+                geneIdLink: this.PhenolyzerGenes[j].geneIdLink,
+                score: this.PhenolyzerGenes[j].score,
               })
             }
           }
@@ -443,124 +518,81 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
               tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene,
               tempA[i].searchTermArrayGTR = this.GtrGenes[j].searchTermArray,
               tempA[i].searchTermIndexGTR = this.GtrGenes[j].searchTermIndex
-
+              tempA[i].value = this.GtrGenes[j].value
             }
           }
         }
 
-        console.log("AddedGenes", this.AddedGenes)
-        // if(this.AddedGenes.length>0){
-          var manualGenes = [];
-          this.AddedGenes.map(x=>{
-            manualGenes.push(x);
+        var manualGenes = [];
+        this.AddedGenes.map(x=>{
+          manualGenes.push(x);
+        })
+
+        var allSources = [];
+
+        var tempAarr =[];
+        tempA.map(x =>{
+          tempAarr.push(x.name);
+        })
+
+        tempA.map((x,j)=>{
+          manualGenes.map((y,i)=>{
+            if(x.name === y){
+              allSources.push(x);
+            }
           })
-        // }
-        // var manualGenes = ["MPZ"]
+        })
 
-          var allSources = [];
+        var tempAfinal = [];
+        tempAfinal = tempA.filter(x=> !manualGenes.includes(x.name));
+        manualGenes = manualGenes.filter(x=> !tempAarr.includes(x));
 
-          var tempAarr =[];
-          tempA.map(x =>{
-            tempAarr.push(x.name);
+
+        this.GtrPhenoTempAGenes = tempAfinal;
+        this.GtrPhenoAddedGenes = allSources;
+
+        var gtrAndAddedGenes = [];
+
+        this.uniqueGtrData.map((x,j)=>{
+          manualGenes.map((y,i)=>{
+            if(x.name === y){
+              gtrAndAddedGenes.push(x);
+            }
           })
+        })
 
-          tempA.map((x,j)=>{
+        var gtrFinal = [];
+        gtrFinal = this.uniqueGtrData.filter(x=> !manualGenes.includes(x.name));
+        manualGenes = manualGenes.filter(x=> !this.uniqueGtrGenes.includes(x));
+        this.GtrFinalGenes = gtrFinal;
+        this.GtrAndImported = gtrAndAddedGenes;
+
+        var phenoAndAddedGenes = [];
+          this.UniquePhenoData.map((x,j)=>{
             manualGenes.map((y,i)=>{
               if(x.name === y){
-                allSources.push(x);
+                phenoAndAddedGenes.push(x);
               }
             })
           })
 
-          var tempAfinal = [];
-          tempAfinal = tempA.filter(x=> !manualGenes.includes(x.name));
-          manualGenes = manualGenes.filter(x=> !tempAarr.includes(x));
+        var phenoFinal = [];
+        phenoFinal = this.UniquePhenoData.filter(x=> !manualGenes.includes(x.name));
+        manualGenes = manualGenes.filter(x=> !this.uniquePheno.includes(x));
 
-
-          this.GtrPhenoTempAGenes = tempAfinal;
-          this.GtrPhenoAddedGenes = allSources;
-
-
-          var gtrAndAddedGenes = [];
-
-          this.uniqueGtrData.map((x,j)=>{
-            manualGenes.map((y,i)=>{
-              if(x.name === y){
-                gtrAndAddedGenes.push(x);
-              }
-            })
-          })
-
-          var gtrFinal = [];
-          gtrFinal = this.uniqueGtrData.filter(x=> !manualGenes.includes(x.name));
-          manualGenes = manualGenes.filter(x=> !this.uniqueGtrGenes.includes(x));
-          console.log("check gtrFinal", gtrFinal)
-          console.log("check this.uniqueGtrData", this.uniqueGtrData.length);
-          console.log("check this.GtrGenes", this.GtrGenes.length);
-          console.log("check this.uniqueGtrGenes", this.uniqueGtrGenes.length);
-          this.GtrFinalGenes = gtrFinal;
-          this.GtrAndImported = gtrAndAddedGenes;
-
-          var phenoAndAddedGenes = [];
-            // this.UniquePhenoData.map((x,j)=>{
-            //   manualGenes.map((y,i)=>{
-            //     if(x.name === y){
-            //       phenoAndAddedGenes.push(x);
-            //       manualGenes.splice(i, 1);
-            //       this.UniquePhenoData.splice(j,1)
-            //     }
-            //   })
-            // })
-
-            this.UniquePhenoData.map((x,j)=>{
-              manualGenes.map((y,i)=>{
-                if(x.name === y){
-                  phenoAndAddedGenes.push(x);
-                }
-              })
-            })
-
-
-            var phenoFinal = [];
-            phenoFinal = this.UniquePhenoData.filter(x=> !manualGenes.includes(x.name));
-            manualGenes = manualGenes.filter(x=> !this.uniquePheno.includes(x));
-
-          this.PhenolyzerFinalGenes = phenoFinal;
-          this.PhenolyzerAndImported = phenoAndAddedGenes;
-          this.finalManualGenes = manualGenes;
-          console.log("PhenolyzerAndImported", this.PhenolyzerAndImported)
-          console.log("this.finalManualGenes", this.finalManualGenes)
+        this.PhenolyzerFinalGenes = phenoFinal;
+        this.PhenolyzerAndImported = phenoAndAddedGenes;
+        this.finalManualGenes = manualGenes;
         var arr=[];
 
-          arr.push(allSources.map(x=>{
-            return {
-              name: x.name,
-              isGtr: true,
-              isPheno: true,
-              isImportedGenes: true,
-              sources: "GTR, Phenolyzer and Added Genes",
-              noOfSources: 3,
-              sourceGTR: x.sourceGTR,
-              searchTermArrayGTR: x.searchTermArrayGTR,
-              searchTermIndexGTR: x.searchTermIndexGTR,
-              sourcePheno: x.sourcePheno,
-              searchTermPheno: x.searchTermPheno,
-              searchTermIndex: x.searchTermIndex,
-              isAssociatedGene: x.isAssociatedGene,
-              geneIdLink: x.geneIdLink,
-              geneId: x.geneId
-            }
-          }))
-
-
-        arr.push(tempAfinal.map(x=>{ //GTR and Pheno
+        arr.push(allSources.map(x=>{
           return {
             name: x.name,
             isGtr: true,
             isPheno: true,
-            isImportedGenes: false,
-            sources: "GTR and Phenolyzer",
-            noOfSources: 2,
+            isImportedGenes: true,
+            sources: "GTR, Phenolyzer and Added Genes",
+            noOfSources: 3,
             sourceGTR: x.sourceGTR,
             searchTermArrayGTR: x.searchTermArrayGTR,
             searchTermIndexGTR: x.searchTermIndexGTR,
@@ -569,137 +601,163 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
             searchTermIndex: x.searchTermIndex,
             isAssociatedGene: x.isAssociatedGene,
             geneIdLink: x.geneIdLink,
-            geneId: x.geneId
+            geneId: x.geneId,
+            value: x.value,
+            score: x.score,
           }
         }))
 
-          arr.push(gtrAndAddedGenes.map(x=>{ //Gtr and Added
-            return {
-              name: x.name,
-              isGtr: true,
-              isPheno: false,
-              isImportedGenes: true,
-              sources: "GTR and Added Genes",
-              noOfSources: 2,
-              sourceGTR: x.sourceGTR,
-              searchTermArrayGTR: x.searchTermArrayGTR,
-              searchTermIndexGTR: x.searchTermIndexGTR,
-              sourcePheno: [],
-              searchTermPheno: [],
-              searchTermIndex: [],
-              isAssociatedGene: x.isAssociatedGene,
-              geneId: x.geneid,
-              geneIdLink: x.geneIdLink
-            }
-          }))
 
+      arr.push(tempAfinal.map(x=>{ //GTR and Pheno
+        return {
+          name: x.name,
+          isGtr: true,
+          isPheno: true,
+          isImportedGenes: false,
+          sources: "GTR and Phenolyzer",
+          noOfSources: 2,
+          sourceGTR: x.sourceGTR,
+          searchTermArrayGTR: x.searchTermArrayGTR,
+          searchTermIndexGTR: x.searchTermIndexGTR,
+          sourcePheno: x.sourcePheno,
+          searchTermPheno: x.searchTermPheno,
+          searchTermIndex: x.searchTermIndex,
+          isAssociatedGene: x.isAssociatedGene,
+          geneIdLink: x.geneIdLink,
+          geneId: x.geneId,
+          value: x.value,
+          score: x.score,
+        }
+      }))
 
+      arr.push(gtrAndAddedGenes.map(x=>{ //Gtr and Added
+        return {
+          name: x.name,
+          isGtr: true,
+          isPheno: false,
+          isImportedGenes: true,
+          sources: "GTR and Added Genes",
+          noOfSources: 2,
+          sourceGTR: x.sourceGTR,
+          searchTermArrayGTR: x.searchTermArrayGTR,
+          searchTermIndexGTR: x.searchTermIndexGTR,
+          sourcePheno: [],
+          searchTermPheno: [],
+          searchTermIndex: [],
+          isAssociatedGene: x.isAssociatedGene,
+          geneId: x.geneid,
+          geneIdLink: x.geneIdLink,
+          value: x.value,
+          score: ""
+        }
+      }))
 
-          arr.push(phenoAndAddedGenes.map(x=>{ //Phenolyzer and Added
-            return {
-              name: x.name,
-              isGtr: false,
-              isPheno: true,
-              isImportedGenes: true,
-              sources: "Phenolyzer and Added Genes",
-              noOfSources: 2,
-              sourcePheno: x.sourcePheno,
-              searchTermPheno: x.searchTermPheno,
-              searchTermIndex: x.searchTermIndex,
-              sourceGTR: [],
-              searchTermArrayGTR: [],
-              searchTermIndexGTR: [],
-              geneIdLink: x.geneIdLink,
-              geneId: x.geneId
-            }
-          }))
+      arr.push(phenoAndAddedGenes.map(x=>{ //Phenolyzer and Added
+        return {
+          name: x.name,
+          isGtr: false,
+          isPheno: true,
+          isImportedGenes: true,
+          sources: "Phenolyzer and Added Genes",
+          noOfSources: 2,
+          sourcePheno: x.sourcePheno,
+          searchTermPheno: x.searchTermPheno,
+          searchTermIndex: x.searchTermIndex,
+          sourceGTR: [],
+          searchTermArrayGTR: [],
+          searchTermIndexGTR: [],
+          geneIdLink: x.geneIdLink,
+          geneId: x.geneId,
+          score: x.score,
+          value: ""
+        }
+      }))
 
+      arr.push(manualGenes.map(x=>{
+        return {
+          name: x,
+          isGtr: false,
+          isPheno: false,
+          isImportedGenes: true,
+          sources: "Added Genes",
+          noOfSources: 1,
+          sourcePheno: [],
+          sourceGTR: [],
+          searchTermArrayGTR: [],
+          searchTermIndexGTR: [],
+          searchTermPheno: [],
+          searchTermIndex: [],
+          value: "",
+          score: ""
+        }
+      }))
 
-          arr.push(manualGenes.map(x=>{
-            return {
-              name: x,
-              isGtr: false,
-              isPheno: false,
-              isImportedGenes: true,
-              sources: "Added Genes",
-              noOfSources: 1,
-              sourcePheno: [],
-              sourceGTR: [],
-              searchTermArrayGTR: [],
-              searchTermIndexGTR: [],
-            }
-          }))
+      arr.push(gtrFinal.map(x=>{
+        return {
+          name: x.name,
+          isGtr: true,
+          isPheno: false,
+          isImportedGenes: false,
+          sources: "GTR",
+          noOfSources: 1,
+          sourceGTR: x.sourceGTR,
+          searchTermArrayGTR: x.searchTermArrayGTR,
+          searchTermIndexGTR: x.searchTermIndexGTR,
+          sourcePheno: [],
+          searchTermPheno: [],
+          searchTermIndex: [],
+          isAssociatedGene: x.isAssociatedGene,
+          geneId: x.geneid,
+          geneIdLink: x.geneIdLink,
+          value: x.value,
+          score: ""
+        }
+      }))
 
+      arr.push(phenoFinal.map(x=>{
+        return {
+          name: x.name,
+          isGtr: false,
+          isPheno: true,
+          isImportedGenes: false,
+          sources: "Phenolyzer",
+          noOfSources: 1,
+          searchTermPheno: x.searchTermPheno,
+          searchTermIndex: x.searchTermIndex,
+          sourcePheno: x.sourcePheno,
+          sourceGTR: [],
+          searchTermArrayGTR: [],
+          searchTermIndexGTR: [],
+          geneIdLink: x.geneIdLink,
+          geneId: x.geneId,
+          score: x.score,
+          value: ""
+        }
+      }))
 
+      var tempSummaryTableArray = [];
+      tempSummaryTableArray = [...arr[0],...arr[2],...arr[3],...arr[4],...arr[1],...arr[5],...arr[6]];
 
-        arr.push(gtrFinal.map(x=>{
-          return {
-            name: x.name,
-            isGtr: true,
-            isPheno: false,
-            isImportedGenes: false,
-            sources: "GTR",
-            noOfSources: 1,
-            sourceGTR: x.sourceGTR,
-            searchTermArrayGTR: x.searchTermArrayGTR,
-            searchTermIndexGTR: x.searchTermIndexGTR,
-            sourcePheno: [],
-            searchTermPheno: [],
-            searchTermIndex: [],
-            searchTermPheno: [],
-            searchTermIndex: [],
-            isAssociatedGene: x.isAssociatedGene,
-            geneId: x.geneid,
-            geneIdLink: x.geneIdLink
-          }
-        }))
-
-        arr.push(phenoFinal.map(x=>{
-          return {
-            name: x.name,
-            isGtr: false,
-            isPheno: true,
-            isImportedGenes: false,
-            sources: "Phenolyzer",
-            noOfSources: 1,
-            searchTermPheno: x.searchTermPheno,
-            searchTermIndex: x.searchTermIndex,
-            sourcePheno: x.sourcePheno,
-            sourceGTR: [],
-            searchTermArrayGTR: [],
-            searchTermIndexGTR: [],
-            geneIdLink: x.geneIdLink,
-            geneId: x.geneId
-          }
-        }))
-
-        var tempSummaryTableArray = [];
-        // console.log("summaryTableArray", this.summaryTableArray)
-          tempSummaryTableArray = [...arr[0],...arr[2],...arr[3],...arr[4],...arr[1],...arr[5],...arr[6]];
-
-        tempSummaryTableArray.map((x,i)=>{
-          x["indexVal"]=i+1;
-          x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
-          x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
-          x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
-          x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
-          x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
-          this.summaryTableArray.push(x);
-        })
-        console.log("tempSummaryTableArray", this.summaryTableArray);
-        this.setPieChartData()
+      tempSummaryTableArray.map((x,i)=>{
+        x["indexVal"]=i+1;
+        x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
+        x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
+        x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
+        x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
+        x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
+        this.summaryTableArray.push(x);
+      })
+      this.setPieChartData()
       },
       setPieChartData(){
         this.pieChartdataArr = [
           {
             name: "Unique to GTR",
             count: this.GtrFinalGenes.length
-            // count: this.uniqueGtrGenes.length
           },
           {
             name: "Unique to Phenolyzer",
             count: this.PhenolyzerFinalGenes.length
-            // count: this.uniquePheno.length
           },
           {
             name: "Unique Added Genes",
@@ -708,7 +766,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           {
             name: "GTR and Phenolyzer",
             count: this.GtrPhenoTempAGenes.length
-            // count: this.commonGtrPhenoGenes.length
           },
           {
             name: "GTR and Added Genes",
@@ -724,7 +781,6 @@ import SummarySvgBar from '../viz/SummarySvgBar.vue';
           }
         ]
       },
-
     }
   }
 </script>

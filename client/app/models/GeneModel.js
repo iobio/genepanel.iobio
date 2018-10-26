@@ -725,19 +725,6 @@ export default class GeneModel {
     });
   }
 
-  getAllPhenotypeTerms() {
-    $.ajax({
-          url: hpoUrl + '?term='+encodeURIComponent(query),
-          type: 'GET',
-          error: function() {
-              callback();
-          },
-          success: function(res) {
-            if (!query.length) return callback();
-              callback(res);
-          }
-      });
-  }
 
   isKnownGene(geneName) {
     console.log("geneName called", geneName, " true or false : ", this.allKnownGeneNames[geneName] || this.allKnownGeneNames[geneName.toUpperCase()])

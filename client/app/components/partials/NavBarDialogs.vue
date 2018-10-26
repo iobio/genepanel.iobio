@@ -68,7 +68,6 @@ var model = new Model();
     }
   }
 
-
 </script>
 
 <style>

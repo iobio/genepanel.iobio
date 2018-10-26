@@ -2,21 +2,22 @@
   <div>
     <div style="background-color:#f9fbff">
       <v-snackbar
-          :timeout="snackbarTimeout"
-          :top="y === 'top'"
-          :bottom="y === 'bottom'"
-          :right="x === 'right'"
-          :left="x === 'left'"
-          :multi-line="mode === 'multi-line'"
-          :vertical="mode === 'vertical'"
-          v-model="snackbar"
-        >
-          {{ snackbarText }}
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
         <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
 
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
+
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text style="margin-bottom:-5px">
@@ -26,7 +27,7 @@
                     <div style="display:inline-block;padding-top:5px;">
                       <label>Search Genes</label>
                       <input
-                        id="input"
+                        id="inputAddGenes"
                         class="form-control"
                         type="text"
                         autocomplete="off"
@@ -34,16 +35,16 @@
                         placeholder="Search gene (E.g. TCOF1)">
                       <typeahead
                         match-start
-                        v-model="search"
-                        target="#input"
+                        v-model="searchGenes"
+                        target="#inputAddGenes"
                         :data="genesData"
                         :limit="parseInt(100)"
                         item-key="gene_name"/>
                     </div>
                     <v-btn
-                        style="margin-top:-0.35px; text-transform: none"
-                        class="btnColor"
-                        v-on:click.prevent="addGeneToList">
+                      style="margin-top:-0.35px; text-transform: none"
+                      class="btnColor"
+                      v-on:click.prevent="addGeneToList">
                       Add
                     </v-btn>
                     Or
@@ -51,25 +52,13 @@
                       <v-icon>edit</v-icon>
                       &nbsp; Paste/ add multiple genes
                     </v-btn>
-                    <!-- <div id="enter-genes-input">
-                      <v-textarea
-                        id="copy-paste-genes"
-                        multi-line
-                        rows="12"
-                        label="Enter gene names"
-                        v-model="genesToApply"
-                      >
-                    </v-textarea>
-                    </div> -->
-                    <!-- <v-btn style="float:right" @click="onApplyGenes">
-                      Apply
-                    </v-btn> -->
                   <br>
                   </v-flex>
                 </v-layout>
               </v-card-text>
             </v-card>
           </v-flex>
+
           <v-flex xs12>
             <v-card>
               <div v-if="genes.length===0">
@@ -85,17 +74,16 @@
                   <v-chip disabled  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
                     {{ i+1 }}. {{ gene }}
                   </v-chip>
-
                 </v-card-text>
               </div>
             </v-card>
           </v-flex>
+
         </v-layout>
 
         <v-layout row justify-center>
           <v-dialog v-model="copyPasteGenes" max-width="400">
             <v-card>
-              <!-- <v-card-title class="headline">Warning</v-card-title> -->
               <v-card-text>
                 <div id="enter-genes-input">
                   <v-textarea
@@ -142,14 +130,9 @@
             </v-card>
           </v-dialog>
         </v-layout>
-
       </v-container>
       <v-container fluid grid-list-md style="min-height:500px">
       </v-container>
-
-
-
-
     </div>
   </div>
 </template>
@@ -180,11 +163,17 @@ var geneModel = new GeneModel();
       },
       alertText: {
         type: String
+      },
+      launchedFromClin: {
+        type: Boolean
+      },
+      clinGenesManual: {
+        type: Array
       }
     },
     data(){
       return {
-        search: "",
+        searchGenes: "",
         genesData: null,
         genes:[],
         snackbar: false,
@@ -207,28 +196,39 @@ var geneModel = new GeneModel();
     mounted(){
       this.genesData = genes;
       this.knownGenesData = knownGenes;
+      bus.$on("newAnalysis", ()=>{
+        this.searchGenes = "";
+        this.genes =[];
+        this.multipleSearchTerms = [];
+        this.multipleSearchArray = [];
+        this.$emit("importedGenes", this.genes);
+      });
+      if(this.clinGenesManual.length>0){
+        this.genes = this.clinGenesManual;
+      }
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[3];
-
     },
     updated(){
-
     },
     watch: {
-      search: function() {
-        if (this.search && this.search.gene_name) {
+      searchGenes: function() {
+        if (this.searchGenes && this.searchGenes.gene_name) {
           this.addGeneToList();
         }
       },
-
+      clinGenesManual: function(){
+        this.genes = this.clinGenesManual;
+        this.$emit("importedGenes", this.genes);
+      }
     },
     methods:{
       addGeneToList(){
-        if(this.search.gene_name!== undefined){
-          if(!this.genes.includes(this.search.gene_name)){
+        if(this.searchGenes.gene_name!== undefined){
+          if(!this.genes.includes(this.searchGenes.gene_name)){
             document.getElementById("input").blur();
-            this.genes.push(this.search.gene_name);
+            this.genes.push(this.searchGenes.gene_name);
             this.$emit("importedGenes", this.genes);
           }
           else{
@@ -238,7 +238,7 @@ var geneModel = new GeneModel();
         }
       },
       ClearInputForNewSearch: function(){
-        this.search = "";
+        this.searchGenes = "";
         document.getElementById("input").value="";
         document.getElementById("input").focus();
       },
@@ -248,7 +248,6 @@ var geneModel = new GeneModel();
       },
       onApplyGenes(){
         this.copyPasteGenes = false;
-        console.log(this.knownGenesData.includes("dbfhjdb"));
         this.genesToApply = this.genesToApply.trim();
         this.genesToApply =  this.genesToApply.replace(/\n/g, " ");
         this.genesToApply =  this.genesToApply.replace(/,/g, " ");
@@ -287,8 +286,6 @@ var geneModel = new GeneModel();
       }
     }
   }
-
-
 </script>
 
 <style lang="sass">
@@ -299,34 +296,34 @@ var geneModel = new GeneModel();
   color: white !important
   background-color: $search-button-color !important
 
-#input
+#inputAddGenes
   width: 600px
   height: 40px
   margin-top: 4px
-  background-color: #F4F4F4
-  border-color: #F4F4F4
+  background-color: $search-box-color
+  border-color: $search-box-color
 
 
 @media screen and (max-width: 1620px)
-  #input
+  #inputAddGenes
     width: 420px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 1050px)
-  #input
+  #inputAddGenes
     width: 450px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 950px)
-  #input
+  #inputAddGenes
     width: 290px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 700px)
-  #input
+  #inputAddGenes
     width: 300px
     height: 40px
     margin-top: 4px

@@ -306,7 +306,8 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
           console.log("here!")
           var msg = "Error in gtr summary. ";
           console.log(msg);
-          reject(msg);
+          // reject(msg);
+          resolve({'disease': disease, 'genePanels': []})
         })
       }
 
@@ -323,7 +324,6 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
 
 
 processGenePanelData(genePanels) {
-  console.log("genePanels ", genePanels)
   var me = this;
 
   genePanels.forEach(function(genePanel) {
@@ -544,8 +544,8 @@ mergeGenesAcrossPanels(genePanels) {
   }
 
 
-  getGeneBarChartData(genes, width) {
-    if(width===undefined){
+  getGeneBarChartData(genes, width, launchedFromClinProps) {
+    if(width===undefined || width===0 || launchedFromClinProps){
       width = 850;
     }
     // Sort genes by gene panel count (descending order)
@@ -579,18 +579,12 @@ mergeGenesAcrossPanels(genePanels) {
               clinGenLink: `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.name}`,
               geneIdLink: `https://www.ncbi.nlm.nih.gov/gene/${gene.geneid}`,
               htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="MyGradient">
-                                    <stop offset="5%"  stop-color="#7CA8CF"/>
-                                    <stop offset="95%" stop-color="#576E97"/>
-                                </linearGradient>
-                            </defs>
-
                             <rect class="genepanelsRect"
-                                  x="1" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
+                                x="1" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
                             <rect class="grayRect"
-                                        x="${(gene._genePanelCount * multiplicationFactor)+3}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
-                            <text x="${(firstBarWidth + 19)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${gene._genePanelCount}</text>
+                                x="${(gene._genePanelCount * multiplicationFactor)+3}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
+                            <text class="tableRectBarText"
+                                x="${(firstBarWidth + 19)}" y="14" font-size="13">${gene._genePanelCount}</text>
                         </svg>`,
             };
       });

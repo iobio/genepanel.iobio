@@ -207,7 +207,6 @@ var model = new Model();
 
     methods:{
       updateTableOnSelectedPanels: function(){
-        console.log("inside updateTableOnSelectedPanels")
         this.selected = this.selectedPanelsInCheckBox;
 
         var nonSelectedItems = [];
@@ -245,7 +244,7 @@ var model = new Model();
             }
           }
           this.selected = tempArr;
-
+          tempArr = null;
       },
       filterPanelsOnSelectedConditions: function(data){
         var tempArrForConditions = [];
@@ -255,6 +254,7 @@ var model = new Model();
           }
         })
         this.selected = tempArrForConditions;
+        tempArrForConditions = null;
       },
       filterPanelsOnBarSelect: function(start,end){
         var tempBarsSelected = [];
@@ -264,6 +264,7 @@ var model = new Model();
           }
         })
         this.selected = tempBarsSelected;
+        tempBarsSelected = null;
       },
       filterGenePanelsOnSelectedNumber: function(data){
         this.items  = this.items.filter(item => {
@@ -283,6 +284,7 @@ var model = new Model();
               }
             }
             items = tempArr;
+            tempArr = null;
             return items;
           }
           else {
@@ -291,13 +293,14 @@ var model = new Model();
       },
       AddGenePanelData: function(){
         //new code
-        console.log("selectedPanelFilters", this.selectedPanelFilters)
-        console.log("DiseasePanelData", this.DiseasePanelData)
+        // console.log("selectedPanelFilters", this.selectedPanelFilters)
+        // console.log("DiseasePanelData", this.DiseasePanelData)
         this.DiseasePanel = this.DiseasePanelData
+        // var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
+        // this.mergedGene = mergedGenePanels
         var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
-        this.mergedGene = mergedGenePanels
         this.items = mergedGenePanels;
-        this.tempItems = mergedGenePanels;
+        // this.tempItems = mergedGenePanels;
         this.items.map(x=>{
           if(x.genecount<this.lowerLimit){
             x.filter = "specific";
@@ -309,7 +312,6 @@ var model = new Model();
             x.filter = "general"
           }
         })
-        console.log("items", this.items);
 
         var temp =[];
         this.selectedPanelFilters.map(x=>{
@@ -319,7 +321,7 @@ var model = new Model();
             }
           })
         })
-        console.log("temp", temp)
+        // console.log("temp", temp)
         let vendors = model.getGenePanelVendors(mergedGenePanels);
         var vendorsToBeSelected = this.getVendorsToBeSelected(temp, vendors);
 
@@ -328,6 +330,9 @@ var model = new Model();
         this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
         this.$emit('selectVendors', vendorsToBeSelected);
+        temp = null;
+        vendorsToBeSelected = null;
+        vendors = null;
       },
       getVendorsToBeSelected: function(temp, vendorsPara){
         var nonSelectedItems = [];
@@ -349,7 +354,7 @@ var model = new Model();
             vendorsToBeSentBack.push(x);
           }
         })
-        console.log("vendorsToBeSentBack", vendorsToBeSentBack.sort());
+        // console.log("vendorsToBeSentBack", vendorsToBeSentBack.sort());
         return vendorsToBeSentBack.sort();
         // this.$emit('selectVendors', vendorsToBeSentBack.sort());
       },

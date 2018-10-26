@@ -61,3 +61,7 @@ table.v-table tbody td, table.v-table tbody th {
   color: #3A3939;
   font-weight: 300 !important;
 }
+
+#conditionChips .v-chip .v-chip__content{
+  cursor: help !important
+}

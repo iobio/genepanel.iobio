@@ -11,8 +11,8 @@
         v-model="snackbar"
       >
         {{ snackbarText }}
-        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
-      </v-snackbar>
+      <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
     <div  id="gene-bar-chart-box"  >
       <div id="gene-bar-chart"></div>
     </div>
@@ -59,31 +59,56 @@
             >
               <!-- {{ header.text }} -->
               <span v-if="header.text==='Gene Panels'">
-                <v-layout>
-                  <v-flex xs3 style="padding-top:30px">
-                    {{header.text}}
+                <v-layout style="margin-left: -20px">
+                  <v-flex xs1 style="margin-top:40px; padding-left:20px">
+                    <small >{{minSliderValue}}</small>
                   </v-flex>
-                  <v-flex xs7 style="padding-top:12px">
-                    <v-slider
-                       v-if="sliderValue>0"
-                       :track-color="color"
-                       thumb-label="always"
-                       :color="sliderColor"
-                       :thumb-color="color"
-                       v-model="sliderValue"
-                       :thumb-size="20"
-                       :max="maxSliderValue"
-                       :min="minSliderValue"
-                    ></v-slider>
-                    <!-- <v-slider
-                      v-model="slider"
-                      thumb-label="always"
-                      :thumb-size="20"
-                      inverse-label
-                    ></v-slider> -->
+                  <v-flex xs10 style="padding-top:12px">
+                    <div >
+                      <v-slider
+                         v-if="sliderValue>=0"
+                         :track-color="color"
+                         thumb-label="always"
+                         :color="sliderColor"
+                         :thumb-color="color"
+                         v-model="sliderValue"
+                         :thumb-size="20"
+                         :max="maxSliderValue"
+                         :min="minSliderValue"
+                         v-on:change="sliderClicked"
+                      ></v-slider>
+                    </div>
+                    <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
+
+                  </v-flex>
+                  <v-flex xs1 style="margin-top:40px;">
+                    <small >{{maxSliderValue}}</small>
+
                   </v-flex>
                 </v-layout>
-
+              </span>
+              <span v-else-if="header.text==='Gene Name'">
+               <div v-show="!openSearchBox">
+                 {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
+               </div>
+               <div v-show="openSearchBox">
+                 <v-layout >
+                   <v-flex xs8 style="margin-top:-30px">
+                     <div id="geneSearchBox">
+                       <v-text-field
+                         label="Search for Gene"
+                         prepend-icon="search"
+                         single-line
+                         hide-details
+                         v-model="search"
+                       ></v-text-field>
+                     </div>
+                   </v-flex>
+                   <v-flex xs1>
+                     <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox=false">close</v-icon>
+                   </v-flex>
+                 </v-layout>
+               </div>
               </span>
               <span v-else>{{ header.text }}</span>
 
@@ -131,78 +156,74 @@
                 <v-card>
                   <div class="conditionsBox">
                     <v-list>
-                        <v-list-tile>
-                          <v-list-tile-content>
-                            <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
-                          </v-list-tile-content>
-                          </v-list-tile>
-                        <v-divider class="Rightbar_card_divider"></v-divider>
-                        <v-list-tile >
-                         <v-list-tile-content>
-                           <v-list-tile-title><strong>MedGen</strong><a v-bind:href="props.item.medGenSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
-                           <br>
-                           <v-list-tile-sub-title>
-                             MedGen organizes information related to human medical genetics, such as attributes of conditions with a genetic contribution.
-                          </v-list-tile-sub-title>
-                            <!-- <v-list-tile-sub-title><a v-bind:href="props.item.medGenSrc" target="_blank"><v-btn block small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
-                         </v-list-tile-content>
-                       </v-list-tile>
-
-                       <br>
-                       <v-list-tile >
+                      <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title><strong>OMIM</strong><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
-                          <br>
-                          <v-list-tile-sub-title>
-                            OMIM is a comprehensive, authoritative compendium of human genes and genetic phenotypes
-                          </v-list-tile-sub-title>
-                           <!-- <v-list-tile-sub-title><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn block  small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
+                          <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
-
-                      <br>
+                      <v-divider class="Rightbar_card_divider"></v-divider>
                       <v-list-tile >
-                       <v-list-tile-content>
-                         <v-list-tile-title><strong>GeneCards</strong><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
-                         <br>
-                         <v-list-tile-sub-title>
-                           GeneCards is a searchable, integrative database that provides comprehensive, user-friendly information on all annotated and predicted human genes.
-                         </v-list-tile-sub-title>
-                          <!-- <v-list-tile-sub-title><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
-                       </v-list-tile-content>
+                        <v-list-tile-content>
+                          <v-list-tile-title><strong>MedGen</strong><a v-bind:href="props.item.medGenSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                          <br>
+                          <v-list-tile-sub-title>
+                            MedGen organizes information related to human medical genetics, such as attributes of conditions with a genetic contribution.
+                        </v-list-tile-sub-title>
+                        </v-list-tile-content>
                      </v-list-tile>
 
-                     <br>
-                     <v-list-tile >
+                    <br>
+                    <v-list-tile >
+                      <v-list-tile-content>
+                        <v-list-tile-title><strong>OMIM</strong><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                        <br>
+                        <v-list-tile-sub-title>
+                          OMIM is a comprehensive, authoritative compendium of human genes and genetic phenotypes
+                        </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+
+                    <br>
+                    <v-list-tile >
+                      <v-list-tile-content>
+                        <v-list-tile-title><strong>GeneCards</strong><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                        <br>
+                        <v-list-tile-sub-title>
+                          GeneCards is a searchable, integrative database that provides comprehensive, user-friendly information on all annotated and predicted human genes.
+                        </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+
+                    <br>
+                    <v-list-tile >
                       <v-list-tile-content>
                         <v-list-tile-title><strong>Genetics Home Reference</strong><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
                         <br>
                         <v-list-tile-sub-title>
                           Genetics Home Reference provides consumer-friendly information about the effects of genetic variation on human health.
                         </v-list-tile-sub-title>
-                         <!-- <v-list-tile-sub-title><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
                       </v-list-tile-content>
                     </v-list-tile>
 
                     <br>
                     <v-list-tile >
-                     <v-list-tile-content>
-                       <v-list-tile-title><strong>ClinGen</strong><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
-                       <br>
-                       <v-list-tile-sub-title>
-                         The Clinical Genome Resource (ClinGen) consortium curates genes and regions of the genome to assess whether there is evidence to support that these genes/regions are dosage sensitive and should be targeted on a cytogenomic array                       </v-list-tile-sub-title>
-                        <!-- <v-list-tile-sub-title><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
-                     </v-list-tile-content>
-                   </v-list-tile>
+                      <v-list-tile-content>
+                        <v-list-tile-title><strong>ClinGen</strong><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                        <br>
+                        <v-list-tile-sub-title>
+                          The Clinical Genome Resource (ClinGen) consortium curates genes and regions of the genome to assess whether there is evidence to support that these genes/regions are dosage sensitive and should be targeted on a cytogenomic array                       </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
 
-                       <br>
-                       <v-list-tile >
-                        <v-list-tile-content>
-                          <v-list-tile-title><strong>Gene ID <i> ( {{props.item.geneid}} )</i> </strong><a v-bind:href="props.item.geneIdLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
-                          <br>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <br>
+                    <br>
+                    <v-list-tile >
+                      <v-list-tile-content>
+                        <v-list-tile-title><strong>Gene ID <i> ( {{props.item.geneid}} )</i> </strong><a v-bind:href="props.item.geneIdLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                        <br>
+                      </v-list-tile-content>
+                    </v-list-tile>
+
+                    <br>
                     </v-list>
                   </div>
                 </v-card>
@@ -245,6 +266,9 @@ var model = new Model();
       },
       launchedFromClinProps: {
         type: Boolean
+      },
+      clinGenes: {
+        type: Array
       }
     },
     data(){
@@ -306,12 +330,21 @@ var model = new Model();
         maxSliderValue: 0,
         sliderColor: 'grey lighten-1',
         color: 'blue darken-3',
+        includeClinGenes: true,
+        openSearchBox: false,
+        defaultGenesToSelect: this.launchedFromClinProps ? 20 : 50
       }
     },
     mounted(){
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.multipleSearchDisorders = this.multipleSearchItems;
       this.AddGeneData();
+      bus.$on("clearClinGenesArray", ()=>{
+        this.includeClinGenes = false;
+      });
+      bus.$on("includeClinGenesArr", ()=>{
+        this.includeClinGenes = true;
+      })
 
     },
     updated(){
@@ -324,7 +357,6 @@ var model = new Model();
       bus.$on('SelectAllGenesBus', ()=>{
         this.selectAllGenes();
       });
-
 
       bus.$on('SelectNumberOfGenes', (data)=> {
         this.filterGenesOnSelectedNumber(data);
@@ -352,7 +384,6 @@ var model = new Model();
     },
     watch: {
       sliderValue: function(){
-        console.log("slider is changing and the value is : ", this.sliderValue);
         this.updateSelectionOnSliderValue();
       },
       GeneData: function(){
@@ -366,9 +397,10 @@ var model = new Model();
       geneSearch: function(){
         this.search = this.geneSearch;
       },
+      clinGenes: function(){
+      },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
-        // console.log("this.multipleSearchItems", this.multipleSearchItems.length)
         if(this.multipleSearchItems.length>=2){
           this.headers = [
             { text: 'Rank', align: 'left', value: 'indexVal' },
@@ -404,21 +436,32 @@ var model = new Model();
               value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'geneid', 'geneIdLink'] },
           ]
         }
-
       }
     },
     methods:{
+      sliderClicked() {
+        this.includeClinGenes = false;
+      },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()
         return items.filter(row => filter(row["name"], search));
       },
       updateSelectionOnSliderValue(){
         this.selected = [];
-        this.items.map(x=>{
-          if(x.value>=this.sliderValue || x.isAssociatedGene){
-            this.selected.push(x);
-          }
-        })
+        if(this.clinGenes.length>0 && this.includeClinGenes){
+          this.items.map(x=>{
+            if(this.clinGenes.includes(x.name)){
+              this.selected.push(x);
+            }
+          })
+        }
+        else{
+          this.items.map(x=>{
+            if(x.value>=this.sliderValue || x.isAssociatedGene){
+              this.selected.push(x);
+            }
+          })
+        }
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
@@ -430,7 +473,6 @@ var model = new Model();
         this.$emit("TotalNoOfGenesFromGTR", this.items.length);
       },
       filterGenesOnSelectedNumberOfPanels(data){
-        // console.log("items in filterGenesOnSelectedNumber", this.items);
         var tempArrForGenesInPanels = [];
         for(var i=0; i<this.items.length; i++){
           if(data<=this.items[i].value){
@@ -512,11 +554,10 @@ var model = new Model();
 
         this.modeOfInheritanceList = this.modeOfInheritanceData;
         this.DataToIncludeSearchTerms = this.GeneData;
-
         this.arrangedSearchData = this.searchTermsForGeneId(this.DataToIncludeSearchTerms);
 
         var mergedGenes = model.mergeGenesAcrossPanels(this.GetGeneData);
-        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth() );
+        let data = model.getGeneBarChartData(mergedGenes, $('#genes-table').innerWidth(), this.launchedFromClinProps );
         this.GenesToDisplay = data;
 
         this.arrangeAllData(this.arrangedSearchData, this.GenesToDisplay);
@@ -560,60 +601,63 @@ var model = new Model();
         })
         var medianValue = model.calculateMedian(valuesForMedian);
         var fiftiethGeneValue;
-        if(this.items.length>50){
-          fiftiethGeneValue = this.items[49].value;
+        if(this.items.length>this.defaultGenesToSelect){
+          fiftiethGeneValue = this.items[this.defaultGenesToSelect-1].value;
         }
         var maxValue = Math.max(...valuesForMedian);
-        console.log("this items", valuesForMedian);
-        console.log("medianValue", medianValue);
         var selectionTempArr = [];
         this.selected = [];
         var cutOffValue;
-        if(this.items.length<=50){
-          cutOffValue = medianValue;
-          if(maxValue===medianValue){
+
+        if(this.clinGenes.length<1 || !this.includeClinGenes){
+          if(this.items.length<=10){
             this.selected = this.items.slice();
           }
+          else if(this.items.length>10 && this.items.length<=this.defaultGenesToSelect){
+            cutOffValue = medianValue;
+            if(maxValue===medianValue){
+              this.selected = this.items.slice();
+            }
+            else{
+              this.items.map(x=>{
+                if(x.value>medianValue || x.isAssociatedGene){
+                  this.selected.push(x);
+                }
+              })
+            }
+          }
           else{
-            this.items.map(x=>{
-              if(x.value>medianValue || x.isAssociatedGene){
-                this.selected.push(x);
-              }
-            })
+            if(medianValue>fiftiethGeneValue){
+              cutOffValue = medianValue;
+            }
+            else {
+              cutOffValue = fiftiethGeneValue;
+            }
+            if(maxValue===cutOffValue){
+              this.selected = this.items.slice(0, this.defaultGenesToSelect);
+            }
+            else {
+              this.items.map((x,i)=>{
+                if((x.value>cutOffValue || x.isAssociatedGene) && i<this.defaultGenesToSelect){
+                  this.selected.push(x);
+                }
+              })
+            }
           }
         }
-        else{
-          if(medianValue>fiftiethGeneValue){
-            cutOffValue = medianValue;
-          }
-          else {
-            cutOffValue = fiftiethGeneValue;
-          }
-          if(maxValue===cutOffValue){
-            this.selected = this.items.slice(0, 50);
-          }
-          // else if(cutOffValue===this.items[50].value){ //Al's condition
-          //   this.selected = this.items.slice(0, 50);
-          // }
-          else {
-            this.items.map((x,i)=>{
-              if((x.value>cutOffValue || x.isAssociatedGene) && i<50){
-                this.selected.push(x);
-              }
-            })
-          }
+
+        //If clin genes have value, set selected accordingly:
+        if(this.clinGenes.length>0 && this.includeClinGenes){
+          this.items.map(x=>{
+            if(this.clinGenes.includes(x.name)){
+              this.selected.push(x);
+            }
+          })
         }
 
         this.sliderValue = this.selected[this.selected.length-1].value;
         this.minSliderValue = Math.min(...valuesForMedian);
         this.maxSliderValue = Math.max(...valuesForMedian);
-
-        // if(this.launchedFromClinProps){
-        //   this.selected = this.items.slice(0,10);
-        // }
-        // else {
-        //   this.selected = this.items.slice(0,50);
-        // }
 
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
@@ -622,7 +666,6 @@ var model = new Model();
         bus.$emit("GeneDistributionChartData", this.items);
 
         this.dataForTables = data.slice(0,10);
-
       },
       arrangeAllData: function(terms, genesData){
         for(var i=0; i<terms.length; i++){
@@ -702,8 +745,8 @@ var model = new Model();
           x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             return `<svg height="30" width="30">
-                  <circle class="sourceIndicator"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <circle class="sourceIndicator"/>
+                  <text class="sourceIndicatorText" x="12" y="15" font-weight="600" font-size="10px" dy=".3em">${y}</text>
                 </svg> `
           })
         });
@@ -751,18 +794,6 @@ var model = new Model();
   pointer-events: all
   stroke: $svgBar-fill
   stroke-width: 2
-  // fill: #FF6845
-
-// .genepanelsRect:hover
-//   fill: #FFE650
-
-.sourceIndicator
-  fill: #ffffff00
-  stroke: #455A64
-  stroke-width: 2
-  cx: 12
-  cy: 15
-  r: 10
 
 .grayRect
   fill: #e8ebed
@@ -779,7 +810,6 @@ var model = new Model();
   overflow: initial
   text-overflow: initial
 
-
 .v-list__tile
   height: auto
 
@@ -788,32 +818,6 @@ var model = new Model();
   overflow-wrap: break-word
   height:  370px
   overflow-y: scroll
-
-
-#gene-histogram-chart .bar rect
-    fill:   #7dc2e5
-    stroke: #1f5d7a
-    stroke-width: .5
-
-
-#gene-histogram-chart .bar.selected rect
-    fill: #2d8fc1
-
-
-#gene-histogram-chart .bar text
-    font-size: 10px
-
-
-#gene-histogram-chart .x.axis
-  font-size: 10px
-
-#gene-histogram-chart .y.axis
-  font-size: 10px !important
-
-#gene-histogram-chart .axis .label
-  font-size: 12px !important
-
-
 
 div.tooltip
   position: absolute
@@ -827,56 +831,14 @@ div.tooltip
   border-radius: 4px
   pointer-events: none
 
-
-/*                           */
-/* Gene horizontal barchart  */
-/*                           */
-#gene-bar-chart #title
-  font-size: 20px
-  padding-bottom: 10px
-  padding-top: 20px
-  font-weight: 300
-
-
-/*                      */
-/*  Any svg chart       */
-/*                      */
-.y.axis line
-  fill: none
-  stroke: #e0e0e0
-  shape-rendering: crispEdges
-
-
-.x.axis line
-  fill: none
-  stroke: #e0e0e0
-  shape-rendering: crispEdges
-
-
-.axis path
-  fill: none
-  stroke: #848383
-  shape-rendering: crispEdges
-
-.axis .label
-  font-size: 12px
-
-.brush .extent
-  fill-opacity: .125
-  shape-rendering: crispEdges
-
-.resize
-  display: inline !important
-  fill: #7A7A7A
-  fill-opacity: 1
-  stroke: #7A7A7A
-  stroke-width: 2px
-
 .input-group__input
   min-height: 3px
 
 .headerWidth
   width: 1%
   color: red
+
+#geneSearchBox .v-label
+  font-size: 12px
 
 </style>

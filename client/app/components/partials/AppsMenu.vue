@@ -46,18 +46,14 @@ var model = new Model();
       }
     },
     mounted(){
-
     },
     updated(){
-
     },
     watch: {
     },
     methods:{
-
     }
   }
-
 
 </script>
 

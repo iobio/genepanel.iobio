@@ -51,6 +51,7 @@ var model = new Model();
         if(wdth<=0 || wdth===undefined){
           wdth = 400;
         }
+
         if(this.totalNumberValue>1200){
           this.totalNumberValue = this.totalNumberValue/1.5
         }
@@ -62,10 +63,18 @@ var model = new Model();
         var selectedgenesWidth = Math.abs(this.selectedNumber * multiplicationFactor-10);
         var grayBarWidth = Math.abs(svgWidth - selectedgenesWidth-10);
 
-        if(grayBarWidth<1){
+        if(grayBarWidth<1 ){
           grayBarWidth = 0;
         }
         else if(this.selectedNumber===0){
+          selectedgenesWidth = 0;
+        }
+
+        if(Number.isNaN(grayBarWidth) || grayBarWidth===Infinity){
+          grayBarWidth = 0;
+        }
+
+        if(selectedgenesWidth===Infinity){
           selectedgenesWidth = 0;
         }
 
@@ -87,13 +96,13 @@ var model = new Model();
 @import url('https://fonts.googleapis.com/css?family=Open+Sans')
 
 .genepanelsRect
-  fill: #4e7ad3
+  fill: $rect-bar
   pointer-events: all
   stroke: white
   stroke-width: 2
 
 .grayRect
-  fill: #e8ebed
+  fill: $trailing-rect-bar
   stroke: white
   stroke-width: 2
 
