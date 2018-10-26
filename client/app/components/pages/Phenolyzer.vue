@@ -52,20 +52,6 @@
                       Generate Gene List
                     </v-btn>
 
-                    <!-- <v-tooltip bottom>
-                      <v-btn
-                        v-if="multipleSearchTerms.length"
-                        slot="activator"
-                        :disabled="checked===true"
-                        flat icon color="primary"
-                        v-on:click="ClearInputForNewSearch"
-                      >
-                        <v-icon>add_circle</v-icon>
-                      </v-btn>
-                      <span>Enter New Phenotype</span>
-                    </v-tooltip> -->
-
-
                     <div v-if="phenolyzerStatus!==null">
                       <center>
                         <!-- <v-progress-circular :width="2" indeterminate color="primary"></v-progress-circular> -->
@@ -158,29 +144,6 @@
                               </div>
                             </v-card-text>
                           </v-card>
-                          <!-- <div style="display:inline-block; padding-top:5px;">
-                            <label>Genes</label>
-                            <input
-                              :disabled="multipleSearchTerms.length<1"
-                              id="top-genes-input"
-                              class="form-control"
-                              type="text"
-                              v-model="genesTop"
-                              autocomplete="off"
-                              list="genes">
-                              <datalist id="genes">
-                                <option v-for="genesCount in genesTopCounts">
-                                  {{ genesCount }}
-                                </option>
-                              </datalist>
-                          </div>
-                          <v-btn
-                              :disabled="multipleSearchTerms.length<1"
-                              style="margin-top:-0.35px; text-transform: none; color:white"
-                              class="btnColor"
-                              v-on:click.prevent="selectNumberOfTopPhenolyzerGenes">
-                            Select
-                          </v-btn> -->
                         </div>
                       </v-flex>
                     </v-layout>
@@ -480,7 +443,6 @@
 
 <script>
 import { bus } from '../../routes';
-
 import { Typeahead, Btn } from 'uiv';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
@@ -613,9 +575,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
-      // console.log("includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       this.HelpDialogsData = HelpDialogs.data;
-      // console.log("clinsearchedPhenolyzer in mounted", this.clinsearchedPhenolyzer);
       bus.$on("clearClinGenesPhenolyzerArray", ()=>{
         this.includeClinPhenolyzerGenes = false;
       })
@@ -664,14 +624,12 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       // if(!this.launchedFromClin){
       // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
-        // console.log("I should be caled")
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
     watch: {
       clinsearchedPhenolyzer: function(){
-        // console.log("clinsearchedPhenolyzer in watch", this.clinsearchedPhenolyzer)
         this.initiatePhenolyzerSearchForClinSavedTerms();
       },
       genesTop: function() {
@@ -679,9 +637,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       },
       phenotypeTerm: function() {
         $("#addedterm").remove();
-        // if (this.phenotypeTerm && this.phenotypeTerm.label) {
-        //   this.getPhenotypeData();
-        // }
       },
       SearchTheDisorderInPhenolyzer: function(){
         self.phenotypeTerm = "";
@@ -904,11 +859,10 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         }
       },
       getPhenotypeDataSearch(){
-        // console.log("clinGenes", this.clinGenes)
         let self = this;
         self.phenotypeSearchedByUser = true;
         self.search = '';
-        self.openSearchBox = false; 
+        self.openSearchBox = false;
         //If autocomplete is not used and a term is searched by clicking the button.
         if(self.phenotypeTerm===undefined && document.getElementById("phenotype-term").value.length>1){
           self.phenotypeTerm = {
@@ -974,10 +928,8 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
-                  // console.log("data", self.items[0])
 
                   self.noOfSourcesSvg();
-                  // console.log("self.includeClinPhenolyzerGenes", self.includeClinPhenolyzerGenes)
                   if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
                     self.selected = [];
                   // if(self.launchedFromClin && self.clinGenes.length>0){
@@ -1012,7 +964,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         }
       },
       combineList(arr){
-        // console.log("arr", arr)
         var temp =[];
           for(var i=0; i<arr.length; i++){
             for(var j=0; j<arr[i].data.length; j++){
@@ -1076,7 +1027,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
             }
           }
         }
-        // console.log("Object.values(obj)", Object.values(obj))
         var withAvgArr = Object.values(obj);
         return withAvgArr;
         // sortTheOrder(withAvgArr)
@@ -1134,27 +1084,18 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       },
 
       drawSvgBars: function(tempItems){
-        // console.log("widthOFtable", $('#genes-table').innerWidth())
         var svgWidth = 270;
         var firstBarWidth = tempItems[0].score * 220;
         var score2Decimals;
         tempItems.map(function(gene){
           score2Decimals = Number(gene.score).toFixed(2);
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="MyGradient">
-                                    <stop offset="5%"  stop-color="#7CA8CF"/>
-                                    <stop offset="95%" stop-color="#576E97"/>
-                                </linearGradient>
-                            </defs>
-
-                            <rect fill="#4e7ad3"
+                            <rect class="genepanelsRect"
                                   x="1" y="3" rx="5" width="${gene.score * 220}" height="16"/>
-                            <rect fill="#e8ebed" stroke="white" stroke-width="2"
+                            <rect class="grayRect"
                                   x="${(gene.score * 220)+3}" y="3" rx="5" width="${(firstBarWidth - (gene.score * 220))}" height="16"/>
-                                  <text x="${(firstBarWidth + 15)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${score2Decimals}</text>
-
-
+                            <text class="tableRectBarText"
+                                x="${(firstBarWidth + 15)}" y="14" font-size="13">${score2Decimals}</text>
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
           gene.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.geneName}`;
@@ -1171,8 +1112,8 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
           x.indexVal = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             return `<svg height="30" width="30">
-                  <circle fill="#ffffff00" stroke-width="2" stroke="#455A64" cx="12" cy="15" r="10"  />
-                  <text x="12" y="15" text-anchor="middle" fill="#455A64" font-weight="600" font-size="10px" font-family="Arial" dy=".3em">${y}</text>
+                  <circle class="sourceIndicator"/>
+                  <text class="sourceIndicatorText" x="12" y="15" font-weight="600" font-size="10"  dy=".3em">${y}</text>
                 </svg> `
           })
         });
@@ -1224,16 +1165,16 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
     width: 600px
     height: 40px
     margin-top: 4px
-    background-color: #F4F4F4
-    border-color: #F4F4F4
+    background-color: $search-box-color
+    border-color: $search-box-color
 
 
   #top-genes-input
     width: 200px
     height: 40px
     margin-top: 4px
-    background-color: #F4F4F4
-    border-color: #F4F4F4
+    background-color: $search-box-color
+    border-color: $search-box-color
 
 
   /* Media Queries */
@@ -1280,13 +1221,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
     .btnColor
       margin-top: 2px
 
-
-
-  // .genepanelsRect
-  //   fill: #4e7ad3
-  //   pointer-events: all
-  //   stroke: #4e7ad3
-  //   stroke-width: 2
 
   #geneSearchBoxPhenolyzer .v-label
     font-size: 12px

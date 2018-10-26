@@ -300,8 +300,8 @@ var geneModel = new GeneModel();
   width: 600px
   height: 40px
   margin-top: 4px
-  background-color: #F4F4F4
-  border-color: #F4F4F4
+  background-color: $search-box-color
+  border-color: $search-box-color
 
 
 @media screen and (max-width: 1620px)

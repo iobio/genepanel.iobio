@@ -4,7 +4,6 @@
   </div>
 </template>
 
-
 <script>
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
@@ -30,9 +29,6 @@ var model = new Model();
       }
     },
     mounted(){
-      // if(typeof this.selectedNumber===Number && typeof this.totalNumber === Number){
-      //   this.drawBars();
-      // }
       this.drawBars();
     },
     updated(){
@@ -60,14 +56,9 @@ var model = new Model();
         var grayBarWidth = Math.abs(absWidthPadding - selectedgenesWidth );
         var selected_Number = this.selectedNumber;
 
-        // console.log("svgWidth", svgWidth)
-        // console.log("this.selectedNumber", this.selectedNumber)
-        // console.log("selectedgenesWidth", selectedgenesWidth)
-
         if(this.selectedNumber===0){
           selectedgenesWidth = 0;
         }
-
 
           this.bars = `<svg viewBox="0 0 ${absWidth} 18" xmlns="http://www.w3.org/2000/svg">
                           <rect class="genepanelsRect"

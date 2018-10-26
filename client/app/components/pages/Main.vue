@@ -15,25 +15,6 @@
         <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
       </v-snackbar>
 
-      <!-- <v-layout row justify-center>
-        <v-dialog v-if="byPassedGenesDialog" v-model="byPassedGenesDialog" max-width="400">
-          <v-card>
-            <v-card-title class="headline">Warning</v-card-title>
-            <v-card-text>
-              <p v-if="byPassedGenes.length>2">
-                Bypassing unknown genes: {{ byPassedGenes }}
-              </p>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn style="float:right" @click.native="byPassedGenesDialog = false">
-                OK
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-layout> -->
-
     <v-navigation-drawer
       permanent
       app
@@ -76,7 +57,6 @@
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
-           <!-- <span v-if="component==='Phenolyzer'"><v-icon color="primary darken-1">dashboard</v-icon></span> -->
            <span v-if="component==='Phenolyzer'">
              <img src="../assets/images/phenolyzer2.svg" alt="" height="28px" width="28px" >
            </span>
@@ -89,7 +69,6 @@
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             </v-badge>
            </v-list-tile-title>
-
          </v-list-tile-content>
        </v-list-tile>
 
@@ -107,10 +86,8 @@
               <span slot="badge">{{ manuallyAddedGenes.length }}</span>
             </v-badge>
            </v-list-tile-title>
-
          </v-list-tile-content>
        </v-list-tile>
-
 
        <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
@@ -128,8 +105,6 @@
            </v-list-tile-title>
          </v-list-tile-content>
        </v-list-tile>
-
-       <!-- <v-divider></v-divider> -->
      </v-list>
 
     </v-navigation-drawer>
@@ -164,9 +139,6 @@
             <v-list-tile @click="exportGtrGenes">
               <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export GTR genes to file</v-list-tile-title>
             </v-list-tile>
-            <!-- <v-list-tile @click="saveGtrGenesAsCSV">
-              <v-list-tile-title><v-icon>save</v-icon>&nbsp; &nbsp;Save GTR genes as CSV</v-list-tile-title>
-            </v-list-tile> -->
             <hr>
           </div>
           <div v-else-if="component==='Phenolyzer'">
@@ -207,7 +179,6 @@
       </span>
       <HelpMenu v-bind:launchedFromClin="launchedFromClin"></HelpMenu>
       <AppsMenu v-show="!launchedFromClin"></AppsMenu>
-
     </v-toolbar>
 
     <div>
@@ -246,47 +217,46 @@
               </GeneticTestingRegistry>
             </keep-alive>
 
-            <keep-alive>
-                <Phenolyzer
-                v-show="component==='Phenolyzer'"
-                v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
-                v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
-                @search-phenotype="onSearchPhenotype"
-                @phenotypeSearchTermArray="phenotypeSearchTermArray"
-                v-bind:launchedFromClin="launchedFromClin"
-                v-bind:browser="browser"
-                v-bind:isMobile="isMobile"
-                v-bind:clinsearchedPhenolyzer="clinPhenolyzerSeachTerm"
-                v-bind:clinGenes="clinGenesPhenolyzer"
-                v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
-              </Phenolyzer>
-            </keep-alive>
+          <keep-alive>
+            <Phenolyzer
+              v-show="component==='Phenolyzer'"
+              v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
+              v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+              @search-phenotype="onSearchPhenotype"
+              @phenotypeSearchTermArray="phenotypeSearchTermArray"
+              v-bind:launchedFromClin="launchedFromClin"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile"
+              v-bind:clinsearchedPhenolyzer="clinPhenolyzerSeachTerm"
+              v-bind:clinGenes="clinGenesPhenolyzer"
+              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
+            </Phenolyzer>
+          </keep-alive>
 
-            <keep-alive>
-              <AddGenes
-                v-show="component==='AddGenes'"
-                v-bind:launchedFromClin="launchedFromClin"
-                v-bind:clinGenesManual="clinGenesManual"
-                v-on:importedGenes="importedGenes">
-              </AddGenes>
-            </keep-alive>
+          <keep-alive>
+            <AddGenes
+              v-show="component==='AddGenes'"
+              v-bind:launchedFromClin="launchedFromClin"
+              v-bind:clinGenesManual="clinGenesManual"
+              v-on:importedGenes="importedGenes">
+            </AddGenes>
+          </keep-alive>
 
-            <keep-alive>
-              <SummaryTab
-                v-show="component==='SummaryTab'"
-                v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
-                v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
-                v-bind:GtrGenesForSummary="selectedGtrGenes"
-                v-bind:searchTermGTR="searchTermGTR"
-                v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
-                v-bind:onSearchPhenotype="phenotypeSearches"
-                v-bind:manuallyAddedGenes="manuallyAddedGenes"
-                :chartColor="ordinalColor"
-                v-bind:browser="browser"
-                v-bind:isMobile="isMobile">
-              </SummaryTab>
-            </keep-alive>
-
+          <keep-alive>
+            <SummaryTab
+              v-show="component==='SummaryTab'"
+              v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+              v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+              v-bind:GtrGenesForSummary="selectedGtrGenes"
+              v-bind:searchTermGTR="searchTermGTR"
+              v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+              v-bind:onSearchPhenotype="phenotypeSearches"
+              v-bind:manuallyAddedGenes="manuallyAddedGenes"
+              :chartColor="ordinalColor"
+              v-bind:browser="browser"
+              v-bind:isMobile="isMobile">
+            </SummaryTab>
+          </keep-alive>
         </div>
       </v-content>
     </div>
@@ -415,27 +385,21 @@ import knownGenes from '../../../data/knownGenes'
     },
     watch: {
       selectedGtrGenes: function(){
-        // console.log("selectedGtrGenes changing");
         if(this.launchedFromClin){
           if(this.clinSearchedGtr.length===1){
-            // console.log("1")
             bus.$emit("clearClinGenesArray");
             this.clinFetchingGtr = false;
           }
           else{
             this.clinSearchedGtrIndex++;
             if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
-              // console.log("2-1")
               this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
             }
             else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length || this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
-              // console.log("2-2")
               bus.$emit("clearClinGenesArray");
               this.clinFetchingGtr = false;
               this.completeClinGtrIteration = true;
             }
-            // console.log("clinSearchedGtrIndex", this.clinSearchedGtrIndex)
-
           }
         }
       },
@@ -445,11 +409,9 @@ import knownGenes from '../../../data/knownGenes'
         }
       },
       selectedPhenolyzerGenes: function(){
-        // console.log(this.selectedPhenolyzerGenes)
         if(this.launchedFromClin){
           if(this.clinsearchedPhenolyzer.length===1){
             bus.$emit("clearClinGenesPhenolyzerArray");
-            // this.clinFetchingGtr = false;
           }
           else{
             this.clinSearchedPhenolyzerIndex++;
@@ -458,7 +420,6 @@ import knownGenes from '../../../data/knownGenes'
             }
             else if (this.clinSearchedPhenolyzerIndex===this.clinsearchedPhenolyzer.length || this.clinSearchedPhenolyzerIndex===this.clinsearchedPhenolyzer.length+1) {
               bus.$emit("clearClinGenesPhenolyzerArray");
-              // this.clinFetchingGtr = false;
             }
           }
         }
@@ -603,30 +564,10 @@ import knownGenes from '../../../data/knownGenes'
 
       },
       updateGtrGenes: function(e){
-        // console.log("selectedGtrGenes", e)
         this.selectedGtrGenes = e;
         if(e.length<=0){
           this.NumberOfGenesSelectedFromGTR = 0;
         }
-
-        // if(this.launchedFromClin){
-        //   if(this.clinSearchedGtr.length===1){
-        //     bus.$emit("clearClinGenesArray");
-        //     // this.clinFetchingGtr = false;
-        //   }
-        //   else{
-        //     this.clinSearchedGtrIndex++;
-        //     if(this.clinSearchedGtrIndex<this.clinSearchedGtr.length){
-        //       this.clinGtrSearchTerm=[this.clinSearchedGtr[this.clinSearchedGtrIndex]]
-        //     }
-        //     else if (this.clinSearchedGtrIndex===this.clinSearchedGtr.length+1) {
-        //       bus.$emit("clearClinGenesArray");
-        //       // this.clinFetchingGtr = false;
-        //     }
-        //     console.log("clinSearchedGtrIndex", this.clinSearchedGtrIndex)
-        //
-        //   }
-        // }
         var gtrGenes = this.selectedGtrGenes.map(gene => {
           return gene.name
         })
@@ -637,9 +578,6 @@ import knownGenes from '../../../data/knownGenes'
 
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
-
-        // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-        // this.NumberOfAllGenes = this.uniqueGenes.length
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
@@ -654,8 +592,6 @@ import knownGenes from '../../../data/knownGenes'
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
 
-        // this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-        // this.NumberOfAllGenes = this.uniqueGenes.length
       },
       copyGtrGenes: function(){
         // window.open('http://localhost:4000');
@@ -673,7 +609,6 @@ import knownGenes from '../../../data/knownGenes'
           }
         })
 
-        // console.log("clinData GTR", clinData)
         var geneNamesToString = geneNames.toString();
         var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
         this.$clipboard(genesToCopy);
@@ -786,9 +721,7 @@ import knownGenes from '../../../data/knownGenes'
 
       },
       sendGenesUsingSocket: function(){
-        // let self = this;
         var genesToCopy = this.uniqueGenes.toString();
-        // console.log("genesToCopy", genesToCopy);
         var socket = io.connect('http://localhost:4026');
 
         socket.emit('geneData', {
@@ -798,11 +731,7 @@ import knownGenes from '../../../data/knownGenes'
 
       },
       copyAllGenes: function(){
-        // let self = this;
         this.genesToCopy = this.uniqueGenes.toString();
-        // console.log("this.uniqueGenes in copy", this.uniqueGenes)
-
-        // this.organizeClinData();
         var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
@@ -814,7 +743,6 @@ import knownGenes from '../../../data/knownGenes'
             searchTermsGtr: gene.searchTermArrayGTR
           }
         })
-        // console.log("clinData", clinData)
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
@@ -849,10 +777,6 @@ import knownGenes from '../../../data/knownGenes'
         })
         this.PhenolyzerGenesArr = phenolyzerGenes;
 
-        // console.log("genesToCopy", this.genesToCopy)
-        // console.log("filteredKnownGenes", filteredKnownGenes)
-        // console.log("this.PhenolyzerGenesArr", this.PhenolyzerGenesArr);
-        // console.log("this.GtrGenesArr", this.GtrGenesArr)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
@@ -946,13 +870,11 @@ import knownGenes from '../../../data/knownGenes'
       },
       updateAllGenesFromSelection(data){
         this.summaryGenes = data;
-        // console.log("this.summaryGenes", this.summaryGenes)
 
         var allGenes = this.summaryGenes.map(x=>{
           return x.name;
         });
         this.uniqueGenes = allGenes;
-        // console.log("this.uniqueGenes", this.uniqueGenes)
         this.NumberOfAllGenes = this.uniqueGenes.length
       },
       receiveClin: function(event) {
@@ -968,16 +890,7 @@ import knownGenes from '../../../data/knownGenes'
 
         // Clin is requesting the selected genes, so send them.
         if (clinObject.type == 'request-genes') {
-          // if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-            // this.checkForUnknownGenes();
-            this.copyAllGenes();
-            // setInterval(()=>{
-            //   if (this.uniqueGenes && this.uniqueGenes.length > 0) {
-            //     this.autoSaveGenes();
-            //   }
-            // },3000)
-
-          // }
+          this.copyAllGenes();
         }
 
         //Clin is sending data to set the state
@@ -1032,6 +945,19 @@ import knownGenes from '../../../data/knownGenes'
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins')
 @import ../assets/sass/variables
 
+.sourceIndicator
+  fill: $source-Indicator-bg
+  stroke: $source-Indicator-color
+  stroke-width: 2
+  cx: 12
+  cy: 15
+  r: 10
+
+.sourceIndicatorText
+  text-anchor: middle
+  fill: $source-Indicator-color
+  font-family: Arial
+
 .tableRectBarText
   font-family: Verdana
   fill: $rect-bar-text-color
@@ -1073,10 +999,8 @@ a:hover
 .badge__badge, .badge__badge .icon, .v-badge__badge, .v-badge__badge .icon
   font-size: 11px
 
-
 .primary
   background-color: #66d4ed !important
-
 
 .toolbar__extension
   height: 25px !important
@@ -1117,10 +1041,8 @@ aside
 .card__title, .card__text
   font-family: $app-font
 
-
 .list__tile__title
   font-family: $app-font
-
 
 .Rightbar_CardHeading
   font-size: 16px
@@ -1170,8 +1092,6 @@ nav.toolbar, nav.v-toolbar
 
   i.material-icons
     margin-right: 2px
-
-
 
   .toolbar__title, .v-toolbar__title
     font-size: 24px

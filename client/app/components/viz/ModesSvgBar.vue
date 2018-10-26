@@ -47,7 +47,6 @@ var model = new Model();
       drawBars(){
         var svgWidth = $('.SvgModesDiv').innerWidth() - 20;
         var absWidth = Math.abs(svgWidth)
-        // console.log(absWidth)
         var multiplicationFactor = absWidth / this.totalNumber;
         var selectedgenesWidth = Math.abs((this.selectedNumber * multiplicationFactor)-12);
         var grayBarWidth = Math.abs(absWidth - selectedgenesWidth -12);

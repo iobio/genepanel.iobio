@@ -4,7 +4,6 @@
       <v-app id="inspire" style="background-color:#f9fbff">
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-20px;">
-
             <!-- show description -->
             <v-flex xs12 style="margin-bottom:5px">
               <v-card>
@@ -189,14 +188,6 @@
                         :selectedNumber="selectedGenes"
                         :totalNumber="totalGenes">
                        </SvgBar>
-                       <!-- <div class="text-xs-center">
-                         <progressCircularDonut
-                           v-if="totalGenes"
-                           :selectedNumber="selectedGenes"
-                           :totalNumber="totalGenes"
-                         >
-                         </progressCircularDonut>
-                       </div> -->
                        <br>
                        <div v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
@@ -333,7 +324,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.selectNumberOfSummaryGenes();
       },
       GtrGenesForSummary:function(){
-        // console.log("watch: this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary);
         this.GtrGenes = [];
         this.uniqueGtrData = [];
         this.UniquePhenoData = [];
@@ -342,7 +332,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.performSetOperations();
       },
       PhenolyzerGenesForSummary: function(){
-        // console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.PhenolyzerGenes = [];
         this.UniquePhenoData = [];
         this.uniqueGtrData = [];
@@ -351,8 +340,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.performSetOperations();
       },
       manuallyAddedGenes: function(){
-        // console.log("watching manuallyAddedGenes")
-        // console.log(" watch : this.PhenolyzerGenesForSummary" , this.PhenolyzerGenesForSummary, "this.GtrGenesForSummary", this.GtrGenesForSummary)
         this.summaryTableArray=[];
         this.uniqueGtrData = [];
         this.UniquePhenoData = [];
@@ -360,8 +347,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
         this.AddedGenes = this.manuallyAddedGenes;
         this.resetUniqueGtrPhenoData();
-        // this.performSetOperations();
-        // this.setSummaryTableData();
       },
       searchTermGTR: function(){
         this.GtrSearchTerms = this.searchTermGTR;
@@ -374,8 +359,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       this.IntroductionTextData = IntroductionText.data[2];
     },
     mounted(){
-      // console.log(" mounted :  this.GtrGenesForSummary", this.GtrGenesForSummary, "this.PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary);
-      // console.log("GtrSearchTerms", this.onSearchPhenotype)
       this.HelpDialogsData = HelpDialogs.data;
       this.GtrGenes = this.GtrGenesForSummary;
       this.PhenolyzerGenes = this.PhenolyzerGenesForSummary;
@@ -420,7 +403,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
         var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
         this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
-        // console.log("this.commonGtrPhenoGenes",this.commonGtrPhenoGenes)
 
         var uniqueGtr = new Set([...gtrSet].filter(x => !phenolyzerSet.has(x)));
         this.uniqueGtrGenes = [...uniqueGtr];
@@ -462,13 +444,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         })
 
         this.uniqueGenes = Array.from(new Set(this.AllSourcesGenes));
-
         this.setSummaryTableData();
-        // this.setPieChartData();
-
       },
       resetUniqueGtrPhenoData(){
-
         this.uniqueGtrGenes.map(x=>{
           this.GtrGenes.map(y=>{
             if(x===y.name){
@@ -503,8 +481,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         })
 
         this.setSummaryTableData();
-
-
       },
       setSummaryTableData(){
         var tempA = [];
@@ -547,116 +523,76 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           }
         }
 
-        // console.log("AddedGenes", this.AddedGenes)
-        // if(this.AddedGenes.length>0){
-          var manualGenes = [];
-          this.AddedGenes.map(x=>{
-            manualGenes.push(x);
+        var manualGenes = [];
+        this.AddedGenes.map(x=>{
+          manualGenes.push(x);
+        })
+
+        var allSources = [];
+
+        var tempAarr =[];
+        tempA.map(x =>{
+          tempAarr.push(x.name);
+        })
+
+        tempA.map((x,j)=>{
+          manualGenes.map((y,i)=>{
+            if(x.name === y){
+              allSources.push(x);
+            }
           })
-        // }
-        // var manualGenes = ["MPZ"]
+        })
 
-          var allSources = [];
+        var tempAfinal = [];
+        tempAfinal = tempA.filter(x=> !manualGenes.includes(x.name));
+        manualGenes = manualGenes.filter(x=> !tempAarr.includes(x));
 
-          var tempAarr =[];
-          tempA.map(x =>{
-            tempAarr.push(x.name);
+
+        this.GtrPhenoTempAGenes = tempAfinal;
+        this.GtrPhenoAddedGenes = allSources;
+
+        var gtrAndAddedGenes = [];
+
+        this.uniqueGtrData.map((x,j)=>{
+          manualGenes.map((y,i)=>{
+            if(x.name === y){
+              gtrAndAddedGenes.push(x);
+            }
           })
+        })
 
-          tempA.map((x,j)=>{
+        var gtrFinal = [];
+        gtrFinal = this.uniqueGtrData.filter(x=> !manualGenes.includes(x.name));
+        manualGenes = manualGenes.filter(x=> !this.uniqueGtrGenes.includes(x));
+        this.GtrFinalGenes = gtrFinal;
+        this.GtrAndImported = gtrAndAddedGenes;
+
+        var phenoAndAddedGenes = [];
+          this.UniquePhenoData.map((x,j)=>{
             manualGenes.map((y,i)=>{
               if(x.name === y){
-                allSources.push(x);
+                phenoAndAddedGenes.push(x);
               }
             })
           })
 
-          var tempAfinal = [];
-          tempAfinal = tempA.filter(x=> !manualGenes.includes(x.name));
-          manualGenes = manualGenes.filter(x=> !tempAarr.includes(x));
+        var phenoFinal = [];
+        phenoFinal = this.UniquePhenoData.filter(x=> !manualGenes.includes(x.name));
+        manualGenes = manualGenes.filter(x=> !this.uniquePheno.includes(x));
 
-
-          this.GtrPhenoTempAGenes = tempAfinal;
-          this.GtrPhenoAddedGenes = allSources;
-
-
-          var gtrAndAddedGenes = [];
-
-          this.uniqueGtrData.map((x,j)=>{
-            manualGenes.map((y,i)=>{
-              if(x.name === y){
-                gtrAndAddedGenes.push(x);
-              }
-            })
-          })
-
-          var gtrFinal = [];
-          gtrFinal = this.uniqueGtrData.filter(x=> !manualGenes.includes(x.name));
-          manualGenes = manualGenes.filter(x=> !this.uniqueGtrGenes.includes(x));
-          // console.log("check this.uniqueGtrGenes", this.uniqueGtrGenes.length);
-          this.GtrFinalGenes = gtrFinal;
-          this.GtrAndImported = gtrAndAddedGenes;
-
-          var phenoAndAddedGenes = [];
-            // this.UniquePhenoData.map((x,j)=>{
-            //   manualGenes.map((y,i)=>{
-            //     if(x.name === y){
-            //       phenoAndAddedGenes.push(x);
-            //       manualGenes.splice(i, 1);
-            //       this.UniquePhenoData.splice(j,1)
-            //     }
-            //   })
-            // })
-
-            this.UniquePhenoData.map((x,j)=>{
-              manualGenes.map((y,i)=>{
-                if(x.name === y){
-                  phenoAndAddedGenes.push(x);
-                }
-              })
-            })
-
-
-            var phenoFinal = [];
-            phenoFinal = this.UniquePhenoData.filter(x=> !manualGenes.includes(x.name));
-            manualGenes = manualGenes.filter(x=> !this.uniquePheno.includes(x));
-
-          this.PhenolyzerFinalGenes = phenoFinal;
-          this.PhenolyzerAndImported = phenoAndAddedGenes;
-          this.finalManualGenes = manualGenes;
+        this.PhenolyzerFinalGenes = phenoFinal;
+        this.PhenolyzerAndImported = phenoAndAddedGenes;
+        this.finalManualGenes = manualGenes;
         var arr=[];
 
-          arr.push(allSources.map(x=>{
-            return {
-              name: x.name,
-              isGtr: true,
-              isPheno: true,
-              isImportedGenes: true,
-              sources: "GTR, Phenolyzer and Added Genes",
-              noOfSources: 3,
-              sourceGTR: x.sourceGTR,
-              searchTermArrayGTR: x.searchTermArrayGTR,
-              searchTermIndexGTR: x.searchTermIndexGTR,
-              sourcePheno: x.sourcePheno,
-              searchTermPheno: x.searchTermPheno,
-              searchTermIndex: x.searchTermIndex,
-              isAssociatedGene: x.isAssociatedGene,
-              geneIdLink: x.geneIdLink,
-              geneId: x.geneId,
-              value: x.value,
-              score: x.score,
-            }
-          }))
-
-
-        arr.push(tempAfinal.map(x=>{ //GTR and Pheno
+        arr.push(allSources.map(x=>{
           return {
             name: x.name,
             isGtr: true,
             isPheno: true,
-            isImportedGenes: false,
-            sources: "GTR and Phenolyzer",
-            noOfSources: 2,
+            isImportedGenes: true,
+            sources: "GTR, Phenolyzer and Added Genes",
+            noOfSources: 3,
             sourceGTR: x.sourceGTR,
             searchTermArrayGTR: x.searchTermArrayGTR,
             searchTermIndexGTR: x.searchTermIndexGTR,
@@ -671,143 +607,157 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           }
         }))
 
-          arr.push(gtrAndAddedGenes.map(x=>{ //Gtr and Added
-            return {
-              name: x.name,
-              isGtr: true,
-              isPheno: false,
-              isImportedGenes: true,
-              sources: "GTR and Added Genes",
-              noOfSources: 2,
-              sourceGTR: x.sourceGTR,
-              searchTermArrayGTR: x.searchTermArrayGTR,
-              searchTermIndexGTR: x.searchTermIndexGTR,
-              sourcePheno: [],
-              searchTermPheno: [],
-              searchTermIndex: [],
-              isAssociatedGene: x.isAssociatedGene,
-              geneId: x.geneid,
-              geneIdLink: x.geneIdLink,
-              value: x.value,
-              score: ""
-            }
-          }))
 
+      arr.push(tempAfinal.map(x=>{ //GTR and Pheno
+        return {
+          name: x.name,
+          isGtr: true,
+          isPheno: true,
+          isImportedGenes: false,
+          sources: "GTR and Phenolyzer",
+          noOfSources: 2,
+          sourceGTR: x.sourceGTR,
+          searchTermArrayGTR: x.searchTermArrayGTR,
+          searchTermIndexGTR: x.searchTermIndexGTR,
+          sourcePheno: x.sourcePheno,
+          searchTermPheno: x.searchTermPheno,
+          searchTermIndex: x.searchTermIndex,
+          isAssociatedGene: x.isAssociatedGene,
+          geneIdLink: x.geneIdLink,
+          geneId: x.geneId,
+          value: x.value,
+          score: x.score,
+        }
+      }))
 
+      arr.push(gtrAndAddedGenes.map(x=>{ //Gtr and Added
+        return {
+          name: x.name,
+          isGtr: true,
+          isPheno: false,
+          isImportedGenes: true,
+          sources: "GTR and Added Genes",
+          noOfSources: 2,
+          sourceGTR: x.sourceGTR,
+          searchTermArrayGTR: x.searchTermArrayGTR,
+          searchTermIndexGTR: x.searchTermIndexGTR,
+          sourcePheno: [],
+          searchTermPheno: [],
+          searchTermIndex: [],
+          isAssociatedGene: x.isAssociatedGene,
+          geneId: x.geneid,
+          geneIdLink: x.geneIdLink,
+          value: x.value,
+          score: ""
+        }
+      }))
 
-          arr.push(phenoAndAddedGenes.map(x=>{ //Phenolyzer and Added
-            return {
-              name: x.name,
-              isGtr: false,
-              isPheno: true,
-              isImportedGenes: true,
-              sources: "Phenolyzer and Added Genes",
-              noOfSources: 2,
-              sourcePheno: x.sourcePheno,
-              searchTermPheno: x.searchTermPheno,
-              searchTermIndex: x.searchTermIndex,
-              sourceGTR: [],
-              searchTermArrayGTR: [],
-              searchTermIndexGTR: [],
-              geneIdLink: x.geneIdLink,
-              geneId: x.geneId,
-              score: x.score,
-              value: ""
-            }
-          }))
+      arr.push(phenoAndAddedGenes.map(x=>{ //Phenolyzer and Added
+        return {
+          name: x.name,
+          isGtr: false,
+          isPheno: true,
+          isImportedGenes: true,
+          sources: "Phenolyzer and Added Genes",
+          noOfSources: 2,
+          sourcePheno: x.sourcePheno,
+          searchTermPheno: x.searchTermPheno,
+          searchTermIndex: x.searchTermIndex,
+          sourceGTR: [],
+          searchTermArrayGTR: [],
+          searchTermIndexGTR: [],
+          geneIdLink: x.geneIdLink,
+          geneId: x.geneId,
+          score: x.score,
+          value: ""
+        }
+      }))
 
+      arr.push(manualGenes.map(x=>{
+        return {
+          name: x,
+          isGtr: false,
+          isPheno: false,
+          isImportedGenes: true,
+          sources: "Added Genes",
+          noOfSources: 1,
+          sourcePheno: [],
+          sourceGTR: [],
+          searchTermArrayGTR: [],
+          searchTermIndexGTR: [],
+          searchTermPheno: [],
+          searchTermIndex: [],
+          value: "",
+          score: ""
+        }
+      }))
 
-          arr.push(manualGenes.map(x=>{
-            return {
-              name: x,
-              isGtr: false,
-              isPheno: false,
-              isImportedGenes: true,
-              sources: "Added Genes",
-              noOfSources: 1,
-              sourcePheno: [],
-              sourceGTR: [],
-              searchTermArrayGTR: [],
-              searchTermIndexGTR: [],
-              searchTermPheno: [],
-              searchTermIndex: [],
-              value: "",
-              score: ""
-            }
-          }))
+      arr.push(gtrFinal.map(x=>{
+        return {
+          name: x.name,
+          isGtr: true,
+          isPheno: false,
+          isImportedGenes: false,
+          sources: "GTR",
+          noOfSources: 1,
+          sourceGTR: x.sourceGTR,
+          searchTermArrayGTR: x.searchTermArrayGTR,
+          searchTermIndexGTR: x.searchTermIndexGTR,
+          sourcePheno: [],
+          searchTermPheno: [],
+          searchTermIndex: [],
+          isAssociatedGene: x.isAssociatedGene,
+          geneId: x.geneid,
+          geneIdLink: x.geneIdLink,
+          value: x.value,
+          score: ""
+        }
+      }))
 
+      arr.push(phenoFinal.map(x=>{
+        return {
+          name: x.name,
+          isGtr: false,
+          isPheno: true,
+          isImportedGenes: false,
+          sources: "Phenolyzer",
+          noOfSources: 1,
+          searchTermPheno: x.searchTermPheno,
+          searchTermIndex: x.searchTermIndex,
+          sourcePheno: x.sourcePheno,
+          sourceGTR: [],
+          searchTermArrayGTR: [],
+          searchTermIndexGTR: [],
+          geneIdLink: x.geneIdLink,
+          geneId: x.geneId,
+          score: x.score,
+          value: ""
+        }
+      }))
 
+      var tempSummaryTableArray = [];
+      tempSummaryTableArray = [...arr[0],...arr[2],...arr[3],...arr[4],...arr[1],...arr[5],...arr[6]];
 
-        arr.push(gtrFinal.map(x=>{
-          return {
-            name: x.name,
-            isGtr: true,
-            isPheno: false,
-            isImportedGenes: false,
-            sources: "GTR",
-            noOfSources: 1,
-            sourceGTR: x.sourceGTR,
-            searchTermArrayGTR: x.searchTermArrayGTR,
-            searchTermIndexGTR: x.searchTermIndexGTR,
-            sourcePheno: [],
-            searchTermPheno: [],
-            searchTermIndex: [],
-            isAssociatedGene: x.isAssociatedGene,
-            geneId: x.geneid,
-            geneIdLink: x.geneIdLink,
-            value: x.value,
-            score: ""
-          }
-        }))
-
-        arr.push(phenoFinal.map(x=>{
-          return {
-            name: x.name,
-            isGtr: false,
-            isPheno: true,
-            isImportedGenes: false,
-            sources: "Phenolyzer",
-            noOfSources: 1,
-            searchTermPheno: x.searchTermPheno,
-            searchTermIndex: x.searchTermIndex,
-            sourcePheno: x.sourcePheno,
-            sourceGTR: [],
-            searchTermArrayGTR: [],
-            searchTermIndexGTR: [],
-            geneIdLink: x.geneIdLink,
-            geneId: x.geneId,
-            score: x.score,
-            value: ""
-          }
-        }))
-
-        var tempSummaryTableArray = [];
-        // console.log("summaryTableArray", this.summaryTableArray)
-          tempSummaryTableArray = [...arr[0],...arr[2],...arr[3],...arr[4],...arr[1],...arr[5],...arr[6]];
-
-        tempSummaryTableArray.map((x,i)=>{
-          x["indexVal"]=i+1;
-          x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
-          x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
-          x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
-          x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
-          x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
-          this.summaryTableArray.push(x);
-        })
-        // console.log("tempSummaryTableArray", this.summaryTableArray);
-        this.setPieChartData()
+      tempSummaryTableArray.map((x,i)=>{
+        x["indexVal"]=i+1;
+        x["omimSrc"]= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
+        x["medGenSrc"]= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
+        x["geneCardsSrc"]= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
+        x["ghrSrc"] = `https://ghr.nlm.nih.gov/gene/${x.name}`;
+        x["clinGenLink"] = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
+        this.summaryTableArray.push(x);
+      })
+      this.setPieChartData()
       },
       setPieChartData(){
         this.pieChartdataArr = [
           {
             name: "Unique to GTR",
             count: this.GtrFinalGenes.length
-            // count: this.uniqueGtrGenes.length
           },
           {
             name: "Unique to Phenolyzer",
             count: this.PhenolyzerFinalGenes.length
-            // count: this.uniquePheno.length
           },
           {
             name: "Unique Added Genes",
@@ -816,7 +766,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           {
             name: "GTR and Phenolyzer",
             count: this.GtrPhenoTempAGenes.length
-            // count: this.commonGtrPhenoGenes.length
           },
           {
             name: "GTR and Added Genes",
@@ -832,7 +781,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           }
         ]
       },
-
     }
   }
 </script>

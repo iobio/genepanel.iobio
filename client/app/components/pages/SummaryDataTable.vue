@@ -105,7 +105,6 @@
                           <v-list-tile-sub-title>
                             OMIM is a comprehensive, authoritative compendium of human genes and genetic phenotypes
                           </v-list-tile-sub-title>
-                           <!-- <v-list-tile-sub-title><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn block  small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
                         </v-list-tile-content>
                       </v-list-tile>
 
@@ -117,7 +116,6 @@
                          <v-list-tile-sub-title>
                            GeneCards is a searchable, integrative database that provides comprehensive, user-friendly information on all annotated and predicted human genes.
                          </v-list-tile-sub-title>
-                          <!-- <v-list-tile-sub-title><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
                        </v-list-tile-content>
                      </v-list-tile>
 
@@ -129,7 +127,6 @@
                         <v-list-tile-sub-title>
                           Genetics Home Reference provides consumer-friendly information about the effects of genetic variation on human health.
                         </v-list-tile-sub-title>
-                         <!-- <v-list-tile-sub-title><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
                       </v-list-tile-content>
                     </v-list-tile>
 
@@ -140,7 +137,6 @@
                        <br>
                        <v-list-tile-sub-title>
                          The Clinical Genome Resource (ClinGen) consortium curates genes and regions of the genome to assess whether there is evidence to support that these genes/regions are dosage sensitive and should be targeted on a cytogenomic array                       </v-list-tile-sub-title>
-                        <!-- <v-list-tile-sub-title><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn block outline small color="primary" >Link</v-btn></a></v-list-tile-sub-title> -->
                      </v-list-tile-content>
                    </v-list-tile>
 
@@ -209,8 +205,6 @@ import Sortable from 'sortablejs';
     }),
     watch: {
       summaryTableData: function(){
-        // this.tableData = this.summaryTableData;
-        // console.log("this.summaryTableData", this.summaryTableData);
         this.addTableData();
       },
       geneSearch: function(){
@@ -219,15 +213,6 @@ import Sortable from 'sortablejs';
 
     },
     mounted(){
-      // new Sortable(
-      //   this.$refs.sortableTable.$el.getElementsByTagName('tbody')[0],
-      //   {
-      //     draggable: '.sortableRow',
-      //     handle: '.sortHandle',
-      //     onEnd: this.dragReorder
-      //   }
-      // )
-
       if($('.v-datatable tbody').parents("#summaryDataTableId").length===1){
         $("#summaryDataTableId").find(".v-datatable tbody").attr('id', 'v-datatble-summary');
       }
@@ -254,12 +239,7 @@ import Sortable from 'sortablejs';
           })
         }
       })
-      // this.tableData = this.summaryTableData;
       this.addTableData();
-      // this.items = this.tableData;
-      // this.selected = this.items.slice();
-      // this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
-      // bus.$emit("updateAllGenes", this.selected);
     },
     updated(){
       this.selectedTemp = this.selected;
@@ -290,10 +270,8 @@ import Sortable from 'sortablejs';
         bus.$emit("exportSummaryGenesAsCSV")
       },
       addTableData(){
-        console.log("summaryTableData", this.summaryTableData)
         var xtableData = [];
         this.tableData = this.summaryTableData;
-        // xtableData = this.tableData;
         var associatedGenes = [];
         var nonAssociatedGenes = [];
 

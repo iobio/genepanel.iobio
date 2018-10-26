@@ -615,8 +615,8 @@ var model = new Model();
     width: 600px
     height: 40px
     margin-top: 4px
-    background-color: #F4F4F4
-    border-color: #F4F4F4
+    background-color: $search-box-color
+    border-color: $search-box-color
 
 
   @media screen and (max-width: 1620px)
@@ -646,12 +646,5 @@ var model = new Model();
 
     .btnColor
       margin-top: 2px
-
-  .input-box
-    background: #00ACC1
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.50)
-    height: 60px
-    padding-left: 30px
-    padding-top: 15px
 
 </style>

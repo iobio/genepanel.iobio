@@ -4,7 +4,6 @@
   </div>
 </template>
 
-
 <script>
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
@@ -64,13 +63,9 @@ var model = new Model();
     }
   }
 
-
 </script>
 
 <style>
-
-
-
 </style>
 
 <style lang="sass">

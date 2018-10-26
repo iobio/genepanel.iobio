@@ -545,7 +545,6 @@ mergeGenesAcrossPanels(genePanels) {
 
 
   getGeneBarChartData(genes, width, launchedFromClinProps) {
-    console.log("width", width)
     if(width===undefined || width===0 || launchedFromClinProps){
       width = 850;
     }
@@ -580,13 +579,6 @@ mergeGenesAcrossPanels(genePanels) {
               clinGenLink: `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.name}`,
               geneIdLink: `https://www.ncbi.nlm.nih.gov/gene/${gene.geneid}`,
               htmlData: `<svg width="${svgWidth}" height="18" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="MyGradient">
-                                    <stop offset="5%"  stop-color="#7CA8CF"/>
-                                    <stop offset="95%" stop-color="#576E97"/>
-                                </linearGradient>
-                            </defs>
-
                             <rect class="genepanelsRect"
                                 x="1" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
                             <rect class="grayRect"

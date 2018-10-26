@@ -11,9 +11,6 @@
       <rect x="151" y="59" rx="0" ry="0" width="200" height="9" />
       <rect x="218" y="119" rx="3" ry="3" width="66.3" height="20.1" />
       <rect x="0" y="32.18" rx="4" ry="4" width="566" height="1" />
-
-		<!-- <rect x="69" y="218.77" rx="0" ry="0" width="346" height="144" />
-		<rect x="68" y="396.78" rx="0" ry="0" width="345" height="142" /> -->
 	</content-loader>
 
   </div>
