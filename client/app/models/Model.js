@@ -588,10 +588,11 @@ mergeGenesAcrossPanels(genePanels) {
                             </defs>
 
                             <rect class="genepanelsRect"
-                                  x="1" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
+                                x="1" y="1" rx="5" width="${gene._genePanelCount * multiplicationFactor}" height="16"/>
                             <rect class="grayRect"
-                                        x="${(gene._genePanelCount * multiplicationFactor)+3}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
-                            <text x="${(firstBarWidth + 19)}" y="14" font-family="Verdana" font-size="13" fill="#4267b2">${gene._genePanelCount}</text>
+                                x="${(gene._genePanelCount * multiplicationFactor)+3}" y="1" rx="5" width="${(firstBarWidth - (gene._genePanelCount * multiplicationFactor))}" height="16"/>
+                            <text class="tableRectBarText"
+                                x="${(firstBarWidth + 19)}" y="14" font-size="13">${gene._genePanelCount}</text>
                         </svg>`,
             };
       });

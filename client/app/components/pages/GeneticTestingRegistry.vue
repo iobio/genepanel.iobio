@@ -1568,13 +1568,16 @@ export default {
       this.selectedDisordersList = e;
     },
     ChangeSelectedGenesText: function(e){
+      console.log("ChangeSelectedGenesText", e);
       this.selectedGenesText = e;
     },
     UpdateNoOfGenesSelectedFromGTR: function(e){
+      console.log("UpdateNoOfGenesSelectedFromGTR", e);
       this.GtrGenesTabNumber = e;
       this.$emit("UpdateNumberOfGenesSelectedFromGTR", e)
     },
     UpdateListOfSelectedGenes: function(e){
+      console.log("UpdateListOfSelectedGenes", e);
       this.$emit("UpdateListOfSelectedGenesGTR", e);
     },
     onSearchGTR: function(genes, phenotype) {
@@ -1620,6 +1623,7 @@ export default {
       //
     },
     TotalNoOfGenesFromGTR: function(e){
+      console.log("TotalNoOfGenesFromGTR", e)
       this.TotalGtrGenes = e;
       this.maxGenes = this.maxGenes>this.TotalGtrGenes?this.maxGenes:this.TotalGtrGenes;
     },
@@ -1635,6 +1639,10 @@ export default {
       this.saveSelectedVendors = this.multiSelectItems;
       this.vendorsSelect = [];
       this.selectedPanelFilters = [];
+      this.selectedGenesText = "0 genes selected"; //ChangeSelectedGenesText
+      this.GtrGenesTabNumber = 0; //UpdateNoOfGenesSelectedFromGTR
+      this.$emit("UpdateNumberOfGenesSelectedFromGTR", 0);
+      this.$emit("UpdateListOfSelectedGenesGTR", []); //UpdateListOfSelectedGenes
     },
     SelectAllDisordersButton: function(){
       this.selectDisorders = this.multiSelectDisorder;
@@ -1651,6 +1659,10 @@ export default {
     DeSelectAllPanels: function(){
       this.selectedPanelsInCheckBox = [];
       this.selectedPanelFilters = [];
+      this.selectedGenesText = "0 genes selected"; //ChangeSelectedGenesText
+      this.GtrGenesTabNumber = 0; //UpdateNoOfGenesSelectedFromGTR
+      this.$emit("UpdateNumberOfGenesSelectedFromGTR", 0);
+      this.$emit("UpdateListOfSelectedGenesGTR", []); //UpdateListOfSelectedGenes
     },
     resetDisorders: function(){
       this.selectDisorders = [];

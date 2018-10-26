@@ -55,10 +55,11 @@ var model = new Model();
 
         this.bars = `<svg viewBox="0 0 ${absWidth} 18" xmlns="http://www.w3.org/2000/svg">
                       <rect class="genepanelsRect"
-                            x="1" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
+                          x="1" y="1" rx="5" width="${selectedgenesWidth}" height="12"/>
                       <rect class="grayRect"
-                            x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
-                      <text x="${selectedgenesWidth+5+grayBarWidth}" y="12" font-family="Verdana" font-size="11" fill="#4267b2">${selected_Number}</text>
+                          x="${selectedgenesWidth+1}" y="1" rx="5" width="${grayBarWidth}" height="12"/>
+                      <text class="tableRectBarText"
+                          x="${selectedgenesWidth+5+grayBarWidth}" y="12" font-size="11">${selected_Number}</text>
                   </svg>`
       }
     }
@@ -72,13 +73,13 @@ var model = new Model();
 @import url('https://fonts.googleapis.com/css?family=Open+Sans')
 
 .genepanelsRect
-  fill: #4e7ad3
+  fill: $rect-bar
   pointer-events: all
   stroke: white
   stroke-width: 2
 
 .grayRect
-  fill: #e8ebed
+  fill: $trailing-rect-bar
   stroke: white
   stroke-width: 2
 

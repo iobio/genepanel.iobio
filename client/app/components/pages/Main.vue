@@ -1032,6 +1032,10 @@ import knownGenes from '../../../data/knownGenes'
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|Poppins')
 @import ../assets/sass/variables
 
+.tableRectBarText
+  font-family: Verdana
+  fill: $rect-bar-text-color
+
 .conditionsBox
   width: 285px
   overflow-wrap: break-word
