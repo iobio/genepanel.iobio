@@ -63,9 +63,11 @@
               Panel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.
             </p>
             <br>
-            <v-btn color="white" style="color:#0D47A1">
-            Learn More
-            </v-btn>
+            <a href="http://iobio.io/user_guides/2018/10/28/how-to-use-gtr/" target="_blank">
+              <v-btn color="white" style="color:#0D47A1">
+              Learn More
+              </v-btn>
+            </a>
             <a href="https://www.ncbi.nlm.nih.gov/gtr/" target="_blank">
               <v-btn color="primary">
                 About GTR

@@ -1153,7 +1153,14 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
     width: 1%
     color: red
 
+  .v-list__tile__sub-title, .v-list__tile__title
+    white-space: initial
+    overflow: initial
+    text-overflow: initial
 
+  .v-list__tile
+    height: auto
+    
   .conditionsBox
     width: 470px
     overflow-wrap: break-word

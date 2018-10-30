@@ -962,9 +962,9 @@ import knownGenes from '../../../data/knownGenes'
   font-family: Verdana
   fill: $rect-bar-text-color
 
-.conditionsBox
-  width: 285px
-  overflow-wrap: break-word
+// .conditionsBox
+//   width: 285px
+//   overflow-wrap: break-word
 
 .margin_ActiveTab
   margin-left: -8px

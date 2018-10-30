@@ -16,14 +16,17 @@
         </v-list-tile>
         <v-divider style="height:2px"></v-divider>
         <v-list-tile >
-          <v-list-tile-title><a href="http://iobio.io/tags/gene.iobio/" target="_iobio">Blog</a></v-list-tile-title>
+          <v-list-tile-title><a href="http://iobio.io/tags/panel.iobio/" target="_iobio">Blog</a></v-list-tile-title>
         </v-list-tile>
         <v-list-tile >
-          <v-list-tile-title><a href="http://gene.iobio.io/help_resources.html" target="_iobio">Tutorials</a></v-list-tile-title>
+          <v-list-tile-title><a href="http://iobio.io/user_guides.html" target="_iobio">Tutorials</a></v-list-tile-title>
         </v-list-tile>
 
         <v-list-tile >
           <v-list-tile-title><a href="http://iobio.io" target=")iobio">iobio</a></v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile >
+          <v-list-tile-title><a href="http://iobio.io/blog.html" target="_iobio">iobio Blog</a></v-list-tile-title>
         </v-list-tile>
         <v-list-tile >
           <v-list-tile-title><a href="http://iobio.io/support.html" target=")iobio">Support the iobio project</a></v-list-tile-title>
