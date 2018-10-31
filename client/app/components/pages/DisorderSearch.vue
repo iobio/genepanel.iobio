@@ -282,7 +282,8 @@ var model = new Model();
         this.search = hint.Title;
       },
       searchInPhenolyzer(){
-        bus.$emit("searchDisorderInPhenolyzer", this.search.DiseaseName)
+        var searchTerm = this.search.DiseaseName? this.search.DiseaseName : this.search
+        bus.$emit("searchDisorderInPhenolyzer", searchTerm)
       },
       remove(item){
         bus.$emit("removeSearchTerm");

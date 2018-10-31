@@ -106,7 +106,7 @@
               Finally, all this information is integrated to generate a weighted score for each gene.
             </p>
             <br>
-            <a href="http://localhost:4000/user_guides/2018/10/27/how-to-use-phenolyzer/" target="_blank">
+            <a href="http://iobio.io/user_guides/2018/10/27/how-to-use-phenolyzer/" target="_blank">
               <v-btn color="white" style="color:#0D47A1">
               Learn More
               </v-btn>

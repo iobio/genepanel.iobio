@@ -1160,7 +1160,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 
   .v-list__tile
     height: auto
-    
+
   .conditionsBox
     width: 470px
     overflow-wrap: break-word
