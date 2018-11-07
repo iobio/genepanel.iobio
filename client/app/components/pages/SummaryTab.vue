@@ -7,13 +7,13 @@
             <!-- show description -->
             <v-flex xs12 style="margin-bottom:5px">
               <v-card>
-                <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0 ">
+                <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0 && manuallyAddedGenes.length===0">
                   <v-card-text>
                       <center><h3>{{ IntroductionTextData.Title }}</h3></center>
                   </v-card-text>
                   <center><v-card-text v-html="IntroductionTextData.Content"></v-card-text></center>
                 </div>
-                <div v-else-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 ">
+                <div v-else-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 || manuallyAddedGenes.length>0">
                   <v-flex  d-flex xs12 >
                     <v-layout row wrap>
                       <v-flex xs6>
@@ -68,7 +68,7 @@
                 <v-flex xs8>
                   <v-card>
                     <SummaryDataTable
-                      v-show="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1"
+                      v-show="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 || manuallyAddedGenes.length>0"
                       v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
                       v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
                       v-bind:geneSearch="geneSearch"
@@ -81,7 +81,7 @@
                 <!-- start side bar -->
                 <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
                   <div class="d-flex mb-2 xs12">
-                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 ||  manuallyAddedGenes.length>0"">
                       <v-card-title primary-title>
                         <v-text-field
                           append-icon="search"
