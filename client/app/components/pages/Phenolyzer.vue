@@ -886,6 +886,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){
+            this.$ga.event('SearchTerm', 'Phenolyzer', searchTerm); //Emit event for Google analytics
             self.$emit('search-phenotype', self.phenotypeTerm);
             self.$emit('phenotypeSearchTermArray', self.multipleSearchTerms);
             self.phenotypeTermEntered = self.phenotypeTerm.value;

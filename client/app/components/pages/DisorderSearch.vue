@@ -400,6 +400,7 @@ var model = new Model();
 
           if(!this.multipleSearchTerms.includes(searchTerm)){
             this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
+            this.$ga.event('SearchTerm', 'GTR', searchTerm); //Emit event for Google analytics
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
