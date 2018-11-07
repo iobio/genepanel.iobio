@@ -493,13 +493,24 @@ import knownGenes from '../../../data/knownGenes'
       selectComponent(componentName){
         this.component = componentName;
         if(componentName === 'GeneticTestingRegistry'){
+          this.$ga.event('component', 'visit', 'GeneticTestingRegistry');
           window.scrollTo(0,this.GtrScrollY);
         }
         else if(componentName === 'Phenolyzer'){
+          this.$ga.event('component', 'visit', 'Phenolyzer');
           window.scrollTo(0,this.PhenolyzerScrollY);
         }
         else if(componentName === 'SummaryTab'){
+          this.$ga.event('component', 'visit', 'SummaryTab')
           window.scrollTo(0,this.SummaryScrollY);
+        }
+        else if(componentName === 'AddGenes'){
+          this.$ga.event('component', 'visit', 'AddGenes')
+          window.scrollTo(0,0);
+        }
+        else if(componentName === 'OverviewPage'){
+          this.$ga.event('component', 'visit', 'OverviewPage')
+          window.scrollTo(0,0);
         }
       },
       forceReload: function(){

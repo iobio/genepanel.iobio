@@ -19,6 +19,8 @@ import * as uiv from 'uiv';
 
 import Clipboard from 'v-clipboard';
 var FileSaver = require('file-saver');
+import VueAnalytics from 'vue-analytics';
+
 
 Vue.use(uiv)
 
@@ -79,6 +81,13 @@ const router = new VueRouter({
   'base': '/',
   'routes': routes
 })
+
+// Google analytics
+Vue.use(VueAnalytics, {
+  id: 'UA-47481907-8',
+  router
+})
+
 
 //Registering component globally for nesting.
 // Vue.component('iobio', Iobio);
