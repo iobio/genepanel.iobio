@@ -50,7 +50,6 @@
          @click=""
          style="background: #4267b2; height:26px; min-width:140px"
        >
-         <!-- <v-list-tile-title>sdjsagk</v-list-tile-title> -->
          <li class="active" style="font-size:14px; margin-top:-22px; color:white"><span>Search on: <strong>{{search}}</strong></span></li><hr>
        </v-list-tile>
      </v-list>
@@ -102,7 +101,6 @@ import { bus } from '../../routes';
 import jQuery from 'jquery';
 global.jQuery = jQuery;
 global.$ = jQuery;
-//import typeahead from 'jquery-typeahead'
 
 import Model from '../../models/Model';
 var model = new Model();
@@ -161,24 +159,16 @@ var model = new Model();
         this.launchedFromClin = this.launchedFromClinProps;
       },
       clinSearchedGtr: function(){
-        // console.log("clinSearchedGtr", this.clinSearchedGtr)
         this.initiateSearchForClinSavedTerms();
       },
       search: function() {
         this.singleItemTypeAhead = false;
-        // console.log("this.DiseaseNames", this.DiseaseNames)
-        // this.DiseaseNamesAsync = this.DiseaseNames;
-        // this.DiseaseNamesAsync.unshift({
-        //   ConceptID: "",
-        //   DiseaseName: this.search
-        // });
         if(this.search.length>0){
           $("#addedterm").remove();
           if($('.dropdown-menu').parents("#conditionsInput").length===1){
             $("#conditionsInput").find(".dropdown-menu").attr('id', 'dropdown-menu-gtr');
             $("#dropdown-menu-gtr").prepend(`<li id='addedterm' class="active"><a href="#"><span>Search on: <strong>${this.search}</strong></span></a><hr style="margin-top:5px; margin-bottom:5px"></li>`);
             if($('ul li').length===1 && this.search.DiseaseName===undefined && !this.launchedFromClin){
-              // $(".dropdown").addClass("open")
               this.singleItemTypeAhead = true;
             }
             else {
@@ -187,9 +177,6 @@ var model = new Model();
 
           }
         }
-        // if (this.search && this.search.DiseaseName) {
-        //   // this.EnterForSearch();
-        // }
       },
       DisordersPropsBackArr: function() {
         this.filteredDiseasesItems = this.DisordersPropsBackArr;
@@ -250,9 +237,7 @@ var model = new Model();
           }, 10)
         }
         else if(event.key == 'ArrowDown') {
-          // console.log("down key");
           $("#addedterm").removeClass("active");
-          // console.log($("ul.dropdown-menu li").length); //checks how many children are there
           this.enterCount = 0;
 
         }
@@ -261,7 +246,6 @@ var model = new Model();
           $($("ul.dropdown-menu li")[0]).addClass("");
           $($("ul.dropdown-menu li")[0]).removeClass("active");
           if($($("ul.dropdown-menu li")[1]).hasClass("active")){
-            // console.log("here")
             this.enterCount++
             if(this.enterCount>0){
               $("#addedterm").addClass("active");
@@ -451,7 +435,6 @@ var model = new Model();
                   diseases = data.diseases;
 
                   data.diseases.forEach(function (disease){
-                    // console.log("disease data", disease)
                     var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                     .then(function (data){
                       if(data.genePanels.length>1){
@@ -470,13 +453,11 @@ var model = new Model();
 
 
               Promise.all(promises).then(function(){
-                // console.log("diseases", diseases)
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
                   comeOutOfPromise();
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-                  // diseases = null;
                   if(filteredDiseases.length<1){
                     filteredDiseases = tryByUsingConceptId();
                   }
@@ -488,7 +469,6 @@ var model = new Model();
             })
 
             var callAfunction = (promises)=>{
-              // console.log("Hollaaaa");
               var filteredDiseases;
               Promise.all(promises).then(function(){
                 if(diseases.length===1 && diseases[0].genePanels===undefined){
@@ -496,7 +476,6 @@ var model = new Model();
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-                  // diseases = null;
                   if(filteredDiseases.length<1){
                     filteredDiseases = tryByUsingConceptId();
                   }
@@ -550,7 +529,6 @@ var model = new Model();
 
               Promise.all(promises1).then(function(){
                  var a  = model.processDiseaseData(diseases);
-                 // console.log("filteredDiseases",a);
                  addFilteredDiseases(a);
               })
             }
@@ -574,7 +552,6 @@ var model = new Model();
 
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
-                // console.log("this.filteredDiseasesItems", this.filteredDiseasesItems);
                 this.$emit('showDiseases', this.filteredDiseasesItems);
                 this.filteredDiseasesItems = [];
                 filteredDiseases = null;
@@ -590,8 +567,6 @@ var model = new Model();
             this.snackbar = true;
           }
         }
-
-
       },
     }
   }
