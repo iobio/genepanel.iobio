@@ -99,7 +99,7 @@
 
             <v-flex d-flex xs12  >
               <v-layout row wrap>
-                <v-flex  xs8 >
+                <v-flex  xs12 sm12 md8 lg8>
                   <v-card>
                     <ContentLoaderPlaceholder v-show="contentPlaceHolder"></ContentLoaderPlaceholder>
                     <show-gene-panel1
@@ -494,7 +494,7 @@
                     </v-dialog>
                   </div>
 
-                   <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
+                   <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
                      <div v-show="contentPlaceHolder">
                        <div>
                          <v-flex xs12>
@@ -702,10 +702,10 @@
                               </span>
 
                               <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
-                                <v-flex xs1>
+                                <v-flex xs12 sm12 md12 lg1 >
 
                                 </v-flex>
-                                <v-flex xs3>
+                                <v-flex xs12 sm12 md12 lg3>
                                   <v-tooltip bottom>
                                     <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific" value="specific"></v-checkbox>
                                     <span>
@@ -713,7 +713,7 @@
                                     </span>
                                   </v-tooltip>
                                 </v-flex>
-                                <v-flex xs3>
+                                <v-flex xs12 sm12 md12 lg3>
                                   <v-tooltip bottom>
                                     <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate" value="moderate"></v-checkbox>
                                       <span>
@@ -721,7 +721,7 @@
                                       </span>
                                   </v-tooltip>
                                 </v-flex>
-                                <v-flex x4>
+                                <v-flex xs12 sm12 md12 lg4>
                                   <v-tooltip bottom>
                                     <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General" value="general"></v-checkbox>
                                     <span>
