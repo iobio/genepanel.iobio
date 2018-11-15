@@ -584,10 +584,11 @@ var model = new Model();
         }
 
         if(this.associatedGenesData.length){
-          this.associatedGenesData.sort(function(a, b){
-            return a.value < b.value;
-          });
+          // this.associatedGenesData = this.associatedGenesData.sort(function(a, b){
+          //   return a.value < b.value;
+          // });
 
+          this.associatedGenesData.sort((a,b) => (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0));
           this.items = [...this.associatedGenesData, ...data];
         }
         else{
