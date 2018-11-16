@@ -3,7 +3,7 @@
     <v-layout row wrap style="margin-top:-10px;">
       <v-flex d-flex xs12>
         <v-card>
-          <v-jumbotron style="height: 370px;" :gradient="gradient" dark>
+          <v-jumbotron class="overview-jumbotron" :gradient="gradient" dark>
             <v-container fill-height>
               <v-layout row wrap>
                 <v-flex xs12>
@@ -12,9 +12,9 @@
                     <h4  class="subheading" style="font-size:17px !important">Generate list of genes based on suspected conditions and phenotypes.</h4>
                     <br><br><br>
                     <v-layout row wrap>
-                      <v-flex xs3>
+                      <v-flex xs12 md1 lg3 xl3>
                       </v-flex>
-                      <v-flex xs3>
+                      <v-flex xs12 md5 lg3 xl3>
                         <v-flex text-xs-center>
                           <h4 style="color:white; display:inline">Suspected Conditions </h4>
                           <v-tooltip top>
@@ -29,20 +29,26 @@
                       </v-flex>
                       <div class="vl"></div>
 
-                      <v-flex xs3>
+                      <v-flex xs12 md5 lg3 xl3>
                         <v-flex text-xs-center>
-                          <h4 style="color:white; display:inline">Suspected Phenotypes </h4>
-                          <v-tooltip top>
-                            <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
-                            <span>Generate a gene list for suspected phenotype (Eg. Lactic acidosis) using the Phenolyzer. </span>
-                          </v-tooltip>
-                          <br><br>
-                          <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('phenolyzer')">
-                            Phenolyzer <v-icon>play_arrow</v-icon>
-                          </v-btn>
+                          <div class="hl">
+                          </div>
+                          <div class="phenolyzer-button-div">
+                            <h4 style="color:white; display:inline">Suspected Phenotypes </h4>
+                            <v-tooltip top>
+                              <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                              <v-container grid-list-xs,sm,md,lg,xl>
+                                <span style="margin:auto; margin-left:20px; margin-right:20px">Generate a gene list for suspected phenotype (Eg. Lactic acidosis) using the Phenolyzer. </span>
+                              </v-container>
+                            </v-tooltip>
+                            <br><br>
+                            <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('phenolyzer')">
+                              Phenolyzer <v-icon>play_arrow</v-icon>
+                            </v-btn>
+                          </div>
                         </v-flex>
                       </v-flex>
-                      <v-flex xs3>
+                      <v-flex xs12 md1 lg3 xl3>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -176,9 +182,29 @@ var model = new Model();
 @import ../assets/sass/variables
 @import url('https://fonts.googleapis.com/css?family=Open+Sans')
 
+.overview-jumbotron
+  height: 370px !important
+
 .vl
     border-left: 1px solid #d8d8d8
     height: 100px
+
+
+@media screen and (max-width: 959px)
+  .vl
+    height: 0
+
+  .overview-jumbotron
+    height: 540px !important
+
+  .phenolyzer-button-div
+    margin-top: 30px
+
+  .hl
+    border-top: 2px solid #d8d8d8
+    margin: auto
+    width: 70%
+    margin-top: 30px
 
 div.polaroid
   width: 400px

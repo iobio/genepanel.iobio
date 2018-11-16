@@ -973,6 +973,13 @@ import knownGenes from '../../../data/knownGenes'
   font-family: Verdana
   fill: $rect-bar-text-color
 
+.genes-card-placeholder
+  margin-top: -40px
+
+@media screen and (max-width: 1263px)
+  .genes-card-placeholder
+    margin-top: 0
+
 // .conditionsBox
 //   width: 285px
 //   overflow-wrap: break-word

@@ -40,7 +40,7 @@
                     <v-flex>
                       <v-layout row wrap>
                         <v-flex >
-                          <div style="margin-top:-40px" v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3">
+                          <div v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
                             <v-card class="" style="margin-left:20px">
                               <v-card-text>
                                 <center>

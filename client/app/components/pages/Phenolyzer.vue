@@ -85,7 +85,7 @@
                   <v-flex xs12 sm12 md12 lg4 xl4>
                     <v-layout row wrap>
                       <v-flex >
-                        <div style="margin-top:-40px" v-if="items.length" class="d-flex mb-2 xs12 mb-3">
+                        <div v-if="items.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
                           <v-card>
                             <v-card-text>
                               <center>
