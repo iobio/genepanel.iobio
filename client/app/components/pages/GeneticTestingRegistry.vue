@@ -701,11 +701,11 @@
                                 </v-dialog>
                               </span>
 
-                              <v-layout v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
-                                <v-flex xs12 sm12 md12 lg1 >
+                              <v-layout row wrap v-on:click="clickedTopPanelFilters" style="margin-top:-12px">
+                                <!-- <v-flex xs12 sm12 md12 lg1 >
 
-                                </v-flex>
-                                <v-flex xs12 sm12 md12 lg3>
+                                </v-flex> -->
+                                <v-flex xs4 sm4 md6 lg4>
                                   <v-tooltip bottom>
                                     <v-checkbox slot="activator" v-model="selectedPanelFilters" color="green" label="Specific" value="specific"></v-checkbox>
                                     <span>
@@ -713,15 +713,15 @@
                                     </span>
                                   </v-tooltip>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12 lg3>
+                                <v-flex xs4 sm4 md6 lg4 style="max-width: 35% !important">
                                   <v-tooltip bottom>
-                                    <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" label="Moderate" value="moderate"></v-checkbox>
+                                    <v-checkbox slot="activator" v-model="selectedPanelFilters" color="amber accent-4" style="font-size:12px" label="Moderate" value="moderate"></v-checkbox>
                                       <span>
                                         <center><i>More than {{ lowerLimitProps}} genes & Less than {{ upperLimitProps }} genes</i></center>
                                       </span>
                                   </v-tooltip>
                                 </v-flex>
-                                <v-flex xs12 sm12 md12 lg4>
+                                <v-flex xs4 sm4 md6 lg4>
                                   <v-tooltip bottom>
                                     <v-checkbox slot="activator" v-model="selectedPanelFilters" color="red" label="General" value="general"></v-checkbox>
                                     <span>
@@ -1608,6 +1608,9 @@ export default {
 
 .v-slider__track, .v-slider__track-fill
   transition: none !important
+
+.v-label
+  font-size: 12px !important
 
 .btn
   padding: 0px

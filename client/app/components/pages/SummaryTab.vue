@@ -65,7 +65,7 @@
             <v-flex  d-flex xs12 >
               <v-layout row wrap>
                 <!-- show data table -->
-                <v-flex xs8>
+                <v-flex xs12 sm12 md8 lg8>
                   <v-card>
                     <SummaryDataTable
                       v-show="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 || manuallyAddedGenes.length>0"
@@ -79,7 +79,7 @@
                 <!-- end data table -->
 
                 <!-- start side bar -->
-                <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
+                <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
                   <div class="d-flex mb-2 xs12">
                     <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 ||  manuallyAddedGenes.length>0"">
                       <v-card-title primary-title>
