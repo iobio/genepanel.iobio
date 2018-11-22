@@ -3,7 +3,7 @@
     {
       "Page": "Genetic Testing Registry",
       "Title": "What is Genetic Testing Registry?",
-      "Content": "<p style='text-align: justify; font-size:14px'><strong>The Genetic Testing Registry (GTR®)</strong> &nbsp;from NCBI provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease. <br>Panel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.</P>"
+      "Content": "<p style='text-align: justify; font-size:14px'><strong>The Genetic Testing Registry (GTR®)</strong> &nbsp;from NCBI provides a central location for voluntary submission of genetic test information by providers. The scope includes the test's purpose, methodology, validity, evidence of the test's usefulness, and laboratory contacts and credentials. The overarching goal of the GTR is to advance the public health and research into the genetic basis of health and disease. <br>Genepanel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.</P>"
     },
     {
       "Page": "Phenolyzer",

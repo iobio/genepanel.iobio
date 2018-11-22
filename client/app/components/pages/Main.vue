@@ -119,7 +119,7 @@
       fixed
     >
       <v-toolbar-title >
-        <span >panel.iobio</span>
+        <span >genepanel.iobio</span>
       </v-toolbar-title>
 
       <span style="margin-left:130px">

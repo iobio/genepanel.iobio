@@ -8,7 +8,7 @@
               <v-layout row wrap>
                 <v-flex xs12>
                   <v-flex text-xs-center style="margin-top:50px">
-                    <span><h1 style="color:white; display:inline;font-family: quicksand !important;" class="display-2 font-weight-thin mb-3">panel.iobio</h1> <br><br></span>
+                    <span><h1 style="color:white; display:inline;font-family: quicksand !important;" class="display-2 font-weight-thin mb-3">genepanel.iobio</h1> <br><br></span>
                     <h4  class="subheading" style="font-size:17px !important">Generate list of genes based on suspected conditions and phenotypes.</h4>
                     <br><br><br>
                     <v-layout row wrap>
@@ -66,7 +66,7 @@
             <h2  text-xs-center class="font-weight-thin mb-3"><img src="../assets/images/ncbi.png" alt="NCBI logo" style="height:65px; width:55px;"> Genetic Testing Registry</h2>
             <p style="text-align: justify; font-size:14px">
               The Genetic Testing Registry (GTR®) is an NCBI resource that compiles genetic test information that has been voluntarily submitted by multiple providers. <br>
-              Panel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.
+              Genepanel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.
             </p>
             <br>
             <a href="http://iobio.io/user_guides/2018/10/28/how-to-use-gtr/" target="_blank">
