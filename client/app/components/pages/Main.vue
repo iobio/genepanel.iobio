@@ -670,19 +670,22 @@ import knownGenes from '../../../data/knownGenes'
         csvExporter.generateCsv(clinData);
 
       },
+      checkIfEmpty: function(data){
+        return data!==""?data: "n/a";
+      },
       exportGenesAsCSV: function(){
-        // console.log("this.summaryGenes", this.summaryGenes)
+        console.log("this.summaryGenes", this.summaryGenes)
         var clinData = this.summaryGenes.map(gene => {
           return {
             Rank: gene.SummaryIndex,
             Gene_name: gene.name,
-            sources: gene.sources,
-            GTR_SearchTerms: gene.searchTermArrayGTR.join(),
-            Phenolyzer_searchTerms: gene.searchTermPheno.join(),
-            gene_id: gene.geneId,
-            Gtr: gene.isGtr,
-            Phenolyzer: gene.isPheno,
-            AddedGene: gene.isImportedGenes
+            Sources: gene.sources,
+            GTR_SearchTerms: this.checkIfEmpty(gene.searchTermArrayGTR.join()),
+            Phenolyzer_searchTerms: this.checkIfEmpty(gene.searchTermPheno.join()),
+            Gene_id: gene.geneId!==undefined?gene.geneId:"n/a",
+            From_Gtr: gene.isGtr===true?"Yes":"No",
+            From_Phenolyzer: gene.isPheno===true?"Yes":"No",
+            From_AddedGene: gene.isImportedGenes===true?"Yes":"No"
           }
         })
 
@@ -694,8 +697,9 @@ import knownGenes from '../../../data/knownGenes'
           showTitle: true,
           title: 'Genes',
           useBom: true,
-          useKeysAsHeaders: true,
-          filename: 'Genes'
+          // useKeysAsHeaders: true,
+          filename: 'Genes',
+          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'Phenolyzer Gene', 'Added Gene']
         };
         const csvExporter = new ExportToCsv(options);
         csvExporter.generateCsv(clinData);
