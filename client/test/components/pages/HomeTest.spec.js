@@ -1,4 +1,4 @@
-import { shallow } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import HomeTest from '../../../app/components/pages/HomeTest.vue';
 
 // import Gtr from '../../../app/components/pages/Gtr.vue'
@@ -7,8 +7,8 @@ import HomeTest from '../../../app/components/pages/HomeTest.vue';
 describe('Home', () => {
 
   it('sets a greeting', () => {
-    let wrapper = shallow(HomeTest);
-    expect(wrapper.vm.greeting).to.equal('hello world!')
+    let wrapper = shallowMount(HomeTest);
+    expect(wrapper.vm.greeting).toBe('hello world!')
   });
 
 });

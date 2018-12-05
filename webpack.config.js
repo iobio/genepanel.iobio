@@ -3,7 +3,7 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var inProduction = process.env.NODE_ENV === 'production';
-var inTest = process.env.NODE_ENV === 'test';
+// var inTest = process.env.NODE_ENV === 'test';
 
 
 
@@ -95,8 +95,14 @@ new webpack.LoaderOptionsPlugin({
     }
 })
 
-if (inTest) {
-  module.exports.plugins = [];
+// if (inTest) {
+//   module.exports.plugins = [];
+// }
+
+if(process.env.NODE_ENV === 'test'){
+  module.exports.externals = [require('webpack-node-externals')()]
+  module.exports.devtool = 'inline-cheap-module-source-map'
+
 }
 
 if (inProduction) {
