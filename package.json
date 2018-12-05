@@ -8,7 +8,8 @@
     "test": "cross-env NODE_ENV=test mocha-webpack --webpack-config webpack.config.js --require client/test/setup.js client/test/**/*.spec.js",
     "test:watch": "npm test -- --auto-watch --no-single-run",
     "build": "./node_modules/webpack/bin/webpack.js",
-    "deploy:prod": "sh deploy.sh prod"
+    "deploy:prod": "sh deploy.sh prod",
+    "cypress:open": "cypress open"
   },
   "nyc": {
     "include": [

@@ -31,6 +31,10 @@ export default class Model {
     return newArr
   }
 
+  addNos(a,b){
+    return a+b;
+  }
+
   filterItemsForModeOfInheritance(items){
     var arr =[];
     var obj= {};
