@@ -39,6 +39,7 @@
       <v-btn
           style="margin-top:-0.35px; text-transform: none"
           class="btnColor"
+          id="generateGtrListButton"
           v-on:click.prevent="checkBeforePerformSearch">
         Generate Gene List
       </v-btn>

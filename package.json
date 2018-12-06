@@ -66,6 +66,7 @@
     "clean-webpack-plugin": "^0.1.16",
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.9",
+    "cypress-vue-unit-test": "^1.11.0",
     "electron": "^2.0.1",
     "expect": "^23.6.0",
     "extract-text-webpack-plugin": "^2.1.2",

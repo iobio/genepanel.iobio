@@ -299,6 +299,7 @@ import knownGenes from '../../../data/knownGenes'
     props: {
       paramLaunchedFromClin: null
     },
+    name: 'Main',
     data(){
       let self = this;
       return{
