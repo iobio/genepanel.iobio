@@ -22,7 +22,7 @@
                             <span>Generate a gene list for suspected condition (Eg. Treacher Collins Syndrome)</span>
                           </v-tooltip>
                           <br><br>
-                          <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('gtr')">
+                          <v-btn id="gtrButton" round color="white" style="color:#0D47A1" @click="getStarted('gtr')">
                             Genetic Testing Registry <v-icon>play_arrow</v-icon>
                           </v-btn>
                         </v-flex>
