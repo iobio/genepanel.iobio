@@ -48,6 +48,7 @@
                     <v-btn
                         style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
+                        id="generatePhenolyzerListButton"
                         v-on:click="getPhenotypeData">
                       Generate Gene List
                     </v-btn>

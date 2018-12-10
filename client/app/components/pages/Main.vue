@@ -54,6 +54,7 @@
        </v-list-tile>
 
        <v-list-tile
+          id="phenolyzerMainButton"
           v-bind:class="[component==='Phenolyzer' ? 'activeTab' : '']"
           @click="selectComponent('Phenolyzer')">
          <v-list-tile-action v-bind:class="[component==='Phenolyzer' ? 'margin_ActiveTab' : '']">
@@ -90,6 +91,7 @@
        </v-list-tile>
 
        <v-list-tile
+          id="summaryMainButton"
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
@@ -127,7 +129,7 @@
       <v-spacer></v-spacer>
       <!-- <a @click="sendGenesUsingSocket" v-show="uniqueGenes.length>1" href="http://localhost:4026" target="_blank"><v-btn color="primary">Analyze Genes</v-btn></a> -->
       <v-menu bottom offset-y style="color:black">
-        <v-btn flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
+        <v-btn id="exportButton" flat slot="activator" :class="launchedFromClin ? 'clinButtonColor' : '' "
         ><v-icon v-if="!launchedFromClin" style="padding-right:4px">input</v-icon>
           Export
         </v-btn>
@@ -150,7 +152,7 @@
             </v-list-tile>
             <hr>
           </div>
-          <v-list-tile @click="copyAllGenes">
+          <v-list-tile id="copyAllGenesButton" @click="copyAllGenes">
             <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="exportAllGenes">
