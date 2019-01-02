@@ -13,7 +13,7 @@
                   </v-card-text>
                   <center><v-card-text v-html="IntroductionTextData.Content"></v-card-text></center>
                 </div>
-                <div v-else-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 || manuallyAddedGenes.length>0">
+                <div v-else-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || manuallyAddedGenes.length>0">
                   <v-flex  d-flex xs12 >
                     <v-layout row wrap>
                       <v-flex xs6>
@@ -68,7 +68,7 @@
                 <v-flex xs12 sm12 md8 lg8>
                   <v-card>
                     <SummaryDataTable
-                      v-show="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 || manuallyAddedGenes.length>0"
+                      v-show="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || manuallyAddedGenes.length>0"
                       v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
                       v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
                       v-bind:geneSearch="geneSearch"
@@ -81,7 +81,7 @@
                 <!-- start side bar -->
                 <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
                   <div class="d-flex mb-2 xs12">
-                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1 ||  manuallyAddedGenes.length>0"">
+                    <v-card v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 ||  manuallyAddedGenes.length>0"">
                       <v-card-title primary-title>
                         <v-text-field
                           append-icon="search"
@@ -125,7 +125,7 @@
                     </v-card>
                   </div> -->
                   <div class="d-flex mt-3 mb-2 xs12">
-                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0">
                       <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
@@ -189,7 +189,7 @@
                         :totalNumber="totalGenes">
                        </SvgBar>
                        <br>
-                       <div v-if="GtrGenesArr.length>1 && PhenolyzerGenesArr.length>1">
+                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
                            <v-flex xs6>
                              <div class="Rightbar_card_content_subheading" style="margin-left:10px">
