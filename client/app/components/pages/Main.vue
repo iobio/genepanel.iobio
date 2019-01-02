@@ -119,7 +119,7 @@
       fixed
     >
       <v-toolbar-title >
-        <span >panel.iobio</span>
+        <span >genepanel.iobio</span>
       </v-toolbar-title>
 
       <span style="margin-left:130px">
@@ -493,13 +493,24 @@ import knownGenes from '../../../data/knownGenes'
       selectComponent(componentName){
         this.component = componentName;
         if(componentName === 'GeneticTestingRegistry'){
+          this.$ga.event('component', 'visit', 'GeneticTestingRegistry');
           window.scrollTo(0,this.GtrScrollY);
         }
         else if(componentName === 'Phenolyzer'){
+          this.$ga.event('component', 'visit', 'Phenolyzer');
           window.scrollTo(0,this.PhenolyzerScrollY);
         }
         else if(componentName === 'SummaryTab'){
+          this.$ga.event('component', 'visit', 'SummaryTab')
           window.scrollTo(0,this.SummaryScrollY);
+        }
+        else if(componentName === 'AddGenes'){
+          this.$ga.event('component', 'visit', 'AddGenes')
+          window.scrollTo(0,0);
+        }
+        else if(componentName === 'OverviewPage'){
+          this.$ga.event('component', 'visit', 'OverviewPage')
+          window.scrollTo(0,0);
         }
       },
       forceReload: function(){
@@ -659,19 +670,22 @@ import knownGenes from '../../../data/knownGenes'
         csvExporter.generateCsv(clinData);
 
       },
+      checkIfEmpty: function(data){
+        return data!==""?data: "n/a";
+      },
       exportGenesAsCSV: function(){
-        // console.log("this.summaryGenes", this.summaryGenes)
+        console.log("this.summaryGenes", this.summaryGenes)
         var clinData = this.summaryGenes.map(gene => {
           return {
             Rank: gene.SummaryIndex,
             Gene_name: gene.name,
-            sources: gene.sources,
-            GTR_SearchTerms: gene.searchTermArrayGTR.join(),
-            Phenolyzer_searchTerms: gene.searchTermPheno.join(),
-            gene_id: gene.geneId,
-            Gtr: gene.isGtr,
-            Phenolyzer: gene.isPheno,
-            AddedGene: gene.isImportedGenes
+            Sources: gene.sources,
+            GTR_SearchTerms: this.checkIfEmpty(gene.searchTermArrayGTR.join()),
+            Phenolyzer_searchTerms: this.checkIfEmpty(gene.searchTermPheno.join()),
+            Gene_id: gene.geneId!==undefined?gene.geneId:"n/a",
+            From_Gtr: gene.isGtr===true?"Yes":"No",
+            From_Phenolyzer: gene.isPheno===true?"Yes":"No",
+            From_AddedGene: gene.isImportedGenes===true?"Yes":"No"
           }
         })
 
@@ -683,8 +697,9 @@ import knownGenes from '../../../data/knownGenes'
           showTitle: true,
           title: 'Genes',
           useBom: true,
-          useKeysAsHeaders: true,
-          filename: 'Genes'
+          // useKeysAsHeaders: true,
+          filename: 'Genes',
+          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'Phenolyzer Gene', 'Added Gene']
         };
         const csvExporter = new ExportToCsv(options);
         csvExporter.generateCsv(clinData);
@@ -962,9 +977,16 @@ import knownGenes from '../../../data/knownGenes'
   font-family: Verdana
   fill: $rect-bar-text-color
 
-.conditionsBox
-  width: 285px
-  overflow-wrap: break-word
+.genes-card-placeholder
+  margin-top: -40px
+
+@media screen and (max-width: 1263px)
+  .genes-card-placeholder
+    margin-top: 0
+
+// .conditionsBox
+//   width: 285px
+//   overflow-wrap: break-word
 
 .margin_ActiveTab
   margin-left: -8px

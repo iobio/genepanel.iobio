@@ -2,10 +2,10 @@
   "data": [
     {
       "HeadlineText": "Disclaimer",
-      "Content": "The University of Utah makes no claims that iobio applications, including panel.iobio are approved for clinical use. All users of iobio applications including panel.iobio understand and accept that any information gained by using these applications, whether the information comes from visualization, processing, internal or external databases, or analysis, may not in any way be used for clinical purposes. The University of Utah makes no representation that iobio or panel.iobio is either safe or effective for any intended use for which research may currently be performed.<br><br> iobio, or any iobio applications ARE TO BE USED FOR RESEARCH PURPOSES ONLY. USE FOR CLINICAL PURPOSES IS EXPRESSLY FORBIDDEN. Approval of iobio applications for clinical use has neither been applied for, nor received, in any country, including the United States of America."
+      "Content": "The University of Utah makes no claims that iobio applications, including genepanel.iobio are approved for clinical use. All users of iobio applications including genepanel.iobio understand and accept that any information gained by using these applications, whether the information comes from visualization, processing, internal or external databases, or analysis, may not in any way be used for clinical purposes. The University of Utah makes no representation that iobio or genepanel.iobio is either safe or effective for any intended use for which research may currently be performed.<br><br> iobio, or any iobio applications ARE TO BE USED FOR RESEARCH PURPOSES ONLY. USE FOR CLINICAL PURPOSES IS EXPRESSLY FORBIDDEN. Approval of iobio applications for clinical use has neither been applied for, nor received, in any country, including the United States of America."
     },
     {
-      "HeadlineText": "panel.iobio 1.0",
+      "HeadlineText": "genepanel.iobio 1.0",
       "Content": "<div id='versions'><div><div class='version-label'>Phenolyzer</div><div class='number'>1.0.5 (02-21-2015)</div></div><div id='versions'><div><div class='version-label'>GTR: Genetic Testing Registry</div><div class='number'><a target='_blank' href='https://www.ncbi.nlm.nih.gov/gtr/'>NCBI</a></div></div>"
     },
     {

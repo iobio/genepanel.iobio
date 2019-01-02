@@ -85,7 +85,7 @@
                   <v-flex xs12 sm12 md12 lg4 xl4>
                     <v-layout row wrap>
                       <v-flex >
-                        <div style="margin-top:-40px" v-if="items.length" class="d-flex mb-2 xs12 mb-3">
+                        <div v-if="items.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
                           <v-card>
                             <v-card-text>
                               <center>
@@ -618,9 +618,10 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       bus.$on('SelectAllPhenolyzerGenesBus', (data)=>{
         this.SelectAllPhenolyzerGenes(data);
       })
-
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+      this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+
       // if(!this.launchedFromClin){
       // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
@@ -886,6 +887,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
           self.checked = true;
           var searchTerm = self.phenotypeTerm.value;
           if(!self.multipleSearchTerms.includes(searchTerm)){
+            this.$ga.event('SearchTerm', 'Phenolyzer', searchTerm); //Emit event for Google analytics
             self.$emit('search-phenotype', self.phenotypeTerm);
             self.$emit('phenotypeSearchTermArray', self.multipleSearchTerms);
             self.phenotypeTermEntered = self.phenotypeTerm.value;
@@ -1153,6 +1155,13 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
     width: 1%
     color: red
 
+  .v-list__tile__sub-title, .v-list__tile__title
+    white-space: initial
+    overflow: initial
+    text-overflow: initial
+
+  .v-list__tile
+    height: auto
 
   .conditionsBox
     width: 470px
