@@ -620,8 +620,9 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       })
       this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
-      this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-
+      if(!this.launchedFromClin){
+        this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+      }
       // if(!this.launchedFromClin){
       // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
