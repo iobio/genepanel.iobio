@@ -207,7 +207,8 @@ import Sortable from 'sortablejs';
       tableData:[],
       selectedGenesText: "",
       associatedGenesData : [],
-      clinGenesSummaryData: []
+      clinGenesSummaryData: [],
+      includeClinGenes: 0
     }),
     watch: {
       summaryTableData: function(){
@@ -252,8 +253,11 @@ import Sortable from 'sortablejs';
       })
       this.addTableData();
       bus.$on("clearClinGenesArray", ()=>{
-        console.log("new searched!")
         // this.clinGenesSummaryData = [];
+        this.includeClinGenes++;
+      })
+      bus.$on("clearClinGenesPhenolyzerArray", ()=>{
+        this.includeClinGenes++;
       })
     },
     updated(){
@@ -315,7 +319,7 @@ import Sortable from 'sortablejs';
         console.log("clinGenesSummary in the function", this.clinGenesSummaryData)
         console.log("is launchedFromClin", this.launchedFromClin);
 
-        if(this.launchedFromClin && this.clinGenesSummaryData.length>0){
+        if(this.launchedFromClin && this.clinGenesSummaryData.length>0 && this.includeClinGenes<3){
           this.selected = [];
           this.items.map(x=>{
             console.log("this.clinGenesSummary.includes(x.name)", this.clinGenesSummaryData.includes(x.name))
