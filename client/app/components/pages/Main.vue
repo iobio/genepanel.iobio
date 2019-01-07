@@ -254,6 +254,8 @@
               v-bind:manuallyAddedGenes="manuallyAddedGenes"
               :chartColor="ordinalColor"
               v-bind:browser="browser"
+              v-bind:clinGenesSummary="clinGenesSummary"
+              v-bind:launchedFromClin="launchedFromClin"
               v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
@@ -371,6 +373,7 @@ import knownGenes from '../../../data/knownGenes'
         clinGenesGtr: [],
         clinGenesPhenolyzer: [],
         clinGenesManual: [],
+        clinGenesSummary: [],
         clinGenesData: [],
         clinSearchedGtrIndex: 0,
         clinSearchedPhenolyzerIndex: 0,
@@ -910,6 +913,7 @@ import knownGenes from '../../../data/knownGenes'
 
         //Clin is sending data to set the state
         else if(clinObject.type == 'set-data'){
+          console.log("clinObject.genesData", clinObject)
           if (clinObject.genes && clinObject.genes.length > 0 && clinObject.phenotypes && clinObject.phenotypes.length > 0) {
             this.clinSearchedGtr = clinObject.phenotypes[0];
             this.clinsearchedPhenolyzer = clinObject.phenotypes[1];
@@ -917,6 +921,8 @@ import knownGenes from '../../../data/knownGenes'
             this.clinGenesGtr = clinObject.genesGtr;
             this.clinGenesPhenolyzer = clinObject.genesPhenolyzer;
             this.clinGenesManual = clinObject.genesManual;
+            this.clinGenesSummary = clinObject.genes;
+            console.log("clinObject.clinGenesSummary", this.clinGenesSummary)
             this.clinGenesData = clinObject.genesData;
             if(this.clinSearchedGtr && this.clinSearchedGtr.length>0){
               this.clinGtrSearchTerm = [this.clinSearchedGtr[0]];

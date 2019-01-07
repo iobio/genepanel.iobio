@@ -72,6 +72,8 @@
                       v-on:TotalSummaryGenes="TotalSummaryGenes($event)"
                       v-on:TotalSummarySelectedGenes="TotalSummarySelectedGenes($event)"
                       v-bind:geneSearch="geneSearch"
+                      v-bind:clinGenesSummary="clinGenesSummary"
+                      v-bind:launchedFromClin="launchedFromClin"
                       v-bind:summaryTableData="summaryTableArray">
                     </SummaryDataTable>
                   </v-card>
@@ -94,36 +96,6 @@
                       <br>
                     </v-card>
                   </div>
-                  <!-- <div>
-                    <v-card v-if="GtrGenesArr.length>1 || PhenolyzerGenesArr.length>1">
-                      <center>
-                        <v-card-text>
-                          <div style="display:inline-block; padding-top:5px;">
-                            <label>Genes Select</label>
-                            <input
-                              id="top-genes-summary"
-                              class="form-control"
-                              type="text"
-                              v-model="genesTop"
-                              placeholder="10"
-                              autocomplete="off"
-                              list="genes">
-                              <datalist id="genes">
-                                <option v-for="genesCount in genesTopCounts">
-                                  {{ genesCount }}
-                                </option>
-                              </datalist>
-                          </div>
-                          <v-btn
-                              style="margin-top:-0.35px; text-transform: none; color:white"
-                              class="btnColor"
-                              v-on:click.prevent="selectNumberOfSummaryGenes">
-                            Select
-                          </v-btn>
-                        </v-card-text>
-                      </center>
-                    </v-card>
-                  </div> -->
                   <div class="d-flex mt-3 mb-2 xs12">
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0">
                       <v-card-text>
@@ -279,6 +251,12 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       },
       browser: {
         type: String
+      },
+      clinGenesSummary: {
+        type: Array
+      },
+      launchedFromClin: {
+        type: Boolean
       }
     },
     data: () => ({
@@ -357,6 +335,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[2];
+    },
+    updated(){
     },
     mounted(){
       this.HelpDialogsData = HelpDialogs.data;
