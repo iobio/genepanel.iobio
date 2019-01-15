@@ -175,7 +175,12 @@ import Sortable from 'sortablejs';
       geneSearch: {
         type: String
       },
-
+      clinGenesSummary: {
+        type: Array
+      },
+      launchedFromClin: {
+        type: Boolean
+      }
     },
     data: () => ({
       pagination: {
@@ -202,6 +207,8 @@ import Sortable from 'sortablejs';
       tableData:[],
       selectedGenesText: "",
       associatedGenesData : [],
+      clinGenesSummaryData: [],
+      includeClinGenes: 0
     }),
     watch: {
       summaryTableData: function(){
@@ -210,9 +217,14 @@ import Sortable from 'sortablejs';
       geneSearch: function(){
         this.search = this.geneSearch;
       },
+      clinGenesSummary: function(){
+        this.clinGenesSummaryData = this.clinGenesSummary;
+      }
 
     },
     mounted(){
+      console.log("clinGenesSummary", this.clinGenesSummary)
+      this.clinGenesSummaryData = this.clinGenesSummary;
       if($('.v-datatable tbody').parents("#summaryDataTableId").length===1){
         $("#summaryDataTableId").find(".v-datatable tbody").attr('id', 'v-datatble-summary');
       }
@@ -240,8 +252,17 @@ import Sortable from 'sortablejs';
         }
       })
       this.addTableData();
+      bus.$on("clearClinGenesArray", ()=>{
+        // this.clinGenesSummaryData = [];
+        this.includeClinGenes++;
+      })
+      bus.$on("clearClinGenesPhenolyzerArray", ()=>{
+        this.includeClinGenes++;
+      })
     },
     updated(){
+      console.log("clinGenesSummary", this.clinGenesSummary)
+      this.clinGenesSummaryData = this.clinGenesSummary;
       this.selectedTemp = this.selected;
       bus.$on('deSelectAllSummaryGenesBus', (data)=>{
         this.DeSelectAllSummaryGenes(data);
@@ -295,11 +316,28 @@ import Sortable from 'sortablejs';
         this.items.map((x,i)=>{
           x.SummaryIndex = i + 1;
         })
+        console.log("clinGenesSummary in the function", this.clinGenesSummaryData)
+        console.log("is launchedFromClin", this.launchedFromClin);
 
-        this.selected = this.items.slice();
-        this.selectedTemp = this.selected;
-        this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
-        bus.$emit("updateAllGenes", this.selected);
+        if(this.launchedFromClin && this.clinGenesSummaryData.length>0 && this.includeClinGenes<3){
+          this.selected = [];
+          this.items.map(x=>{
+            console.log("this.clinGenesSummary.includes(x.name)", this.clinGenesSummaryData.includes(x.name))
+            if(this.clinGenesSummaryData.includes(x.name)){
+              this.selected.push(x);
+            }
+          })
+          console.log("selected length", this.selected.length)
+          this.selectedTemp = this.selected;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          bus.$emit("updateAllGenes", this.selected);
+        }
+        else {
+          this.selected = this.items.slice();
+          this.selectedTemp = this.selected;
+          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+          bus.$emit("updateAllGenes", this.selected);
+        }
 
       },
       filterItemsOnSearch(items, search, filter) {

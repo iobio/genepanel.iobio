@@ -16,23 +16,19 @@ else
 fi
 
 # link to files needed for static page
-ln -s ~/desktop/genepanel/server/views/index.html ~/desktop/genepanel/deploy/index.html
-ln -s ~/desktop/genepanel/client/assets ~/desktop/genepanel/deploy/assets
-ln -s ~/desktop/genepanel/client/dist/build.js ~/desktop/genepanel/deploy/dist/build.js
+working_dir=$PWD
+
+ln -s $working_dir/server/views/index.html $working_dir/deploy/index.html
+ln -s $working_dir/client/assets $working_dir/deploy/assets
+ln -s $working_dir/client/dist/build.js $working_dir/deploy/dist/build.js
 if [[ $1 == "prod" ]]; then
-  ln -s ~/desktop/genepanel/client/dist/build.js.map ~/desktop/genepanel/deploy/dist/build.js.map
+  ln -s $working_dir/client/dist/build.js.map $working_dir/deploy/dist/build.js.map
 fi
 
 # upload to cloudfront
 if [[ $1 == "prod" ]]; then
-  #aws s3 cp ./deploy/  s3://static.iobio.io/vue.gene.iobio.io/ --recursive
-  #aws cloudfront create-invalidation --distribution-id EPK0TTL11YUW --paths /
 
-  echo "** Uploaded to prod s3 bucket **"
-  # aws s3 cp ./deploy/  s3://static.iobio.io/prod/gene.iobio.io/ --recursive
-  # echo "** Renew cloudfrount cache **"
-  # aws cloudfront create-invalidation --distribution-id E331YTF25OIVP7 --paths /\*
-  echo "** Syncing to dev s3 bucket **"
+  echo "** Syncing to s3 bucket **"
   aws s3 cp ./deploy/  s3://static.iobio.io/dev/panel.iobio.io/ --recursive
 
   echo "** Syncing to genepanel prod s3 bucket **"
@@ -43,14 +39,6 @@ if [[ $1 == "prod" ]]; then
 
   echo "** Renew genepanel prod cloudfrount cache **"
   aws cloudfront create-invalidation --distribution-id E14HSC209IWKWU --paths /\*
-
-
-  # echo "** Syncing to prod s3 bucket **"
-  # aws s3 cp ./deploy/  s3://static.iobio.io/prod/panel.iobio.io/ --recursive
-
-
-  # echo "** Renew prod cloudfrount cache **"
-  # aws cloudfront create-invalidation --distribution-id ESCEVE7C90M80 --paths /\*
 
 
 else
