@@ -336,7 +336,7 @@ import knownGenes from '../../../data/knownGenes'
         GeneMembershipProps: [],
         IntroductionTextData: null,
 
-        clinIobioUrls: ["http://localhost:4030", "http://clin.iobio.io", "https://clin.iobio.io", "https://dev.clin.iobio.io", "http://dev.clin.iobio.io"],
+        clinIobioUrls: ["http://localhost:4030", "http://tony.iobio.io:4030", "http://clin.iobio.io", "https://clin.iobio.io", "https://dev.clin.iobio.io", "http://dev.clin.iobio.io"],
         clinIobioUrl: null,
         launchedFromClin: self.paramLaunchedFromClin == 'true' ? true : false,
 
@@ -935,7 +935,10 @@ import knownGenes from '../../../data/knownGenes'
           }
         }
 
-        var responseObject = {success: true, type: 'message-received', sender: 'genepanel.iobio.io'};
+        var responseObject = {success: true,
+          type: 'confirm-set-data',
+          sender: 'genepanel.iobio.io',
+          app: 'genepanel'};
         window.parent.postMessage(JSON.stringify(responseObject), this.clinIobioUrl);
       },
       sendClin: function(obj) {
