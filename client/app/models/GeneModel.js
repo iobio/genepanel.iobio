@@ -703,10 +703,12 @@ export default class GeneModel {
   }
 
   parsePhenolyzerGenes(data, selectGeneCount, numberPhenolyzerGenes) {
+    // console.log("data", data)
     var me = this;
     var count = 0;
     me.phenolyzerGenes = [];
     data.split("\n").forEach( function(rec) {
+      console.log("rec", rec)
       var fields = rec.split("\t");
       if (fields.length > 2) {
         var geneName               = fields[1];

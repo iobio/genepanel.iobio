@@ -155,12 +155,46 @@ var model = new Model();
         panelsDefinitionValues: [20, 45]
       }
     },
+    mounted(){
+      console.log("hello")
+      fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=lacticacidosis%20headaches`)
+        .then((response) => {
+          response.body
+            .getReader()
+            .read()
+            .then((value, done) => {
+              // console.log(value.value) //gets the unit8Array
+              var decoder = new TextDecoder('utf-8');
+              // console.log(decoder.decode(value.value));
+              var res = decoder.decode(value.value);
+              this.parseTerms(res);
+            });
+        });
+
+
+    },
     updated(){
 
     },
     watch: {
     },
     methods:{
+      parseTerms: function(res){
+        var count = 0;
+        var hpoTermArr = [];
+        // console.log("parseTerms called", res)
+        res.split("\n").forEach(function(rec){
+          // console.log("rec", rec)
+          var fields = rec.split("\t");
+          if(fields.length===5){
+            var hpoNumber = fields[0];
+            var phenotype = fields[1];
+            hpoTermArr.push({hpoNumber:hpoNumber, phenotype:phenotype})
+          }
+        })
+        hpoTermArr.shift();
+        console.log("hpoTermArr",hpoTermArr)
+      },
       getStarted: function(component){
         if(component==='gtr'){
           bus.$emit('openGtrComponent');
