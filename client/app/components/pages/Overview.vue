@@ -1,6 +1,6 @@
 <template>
   <div id="overview-panel">
-    <v-layout row wrap style="margin-top:-10px;">
+    <!-- <v-layout row wrap style="margin-top:-10px;">
       <v-flex d-flex xs12>
         <v-card>
           <v-jumbotron class="overview-jumbotron" :gradient="gradient" dark>
@@ -128,10 +128,25 @@
           </v-container>
         </v-flex>
       </v-flex>
-    </v-layout>
-    <br>
+    </v-layout> -->
+    <v-card-text>
+
+    </v-card-text>
+    <v-textarea
+             outline
+             v-model="notes"
+             name="input-7-4"
+             label="Outline textarea"
+    ></v-textarea>
+    <v-btn v-on:click="fetchHpoTerm" color="primary">submit</v-btn>
+    <div v-if="this.HpoTerms.length>0">
+      <div v-for="term in HpoTerms">
+        {{term.hpoNumber}} - {{term.phenotype}}
+      </div>
+    </div>
     <v-container fluid grid-list-md style="min-height:200px">
     </v-container>
+
   </div>
 </template>
 
@@ -141,6 +156,7 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
+import hpo_genes from '../../../data/hpo_genes.json'
 
 var model = new Model();
 
@@ -152,26 +168,17 @@ var model = new Model();
     data(){
       return {
         gradient: 'to top,  #0D47A1,#42A5F5',
-        panelsDefinitionValues: [20, 45]
+        panelsDefinitionValues: [20, 45],
+        notes: "",
+        HpoTerms: [],
+        multipleSearchTerms: [],
+        HpoGenesData: null,
+        items: [],
       }
     },
     mounted(){
-      console.log("hello")
-      fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=lacticacidosis%20headaches`)
-        .then((response) => {
-          response.body
-            .getReader()
-            .read()
-            .then((value, done) => {
-              // console.log(value.value) //gets the unit8Array
-              var decoder = new TextDecoder('utf-8');
-              // console.log(decoder.decode(value.value));
-              var res = decoder.decode(value.value);
-              this.parseTerms(res);
-            });
-        });
-
-
+      this.HpoGenesData = hpo_genes;
+      console.log(this.HpoGenesData["HP:0003803"])
     },
     updated(){
 
@@ -179,21 +186,56 @@ var model = new Model();
     watch: {
     },
     methods:{
+      fetchHpoTerm: function(){
+        this.HpoTerms = [];
+        console.log("notes", this.notes);
+        var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
+        console.log("url", u)
+        fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
+          .then((response) => {
+            response.body
+              .getReader()
+              .read()
+              .then((value, done) => {
+                // console.log(value.value) //gets the unit8Array
+                var decoder = new TextDecoder('utf-8');
+                // console.log(decoder.decode(value.value));
+                var res = decoder.decode(value.value);
+                this.parseTerms(res);
+              });
+          });
+      },
       parseTerms: function(res){
         var count = 0;
         var hpoTermArr = [];
-        // console.log("parseTerms called", res)
+        var terms = [];
+        console.log("parseTerms called", res)
         res.split("\n").forEach(function(rec){
           // console.log("rec", rec)
           var fields = rec.split("\t");
           if(fields.length===5){
             var hpoNumber = fields[0];
             var phenotype = fields[1];
+            terms.push(hpoNumber)
             hpoTermArr.push({hpoNumber:hpoNumber, phenotype:phenotype})
           }
         })
         hpoTermArr.shift();
-        console.log("hpoTermArr",hpoTermArr)
+        terms.shift();
+        this.multipleSearchTerms = terms;
+        console.log("this.multipleSearchTerms", this.multipleSearchTerms)
+        console.log("hpoTermArr",hpoTermArr);
+        this.HpoTerms = hpoTermArr;
+        this.getGenesForHpoTerms();
+      },
+      getGenesForHpoTerms: function(){
+        this.multipleSearchTerms.map((x, i)=>{
+          if(this.HpoGenesData[x]!==undefined){
+            this.items = [...this.items, ...this.HpoGenesData[x].gene_symbol]
+
+          }
+        })
+        console.log("this.items", this.items)
       },
       getStarted: function(component){
         if(component==='gtr'){
