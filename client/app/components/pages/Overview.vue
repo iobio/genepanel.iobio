@@ -229,13 +229,47 @@ var model = new Model();
         this.getGenesForHpoTerms();
       },
       getGenesForHpoTerms: function(){
-        this.multipleSearchTerms.map((x, i)=>{
-          if(this.HpoGenesData[x]!==undefined){
-            this.items = [...this.items, ...this.HpoGenesData[x].gene_symbol]
+        var genes = [];
+        this.multipleSearchTerms.map((term, i)=>{
+          if(this.HpoGenesData[term]!==undefined){
+            // this.items = [...this.items, ...this.HpoGenesData[x].gene_symbol]
+            this.HpoGenesData[term].gene_symbol.map(gene_name=>{
+              if(!genes.includes(gene_name)){
+                genes.push(gene_name);
+                this.items.push({
+                  gene: gene_name,
+                  searchTermIndex: [i+1],
+                  hpoTerm: [term],
+                  componentSource: "ClinPhen"
+                })
+              }
+              else if(genes.includes(gene_name)){
+                var idx = genes.indexOf(gene_name);
+                console.log("gene_name", gene_name)
+                console.log("this.items[idx].hpoTerm", this.items[idx].hpoTerm)
+                console.log("term", term);
+                console.log("check equality", this.items[idx].hpoTerm===term)
+                if(this.items[idx].hpoTerm!==term){
+                  this.items[idx].searchTermIndex.push(i+1);
+                  this.items[idx].hpoTerm.push(term);
+                }
+              }
+            })
 
           }
         })
         console.log("this.items", this.items)
+        this.noOfSourcesSvg();
+      },
+      noOfSourcesSvg: function(){
+        this.items.map((x, i)=>{
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
+            return `<svg height="30" width="30">
+                  <circle class="sourceIndicator"/>
+                  <text class="sourceIndicatorText" x="12" y="15" font-weight="600" font-size="10"  dy=".3em">${y}</text>
+                </svg> `
+          })
+        });
       },
       getStarted: function(component){
         if(component==='gtr'){
