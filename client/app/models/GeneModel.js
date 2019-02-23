@@ -708,7 +708,6 @@ export default class GeneModel {
     var count = 0;
     me.phenolyzerGenes = [];
     data.split("\n").forEach( function(rec) {
-      console.log("rec", rec)
       var fields = rec.split("\t");
       if (fields.length > 2) {
         var geneName               = fields[1];

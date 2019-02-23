@@ -331,6 +331,8 @@ import Sortable from 'sortablejs';
           this.selectedTemp = this.selected;
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           bus.$emit("updateAllGenes", this.selected);
+          console.log("selected summary", this.selected)
+
         }
 
       },

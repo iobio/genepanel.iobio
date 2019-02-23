@@ -603,7 +603,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       }
     },
     updated(){
-      console.log("selected", this.selected)
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";

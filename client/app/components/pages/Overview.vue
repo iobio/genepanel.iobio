@@ -191,7 +191,7 @@ var model = new Model();
         console.log("notes", this.notes);
         var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
         console.log("url", u)
-        fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
+        return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
           .then((response) => {
             response.body
               .getReader()
