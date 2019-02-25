@@ -27,7 +27,7 @@
                     <div v-if="this.HpoTerms.length">
                       <br>
                         HPO Terms:
-                      <v-chip disabled  color="primary" text-color="white" v-for="(term, i) in HpoTerms" :key="i" >
+                      <v-chip disabled  color="primary" text-color="white" close v-for="(term, i) in HpoTerms" :key="i" @input="remove(term)">
                         {{ i+1 }}. <b> {{ term.hpoNumber }} </b> &nbsp; <i> ({{term.phenotype}}) </i>
                       </v-chip>
                     </div>
@@ -35,9 +35,28 @@
 
                   <v-flex xs12 sm12 md12 lg4 xl4>
                     <v-layout row wrap>
-                      <v-flex >
-                        <div >
+                      <v-flex style="margin-left:20px">
+                        <div v-if="items.length>0">
                           <v-card>
+                            <v-card-text>
+                              <center>
+                                <span class="Rightbar_CardHeading" style="font-size:15px">
+                                  GENES
+                                </span>
+                                <v-divider class="Rightbar_card_divider"></v-divider>
+                                <span class="Rightbar_card_content_subheading">
+                                  <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected
+                                </span>
+                              </center>
+                              <div class="text-xs-center">
+                                <progressCircularDonut
+                                  v-if="items.length>0"
+                                  :selectedNumber="selected.length"
+                                  :totalNumber="items.length"
+                                >
+                                </progressCircularDonut>
+                              </div>
+                            </v-card-text>
                           </v-card>
                         </div>
                       </v-flex>
@@ -312,6 +331,14 @@ import hpo_genes from '../../../data/hpo_genes.json'
           })
         });
       },
+      remove(term){
+        var idx = this.multipleSearchTerms.indexOf(term.hpoNumber);
+        this.HpoTerms.splice(idx,1);
+        this.HpoTerms = [...this.HpoTerms];
+        this.multipleSearchTerms.splice(idx,1);
+        this.multipleSearchTerms = [...this.multipleSearchTerms];
+        this.getGenesForHpoTerms();
+      }
     }
   }
 </script>
