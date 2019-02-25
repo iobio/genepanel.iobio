@@ -1,6 +1,6 @@
 <template>
   <div id="overview-panel">
-    <!-- <v-layout row wrap style="margin-top:-10px;">
+    <v-layout row wrap style="margin-top:-10px;">
       <v-flex d-flex xs12>
         <v-card>
           <v-jumbotron class="overview-jumbotron" :gradient="gradient" dark>
@@ -128,22 +128,13 @@
           </v-container>
         </v-flex>
       </v-flex>
-    </v-layout> -->
-    <v-card-text>
+    </v-layout>
 
-    </v-card-text>
-    <v-textarea
-             outline
-             v-model="notes"
-             name="input-7-4"
-             label="Outline textarea"
-    ></v-textarea>
-    <v-btn v-on:click="fetchHpoTerm" color="primary">submit</v-btn>
-    <div v-if="this.HpoTerms.length>0">
+    <!-- <div v-if="this.HpoTerms.length>0">
       <div v-for="term in HpoTerms">
         {{term.hpoNumber}} - {{term.phenotype}}
       </div>
-    </div>
+    </div> -->
     <v-container fluid grid-list-md style="min-height:200px">
     </v-container>
 

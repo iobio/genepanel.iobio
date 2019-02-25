@@ -1,0 +1,288 @@
+<template>
+  <div>
+    <div style="background-color:#f9fbff">
+
+      <v-container fluid grid-list-md>
+        <v-layout row wrap style="margin-top:-20px;">
+          <v-flex d-flex xs12>
+            <v-card>
+              <v-card-text style="margin-bottom:-5px">
+                <h3>ClinPhen</h3>
+                <v-layout row wrap>
+                  <v-flex xs12 sm12 md12 lg8 xl8>
+                    <v-textarea
+                             solo
+                             v-model="notes"
+                             name="input-7-4"
+                             label="Enter clinical notes"
+                    ></v-textarea>
+                    <v-btn v-on:click="fetchHpoTerm" color="primary">submit</v-btn>
+
+                    <p></p>
+                    <!-- <div v-if="this.HpoTerms.length>0">
+                      <div v-for="term in HpoTerms">
+                        {{term.hpoNumber}} - {{term.phenotype}}
+                      </div>
+                    </div> -->
+                    <div v-if="this.HpoTerms.length">
+                      <br>
+                        HPO Terms:
+                      <v-chip disabled  color="primary" text-color="white" v-for="(term, i) in HpoTerms" :key="i" >
+                        {{ i+1 }}. <b> {{ term.hpoNumber }} </b> &nbsp; <i> ({{term.phenotype}}) </i>
+                      </v-chip>
+                    </div>
+                  </v-flex>
+
+                  <v-flex xs12 sm12 md12 lg4 xl4>
+                    <v-layout row wrap>
+                      <v-flex >
+                        <div >
+                          <v-card>
+                          </v-card>
+                        </div>
+                      </v-flex>
+                    </v-layout>
+                  </v-flex>
+
+                </v-layout>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+
+          <v-flex xs12 >
+            <v-card >
+
+            </v-card>
+          </v-flex>
+
+          <v-flex d-flex xs12 >
+            <v-layout row wrap>
+              <!-- Start data table  -->
+              <v-flex xs8>
+                <v-card>
+                  <!-- <ContentLoaderPlaceholder v-show="checked===true"></ContentLoaderPlaceholder> -->
+                </v-card>
+              </v-flex>
+
+              <!-- Datatable goes here -->
+              <v-flex xs12>
+                <v-card>
+
+                </v-card>
+              </v-flex>
+              <!-- End data table -->
+
+
+            </v-layout>
+          </v-flex>
+        </v-layout>
+      </v-container>
+
+      <v-container fluid grid-list-md style="min-height:500px">
+        <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
+          <v-flex d-flex xs12 sm12 md12 lg12>
+
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import { bus } from '../../routes';
+import { Typeahead, Btn } from 'uiv';
+import GeneModel from '../../models/GeneModel';
+var geneModel = new GeneModel();
+import IntroductionText from '../../../data/IntroductionText.json'
+import Dialogs from '../partials/Dialogs.vue';
+import HelpDialogs from '../../../data/HelpDialogs.json';
+import SvgBar from '../viz/SvgBar.vue'
+import progressCircularDonut from '../partials/progressCircularDonut.vue';
+import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
+import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
+import hpo_genes from '../../../data/hpo_genes.json'
+
+  export default {
+    components: {
+      'Dialogs': Dialogs,
+      'SvgBar': SvgBar,
+      'progressCircularDonut': progressCircularDonut,
+      'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
+      'ContentLoaderSidebar': ContentLoaderSidebar,
+      Typeahead
+    },
+    props: {
+      isMobile: {
+        type: Boolean
+      },
+      browser: {
+        type: String
+      },
+      launchedFromClin: {
+        type: Boolean
+      }
+    },
+    data(){
+      let self = this;
+      return {
+        notes: "",
+        HpoTerms: [],
+        multipleSearchTerms: [],
+        HpoGenesData: null,
+        items: [],
+        //DataTable
+        pagination: {
+          sortBy: 'rank',
+          // descending: true,
+          rowsPerPage: 25
+        },
+        search: '',
+        selected: [],
+        headers: [
+          {
+            text: 'Rank',
+            value: 'indexVal',
+            sortable: false,
+            align: 'left',
+          },
+          {
+            text: 'Gene Name',
+            align: 'left',
+            value: 'geneName',
+            sortable: false,
+          },
+         {
+           text: 'Phenolyzer score',
+           align: 'left',
+           value: 'score',
+           sortable: false,
+          },
+          {
+            text: '',
+            align: 'left',
+            value: 'htmlData',
+            sortable: false,
+          },
+          {
+            text: '',
+            align: 'left',
+            sortable: false,
+            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
+          }
+        ],
+      }
+    },
+    beforeCreate(){
+    },
+    created(){
+    },
+    mounted(){
+      this.HpoGenesData = hpo_genes;
+      console.log(this.HpoGenesData["HP:0003803"])
+    },
+    updated(){
+    },
+    watch: {
+    },
+    methods: {
+      fetchHpoTerm: function(){
+        this.HpoTerms = [];
+        console.log("notes", this.notes);
+        var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
+        console.log("url", u)
+        return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
+          .then((response) => {
+            response.body
+              .getReader()
+              .read()
+              .then((value, done) => {
+                // console.log(value.value) //gets the unit8Array
+                var decoder = new TextDecoder('utf-8');
+                // console.log(decoder.decode(value.value));
+                var res = decoder.decode(value.value);
+                this.parseTerms(res);
+              });
+          });
+      },
+      parseTerms: function(res){
+        var count = 0;
+        var hpoTermArr = [];
+        var terms = [];
+        console.log("parseTerms called", res)
+        res.split("\n").forEach(function(rec){
+          // console.log("rec", rec)
+          var fields = rec.split("\t");
+          if(fields.length===5){
+            var hpoNumber = fields[0];
+            var phenotype = fields[1];
+            terms.push(hpoNumber)
+            hpoTermArr.push({hpoNumber:hpoNumber, phenotype:phenotype})
+          }
+        })
+        hpoTermArr.shift();
+        terms.shift();
+        this.multipleSearchTerms = terms;
+        console.log("this.multipleSearchTerms", this.multipleSearchTerms)
+        console.log("hpoTermArr",hpoTermArr);
+        this.HpoTerms = hpoTermArr;
+        this.getGenesForHpoTerms();
+      },
+      getGenesForHpoTerms: function(){
+        var genes = [];
+        this.multipleSearchTerms.map((term, i)=>{
+          if(this.HpoGenesData[term]!==undefined){
+            // this.items = [...this.items, ...this.HpoGenesData[x].gene_symbol]
+            this.HpoGenesData[term].gene_symbol.map(gene_name=>{
+              if(!genes.includes(gene_name)){
+                genes.push(gene_name);
+                this.items.push({
+                  gene: gene_name,
+                  searchTermIndex: [i+1],
+                  hpoTerm: [term],
+                  componentSource: "ClinPhen"
+                })
+              }
+              else if(genes.includes(gene_name)){
+                var idx = genes.indexOf(gene_name);
+                console.log("gene_name", gene_name)
+                console.log("this.items[idx].hpoTerm", this.items[idx].hpoTerm)
+                console.log("term", term);
+                console.log("check equality", this.items[idx].hpoTerm===term)
+                if(this.items[idx].hpoTerm!==term){
+                  this.items[idx].searchTermIndex.push(i+1);
+                  this.items[idx].hpoTerm.push(term);
+                }
+              }
+            })
+
+          }
+        })
+        console.log("this.items", this.items)
+        this.noOfSourcesSvg();
+      },
+      noOfSourcesSvg: function(){
+        this.items.map((x, i)=>{
+          x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
+            return `<svg height="30" width="30">
+                  <circle class="sourceIndicator"/>
+                  <text class="sourceIndicatorText" x="12" y="15" font-weight="600" font-size="10"  dy=".3em">${y}</text>
+                </svg> `
+          })
+        });
+      },
+    }
+  }
+</script>
+
+<style>
+
+</style>
+
+<style lang="sass">
+
+  @import ../assets/sass/variables
+
+
+</style>

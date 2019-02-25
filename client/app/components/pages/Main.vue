@@ -73,6 +73,24 @@
        </v-list-tile>
 
        <v-list-tile
+          v-bind:class="[component==='ClinPhen' ? 'activeTab' : '']"
+          @click="selectComponent('ClinPhen')">
+         <v-list-tile-action v-bind:class="[component==='ClinPhen' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='ClinPhen'"><v-icon color="primary darken-1">speaker_notes</v-icon></span>
+           <span v-else><v-icon color="blue-grey darken-2">speaker_notes</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title v-bind:class="[component==='ClinPhen' ? 'activeTabText' : '']">
+             ClinPhen
+             <v-badge color="primary darken-1" right class="badge-bg-color">
+               <!-- <span  slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span> -->
+               <span  slot="badge">0</span>
+             </v-badge>
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
+       <v-list-tile
           v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
           @click="selectComponent('AddGenes')">
          <v-list-tile-action v-bind:class="[component==='AddGenes' ? 'margin_ActiveTab' : '']">
@@ -234,6 +252,13 @@
           </keep-alive>
 
           <keep-alive>
+            <ClinPhen
+              v-show="component==='ClinPhen'"
+            >
+            </ClinPhen>
+          </keep-alive>
+
+          <keep-alive>
             <AddGenes
               v-show="component==='AddGenes'"
               v-bind:launchedFromClin="launchedFromClin"
@@ -271,6 +296,7 @@
 import { bus } from '../../routes';
 import GeneticTestingRegistry from './GeneticTestingRegistry.vue';
 import Phenolyzer from './Phenolyzer.vue';
+import ClinPhen from './ClinPhen.vue'
 import AddGenes from './AddGenes.vue';
 // import HomePage from './HomePage.vue';
 import SummaryTab from './SummaryTab.vue';
@@ -296,7 +322,8 @@ import knownGenes from '../../../data/knownGenes'
       'HelpMenu': HelpMenu,
       'Overview':Overview,
       'Footer': Footer,
-      'AddGenes': AddGenes
+      'AddGenes': AddGenes,
+      'ClinPhen' : ClinPhen
     },
     props: {
       paramLaunchedFromClin: null
@@ -304,7 +331,7 @@ import knownGenes from '../../../data/knownGenes'
     data(){
       let self = this;
       return{
-        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'ClinPhen',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
