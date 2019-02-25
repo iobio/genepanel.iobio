@@ -66,8 +66,61 @@
 
               <!-- Datatable goes here -->
               <v-flex xs12>
-                <v-card>
-
+                <v-card v-if="items.length">
+                  <v-data-table
+                      id="clinphen-genes-table"
+                      v-model="selected"
+                      v-bind:headers="headers"
+                      v-bind:items="items"
+                      select-all
+                      v-bind:pagination.sync="pagination"
+                      item-key="gene"
+                      class="elevation-1"
+                      v-bind:search="search"
+                      no-data-text="No pheotype genes Available Currently"
+                    >
+                    <template slot="headers" slot-scope="props">
+                      <tr>
+                        <th>
+                          <v-checkbox
+                            primary
+                            hide-details
+                            @click.native="toggleAll"
+                            :input-value="props.all"
+                            :indeterminate="props.indeterminate"
+                          ></v-checkbox>
+                        </th>
+                        <th v-for="header in props.headers" :key="header.text"
+                          :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                        >
+                          {{ header.text }}
+                        </th>
+                      </tr>
+                    </template>
+                    <template slot="items" slot-scope="props">
+                      <tr :active="props.selected">
+                        <td>
+                          <v-checkbox
+                            primary
+                            hide-details
+                            v-model="props.selected"
+                            :input-value="props.selected"
+                          ></v-checkbox>
+                        </td>
+                        <td>{{ props.item.index }}</td>
+                        <td >
+                          <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.gene }}</span>
+                        </td>
+                          <td >
+                            <span v-for="x in props.item.searchTermIndexSVG">
+                              <span v-html="x"></span>
+                            </span>
+                          </td>
+                      </tr>
+                    </template>
+                    <template slot="footer">
+                  </template>
+                  </v-data-table>
                 </v-card>
               </v-flex>
               <!-- End data table -->
@@ -132,9 +185,10 @@ import hpo_genes from '../../../data/hpo_genes.json'
         multipleSearchTerms: [],
         HpoGenesData: null,
         items: [],
+        selected: [],
         //DataTable
         pagination: {
-          sortBy: 'rank',
+          sortBy: 'index',
           // descending: true,
           rowsPerPage: 25
         },
@@ -142,35 +196,18 @@ import hpo_genes from '../../../data/hpo_genes.json'
         selected: [],
         headers: [
           {
-            text: 'Rank',
-            value: 'indexVal',
+            text: 'Number',
+            value: 'index',
             sortable: false,
             align: 'left',
           },
           {
             text: 'Gene Name',
             align: 'left',
-            value: 'geneName',
+            value: 'gene',
             sortable: false,
           },
-         {
-           text: 'Phenolyzer score',
-           align: 'left',
-           value: 'score',
-           sortable: false,
-          },
-          {
-            text: '',
-            align: 'left',
-            value: 'htmlData',
-            sortable: false,
-          },
-          {
-            text: '',
-            align: 'left',
-            sortable: false,
-            value: ['haploScore', 'value', 'omimSrc', 'clinGenLink', '', 'rank', 'geneId', 'geneIdLink']
-          }
+          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
         ],
       }
     },
@@ -231,6 +268,8 @@ import hpo_genes from '../../../data/hpo_genes.json'
       },
       getGenesForHpoTerms: function(){
         var genes = [];
+        this.items = [];
+        this.selected = [];
         this.multipleSearchTerms.map((term, i)=>{
           if(this.HpoGenesData[term]!==undefined){
             // this.items = [...this.items, ...this.HpoGenesData[x].gene_symbol]
@@ -241,29 +280,30 @@ import hpo_genes from '../../../data/hpo_genes.json'
                   gene: gene_name,
                   searchTermIndex: [i+1],
                   hpoTerm: [term],
-                  componentSource: "ClinPhen"
+                  componentSource: "ClinPhen",
+                  hpoSource:1,
                 })
               }
               else if(genes.includes(gene_name)){
                 var idx = genes.indexOf(gene_name);
-                console.log("gene_name", gene_name)
-                console.log("this.items[idx].hpoTerm", this.items[idx].hpoTerm)
-                console.log("term", term);
-                console.log("check equality", this.items[idx].hpoTerm===term)
                 if(this.items[idx].hpoTerm!==term){
                   this.items[idx].searchTermIndex.push(i+1);
                   this.items[idx].hpoTerm.push(term);
+                  this.items[idx].hpoSource = this.items[idx].hpoSource+1;
                 }
               }
             })
 
           }
         })
-        console.log("this.items", this.items)
+        console.log("this.items", this.items);
+        this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
+        this.selected = this.items.slice();
       },
       noOfSourcesSvg: function(){
         this.items.map((x, i)=>{
+          x.index = i+1;
           x.searchTermIndexSVG = x.searchTermIndex.map(y=>{
             return `<svg height="30" width="30">
                   <circle class="sourceIndicator"/>
