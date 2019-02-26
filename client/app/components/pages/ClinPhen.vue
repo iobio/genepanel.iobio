@@ -26,7 +26,6 @@
                         <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit to Generate Gene List</v-btn>
                       </v-flex>
                     </v-layout>
-
                     <p>
                       ------ <i>OR</i> ------
                     </p>
@@ -111,7 +110,7 @@
               <!-- Start data table  -->
               <v-flex xs8>
                 <v-card>
-                  <!-- <ContentLoaderPlaceholder v-show="checked===true"></ContentLoaderPlaceholder> -->
+                  <ContentLoaderPlaceholder v-show="checked===true"></ContentLoaderPlaceholder>
                 </v-card>
               </v-flex>
 
@@ -235,6 +234,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         notes: "",
         HpoTerms: [],
         multipleSearchTerms: [],
+        checked: false,
         HpoGenesData: null,
         HpoTermsTypeaheadData: null,
         items: [],
@@ -281,6 +281,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
     },
     methods: {
       searchForTheInputTerm(){
+        this.checked = true;
         var res = this.searchInput.HPO_Data.split(" - ");
         var hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
         var phenoTerm = res[0];
@@ -300,9 +301,8 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       },
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
-        console.log("notes", this.notes);
+        this.checked = true;
         var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
-        console.log("url", u)
         return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
           .then((response) => {
             response.body
@@ -370,6 +370,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
 
           }
         })
+        this.checked = false;
         console.log("this.items", this.items);
         this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
@@ -387,6 +388,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         });
       },
       remove(term){
+        this.checked = true;
         var idx = this.multipleSearchTerms.indexOf(term.hpoNumber);
         this.HpoTerms.splice(idx,1);
         this.HpoTerms = [...this.HpoTerms];
