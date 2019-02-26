@@ -10,20 +10,52 @@
                 <h3>ClinPhen</h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
-                    <v-textarea
-                             solo
-                             v-model="notes"
-                             name="input-7-4"
-                             label="Enter clinical notes"
-                    ></v-textarea>
-                    <v-btn v-on:click="fetchHpoTerm" color="primary">submit</v-btn>
+                    <label>Enter or paste clinical notes</label>
 
+                    <v-layout row wrap>
+                      <v-flex lg8>
+                        <v-textarea
+                                 solo
+                                 v-model="notes"
+                                 name="input-7-4"
+                                 rows="2"
+                                 label="Patient has symptoms such as headache, tiredness.."
+                        ></v-textarea>
+                      </v-flex>
+                      <v-flex lg4>
+                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit to Generate Gene List</v-btn>
+                      </v-flex>
+                    </v-layout>
+
+                    <p>
+                      ------ <i>OR</i> ------
+                    </p>
+                    <div id="HPOInput" style="display:inline-block; padding-top:5px;">
+                      <label>Enter Phenotype</label>
+                      <input
+                        id="hpo_input"
+                        class="form-control"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="Search phenotype (E.g. Ataxia)">
+                      <typeahead
+                        match-start
+                        v-model="searchInput"
+                        target="#hpo_input"
+                        :data="HpoTermsTypeaheadData"
+                        :limit="parseInt(100)"
+                        :preselect="false"
+                        item-key="HPO_Data"/>
+
+                    </div>
+                    <v-btn
+                        style="margin-top:-0.35px; text-transform: none"
+                        class="btnColor"
+                        v-on:click="searchForTheInputTerm"
+                        >
+                      Generate Gene List
+                    </v-btn>
                     <p></p>
-                    <!-- <div v-if="this.HpoTerms.length>0">
-                      <div v-for="term in HpoTerms">
-                        {{term.hpoNumber}} - {{term.phenotype}}
-                      </div>
-                    </div> -->
                     <div v-if="this.HpoTerms.length">
                       <br>
                         HPO Terms:
@@ -174,7 +206,8 @@ import SvgBar from '../viz/SvgBar.vue'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
-import hpo_genes from '../../../data/hpo_genes.json'
+import hpo_genes from '../../../data/hpo_genes.json';
+import HpoTermsData from '../../../data/HpoTermsData.json';
 
   export default {
     components: {
@@ -203,6 +236,7 @@ import hpo_genes from '../../../data/hpo_genes.json'
         HpoTerms: [],
         multipleSearchTerms: [],
         HpoGenesData: null,
+        HpoTermsTypeaheadData: null,
         items: [],
         selected: [],
         //DataTable
@@ -212,6 +246,7 @@ import hpo_genes from '../../../data/hpo_genes.json'
           rowsPerPage: 25
         },
         search: '',
+        searchInput: "",
         selected: [],
         headers: [
           {
@@ -236,6 +271,7 @@ import hpo_genes from '../../../data/hpo_genes.json'
     },
     mounted(){
       this.HpoGenesData = hpo_genes;
+      this.HpoTermsTypeaheadData  = HpoTermsData.data;
       console.log(this.HpoGenesData["HP:0003803"])
     },
     updated(){
@@ -243,8 +279,26 @@ import hpo_genes from '../../../data/hpo_genes.json'
     watch: {
     },
     methods: {
+      searchForTheInputTerm(){
+        var res = this.searchInput.HPO_Data.split(" - ");
+        var hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
+        var phenoTerm = res[0];
+        if(!this.multipleSearchTerms.includes(hpoId)){
+          this.multipleSearchTerms.push(hpoId);
+          this.HpoTerms.push(
+            {
+              hpoNumber:hpoId,
+              phenotype:phenoTerm}
+          )
+          this.getGenesForHpoTerms();
+        }
+        else {
+          alert("This HPO Term already exists");
+        }
+        console.log("this.multipleSearchTerms", this.multipleSearchTerms);
+      },
       fetchHpoTerm: function(){
-        this.HpoTerms = [];
+        // this.HpoTerms = [];
         console.log("notes", this.notes);
         var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
         console.log("url", u)
@@ -350,6 +404,43 @@ import hpo_genes from '../../../data/hpo_genes.json'
 <style lang="sass">
 
   @import ../assets/sass/variables
+
+  #hpo_input
+    width: 600px
+    height: 40px
+    margin-top: 4px
+    // background-color: $search-box-color
+    border-color: $search-box-color
+
+
+  @media screen and (max-width: 1620px)
+    #hpo_input
+      width: 420px
+      height: 40px
+      margin-top: 4px
+
+  @media screen and (max-width: 1050px)
+    #hpo_input
+      width: 450px
+      height: 40px
+      margin-top: 4px
+
+  @media screen and (max-width: 950px)
+    #hpo_input
+      width: 290px
+      height: 40px
+      margin-top: 4px
+
+  @media screen and (max-width: 700px)
+    #hpo_input
+      width: 300px
+      height: 40px
+      margin-top: 4px
+      box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+
+    .btnColor
+      margin-top: 2px
+
 
 
 </style>
