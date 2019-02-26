@@ -83,8 +83,8 @@
            <v-list-tile-title v-bind:class="[component==='ClinPhen' ? 'activeTabText' : '']">
              ClinPhen
              <v-badge color="primary darken-1" right class="badge-bg-color">
-               <!-- <span  slot="badge">{{ NumberOfGenesSelectedFromGTR }}</span> -->
-               <span  slot="badge">0</span>
+               <span  slot="badge">{{ clinPhenSelectedGenes.length }}</span>
+               <!-- <span  slot="badge">0</span> -->
              </v-badge>
            </v-list-tile-title>
          </v-list-tile-content>
@@ -254,6 +254,7 @@
           <keep-alive>
             <ClinPhen
               v-show="component==='ClinPhen'"
+              v-on:ClinPhenGenes="ClinPhenGenes($event)"
             >
             </ClinPhen>
           </keep-alive>
@@ -331,7 +332,7 @@ import knownGenes from '../../../data/knownGenes'
     data(){
       let self = this;
       return{
-        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'ClinPhen',
+        component: self.paramLaunchedFromClin == 'true' ? 'GeneticTestingRegistry' : 'OverviewPage',
         GtrScrollY:0,
         PhenolyzerScrollY:0,
         SummaryScrollY:0,
@@ -411,6 +412,7 @@ import knownGenes from '../../../data/knownGenes'
         byPassedGenes: "",
         byPassedGenesDialog: false,
         genesToCopy: "",
+        clinPhenSelectedGenes: [],
       }
     },
     watch: {
@@ -982,7 +984,9 @@ import knownGenes from '../../../data/knownGenes'
       importedGenes: function(genes){
         this.manuallyAddedGenes = genes;
       },
-
+      ClinPhenGenes:function(genes){
+        this.clinPhenSelectedGenes = genes;
+      }
     }
 
   }

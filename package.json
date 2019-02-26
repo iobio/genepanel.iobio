@@ -1,6 +1,9 @@
 {
   "name": "iobio-vue-skeleton",
   "version": "0.0.0",
+  "author": {
+    "name": "Aditya Ekawade"
+  },
   "scripts": {
     "start": "./node_modules/webpack/bin/webpack.js && DEBUG=http ./node_modules/nodemon/bin/nodemon.js --debug=127.0.0.1:5860 --inspect --ignore client/ www.js",
     "webpack": "./node_modules/webpack/bin/webpack.js --watch",
@@ -8,7 +11,8 @@
     "test": "cross-env NODE_ENV=test karma start",
     "test:watch": "npm test -- --auto-watch --no-single-run",
     "build": "./node_modules/webpack/bin/webpack.js",
-    "deploy:prod": "sh deploy.sh prod"
+    "deploy:prod": "sh deploy.sh prod",
+    "deploy:dev": "sh deploy_dev.sh"
   },
   "dependencies": {
     "axios": "^0.17.1",
