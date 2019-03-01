@@ -278,6 +278,7 @@
               v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
               v-bind:onSearchPhenotype="phenotypeSearches"
               v-bind:manuallyAddedGenes="manuallyAddedGenes"
+              v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
               :chartColor="ordinalColor"
               v-bind:browser="browser"
               v-bind:clinGenesSummary="clinGenesSummary"
