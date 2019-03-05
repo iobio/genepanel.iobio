@@ -188,15 +188,6 @@ var model = new Model();
     methods:{
       drawVenn: function(){
         var x = require('venn.js')
-        // console.log("venn", venn)
-        // console.log(x)
-        //
-        // var sets = [ {sets: ['A'], size: 12},
-        //        {sets: ['B'], size: 12},
-        //        {sets: ['A','B'], size: 2}];
-        //
-        // var chart = x.VennDiagram()
-        // d3.select("#venn").datum(sets).call(chart);
         var chart = x.VennDiagram()
                  .width(500)
                  .height(500);

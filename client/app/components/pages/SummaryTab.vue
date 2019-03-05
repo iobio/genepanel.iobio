@@ -524,12 +524,58 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var uniqueGTR =[];
         var uniqueClinPhen = [];
         var uniqueAddedGenes = [];
+        var summaryObj = {
+          gtr: {
+            count: 0
+          },
+          phenolyzer: {
+            count: 0
+          },
+          ImportedGenes: {
+            count: 0
+          },
+          ClinPhen: {
+            count: 0
+          },
+          gtr_phenolyzer: {
+            count: 0
+          },
+          gtr_ImportedGenes: {
+            count: 0
+          },
+          gtr_ClinPhen: {
+            count: 0
+          },
+          phenolyzer_ImportedGenes: {
+            count: 0
+          },
+          phenolyzer_ClinPhen: {
+            count: 0
+          },
+          gtr_phenolyzer_ImportedGenes: {
+            count: 0
+          },
+          gtr_phenolyzer_ClinPhen: {
+            count: 0
+          },
+          gtr_ImportedGenes_ClinPhen: {
+            count: 0
+          },
+          phenolyzer_ImportedGenes_ClinPhen: {
+            count: 0
+          },
+          gtr_phenolyzer_ImportedGenes_ClinPhen: {
+            count: 0
+          }
+        }
+        console.log("summaryObj", summaryObj)
 
 
         for(var i=0; i<summaryGenes.length; i++){
           console.log("summaryGenes[i].sources.length", summaryGenes[i].sources[0])
           if(summaryGenes[i].sources.length===4){
             allSourcesGenes.push(summaryGenes[i]);
+            summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
             summaryGenes.splice(i, 1);
                 i--;
           }
