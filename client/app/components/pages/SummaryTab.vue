@@ -7,6 +7,8 @@
             <!-- show description -->
             <v-flex xs12 style="margin-bottom:5px">
               <v-card>
+                <div id="venn"></div>
+                <p></p>
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0 && manuallyAddedGenes.length===0 && clinPhenSelectedGenes.length===0">
                   <v-card-text>
                       <center><h3>{{ IntroductionTextData.Title }}</h3></center>
@@ -299,6 +301,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       genesTopCounts: [5, 10, 30, 50],
       genesTop: null,
       openEditBox: false,
+      vennData: {},
     }),
     watch: {
       genesTop: function(){
@@ -552,6 +555,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           phenolyzer_ClinPhen: {
             count: 0
           },
+          ImportedGenes_ClinPhen: {
+            count: 0
+          },
           gtr_phenolyzer_ImportedGenes: {
             count: 0
           },
@@ -568,11 +574,10 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             count: 0
           }
         }
-        console.log("summaryObj", summaryObj)
 
 
         for(var i=0; i<summaryGenes.length; i++){
-          console.log("summaryGenes[i].sources.length", summaryGenes[i].sources[0])
+          // console.log("summaryGenes[i].sources.length", summaryGenes[i].sources[0])
           if(summaryGenes[i].sources.length===4){
             allSourcesGenes.push(summaryGenes[i]);
             summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
@@ -581,39 +586,145 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           }
           else if(summaryGenes[i].sources.length===3){
             threeSourcesGenes.push(summaryGenes[i]);
+            if(!summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.gtr_phenolyzer_ImportedGenes.count++;
+            }
+            else if(!summaryGenes[i].sources.includes("ImportedGenes")){
+              summaryObj.gtr_phenolyzer_ClinPhen.count++;
+            }
+            else if(!summaryGenes[i].sources.includes("Pheno")){
+              summaryObj.gtr_ImportedGenes_ClinPhen.count++;
+            }
+            else if(!summaryGenes[i].sources.includes("GTR")){
+              summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
+            }
             summaryGenes.splice(i, 1);
                 i--;
           }
           else if(summaryGenes[i].sources.length===2){
             twoSourcesGenes.push(summaryGenes[i]);
+            if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("Pheno")){
+              summaryObj.gtr_phenolyzer.count++;
+            }
+            else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ImportedGenes")){
+              summaryObj.gtr_ImportedGenes.count++;
+            }
+            else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.gtr_ClinPhen.count++;
+            }
+            else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ImportedGenes")){
+              summaryObj.phenolyzer_ImportedGenes.count++;
+            }
+            else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.phenolyzer_ClinPhen.count++;
+            }
+            else if(summaryGenes[i].sources.includes("ImportedGenes") && summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.ImportedGenes_ClinPhen.count++;
+            }
             summaryGenes.splice(i, 1);
                 i--;
           }
           else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="ImportedGenes"){
             uniqueAddedGenes.push(summaryGenes[i]);
+            summaryObj.ImportedGenes.count++;
             summaryGenes.splice(i, 1);
                 i--;
           }
           else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="GTR"){
             uniqueGTR.push(summaryGenes[i]);
+            summaryObj.gtr.count++;
             summaryGenes.splice(i, 1);
                 i--;
           }
           else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="ClinPhen"){
             uniqueClinPhen.push(summaryGenes[i]);
+            summaryObj.ClinPhen.count++;
             summaryGenes.splice(i, 1);
                 i--;
           }
           else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="Pheno"){
             uniquePheno.push(summaryGenes[i]);
+            summaryObj.phenolyzer.count++;
             summaryGenes.splice(i, 1);
                 i--;
           }
         }
 
+        console.log("summaryObj", summaryObj)
         var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         console.log("tableGenes", tableGenes);
         this.summaryTableArray = tableGenes;
+        this.generateVennDiagramData(summaryObj);
+
+      },
+      generateVennDiagramData(summaryObj){
+        this.vennData = {
+          "data": [
+            {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
+            {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
+            {"sets" : [2], "label" : "Added Genes", "size" : summaryObj.ImportedGenes.count},
+            {"sets" : [3], "label" : "ClinPhen", "size":summaryObj.ClinPhen.count},
+            {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
+            {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
+            {"sets" : [0,3], "size":summaryObj.gtr_ClinPhen.count},
+            {"sets" : [1,2], "size":summaryObj.phenolyzer_ImportedGenes.count},
+            {"sets" : [1,3], "size":summaryObj.phenolyzer_ClinPhen.count},
+            {"sets" : [2,3], "size":summaryObj.ImportedGenes_ClinPhen.count},
+            {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count},
+            {"sets" : [0,1,2], "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
+            {"sets" : [0,1,3], "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
+            {"sets" : [1,2,3], "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
+            {"sets" : [0,1,2,3], "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen}
+          ]
+        }
+        this.drawVennDiagram();
+      },
+      drawVennDiagram(){
+        d3.select("#venn").select("svg").remove();
+        var x = require('venn.js')
+        var chart = x.VennDiagram()
+                 .width(500)
+                 .height(500);
+
+      var div = d3.select("#venn")
+      div.datum(this.vennData.data).call(chart);
+
+      var tooltip = d3.select("body").append("div")
+          .attr("class", "venntooltip");
+
+      div.selectAll("path")
+          .style("stroke-opacity", 0)
+          .style("stroke", "#fff")
+          .style("stroke-width", 3)
+
+      div.selectAll("g")
+          .on("mouseover", function(d, i) {
+              // sort all the areas relative to the current item
+              x.sortAreas(div, d);
+
+              // Display a tooltip with the current size
+              tooltip.transition().duration(400).style("opacity", .9);
+              tooltip.text(d.size + " genes");
+
+              // highlight the current path
+              var selection = d3.select(this).transition("tooltip").duration(400);
+              selection.select("path")
+                  .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
+                  .style("stroke-opacity", 1);
+          })
+
+          .on("mousemove", function() {
+              tooltip.style("left", (d3.event.pageX) + "px")
+                     .style("top", (d3.event.pageY - 28) + "px");
+          })
+
+          .on("mouseout", function(d, i) {
+              tooltip.transition().duration(400).style("opacity", 0);
+              var selection = d3.select(this).transition("tooltip").duration(400);
+              selection.select("path")
+                  .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
+                  .style("stroke-opacity", 0);
+          });
 
       },
       setPieChartData(){
@@ -659,4 +770,17 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
     border-bottom: 6px solid $activeCard-border
 .dialogBox
   margin-top: -20px
+
+.venntooltip
+  position: absolute
+  text-align: center
+  width: 128px
+  height: 16px
+  background: #333
+  color: #ddd
+  padding: 2px
+  border: 0px
+  border-radius: 8px
+  opacity: 0
+
 </style>

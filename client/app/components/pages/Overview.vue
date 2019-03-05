@@ -135,7 +135,7 @@
         {{term.hpoNumber}} - {{term.phenotype}}
       </div>
     </div> -->
-    <div id="venn"></div>
+    <!-- <div id="venn"></div> -->
     <button v-on:click="drawVenn"> Click </button>
     <v-container fluid grid-list-md style="min-height:200px">
     </v-container>

@@ -1,10 +1,6 @@
 {
   "data": [
-    {
-      "sets" : [0],
-      "label" : "Phenolyzer",
-      "size" : 28
-    },
+    {"sets" : [0], "label" : "Phenolyzer", "size" : 28},
     {"sets" : [1], "label" : "GTR", "size": 35},
     {"sets" : [2], "label" : "HPO", "size" : 108},
     {"sets" : [3], "label" : "Added Genes", "size":10},
