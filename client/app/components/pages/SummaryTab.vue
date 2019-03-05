@@ -605,6 +605,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             twoSourcesGenes.push(summaryGenes[i]);
             if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("Pheno")){
               summaryObj.gtr_phenolyzer.count++;
+              summaryObj.gtr.count++;
+              summaryObj.phenolyzer.count++;
             }
             else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ImportedGenes")){
               summaryObj.gtr_ImportedGenes.count++;
@@ -775,7 +777,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
   position: absolute
   text-align: center
   width: 128px
-  height: 16px
+  height: 26px
   background: #333
   color: #ddd
   padding: 2px
