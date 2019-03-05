@@ -581,6 +581,10 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           if(summaryGenes[i].sources.length===4){
             allSourcesGenes.push(summaryGenes[i]);
             summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
+            summaryObj.gtr.count++;
+            summaryObj.phenolyzer.count++;
+            summaryObj.ImportedGenes.count++;
+            summaryObj.ClinPhen.count++;
             summaryGenes.splice(i, 1);
                 i--;
           }
@@ -588,15 +592,30 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             threeSourcesGenes.push(summaryGenes[i]);
             if(!summaryGenes[i].sources.includes("ClinPhen")){
               summaryObj.gtr_phenolyzer_ImportedGenes.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ImportedGenes.count++;
+
+              summaryObj.phenolyzer_ImportedGenes.count++;
+              summaryObj.gtr_ImportedGenes.count++;
             }
             else if(!summaryGenes[i].sources.includes("ImportedGenes")){
               summaryObj.gtr_phenolyzer_ClinPhen.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ClinPhen.count++;
             }
             else if(!summaryGenes[i].sources.includes("Pheno")){
               summaryObj.gtr_ImportedGenes_ClinPhen.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.ClinPhen.count++;
             }
             else if(!summaryGenes[i].sources.includes("GTR")){
               summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.ClinPhen.count++;
             }
             summaryGenes.splice(i, 1);
                 i--;
@@ -610,18 +629,28 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             }
             else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ImportedGenes")){
               summaryObj.gtr_ImportedGenes.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.gtr.count++;
             }
             else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ClinPhen")){
               summaryObj.gtr_ClinPhen.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ClinPhen.count++;
             }
             else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ImportedGenes")){
               summaryObj.phenolyzer_ImportedGenes.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.phenolyzer.count++;
             }
             else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ClinPhen")){
               summaryObj.phenolyzer_ClinPhen.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.ClinPhen.count++;
             }
             else if(summaryGenes[i].sources.includes("ImportedGenes") && summaryGenes[i].sources.includes("ClinPhen")){
               summaryObj.ImportedGenes_ClinPhen.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.ClinPhen.count++;
             }
             summaryGenes.splice(i, 1);
                 i--;
@@ -664,7 +693,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           "data": [
             {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
             {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
-            {"sets" : [2], "label" : "Added Genes", "size" : summaryObj.ImportedGenes.count},
+            {"sets" : [2], "label" : "Imported", "size" : summaryObj.ImportedGenes.count},
             {"sets" : [3], "label" : "ClinPhen", "size":summaryObj.ClinPhen.count},
             {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
             {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
