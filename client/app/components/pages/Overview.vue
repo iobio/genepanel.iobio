@@ -135,6 +135,8 @@
         {{term.hpoNumber}} - {{term.phenotype}}
       </div>
     </div> -->
+    <div id="venn"></div>
+    <button v-on:click="drawVenn"> Click </button>
     <v-container fluid grid-list-md style="min-height:200px">
     </v-container>
 
@@ -147,9 +149,13 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
-import hpo_genes from '../../../data/hpo_genes.json'
-
+import hpo_genes from '../../../data/hpo_genes.json';
+import genesJsonp from './genes.json';
+// import venn from "venn.js"
+// require('venn.js')
 var model = new Model();
+// import initVenn from '../../d3/venn';
+// var Venn = new initVenn();
 
   export default {
     components: {
@@ -165,11 +171,14 @@ var model = new Model();
         multipleSearchTerms: [],
         HpoGenesData: null,
         items: [],
+        setsData: [],
       }
     },
     mounted(){
       this.HpoGenesData = hpo_genes;
-      console.log(this.HpoGenesData["HP:0003803"])
+      console.log(this.HpoGenesData["HP:0003803"]);
+      this.setsData = genesJsonp.data
+      console.log("venn", venn)
     },
     updated(){
 
@@ -177,6 +186,62 @@ var model = new Model();
     watch: {
     },
     methods:{
+      drawVenn: function(){
+        var x = require('venn.js')
+        // console.log("venn", venn)
+        // console.log(x)
+        //
+        // var sets = [ {sets: ['A'], size: 12},
+        //        {sets: ['B'], size: 12},
+        //        {sets: ['A','B'], size: 2}];
+        //
+        // var chart = x.VennDiagram()
+        // d3.select("#venn").datum(sets).call(chart);
+        var chart = x.VennDiagram()
+                 .width(500)
+                 .height(500);
+
+      var div = d3.select("#venn")
+      div.datum(this.setsData).call(chart);
+
+      var tooltip = d3.select("body").append("div")
+          .attr("class", "venntooltip");
+
+      div.selectAll("path")
+          .style("stroke-opacity", 0)
+          .style("stroke", "#fff")
+          .style("stroke-width", 3)
+
+      div.selectAll("g")
+          .on("mouseover", function(d, i) {
+              // sort all the areas relative to the current item
+              x.sortAreas(div, d);
+
+              // Display a tooltip with the current size
+              tooltip.transition().duration(400).style("opacity", .9);
+              tooltip.text(d.size + " genes");
+
+              // highlight the current path
+              var selection = d3.select(this).transition("tooltip").duration(400);
+              selection.select("path")
+                  .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
+                  .style("stroke-opacity", 1);
+          })
+
+          .on("mousemove", function() {
+              tooltip.style("left", (d3.event.pageX) + "px")
+                     .style("top", (d3.event.pageY - 28) + "px");
+          })
+
+          .on("mouseout", function(d, i) {
+              tooltip.transition().duration(400).style("opacity", 0);
+              var selection = d3.select(this).transition("tooltip").duration(400);
+              selection.select("path")
+                  .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
+                  .style("stroke-opacity", 0);
+          });
+
+      },
       fetchHpoTerm: function(){
         this.HpoTerms = [];
         console.log("notes", this.notes);
