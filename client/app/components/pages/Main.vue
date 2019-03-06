@@ -758,9 +758,14 @@ import knownGenes from '../../../data/knownGenes'
             score: gene.score,
             genePanels: gene.value,
             searchTermsPhenolyzer: gene.searchTermPheno,
-            searchTermsGtr: gene.searchTermArrayGTR
+            searchTermsGtr: gene.searchTermArrayGTR,
+            geneRankGtr: gene.geneRankGtr,
+            geneRankPhenolyzer: gene.geneRankPhenolyzer
           }
         })
+
+        console.log("this.summaryGenes", clinData)
+
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
