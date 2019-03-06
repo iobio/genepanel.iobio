@@ -764,8 +764,6 @@ import knownGenes from '../../../data/knownGenes'
           }
         })
 
-        console.log("this.summaryGenes", clinData)
-
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
