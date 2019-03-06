@@ -581,10 +581,24 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           if(summaryGenes[i].sources.length===4){
             allSourcesGenes.push(summaryGenes[i]);
             summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
+
             summaryObj.gtr.count++;
             summaryObj.phenolyzer.count++;
             summaryObj.ImportedGenes.count++;
             summaryObj.ClinPhen.count++;
+
+            summaryObj.gtr_phenolyzer_ImportedGenes.count++;
+            summaryObj.gtr_phenolyzer_ClinPhen.count++;
+            summaryObj.gtr_ImportedGenes_ClinPhen.count++;
+            summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
+
+            summaryObj.gtr_phenolyzer.count++;
+            summaryObj.gtr_ImportedGenes.count++;
+            summaryObj.gtr_ClinPhen.count++;
+            summaryObj.phenolyzer_ImportedGenes.count++;
+            summaryObj.phenolyzer_ClinPhen.count++;
+            summaryObj.ImportedGenes_ClinPhen.count++;
+
             summaryGenes.splice(i, 1);
                 i--;
           }
@@ -598,24 +612,37 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
               summaryObj.phenolyzer_ImportedGenes.count++;
               summaryObj.gtr_ImportedGenes.count++;
+              summaryObj.gtr_phenolyzer.count++;
             }
             else if(!summaryGenes[i].sources.includes("ImportedGenes")){
               summaryObj.gtr_phenolyzer_ClinPhen.count++;
               summaryObj.phenolyzer.count++;
               summaryObj.gtr.count++;
               summaryObj.ClinPhen.count++;
+
+              summaryObj.phenolyzer_ClinPhen.count++;
+              summaryObj.gtr_ClinPhen.count++;
+              summaryObj.gtr_phenolyzer.count++;
             }
             else if(!summaryGenes[i].sources.includes("Pheno")){
               summaryObj.gtr_ImportedGenes_ClinPhen.count++;
               summaryObj.gtr.count++;
               summaryObj.ImportedGenes.count++;
               summaryObj.ClinPhen.count++;
+
+              summaryObj.gtr_ClinPhen.count++;
+              summaryObj.gtr_ImportedGenes.count++;
+              summaryObj.ImportedGenes_ClinPhen.count++;
             }
             else if(!summaryGenes[i].sources.includes("GTR")){
               summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
               summaryObj.phenolyzer.count++;
               summaryObj.ImportedGenes.count++;
               summaryObj.ClinPhen.count++;
+
+              summaryObj.ImportedGenes_ClinPhen.count++;
+              summaryObj.phenolyzer_ImportedGenes.count++;
+              summaryObj.phenolyzer_ClinPhen.count++;
             }
             summaryGenes.splice(i, 1);
                 i--;
@@ -714,8 +741,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         d3.select("#venn").select("svg").remove();
         var x = require('venn.js')
         var chart = x.VennDiagram()
-                 .width(500)
-                 .height(500);
+                 .width(400)
+                 .height(400);
 
       var div = d3.select("#venn")
       div.datum(this.vennData.data).call(chart);
