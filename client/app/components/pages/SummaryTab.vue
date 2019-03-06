@@ -7,8 +7,8 @@
             <!-- show description -->
             <v-flex xs12 style="margin-bottom:5px">
               <v-card>
-                <div id="venn"></div>
-                <p></p>
+                <!-- <div id="venn"></div>
+                <p></p> -->
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0 && manuallyAddedGenes.length===0 && clinPhenSelectedGenes.length===0">
                   <v-card-text>
                       <center><h3>{{ IntroductionTextData.Title }}</h3></center>
@@ -83,9 +83,9 @@
                 <!-- end data table -->
 
                 <!-- start side bar -->
-                <!-- <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
+                <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
                   <div class="d-flex mb-2 xs12">
-                    <v-card v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 ||  manuallyAddedGenes.length>0"">
+                    <v-card v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 ||  manuallyAddedGenes.length>0 || clinPhenGenesArr.length>0">
                       <v-card-title primary-title>
                         <v-text-field
                           append-icon="search"
@@ -98,8 +98,9 @@
                       <br>
                     </v-card>
                   </div>
+
                   <div class="d-flex mt-3 mb-2 xs12">
-                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0">
+                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
                       <v-card-text>
                       <center>
                         <span class="Rightbar_CardHeading">
@@ -163,7 +164,7 @@
                         :totalNumber="totalGenes">
                        </SvgBar>
                        <br>
-                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
+                       <!-- <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
                            <v-flex xs6>
                              <div class="Rightbar_card_content_subheading" style="margin-left:10px">
@@ -182,12 +183,19 @@
                              </div>
                            </v-flex>
                          </v-layout>
-                       </div>
+                       </div> -->
                      </v-card-text>
                     </v-card>
                   </div>
+
+                  <div class="d-flex mb-2 xs12">
+                    <v-card>
+                      <div id="venn"></div>
+                    </v-card>
+                  </div>
+
                   <br>
-                </div> -->
+                </div>
 
                 <!-- end side bar -->
               </v-layout>
@@ -273,6 +281,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       GtrGenesArr:[],
       PhenolyzerGenesArr:[],
       AllSourcesGenes:[],
+      clinPhenGenesArr: [],
       commonGtrPhenoGenes:[],
       uniqueGtrGenes:[],
       uniqueGtrData: [],
@@ -396,6 +405,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var clinPhenGenes = this.clinPhenSelectedGenes.map(x=>{
           return x.gene;
         })
+        this.clinPhenGenesArr = clinPhenGenes;
 
         //Create an array for added geneSearch
         var manualGenes = [];
@@ -735,7 +745,12 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             {"sets" : [0,1,2,3], "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen}
           ]
         }
-        this.drawVennDiagram();
+        if(this.GtrGenesArr.length>0 || this.PhenolyzerGenesArr.length>0 ||  this.manuallyAddedGenes.length>0 || this.clinPhenGenesArr.length>0){
+          this.drawVennDiagram();
+        }
+        else {
+          d3.select("#venn").select("svg").remove();
+        }
       },
       drawVennDiagram(){
         d3.select("#venn").select("svg").remove();
