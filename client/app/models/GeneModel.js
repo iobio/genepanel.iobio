@@ -709,7 +709,7 @@ export default class GeneModel {
     me.phenolyzerGenes = [];
     data.split("\n").forEach( function(rec) {
       var fields = rec.split("\t");
-      if (fields.length > 2) {
+      if (fields.length > 2 && fields[1]!=="Gene") {
         var geneName               = fields[1];
         if (count < numberPhenolyzerGenes) {
           var rank                 = fields[0];
