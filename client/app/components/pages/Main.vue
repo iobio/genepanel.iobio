@@ -205,6 +205,7 @@
                 v-bind:selectedDisordersListCB="selectedDisordersList"
                 v-on:UpdateNumberOfGenesSelectedFromGTR="updateGtrTabBadge($event)"
                 v-on:UpdateListOfSelectedGenesGTR="updateGtrGenes($event)"
+                v-on:GtrFullGeneList="GtrFullGeneList($event)"
                 :chartColor="ordinalColor"
                 :barColor="barColor"
                 @search-gtr="onSearchGTR"
@@ -222,6 +223,7 @@
               v-show="component==='Phenolyzer'"
               v-on:NoOfGenesSelectedFromPhenolyzer="updatePhenolyzerTabBadge($event)"
               v-on:SelectedPhenolyzerGenesToCopy="updatePhenolyzerGenes($event)"
+              v-on:PhenolyzerFullGeneList="PhenolyzerFullGeneList($event)"
               @search-phenotype="onSearchPhenotype"
               @phenotypeSearchTermArray="phenotypeSearchTermArray"
               v-bind:launchedFromClin="launchedFromClin"
@@ -384,6 +386,8 @@ import knownGenes from '../../../data/knownGenes'
         byPassedGenes: "",
         byPassedGenesDialog: false,
         genesToCopy: "",
+        gtrCompleteGeneList: [],
+        phenolyzerCompleteGeneLis: [],
       }
     },
     watch: {
@@ -577,6 +581,9 @@ import knownGenes from '../../../data/knownGenes'
         FileSaver.saveAs(blob, "hello world.txt");
 
       },
+      GtrFullGeneList: function(e){
+        this.gtrCompleteGeneList = e;
+      },
       updateGtrGenes: function(e){
         this.selectedGtrGenes = e;
         if(e.length<=0){
@@ -592,6 +599,9 @@ import knownGenes from '../../../data/knownGenes'
 
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
+      },
+      PhenolyzerFullGeneList: function(e){
+        this.phenolyzerCompleteGeneLis = e;
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
@@ -773,7 +783,6 @@ import knownGenes from '../../../data/knownGenes'
             manuallyAdded: gene.isImportedGenes,
           }
         })
-        console.log("rankData", rankData)
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
@@ -808,6 +817,24 @@ import knownGenes from '../../../data/knownGenes'
         })
         this.PhenolyzerGenesArr = phenolyzerGenes;
 
+        var gtrCompleteLsit = [];
+        this.gtrCompleteGeneList.map(gene=>{
+          gtrCompleteLsit.push({
+            name: gene.name,
+            gtrRank: gene.indexVal,
+            gtrAssociated: gene.isAssociatedGene
+          })
+        })
+
+        var phenolyzerCompleteList = [];
+        this.phenolyzerCompleteGeneLis.map(gene=>{
+          phenolyzerCompleteList.push({
+            name: gene.geneName,
+            phenolyzerRank: gene.indexVal
+          })
+        })
+
+        console.log("phenolyzerCompleteList", phenolyzerCompleteList)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',
@@ -819,7 +846,9 @@ import knownGenes from '../../../data/knownGenes'
           byPassedGenes: byPassedGenesArr,
           genesRankData: rankData,
           // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
-          searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
+          searchTerms:  [this.searchTermGTR, this.phenotypeSearches],
+          gtrFullList: gtrCompleteLsit,
+          phenlolyzerFullList: phenolyzerCompleteList
 
         });
 

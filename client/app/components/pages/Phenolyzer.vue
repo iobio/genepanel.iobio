@@ -539,6 +539,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         this.search = '';
         this.openSearchBox = false;
         this.$emit("SelectedPhenolyzerGenesToCopy", []);
+        this.$emit("PhenolyzerFullGeneList", []);
         this.$emit("NoOfGenesSelectedFromPhenolyzer", 0);
         this.phenotypeSearchedByUser = false;
         geneModel.StopAjaxCall();
@@ -556,6 +557,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
       })
 
       bus.$on('deSelectAllPhenolyzerGenesBus', (data)=>{
@@ -569,11 +571,13 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
       if(!this.launchedFromClin){
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
       }
       // if(!this.launchedFromClin){
       // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
       }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
@@ -760,6 +764,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
           this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
           this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
           this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+          this.$emit("PhenolyzerFullGeneList", this.items);
         }
         else {
           this.items = [];
@@ -769,6 +774,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
           this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
           this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
           this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+          this.$emit("PhenolyzerFullGeneList", this.items);
         }
 
 
@@ -845,6 +851,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
             self.NoOfGenesSelectedFromPhenolyzer = 0;
             if(!self.launchedFromClin){
               this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
+              this.$emit("PhenolyzerFullGeneList", this.items);
             }
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             geneModel.newSearchCall();
@@ -899,6 +906,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
                   self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
                   self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
                   self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+                  this.$emit("PhenolyzerFullGeneList", this.items);
 
                 }
               } else {

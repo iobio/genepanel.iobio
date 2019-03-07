@@ -110,6 +110,7 @@
                       v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
                       v-on:TotalNoOfGenesFromGTR="TotalNoOfGenesFromGTR($event)"
                       v-on:SelectedGenesToCopy="UpdateListOfSelectedGenes($event)"
+                      v-on:GtrFullGeneList="GtrFullGeneList($event)"
                       v-bind:multipleSearchItems="multipleSearchItems"
                       v-bind:geneSearch="geneSearch"
                       v-bind:launchedFromClinProps="launchedFromClinProps"
@@ -1286,6 +1287,7 @@ export default {
         this.modeOfInheritanceProps=[];
         this.selectedGenesText = "";
         this.$emit("UpdateListOfSelectedGenesGTR", []);
+        this.$emit("GtrFullGeneList", [])
       }
     },
     checkForAssociatedGenes: function(){
@@ -1317,6 +1319,7 @@ export default {
       if(e.length<=0){
         this.geneProps = [];
         this.$emit("UpdateListOfSelectedGenesGTR", []);
+        this.$emit("GtrFullGeneList", [])
       }
       this.checkForAssociatedGenes();
     },
@@ -1465,6 +1468,9 @@ export default {
       this.GtrGenesTabNumber = e;
       this.$emit("UpdateNumberOfGenesSelectedFromGTR", e)
     },
+    GtrFullGeneList: function(e){
+      this.$emit("GtrFullGeneList", e)
+    },
     UpdateListOfSelectedGenes: function(e){
       this.$emit("UpdateListOfSelectedGenesGTR", e);
     },
@@ -1505,6 +1511,7 @@ export default {
       this.GtrGenesTabNumber = 0; //UpdateNoOfGenesSelectedFromGTR
       this.$emit("UpdateNumberOfGenesSelectedFromGTR", 0);
       this.$emit("UpdateListOfSelectedGenesGTR", []); //UpdateListOfSelectedGenes
+      this.$emit("GtrFullGeneList", [])
     },
     SelectAllDisordersButton: function(){
       this.selectDisorders = this.multiSelectDisorder;
@@ -1525,6 +1532,7 @@ export default {
       this.GtrGenesTabNumber = 0; //UpdateNoOfGenesSelectedFromGTR
       this.$emit("UpdateNumberOfGenesSelectedFromGTR", 0);
       this.$emit("UpdateListOfSelectedGenesGTR", []); //UpdateListOfSelectedGenes
+      this.$emit("GtrFullGeneList", [])
     },
     resetDisorders: function(){
       this.selectDisorders = [];
