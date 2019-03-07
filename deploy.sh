@@ -28,14 +28,8 @@ fi
 # upload to cloudfront
 if [[ $1 == "prod" ]]; then
 
-  echo "** Syncing to s3 bucket **"
-  aws s3 cp ./deploy/  s3://static.iobio.io/dev/panel.iobio.io/ --recursive
-
   echo "** Syncing to genepanel prod s3 bucket **"
   aws s3 cp ./deploy/  s3://static.iobio.io/prod/genepanel.iobio.io/ --recursive
-
-  echo "** Renew cloudfrount cache **"
-  aws cloudfront create-invalidation --distribution-id E2ZI10KD8X77ZL --paths /\*
 
   echo "** Renew genepanel prod cloudfrount cache **"
   aws cloudfront create-invalidation --distribution-id E14HSC209IWKWU --paths /\*

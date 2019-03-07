@@ -641,7 +641,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           value: x.value,
           score: "",
           geneRankGtr: x.geneRankGtr,
-          geneRankPhenolyzer: "NA",
+          geneRankPhenolyzer: -1,
         }
       }))
 
@@ -664,7 +664,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           score: x.score,
           value: "",
           geneRankPhenolyzer: x.geneRankPhenolyzer,
-          geneRankGtr: "NA"
+          geneRankGtr: -1,
         }
       }))
 
@@ -684,8 +684,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           searchTermIndex: [],
           value: "",
           score: "",
-          geneRankGtr: "NA",
-          geneRankPhenolyzer: "NA",
+          geneRankGtr: -1,
+          geneRankPhenolyzer: -1,
         }
       }))
 
@@ -709,7 +709,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           value: x.value,
           score: "",
           geneRankGtr: x.geneRankGtr,
-          geneRankPhenolyzer: "NA",
+          geneRankPhenolyzer: -1,
         }
       }))
 
@@ -731,7 +731,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           geneId: x.geneId,
           score: x.score,
           value: "",
-          geneRankGtr: "NA",
+          geneRankGtr: -1,
           geneRankPhenolyzer: x.geneRankPhenolyzer,
         }
       }))

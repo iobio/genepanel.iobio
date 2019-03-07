@@ -340,59 +340,6 @@
 
               <!-- start sidebar -->
               <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs4 pr-2 pl-2': 'flex xs3 pr-2 pl-2']" >
-                <!-- <div class="d-flex mb-2 xs12">
-                  <v-card v-if="multipleSearchTerms.length">
-                    <v-card-title primary-title>
-                      <v-text-field
-                        append-icon="search"
-                        label="Search for Gene"
-                        single-line
-                        hide-details
-                        v-model="search"
-                      ></v-text-field>
-                    </v-card-title>
-                    <br>
-                  </v-card>
-                </div> -->
-
-                <!-- <div class="d-flex mt-3 mb-2 xs12"> -->
-                <!-- <div v-if=" checked===true" class="d-flex mb-2 xs12">
-                  <v-flex xs12>
-                    <v-card >
-                      <ContentLoaderSidebar ></ContentLoaderSidebar>
-                    </v-card>
-                  </v-flex>
-                </div>
-
-                <div v-else class="d-flex mb-2 xs12">
-                  <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard ']" v-if="multipleSearchTerms.length">
-                    <v-card-text>
-                      <center>
-                        <span class="Rightbar_CardHeading">
-                        GENES
-                        </span>
-
-                      <v-divider class="Rightbar_card_divider"></v-divider>
-                      <span class="Rightbar_card_content_subheading">
-                        <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected</span>
-                      </center>
-                      <SvgBar
-                       class="SvgBarClass"
-                       id="genesSvgBox"
-                       :selectedNumber="selected.length"
-                       :totalNumber="items.length">
-                      </SvgBar>
-                      <div class="text-xs-center">
-                        <progressCircularDonut
-                          v-if="items.length>0"
-                          :selectedNumber="selected.length"
-                          :totalNumber="items.length"
-                        >
-                        </progressCircularDonut>
-                      </div>
-                    </v-card-text>
-                  </v-card>
-                </div> -->
               </div>
             </v-layout>
           </v-flex>

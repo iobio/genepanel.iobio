@@ -764,6 +764,16 @@ import knownGenes from '../../../data/knownGenes'
           }
         })
 
+        var rankData = this.summaryGenes.map(gene=>{
+          return {
+            name: gene.name,
+            gtrRank: gene.geneRankGtr,
+            gtrAssociated: gene.isAssociatedGene,
+            phenolyzerRank: gene.geneRankPhenolyzer,
+            manuallyAdded: gene.isImportedGenes,
+          }
+        })
+        console.log("rankData", rankData)
 
         if(this.uniqueGenes.length>0){
           this.snackbarText = " Number of Genes Copied : " + this.uniqueGenes.length + " ";
@@ -807,6 +817,7 @@ import knownGenes from '../../../data/knownGenes'
           genesManual: this.manuallyAddedGenes,
           genesReport: clinData,
           byPassedGenes: byPassedGenesArr,
+          genesRankData: rankData,
           // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
           searchTerms:  [this.searchTermGTR, this.phenotypeSearches]
 
