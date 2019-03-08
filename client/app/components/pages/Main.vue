@@ -834,7 +834,6 @@ import knownGenes from '../../../data/knownGenes'
           })
         })
 
-        console.log("phenolyzerCompleteList", phenolyzerCompleteList)
         this.sendClin({
           type: 'apply-genes',
           source: 'all',

@@ -310,7 +310,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.performSetOperations();
       },
       PhenolyzerGenesForSummary: function(){
-        console.log("PhenolyzerGenesForSummary", this.PhenolyzerGenesForSummary)
         this.PhenolyzerGenes = [];
         this.UniquePhenoData = [];
         this.uniqueGtrData = [];

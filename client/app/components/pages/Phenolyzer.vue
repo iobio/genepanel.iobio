@@ -557,7 +557,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
         this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-        this.$emit("PhenolyzerFullGeneList", this.items);
       })
 
       bus.$on('deSelectAllPhenolyzerGenesBus', (data)=>{
@@ -567,17 +566,17 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       bus.$on('SelectAllPhenolyzerGenesBus', (data)=>{
         this.SelectAllPhenolyzerGenes(data);
       })
-      this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
-      this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+      if(this.items.length>0){
+        this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
+        this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
+      }
       if(!this.launchedFromClin){
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-        this.$emit("PhenolyzerFullGeneList", this.items);
       }
       // if(!this.launchedFromClin){
       // console.log("this.includeClinPhenolyzerGenes", this.includeClinPhenolyzerGenes)
       if(!this.includeClinPhenolyzerGenes){
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
-        this.$emit("PhenolyzerFullGeneList", this.items);
       }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
     },
