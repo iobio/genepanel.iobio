@@ -847,7 +847,7 @@ import knownGenes from '../../../data/knownGenes'
           // searchTerms:  [this.searchTermGTR, this.searchTermPhenotype]
           searchTerms:  [this.searchTermGTR, this.phenotypeSearches],
           gtrFullList: gtrCompleteLsit,
-          phenlolyzerFullList: phenolyzerCompleteList
+          phenolyzerFullList: phenolyzerCompleteList
 
         });
 
