@@ -388,6 +388,7 @@ import knownGenes from '../../../data/knownGenes'
         genesToCopy: "",
         gtrCompleteGeneList: [],
         phenolyzerCompleteGeneLis: [],
+        summaryGenes: [],
       }
     },
     watch: {
