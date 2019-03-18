@@ -379,6 +379,7 @@ var model = new Model();
       this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
       this.$emit("NoOfGenesSelectedFromGTR", this.selected.length);
       this.$emit("SelectedGenesToCopy", this.selected);
+      this.$emit("GtrFullGeneList", this.items);
       this.$emit("TotalNoOfGenesFromGTR", this.items.length);
 
     },

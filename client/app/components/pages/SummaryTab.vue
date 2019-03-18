@@ -398,7 +398,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 isAssociatedGene: y.isAssociatedGene,
                 geneid: y.geneid,
                 geneIdLink: y.geneIdLink,
-                value: y.value
+                value: y.value,
+                geneRankGtr: y.indexVal
               })
             }
           })
@@ -418,6 +419,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 geneId: y.geneId,
                 geneIdLink: y.geneIdLink,
                 score: y.score,
+                geneRankPhenolyzer: y.indexVal,
               })
             }
           })
@@ -438,7 +440,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 isAssociatedGene: y.isAssociatedGene,
                 geneid: y.geneid,
                 geneIdLink: y.geneIdLink,
-                value: y.value
+                value: y.value,
+                geneRankGtr: y.indexVal
               })
             }
           })
@@ -455,6 +458,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 geneId: y.geneId,
                 geneIdLink: y.geneIdLink,
                 score: y.score,
+                geneRankPhenolyzer: y.indexVal,
               })
             }
           })
@@ -482,6 +486,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 geneId: this.PhenolyzerGenes[j].geneId,
                 geneIdLink: this.PhenolyzerGenes[j].geneIdLink,
                 score: this.PhenolyzerGenes[j].score,
+                geneRankPhenolyzer: this.PhenolyzerGenes[j].indexVal,
               })
             }
           }
@@ -498,7 +503,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               tempA[i].isAssociatedGene = this.GtrGenes[j].isAssociatedGene,
               tempA[i].searchTermArrayGTR = this.GtrGenes[j].searchTermArray,
               tempA[i].searchTermIndexGTR = this.GtrGenes[j].searchTermIndex
-              tempA[i].value = this.GtrGenes[j].value
+              tempA[i].value = this.GtrGenes[j].value,
+              tempA[i].geneRankGtr = this.GtrGenes[j].indexVal
             }
           }
         }
@@ -584,6 +590,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             geneId: x.geneId,
             value: x.value,
             score: x.score,
+            geneRankGtr: x.geneRankGtr,
+            geneRankPhenolyzer: x.geneRankPhenolyzer,
           }
         }))
 
@@ -607,6 +615,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           geneId: x.geneId,
           value: x.value,
           score: x.score,
+          geneRankGtr: x.geneRankGtr,
+          geneRankPhenolyzer: x.geneRankPhenolyzer,
         }
       }))
 
@@ -628,7 +638,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           geneId: x.geneid,
           geneIdLink: x.geneIdLink,
           value: x.value,
-          score: ""
+          score: "",
+          geneRankGtr: x.geneRankGtr,
+          geneRankPhenolyzer: -1,
         }
       }))
 
@@ -649,7 +661,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           geneIdLink: x.geneIdLink,
           geneId: x.geneId,
           score: x.score,
-          value: ""
+          value: "",
+          geneRankPhenolyzer: x.geneRankPhenolyzer,
+          geneRankGtr: -1,
         }
       }))
 
@@ -668,7 +682,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           searchTermPheno: [],
           searchTermIndex: [],
           value: "",
-          score: ""
+          score: "",
+          geneRankGtr: -1,
+          geneRankPhenolyzer: -1,
         }
       }))
 
@@ -690,7 +706,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           geneId: x.geneid,
           geneIdLink: x.geneIdLink,
           value: x.value,
-          score: ""
+          score: "",
+          geneRankGtr: x.geneRankGtr,
+          geneRankPhenolyzer: -1,
         }
       }))
 
@@ -711,7 +729,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           geneIdLink: x.geneIdLink,
           geneId: x.geneId,
           score: x.score,
-          value: ""
+          value: "",
+          geneRankGtr: -1,
+          geneRankPhenolyzer: x.geneRankPhenolyzer,
         }
       }))
 
