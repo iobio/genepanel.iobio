@@ -6,6 +6,7 @@ before_install:
   - npm install
 
 script:
+  - NODE_ENV=production npm run build
   - echo "skipping tests"
 
 cache:
