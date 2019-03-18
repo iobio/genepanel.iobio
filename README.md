@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/iobio/genepanel.iobio.svg?branch=master)](https://travis-ci.org/iobio/genepanel.iobio)
+
 ## Starting App
 
 Using node version 8.5.x
