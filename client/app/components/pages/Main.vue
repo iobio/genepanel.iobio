@@ -105,6 +105,30 @@
            </v-list-tile-title>
          </v-list-tile-content>
        </v-list-tile>
+
+       <v-divider
+         dark
+         v-if="launchedFromClin"
+         class="my-3"
+       ></v-divider>
+
+       <v-list-tile
+          v-if="launchedFromClin"
+          @click="clearAllFromClin">
+         <v-list-tile-action >
+           <span><v-icon color="blue-grey darken-2">autorenew</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title>
+             Clear All
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
+
+
+
+
      </v-list>
 
     </v-navigation-drawer>
@@ -112,6 +136,7 @@
     <Footer></Footer>
 
     <v-toolbar
+      v-if="!launchedFromClin"
       :class="launchedFromClin ? 'clin' : '' "
       dark
       :height="launchedFromClin ? 45 : 64"
@@ -163,27 +188,29 @@
         </v-list>
       </v-menu>
       <span>
-        <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
-          <v-btn :class="launchedFromClin ? 'clinButtonColor' : '' " flat slot="activator">
-          <v-icon v-if="!launchedFromClin">autorenew</v-icon>Clear All</v-btn>
-          <v-card>
-            <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
-            <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" flat @click.native="forceReload">Yes</v-btn>
-              <v-btn color="blue darken-1" flat @click.native="newAnalysisDialog = false">No</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+        <v-btn @click="newAnalysisDialog = true" :class="launchedFromClin ? 'clinButtonColor' : '' " flat >
+        <v-icon v-if="!launchedFromClin">autorenew</v-icon>Clear All</v-btn>
       </span>
       <HelpMenu v-bind:launchedFromClin="launchedFromClin"></HelpMenu>
       <AppsMenu v-show="!launchedFromClin"></AppsMenu>
     </v-toolbar>
 
+    <v-dialog v-model="newAnalysisDialog" persistent max-width="350">
+      <v-card>
+        <v-card-title class="headline">Are you sure you want to clear all?</v-card-title>
+        <v-card-text>Clicking "Yes" will clear results from all pages and begin a new analysis.</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="forceReload">Yes</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="newAnalysisDialog = false">No</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
     <div>
       <v-content style="padding: 0px 0px 0px 300px" :class="launchedFromClin ? 'clin' : '' ">
-        <div class="header-nav-bar" >
+        <div class="header-nav-bar" v-if="!launchedFromClin">
           <v-card-text>
             <p></p>
           </v-card-text>
@@ -1001,6 +1028,10 @@ import knownGenes from '../../../data/knownGenes'
       importedGenes: function(genes){
         this.manuallyAddedGenes = genes;
       },
+      clearAllFromClin: function(){
+        console.log("clicked!");
+        this.newAnalysisDialog = true;
+      }
 
     }
 
@@ -1363,7 +1394,7 @@ aside
   font-family: $app-font-clin !important
   text-color:  $text-color-clin
   &.clin
-    margin-top: 45px !important
+    margin-top: 0 !important
 
     .v-badge__badge.primary
       background-color: $app-color-clin !important
