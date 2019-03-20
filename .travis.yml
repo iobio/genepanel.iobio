@@ -7,7 +7,7 @@ before_install:
 
 script:
   - NODE_ENV=production npm run build
-  - echo "skipping tests"
+  - echo "Checking build"
 
 cache:
    directories:

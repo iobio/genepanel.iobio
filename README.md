@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/iobio/genepanel.iobio.svg?branch=master)](https://travis-ci.org/iobio/genepanel.iobio)
+# genepanel.iobio [![Build Status](https://travis-ci.org/iobio/genepanel.iobio.svg?branch=master)](https://travis-ci.org/iobio/genepanel.iobio)  [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 
 ## Starting App
 
