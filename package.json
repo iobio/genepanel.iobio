@@ -1,6 +1,14 @@
 {
-  "name": "iobio-vue-skeleton",
-  "version": "0.0.0",
+  "name": "genepanel.iobio",
+  "version": "1.4",
+  "author": {
+    "name": "iobio - Aditya Ekawade"
+  },
+  "homepage": "https://genepanel.iobio.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iobio/genepanel.iobio.git"
+  },
   "scripts": {
     "start": "./node_modules/webpack/bin/webpack.js && DEBUG=http ./node_modules/nodemon/bin/nodemon.js --debug=127.0.0.1:5860 --inspect --ignore client/ www.js",
     "webpack": "./node_modules/webpack/bin/webpack.js --watch",
