@@ -980,7 +980,6 @@ import knownGenes from '../../../data/knownGenes'
         if (clinObject.type == 'request-genes') {
           this.copyAllGenes();
         }
-
         //Clin is sending data to set the state
         else if(clinObject.type == 'set-data'){
           console.log("clinObject.genesData", clinObject)
@@ -1004,6 +1003,17 @@ import knownGenes from '../../../data/knownGenes'
 
           }
         }
+        //Toggle between the components based on the clin event
+        else if(clinObject.type === 'show-gtr-genes'){
+          this.component = "GeneticTestingRegistry";
+        }
+        else if(clinObject.type === 'show-phenotype-genes'){
+          this.component = "Phenolyzer";
+        }
+        else if(clinObject.type === 'show-summary-genes'){
+          this.component = "SummaryTab";
+        }
+
 
         var responseObject = {success: true,
           type: 'confirm-set-data',
