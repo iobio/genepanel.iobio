@@ -23,6 +23,7 @@
     <br>
      <v-list dense class="pt-0">
        <v-list-tile
+        v-if="!launchedFromClin"
          v-bind:class="[component==='OverviewPage' ? 'activeTab' : '']"
          @click="selectComponent('OverviewPage')">
          <v-list-tile-action v-bind:class="[component==='OverviewPage' ? 'margin_ActiveTab' : '']">
