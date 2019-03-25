@@ -59,16 +59,27 @@
         <br>
           Conditions Searched:
           <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
-            <v-tooltip bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
-              <v-chip disabled slot="activator" color="primary" text-color="white" close :key="i" @input="remove(searchItem)" @mouseover="showTooltip(searchItem)" @mouseout="hideToolTip(searchItem)">
+              <v-chip slot="activator" color="primary" text-color="white" close :key="i" @input="remove(searchItem)">
                 {{ i+1 }}. {{ searchItem }}
+                <v-tooltip v-model="showToolTipDefinition" bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
+                  <v-btn class="conditionChip" icon slot="activator" @mouseover="showTooltip(searchItem)" @mouseout="hideToolTip(searchItem)">
+                        <v-icon size="20" style="color:#aebcdb!important">info</v-icon>
+                       </v-btn>
+                       <span v-show="tooltipDefinition!== null">
+                         <div style="width:600px" v-model="tooltipDefinition">
+                           {{ tooltipDefinition }}
+                         </div>
+                       </span>
+                  </v-tooltip>
+                <!-- <v-tooltip bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
+                  <span v-show="tooltipDefinition!== null">
+                    <div style="width:600px" v-model="tooltipDefinition">
+                      {{ tooltipDefinition }}
+                    </div>
+                  </span>
+                </v-tooltip> -->
               </v-chip>
-              <span v-show="tooltipDefinition!== null">
-                <div style="width:600px" v-model="tooltipDefinition">
-                  {{ tooltipDefinition }}
-                </div>
-              </span>
-            </v-tooltip>
+
           </span>
       </div>
 
@@ -152,6 +163,7 @@ var model = new Model();
         alertWarningHints: false,
         definitionObj: {},
         tooltipDefinition: null,
+        showToolTipDefinition: false,
       }
     },
     watch: {
@@ -276,6 +288,7 @@ var model = new Model();
       showTooltip(item){
         if(this.definitionObj.hasOwnProperty(item)){
           this.tooltipDefinition = this.definitionObj[item];
+          this.showToolTipDefinition = true;
         }
         else {
           this.tooltipDefinition = null;
@@ -283,6 +296,7 @@ var model = new Model();
       },
       hideToolTip(item){
         this.tooltipDefinition = null;
+        this.showToolTipDefinition = false;
       },
       removeItem(item){
         bus.$emit("removeClinGenesArray");
@@ -576,6 +590,11 @@ var model = new Model();
 <style lang="sass" scoped>
 
   @import ../assets/sass/variables
+
+  .conditionChip
+    cursor: help !important
+    margin: 0
+    margin-right: -6px
 
   .btnColor
     color: white
