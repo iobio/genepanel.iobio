@@ -3,7 +3,7 @@
     <v-layout row wrap style="margin-top:-10px;">
       <v-flex d-flex xs12>
         <v-card>
-          <v-jumbotron class="overview-jumbotron" :gradient="gradient" dark>
+          <v-responsive class="overview-jumbotron" :gradient="gradient" dark>
             <v-container fill-height>
               <v-layout row wrap>
                 <v-flex xs12>
@@ -55,7 +55,7 @@
                 </v-flex>
               </v-layout>
             </v-container>
-          </v-jumbotron>
+          </v-responsive>
         </v-card>
       </v-flex>
     </v-layout>

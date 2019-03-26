@@ -89,7 +89,7 @@
     "url-loader": "^0.5.9",
     "vue-hot-reload-loader": "^0.1.5",
     "vue-loader": "^12.2.1",
-    "vue-template-compiler": "^2.5.10",
+    "vue-template-compiler": "^2.6.10",
     "vue-test-utils": "^1.0.0-beta.3",
     "vuetable-2": "^1.7.4",
     "webpack": "^2.6.1",
