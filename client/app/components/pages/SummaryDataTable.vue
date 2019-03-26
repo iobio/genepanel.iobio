@@ -314,18 +314,14 @@ import Sortable from 'sortablejs';
         this.items.map((x,i)=>{
           x.SummaryIndex = i + 1;
         })
-        // console.log("clinGenesSummary in the function", this.clinGenesSummaryData)
-        console.log("is launchedFromClin", this.launchedFromClin);
 
         if(this.launchedFromClin && this.clinGenesSummaryData.length>0 && this.includeClinGenes<3){
           this.selected = [];
           this.items.map(x=>{
-            // console.log("this.clinGenesSummary.includes(x.name)", this.clinGenesSummaryData.includes(x.name))
             if(this.clinGenesSummaryData.includes(x.name)){
               this.selected.push(x);
             }
           })
-          // console.log("selected length", this.selected.length)
           this.selectedTemp = this.selected;
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           bus.$emit("updateAllGenes", this.selected);
