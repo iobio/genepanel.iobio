@@ -67,7 +67,7 @@
                     <div v-if="multipleSearchTerms.length">
                       <br>
                         Phenotypes Searched:
-                      <v-chip disabled  color="primary" text-color="white" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
+                      <v-chip  color="primary" text-color="white" close v-for="(searchItem, i) in multipleSearchTerms" :key="i" @input="remove(searchItem)">
                         {{ i+1 }}. {{ searchItem }}
                       </v-chip>
                     </div>
