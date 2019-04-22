@@ -88,12 +88,13 @@
       <v-alert  color="warning" dismissible v-model="alert">
         Sorry, the following search term returns no gene panels! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
       </v-alert>
-      <v-alert  color="warning" dismissible v-model="alertWarning">
-        Sorry, we are unable to fetch data for this term! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
-      </v-alert>
       <v-alert v-if="alertWarningHints && warningHints.length>0"  color="info" outline dismissible v-model="alertWarningHints">
         Sorry, This search term is too general. Please try a more specific term. <br><br> Example: <li style="cursor: pointer" v-if="warningHints.length>0" v-for="(hint, i) in warningHints" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
       </v-alert>
+      <v-alert  color="warning" dismissible v-model="alertWarning" outline>
+        <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
+      </v-alert>
+
     </p>
   </div>
 </template>
@@ -242,7 +243,6 @@ var model = new Model();
     methods:{
       EnterForSearch(){
         if(event.key === 'Enter') {
-          // console.log("enter key")
           this.enterPressed = true;
           setTimeout(()=>{
             this.checkBeforePerformSearch();
@@ -373,11 +373,9 @@ var model = new Model();
         }
       },
       performSearch: function(){
-        // console.log("performSearch called")
         // this.$emit('showDiseases', []);
         this.singleItemTypeAhead = false;
         $("#addedterm").remove();
-        // console.log("this search", this.search)
         var searchTerm ="";
         var conceptId = ""
         if(this.search.DiseaseName!==undefined){
@@ -410,7 +408,9 @@ var model = new Model();
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
-              if(diseases.length>30){
+              var maxDiseasesLimit = false;
+              if(diseases.length>7){
+                maxDiseasesLimit = true;
                 comeOutOfPromise1(diseases);
               }
               else {
@@ -472,10 +472,10 @@ var model = new Model();
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-                  if(filteredDiseases.length<1){
+                  if(filteredDiseases.length<1 && diseases.length<8){
                     filteredDiseases = tryByUsingConceptId();
                   }
-                  else {
+                  else if(!maxDiseasesLimit){
                     addFilteredDiseases(filteredDiseases);
                   }
                 }
@@ -508,15 +508,15 @@ var model = new Model();
             }
 
             var comeOutOfPromise1 =(diseases)=>{
-              this.warningHints = diseases.slice(10, 14);
+              this.warningHints = diseases.slice(3, 7);
               this.alertWarningHints = true
               this.checked=false;
               bus.$emit("hideContentLoader");
               this.remove(this.search)
+              this.alert = false;
             }
 
             var createDefinitionsObj = (data)=>{
-              // console.log(data.diseases)
               searchTerm = data.searchTerm;
               if(this.definitionObj[searchTerm]===undefined && data.diseases.length>0){
                 if(data.diseases[0].Title === searchTerm && data.diseases[0].Definition.length>10){
