@@ -1057,6 +1057,7 @@ export default {
       $('#generalSlider').css('left', `${this.panelsDefinitionValues[1]}%`)
     },
     selectedPanelFilters: function(){
+      this.chartComponent = "PanelFilters";
       this.maxGenes = 0;
       this.filterPanelsOnselectedPanelFilters();
     },
@@ -1254,7 +1255,6 @@ export default {
       }
     },
     addDiseases: function(e){
-      // console.log("addDiseases", e)
       this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       for(var i=0; i<e.length; i++){

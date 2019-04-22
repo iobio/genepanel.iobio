@@ -55,9 +55,7 @@
           <strong>{{ selected.length}} of {{ items.length }} panels selected</strong>
         </td>
       </template>
-      </v-data-table>
-      <!-- </v-app> -->
-
+    </v-data-table>
   </div>
 </template>
 
@@ -73,13 +71,7 @@ global.$ = jQuery;
 import Model from '../../models/Model';
 var model = new Model();
 
-// var tempArr = [];
-
-
   export default {
-    // components: {
-    // },
-    // props: ['DiseasePanelData'],
     props: {
       DiseasePanelData:{
         type: Array
@@ -147,11 +139,9 @@ var model = new Model();
         this.AddGenePanelData();
       },
       selectedVendorsProps: function(){
-        // console.log("selectedVendorsProps in gene panels  ")
         this.selectedVendorsFromFilterPanel = this.selectedVendorsProps;
       },
       selectedPanelsInCheckBox: function(){
-        // console.log("selectedPanelsInCheckBox", this.selectedPanelsInCheckBox);
         this.updateTableOnSelectedPanels();
       },
       selectedPanelsInCheckBoxPropsOne: function(){
@@ -293,8 +283,6 @@ var model = new Model();
       },
       AddGenePanelData: function(){
         //new code
-        // console.log("selectedPanelFilters", this.selectedPanelFilters)
-        // console.log("DiseasePanelData", this.DiseasePanelData)
         this.DiseasePanel = this.DiseasePanelData
         // var mergedGenePanels = model.mergeGenePanelsAcrossDiseases(this.DiseasePanel);
         // this.mergedGene = mergedGenePanels
@@ -354,7 +342,6 @@ var model = new Model();
             vendorsToBeSentBack.push(x);
           }
         })
-        // console.log("vendorsToBeSentBack", vendorsToBeSentBack.sort());
         return vendorsToBeSentBack.sort();
         // this.$emit('selectVendors', vendorsToBeSentBack.sort());
       },

@@ -138,7 +138,6 @@ var model = new Model();
 
           //New code that updates the data properly.
           this.items = this.DiseasePanelData;
-          // console.log(this.items)
           this.items.forEach(x=>{
             if(x._modeOfInheritance===""){
               x._modeOfInheritance= "Not provided";

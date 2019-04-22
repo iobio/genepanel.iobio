@@ -328,7 +328,6 @@ processGenePanelData(genePanels) {
 
 
 processDiseaseData(diseases) {
-  console.log(diseases)
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
     if(disease.genePanels){
