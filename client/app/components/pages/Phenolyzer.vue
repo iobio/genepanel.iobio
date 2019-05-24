@@ -514,6 +514,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
         includeClinPhenolyzerGenes: true,
         openSearchBox: false,
         openEditBoxPhenolyzer: false,
+        genesSearchTermObj: {},
       }
     },
     beforeCreate(){
@@ -875,6 +876,24 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
                     name: searchTerm,
                     data: self.tempItems
                   }))
+                  console.log("self.dictionaryArr", self.dictionaryArr)
+                  if(self.genesSearchTermObj[searchTerm]===undefined){
+                    self.genesSearchTermObj[searchTerm] = [];
+                  }
+
+                  if(!self.genesSearchTermObj[searchTerm].length){
+                    self.tempItems.map(x=>{
+                      self.genesSearchTermObj[searchTerm].push({
+                        name: x.geneName,
+                        rank: x.rank,
+                        score: x.score
+                      })
+                    })
+                  }
+                  console.log("genesSearchTermObj", self.genesSearchTermObj)
+                  this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
+
+
                   var combinedList = self.combineList(self.dictionaryArr);
                   var createdObj = self.createObj(combinedList);
                   var averagedData = self.performMeanOperation(combinedList, createdObj);

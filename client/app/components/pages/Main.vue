@@ -260,7 +260,8 @@
               v-bind:isMobile="isMobile"
               v-bind:clinsearchedPhenolyzer="clinPhenolyzerSeachTerm"
               v-bind:clinGenes="clinGenesPhenolyzer"
-              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
+              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer"
+              v-on:individualGenesObjPhenolyzer="individualGenesObjPhenolyzer($event)">
             </Phenolyzer>
           </keep-alive>
 
@@ -419,6 +420,7 @@ import knownGenes from '../../../data/knownGenes'
         phenolyzerCompleteGeneLis: [],
         summaryGenes: [],
         individualGenesSearchTermGtr:[],
+        individualGenesSearchTermPhenolyzer: [],
       }
     },
     watch: {
@@ -498,8 +500,10 @@ import knownGenes from '../../../data/knownGenes'
     },
     methods: {
       individualGenesGtr: function(obj){
-        console.log(obj)
         this.individualGenesSearchTermGtr = obj;
+      },
+      individualGenesObjPhenolyzer:function(obj){
+        this.individualGenesSearchTermPhenolyzer = obj;
       },
       checkIfMobile: function(){
         this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -814,6 +818,24 @@ import knownGenes from '../../../data/knownGenes'
         }
         return arr;
       },
+      setSearchTermsPhenolyzer: function(searchTermPheno, geneName){
+        var arr =[];
+        if(this.individualGenesSearchTermPhenolyzer){
+          searchTermPheno.map(x=>{
+            var idx = this.individualGenesSearchTermPhenolyzer[x].findIndex(obj=>obj.name === geneName);
+            if(this.individualGenesSearchTermPhenolyzer.hasOwnProperty(x)){
+              var y = this.individualGenesSearchTermPhenolyzer[x];
+              arr.push({
+                searchTerm: x,
+                rank: y[idx].rank,
+                score: y[idx].score
+              })
+            }
+          })
+        }
+        return arr;
+
+      },
       copyAllGenes: function(){
         this.genesToCopy = this.uniqueGenes.toString();
         // var clinData = this.summaryGenes.map(gene=> {
@@ -837,7 +859,7 @@ import knownGenes from '../../../data/knownGenes'
             geneId: gene.geneId,
             score: gene.score,
             genePanels: gene.value,
-            searchTermsPhenolyzer: gene.searchTermPheno,
+            searchTermsPhenolyzer: this.setSearchTermsPhenolyzer(gene.searchTermPheno, gene.name),
             searchTermsGtr: this.setSearchTermsGTR(gene.searchTermArrayGTR, gene.name),
             geneRankGtr: gene.geneRankGtr,
             geneRankPhenolyzer: gene.geneRankPhenolyzer
