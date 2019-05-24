@@ -242,7 +242,8 @@
                 v-bind:clinSearchedGtr="clinGtrSearchTerm"
                 v-bind:clinFetchingGtr="clinFetchingGtr"
                 v-bind:clinGenes="clinGenesGtr"
-                v-bind:isMobile="isMobile">
+                v-bind:isMobile="isMobile"
+                v-on:individualGenesGtr="individualGenesGtr($event)">
               </GeneticTestingRegistry>
             </keep-alive>
 
@@ -417,6 +418,7 @@ import knownGenes from '../../../data/knownGenes'
         gtrCompleteGeneList: [],
         phenolyzerCompleteGeneLis: [],
         summaryGenes: [],
+        individualGenesSearchTermGtr:[],
       }
     },
     watch: {
@@ -495,6 +497,10 @@ import knownGenes from '../../../data/knownGenes'
     updated(){
     },
     methods: {
+      individualGenesGtr: function(obj){
+        console.log(obj)
+        this.individualGenesSearchTermGtr = obj;
+      },
       checkIfMobile: function(){
         this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       },
@@ -787,8 +793,43 @@ import knownGenes from '../../../data/knownGenes'
         });
 
       },
+      setSearchTermsGTR(searchTermArrayGTR, geneName){
+        // console.log("this.individualGenesSearchTermGtr", this.individualGenesSearchTermGtr)
+        var arr =[];
+        if(this.individualGenesSearchTermGtr){
+          searchTermArrayGTR.map(x=>{
+            var idx = this.individualGenesSearchTermGtr[x].findIndex(obj=>obj.name === geneName);
+            // console.log("idx", idx)
+            // console.log("x", x)
+            if(this.individualGenesSearchTermGtr.hasOwnProperty(x)){
+              // console.log("this.individualGenesSearchTermGtr[x]", this.individualGenesSearchTermGtr[x]);
+              var y = this.individualGenesSearchTermGtr[x];
+              arr.push({
+                searchTerm: x,
+                rank: y[idx].rank,
+                genePanelsCount: y[idx].genePanelsCount
+              })
+            }
+          })
+        }
+        return arr;
+      },
       copyAllGenes: function(){
         this.genesToCopy = this.uniqueGenes.toString();
+        // var clinData = this.summaryGenes.map(gene=> {
+        //   return {
+        //     name: gene.name,
+        //     source: gene.sources,
+        //     geneId: gene.geneId,
+        //     score: gene.score,
+        //     genePanels: gene.value,
+        //     searchTermsPhenolyzer: gene.searchTermPheno,
+        //     searchTermsGtr: gene.searchTermArrayGTR,
+        //     geneRankGtr: gene.geneRankGtr,
+        //     geneRankPhenolyzer: gene.geneRankPhenolyzer
+        //   }
+        // })
+
         var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
@@ -797,11 +838,13 @@ import knownGenes from '../../../data/knownGenes'
             score: gene.score,
             genePanels: gene.value,
             searchTermsPhenolyzer: gene.searchTermPheno,
-            searchTermsGtr: gene.searchTermArrayGTR,
+            searchTermsGtr: this.setSearchTermsGTR(gene.searchTermArrayGTR, gene.name),
             geneRankGtr: gene.geneRankGtr,
             geneRankPhenolyzer: gene.geneRankPhenolyzer
           }
         })
+
+        console.log("clinData", clinData)
 
         var rankData = this.summaryGenes.map(gene=>{
           return {
@@ -959,7 +1002,7 @@ import knownGenes from '../../../data/knownGenes'
       },
       updateAllGenesFromSelection(data){
         this.summaryGenes = data;
-
+        // console.log("this.summaryGenes", this.summaryGenes)
         var allGenes = this.summaryGenes.map(x=>{
           return x.name;
         });

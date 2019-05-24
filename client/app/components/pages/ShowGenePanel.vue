@@ -255,6 +255,9 @@ var model = new Model();
       GeneData: {
         type: Array
       },
+      GeneDataIndividual: {
+        type: Array
+      },
       geneSearch: {
         type: String
       },
@@ -264,12 +267,18 @@ var model = new Model();
       associatedGenes: {
         type: Array
       },
+      associatedGenesIndividual: {
+        type: Array
+      },
       launchedFromClinProps: {
         type: Boolean
       },
       clinGenes: {
         type: Array
-      }
+      },
+      currentSearchedTerm: {
+        type: String
+      },
     },
     data(){
       return {
@@ -332,13 +341,23 @@ var model = new Model();
         color: 'blue darken-3',
         includeClinGenes: true,
         openSearchBox: false,
-        defaultGenesToSelect: this.launchedFromClinProps ? 20 : 50
+        defaultGenesToSelect: this.launchedFromClinProps ? 20 : 50,
+        GetGeneDataIndividual: [],
+        DataToIncludeSearchTermsIndividual: [],
+        arrangedSearchDataIndividual: [],
+        GenesToDisplayIndividual: [],
+        itemsIndividual: [],
+        associatedGenesDataIndividual: [],
+        currentSearchTerm: "",
+        genesSearchTermObj: {},
       }
     },
     mounted(){
       this.modeOfInheritanceProps = this.modeOfInheritanceData;
       this.multipleSearchDisorders = this.multipleSearchItems;
+      this.currentSearchTerm = this.currentSearchedTerm;
       this.AddGeneData();
+      this.AddGeneDataIndividual();
       bus.$on("clearClinGenesArray", ()=>{
         this.includeClinGenes = false;
       });
@@ -348,6 +367,9 @@ var model = new Model();
 
     },
     updated(){
+      // console.log("selected", this.selected )
+      // console.log("items", this.items )
+
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
 
       bus.$on('deSelectAllGenesBus', ()=>{
@@ -390,6 +412,9 @@ var model = new Model();
       GeneData: function(){
         this.AddGeneData();
       },
+      GeneDataIndividual: function(){
+        this.AddGeneDataIndividual();
+      },
       modeOfInheritanceData: function(){
       },
       NumberOfTopGenes: function() {
@@ -399,6 +424,9 @@ var model = new Model();
         this.search = this.geneSearch;
       },
       clinGenes: function(){
+      },
+      currentSearchedTerm: function(){
+        this.currentSearchTerm = this.currentSearchedTerm;
       },
       multipleSearchItems: function(){
         this.multipleSearchDisorders = this.multipleSearchItems;
@@ -668,6 +696,90 @@ var model = new Model();
         bus.$emit("GeneDistributionChartData", this.items);
 
         this.dataForTables = data.slice(0,10);
+      },
+      AddGeneDataIndividual: function(){
+        console.log("called")
+        this.GetGeneDataIndividual = this.GeneDataIndividual;
+        this.associatedGenesDataIndividual = this.associatedGenesIndividual;
+        if(this.associatedGenesIndividual.length){
+          this.associatedGenesIndividual.map(x=>{
+            x.omimSrc= `https://www.ncbi.nlm.nih.gov/omim/?term=${x.name}`;
+            x.medGenSrc= `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.name}`;
+            x.geneCardsSrc= `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.name}`;
+            x.ghrSrc= `https://ghr.nlm.nih.gov/gene/${x.name}`;
+            x.clinGenLink= `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.name}`;
+            x.htmlData = this.drawHtmlData($('#genes-table').innerWidth());
+            x.isAssociatedGene = true;
+            x.value = 0;
+          })
+        }
+
+        // this.modeOfInheritanceList = this.modeOfInheritanceData;
+        this.DataToIncludeSearchTermsIndividual = this.GeneDataIndividual;
+        this.arrangedSearchDataIndividual = this.searchTermsForGeneId(this.DataToIncludeSearchTermsIndividual);
+
+        var mergedGenesIndividual = model.mergeGenesAcrossPanels(this.GeneDataIndividual);
+        let dataIndividual = model.getGeneBarChartData(mergedGenesIndividual, $('#genes-table').innerWidth(), this.launchedFromClinProps );
+        this.GenesToDisplayIndividual = dataIndividual;
+
+        this.arrangeAllData(this.arrangedSearchDataIndividual, this.GenesToDisplayIndividual);
+
+        if(this.associatedGenesIndividual.length){
+          this.associatedGenesIndividual.map(x=>{
+            var checkIfAssociatedGeneExist = obj => obj.name === x.name;
+            if(dataIndividual.some(checkIfAssociatedGeneExist)){
+              var genes = [];
+              dataIndividual.map(y=>{
+                genes.push(y.name);
+              });
+              var i = genes.indexOf(x.name);
+              x.htmlData = dataIndividual[i].htmlData;
+              x.value = dataIndividual[i].value;
+              x.conditions = dataIndividual[i].conditions;
+              x.diseases = dataIndividual[i].diseases;
+              x.geneid = dataIndividual[i].geneid;
+
+              dataIndividual.splice(i, 1);
+              dataIndividual = [...dataIndividual];
+            }
+          })
+        }
+
+        if(this.associatedGenesDataIndividual.length){
+          // this.associatedGenesData = this.associatedGenesData.sort(function(a, b){
+          //   return a.value < b.value;
+          // });
+
+          this.associatedGenesDataIndividual.sort((a,b) => (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0));
+          this.itemsIndividual = [...this.associatedGenesDataIndividual, ...dataIndividual];
+        }
+        else{
+          this.itemsIndividual = dataIndividual;
+        }
+        this.noOfSourcesSvg();
+        console.log("this.currentSearchTerm", this.currentSearchTerm)
+        console.log("this.itemsIndividual", this.itemsIndividual)
+        this.createSeperateGenesObj();
+      },
+      createSeperateGenesObj: function(){
+        if(this.genesSearchTermObj[this.currentSearchTerm]===undefined){
+          this.genesSearchTermObj[this.currentSearchTerm] = [];
+        }
+        this.updateGenesSearchTermObj();
+      },
+      updateGenesSearchTermObj: function(){
+        if(!this.genesSearchTermObj[this.currentSearchTerm].length){
+          this.itemsIndividual.map((x,i)=>{
+            this.genesSearchTermObj[this.currentSearchTerm].push({
+              name: x.name,
+              genePanelsCount: x.value,
+              rank: i+1,
+            })
+          })
+        }
+        // this.itemsIndividual = [];
+        console.log("genesSearchTermObj", this.genesSearchTermObj)
+        this.$emit("individualGenesObj", this.genesSearchTermObj)
       },
       arrangeAllData: function(terms, genesData){
         for(var i=0; i<terms.length; i++){

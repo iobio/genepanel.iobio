@@ -397,6 +397,7 @@ var model = new Model();
           if(!this.multipleSearchTerms.includes(searchTerm)){
             this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
             this.$ga.event('SearchTerm', 'GTR', searchTerm); //Emit event for Google analytics
+            this.$emit("currentSearchTerm", searchTerm)
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
@@ -562,10 +563,13 @@ var model = new Model();
                   x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
                   this.filteredDiseasesItems.push(x);
                 });
+                console.log("filteredDiseases", filteredDiseases)
+                this.$emit("searchTermDiseases", filteredDiseases)
               }
 
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
+                console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
                 this.$emit('showDiseases', this.filteredDiseasesItems);
                 this.filteredDiseasesItems = [];
                 filteredDiseases = null;
