@@ -798,21 +798,24 @@ import knownGenes from '../../../data/knownGenes'
 
       },
       setSearchTermsGTR(searchTermArrayGTR, geneName){
-        // console.log("this.individualGenesSearchTermGtr", this.individualGenesSearchTermGtr)
         var arr =[];
         if(this.individualGenesSearchTermGtr){
           searchTermArrayGTR.map(x=>{
             var idx = this.individualGenesSearchTermGtr[x].findIndex(obj=>obj.name === geneName);
-            // console.log("idx", idx)
-            // console.log("x", x)
+            var y = this.individualGenesSearchTermGtr[x];
             if(this.individualGenesSearchTermGtr.hasOwnProperty(x)){
-              // console.log("this.individualGenesSearchTermGtr[x]", this.individualGenesSearchTermGtr[x]);
-              var y = this.individualGenesSearchTermGtr[x];
-              arr.push({
-                searchTerm: x,
-                rank: y[idx].rank,
-                genePanelsCount: y[idx].genePanelsCount
-              })
+              if(y[idx]!==undefined){
+                arr.push({
+                  searchTerm: x,
+                  rank: y[idx].rank,
+                  genePanelsCount: y[idx].genePanelsCount
+                })
+              }
+              else {
+                arr.push({
+                  searchTerm: x
+                })
+              }
             }
           })
         }
@@ -827,8 +830,8 @@ import knownGenes from '../../../data/knownGenes'
               var y = this.individualGenesSearchTermPhenolyzer[x];
               arr.push({
                 searchTerm: x,
-                rank: y[idx].rank,
-                score: y[idx].score
+                rank: Number(y[idx].rank),
+                score: Number(y[idx].score)
               })
             }
           })
@@ -838,20 +841,6 @@ import knownGenes from '../../../data/knownGenes'
       },
       copyAllGenes: function(){
         this.genesToCopy = this.uniqueGenes.toString();
-        // var clinData = this.summaryGenes.map(gene=> {
-        //   return {
-        //     name: gene.name,
-        //     source: gene.sources,
-        //     geneId: gene.geneId,
-        //     score: gene.score,
-        //     genePanels: gene.value,
-        //     searchTermsPhenolyzer: gene.searchTermPheno,
-        //     searchTermsGtr: gene.searchTermArrayGTR,
-        //     geneRankGtr: gene.geneRankGtr,
-        //     geneRankPhenolyzer: gene.geneRankPhenolyzer
-        //   }
-        // })
-
         var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
@@ -1105,7 +1094,6 @@ import knownGenes from '../../../data/knownGenes'
         this.manuallyAddedGenes = genes;
       },
       clearAllFromClin: function(){
-        console.log("clicked!");
         this.newAnalysisDialog = true;
       }
 

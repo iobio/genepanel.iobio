@@ -79,12 +79,6 @@ var model = new Model();
       // selectedVendorsProps: {
       //   type: Array
       // },
-      // selectedPanelsInCheckBox: {
-      //   type: Array
-      // },
-      // selectedPanelsInCheckBoxPropsOne: {
-      //   type: Array
-      // },
       selectedPanelFilters: {
         type: Array
       },
@@ -176,23 +170,6 @@ var model = new Model();
     updated(){
       //Emit the this.selected array back to the home.vue so it can be passed as props
       this.$emit('selectedPanelsIndividual', this.selected);
-      // this.$emit('NoOfPanels', this.items);
-
-      // bus.$on('SelectNumberOfPanel', (data)=> {
-      //   this.filterGenePanelsOnSelectedNumber(data);
-      // })
-      //
-      // bus.$on('selectNumberOfConditionsInPanel', (data)=>{
-      //   this.filterPanelsOnSelectedConditions(data);
-      // })
-      //
-      // bus.$on("conditionsOnBarSelect", (start, end)=>{
-      //   this.filterPanelsOnBarSelect(start, end);
-      // })
-      //
-      // bus.$on("clearConditionFilters", ()=>{
-      //   this.selected = this.items.slice()
-      // })
     },
 
     methods:{

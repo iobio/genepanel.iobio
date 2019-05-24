@@ -1503,7 +1503,6 @@ export default {
             }
           }
       }
-      console.log("genePropsIndividual", temp)
       this.genePropsIndividual = temp;
     },
     selectPanelsEdgeCase: function(e){

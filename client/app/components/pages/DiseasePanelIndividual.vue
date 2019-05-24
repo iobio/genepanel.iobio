@@ -239,48 +239,12 @@ var model = new Model();
 
       // this.draw();
       this.showDiseasesData()
-      // bus.$on("RequestModeOfInheritanceData", ()=>{
-      //   this.sendModeOfInheritanceData();
-      // });
-      // bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
-      //   this.updateFromPieChart(modeOfInheritance, selection);
-      //   this.pieChartFlag = true
-      // });
-      // bus.$on("removeSearchTerm", ()=>{
-      //   this.flagForDisorderFilter = false; //Sets the flag to false because removing a terms clears the selection.
-      // });
-      // bus.$on("updatedFromDisorders", ()=>{
-      //   this.pieChartFlag = false;
-      // });
-      // bus.$on("newSearch", ()=>{
-      //   this.pieChartFlag = false;
-      // });
-      // bus.$on("resetDisordersBus", ()=>{
-      //   this.pieChartFlag = false;
-      //   this.flagForDisorderFilter = false;
-      //   this.selected = this.tempDisorders.slice();
-      //   this.items = this.tempDisorders;
-      //   this.getDisorderNames();
-      //   this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
-      //   this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
-      //   return this.items;
-      // });
     },
     updated(){
       this.$emit('selectedDiseasesIndividual', this.selected);
-      //
-      // bus.$on('deSelectAllDisordersBus', ()=>{
-      //   this.deSelectAllDisorders();
-      // });
-      //
-      // bus.$on('SelectAllDisordersBus', ()=>{
-      //   this.selectAllDisorders();
-      // });
-      //
     },
     watch: {
       DiseasePanelData: function(){
-        console.log("this.DiseasePanelDataindividual", this.DiseasePanelData)
         this.showDiseasesData();
       },
       selectedDisordersProps: function(){
@@ -292,7 +256,6 @@ var model = new Model();
           this.flagForDisorderFilter = false;
         }
         this.updateDisordersTableOnSelectedDisorders();
-        // bus.$emit("disordersFilter");
       },
       selectedModesOfInheritance: function(){
         this.updateTableOnSelectedModes();
