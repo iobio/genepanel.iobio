@@ -235,8 +235,6 @@ var model = new Model();
 
     },
     mounted(){
-      console.log("mounted .DiseasePanelDataindividual", this.DiseasePanelData)
-
       // this.draw();
       this.showDiseasesData()
     },

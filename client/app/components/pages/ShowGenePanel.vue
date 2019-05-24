@@ -367,9 +367,6 @@ var model = new Model();
 
     },
     updated(){
-      // console.log("selected", this.selected )
-      // console.log("items", this.items )
-
       this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
 
       bus.$on('deSelectAllGenesBus', ()=>{
@@ -698,7 +695,6 @@ var model = new Model();
         this.dataForTables = data.slice(0,10);
       },
       AddGeneDataIndividual: function(){
-        console.log("called")
         this.GetGeneDataIndividual = this.GeneDataIndividual;
         this.associatedGenesDataIndividual = this.associatedGenesIndividual;
         if(this.associatedGenesIndividual.length){
@@ -757,8 +753,6 @@ var model = new Model();
           this.itemsIndividual = dataIndividual;
         }
         this.noOfSourcesSvg();
-        console.log("this.currentSearchTerm", this.currentSearchTerm)
-        console.log("this.itemsIndividual", this.itemsIndividual)
         this.createSeperateGenesObj();
       },
       createSeperateGenesObj: function(){
@@ -778,7 +772,6 @@ var model = new Model();
           })
         }
         // this.itemsIndividual = [];
-        console.log("genesSearchTermObj", this.genesSearchTermObj)
         this.$emit("individualGenesObj", this.genesSearchTermObj)
       },
       arrangeAllData: function(terms, genesData){

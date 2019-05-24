@@ -563,13 +563,11 @@ var model = new Model();
                   x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
                   this.filteredDiseasesItems.push(x);
                 });
-                console.log("filteredDiseases", filteredDiseases)
                 this.$emit("searchTermDiseases", filteredDiseases)
               }
 
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
-                console.log("this.filteredDiseasesItems", this.filteredDiseasesItems)
                 this.$emit('showDiseases', this.filteredDiseasesItems);
                 this.filteredDiseasesItems = [];
                 filteredDiseases = null;
