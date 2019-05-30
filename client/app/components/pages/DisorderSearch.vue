@@ -59,16 +59,27 @@
         <br>
           Conditions Searched:
           <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
-            <v-tooltip bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
-              <v-chip disabled slot="activator" color="primary" text-color="white" close :key="i" @input="remove(searchItem)" @mouseover="showTooltip(searchItem)" @mouseout="hideToolTip(searchItem)">
+              <v-chip slot="activator" color="primary" text-color="white" close :key="i" @input="remove(searchItem)">
                 {{ i+1 }}. {{ searchItem }}
+                <v-tooltip v-model="showToolTipDefinition" bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
+                  <v-btn class="conditionChip" icon slot="activator" @mouseover="showTooltip(searchItem)" @mouseout="hideToolTip(searchItem)">
+                        <v-icon size="20" style="color:#aebcdb!important">info</v-icon>
+                       </v-btn>
+                       <span v-show="tooltipDefinition!== null">
+                         <div style="width:600px" v-model="tooltipDefinition">
+                           {{ tooltipDefinition }}
+                         </div>
+                       </span>
+                  </v-tooltip>
+                <!-- <v-tooltip bottom :z-index="[tooltipDefinition=== null ? '-1' : '4']">
+                  <span v-show="tooltipDefinition!== null">
+                    <div style="width:600px" v-model="tooltipDefinition">
+                      {{ tooltipDefinition }}
+                    </div>
+                  </span>
+                </v-tooltip> -->
               </v-chip>
-              <span v-show="tooltipDefinition!== null">
-                <div style="width:600px" v-model="tooltipDefinition">
-                  {{ tooltipDefinition }}
-                </div>
-              </span>
-            </v-tooltip>
+
           </span>
       </div>
 
@@ -77,12 +88,13 @@
       <v-alert  color="warning" dismissible v-model="alert">
         Sorry, the following search term returns no gene panels! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
       </v-alert>
-      <v-alert  color="warning" dismissible v-model="alertWarning">
-        Sorry, we are unable to fetch data for this term! <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
-      </v-alert>
       <v-alert v-if="alertWarningHints && warningHints.length>0"  color="info" outline dismissible v-model="alertWarningHints">
         Sorry, This search term is too general. Please try a more specific term. <br><br> Example: <li style="cursor: pointer" v-if="warningHints.length>0" v-for="(hint, i) in warningHints" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
       </v-alert>
+      <v-alert  color="warning" dismissible v-model="alertWarning" outline>
+        <a v-on:click="searchInPhenolyzer">  <strong> Try in Phenolyzer</strong></a>
+      </v-alert>
+
     </p>
   </div>
 </template>
@@ -152,6 +164,7 @@ var model = new Model();
         alertWarningHints: false,
         definitionObj: {},
         tooltipDefinition: null,
+        showToolTipDefinition: false,
       }
     },
     watch: {
@@ -230,7 +243,6 @@ var model = new Model();
     methods:{
       EnterForSearch(){
         if(event.key === 'Enter') {
-          // console.log("enter key")
           this.enterPressed = true;
           setTimeout(()=>{
             this.checkBeforePerformSearch();
@@ -276,6 +288,7 @@ var model = new Model();
       showTooltip(item){
         if(this.definitionObj.hasOwnProperty(item)){
           this.tooltipDefinition = this.definitionObj[item];
+          this.showToolTipDefinition = true;
         }
         else {
           this.tooltipDefinition = null;
@@ -283,6 +296,7 @@ var model = new Model();
       },
       hideToolTip(item){
         this.tooltipDefinition = null;
+        this.showToolTipDefinition = false;
       },
       removeItem(item){
         bus.$emit("removeClinGenesArray");
@@ -359,11 +373,9 @@ var model = new Model();
         }
       },
       performSearch: function(){
-        // console.log("performSearch called")
         // this.$emit('showDiseases', []);
         this.singleItemTypeAhead = false;
         $("#addedterm").remove();
-        // console.log("this search", this.search)
         var searchTerm ="";
         var conceptId = ""
         if(this.search.DiseaseName!==undefined){
@@ -385,6 +397,7 @@ var model = new Model();
           if(!this.multipleSearchTerms.includes(searchTerm)){
             this.multipleSearchTerms.push(searchTerm); //Store search terms in an array
             this.$ga.event('SearchTerm', 'GTR', searchTerm); //Emit event for Google analytics
+            this.$emit("currentSearchTerm", searchTerm)
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
             var diseases;
@@ -396,7 +409,9 @@ var model = new Model();
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
-              if(diseases.length>30){
+              var maxDiseasesLimit = false;
+              if(diseases.length>7){
+                maxDiseasesLimit = true;
                 comeOutOfPromise1(diseases);
               }
               else {
@@ -458,10 +473,10 @@ var model = new Model();
                 }
                 else {
                   filteredDiseases = model.processDiseaseData(diseases);
-                  if(filteredDiseases.length<1){
+                  if(filteredDiseases.length<1 && diseases.length<8){
                     filteredDiseases = tryByUsingConceptId();
                   }
-                  else {
+                  else if(!maxDiseasesLimit){
                     addFilteredDiseases(filteredDiseases);
                   }
                 }
@@ -494,15 +509,15 @@ var model = new Model();
             }
 
             var comeOutOfPromise1 =(diseases)=>{
-              this.warningHints = diseases.slice(10, 14);
+              this.warningHints = diseases.slice(3, 7);
               this.alertWarningHints = true
               this.checked=false;
               bus.$emit("hideContentLoader");
               this.remove(this.search)
+              this.alert = false;
             }
 
             var createDefinitionsObj = (data)=>{
-              // console.log(data.diseases)
               searchTerm = data.searchTerm;
               if(this.definitionObj[searchTerm]===undefined && data.diseases.length>0){
                 if(data.diseases[0].Title === searchTerm && data.diseases[0].Definition.length>10){
@@ -548,6 +563,7 @@ var model = new Model();
                   x["searchTermIndex"] = [this.multipleSearchTerms.indexOf(searchTerm)+1];
                   this.filteredDiseasesItems.push(x);
                 });
+                this.$emit("searchTermDiseases", filteredDiseases)
               }
 
               if(this.multipleSearchTerms.includes(searchTerm)){
@@ -576,6 +592,11 @@ var model = new Model();
 <style lang="sass" scoped>
 
   @import ../assets/sass/variables
+
+  .conditionChip
+    cursor: help !important
+    margin: 0
+    margin-right: -6px
 
   .btnColor
     color: white

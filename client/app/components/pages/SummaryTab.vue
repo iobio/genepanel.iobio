@@ -133,7 +133,7 @@
                              </div>
                            </span>
                            of {{ totalGenes }} genes selected
-                           <v-tooltip bottom v-if="!openEditBox">
+                           <!-- <v-tooltip bottom v-if="!openEditBox">
                             <v-icon
                               slot="activator"
                               v-on:click="openEditBox=true"
@@ -141,8 +141,8 @@
                               edit
                             </v-icon>
                             <span>Edit the number of genes selected</span>
-                          </v-tooltip>
-                          <v-tooltip bottom v-else>
+                          </v-tooltip> -->
+                          <v-tooltip bottom v-if="openEditBox">
                            <v-icon
                              slot="activator"
                              v-on:click="openEditBox=false"
@@ -152,6 +152,9 @@
                            <span>Close the edit box</span>
                          </v-tooltip>
                          </span>
+                         <br>
+                         <a v-on:click="openEditBox=true" v-if="!openEditBox"> <i><v-icon style="color:#4267b2">edit</v-icon> Edit the number of genes selected </i></a>
+                         <br><br>
                        </center>
                        <SvgBar
                        v-if="totalGenes"

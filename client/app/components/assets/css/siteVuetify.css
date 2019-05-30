@@ -63,5 +63,5 @@ table.v-table tbody td, table.v-table tbody th {
 }
 
 #conditionChips .v-chip .v-chip__content{
-  cursor: help !important
+  /* cursor: help !important */
 }

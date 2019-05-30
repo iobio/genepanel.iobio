@@ -242,7 +242,8 @@
                 v-bind:clinSearchedGtr="clinGtrSearchTerm"
                 v-bind:clinFetchingGtr="clinFetchingGtr"
                 v-bind:clinGenes="clinGenesGtr"
-                v-bind:isMobile="isMobile">
+                v-bind:isMobile="isMobile"
+                v-on:individualGenesGtr="individualGenesGtr($event)">
               </GeneticTestingRegistry>
             </keep-alive>
 
@@ -259,7 +260,8 @@
               v-bind:isMobile="isMobile"
               v-bind:clinsearchedPhenolyzer="clinPhenolyzerSeachTerm"
               v-bind:clinGenes="clinGenesPhenolyzer"
-              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer">
+              v-bind:SearchTheDisorderInPhenolyzer="SearchTheDisorderInPhenolyzer"
+              v-on:individualGenesObjPhenolyzer="individualGenesObjPhenolyzer($event)">
             </Phenolyzer>
           </keep-alive>
 
@@ -417,6 +419,8 @@ import knownGenes from '../../../data/knownGenes'
         gtrCompleteGeneList: [],
         phenolyzerCompleteGeneLis: [],
         summaryGenes: [],
+        individualGenesSearchTermGtr:[],
+        individualGenesSearchTermPhenolyzer: [],
       }
     },
     watch: {
@@ -495,6 +499,12 @@ import knownGenes from '../../../data/knownGenes'
     updated(){
     },
     methods: {
+      individualGenesGtr: function(obj){
+        this.individualGenesSearchTermGtr = obj;
+      },
+      individualGenesObjPhenolyzer:function(obj){
+        this.individualGenesSearchTermPhenolyzer = obj;
+      },
       checkIfMobile: function(){
         this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       },
@@ -787,6 +797,48 @@ import knownGenes from '../../../data/knownGenes'
         });
 
       },
+      setSearchTermsGTR(searchTermArrayGTR, geneName){
+        var arr =[];
+        if(this.individualGenesSearchTermGtr){
+          searchTermArrayGTR.map(x=>{
+            var idx = this.individualGenesSearchTermGtr[x].findIndex(obj=>obj.name === geneName);
+            var y = this.individualGenesSearchTermGtr[x];
+            if(this.individualGenesSearchTermGtr.hasOwnProperty(x)){
+              if(y[idx]!==undefined){
+                arr.push({
+                  searchTerm: x,
+                  rank: y[idx].rank,
+                  genePanelsCount: y[idx].genePanelsCount
+                })
+              }
+              else {
+                arr.push({
+                  searchTerm: x
+                })
+              }
+            }
+          })
+        }
+        return arr;
+      },
+      setSearchTermsPhenolyzer: function(searchTermPheno, geneName){
+        var arr =[];
+        if(this.individualGenesSearchTermPhenolyzer){
+          searchTermPheno.map(x=>{
+            var idx = this.individualGenesSearchTermPhenolyzer[x].findIndex(obj=>obj.name === geneName);
+            if(this.individualGenesSearchTermPhenolyzer.hasOwnProperty(x)){
+              var y = this.individualGenesSearchTermPhenolyzer[x];
+              arr.push({
+                searchTerm: x,
+                rank: Number(y[idx].rank),
+                score: Number(y[idx].score)
+              })
+            }
+          })
+        }
+        return arr;
+
+      },
       copyAllGenes: function(){
         this.genesToCopy = this.uniqueGenes.toString();
         var clinData = this.summaryGenes.map(gene=> {
@@ -796,12 +848,14 @@ import knownGenes from '../../../data/knownGenes'
             geneId: gene.geneId,
             score: gene.score,
             genePanels: gene.value,
-            searchTermsPhenolyzer: gene.searchTermPheno,
-            searchTermsGtr: gene.searchTermArrayGTR,
+            searchTermsPhenolyzer: this.setSearchTermsPhenolyzer(gene.searchTermPheno, gene.name),
+            searchTermsGtr: this.setSearchTermsGTR(gene.searchTermArrayGTR, gene.name),
             geneRankGtr: gene.geneRankGtr,
             geneRankPhenolyzer: gene.geneRankPhenolyzer
           }
         })
+
+        console.log("clinData", clinData)
 
         var rankData = this.summaryGenes.map(gene=>{
           return {
@@ -959,7 +1013,7 @@ import knownGenes from '../../../data/knownGenes'
       },
       updateAllGenesFromSelection(data){
         this.summaryGenes = data;
-
+        // console.log("this.summaryGenes", this.summaryGenes)
         var allGenes = this.summaryGenes.map(x=>{
           return x.name;
         });
@@ -1040,7 +1094,6 @@ import knownGenes from '../../../data/knownGenes'
         this.manuallyAddedGenes = genes;
       },
       clearAllFromClin: function(){
-        console.log("clicked!");
         this.newAnalysisDialog = true;
       }
 

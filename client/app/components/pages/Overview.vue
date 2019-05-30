@@ -3,7 +3,7 @@
     <v-layout row wrap style="margin-top:-10px;">
       <v-flex d-flex xs12>
         <v-card>
-          <v-jumbotron class="overview-jumbotron" :gradient="gradient" dark>
+          <v-responsive class="overview-jumbotron" :gradient="gradient" dark>
             <v-container fill-height>
               <v-layout row wrap>
                 <v-flex xs12>
@@ -18,7 +18,7 @@
                         <v-flex text-xs-center>
                           <h4 style="color:white; display:inline">Suspected Conditions </h4>
                           <v-tooltip top>
-                            <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                            <span style="cursor:pointer" slot="activator" ><v-icon color="white" small>help</v-icon></span>
                             <span>Generate a gene list for suspected condition (Eg. Treacher Collins Syndrome)</span>
                           </v-tooltip>
                           <br><br>
@@ -36,7 +36,7 @@
                           <div class="phenolyzer-button-div">
                             <h4 style="color:white; display:inline">Suspected Phenotypes </h4>
                             <v-tooltip top>
-                              <span style="cursor:pointer" slot="activator" ><v-icon small>help</v-icon></span>
+                              <span style="cursor:pointer" slot="activator" ><v-icon color="white" small>help</v-icon></span>
                               <v-container grid-list-xs,sm,md,lg,xl>
                                 <span style="margin:auto; margin-left:20px; margin-right:20px">Generate a gene list for suspected phenotype (Eg. Lactic acidosis) using the Phenolyzer. </span>
                               </v-container>
@@ -55,7 +55,7 @@
                 </v-flex>
               </v-layout>
             </v-container>
-          </v-jumbotron>
+          </v-responsive>
         </v-card>
       </v-flex>
     </v-layout>
@@ -184,6 +184,7 @@ var model = new Model();
 
 .overview-jumbotron
   height: 370px !important
+  background: linear-gradient(to top,  #0D47A1,#42A5F5)
 
 .vl
     border-left: 1px solid #d8d8d8

@@ -1,6 +1,5 @@
 <template>
   <div>
-      <div id="pie-chart-box"></div>
       <v-data-table
           v-model="selected"
           v-bind:headers="headers"
@@ -76,12 +75,12 @@ var model = new Model();
       DiseasePanelData: {
         type: Array
       },
-      selectedDisordersProps: {
-        type: Array
-      },
-      selectedModesOfInheritance:{
-        type:Array
-      }
+      // selectedDisordersProps: {
+      //   type: Array
+      // },
+      // selectedModesOfInheritance:{
+      //   type:Array
+      // }
     },
     data(){
         return {
@@ -147,15 +146,15 @@ var model = new Model();
           this.tempDisorders = this.DiseasePanelData;
           // this.getDisorderNames();
           this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);
-          this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
+          // this.$emit("PieChartSelectorData", this.modeOfInheritanceData); //Emit
                                             // the mode of Inheritance back to parent so it can be used as props in summary panel
           this.selected = this.items.slice();
-          this.$emit('setDisorderNamesList', this.items)
+          // this.$emit('setDisorderNamesList', this.items)
         },
         getDisorderNames(){
           var namesOfDisorders = model.filterItemsForDisorderNames(this.items);
           this.disorderNamesList = Array.from(new Set(namesOfDisorders))
-          this.$emit('setDisorderNamesList', this.disorderNamesList)
+          // this.$emit('setDisorderNamesList', this.disorderNamesList)
         },
         selectAllDisorders: function(){
           this.selected = this.items.slice()
@@ -180,16 +179,16 @@ var model = new Model();
             }
           })
           this.selected = tempA;
-          this.$emit('disordersSelectedData', this.selected)
+          // this.$emit('disordersSelectedData', this.selected)
         },
         updateDisordersTableOnSelectedDisorders: function(){
           var modeData = [];
             this.selected = this.selectedDisordersFromFilterPanel;
             modeData = model.filterItemsForModeOfInheritance(this.selected); //Update the select pie chart data when dropdown item selected.
-            this.$emit("ModesSelectedData", modeData);
+            // this.$emit("ModesSelectedData", modeData);
         },
         sendModeOfInheritanceData(){
-          bus.$emit("PieChartSelectorData");
+          // bus.$emit("PieChartSelectorData");
         },
         updateFromPieChart(modeOfInheritance, selection){
           if(modeOfInheritance === "Not provided"){
@@ -238,44 +237,9 @@ var model = new Model();
     mounted(){
       // this.draw();
       this.showDiseasesData()
-      bus.$on("RequestModeOfInheritanceData", ()=>{
-        this.sendModeOfInheritanceData();
-      });
-      bus.$on("updateModeOfInheritance", (modeOfInheritance, selection)=>{
-        this.updateFromPieChart(modeOfInheritance, selection);
-        this.pieChartFlag = true
-      });
-      bus.$on("removeSearchTerm", ()=>{
-        this.flagForDisorderFilter = false; //Sets the flag to false because removing a terms clears the selection.
-      });
-      bus.$on("updatedFromDisorders", ()=>{
-        this.pieChartFlag = false;
-      });
-      bus.$on("newSearch", ()=>{
-        this.pieChartFlag = false;
-      });
-      bus.$on("resetDisordersBus", ()=>{
-        this.pieChartFlag = false;
-        this.flagForDisorderFilter = false;
-        this.selected = this.tempDisorders.slice();
-        this.items = this.tempDisorders;
-        this.getDisorderNames();
-        this.modeOfInheritanceData = model.filterItemsForModeOfInheritance(this.items);  //Update the select pie chart data when dropdown item selected.
-        this.$emit("PieChartSelectorData", this.modeOfInheritanceData);
-        return this.items;
-      });
     },
     updated(){
-      this.$emit('selectedDiseases', this.selected);
-
-      bus.$on('deSelectAllDisordersBus', ()=>{
-        this.deSelectAllDisorders();
-      });
-
-      bus.$on('SelectAllDisordersBus', ()=>{
-        this.selectAllDisorders();
-      });
-
+      this.$emit('selectedDiseasesIndividual', this.selected);
     },
     watch: {
       DiseasePanelData: function(){
@@ -290,7 +254,6 @@ var model = new Model();
           this.flagForDisorderFilter = false;
         }
         this.updateDisordersTableOnSelectedDisorders();
-        bus.$emit("disordersFilter");
       },
       selectedModesOfInheritance: function(){
         this.updateTableOnSelectedModes();

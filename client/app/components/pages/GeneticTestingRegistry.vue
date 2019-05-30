@@ -30,9 +30,11 @@
                       <DisorderSearch
                         v-bind:DisordersPropsBackArr="DisordersPropsBackArr"
                         v-on:showDiseases="addDiseases($event)"
+                        v-on:searchTermDiseases="searchTermDiseases($event)"
                         v-on:multipleSearchData="multipleSearchData($event)"
                         v-bind:launchedFromClinProps="launchedFromClinProps"
                         v-bind:clinSearchedGtr="clinSearchedGtr"
+                        v-on:currentSearchTerm="currentSearchTerm($event)"
                         @search-gtr="onSearchGTR">
                       </DisorderSearch>
                     </v-flex>
@@ -105,6 +107,7 @@
                     <show-gene-panel1
                     v-if="geneProps.length && diseasesProps.length && modeOfInheritanceProps.length && multipleSearchItems.length"
                       v-bind:GeneData="geneProps"
+                      v-bind:GeneDataIndividual="genePropsIndividual"
                       v-bind:modeOfInheritanceData="modeOfInheritanceProps"
                       v-on:UpdateSelectedGenesText="ChangeSelectedGenesText($event)"
                       v-on:NoOfGenesSelectedFromGTR="UpdateNoOfGenesSelectedFromGTR($event)"
@@ -115,7 +118,10 @@
                       v-bind:geneSearch="geneSearch"
                       v-bind:launchedFromClinProps="launchedFromClinProps"
                       v-bind:clinGenes="clinGenes"
-                      v-bind:associatedGenes="associatedGenes">
+                      v-bind:associatedGenes="associatedGenes"
+                      v-bind:associatedGenesIndividual="associatedGenesIndividual"
+                      v-bind:currentSearchedTerm="currentSearchedTerm"
+                      v-on:individualGenesObj="individualGenesObj($event)">
                     </show-gene-panel1>
                     <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
                       <NoGenesDisplayTable></NoGenesDisplayTable>
@@ -877,6 +883,38 @@
             </v-card-text>
           </v-card>
         </v-flex>
+        <br>
+        <v-flex v-if="individualDiseases.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+          <v-card >
+            <v-card-title primary class="title">Disorders</v-card-title>
+            <v-card-text>
+              <DiseasePanelIndividual
+                v-if="individualDiseases.length"
+                v-bind:DiseasePanelData="individualDiseases"
+                v-on:selectedDiseasesIndividual="selectedDiseasesIndividual($event)">
+              </DiseasePanelIndividual>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+        <br>
+
+        <v-flex v-if="diseasesPropsIndividual.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+          <v-card >
+            <v-card-title primary class="title">Panels</v-card-title>
+            <v-card-text>
+              <GenePanelIndividual
+                v-if="diseasesPropsIndividual.length"
+                v-bind:DiseasePanelData="diseasesPropsIndividual"
+                v-bind:selectedPanelFilters="selectedPanelFilters"
+                v-bind:lowerLimitProps="lowerLimitProps"
+                v-bind:upperLimitProps="upperLimitProps"
+                v-on:selectedPanelsIndividual="selectedPanelsIndividual($event)">
+                <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
+              </GenePanelIndividual>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+
       </v-layout>
     </v-container>
     <v-container fluid grid-list-md style="min-height:500px">
@@ -909,6 +947,8 @@ import PanelsDefinitionSelector from './PanelsDefinitionSelector.vue';
 import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import LoadingTemplate from './LoadingTemplate.vue';
+import DiseasePanelIndividual from './DiseasePanelIndividual.vue'
+import GenePanelIndividual from './GenePanelIndividual.vue'
 
 export default {
   components: { //Registering locally for nesting!
@@ -927,7 +967,9 @@ export default {
     'progressCircularDonut': progressCircularDonut,
     'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
     'ContentLoaderSidebar': ContentLoaderSidebar,
-    'LoadingTemplate': LoadingTemplate
+    'LoadingTemplate': LoadingTemplate,
+    'DiseasePanelIndividual': DiseasePanelIndividual,
+    'GenePanelIndividual': GenePanelIndividual
   },
   name: 'home',
   props: {
@@ -1038,6 +1080,11 @@ export default {
       showPanelsCardData: false,
       clinFetchingGtrData: false,
       contentPlaceHolder: false,
+      individualDiseases: [],
+      diseasesPropsIndividual: [],
+      genePropsIndividual: [],
+      associatedGenesIndividual: [],
+      currentSearchedTerm: ""
       // browser: null,
       // isMobile: false,
     }
@@ -1057,6 +1104,7 @@ export default {
       $('#generalSlider').css('left', `${this.panelsDefinitionValues[1]}%`)
     },
     selectedPanelFilters: function(){
+      this.chartComponent = "PanelFilters";
       this.maxGenes = 0;
       this.filterPanelsOnselectedPanelFilters();
     },
@@ -1213,6 +1261,12 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    individualGenesObj: function(obj){
+      this.$emit("individualGenesGtr", obj)
+    },
+    currentSearchTerm: function(term){
+      this.currentSearchedTerm = term;
+    },
     openEditPanelsDefinitionModal: function(){
       this.editPanelDefinition=true;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
@@ -1254,7 +1308,6 @@ export default {
       }
     },
     addDiseases: function(e){
-      // console.log("addDiseases", e)
       this.removeSearchTermFlag = false;
       this.disordersSearchedByUser= true;
       for(var i=0; i<e.length; i++){
@@ -1290,6 +1343,9 @@ export default {
         this.$emit("GtrFullGeneList", [])
       }
     },
+    searchTermDiseases:function(diseases){
+      this.individualDiseases = diseases;
+    },
     checkForAssociatedGenes: function(){
       var temp = [];
       this.diseasesProps.map(x=>{
@@ -1314,6 +1370,30 @@ export default {
       })
       this.associatedGenes = temp;
     },
+    checkForAssociatedGenesIndividual: function(){
+      var temp = [];
+      this.diseasesPropsIndividual.map(x=>{
+        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!==""){
+          if(x.ConceptMeta.AssociatedGenes.Gene.__text!==undefined){
+            temp.push({
+              name: x.ConceptMeta.AssociatedGenes.Gene.__text,
+              searchTermIndex: x.searchTermIndex,
+              searchTermArray: x.searchTermArray
+            })
+          }
+          else if(x.ConceptMeta.AssociatedGenes.Gene.__text===undefined){
+            x.ConceptMeta.AssociatedGenes.Gene.map(y=>{
+              temp.push({
+                name: y.__text,
+                searchTermIndex: x.searchTermIndex,
+                searchTermArray: x.searchTermArray
+              })
+            })
+          }
+        }
+      })
+      this.associatedGenesIndividual = temp;
+    },
     selectDiseases: function(e){ //Gets back the data based on the changes or updates in the disease panel;
       this.diseasesProps = e;
       if(e.length<=0){
@@ -1322,6 +1402,10 @@ export default {
         this.$emit("GtrFullGeneList", [])
       }
       this.checkForAssociatedGenes();
+    },
+    selectedDiseasesIndividual: function(e){
+      this.diseasesPropsIndividual = e;
+      this.checkForAssociatedGenesIndividual();
     },
     selectPanels: function(e){
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
@@ -1371,6 +1455,55 @@ export default {
           }
       }
       this.geneProps = temp;
+    },
+    selectedPanelsIndividual: function(e){
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
+          //set the items in the panels card
+          this.multiSelectPanels = e;
+      }
+      var temp = [];
+      if(this.saveSelectedPanels.length===0 && this.chartComponent === 'disorders'){
+        temp = e;
+      }
+      else if(this.saveSelectedPanels.length>0 && this.chartComponent === 'disorders'){
+        e.map(x=>{
+          if(this.saveSelectedPanels.includes(x.testname)){
+            temp.push(x);
+          }
+        })
+      }
+      else {
+        if(this.chartComponent!=='PanelFilters' && this.chartComponent!=='GeneMembership' && this.chartComponent!=='Vendors'){
+          var tempArr = [];
+          tempArr = e;
+          this.selectedPanelFilters.map(x=>{
+            tempArr.map(y=>{
+              if(x === y.filter){
+                temp.push(y);
+              }
+            })
+          })
+        }
+        else {
+          temp = e;
+        }
+      }
+
+      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
+        this.selectedPanelsInCheckBox = temp;
+      }
+
+      if(temp.length===0 && this.chartComponent===null){
+          if(this.selectedPanelFilters.length===1){
+            this.selectedPanelFilters = ["specific", , "moderate"];
+            temp = this.selectPanelsEdgeCase(e);
+            if(temp.length===0){
+              this.selectedPanelFilters = ["specific", , "moderate", "general"];
+              temp = this.selectPanelsEdgeCase(e);
+            }
+          }
+      }
+      this.genePropsIndividual = temp;
     },
     selectPanelsEdgeCase: function(e){
       var tempArr = [];

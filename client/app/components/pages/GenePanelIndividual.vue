@@ -76,24 +76,18 @@ var model = new Model();
       DiseasePanelData:{
         type: Array
       },
-      selectedVendorsProps: {
-        type: Array
-      },
-      selectedPanelsInCheckBox: {
-        type: Array
-      },
-      selectedPanelsInCheckBoxPropsOne: {
-        type: Array
-      },
+      // selectedVendorsProps: {
+      //   type: Array
+      // },
       selectedPanelFilters: {
         type: Array
+      },
+      upperLimitProps: {
+        type: Number
+      },
+      lowerLimitProps: {
+        type: Number
       }
-      // upperLimitProps: {
-      //   type: Number
-      // },
-      // lowerLimitProps: {
-      //   type: Number
-      // }
     },
     data(){
       return {
@@ -175,24 +169,7 @@ var model = new Model();
     },
     updated(){
       //Emit the this.selected array back to the home.vue so it can be passed as props
-      this.$emit('selectedPanels', this.selected);
-      this.$emit('NoOfPanels', this.items);
-
-      bus.$on('SelectNumberOfPanel', (data)=> {
-        this.filterGenePanelsOnSelectedNumber(data);
-      })
-
-      bus.$on('selectNumberOfConditionsInPanel', (data)=>{
-        this.filterPanelsOnSelectedConditions(data);
-      })
-
-      bus.$on("conditionsOnBarSelect", (start, end)=>{
-        this.filterPanelsOnBarSelect(start, end);
-      })
-
-      bus.$on("clearConditionFilters", ()=>{
-        this.selected = this.items.slice()
-      })
+      this.$emit('selectedPanelsIndividual', this.selected);
     },
 
     methods:{
@@ -218,7 +195,7 @@ var model = new Model();
             vendorsToBeSentBack.push(x);
           }
         })
-        this.$emit('selectVendors', vendorsToBeSentBack.sort());
+        // this.$emit('selectVendors', vendorsToBeSentBack.sort());
       },
       justUpdateTabel: function(){
         this.selected =this.selectedPanelsInCheckBoxPropsOne;
@@ -315,9 +292,9 @@ var model = new Model();
 
         this.vendorList = vendors;
         this.selected = this.items.slice();
-        this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
+        // this.$emit('setVendorList', this.vendorList.sort()); //Emit the vendor list
                             //back to the parent so it can be used as props in filterpanel
-        this.$emit('selectVendors', vendorsToBeSelected);
+        // this.$emit('selectVendors', vendorsToBeSelected);
         temp = null;
         vendorsToBeSelected = null;
         vendors = null;

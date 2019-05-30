@@ -184,7 +184,6 @@ export default class Model {
 }
 
 promiseGetGenePanels(disease) {
-  // console.log("disease in promiseGetGenePanels", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
@@ -246,25 +245,12 @@ promiseGetGenePanels(disease) {
 
 
 promiseGetGenePanelsUsingSearchTerm(disease) {
-  // console.log("disease in promiseGetGenePanelsUsingSearchTerm", disease)
   var me = this;
   return new Promise(function(resolve, reject) {
 
   var diseaseTitle = encodeURIComponent(disease.Title.trim());
-  // console.log("diseaseTitle ",diseaseTitle)
-
-
-    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr"
-    //                 + '&usehistory=y&retmode=json'
-    //                 + '&term='
-    //                 + disease.Title
-    //                 +'[5D';
-
-    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerence%5D&retmax=100&usehistory=y"
     var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
 
-    // var searchUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=gluten%20intolerance%5D&retmax=100&usehistory=y"
-    // console.log("url in promiseGetGenePanelsUsingSearchTerm", searchUrl)
     $.ajax( searchUrl )
     .done(function(data) {
       if (data["esearchresult"]["ERROR"] != undefined) {
@@ -273,17 +259,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
       } else {
         var webenv = data["esearchresult"]["webenv"];
         var queryKey = data["esearchresult"]["querykey"];
-
-        // console.log("webenv", webenv)
-
-        //for gluten intolerence
-        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_97789288_130.14.22.32_9001_1536823160_836253305_0MetA0_S_MegaStore&usehistory=y";
-
-        //for gluten intolerance
-        // var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr&query_key=1&retmode=json&WebEnv=NCID_1_50891271_130.14.18.34_9001_1536823504_60589024_0MetA0_S_MegaStore&usehistory=y"
-
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
-        // console.log("summaryUrl in getpanels", summaryUrl)
         $.ajax( summaryUrl )
         .done(function(sumData) {
           if (sumData.result == null) {
@@ -303,7 +279,6 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
           }
         })
         .fail(function() {
-          console.log("here!")
           var msg = "Error in gtr summary. ";
           console.log(msg);
           // reject(msg);
@@ -353,10 +328,12 @@ processGenePanelData(genePanels) {
 
 
 processDiseaseData(diseases) {
-
   var me = this;
   var filteredDiseases = diseases.filter(function(disease) {
-    return disease.genePanels.length>0;
+    if(disease.genePanels){
+      return disease.genePanels.length>0;
+    }
+    else return;
   })
 
   let rowNumber = 1;
