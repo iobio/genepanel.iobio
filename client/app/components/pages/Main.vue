@@ -243,7 +243,9 @@
                 v-bind:clinFetchingGtr="clinFetchingGtr"
                 v-bind:clinGenes="clinGenesGtr"
                 v-bind:isMobile="isMobile"
-                v-on:individualGenesGtr="individualGenesGtr($event)">
+                v-on:individualGenesGtr="individualGenesGtr($event)"
+                v-on:AllSelectedpanels="AllSelectedpanels($event)"
+                v-on:individualPanelsSearchObj="individualPanelsSearchObj($event)">
               </GeneticTestingRegistry>
             </keep-alive>
 
@@ -315,6 +317,8 @@ import Overview from './Overview.vue';
 import Footer from '../partials/Footer.vue';
 import { ExportToCsv } from 'export-to-csv';
 import knownGenes from '../../../data/knownGenes'
+import Model from '../../models/Model';
+var model = new Model();
 
 // var fs = require('fs');
 
@@ -419,11 +423,17 @@ import knownGenes from '../../../data/knownGenes'
         gtrCompleteGeneList: [],
         phenolyzerCompleteGeneLis: [],
         summaryGenes: [],
-        individualGenesSearchTermGtr:[],
+        individualGenesSearchTermGtr:{},
         individualGenesSearchTermPhenolyzer: [],
+        AllSelectedGtrPanels: [],
+        individualGtrPanelsSearchObj: {},
+        selectedObj: {}
       }
     },
     watch: {
+      AllSelectedGtrPanels: function(){
+        this.getIndividualRankedGene();
+      },
       selectedGtrGenes: function(){
         if(this.launchedFromClin){
           if(this.clinSearchedGtr.length===1){
@@ -499,6 +509,12 @@ import knownGenes from '../../../data/knownGenes'
     updated(){
     },
     methods: {
+      AllSelectedpanels: function(panels){
+        this.AllSelectedGtrPanels = panels;
+      },
+      individualPanelsSearchObj: function(panels){
+        this.individualGtrPanelsSearchObj = panels;
+      },
       individualGenesGtr: function(obj){
         this.individualGenesSearchTermGtr = obj;
       },
@@ -638,6 +654,9 @@ import knownGenes from '../../../data/knownGenes'
 
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
+
+        // this.getIndividualRankedGene();
+
       },
       PhenolyzerFullGeneList: function(e){
         this.phenolyzerCompleteGeneLis = e;
@@ -841,6 +860,8 @@ import knownGenes from '../../../data/knownGenes'
       },
       copyAllGenes: function(){
         this.genesToCopy = this.uniqueGenes.toString();
+        this.getIndividualGeneList();
+
         var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
@@ -933,7 +954,52 @@ import knownGenes from '../../../data/knownGenes'
           phenolyzerFullList: phenolyzerCompleteList
 
         });
+      },
+      getIndividualGeneList(){
+        for(const prop in this.selectedObj){
+          var mergedGenes = model.mergeGenesAcrossPanels(this.selectedObj[prop]);
+          let data = model.getIndividualGenes(mergedGenes );
+          this.createSeperateGenesObj(data, prop);
+        }
+      },
+      createSeperateGenesObj(genes, term){
+        this.individualGenesSearchTermGtr[term] = genes;
+        this.individualGenesSearchTermGtr[term].map((x,i)=>{
+          x.genePanelsCount = x.value;
+          x.rank = i+1;
+        })
+      },
+      updateGenesSearchTermObj(genes, term){
 
+      },
+      getIndividualRankedGene(){
+        var panelsId = [];
+        this.AllSelectedGtrPanels.map(x=>{
+          panelsId.push(x.id)
+        })
+        for(const prop in this.individualGtrPanelsSearchObj){
+          if(this.selectedObj[prop]===undefined){
+            this.selectedObj[prop] = []
+          }
+        }
+
+      for(const prop in this.individualGtrPanelsSearchObj){
+        var temp = [];
+        this.individualGtrPanelsSearchObj[prop].map(x=>{
+          if(panelsId.includes(x.id)){
+            temp.push(x);
+          }
+        })
+
+        var obj = {};
+        var len = temp.length;
+        for ( var i=0; i < len; i++ )
+            obj[temp[i]['id']] = temp[i];
+        var y  = new Array();
+        for ( var key in obj )
+            y.push(obj[key]);
+        this.selectedObj[prop] = y;
+        }
       },
       autoSaveGenes(){
 
