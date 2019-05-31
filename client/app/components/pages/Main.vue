@@ -969,9 +969,7 @@ var model = new Model();
         }
       },
       createSeperateGenesObj(genes, term){
-        if(this.individualGenesSearchTermGtr[term]===undefined){
-          this.individualGenesSearchTermGtr[term] = genes;
-        }
+        this.individualGenesSearchTermGtr[term] = genes;
         this.individualGenesSearchTermGtr[term].map((x,i)=>{
           x.genePanelsCount = x.value;
           x.rank = i+1;
