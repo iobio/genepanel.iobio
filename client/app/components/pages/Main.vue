@@ -243,7 +243,9 @@
                 v-bind:clinFetchingGtr="clinFetchingGtr"
                 v-bind:clinGenes="clinGenesGtr"
                 v-bind:isMobile="isMobile"
-                v-on:individualGenesGtr="individualGenesGtr($event)">
+                v-on:individualGenesGtr="individualGenesGtr($event)"
+                v-on:AllSelectedpanels="AllSelectedpanels($event)"
+                v-on:individualPanelsSearchObj="individualPanelsSearchObj($event)">
               </GeneticTestingRegistry>
             </keep-alive>
 
@@ -315,6 +317,8 @@ import Overview from './Overview.vue';
 import Footer from '../partials/Footer.vue';
 import { ExportToCsv } from 'export-to-csv';
 import knownGenes from '../../../data/knownGenes'
+import Model from '../../models/Model';
+var model = new Model();
 
 // var fs = require('fs');
 
@@ -419,11 +423,17 @@ import knownGenes from '../../../data/knownGenes'
         gtrCompleteGeneList: [],
         phenolyzerCompleteGeneLis: [],
         summaryGenes: [],
-        individualGenesSearchTermGtr:[],
+        individualGenesSearchTermGtr:{},
         individualGenesSearchTermPhenolyzer: [],
+        AllSelectedGtrPanels: [],
+        individualGtrPanelsSearchObj: {},
+        selectedObj: {}
       }
     },
     watch: {
+      AllSelectedGtrPanels: function(){
+        this.getIndividualRankedGene();
+      },
       selectedGtrGenes: function(){
         if(this.launchedFromClin){
           if(this.clinSearchedGtr.length===1){
@@ -499,6 +509,14 @@ import knownGenes from '../../../data/knownGenes'
     updated(){
     },
     methods: {
+      AllSelectedpanels: function(panels){
+        // console.log("AllSelectedpanels", panels);
+        this.AllSelectedGtrPanels = panels;
+      },
+      individualPanelsSearchObj: function(panels){
+        // console.log("individualPanelsSearchObj", panels);
+        this.individualGtrPanelsSearchObj = panels;
+      },
       individualGenesGtr: function(obj){
         this.individualGenesSearchTermGtr = obj;
       },
@@ -638,6 +656,9 @@ import knownGenes from '../../../data/knownGenes'
 
         var allGenes = [...gtrGenes, ...phenolyzerGenes];
         this.AllSourcesGenes = allGenes;
+
+        // this.getIndividualRankedGene();
+
       },
       PhenolyzerFullGeneList: function(e){
         this.phenolyzerCompleteGeneLis = e;
@@ -841,6 +862,8 @@ import knownGenes from '../../../data/knownGenes'
       },
       copyAllGenes: function(){
         this.genesToCopy = this.uniqueGenes.toString();
+        this.getIndividualGeneList();
+
         var clinData = this.summaryGenes.map(gene=> {
           return {
             name: gene.name,
@@ -933,6 +956,76 @@ import knownGenes from '../../../data/knownGenes'
           phenolyzerFullList: phenolyzerCompleteList
 
         });
+      },
+      getIndividualGeneList(){
+        for(const prop in this.selectedObj){
+          // console.log("props", prop);
+          // console.log("this.selectedObj[prop]", this.selectedObj[prop].length)
+          var mergedGenes = model.mergeGenesAcrossPanels(this.selectedObj[prop]);
+          let data = model.getIndividualGenes(mergedGenes );
+          console.log("data", data);
+          this.createSeperateGenesObj(data, prop);
+
+        }
+      },
+      createSeperateGenesObj(genes, term){
+        if(this.individualGenesSearchTermGtr[term]===undefined){
+          this.individualGenesSearchTermGtr[term] = genes;
+        }
+        this.individualGenesSearchTermGtr[term].map((x,i)=>{
+          x.genePanelsCount = x.value;
+          x.rank = i+1;
+        })
+        console.log("this.individualGenesSearchTermGtr", this.individualGenesSearchTermGtr)
+        // this.updateGenesSearchTermObj(genes, term);
+      },
+      updateGenesSearchTermObj(genes, term){
+
+      },
+      getIndividualRankedGene(){
+        var panelsId = [];
+        this.AllSelectedGtrPanels.map(x=>{
+          panelsId.push(x.id)
+        })
+        console.log("this.selectedObj", this.selectedObj)
+        console.log("panelsId", panelsId)
+        for(const prop in this.individualGtrPanelsSearchObj){
+          if(this.selectedObj[prop]===undefined){
+            this.selectedObj[prop] = []
+          }
+        }
+
+      for(const prop in this.individualGtrPanelsSearchObj){
+        // console.log("term", prop)
+        // var ExistingIndividualPanelIds = [];
+        // this.individualGtrPanelsSearchObj[prop].map(x=>{
+        //   ExistingIndividualPanelIds.push(x.id);
+        // })
+        // console.log("ExistingIndividualPanelIds", ExistingIndividualPanelIds)
+        var temp = [];
+        this.individualGtrPanelsSearchObj[prop].map(x=>{
+          // console.log("x ", x.testname, "  - -- - x.id", x.id);
+          // console.log("includes", panelsId.includes(x.id))
+          if(panelsId.includes(x.id)){
+            temp.push(x);
+          }
+        })
+
+        var obj = {};
+        var len = temp.length;
+
+        for ( var i=0; i < len; i++ )
+            obj[temp[i]['id']] = temp[i];
+
+        var y  = new Array();
+        for ( var key in obj )
+            y.push(obj[key]);
+        // console.log("y", y);
+        this.selectedObj[prop] = y;
+
+      }
+      console.log("individualGtrPanelsSearchObj", this.individualGtrPanelsSearchObj)
+      console.log("selectedObj", this.selectedObj)
 
       },
       autoSaveGenes(){
