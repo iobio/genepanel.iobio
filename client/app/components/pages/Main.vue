@@ -69,7 +69,24 @@
              <v-badge color="primary" right class="badge-bg-color">
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             </v-badge>
-           </v-list-tile-title>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile
+        v-bind:class="[component==='ClinPhen' ? 'activeTab' : '']"
+        @click="selectComponent('ClinPhen')">
+        <v-list-tile-action v-bind:class="[component==='ClinPhen' ? 'margin_ActiveTab' : '']">
+          <span v-if="component==='ClinPhen'"><v-icon color="primary darken-1">speaker_notes</v-icon></span>
+          <span v-else><v-icon color="blue-grey darken-2">speaker_notes</v-icon></span>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title v-bind:class="[component==='ClinPhen' ? 'activeTabText' : '']">
+          ClinPhen
+            <v-badge color="primary darken-1" right class="badge-bg-color">
+            <span  slot="badge">{{ clinPhenSelectedGenes.length }}</span>
+            <!-- <span  slot="badge">0</span> -->
+            </v-badge>
+          </v-list-tile-title>
          </v-list-tile-content>
        </v-list-tile>
 
@@ -268,6 +285,15 @@
           </keep-alive>
 
           <keep-alive>
+            <ClinPhen
+              v-show="component==='ClinPhen'"
+              v-on:ClinPhenGenes="ClinPhenGenes($event)"
+            >
+            </ClinPhen>
+          </keep-alive>
+
+
+          <keep-alive>
             <AddGenes
               v-show="component==='AddGenes'"
               v-bind:launchedFromClin="launchedFromClin"
@@ -319,6 +345,8 @@ import { ExportToCsv } from 'export-to-csv';
 import knownGenes from '../../../data/knownGenes'
 import Model from '../../models/Model';
 var model = new Model();
+import ClinPhen from './ClinPhen.vue'
+
 
 // var fs = require('fs');
 
@@ -332,7 +360,8 @@ var model = new Model();
       'HelpMenu': HelpMenu,
       'Overview':Overview,
       'Footer': Footer,
-      'AddGenes': AddGenes
+      'AddGenes': AddGenes,
+      'ClinPhen' : ClinPhen
     },
     props: {
       paramLaunchedFromClin: null
@@ -427,7 +456,9 @@ var model = new Model();
         individualGenesSearchTermPhenolyzer: [],
         AllSelectedGtrPanels: [],
         individualGtrPanelsSearchObj: {},
-        selectedObj: {}
+        selectedObj: {},
+        clinPhenSelectedGenes: [],
+
       }
     },
     watch: {
@@ -1161,6 +1192,9 @@ var model = new Model();
       },
       clearAllFromClin: function(){
         this.newAnalysisDialog = true;
+      },
+      ClinPhenGenes:function(genes){
+        this.clinPhenSelectedGenes = genes;
       }
 
     }
