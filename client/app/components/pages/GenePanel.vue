@@ -175,6 +175,7 @@ var model = new Model();
     },
     updated(){
       //Emit the this.selected array back to the home.vue so it can be passed as props
+      console.log('selectedPanels', this.selected.length)
       this.$emit('selectedPanels', this.selected);
       this.$emit('NoOfPanels', this.items);
 

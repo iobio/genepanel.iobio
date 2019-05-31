@@ -121,7 +121,8 @@
                       v-bind:associatedGenes="associatedGenes"
                       v-bind:associatedGenesIndividual="associatedGenesIndividual"
                       v-bind:currentSearchedTerm="currentSearchedTerm"
-                      v-on:individualGenesObj="individualGenesObj($event)">
+                      v-on:individualGenesObj="individualGenesObj($event)"
+                      >
                     </show-gene-panel1>
                     <div v-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length">
                       <NoGenesDisplayTable></NoGenesDisplayTable>
@@ -859,7 +860,7 @@
         </v-flex>
         <br>
 <!-- style="visibility:hidden; height:0px" -->
-        <v-flex v-if="diseasesProps.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+        <v-flex v-if="diseasesProps.length" d-flex xs12 sm12 md12 >
           <v-card >
             <v-card-title primary class="title">Panels</v-card-title>
             <v-card-text>
@@ -898,7 +899,7 @@
         </v-flex>
         <br>
 
-        <v-flex v-if="diseasesPropsIndividual.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px" >
+        <v-flex v-if="diseasesPropsIndividual.length" d-flex xs12 sm12 md12 >
           <v-card >
             <v-card-title primary class="title">Panels</v-card-title>
             <v-card-text>
@@ -909,7 +910,6 @@
                 v-bind:lowerLimitProps="lowerLimitProps"
                 v-bind:upperLimitProps="upperLimitProps"
                 v-on:selectedPanelsIndividual="selectedPanelsIndividual($event)">
-                <!-- v-bind:selectedVendorsProps="selectedVendorsList"> -->
               </GenePanelIndividual>
             </v-card-text>
           </v-card>
@@ -1084,7 +1084,8 @@ export default {
       diseasesPropsIndividual: [],
       genePropsIndividual: [],
       associatedGenesIndividual: [],
-      currentSearchedTerm: ""
+      currentSearchedTerm: "",
+      panelsSearchTermObj: {},
       // browser: null,
       // isMobile: false,
     }
@@ -1177,6 +1178,7 @@ export default {
     }
   },
   updated(){
+    this.$emit('AllSelectedpanels', this.selectedPanelsInCheckBox)
   },
   mounted(){
     this.HelpDialogsData = HelpDialogs.data;
@@ -1454,56 +1456,23 @@ export default {
             }
           }
       }
-      this.geneProps = temp;
+      this.geneProps = temp; //Selected panels
     },
     selectedPanelsIndividual: function(e){
-      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
-          //set the items in the panels card
-          this.multiSelectPanels = e;
+      // console.log("selectedPanelsIndividual", e); //Save it as panels of individual terms--> all panels associated with a search term.
+      this.createSeparatePanelsObj(e);
+    },
+    createSeparatePanelsObj: function(panels){
+      if(this.panelsSearchTermObj[this.currentSearchedTerm]===undefined){
+        this.panelsSearchTermObj[this.currentSearchedTerm] = [];
       }
-      var temp = [];
-      if(this.saveSelectedPanels.length===0 && this.chartComponent === 'disorders'){
-        temp = e;
+      this.updatePanelsSearchObj(panels);
+    },
+    updatePanelsSearchObj: function(panels){
+      if(!this.panelsSearchTermObj[this.currentSearchedTerm].length){
+        this.panelsSearchTermObj[this.currentSearchedTerm] = panels;
       }
-      else if(this.saveSelectedPanels.length>0 && this.chartComponent === 'disorders'){
-        e.map(x=>{
-          if(this.saveSelectedPanels.includes(x.testname)){
-            temp.push(x);
-          }
-        })
-      }
-      else {
-        if(this.chartComponent!=='PanelFilters' && this.chartComponent!=='GeneMembership' && this.chartComponent!=='Vendors'){
-          var tempArr = [];
-          tempArr = e;
-          this.selectedPanelFilters.map(x=>{
-            tempArr.map(y=>{
-              if(x === y.filter){
-                temp.push(y);
-              }
-            })
-          })
-        }
-        else {
-          temp = e;
-        }
-      }
-
-      if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
-        this.selectedPanelsInCheckBox = temp;
-      }
-
-      if(temp.length===0 && this.chartComponent===null){
-          if(this.selectedPanelFilters.length===1){
-            this.selectedPanelFilters = ["specific", , "moderate"];
-            temp = this.selectPanelsEdgeCase(e);
-            if(temp.length===0){
-              this.selectedPanelFilters = ["specific", , "moderate", "general"];
-              temp = this.selectPanelsEdgeCase(e);
-            }
-          }
-      }
-      this.genePropsIndividual = temp;
+      this.$emit('individualPanelsSearchObj', this.panelsSearchTermObj)
     },
     selectPanelsEdgeCase: function(e){
       var tempArr = [];

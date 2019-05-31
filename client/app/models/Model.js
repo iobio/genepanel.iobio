@@ -569,6 +569,38 @@ mergeGenesAcrossPanels(genePanels) {
   }
 
 
+  getIndividualGenes(genes) {
+    var sortedGenes = genes.sort(function(a,b) {
+      if (a._genePanelCount == b._genePanelCount) {
+        return b._diseaseCount - a._diseaseCount;
+      } else {
+        return b._genePanelCount - a._genePanelCount ;
+      }
+    })
+      return sortedGenes.map(function(gene, idx) {
+        return {
+              key: idx,
+              name: gene.name,
+              geneid: gene.geneid,
+              value: +gene._genePanelCount,
+              diseases: gene._diseaseCount,
+              conditions: gene._diseaseNames,
+              // searchTerm: gene.searchTerm,
+              searchTermArray: gene.searchTermArray,
+              searchTermIndex: gene.searchTermIndex,
+              isAssociatedGene: false,
+              omimSrc: `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.name}`,
+              medGenSrc: `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.name}`,
+              geneCardsSrc: `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${gene.name}`,
+              ghrSrc: `https://ghr.nlm.nih.gov/gene/${gene.name}`,
+              clinGenLink: `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${gene.name}`,
+              geneIdLink: `https://www.ncbi.nlm.nih.gov/gene/${gene.geneid}`,
+            };
+      });
+
+  }
+
+
   binarySearchFunction(array, targetValue){
     var min = 0;
     var max = array.length - 1;
