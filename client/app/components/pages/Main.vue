@@ -510,11 +510,9 @@ var model = new Model();
     },
     methods: {
       AllSelectedpanels: function(panels){
-        // console.log("AllSelectedpanels", panels);
         this.AllSelectedGtrPanels = panels;
       },
       individualPanelsSearchObj: function(panels){
-        // console.log("individualPanelsSearchObj", panels);
         this.individualGtrPanelsSearchObj = panels;
       },
       individualGenesGtr: function(obj){
@@ -959,13 +957,9 @@ var model = new Model();
       },
       getIndividualGeneList(){
         for(const prop in this.selectedObj){
-          // console.log("props", prop);
-          // console.log("this.selectedObj[prop]", this.selectedObj[prop].length)
           var mergedGenes = model.mergeGenesAcrossPanels(this.selectedObj[prop]);
           let data = model.getIndividualGenes(mergedGenes );
-          console.log("data", data);
           this.createSeperateGenesObj(data, prop);
-
         }
       },
       createSeperateGenesObj(genes, term){
@@ -974,8 +968,6 @@ var model = new Model();
           x.genePanelsCount = x.value;
           x.rank = i+1;
         })
-        console.log("this.individualGenesSearchTermGtr", this.individualGenesSearchTermGtr)
-        // this.updateGenesSearchTermObj(genes, term);
       },
       updateGenesSearchTermObj(genes, term){
 
@@ -985,8 +977,6 @@ var model = new Model();
         this.AllSelectedGtrPanels.map(x=>{
           panelsId.push(x.id)
         })
-        console.log("this.selectedObj", this.selectedObj)
-        console.log("panelsId", panelsId)
         for(const prop in this.individualGtrPanelsSearchObj){
           if(this.selectedObj[prop]===undefined){
             this.selectedObj[prop] = []
@@ -994,16 +984,8 @@ var model = new Model();
         }
 
       for(const prop in this.individualGtrPanelsSearchObj){
-        // console.log("term", prop)
-        // var ExistingIndividualPanelIds = [];
-        // this.individualGtrPanelsSearchObj[prop].map(x=>{
-        //   ExistingIndividualPanelIds.push(x.id);
-        // })
-        // console.log("ExistingIndividualPanelIds", ExistingIndividualPanelIds)
         var temp = [];
         this.individualGtrPanelsSearchObj[prop].map(x=>{
-          // console.log("x ", x.testname, "  - -- - x.id", x.id);
-          // console.log("includes", panelsId.includes(x.id))
           if(panelsId.includes(x.id)){
             temp.push(x);
           }
@@ -1011,20 +993,13 @@ var model = new Model();
 
         var obj = {};
         var len = temp.length;
-
         for ( var i=0; i < len; i++ )
             obj[temp[i]['id']] = temp[i];
-
         var y  = new Array();
         for ( var key in obj )
             y.push(obj[key]);
-        // console.log("y", y);
         this.selectedObj[prop] = y;
-
-      }
-      console.log("individualGtrPanelsSearchObj", this.individualGtrPanelsSearchObj)
-      console.log("selectedObj", this.selectedObj)
-
+        }
       },
       autoSaveGenes(){
 

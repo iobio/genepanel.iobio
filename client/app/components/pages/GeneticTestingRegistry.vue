@@ -1461,53 +1461,6 @@ export default {
     selectedPanelsIndividual: function(e){
       // console.log("selectedPanelsIndividual", e); //Save it as panels of individual terms--> all panels associated with a search term.
       this.createSeparatePanelsObj(e);
-      // if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
-      //     //set the items in the panels card
-      //     this.multiSelectPanels = e;
-      // }
-      // var temp = [];
-      // if(this.saveSelectedPanels.length===0 && this.chartComponent === 'disorders'){
-      //   temp = e;
-      // }
-      // else if(this.saveSelectedPanels.length>0 && this.chartComponent === 'disorders'){
-      //   e.map(x=>{
-      //     if(this.saveSelectedPanels.includes(x.testname)){
-      //       temp.push(x);
-      //     }
-      //   })
-      // }
-      // else {
-      //   if(this.chartComponent!=='PanelFilters' && this.chartComponent!=='GeneMembership' && this.chartComponent!=='Vendors'){
-      //     var tempArr = [];
-      //     tempArr = e;
-      //     this.selectedPanelFilters.map(x=>{
-      //       tempArr.map(y=>{
-      //         if(x === y.filter){
-      //           temp.push(y);
-      //         }
-      //       })
-      //     })
-      //   }
-      //   else {
-      //     temp = e;
-      //   }
-      // }
-      //
-      // if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters'  && this.chartComponent!=='PanelsDefinition'){
-      //   this.selectedPanelsInCheckBox = temp;
-      // }
-      //
-      // if(temp.length===0 && this.chartComponent===null){
-      //     if(this.selectedPanelFilters.length===1){
-      //       this.selectedPanelFilters = ["specific", , "moderate"];
-      //       temp = this.selectPanelsEdgeCase(e);
-      //       if(temp.length===0){
-      //         this.selectedPanelFilters = ["specific", , "moderate", "general"];
-      //         temp = this.selectPanelsEdgeCase(e);
-      //       }
-      //     }
-      // }
-      // this.genePropsIndividual = temp;
     },
     createSeparatePanelsObj: function(panels){
       if(this.panelsSearchTermObj[this.currentSearchedTerm]===undefined){
@@ -1519,7 +1472,6 @@ export default {
       if(!this.panelsSearchTermObj[this.currentSearchedTerm].length){
         this.panelsSearchTermObj[this.currentSearchedTerm] = panels;
       }
-      // console.log("this.panelsSearchTermObj", this.panelsSearchTermObj)
       this.$emit('individualPanelsSearchObj', this.panelsSearchTermObj)
     },
     selectPanelsEdgeCase: function(e){
