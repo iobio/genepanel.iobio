@@ -58,7 +58,7 @@
                     <div v-if="this.HpoTerms.length">
                       <br>
                         HPO Terms:
-                      <v-chip disabled  color="primary" text-color="white" close v-for="(term, i) in HpoTerms" :key="i" @input="remove(term)">
+                      <v-chip  color="primary" text-color="white" close v-for="(term, i) in HpoTerms" :key="i" @input="remove(term)">
                         {{ i+1 }}. <b> {{ term.hpoNumber }} </b> &nbsp; <i> ({{term.phenotype}}) </i>
                       </v-chip>
                     </div>

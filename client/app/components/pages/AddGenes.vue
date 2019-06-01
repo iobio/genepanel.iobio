@@ -71,7 +71,7 @@
                 <v-card-text>
                   Genes:
                   <br>
-                  <v-chip disabled  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
+                  <v-chip  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
                     {{ i+1 }}. {{ gene }}
                   </v-chip>
                 </v-card-text>
