@@ -245,6 +245,7 @@ var geneModel = new GeneModel();
       remove(gene){
         this.genes.splice(this.genes.indexOf(gene), 1)
         this.genes = [...this.genes];
+        this.$emit("importedGenes", this.genes);
       },
       onApplyGenes(){
         this.copyPasteGenes = false;
