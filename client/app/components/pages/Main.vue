@@ -316,6 +316,7 @@
               v-bind:browser="browser"
               v-bind:clinGenesSummary="clinGenesSummary"
               v-bind:launchedFromClin="launchedFromClin"
+              v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
               v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
