@@ -785,11 +785,12 @@ import ClinPhen from './ClinPhen.vue'
           return {
             Rank: gene.SummaryIndex,
             Gene_name: gene.name,
-            Sources: gene.sources,
+            Sources: gene.sources.join(), //this is an array so need to convert it to string
             GTR_SearchTerms: this.checkIfEmpty(gene.searchTermArrayGTR.join()),
             Phenolyzer_searchTerms: this.checkIfEmpty(gene.searchTermPheno.join()),
             Gene_id: gene.geneId!==undefined?gene.geneId:"n/a",
             From_Gtr: gene.isGtr===true?"Yes":"No",
+            From_ClinPhen: gene.isClinPhen===true?"Yes":"No",
             From_Phenolyzer: gene.isPheno===true?"Yes":"No",
             From_AddedGene: gene.isImportedGenes===true?"Yes":"No"
           }
@@ -805,7 +806,7 @@ import ClinPhen from './ClinPhen.vue'
           useBom: true,
           // useKeysAsHeaders: true,
           filename: 'Genes',
-          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'Phenolyzer Gene', 'Added Gene']
+          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'ClinPhen Gene', 'Phenolyzer Gene', 'Added Gene']
         };
         const csvExporter = new ExportToCsv(options);
         csvExporter.generateCsv(clinData);

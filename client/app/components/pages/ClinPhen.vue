@@ -631,7 +631,4 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
 
     .btnColor
       margin-top: 2px
-
-
-
 </style>
