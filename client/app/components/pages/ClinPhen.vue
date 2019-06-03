@@ -15,11 +15,11 @@
                     <v-layout row wrap>
                       <v-flex lg8>
                         <v-textarea
-                                 solo
-                                 v-model="notes"
-                                 name="input-7-4"
-                                 rows="4"
-                                 label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
+                          solo
+                          v-model="notes"
+                          name="input-7-4"
+                          rows="4"
+                          label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
                         ></v-textarea>
                       </v-flex>
                       <v-flex lg4>
@@ -595,7 +595,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.$emit("clinphenTerms", this.HpoTerms);
         this.getGenesForHpoTerms();
-      }
+      },
+      toggleAll () { //Data Table
+        if (this.selected.length) this.selected = []
+        else this.selected = this.items.slice()
+      },
     }
   }
 </script>
