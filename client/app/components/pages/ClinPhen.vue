@@ -18,8 +18,8 @@
                                  solo
                                  v-model="notes"
                                  name="input-7-4"
-                                 rows="2"
-                                 label="Patient has symptoms such as headache, tiredness.."
+                                 rows="4"
+                                 label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
                         ></v-textarea>
                       </v-flex>
                       <v-flex lg4>
@@ -260,13 +260,16 @@
         persistent
       >
         <v-card>
-          <br>
+          <v-card-title class="headline grey lighten-2">
+            <span>HPO Terms</span>
+          </v-card-title>
+
           <v-card-text>
             <b>Clinical Note: </b>  {{notes}}
-            <br>
+            <br><br>
             <i v-if="confirmationItems.length">
-              The following phenotypes have been identified from the entered Clinical note.
-              Use the toggle to accept or reject the phenotype.
+              The following phenotypes have been identified from the entered Clinical note entered.
+              Use the toggle to accept or reject the phenotype(s).
             </i>
           </v-card-text>
           <v-card-text>
@@ -281,7 +284,7 @@
               <template v-slot:items="props">
                 <td>{{ props.item.hpoNumber }}</td>
                 <td >{{ props.item.phenotype }}</td>
-                <td>
+                <td style="padding-top:20px">
                   <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch>
                 </td>
               </template>
@@ -440,7 +443,16 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
     mounted(){
       this.HpoGenesData = hpo_genes;
       this.HpoTermsTypeaheadData  = HpoTermsData.data;
-      console.log(this.HpoGenesData["HP:0003803"])
+      bus.$on("newAnalysis", ()=>{
+        this.items = [];
+        this.selected = [];
+        this.multipleSearchTerms = [];
+        this.notes = "";
+        this.HpoTerms = [];
+        this.$emit("ClinPhenGenes", []);
+        this.$emit("clinphenTerms", []);
+        document.getElementById("hpo_input").value="";
+      })
     },
     updated(){
       this.$emit("ClinPhenGenes", this.selected);

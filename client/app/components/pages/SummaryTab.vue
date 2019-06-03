@@ -327,7 +327,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       openEditBox: false,
       vennData: {},
       HpoTerms: [],
-
+      resourcesUsed: {}
     }),
     watch: {
       genesTop: function(){
@@ -1132,6 +1132,11 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             {"sets" : [0,1,2,3], "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen}
           ]
         }
+        // if(Object.keys(this.resourcesUsed).length>1){
+        //   console.log("here!!")
+        //   this.drawVennDiagram();
+        // }
+
         if(this.GtrGenesArr.length>0 || this.PhenolyzerGenesArr.length>0 ||  this.manuallyAddedGenes.length>0 || this.clinPhenGenesArr.length>0){
           this.drawVennDiagram();
         }
@@ -1140,6 +1145,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         }
       },
       drawVennDiagram(){
+        console.log("should be here!")
         d3.select("#venn").select("svg").remove();
         var x = require('venn.js')
         var chart = x.VennDiagram()
