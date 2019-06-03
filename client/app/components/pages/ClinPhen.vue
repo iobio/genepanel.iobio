@@ -191,9 +191,9 @@
         <v-card>
           <br>
           <v-card-text>
-            <b>Note: </b> {{notes}}
+            <b>Clinical Note: </b>  {{notes}}
             <br>
-            <i>The following phenotypes have been identified from the entered Clinical note. Please verify the identified phenotypes to generate gene list</i>
+            <i v-if="confirmationItems.length">The following phenotypes have been identified from the entered Clinical note. Please verify the identified phenotypes to generate gene list</i>
           </v-card-text>
           <v-card-text>
             <!-- Datatable -->
@@ -212,14 +212,40 @@
                 </td>
               </template>
             </v-data-table>
+            <div v-if="confirmationItems.length===0">
+              <center> <strong><i>No HPO terms found for the entered text</i></strong> </center>
+            </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
             <v-btn color="blue darken-1" flat @click="updateHPOtermsSelection">Save and Generate Gene list</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
       <!-- End Confirmation Dialog box -->
+
+      <!-- Loading dialog box -->
+      <v-dialog
+        v-model="loadingDialog"
+        hide-overlay
+        persistent
+        width="300"
+      >
+        <v-card
+          color="primary"
+          dark
+        >
+          <v-card-text>
+              <p style="color:white">Fetching the HPO terms...</p>
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
 
       <v-container fluid grid-list-md style="min-height:500px">
         <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
@@ -280,6 +306,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         items: [],
         selected: [],
         confirmationDialog: false,
+        loadingDialog: false,
         //DataTable
         pagination: {
           sortBy: 'index',
@@ -363,6 +390,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       },
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
+        this.loadingDialog = true;
         var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
         return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
           .then((response) => {
@@ -394,10 +422,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         })
         hpoTermArr.shift();
         terms.shift();
-        this.multipleSearchTerms = terms;
-        this.HpoTerms = hpoTermArr;
+        // this.multipleSearchTerms = terms;
+        // this.HpoTerms = hpoTermArr;
         this.confirmationItems = hpoTermArr;
         this.confirmationSelected = hpoTermArr;
+        this.loadingDialog = false;
         this.confirmationDialog = true;
       },
       updateHPOtermsSelection: function(){
