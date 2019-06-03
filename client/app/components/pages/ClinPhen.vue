@@ -161,11 +161,82 @@
                         <td >
                           <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.gene }}</span>
                         </td>
-                          <td >
-                            <span v-for="x in props.item.searchTermIndexSVG">
-                              <span v-html="x"></span>
-                            </span>
-                          </td>
+                        <td >
+                          <span v-for="x in props.item.searchTermIndexSVG">
+                            <span v-html="x"></span>
+                          </span>
+                        </td>
+                        <td>
+                          <v-menu bottom offset-y style="color:black">
+                            <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
+                            <v-card>
+                              <div class="conditionsBox">
+                                <v-list>
+                                  <v-list-tile>
+                                    <v-list-tile-content>
+                                      <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
+                                    </v-list-tile-content>
+                                  </v-list-tile>
+                                  <v-divider class="Rightbar_card_divider"></v-divider>
+                                  <v-list-tile >
+                                    <v-list-tile-content>
+                                      <v-list-tile-title><strong>MedGen</strong><a v-bind:href="props.item.medGenSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                      <br>
+                                      <v-list-tile-sub-title>
+                                        MedGen organizes information related to human medical genetics, such as attributes of conditions with a genetic contribution.
+                                    </v-list-tile-sub-title>
+                                    </v-list-tile-content>
+                                 </v-list-tile>
+
+                                <br>
+                                <v-list-tile >
+                                  <v-list-tile-content>
+                                    <v-list-tile-title><strong>OMIM</strong><a v-bind:href="props.item.omimSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                    <br>
+                                    <v-list-tile-sub-title>
+                                      OMIM is a comprehensive, authoritative compendium of human genes and genetic phenotypes
+                                    </v-list-tile-sub-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <br>
+                                <v-list-tile >
+                                  <v-list-tile-content>
+                                    <v-list-tile-title><strong>GeneCards</strong><a v-bind:href="props.item.geneCardsSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                    <br>
+                                    <v-list-tile-sub-title>
+                                      GeneCards is a searchable, integrative database that provides comprehensive, user-friendly information on all annotated and predicted human genes.
+                                    </v-list-tile-sub-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <br>
+                                <v-list-tile >
+                                  <v-list-tile-content>
+                                    <v-list-tile-title><strong>Genetics Home Reference</strong><a v-bind:href="props.item.ghrSrc" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                    <br>
+                                    <v-list-tile-sub-title>
+                                      Genetics Home Reference provides consumer-friendly information about the effects of genetic variation on human health.
+                                    </v-list-tile-sub-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <br>
+                                <v-list-tile >
+                                  <v-list-tile-content>
+                                    <v-list-tile-title><strong>ClinGen</strong><a v-bind:href="props.item.clinGenLink" target="_blank"><v-btn small round outline color="primary">Link</v-btn></a></v-list-tile-title>
+                                    <br>
+                                    <v-list-tile-sub-title>
+                                      The Clinical Genome Resource (ClinGen) consortium curates genes and regions of the genome to assess whether there is evidence to support that these genes/regions are dosage sensitive and should be targeted on a cytogenomic array                       </v-list-tile-sub-title>
+                                  </v-list-tile-content>
+                                </v-list-tile>
+
+                                <br>
+                                </v-list>
+                              </div>
+                            </v-card>
+                          </v-menu>
+                        </td>
                       </tr>
                     </template>
                     <template slot="footer">
@@ -193,7 +264,10 @@
           <v-card-text>
             <b>Clinical Note: </b>  {{notes}}
             <br>
-            <i v-if="confirmationItems.length">The following phenotypes have been identified from the entered Clinical note. Please verify the identified phenotypes to generate gene list</i>
+            <i v-if="confirmationItems.length">
+              The following phenotypes have been identified from the entered Clinical note.
+              Use the toggle to accept or reject the phenotype.
+            </i>
           </v-card-text>
           <v-card-text>
             <!-- Datatable -->
@@ -329,7 +403,13 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             value: 'gene',
             sortable: false,
           },
-          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
+          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG'},
+          {
+            text: '',
+            align: 'left',
+            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
+            sortable: false,
+          },
         ],
         confirmationItems: [],
         confirmationSelected: [],
@@ -485,6 +565,12 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
                   <text class="sourceIndicatorText" x="12" y="15" font-weight="600" font-size="10"  dy=".3em">${y}</text>
                 </svg> `
           })
+          x.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${x.gene}`;
+          x.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${x.gene}`;
+          x.geneCardsSrc = `https://www.genecards.org/cgi-bin/carddisp.pl?gene=${x.gene}`;
+          x.ghrSrc = `https://ghr.nlm.nih.gov/gene/${x.gene}`;
+          x.clinGenLink = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.gene}`;
+
         });
       },
       remove(term){
