@@ -13,7 +13,7 @@
                   </v-card-text>
                   <center><v-card-text v-html="IntroductionTextData.Content"></v-card-text></center>
                 </div>
-                <div v-else-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || manuallyAddedGenes.length>0">
+                <div v-else-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || manuallyAddedGenes.length>0 || HpoTerms.length>0">
                   <v-flex  d-flex xs12 >
                     <v-layout row wrap>
                       <v-flex xs6>
@@ -52,6 +52,18 @@
                               No phenotypes searched
                            </v-chip>
                         </div>
+                        </v-card-text>
+                      </v-flex>
+                    </v-layout>
+                    <v-layout row wrap v-if="HpoTerms.length>0">
+                      <v-flex>
+                        <v-card-text>
+                          <strong>HPO Terms: </strong>
+                          <div>
+                            <v-chip disabled color="primary" text-color="white" v-for="(searchItem, i) in HpoTerms" :key="i">
+                              {{ i+1 }}. {{ searchItem.hpoNumber }}  &nbsp; <i> ({{searchItem.phenotype}}) </i>
+                            </v-chip>
+                          </div>
                         </v-card-text>
                       </v-flex>
                     </v-layout>
@@ -270,6 +282,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       },
       clinPhenSelectedGenes: {
         type: Array
+      },
+      hpoClinPhenTerms: {
+        type: Array
       }
     },
     data: () => ({
@@ -311,6 +326,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       genesTop: null,
       openEditBox: false,
       vennData: {},
+      HpoTerms: [],
 
     }),
     watch: {
@@ -356,6 +372,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       },
       onSearchPhenotype: function(){
         this.PhenolyzerSearchTerms = this.onSearchPhenotype;
+      },
+      hpoClinPhenTerms: function(){
+        this.HpoTerms = this.hpoClinPhenTerms;
       }
     },
     created(){
@@ -371,11 +390,13 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       this.performSetOperations();
       this.GtrSearchTerms = this.searchTermGTR;
       this.PhenolyzerSearchTerms = this.onSearchPhenotype;
+      this.HpoTerms = this.hpoClinPhenTerms;
       bus.$on("newAnalysis", ()=>{
         this.PhenolyzerSearchTerms = [];
         this.GtrSearchTerms = [];
         this.selected = [];
         this.items = [];
+        this.HpoTerms = [];
       });
     },
     methods: {

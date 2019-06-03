@@ -288,6 +288,7 @@
             <ClinPhen
               v-show="component==='ClinPhen'"
               v-on:ClinPhenGenes="ClinPhenGenes($event)"
+              v-on:clinphenTerms="clinphenTerms($event)"
             >
             </ClinPhen>
           </keep-alive>
@@ -317,6 +318,7 @@
               v-bind:clinGenesSummary="clinGenesSummary"
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
+              v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
               v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
@@ -459,6 +461,7 @@ import ClinPhen from './ClinPhen.vue'
         individualGtrPanelsSearchObj: {},
         selectedObj: {},
         clinPhenSelectedGenes: [],
+        hpoClinPhenTerms: [],
 
       }
     },
@@ -1196,6 +1199,9 @@ import ClinPhen from './ClinPhen.vue'
       },
       ClinPhenGenes:function(genes){
         this.clinPhenSelectedGenes = genes;
+      },
+      clinphenTerms: function(terms){
+        this.hpoClinPhenTerms = terms;
       }
 
     }

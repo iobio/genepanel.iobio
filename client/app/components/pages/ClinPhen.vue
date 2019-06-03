@@ -524,6 +524,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         var genes = [];
         this.items = [];
         this.selected = [];
+        this.$emit("clinphenTerms", this.HpoTerms);
         this.multipleSearchTerms.map((term, i)=>{
           if(this.HpoGenesData[term]!==undefined){
             // this.items = [...this.items, ...this.HpoGenesData[x].gene_symbol]
@@ -580,6 +581,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         this.HpoTerms = [...this.HpoTerms];
         this.multipleSearchTerms.splice(idx,1);
         this.multipleSearchTerms = [...this.multipleSearchTerms];
+        this.$emit("clinphenTerms", this.HpoTerms);
         this.getGenesForHpoTerms();
       }
     }
