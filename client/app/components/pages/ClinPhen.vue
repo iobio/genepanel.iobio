@@ -23,7 +23,7 @@
                         ></v-textarea>
                       </v-flex>
                       <v-flex lg4>
-                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit to Generate Gene List</v-btn>
+                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit</v-btn>
                       </v-flex>
                     </v-layout>
                     <p>
@@ -178,8 +178,49 @@
 
             </v-layout>
           </v-flex>
+
         </v-layout>
       </v-container>
+
+      <!-- Confirmation Dialog box -->
+      <v-dialog
+        v-model="confirmationDialog"
+        max-width="850px"
+        persistent
+      >
+        <v-card>
+          <br>
+          <v-card-text>
+            <b>Note: </b> {{notes}}
+            <br>
+            <i>The following phenotypes have been identified from the entered Clinical note. Please verify the identified phenotypes to generate gene list</i>
+          </v-card-text>
+          <v-card-text>
+            <!-- Datatable -->
+            <v-data-table
+              v-if="confirmationItems.length"
+              :headers="confirmationTableHeader"
+              :items="confirmationItems"
+              class="elevation-1"
+              hide-actions=false
+            >
+              <template v-slot:items="props">
+                <td>{{ props.item.hpoNumber }}</td>
+                <td >{{ props.item.phenotype }}</td>
+                <td>
+                  <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch>
+                </td>
+              </template>
+            </v-data-table>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" flat @click="confirmationDialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" flat @click="confirmationDialog = false">Save and Generate Gene list</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <!-- End Confirmation Dialog box -->
 
       <v-container fluid grid-list-md style="min-height:500px">
         <v-layout row wrap style="margin-top: -20px;margin-left: -20px;margin-right: -20px;">
@@ -239,6 +280,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         HpoTermsTypeaheadData: null,
         items: [],
         selected: [],
+        confirmationDialog: false,
         //DataTable
         pagination: {
           sortBy: 'index',
@@ -262,6 +304,26 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             sortable: false,
           },
           { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG' },
+        ],
+        confirmationItems: [],
+        confirmationSelected: [],
+        confirmationTableHeader: [
+          {
+            text: 'HPO ID',
+            value: 'hpoNumber',
+            sortable: false,
+            align: 'left'
+          },
+          {
+            text: 'Phenotype',
+            value: 'phenotype',
+            sortable: false,
+            align: 'left'
+          },
+          {
+            text: 'Selection',
+            sortable: false,
+          }
         ],
       }
     },
@@ -290,7 +352,8 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
           this.HpoTerms.push(
             {
               hpoNumber:hpoId,
-              phenotype:phenoTerm}
+              phenotype:phenoTerm
+            }
           )
           this.getGenesForHpoTerms();
         }
@@ -321,9 +384,8 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         var count = 0;
         var hpoTermArr = [];
         var terms = [];
-        console.log("parseTerms called", res)
+        console.log("parseTerms called", res);
         res.split("\n").forEach(function(rec){
-          // console.log("rec", rec)
           var fields = rec.split("\t");
           if(fields.length===5){
             var hpoNumber = fields[0];
@@ -338,6 +400,9 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         console.log("this.multipleSearchTerms", this.multipleSearchTerms)
         console.log("hpoTermArr",hpoTermArr);
         this.HpoTerms = hpoTermArr;
+        this.confirmationItems = hpoTermArr;
+        this.confirmationSelected = hpoTermArr;
+        this.confirmationDialog = true;
         this.getGenesForHpoTerms();
       },
       getGenesForHpoTerms: function(){
