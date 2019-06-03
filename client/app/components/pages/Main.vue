@@ -193,6 +193,15 @@
             </v-list-tile>
             <hr>
           </div>
+          <div v-else-if="component==='ClinPhen'">
+            <v-list-tile @click="copyClinPhenGenes">
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy ClinPhen genes to clipboard</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="exportClinPhenGenes">
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export ClinPhen genes to file</v-list-tile-title>
+            </v-list-tile>
+            <hr>
+          </div>
           <v-list-tile @click="copyAllGenes">
             <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
           </v-list-tile>
@@ -842,6 +851,19 @@ import ClinPhen from './ClinPhen.vue'
         });
 
       },
+      copyClinPhenGenes: function(){
+        var geneNames = this.clinPhenSelectedGenes.map(gene => {
+          return gene.gene;
+        })
+        var geneNamesToString = geneNames.toString();
+        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
+        this.$clipboard(genesToCopy);
+
+        if(this.clinPhenSelectedGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.clinPhenSelectedGenes.length + " ";
+        }
+        this.snackbar=true;
+      },
       sendGenesUsingSocket: function(){
         var genesToCopy = this.uniqueGenes.toString();
         var socket = io.connect('http://localhost:4026');
@@ -1096,6 +1118,20 @@ import ClinPhen from './ClinPhen.vue'
         if(this.selectedPhenolyzerGenes.length>0){
           var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
           FileSaver.saveAs(blob, "Phenolyzer Genes.txt");
+        }
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
+      },
+      exportClinPhenGenes: function(){
+        var geneNames = this.clinPhenSelectedGenes.map(gene => {
+          return gene.gene;
+        })
+        var geneNamesToExport = geneNames.toString();
+        if(this.clinPhenSelectedGenes.length>0){
+          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+          FileSaver.saveAs(blob, "ClinPhen Genes.txt");
         }
         else {
           this.snackbarText = "You need to select genes inorder to use this feature";
