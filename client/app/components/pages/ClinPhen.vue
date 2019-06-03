@@ -215,8 +215,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" flat @click="confirmationDialog = false">Close</v-btn>
-            <v-btn color="blue darken-1" flat @click="confirmationDialog = false">Save and Generate Gene list</v-btn>
+            <v-btn color="blue darken-1" flat @click="updateHPOtermsSelection">Save and Generate Gene list</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -364,7 +363,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       },
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
-        this.checked = true;
         var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
         return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
           .then((response) => {
@@ -397,12 +395,20 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         hpoTermArr.shift();
         terms.shift();
         this.multipleSearchTerms = terms;
-        console.log("this.multipleSearchTerms", this.multipleSearchTerms)
-        console.log("hpoTermArr",hpoTermArr);
         this.HpoTerms = hpoTermArr;
         this.confirmationItems = hpoTermArr;
         this.confirmationSelected = hpoTermArr;
         this.confirmationDialog = true;
+      },
+      updateHPOtermsSelection: function(){
+        this.checked = true;
+        this.confirmationDialog = false;
+        this.HpoTerms = this.confirmationSelected;
+        var temp = [];
+        this.confirmationSelected.map(term =>{
+          temp.push(term.hpoNumber)
+        })
+        this.multipleSearchTerms = temp;
         this.getGenesForHpoTerms();
       },
       getGenesForHpoTerms: function(){
