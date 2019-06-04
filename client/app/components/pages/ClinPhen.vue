@@ -38,12 +38,12 @@
                         autocomplete="off"
                         placeholder="Search phenotype (E.g. Ataxia)">
                       <typeahead
-                        match-start
                         v-model="searchInput"
+                        hide-details="false"
+                        force-select :force-clear="true"
                         target="#hpo_input"
                         :data="HpoTermsTypeaheadData"
                         :limit="parseInt(100)"
-                        :preselect="false"
                         item-key="HPO_Data"/>
 
                     </div>
@@ -174,7 +174,7 @@
                                 <v-list>
                                   <v-list-tile>
                                     <v-list-tile-content>
-                                      <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.name }} )</i> </strong></v-list-tile-title>
+                                      <v-list-tile-title><strong style="font-size:18px"> Gene Resource Links &nbsp;<i>( {{ props.item.gene }} )</i> </strong></v-list-tile-title>
                                     </v-list-tile-content>
                                   </v-list-tile>
                                   <v-divider class="Rightbar_card_divider"></v-divider>
