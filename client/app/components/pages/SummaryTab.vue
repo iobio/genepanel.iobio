@@ -176,7 +176,7 @@
                         :totalNumber="totalGenes">
                        </SvgBar>
                        <br>
-                       <!-- <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
+                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
                            <v-flex xs6>
                              <div class="Rightbar_card_content_subheading" style="margin-left:10px">
@@ -195,16 +195,16 @@
                              </div>
                            </v-flex>
                          </v-layout>
-                       </div> -->
+                       </div>
                      </v-card-text>
                     </v-card>
                   </div>
 
-                  <div class="d-flex mb-2 xs12">
+                  <!-- <div class="d-flex mb-2 xs12">
                     <v-card>
                       <div id="venn"></div>
                     </v-card>
-                  </div>
+                  </div> -->
 
                   <br>
                 </div>
@@ -388,14 +388,12 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.HpoTerms = this.hpoClinPhenTerms;
       },
       gtrCompleteGeneList: function(){
-        console.log(" gtrCompleteGeneList watching", this.gtrCompleteGeneList)
         this.gtrFullGeneList = [];
         this.summaryTableArrayFullList = [];
         this.gtrFullGeneList = this.gtrCompleteGeneList;
         this.performSetOperationsFullList();
       },
       phenolyzerCompleteGeneList: function(){
-        console.log(" phenolyzerCompleteGeneLis watching", this.phenolyzerCompleteGeneList)
         this.PhenolyzerFullGeneList = [];
         this.summaryTableArrayFullList = [];
         this.PhenolyzerFullGeneList = this.phenolyzerCompleteGeneList;
@@ -441,7 +439,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var gtrGenes = this.GtrGenes.map(gene => {
           return gene.name
         })
-        this.GtrGenesArrFullList = gtrGenes;
+        this.GtrGenesArr = gtrGenes;
 
         //Create an array of Phenolyzer Gene Names
         var phenolyzerGenes = this.PhenolyzerGenes.map(gene => {
@@ -533,7 +531,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         uniqueGenes.map((x,i)=>{
           if(phenolyzerGenes.includes(x)){
             var idx = phenolyzerGenes.indexOf(x);
-            console.log("summaryGenes[i].geneId", summaryGenes[i].geneId)
             summaryGenes[i].isPheno = true;
             summaryGenes[i].noOfSources++;
             summaryGenes[i].sources.push("Pheno");
@@ -963,6 +960,10 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var uniqueGTR =[];
         var uniqueClinPhen = [];
         var uniqueAddedGenes = [];
+        var gtrPhenoGenes = [];
+        var gtrAddedGenes = [];
+        var phenoAddedGenes = [];
+        var GtrPhenoAdded = [];
         var summaryObj = {
           gtr: {
             count: 0
@@ -1035,6 +1036,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           else if(summaryGenes[i].sources.length===3){
             threeSourcesGenes.push(summaryGenes[i]);
             if(!summaryGenes[i].sources.includes("ClinPhen")){
+              GtrPhenoAdded.push(summaryGenes[i])
               summaryObj.gtr_phenolyzer_ImportedGenes.count++;
               summaryObj.phenolyzer.count++;
               summaryObj.gtr.count++;
@@ -1076,11 +1078,13 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           else if(summaryGenes[i].sources.length===2){
             twoSourcesGenes.push(summaryGenes[i]);
             if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("Pheno")){
+              gtrPhenoGenes.push(summaryGenes[i]);
               summaryObj.gtr_phenolyzer.count++;
               summaryObj.gtr.count++;
               summaryObj.phenolyzer.count++;
             }
             else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ImportedGenes")){
+              gtrAddedGenes.push(summaryGenes[i])
               summaryObj.gtr_ImportedGenes.count++;
               summaryObj.ImportedGenes.count++;
               summaryObj.gtr.count++;
@@ -1091,6 +1095,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               summaryObj.ClinPhen.count++;
             }
             else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ImportedGenes")){
+              phenoAddedGenes.push(summaryGenes[i])
               summaryObj.phenolyzer_ImportedGenes.count++;
               summaryObj.ImportedGenes.count++;
               summaryObj.phenolyzer.count++;
@@ -1137,7 +1142,38 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         console.log("tableGenes", tableGenes);
         this.summaryTableArray = tableGenes;
-        this.generateVennDiagramData(summaryObj);
+        // this.generateVennDiagramData(summaryObj);
+        this.pieChartdataArr = [
+          {
+            name: "Unique to GTR",
+            count: uniqueGTR.length
+          },
+          {
+            name: "Unique to Phenolyzer",
+            count: uniquePheno.length
+          },
+          {
+            name: "Unique Added Genes",
+            count: uniqueAddedGenes.length
+          },
+          {
+            name: "GTR and Phenolyzer",
+            count: gtrPhenoGenes.length
+          },
+          {
+            name: "GTR and Added Genes",
+            count: gtrAddedGenes.length
+          },
+          {
+            name: "Phenolyzer and Added Genes",
+            count: phenoAddedGenes.length
+          },
+          {
+            name: "All sources",
+            count: GtrPhenoAdded.length
+          }
+        ]
+
       },
       generateVennDiagramData(summaryObj){
         this.vennData = {
@@ -1268,9 +1304,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         uniqueGenes.map((x,i)=>{
           if(phenolyzerGenes.includes(x)){
             var idx = phenolyzerGenes.indexOf(x);
-            console.log("summaryGenes[i].geneId", summaryGenes[i].geneId)
-            console.log("this.PhenolyzerFullGeneList[i].geneId", this.PhenolyzerFullGeneList[idx].geneId)
-
             summaryGenes[i].isPheno = true;
             summaryGenes[i].noOfSources++;
             summaryGenes[i].sources.push("Pheno");
