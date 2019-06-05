@@ -105,7 +105,7 @@
                      </div>
                    </v-flex>
                    <v-flex xs1>
-                     <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox=false">close</v-icon>
+                     <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
                    </v-flex>
                  </v-layout>
                </div>
@@ -885,6 +885,10 @@ var model = new Model();
             document.getElementById("geneSelection").reset();
           }
          }, 1500);
+      },
+      closeSearchBox: function(){
+        this.search = "";
+        this.openSearchBox=false;
       },
     }
   }

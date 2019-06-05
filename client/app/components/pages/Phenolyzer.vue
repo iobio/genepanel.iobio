@@ -221,7 +221,7 @@
                                  <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
                                </v-flex>
                                <v-flex xs1>
-                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox=false">close</v-icon>
+                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
                                </v-flex>
                              </v-layout>
                            </div>
@@ -1100,7 +1100,11 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
             x["phenotypeSearchTerm"]=this.phenotypeTerm.value
           }
         });
-      }
+      },
+      closeSearchBox: function(){
+        this.search = "";
+        this.openSearchBox=false;
+      },
     }
   }
 </script>
