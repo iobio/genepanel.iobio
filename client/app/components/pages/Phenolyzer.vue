@@ -876,7 +876,6 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
                     name: searchTerm,
                     data: self.tempItems
                   }))
-                  console.log("self.dictionaryArr", self.dictionaryArr)
                   if(self.genesSearchTermObj[searchTerm]===undefined){
                     self.genesSearchTermObj[searchTerm] = [];
                   }
@@ -890,9 +889,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
                       })
                     })
                   }
-                  console.log("genesSearchTermObj", self.genesSearchTermObj)
                   this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
-
 
                   var combinedList = self.combineList(self.dictionaryArr);
                   var createdObj = self.createObj(combinedList);

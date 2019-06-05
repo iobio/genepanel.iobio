@@ -772,7 +772,6 @@ var model = new Model();
           })
         }
         // this.itemsIndividual = [];
-        // console.log("this.genesSearchTermObj", this.genesSearchTermObj)
         this.$emit("individualGenesObj", this.genesSearchTermObj)
       },
       arrangeAllData: function(terms, genesData){

@@ -271,11 +271,9 @@ var geneModel = new GeneModel();
         })
 
         if(byPassedGenesArr.length>0){
-          console.log("" + byPassedGenesArr.join(" , ") + "  ");
           this.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
         }
         if(duplicateGenes.length>0){
-          console.log("" + duplicateGenes.join(" , ") + "  ");
           this.dupGenes = "" + duplicateGenes.join(" , ") + "  ";
         }
 

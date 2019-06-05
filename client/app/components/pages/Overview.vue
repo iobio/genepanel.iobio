@@ -165,8 +165,6 @@ var model = new Model();
     },
     mounted(){
       this.HpoGenesData = hpo_genes;
-      console.log(this.HpoGenesData["HP:0003803"]);
-      // this.setsData = genesJsonp.data
     },
     updated(){
 

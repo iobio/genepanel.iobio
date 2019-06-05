@@ -72,7 +72,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <v-list-tile
+      <!-- <v-list-tile
         v-bind:class="[component==='ClinPhen' ? 'activeTab' : '']"
         @click="selectComponent('ClinPhen')">
         <v-list-tile-action v-bind:class="[component==='ClinPhen' ? 'margin_ActiveTab' : '']">
@@ -84,11 +84,10 @@
           ClinPhen
             <v-badge color="primary darken-1" right class="badge-bg-color">
             <span  slot="badge">{{ clinPhenSelectedGenes.length }}</span>
-            <!-- <span  slot="badge">0</span> -->
             </v-badge>
           </v-list-tile-title>
          </v-list-tile-content>
-       </v-list-tile>
+       </v-list-tile> -->
 
        <v-list-tile
           v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
