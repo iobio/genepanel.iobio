@@ -328,6 +328,8 @@
               v-bind:launchedFromClin="launchedFromClin"
               v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
               v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
+              v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
+              v-on:summaryGenesFullList="summaryGenesFullList($event)"
               v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
@@ -471,7 +473,7 @@ import ClinPhen from './ClinPhen.vue'
         selectedObj: {},
         clinPhenSelectedGenes: [],
         hpoClinPhenTerms: [],
-
+        summaryAllGenes:[],
       }
     },
     watch: {
@@ -920,7 +922,7 @@ import ClinPhen from './ClinPhen.vue'
         this.genesToCopy = this.uniqueGenes.toString();
         this.getIndividualGeneList();
 
-        var clinData = this.summaryGenes.map(gene=> {
+        var clinData = this.summaryAllGenes.map(gene=> {
           return {
             name: gene.name,
             source: gene.sources,
@@ -1239,6 +1241,9 @@ import ClinPhen from './ClinPhen.vue'
       },
       clinphenTerms: function(terms){
         this.hpoClinPhenTerms = terms;
+      },
+      summaryGenesFullList: function(genes){
+        this.summaryAllGenes = genes;
       }
 
     }

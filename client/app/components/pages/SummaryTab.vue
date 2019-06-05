@@ -285,7 +285,11 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       },
       hpoClinPhenTerms: {
         type: Array
-      }
+      },
+      gtrCompleteGeneList: {
+        type: Array
+      },
+
     },
     data: () => ({
       gradient: 'to top, #7B1FA2, #E1BEE7',
@@ -327,7 +331,10 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       openEditBox: false,
       vennData: {},
       HpoTerms: [],
-      resourcesUsed: {}
+      resourcesUsed: {},
+      gtrFullGeneList:[],
+      summaryTableArrayFullList: [],
+      GtrGenesArrFullList: []
     }),
     watch: {
       genesTop: function(){
@@ -375,7 +382,14 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       },
       hpoClinPhenTerms: function(){
         this.HpoTerms = this.hpoClinPhenTerms;
-      }
+      },
+      gtrCompleteGeneList: function(){
+        this.gtrFullGeneList = [];
+        this.summaryTableArrayFullList = [];
+        this.gtrFullGeneList = this.gtrCompleteGeneList;
+        this.performSetOperationsFullList();
+
+      },
     },
     created(){
       this.IntroductionTextData = IntroductionText.data[2];
@@ -416,7 +430,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var gtrGenes = this.GtrGenes.map(gene => {
           return gene.name
         })
-        this.GtrGenesArr = gtrGenes;
+        this.GtrGenesArrFullList = gtrGenes;
 
         //Create an array of Phenolyzer Gene Names
         var phenolyzerGenes = this.PhenolyzerGenes.map(gene => {
@@ -558,7 +572,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         //old code
       //   this.AllSourcesGenes = allGenes;
       //
-      //   var gtrSet = new Set(this.GtrGenesArr);
+      //   var gtrSet = new Set(GtrGenesArrFullList);
       //   var phenolyzerSet = new Set(this.PhenolyzerGenesArr);
       //   var intersectGtrPhenolyzer = new Set([...gtrSet].filter(x => phenolyzerSet.has(x)));
       //   this.commonGtrPhenoGenes = [...intersectGtrPhenolyzer];
@@ -1143,6 +1157,332 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         else {
           d3.select("#venn").select("svg").remove();
         }
+      },
+      performSetOperationsFullList: function(){
+        //Create an array of GTR Gene Names
+        var gtrGenes = this.gtrFullGeneList.map(gene => {
+          return gene.name
+        })
+        this.GtrGenesArrFullList = gtrGenes;
+
+        //Create an array of Phenolyzer Gene Names
+        var phenolyzerGenes = this.PhenolyzerGenes.map(gene => {
+          return gene.geneName
+        })
+        this.PhenolyzerGenesArr = phenolyzerGenes;
+
+        //Create an array of ClinPhen Gene Names
+        var clinPhenGenes = this.clinPhenSelectedGenes.map(x=>{
+          return x.gene;
+        })
+        this.clinPhenGenesArr = clinPhenGenes;
+
+        //Create an array for added geneSearch
+        var manualGenes = [];
+        this.AddedGenes.map(x=>{
+          manualGenes.push(x);
+        })
+
+        //Create an array of genes from all sources
+        var allGenes = [...manualGenes, ...gtrGenes, ...clinPhenGenes, ...phenolyzerGenes];
+
+        //Get only unique genes from all allSources
+        var uniqueGenes= [...new Set(allGenes)];
+
+        var summaryGenes = [];
+
+        //Check if the gene is in addedGenes
+        uniqueGenes.map((x,i)=>{
+          if(manualGenes.includes(x)){
+            summaryGenes.push({
+              name: x,
+              isImportedGenes: true,
+              noOfSources: 1,
+              sources: ['ImportedGenes']
+            })
+          }
+          else{
+            summaryGenes.push({
+              name: x,
+              isImportedGenes: false,
+              noOfSources: 0,
+              sources: []
+            })
+          }
+        })
+
+
+        //Check if the gene is in GTR
+        uniqueGenes.map((x,i)=>{
+          if(gtrGenes.includes(x)){
+            var idx = gtrGenes.indexOf(x);
+            summaryGenes[i].isGtr = true;
+            summaryGenes[i].value = this.gtrFullGeneList[idx].value;
+            summaryGenes[i].noOfSources++;
+            summaryGenes[i].sources.push("GTR");
+            summaryGenes[i].searchTermArrayGTR =  this.gtrFullGeneList[idx].searchTermArray; //["Treacher Collins syndrome"]
+            summaryGenes[i].searchTermIndexGTR =  this.gtrFullGeneList[idx].searchTermIndex; //[1]
+            summaryGenes[i].isAssociatedGene   =  this.gtrFullGeneList[idx].isAssociatedGene;
+            summaryGenes[i].sourceGTR =  this.gtrFullGeneList[idx].searchTermIndexSVG; // ["<svg height=\"30\" width=\"30\">\n..."]
+            summaryGenes[i].geneId =  this.gtrFullGeneList[idx].geneid;
+            summaryGenes[i].omimSrc =  this.gtrFullGeneList[idx].omimSrc;
+            summaryGenes[i].medGenSrc =  this.gtrFullGeneList[idx].medGenSrc;
+            summaryGenes[i].geneCardsSrc =  this.gtrFullGeneList[idx].geneCardsSrc;
+            summaryGenes[i].ghrSrc =  this.gtrFullGeneList[idx].ghrSrc;
+            summaryGenes[i].clinGenLink =  this.gtrFullGeneList[idx].clinGenLink;
+            summaryGenes[i].geneIdLink =  this.gtrFullGeneList[idx].geneIdLink;
+            summaryGenes[i].geneRankGtr = this.gtrFullGeneList[idx].indexVal;
+          }
+          else {
+            summaryGenes[i].isGtr = false;
+            summaryGenes[i].value = "";
+            summaryGenes[i].searchTermArrayGTR =  [];
+            summaryGenes[i].searchTermIndexGTR =  [];
+            summaryGenes[i].isAssociatedGene   =  false;
+            summaryGenes[i].geneId =  "";
+            summaryGenes[i].sourceGTR =  [];
+            summaryGenes[i].omimSrc =  "";
+            summaryGenes[i].medGenSrc =  "";
+            summaryGenes[i].geneCardsSrc =  "";
+            summaryGenes[i].ghrSrc =  "";
+            summaryGenes[i].clinGenLink =  "";
+            summaryGenes[i].geneIdLink =  "";
+            summaryGenes[i].geneRankGtr = -1;
+          }
+        })
+
+        //Check if the gene is in Phenolyzer
+        uniqueGenes.map((x,i)=>{
+          if(phenolyzerGenes.includes(x)){
+            var idx = phenolyzerGenes.indexOf(x);
+            summaryGenes[i].isPheno = true;
+            summaryGenes[i].noOfSources++;
+            summaryGenes[i].sources.push("Pheno");
+            summaryGenes[i].geneId =  this.PhenolyzerGenes[idx].geneid;
+            summaryGenes[i].score =  this.PhenolyzerGenes[idx].score;
+            summaryGenes[i].searchTermPheno =  this.PhenolyzerGenes[idx].searchTerm;
+            summaryGenes[i].searchTermIndex =  this.PhenolyzerGenes[idx].searchTermIndex;
+            summaryGenes[i].sourcePheno =  this.PhenolyzerGenes[idx].searchTermIndexSVG;
+            summaryGenes[i].omimSrc =  this.PhenolyzerGenes[idx].omimSrc;
+            summaryGenes[i].medGenSrc =  this.PhenolyzerGenes[idx].medGenSrc;
+            summaryGenes[i].geneCardsSrc =  this.PhenolyzerGenes[idx].geneCardsSrc;
+            summaryGenes[i].ghrSrc =  this.PhenolyzerGenes[idx].ghrSrc;
+            summaryGenes[i].clinGenLink =  this.PhenolyzerGenes[idx].clinGenLink;
+            summaryGenes[i].geneIdLink =  this.PhenolyzerGenes[idx].geneIdLink;
+            summaryGenes[i].geneRankPhenolyzer = this.PhenolyzerGenes[idx].indexVal;
+          }
+          else {
+            summaryGenes[i].isPheno = false;
+            summaryGenes[i].score =  "";
+            summaryGenes[i].searchTermPheno =  [];
+            summaryGenes[i].searchTermIndex =  [];
+            summaryGenes[i].sourcePheno =  [];
+            summaryGenes[i].geneRankPhenolyzer = -1;
+          }
+        })
+        //Check if the gene is in HPO
+        uniqueGenes.map((x,i)=>{
+          if(clinPhenGenes.includes(x)){
+            var idx = clinPhenGenes.indexOf(x);
+            summaryGenes[i].isClinPhen = true;
+            summaryGenes[i].noOfSources++;
+            summaryGenes[i].sources.push("ClinPhen");
+            summaryGenes[i].hpoTerm = this.clinPhenSelectedGenes[idx].hpoTerm;
+            summaryGenes[i].searchTermIndexHpo = this.clinPhenSelectedGenes[idx].searchTermIndex;
+            summaryGenes[i].sourceHPO = this.clinPhenSelectedGenes[idx].searchTermIndexSVG;
+          }
+          else {
+            summaryGenes[i].isClinPhen = false;
+            summaryGenes[i].hpoTerm = [];
+            summaryGenes[i].searchTermIndexHpo = [];
+            summaryGenes[i].sourceHPO = [];
+          }
+        })
+
+        this.createSummaryTableDataFullList(summaryGenes);
+      },
+      createSummaryTableDataFullList(summaryGenes){
+        var allSourcesGenes = [];
+        var threeSourcesGenes = [];
+        var twoSourcesGenes = [];
+        var uniquePheno = [];
+        var uniqueGTR =[];
+        var uniqueClinPhen = [];
+        var uniqueAddedGenes = [];
+        var summaryObj = {
+          gtr: {
+            count: 0
+          },
+          phenolyzer: {
+            count: 0
+          },
+          ImportedGenes: {
+            count: 0
+          },
+          ClinPhen: {
+            count: 0
+          },
+          gtr_phenolyzer: {
+            count: 0
+          },
+          gtr_ImportedGenes: {
+            count: 0
+          },
+          gtr_ClinPhen: {
+            count: 0
+          },
+          phenolyzer_ImportedGenes: {
+            count: 0
+          },
+          phenolyzer_ClinPhen: {
+            count: 0
+          },
+          ImportedGenes_ClinPhen: {
+            count: 0
+          },
+          gtr_phenolyzer_ImportedGenes: {
+            count: 0
+          },
+          gtr_phenolyzer_ClinPhen: {
+            count: 0
+          },
+          gtr_ImportedGenes_ClinPhen: {
+            count: 0
+          },
+          phenolyzer_ImportedGenes_ClinPhen: {
+            count: 0
+          },
+          gtr_phenolyzer_ImportedGenes_ClinPhen: {
+            count: 0
+          }
+        }
+        for(var i=0; i<summaryGenes.length; i++){
+          // console.log("summaryGenes[i].sources.length", summaryGenes[i].sources[0])
+          if(summaryGenes[i].sources.length===4){
+            allSourcesGenes.push(summaryGenes[i]);
+            summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
+            summaryObj.gtr.count++;
+            summaryObj.phenolyzer.count++;
+            summaryObj.ImportedGenes.count++;
+            summaryObj.ClinPhen.count++;
+            summaryObj.gtr_phenolyzer_ImportedGenes.count++;
+            summaryObj.gtr_phenolyzer_ClinPhen.count++;
+            summaryObj.gtr_ImportedGenes_ClinPhen.count++;
+            summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
+            summaryObj.gtr_phenolyzer.count++;
+            summaryObj.gtr_ImportedGenes.count++;
+            summaryObj.gtr_ClinPhen.count++;
+            summaryObj.phenolyzer_ImportedGenes.count++;
+            summaryObj.phenolyzer_ClinPhen.count++;
+            summaryObj.ImportedGenes_ClinPhen.count++;
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+          else if(summaryGenes[i].sources.length===3){
+            threeSourcesGenes.push(summaryGenes[i]);
+            if(!summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.gtr_phenolyzer_ImportedGenes.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.phenolyzer_ImportedGenes.count++;
+              summaryObj.gtr_ImportedGenes.count++;
+              summaryObj.gtr_phenolyzer.count++;
+            }
+            else if(!summaryGenes[i].sources.includes("ImportedGenes")){
+              summaryObj.gtr_phenolyzer_ClinPhen.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ClinPhen.count++;
+              summaryObj.phenolyzer_ClinPhen.count++;
+              summaryObj.gtr_ClinPhen.count++;
+              summaryObj.gtr_phenolyzer.count++;
+            }
+            else if(!summaryGenes[i].sources.includes("Pheno")){
+              summaryObj.gtr_ImportedGenes_ClinPhen.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.ClinPhen.count++;
+              summaryObj.gtr_ClinPhen.count++;
+              summaryObj.gtr_ImportedGenes.count++;
+              summaryObj.ImportedGenes_ClinPhen.count++;
+            }
+            else if(!summaryGenes[i].sources.includes("GTR")){
+              summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.ClinPhen.count++;
+              summaryObj.ImportedGenes_ClinPhen.count++;
+              summaryObj.phenolyzer_ImportedGenes.count++;
+              summaryObj.phenolyzer_ClinPhen.count++;
+            }
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+          else if(summaryGenes[i].sources.length===2){
+            twoSourcesGenes.push(summaryGenes[i]);
+            if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("Pheno")){
+              summaryObj.gtr_phenolyzer.count++;
+              summaryObj.gtr.count++;
+              summaryObj.phenolyzer.count++;
+            }
+            else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ImportedGenes")){
+              summaryObj.gtr_ImportedGenes.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.gtr.count++;
+            }
+            else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.gtr_ClinPhen.count++;
+              summaryObj.gtr.count++;
+              summaryObj.ClinPhen.count++;
+            }
+            else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ImportedGenes")){
+              summaryObj.phenolyzer_ImportedGenes.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.phenolyzer.count++;
+            }
+            else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.phenolyzer_ClinPhen.count++;
+              summaryObj.phenolyzer.count++;
+              summaryObj.ClinPhen.count++;
+            }
+            else if(summaryGenes[i].sources.includes("ImportedGenes") && summaryGenes[i].sources.includes("ClinPhen")){
+              summaryObj.ImportedGenes_ClinPhen.count++;
+              summaryObj.ImportedGenes.count++;
+              summaryObj.ClinPhen.count++;
+            }
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+          else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="ImportedGenes"){
+            uniqueAddedGenes.push(summaryGenes[i]);
+            summaryObj.ImportedGenes.count++;
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+          else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="GTR"){
+            uniqueGTR.push(summaryGenes[i]);
+            summaryObj.gtr.count++;
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+          else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="ClinPhen"){
+            uniqueClinPhen.push(summaryGenes[i]);
+            summaryObj.ClinPhen.count++;
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+          else if(summaryGenes[i].sources.length===1 && summaryGenes[i].sources[0]==="Pheno"){
+            uniquePheno.push(summaryGenes[i]);
+            summaryObj.phenolyzer.count++;
+            summaryGenes.splice(i, 1);
+                i--;
+          }
+        }
+        var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
+        console.log("tableGenes full list", tableGenes);
+        this.summaryTableArrayFullList = tableGenes;
+        this.$emit('summaryGenesFullList', this.summaryTableArrayFullList);
       },
       drawVennDiagram(){
         console.log("should be here!")
