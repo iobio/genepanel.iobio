@@ -69,9 +69,25 @@
              <v-badge color="primary" right class="badge-bg-color">
               <span slot="badge">{{ NumberOfGenesSelectedFromPhenolyzer }}</span>
             </v-badge>
-           </v-list-tile-title>
+          </v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+      <!-- <v-list-tile
+        v-bind:class="[component==='ClinPhen' ? 'activeTab' : '']"
+        @click="selectComponent('ClinPhen')">
+        <v-list-tile-action v-bind:class="[component==='ClinPhen' ? 'margin_ActiveTab' : '']">
+          <span v-if="component==='ClinPhen'"><v-icon color="primary darken-1">speaker_notes</v-icon></span>
+          <span v-else><v-icon color="blue-grey darken-2">speaker_notes</v-icon></span>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title v-bind:class="[component==='ClinPhen' ? 'activeTabText' : '']">
+          ClinPhen
+            <v-badge color="primary darken-1" right class="badge-bg-color">
+            <span  slot="badge">{{ clinPhenSelectedGenes.length }}</span>
+            </v-badge>
+          </v-list-tile-title>
          </v-list-tile-content>
-       </v-list-tile>
+       </v-list-tile> -->
 
        <v-list-tile
           v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
@@ -176,6 +192,15 @@
             </v-list-tile>
             <hr>
           </div>
+          <div v-else-if="component==='ClinPhen'">
+            <v-list-tile @click="copyClinPhenGenes">
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy ClinPhen genes to clipboard</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="exportClinPhenGenes">
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export ClinPhen genes to file</v-list-tile-title>
+            </v-list-tile>
+            <hr>
+          </div>
           <v-list-tile @click="copyAllGenes">
             <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy all genes to clipboard</v-list-tile-title>
           </v-list-tile>
@@ -268,6 +293,16 @@
           </keep-alive>
 
           <keep-alive>
+            <ClinPhen
+              v-show="component==='ClinPhen'"
+              v-on:ClinPhenGenes="ClinPhenGenes($event)"
+              v-on:clinphenTerms="clinphenTerms($event)"
+            >
+            </ClinPhen>
+          </keep-alive>
+
+
+          <keep-alive>
             <AddGenes
               v-show="component==='AddGenes'"
               v-bind:launchedFromClin="launchedFromClin"
@@ -290,6 +325,11 @@
               v-bind:browser="browser"
               v-bind:clinGenesSummary="clinGenesSummary"
               v-bind:launchedFromClin="launchedFromClin"
+              v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
+              v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
+              v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
+              v-on:summaryGenesFullList="summaryGenesFullList($event)"
+              v-bind:phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
               v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
@@ -319,6 +359,8 @@ import { ExportToCsv } from 'export-to-csv';
 import knownGenes from '../../../data/knownGenes'
 import Model from '../../models/Model';
 var model = new Model();
+import ClinPhen from './ClinPhen.vue'
+
 
 // var fs = require('fs');
 
@@ -332,7 +374,8 @@ var model = new Model();
       'HelpMenu': HelpMenu,
       'Overview':Overview,
       'Footer': Footer,
-      'AddGenes': AddGenes
+      'AddGenes': AddGenes,
+      'ClinPhen' : ClinPhen
     },
     props: {
       paramLaunchedFromClin: null
@@ -421,13 +464,16 @@ var model = new Model();
         byPassedGenesDialog: false,
         genesToCopy: "",
         gtrCompleteGeneList: [],
-        phenolyzerCompleteGeneLis: [],
+        phenolyzerCompleteGeneList: [],
         summaryGenes: [],
         individualGenesSearchTermGtr:{},
         individualGenesSearchTermPhenolyzer: [],
         AllSelectedGtrPanels: [],
         individualGtrPanelsSearchObj: {},
-        selectedObj: {}
+        selectedObj: {},
+        clinPhenSelectedGenes: [],
+        hpoClinPhenTerms: [],
+        summaryAllGenes:[],
       }
     },
     watch: {
@@ -659,7 +705,7 @@ var model = new Model();
 
       },
       PhenolyzerFullGeneList: function(e){
-        this.phenolyzerCompleteGeneLis = e;
+        this.phenolyzerCompleteGeneList = e;
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
@@ -750,11 +796,12 @@ var model = new Model();
           return {
             Rank: gene.SummaryIndex,
             Gene_name: gene.name,
-            Sources: gene.sources,
+            Sources: gene.sources.join(), //this is an array so need to convert it to string
             GTR_SearchTerms: this.checkIfEmpty(gene.searchTermArrayGTR.join()),
             Phenolyzer_searchTerms: this.checkIfEmpty(gene.searchTermPheno.join()),
             Gene_id: gene.geneId!==undefined?gene.geneId:"n/a",
             From_Gtr: gene.isGtr===true?"Yes":"No",
+            From_ClinPhen: gene.isClinPhen===true?"Yes":"No",
             From_Phenolyzer: gene.isPheno===true?"Yes":"No",
             From_AddedGene: gene.isImportedGenes===true?"Yes":"No"
           }
@@ -770,7 +817,7 @@ var model = new Model();
           useBom: true,
           // useKeysAsHeaders: true,
           filename: 'Genes',
-          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'Phenolyzer Gene', 'Added Gene']
+          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'ClinPhen Gene', 'Phenolyzer Gene', 'Added Gene']
         };
         const csvExporter = new ExportToCsv(options);
         csvExporter.generateCsv(clinData);
@@ -805,6 +852,19 @@ var model = new Model();
           searchTerms: [this.searchTermPhenotype]
         });
 
+      },
+      copyClinPhenGenes: function(){
+        var geneNames = this.clinPhenSelectedGenes.map(gene => {
+          return gene.gene;
+        })
+        var geneNamesToString = geneNames.toString();
+        var genesToCopy = geneNamesToString.replace(/,/gi , ' ');
+        this.$clipboard(genesToCopy);
+
+        if(this.clinPhenSelectedGenes.length>0){
+          this.snackbarText = " Number of Genes Copied : " + this.clinPhenSelectedGenes.length + " ";
+        }
+        this.snackbar=true;
       },
       sendGenesUsingSocket: function(){
         var genesToCopy = this.uniqueGenes.toString();
@@ -862,7 +922,7 @@ var model = new Model();
         this.genesToCopy = this.uniqueGenes.toString();
         this.getIndividualGeneList();
 
-        var clinData = this.summaryGenes.map(gene=> {
+        var clinData = this.summaryAllGenes.map(gene=> {
           return {
             name: gene.name,
             source: gene.sources,
@@ -931,7 +991,7 @@ var model = new Model();
         })
 
         var phenolyzerCompleteList = [];
-        this.phenolyzerCompleteGeneLis.map(gene=>{
+        this.phenolyzerCompleteGeneList.map(gene=>{
           phenolyzerCompleteList.push({
             name: gene.geneName,
             phenolyzerRank: gene.indexVal
@@ -1066,6 +1126,20 @@ var model = new Model();
           this.snackbar=true;
         }
       },
+      exportClinPhenGenes: function(){
+        var geneNames = this.clinPhenSelectedGenes.map(gene => {
+          return gene.gene;
+        })
+        var geneNamesToExport = geneNames.toString();
+        if(this.clinPhenSelectedGenes.length>0){
+          var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
+          FileSaver.saveAs(blob, "ClinPhen Genes.txt");
+        }
+        else {
+          this.snackbarText = "You need to select genes inorder to use this feature";
+          this.snackbar=true;
+        }
+      },
       exportAllGenes: function(){
           var geneNamesToExport = this.uniqueGenes.toString();
           if(this.uniqueGenes.length>0){
@@ -1161,6 +1235,15 @@ var model = new Model();
       },
       clearAllFromClin: function(){
         this.newAnalysisDialog = true;
+      },
+      ClinPhenGenes:function(genes){
+        this.clinPhenSelectedGenes = genes;
+      },
+      clinphenTerms: function(terms){
+        this.hpoClinPhenTerms = terms;
+      },
+      summaryGenesFullList: function(genes){
+        this.summaryAllGenes = genes;
       }
 
     }
