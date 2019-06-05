@@ -289,7 +289,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       gtrCompleteGeneList: {
         type: Array
       },
-
+      phenolyzerCompleteGeneList: {
+        type: Array
+      }
     },
     data: () => ({
       gradient: 'to top, #7B1FA2, #E1BEE7',
@@ -334,7 +336,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       resourcesUsed: {},
       gtrFullGeneList:[],
       summaryTableArrayFullList: [],
-      GtrGenesArrFullList: []
+      GtrGenesArrFullList: [],
+      PhenolyzerFullGeneList: [],
+      PhenolyzerGenesArrFullList: [],
     }),
     watch: {
       genesTop: function(){
@@ -384,11 +388,18 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.HpoTerms = this.hpoClinPhenTerms;
       },
       gtrCompleteGeneList: function(){
+        console.log(" gtrCompleteGeneList watching", this.gtrCompleteGeneList)
         this.gtrFullGeneList = [];
         this.summaryTableArrayFullList = [];
         this.gtrFullGeneList = this.gtrCompleteGeneList;
         this.performSetOperationsFullList();
-
+      },
+      phenolyzerCompleteGeneList: function(){
+        console.log(" phenolyzerCompleteGeneLis watching", this.phenolyzerCompleteGeneList)
+        this.PhenolyzerFullGeneList = [];
+        this.summaryTableArrayFullList = [];
+        this.PhenolyzerFullGeneList = this.phenolyzerCompleteGeneList;
+        this.performSetOperationsFullList();
       },
     },
     created(){
@@ -522,10 +533,12 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         uniqueGenes.map((x,i)=>{
           if(phenolyzerGenes.includes(x)){
             var idx = phenolyzerGenes.indexOf(x);
+            console.log("summaryGenes[i].geneId", summaryGenes[i].geneId)
             summaryGenes[i].isPheno = true;
             summaryGenes[i].noOfSources++;
             summaryGenes[i].sources.push("Pheno");
-            summaryGenes[i].geneId =  this.PhenolyzerGenes[idx].geneid;
+            // summaryGenes[i].geneId =  this.PhenolyzerGenes[idx].geneid;
+            summaryGenes[i].geneId =  summaryGenes[i].geneId === "" ? this.PhenolyzerGenes[idx].geneId : summaryGenes[i].geneId;
             summaryGenes[i].score =  this.PhenolyzerGenes[idx].score;
             summaryGenes[i].searchTermPheno =  this.PhenolyzerGenes[idx].searchTerm;
             summaryGenes[i].searchTermIndex =  this.PhenolyzerGenes[idx].searchTermIndex;
@@ -1166,10 +1179,10 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.GtrGenesArrFullList = gtrGenes;
 
         //Create an array of Phenolyzer Gene Names
-        var phenolyzerGenes = this.PhenolyzerGenes.map(gene => {
+        var phenolyzerGenes = this.PhenolyzerFullGeneList.map(gene => {
           return gene.geneName
         })
-        this.PhenolyzerGenesArr = phenolyzerGenes;
+        this.PhenolyzerGenesArrFullList = phenolyzerGenes;
 
         //Create an array of ClinPhen Gene Names
         var clinPhenGenes = this.clinPhenSelectedGenes.map(x=>{
@@ -1255,21 +1268,25 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         uniqueGenes.map((x,i)=>{
           if(phenolyzerGenes.includes(x)){
             var idx = phenolyzerGenes.indexOf(x);
+            console.log("summaryGenes[i].geneId", summaryGenes[i].geneId)
+            console.log("this.PhenolyzerFullGeneList[i].geneId", this.PhenolyzerFullGeneList[idx].geneId)
+
             summaryGenes[i].isPheno = true;
             summaryGenes[i].noOfSources++;
             summaryGenes[i].sources.push("Pheno");
-            summaryGenes[i].geneId =  this.PhenolyzerGenes[idx].geneid;
-            summaryGenes[i].score =  this.PhenolyzerGenes[idx].score;
-            summaryGenes[i].searchTermPheno =  this.PhenolyzerGenes[idx].searchTerm;
-            summaryGenes[i].searchTermIndex =  this.PhenolyzerGenes[idx].searchTermIndex;
-            summaryGenes[i].sourcePheno =  this.PhenolyzerGenes[idx].searchTermIndexSVG;
-            summaryGenes[i].omimSrc =  this.PhenolyzerGenes[idx].omimSrc;
-            summaryGenes[i].medGenSrc =  this.PhenolyzerGenes[idx].medGenSrc;
-            summaryGenes[i].geneCardsSrc =  this.PhenolyzerGenes[idx].geneCardsSrc;
-            summaryGenes[i].ghrSrc =  this.PhenolyzerGenes[idx].ghrSrc;
-            summaryGenes[i].clinGenLink =  this.PhenolyzerGenes[idx].clinGenLink;
-            summaryGenes[i].geneIdLink =  this.PhenolyzerGenes[idx].geneIdLink;
-            summaryGenes[i].geneRankPhenolyzer = this.PhenolyzerGenes[idx].indexVal;
+            // summaryGenes[i].geneId =  this.PhenolyzerFullGeneList[idx].geneId;
+            summaryGenes[i].geneId =  summaryGenes[i].geneId === "" ? this.PhenolyzerFullGeneList[idx].geneId : summaryGenes[i].geneId;
+            summaryGenes[i].score =  this.PhenolyzerFullGeneList[idx].score;
+            summaryGenes[i].searchTermPheno =  this.PhenolyzerFullGeneList[idx].searchTerm;
+            summaryGenes[i].searchTermIndex =  this.PhenolyzerFullGeneList[idx].searchTermIndex;
+            summaryGenes[i].sourcePheno =  this.PhenolyzerFullGeneList[idx].searchTermIndexSVG;
+            summaryGenes[i].omimSrc =  this.PhenolyzerFullGeneList[idx].omimSrc;
+            summaryGenes[i].medGenSrc =  this.PhenolyzerFullGeneList[idx].medGenSrc;
+            summaryGenes[i].geneCardsSrc =  this.PhenolyzerFullGeneList[idx].geneCardsSrc;
+            summaryGenes[i].ghrSrc =  this.PhenolyzerFullGeneList[idx].ghrSrc;
+            summaryGenes[i].clinGenLink =  this.PhenolyzerFullGeneList[idx].clinGenLink;
+            summaryGenes[i].geneIdLink =  this.PhenolyzerFullGeneList[idx].geneIdLink;
+            summaryGenes[i].geneRankPhenolyzer = this.PhenolyzerFullGeneList[idx].indexVal;
           }
           else {
             summaryGenes[i].isPheno = false;
@@ -1485,7 +1502,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.$emit('summaryGenesFullList', this.summaryTableArrayFullList);
       },
       drawVennDiagram(){
-        console.log("should be here!")
         d3.select("#venn").select("svg").remove();
         var x = require('venn.js')
         var chart = x.VennDiagram()

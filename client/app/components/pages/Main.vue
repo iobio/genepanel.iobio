@@ -330,6 +330,7 @@
               v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
               v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
               v-on:summaryGenesFullList="summaryGenesFullList($event)"
+              v-bind:phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
               v-bind:isMobile="isMobile">
             </SummaryTab>
           </keep-alive>
@@ -464,7 +465,7 @@ import ClinPhen from './ClinPhen.vue'
         byPassedGenesDialog: false,
         genesToCopy: "",
         gtrCompleteGeneList: [],
-        phenolyzerCompleteGeneLis: [],
+        phenolyzerCompleteGeneList: [],
         summaryGenes: [],
         individualGenesSearchTermGtr:{},
         individualGenesSearchTermPhenolyzer: [],
@@ -705,7 +706,7 @@ import ClinPhen from './ClinPhen.vue'
 
       },
       PhenolyzerFullGeneList: function(e){
-        this.phenolyzerCompleteGeneLis = e;
+        this.phenolyzerCompleteGeneList = e;
       },
       updatePhenolyzerGenes:function(e){
         this.selectedPhenolyzerGenes = e;
@@ -991,7 +992,7 @@ import ClinPhen from './ClinPhen.vue'
         })
 
         var phenolyzerCompleteList = [];
-        this.phenolyzerCompleteGeneLis.map(gene=>{
+        this.phenolyzerCompleteGeneList.map(gene=>{
           phenolyzerCompleteList.push({
             name: gene.geneName,
             phenolyzerRank: gene.indexVal
