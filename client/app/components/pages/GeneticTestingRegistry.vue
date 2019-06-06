@@ -860,7 +860,7 @@
         </v-flex>
         <br>
 <!-- style="visibility:hidden; height:0px" -->
-        <v-flex v-if="diseasesProps.length" d-flex xs12 sm12 md12 >
+        <v-flex v-if="diseasesProps.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
           <v-card >
             <v-card-title primary class="title">Panels</v-card-title>
             <v-card-text>
@@ -899,7 +899,7 @@
         </v-flex>
         <br>
 
-        <v-flex v-if="diseasesPropsIndividual.length" d-flex xs12 sm12 md12 >
+        <v-flex v-if="diseasesPropsIndividual.length" d-flex xs12 sm12 md12 style="visibility:hidden; height:0px">
           <v-card >
             <v-card-title primary class="title">Panels</v-card-title>
             <v-card-text>

@@ -141,6 +141,7 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
+import hpo_genes from '../../../data/hpo_genes.json';
 
 var model = new Model();
 
@@ -152,8 +153,18 @@ var model = new Model();
     data(){
       return {
         gradient: 'to top,  #0D47A1,#42A5F5',
-        panelsDefinitionValues: [20, 45]
+        panelsDefinitionValues: [20, 45],
+        notes: "",
+        HpoTerms: [],
+        multipleSearchTerms: [],
+        HpoGenesData: null,
+        items: [],
+        setsData: [],
+
       }
+    },
+    mounted(){
+      this.HpoGenesData = hpo_genes;
     },
     updated(){
 

@@ -61,6 +61,13 @@
                 </span>
               </center>
             </td>
+            <!-- <td>
+              <center>
+                <span v-if="props.item.isClinPhen">
+                  <v-icon style="color:#455A64">check_circle_outline</v-icon>
+                </span>
+              </center>
+            </td> -->
             <td>
               <center>
                 <span v-for="x in props.item.sourceGTR">
@@ -198,6 +205,7 @@ import Sortable from 'sortablejs';
         { text: 'Number', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
+        // { text: 'ClinPhen', align: 'left', sortable: false, value: 'isClinPhen' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
@@ -331,6 +339,8 @@ import Sortable from 'sortablejs';
           this.selectedTemp = this.selected;
           this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
           bus.$emit("updateAllGenes", this.selected);
+          // console.log("selected summary", this.selected)
+
         }
 
       },

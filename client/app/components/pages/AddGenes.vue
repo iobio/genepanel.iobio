@@ -71,7 +71,7 @@
                 <v-card-text>
                   Genes:
                   <br>
-                  <v-chip disabled  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
+                  <v-chip  color="primary" text-color="white" close v-for="(gene, i) in genes" :key="i" @input="remove(gene)">
                     {{ i+1 }}. {{ gene }}
                   </v-chip>
                 </v-card-text>
@@ -245,6 +245,7 @@ var geneModel = new GeneModel();
       remove(gene){
         this.genes.splice(this.genes.indexOf(gene), 1)
         this.genes = [...this.genes];
+        this.$emit("importedGenes", this.genes);
       },
       onApplyGenes(){
         this.copyPasteGenes = false;
@@ -270,11 +271,9 @@ var geneModel = new GeneModel();
         })
 
         if(byPassedGenesArr.length>0){
-          console.log("" + byPassedGenesArr.join(" , ") + "  ");
           this.byPassedGenes = "" + byPassedGenesArr.join(" , ") + "  ";
         }
         if(duplicateGenes.length>0){
-          console.log("" + duplicateGenes.join(" , ") + "  ");
           this.dupGenes = "" + duplicateGenes.join(" , ") + "  ";
         }
 
