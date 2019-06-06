@@ -128,6 +128,7 @@
                       class="elevation-1"
                       v-bind:search="search"
                       no-data-text="No pheotype genes Available Currently"
+                      :custom-filter="filterItemsOnSearchClinPhen"
                     >
                     <template slot="headers" slot-scope="props">
                       <tr>
@@ -143,7 +144,33 @@
                         <th v-for="header in props.headers" :key="header.text"
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
-                          {{ header.text }}
+                          <!-- {{ header.text }} -->
+                          <span v-if="header.text==='Gene Name'">
+                           <div v-show="!openSearchBox">
+                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
+                           </div>
+                           <div v-show="openSearchBox">
+                             <v-layout >
+                               <v-flex xs8 style="margin-top:-30px">
+                                 <div id="geneSearchBoxPhenolyzer">
+                                   <v-text-field
+                                     label="Search for Gene"
+                                     prepend-icon="search"
+                                     single-line
+                                     hide-details
+                                     v-model="search"
+                                   ></v-text-field>
+                                 </div>
+                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
+                               </v-flex>
+                               <v-flex xs1>
+                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
+                               </v-flex>
+                             </v-layout>
+                           </div>
+                          </span>
+                          <span v-else>{{ header.text }}</span>
+
                         </th>
                       </tr>
                     </template>
@@ -434,6 +461,8 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             sortable: false,
           }
         ],
+        openSearchBox: false,
+        search: '',
       }
     },
     beforeCreate(){
@@ -599,6 +628,14 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       toggleAll () { //Data Table
         if (this.selected.length) this.selected = []
         else this.selected = this.items.slice()
+      },
+      filterItemsOnSearchClinPhen(items, search, filter) {
+        search = search.toString().toLowerCase()
+        return items.filter(row => filter(row["gene"], search));
+      },
+      closeSearchBox: function(){
+        this.search = "";
+        this.openSearchBox=false;
       },
     }
   }

@@ -72,7 +72,7 @@
           </v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
-      <!-- <v-list-tile
+      <v-list-tile
         v-bind:class="[component==='ClinPhen' ? 'activeTab' : '']"
         @click="selectComponent('ClinPhen')">
         <v-list-tile-action v-bind:class="[component==='ClinPhen' ? 'margin_ActiveTab' : '']">
@@ -87,7 +87,7 @@
             </v-badge>
           </v-list-tile-title>
          </v-list-tile-content>
-       </v-list-tile> -->
+       </v-list-tile>
 
        <v-list-tile
           v-bind:class="[component==='AddGenes' ? 'activeTab' : '']"
