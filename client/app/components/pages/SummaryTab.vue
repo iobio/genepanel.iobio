@@ -176,7 +176,7 @@
                         :totalNumber="totalGenes">
                        </SvgBar>
                        <br>
-                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
+                       <!-- <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
                            <v-flex xs6>
                              <div class="Rightbar_card_content_subheading" style="margin-left:10px">
@@ -195,16 +195,16 @@
                              </div>
                            </v-flex>
                          </v-layout>
-                       </div>
+                       </div> -->
                      </v-card-text>
                     </v-card>
                   </div>
 
-                  <!-- <div class="d-flex mb-2 xs12">
+                  <div class="d-flex mb-2 xs12">
                     <v-card>
                       <div id="venn"></div>
                     </v-card>
-                  </div> -->
+                  </div>
 
                   <br>
                 </div>
@@ -640,7 +640,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         for(var i=0; i<summaryGenes.length; i++){
           if(summaryGenes[i].sources.length===4){
             allSourcesGenes.push(summaryGenes[i]);
-            summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
+            summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count++;
             summaryObj.gtr.count++;
             summaryObj.phenolyzer.count++;
             summaryObj.ImportedGenes.count++;
@@ -765,7 +765,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         }
         var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         this.summaryTableArray = tableGenes;
-        // this.generateVennDiagramData(summaryObj);
+        this.generateVennDiagramData(summaryObj);
         this.pieChartdataArr = [
           {
             name: "Unique to GTR",
@@ -803,19 +803,19 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           "data": [
             {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
             {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
-            {"sets" : [2], "label" : "Imported", "size" : summaryObj.ImportedGenes.count},
+            {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count},
             {"sets" : [3], "label" : "ClinPhen", "size":summaryObj.ClinPhen.count},
             {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
             {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
-            {"sets" : [0,3], "size":summaryObj.gtr_ClinPhen.count},
-            {"sets" : [1,2], "size":summaryObj.phenolyzer_ImportedGenes.count},
-            {"sets" : [1,3], "size":summaryObj.phenolyzer_ClinPhen.count},
-            {"sets" : [2,3], "size":summaryObj.ImportedGenes_ClinPhen.count},
+            {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count},
+            {"sets" : [1,2],  "size":summaryObj.phenolyzer_ImportedGenes.count},
+            {"sets" : [1,3],  "size":summaryObj.phenolyzer_ClinPhen.count},
+            {"sets" : [2,3],  "size":summaryObj.ImportedGenes_ClinPhen.count},
             {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2], "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
-            {"sets" : [0,1,3], "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
-            {"sets" : [1,2,3], "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2,3], "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen}
+            {"sets" : [0,1,2],  "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
+            {"sets" : [0,1,3],  "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
+            {"sets" : [1,2,3],  "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
+            {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count}
           ]
         }
         // if(Object.keys(this.resourcesUsed).length>1){

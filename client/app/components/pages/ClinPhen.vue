@@ -490,7 +490,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
     },
     watch: {
       searchInput: function(){
-        console.log("this.searchInput", this.searchInput)
         if(this.searchInput===undefined){
           this.submitButtonEnabled = false;
         }
@@ -518,7 +517,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         else {
           alert("This HPO Term already exists");
         }
-        console.log("this.multipleSearchTerms", this.multipleSearchTerms);
       },
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
@@ -542,7 +540,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         var count = 0;
         var hpoTermArr = [];
         var terms = [];
-        console.log("parseTerms called", res);
         res.split("\n").forEach(function(rec){
           var fields = rec.split("\t");
           if(fields.length===5){
@@ -604,7 +601,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
           }
         })
         this.checked = false;
-        console.log("this.items", this.items);
         this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
         this.selected = this.items.slice();
