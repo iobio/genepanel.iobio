@@ -36,6 +36,7 @@
                         class="form-control"
                         type="text"
                         autocomplete="off"
+                        v-on:focus="ClearInputForNewSearch"
                         placeholder="Search phenotype (E.g. Ataxia)">
                       <typeahead
                         v-model="searchInput"
@@ -643,6 +644,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       closeSearchBox: function(){
         this.search = "";
         this.openSearchBox=false;
+      },
+      ClearInputForNewSearch: function(){
+        this.searchInput = "";
+        document.getElementById("hpo_input").value="";
+        document.getElementById("hpo_input").focus();
       },
     }
   }
