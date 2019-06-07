@@ -48,6 +48,7 @@
 
                     </div>
                     <v-btn
+                        :class="{'disable-events': !submitButtonEnabled}"
                         style="margin-top:-0.35px; text-transform: none"
                         class="btnColor"
                         v-on:click="searchForTheInputTerm"
@@ -463,6 +464,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         ],
         openSearchBox: false,
         search: '',
+        submitButtonEnabled: false,
       }
     },
     beforeCreate(){
@@ -487,6 +489,15 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       this.$emit("ClinPhenGenes", this.selected);
     },
     watch: {
+      searchInput: function(){
+        console.log("this.searchInput", this.searchInput)
+        if(this.searchInput===undefined){
+          this.submitButtonEnabled = false;
+        }
+        else {
+          this.submitButtonEnabled = true;
+        }
+      }
     },
     methods: {
       searchForTheInputTerm(){
@@ -649,6 +660,9 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
 
   @import ../assets/sass/variables
 
+  .disable-events
+    pointer-events: none
+
   #hpo_input
     width: 600px
     height: 40px
@@ -684,4 +698,5 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
 
     .btnColor
       margin-top: 2px
+
 </style>
