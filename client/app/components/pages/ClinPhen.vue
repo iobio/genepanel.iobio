@@ -37,7 +37,7 @@
                         type="text"
                         autocomplete="off"
                         v-on:focus="ClearInputForNewSearch"
-                        placeholder="Search phenotype (E.g. Ataxia)">
+                        placeholder="Search phenotype (E.g. Mandibulofacial dysostosis)">
                       <typeahead
                         v-model="searchInput"
                         hide-details="false"

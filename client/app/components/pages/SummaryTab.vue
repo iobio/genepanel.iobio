@@ -200,7 +200,11 @@
                     </v-card>
                   </div>
 
-                  <div class="d-flex mb-2 xs12">
+                  <div class="d-flex mb-2 xs12"
+                    v-show="(GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0) ||
+                          (GtrGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
+                          (PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
+                          (GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0)">
                     <v-card>
                       <div id="venn"></div>
                     </v-card>
@@ -818,11 +822,11 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count}
           ]
         }
-        // if(Object.keys(this.resourcesUsed).length>1){
-        //   this.drawVennDiagram();
-        // }
 
-        if(this.GtrGenesArr.length>0 || this.PhenolyzerGenesArr.length>0 ||  this.manuallyAddedGenes.length>0 || this.clinPhenGenesArr.length>0){
+        if((this.GtrGenesArr.length>0 && this.PhenolyzerGenesArr.length>0) ||
+              (this.GtrGenesArr.length>0 && this.clinPhenSelectedGenes.length>0) ||
+              (this.PhenolyzerGenesArr.length>0 && this.clinPhenSelectedGenes.length>0) ||
+              (this.GtrGenesArr.length>0 && this.PhenolyzerGenesArr.length>0 && this.clinPhenSelectedGenes.length>0)){
           this.drawVennDiagram();
         }
         else {
