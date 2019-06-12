@@ -594,6 +594,17 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             }
            })
         }
+        else if(criteria==="gtr_value"){
+          genes.sort(function(a,b){
+            if (a.value===b.value){
+               return (b.value.value);
+            } else if(a.value<b.value){
+               return 1;
+            } else if(a.value>b.value){
+               return -1;
+            }
+           })
+        }
         return genes;
       },
       createSummaryTableData(summaryGenes){
@@ -793,11 +804,12 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 i--;
           }
         }
+        console.log("uniqueGTR", uniqueGTR)
         // var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         var tableGenes = [
           ...this.sortGenes(allSourcesGenes,"phenolyzer_score"),
-          ...this.sortGenes(GtrPhenoAdded,"phenolyzer_score"), ...GtrAddedClinPhenGenes, ...this.sortGenes(PhenoAddedClinPhenGenes, "phenolyzer_score"),
-          ...gtrAddedGenes, ...this.sortGenes(phenoAddedGenes,"phenolyzer_score"), ...AddedClinPhenGenes,
+          ...this.sortGenes(GtrPhenoAdded,"phenolyzer_score"), ...this.sortGenes(GtrAddedClinPhenGenes,"gtr_value"), ...this.sortGenes(PhenoAddedClinPhenGenes, "phenolyzer_score"),
+          ...this.sortGenes(gtrAddedGenes,"gtr_value"), ...this.sortGenes(phenoAddedGenes,"phenolyzer_score"), ...AddedClinPhenGenes,
           ...uniqueAddedGenes,...this.sortGenes(GtrPhenoClinPhenGenes, "phenolyzer_score"),
           ...this.sortGenes(gtrPhenoGenes, "phenolyzer_score"), ...gtrClinPhenGenes,
           ...this.sortGenes(phenoClinPhenGenes, "phenolyzer_score"),
