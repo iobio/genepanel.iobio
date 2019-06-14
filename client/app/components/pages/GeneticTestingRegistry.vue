@@ -51,7 +51,45 @@
                                   </span>
                                   <v-divider class="Rightbar_card_divider"></v-divider>
                                   <span class="Rightbar_card_content_subheading">
-                                    <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong> of {{ TotalGtrGenes }} genes selected
+                                    <span v-if="!openEditBoxGtr">
+                                      <strong class="Rightbar_card_content_heading">{{ GtrGenesTabNumber }}</strong>
+                                    </span>
+                                    <span v-else>
+                                      <div style="display:inline-block; padding-top:5px;">
+                                        <input
+                                          id="top-genes-gtr"
+                                          class="form-control"
+                                          style="margin-bottom:8px; width:82%"
+                                          type="text"
+                                          v-model="NumberOfTopGenes"
+                                          autocomplete="off"
+                                          list="genes">
+                                          <datalist id="genes">
+                                            <option v-for="genesCount in genesTopCounts">
+                                              {{ genesCount }}
+                                            </option>
+                                          </datalist>
+                                      </div>
+                                    </span>
+                                      of {{ TotalGtrGenes }} genes selected
+                                      <v-tooltip bottom v-if="!openEditBoxGtr">
+                                       <v-icon
+                                         slot="activator"
+                                         v-on:click="OpenGtrGenesSelectionBox"
+                                       >
+                                         edit
+                                       </v-icon>
+                                       <span>Edit the number of genes selected</span>
+                                     </v-tooltip>
+                                     <v-tooltip bottom v-else>
+                                      <v-icon
+                                        slot="activator"
+                                        v-on:click="openEditBoxGtr=false"
+                                      >
+                                        close
+                                      </v-icon>
+                                      <span>Close the edit box</span>
+                                    </v-tooltip>
                                   </span>
                                 </center>
                                 <div class="text-xs-center">
@@ -1086,6 +1124,8 @@ export default {
       associatedGenesIndividual: [],
       currentSearchedTerm: "",
       panelsSearchTermObj: {},
+      openEditBoxGtr: false,
+      genesTopCounts: [5, 10, 30, 50, 80, 100],
       // browser: null,
       // isMobile: false,
     }
@@ -1694,6 +1734,10 @@ export default {
       this.lowerLimitInput = this.lowerLimitProps;
       this.panelsDefinitionValues = [this.lowerLimitInput, this.upperLimitInput]
     },
+    OpenGtrGenesSelectionBox: function(){
+      this.openEditBoxGtr = true;
+      this.NumberOfTopGenes = this.GtrGenesTabNumber;
+    }
   }
 }
 </script>

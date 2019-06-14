@@ -81,7 +81,7 @@
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title v-bind:class="[component==='ClinPhen' ? 'activeTabText' : '']">
-          ClinPhen
+          ClinPhen & HPO terms
             <v-badge color="primary darken-1" right class="badge-bg-color">
             <span  slot="badge">{{ clinPhenSelectedGenes.length }}</span>
             </v-badge>

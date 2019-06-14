@@ -515,7 +515,7 @@ var model = new Model();
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
-        this.flagForNumberOfGenesSelected = true;
+        // this.flagForNumberOfGenesSelected = true;
         this.NumberOfGenesSelectedFromFilter = data;
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);
