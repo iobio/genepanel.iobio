@@ -30,14 +30,14 @@
                       ------ <i>OR</i> ------
                     </p>
                     <div id="HPOInput" style="display:inline-block; padding-top:5px;">
-                      <label>Enter Phenotype</label>
+                      <label>Enter Phenotype or HPO term</label>
                       <input
                         id="hpo_input"
                         class="form-control"
                         type="text"
                         autocomplete="off"
                         v-on:focus="ClearInputForNewSearch"
-                        placeholder="Search phenotype (E.g. Mandibulofacial dysostosis)">
+                        placeholder="Search phenotype (Mandibulofacial dysostosis) or HPO term (HP:0005321)">
                       <typeahead
                         v-model="searchInput"
                         hide-details="false"
