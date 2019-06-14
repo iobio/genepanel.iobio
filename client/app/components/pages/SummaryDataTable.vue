@@ -49,6 +49,7 @@
             <td><v-btn style="cursor: move" icon class="sortHandle"><v-icon>drag_handle</v-icon></v-btn></td>
             <td>{{ props.item.SummaryIndex}}</td>
             <td>
+              <!-- <span style="font-size:14px; font-weight:600; margin-top:2px" @click="showGeneInfo(props.item)" slot="activator">{{ props.item.name }}</span> -->
               <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
               <span v-if="props.item.isAssociatedGene===true">
                 <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
@@ -168,6 +169,19 @@
       </v-data-table>
     </div>
     <br>
+    <v-dialog v-model="dialog" scrollable max-width="300px">
+       <v-card>
+         <v-card-title>Gene</v-card-title>
+         <v-divider></v-divider>
+         <v-card-text>
+           {{clickedGene.name}}
+         </v-card-text>
+         <v-divider></v-divider>
+         <v-card-actions>
+           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
+         </v-card-actions>
+       </v-card>
+     </v-dialog>
   </div>
 </template>
 
@@ -216,7 +230,9 @@ import Sortable from 'sortablejs';
       selectedGenesText: "",
       associatedGenesData : [],
       clinGenesSummaryData: [],
-      includeClinGenes: 0
+      includeClinGenes: 0,
+      dialog: false,
+      clickedGene: {}
     }),
     watch: {
       summaryTableData: function(){
@@ -375,6 +391,10 @@ import Sortable from 'sortablejs';
           this.pagination.descending = false
         }
       },
+      showGeneInfo(gene){
+        this.dialog = true;
+        this.clickedGene = gene;
+      }
     }
   }
 </script>

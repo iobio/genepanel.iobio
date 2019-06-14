@@ -424,6 +424,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.selected = [];
         this.items = [];
         this.HpoTerms = [];
+        this.geneSearch = ''; 
       });
     },
     methods: {
@@ -804,7 +805,6 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 i--;
           }
         }
-        console.log("uniqueGTR", uniqueGTR)
         // var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         var tableGenes = [
           ...this.sortGenes(allSourcesGenes,"phenolyzer_score"),
