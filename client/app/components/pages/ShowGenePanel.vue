@@ -29,7 +29,6 @@
       >
         Genes marked with the <v-icon style="font-size:20px">verified_user</v-icon> icon are reported to be associated with the condition; it is possible that they do not appear on any panels that test for the condition. These genes will always appear at the top of the gene list.
       </v-alert>
-
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -63,7 +62,7 @@
                   <v-flex xs1 style="margin-top:40px; padding-left:20px">
                     <small >{{minSliderValue}}</small>
                   </v-flex>
-                  <v-flex xs10 style="padding-top:12px">
+                  <v-flex xs8 style="padding-top:12px">
                     <div >
                       <v-slider
                          v-if="sliderValue>=0"
@@ -78,12 +77,35 @@
                          v-on:change="sliderClicked"
                       ></v-slider>
                     </div>
-                    <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
+                    <div style="margin-top:-20px; padding-bottom:10px">
+                      <center>
+                        {{header.text}}
+                        <v-tooltip bottom>
+                          <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
+                          <span>The slider above sets the cut off value for the panels. Ex. If the slider value is 12, all the genes present in 12 or more panels are selected.</span>
+                        </v-tooltip>
+                      </center>
+                    </div>
 
                   </v-flex>
                   <v-flex xs1 style="margin-top:40px;">
                     <small >{{maxSliderValue}}</small>
-
+                  </v-flex>
+                  <v-flex xs2>
+                    <v-flex>
+                      <v-text-field
+                        style="font-size:14px"
+                        v-model="sliderValue"
+                        class="mt-0"
+                        type="number"
+                      ></v-text-field>
+                      <v-tooltip bottom>
+                        <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
+                        <span>This numeric entry can be used to set the slider value.</span>
+                      </v-tooltip>
+                    </v-flex>
+                  </v-flex>
+                  <v-flex>
                   </v-flex>
                 </v-layout>
               </span>
@@ -109,6 +131,8 @@
                    </v-flex>
                  </v-layout>
                </div>
+              </span>
+              <span v-else-if="header.text===''" >
               </span>
               <span v-else>{{ header.text }}</span>
 
@@ -491,7 +515,7 @@ var model = new Model();
       },
       filterGenesOnSelectedNumber(data){
         this.selected = this.items.slice(0, data);
-        this.flagForNumberOfGenesSelected = true;
+        // this.flagForNumberOfGenesSelected = true;
         this.NumberOfGenesSelectedFromFilter = data;
         this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
         this.$emit("UpdateSelectedGenesText", this.selectedGenesText);

@@ -176,7 +176,7 @@
                         :totalNumber="totalGenes">
                        </SvgBar>
                        <br>
-                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
+                       <!-- <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
                            <v-flex xs6>
                              <div class="Rightbar_card_content_subheading" style="margin-left:10px">
@@ -195,16 +195,20 @@
                              </div>
                            </v-flex>
                          </v-layout>
-                       </div>
+                       </div> -->
                      </v-card-text>
                     </v-card>
                   </div>
 
-                  <!-- <div class="d-flex mb-2 xs12">
+                  <div class="d-flex mb-2 xs12"
+                    v-show="(GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0) ||
+                          (GtrGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
+                          (PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
+                          (GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0)">
                     <v-card>
                       <div id="venn"></div>
                     </v-card>
-                  </div> -->
+                  </div>
 
                   <br>
                 </div>
@@ -420,6 +424,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.selected = [];
         this.items = [];
         this.HpoTerms = [];
+        this.geneSearch = ''; 
       });
     },
     methods: {
@@ -578,6 +583,31 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
         this.createSummaryTableData(summaryGenes);
       },
+      sortGenes(genes, criteria){
+        if(criteria==="phenolyzer_score"){
+          genes.sort(function(a,b){
+            if (a.score===b.score){
+               return (b.score-a.score);
+            } else if(a.score<b.score){
+               return 1;
+            } else if(a.score>b.score){
+               return -1;
+            }
+           })
+        }
+        else if(criteria==="gtr_value"){
+          genes.sort(function(a,b){
+            if (a.value===b.value){
+               return (b.value.value);
+            } else if(a.value<b.value){
+               return 1;
+            } else if(a.value>b.value){
+               return -1;
+            }
+           })
+        }
+        return genes;
+      },
       createSummaryTableData(summaryGenes){
         var allSourcesGenes = [];
         var threeSourcesGenes = [];
@@ -588,8 +618,14 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         var uniqueAddedGenes = [];
         var gtrPhenoGenes = [];
         var gtrAddedGenes = [];
+        var gtrClinPhenGenes = [];
         var phenoAddedGenes = [];
+        var phenoClinPhenGenes = [];
+        var AddedClinPhenGenes = [];
         var GtrPhenoAdded = [];
+        var GtrPhenoClinPhenGenes = [];
+        var GtrAddedClinPhenGenes = [];
+        var PhenoAddedClinPhenGenes = [];
         var summaryObj = {
           gtr: {
             count: 0
@@ -640,7 +676,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         for(var i=0; i<summaryGenes.length; i++){
           if(summaryGenes[i].sources.length===4){
             allSourcesGenes.push(summaryGenes[i]);
-            summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen++;
+            summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count++;
             summaryObj.gtr.count++;
             summaryObj.phenolyzer.count++;
             summaryObj.ImportedGenes.count++;
@@ -671,6 +707,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               summaryObj.gtr_phenolyzer.count++;
             }
             else if(!summaryGenes[i].sources.includes("ImportedGenes")){
+              GtrPhenoClinPhenGenes.push(summaryGenes[i])
               summaryObj.gtr_phenolyzer_ClinPhen.count++;
               summaryObj.phenolyzer.count++;
               summaryObj.gtr.count++;
@@ -680,6 +717,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               summaryObj.gtr_phenolyzer.count++;
             }
             else if(!summaryGenes[i].sources.includes("Pheno")){
+              GtrAddedClinPhenGenes.push(summaryGenes[i]);
               summaryObj.gtr_ImportedGenes_ClinPhen.count++;
               summaryObj.gtr.count++;
               summaryObj.ImportedGenes.count++;
@@ -689,6 +727,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               summaryObj.ImportedGenes_ClinPhen.count++;
             }
             else if(!summaryGenes[i].sources.includes("GTR")){
+              PhenoAddedClinPhenGenes.push(summaryGenes[i]);
               summaryObj.phenolyzer_ImportedGenes_ClinPhen.count++;
               summaryObj.phenolyzer.count++;
               summaryObj.ImportedGenes.count++;
@@ -715,6 +754,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               summaryObj.gtr.count++;
             }
             else if(summaryGenes[i].sources.includes("GTR") && summaryGenes[i].sources.includes("ClinPhen")){
+              gtrClinPhenGenes.push(summaryGenes[i])
               summaryObj.gtr_ClinPhen.count++;
               summaryObj.gtr.count++;
               summaryObj.ClinPhen.count++;
@@ -726,11 +766,13 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
               summaryObj.phenolyzer.count++;
             }
             else if(summaryGenes[i].sources.includes("Pheno") && summaryGenes[i].sources.includes("ClinPhen")){
+              phenoClinPhenGenes.push(summaryGenes[i])
               summaryObj.phenolyzer_ClinPhen.count++;
               summaryObj.phenolyzer.count++;
               summaryObj.ClinPhen.count++;
             }
             else if(summaryGenes[i].sources.includes("ImportedGenes") && summaryGenes[i].sources.includes("ClinPhen")){
+              AddedClinPhenGenes.push(summaryGenes[i])
               summaryObj.ImportedGenes_ClinPhen.count++;
               summaryObj.ImportedGenes.count++;
               summaryObj.ClinPhen.count++;
@@ -763,9 +805,18 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
                 i--;
           }
         }
-        var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
+        // var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
+        var tableGenes = [
+          ...this.sortGenes(allSourcesGenes,"phenolyzer_score"),
+          ...this.sortGenes(GtrPhenoAdded,"phenolyzer_score"), ...this.sortGenes(GtrAddedClinPhenGenes,"gtr_value"), ...this.sortGenes(PhenoAddedClinPhenGenes, "phenolyzer_score"),
+          ...this.sortGenes(gtrAddedGenes,"gtr_value"), ...this.sortGenes(phenoAddedGenes,"phenolyzer_score"), ...AddedClinPhenGenes,
+          ...uniqueAddedGenes,...this.sortGenes(GtrPhenoClinPhenGenes, "phenolyzer_score"),
+          ...this.sortGenes(gtrPhenoGenes, "phenolyzer_score"), ...gtrClinPhenGenes,
+          ...this.sortGenes(phenoClinPhenGenes, "phenolyzer_score"),
+          ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno
+        ]
         this.summaryTableArray = tableGenes;
-        // this.generateVennDiagramData(summaryObj);
+        this.generateVennDiagramData(summaryObj);
         this.pieChartdataArr = [
           {
             name: "Unique to GTR",
@@ -803,26 +854,26 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
           "data": [
             {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
             {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
-            {"sets" : [2], "label" : "Imported", "size" : summaryObj.ImportedGenes.count},
+            {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count},
             {"sets" : [3], "label" : "ClinPhen", "size":summaryObj.ClinPhen.count},
             {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
             {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
-            {"sets" : [0,3], "size":summaryObj.gtr_ClinPhen.count},
-            {"sets" : [1,2], "size":summaryObj.phenolyzer_ImportedGenes.count},
-            {"sets" : [1,3], "size":summaryObj.phenolyzer_ClinPhen.count},
-            {"sets" : [2,3], "size":summaryObj.ImportedGenes_ClinPhen.count},
+            {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count},
+            {"sets" : [1,2],  "size":summaryObj.phenolyzer_ImportedGenes.count},
+            {"sets" : [1,3],  "size":summaryObj.phenolyzer_ClinPhen.count},
+            {"sets" : [2,3],  "size":summaryObj.ImportedGenes_ClinPhen.count},
             {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2], "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
-            {"sets" : [0,1,3], "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
-            {"sets" : [1,2,3], "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2,3], "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen}
+            {"sets" : [0,1,2],  "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
+            {"sets" : [0,1,3],  "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
+            {"sets" : [1,2,3],  "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
+            {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count}
           ]
         }
-        // if(Object.keys(this.resourcesUsed).length>1){
-        //   this.drawVennDiagram();
-        // }
 
-        if(this.GtrGenesArr.length>0 || this.PhenolyzerGenesArr.length>0 ||  this.manuallyAddedGenes.length>0 || this.clinPhenGenesArr.length>0){
+        if((this.GtrGenesArr.length>0 && this.PhenolyzerGenesArr.length>0) ||
+              (this.GtrGenesArr.length>0 && this.clinPhenSelectedGenes.length>0) ||
+              (this.PhenolyzerGenesArr.length>0 && this.clinPhenSelectedGenes.length>0) ||
+              (this.GtrGenesArr.length>0 && this.PhenolyzerGenesArr.length>0 && this.clinPhenSelectedGenes.length>0)){
           this.drawVennDiagram();
         }
         else {

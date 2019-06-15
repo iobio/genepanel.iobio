@@ -30,13 +30,14 @@
                       ------ <i>OR</i> ------
                     </p>
                     <div id="HPOInput" style="display:inline-block; padding-top:5px;">
-                      <label>Enter Phenotype</label>
+                      <label>Enter Phenotype or HPO term</label>
                       <input
                         id="hpo_input"
                         class="form-control"
                         type="text"
                         autocomplete="off"
-                        placeholder="Search phenotype (E.g. Ataxia)">
+                        v-on:focus="ClearInputForNewSearch"
+                        placeholder="Search phenotype (Mandibulofacial dysostosis) or HPO term (HP:0005321)">
                       <typeahead
                         v-model="searchInput"
                         hide-details="false"
@@ -48,6 +49,7 @@
 
                     </div>
                     <v-btn
+                        :class="{'disable-events': !submitButtonEnabled}"
                         style="margin-top:-0.35px; text-transform: none"
                         class="btnColor"
                         v-on:click="searchForTheInputTerm"
@@ -128,6 +130,7 @@
                       class="elevation-1"
                       v-bind:search="search"
                       no-data-text="No pheotype genes Available Currently"
+                      :custom-filter="filterItemsOnSearchClinPhen"
                     >
                     <template slot="headers" slot-scope="props">
                       <tr>
@@ -143,7 +146,33 @@
                         <th v-for="header in props.headers" :key="header.text"
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
-                          {{ header.text }}
+                          <!-- {{ header.text }} -->
+                          <span v-if="header.text==='Gene Name'">
+                           <div v-show="!openSearchBox">
+                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
+                           </div>
+                           <div v-show="openSearchBox">
+                             <v-layout >
+                               <v-flex xs8 style="margin-top:-30px">
+                                 <div id="geneSearchBoxPhenolyzer">
+                                   <v-text-field
+                                     label="Search for Gene"
+                                     prepend-icon="search"
+                                     single-line
+                                     hide-details
+                                     v-model="search"
+                                   ></v-text-field>
+                                 </div>
+                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
+                               </v-flex>
+                               <v-flex xs1>
+                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
+                               </v-flex>
+                             </v-layout>
+                           </div>
+                          </span>
+                          <span v-else>{{ header.text }}</span>
+
                         </th>
                       </tr>
                     </template>
@@ -434,6 +463,9 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             sortable: false,
           }
         ],
+        openSearchBox: false,
+        search: '',
+        submitButtonEnabled: false,
       }
     },
     beforeCreate(){
@@ -458,6 +490,14 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       this.$emit("ClinPhenGenes", this.selected);
     },
     watch: {
+      searchInput: function(){
+        if(this.searchInput===undefined){
+          this.submitButtonEnabled = false;
+        }
+        else {
+          this.submitButtonEnabled = true;
+        }
+      }
     },
     methods: {
       searchForTheInputTerm(){
@@ -478,7 +518,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         else {
           alert("This HPO Term already exists");
         }
-        console.log("this.multipleSearchTerms", this.multipleSearchTerms);
       },
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
@@ -502,7 +541,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         var count = 0;
         var hpoTermArr = [];
         var terms = [];
-        console.log("parseTerms called", res);
         res.split("\n").forEach(function(rec){
           var fields = rec.split("\t");
           if(fields.length===5){
@@ -564,7 +602,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
           }
         })
         this.checked = false;
-        console.log("this.items", this.items);
         this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
         this.selected = this.items.slice();
@@ -600,6 +637,19 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         if (this.selected.length) this.selected = []
         else this.selected = this.items.slice()
       },
+      filterItemsOnSearchClinPhen(items, search, filter) {
+        search = search.toString().toLowerCase()
+        return items.filter(row => filter(row["gene"], search));
+      },
+      closeSearchBox: function(){
+        this.search = "";
+        this.openSearchBox=false;
+      },
+      ClearInputForNewSearch: function(){
+        this.searchInput = "";
+        document.getElementById("hpo_input").value="";
+        document.getElementById("hpo_input").focus();
+      },
     }
   }
 </script>
@@ -611,6 +661,9 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
 <style lang="sass">
 
   @import ../assets/sass/variables
+
+  .disable-events
+    pointer-events: none
 
   #hpo_input
     width: 600px
@@ -647,4 +700,5 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
 
     .btnColor
       margin-top: 2px
+
 </style>
