@@ -523,6 +523,11 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
+      geneModel.promiseGetNCBIGeneSummary("TCOF1")
+      .then(function(data) {
+        console.log("data", data)
+        // self.ncbiSummary = data;
+      })
       this.HelpDialogsData = HelpDialogs.data;
       bus.$on("clearClinGenesPhenolyzerArray", ()=>{
         this.includeClinPhenolyzerGenes = false;
