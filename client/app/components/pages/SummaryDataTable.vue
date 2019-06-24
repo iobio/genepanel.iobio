@@ -49,7 +49,7 @@
             <td><v-btn style="cursor: move" icon class="sortHandle"><v-icon>drag_handle</v-icon></v-btn></td>
             <td>{{ props.item.SummaryIndex}}</td>
             <td>
-              <span style="font-size:14px; font-weight:600; margin-top:2px" @click="showGeneInfo(props.item)" slot="activator">{{ props.item.name }}</span>
+              <span style="font-size:14px; font-weight:600; margin-top:2px; cursor:pointer" @click="showGeneInfo(props.item)" slot="activator">{{ props.item.name }}</span>
               <!-- <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span> -->
               <span v-if="props.item.isAssociatedGene===true">
                 <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
@@ -169,12 +169,11 @@
       </v-data-table>
     </div>
     <br>
-    <v-dialog v-model="dialog" scrollable max-width="300px">
+    <v-dialog v-model="dialog" scrollable max-width="1300px">
        <v-card>
          <v-card-title>Gene</v-card-title>
          <v-divider></v-divider>
          <v-card-text v-if="ncbiSummary!==null && clickedGene.name === ncbiSummary.name">
-           <!-- {{clickedGene.name}} -->
           <GeneCard
             :gene="clickedGene.name"
             :ncbiSummary="ncbiSummary"
