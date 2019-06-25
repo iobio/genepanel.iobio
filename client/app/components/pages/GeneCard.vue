@@ -18,6 +18,12 @@
     <br><br>
     <span id="gene-card-heading">Gene id:</span> {{ncbiSummary.uid}}
     <br><br>
+    <div v-if="drugs.length">
+      <span id="gene-card-heading">Drugs: </span>
+      <span v-for="drug in drugs">
+        {{drug}} ,
+      </span>
+    </div>
 
   </div>
 </template>
@@ -38,6 +44,9 @@ var model = new Model();
       },
       ncbiSummary: {
         type: Object
+      },
+      drugs: {
+        type: Array
       }
     },
     data(){
@@ -46,6 +55,7 @@ var model = new Model();
     },
     mounted(){
       this.drawChromosome();
+      console.log("this.drugs", this.drugs)
     },
     updated(){
 

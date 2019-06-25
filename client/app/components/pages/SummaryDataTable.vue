@@ -179,6 +179,7 @@
           <GeneCard
             :gene="clickedGene.name"
             :ncbiSummary="ncbiSummary"
+            :drugs="drugs"
             >
           </GeneCard>
          </v-card-text>
@@ -197,6 +198,7 @@ import Sortable from 'sortablejs';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import GeneCard from './GeneCard.vue';
+import fetchJsonp from 'fetch-jsonp';
 
   export default {
     components: {
@@ -247,6 +249,7 @@ import GeneCard from './GeneCard.vue';
       dialog: false,
       clickedGene: {},
       ncbiSummary: null,
+      drugs: [],
     }),
     watch: {
       summaryTableData: function(){
@@ -413,6 +416,24 @@ import GeneCard from './GeneCard.vue';
         .then((data)=>{
           console.log("data", data)
           this.ncbiSummary = data;
+        })
+
+        fetchJsonp(`http://localhost:4000/${gene.name}`, {
+          timeout: 5000,
+          jsonpCallback:'callback',
+        })
+        .then((response)=>{
+          return response.json()
+          // console.log('response json', response)
+        }).then((json) => {
+          var arr = [];
+          console.log('parsed json', json.matchedTerms)
+          json.matchedTerms[0].interactions.map(x=>{
+            arr.push(x.drugName);
+          })
+          this.drugs = arr;
+        }).catch(function(ex) {
+          console.log('parsing failed', ex)
         })
       }
     }
