@@ -1,11 +1,24 @@
 <template>
-  <div>
-    {{ gene }}
+  <div id="gene-card" >
+    <span id="gene-card-heading">Full Name:</span> {{ncbiSummary.nomenclaturename}}
+    <br><br>
+    <span id="gene-card-heading">NCBI Summary:</span>
     <br>
-    NCBI Summary:
+    <span>
+      {{ncbiSummary.summary}}
+    </span>
+    <br><br>
+    <span id="gene-card-heading">Chromosome:</span> {{ncbiSummary.chromosome}}
     <br>
-    {{ncbiSummary.summary}}
+    <span id="gene-card-heading">Cytogenetic Location: </span>{{ncbiSummary.maplocation}}
     <div id="ideo-container"></div>
+    <span id="gene-card-heading">Molecular Location:</span> base pairs {{ncbiSummary.genomicinfo[0].chrstart}} to {{this.ncbiSummary.genomicinfo[0].chrstop}}
+    <br><br>
+    <span id="gene-card-heading">Aliases: </span>{{ncbiSummary.otheraliases}}
+    <br><br>
+    <span id="gene-card-heading">Gene id:</span> {{ncbiSummary.uid}}
+    <br><br>
+
   </div>
 </template>
 
@@ -67,7 +80,20 @@ var model = new Model();
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:500');
+
 #ideo-container {
-  height: 300px;
+  height: 100px;
+}
+
+#gene-card{
+  font-family: quicksand;
+  font-size: 15px;
+  text-align: justify;
+}
+
+#gene-card-heading{
+  color: #36577a;
+  font-weight: bold;
 }
 </style>

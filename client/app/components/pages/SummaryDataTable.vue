@@ -169,9 +169,11 @@
       </v-data-table>
     </div>
     <br>
-    <v-dialog v-model="dialog" scrollable max-width="1300px">
+    <v-dialog v-model="dialog" scrollable max-width="800px">
        <v-card>
-         <v-card-title>Gene</v-card-title>
+         <v-card-title>
+           <span class="headline">{{ clickedGene.name }}</span>
+         </v-card-title>
          <v-divider></v-divider>
          <v-card-text v-if="ncbiSummary!==null && clickedGene.name === ncbiSummary.name">
           <GeneCard
