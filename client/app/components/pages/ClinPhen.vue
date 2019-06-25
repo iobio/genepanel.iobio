@@ -313,6 +313,8 @@
               <template v-slot:items="props">
                 <td>{{ props.item.hpoNumber }}</td>
                 <td >{{ props.item.phenotype }}</td>
+                <td >{{ props.item.occurrences }}</td>
+                <td >{{ props.item.earliness }}</td>
                 <td style="padding-top:20px">
                   <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch>
                 </td>
@@ -321,6 +323,12 @@
             <div v-if="confirmationItems.length===0">
               <center> <strong><i>No HPO terms found for the entered text</i></strong> </center>
             </div>
+          </v-card-text>
+          <v-card-text>
+            <i style="text-align:justify" v-if="confirmationItems.length">
+              Phenotypes extracted from the clinical notes are prioritized, first by number of occurrences in the notes (phenotypes that likely pertain to a genetic disease are usually mentioned in multiple clinical notes, and even multiple times in the same note), <br>
+              then by earliest occurrence in the notes (clinicians usually begin a note with a summary of the phenotypes that seem striking and indicative of a genetic disease).
+            </i>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -459,9 +467,21 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             align: 'left'
           },
           {
+            text: 'No. occurrences',
+            value: 'occurrences',
+            sortable: false,
+            align: 'left'
+          },
+          {
+            text: 'Earliness',
+            value: 'earliness',
+            sortable: false,
+            align: 'left'
+          },
+          {
             text: 'Selection',
             sortable: false,
-          }
+          },
         ],
         openSearchBox: false,
         search: '',
@@ -543,11 +563,21 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         var terms = [];
         res.split("\n").forEach(function(rec){
           var fields = rec.split("\t");
+          console.log("fields", fields)
           if(fields.length===5){
             var hpoNumber = fields[0];
             var phenotype = fields[1];
+            var occurrences = fields[2];
+            var earliness = fields[3];
             terms.push(hpoNumber)
-            hpoTermArr.push({hpoNumber:hpoNumber, phenotype:phenotype})
+            hpoTermArr.push(
+              {
+                hpoNumber:hpoNumber,
+                phenotype:phenotype,
+                occurrences:occurrences,
+                earliness:earliness
+              }
+            )
           }
         })
         hpoTermArr.shift();
