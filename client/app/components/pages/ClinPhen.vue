@@ -573,9 +573,24 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         else {
           this.submitButtonEnabled = true;
         }
-      }
+      },
+      sliderValue: function(){
+        this.updateSelectionOnSliderValue(this.sliderValue);
+      },
     },
     methods: {
+      updateSelectionOnSliderValue(sliderValue){
+        this.selected = [];
+        var len = this.items.length;
+        for(var i=0; i<len; i++){
+          if(this.items[i].hpoSource >= sliderValue) {
+            this.selected.push(this.items[i]);
+          }
+          else {
+            break;
+          }
+        }
+      },
       searchForTheInputTerm(){
         this.checked = true;
         var res = this.searchInput.HPO_Data.split(" - ");
@@ -710,22 +725,9 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         });
       },
       selectGenes(){
-        console.log("items", this.items)
         this.maxSliderValue = this.items[0].hpoSource;
-        console.log("this.maxSliderValue", this.maxSliderValue);
-        var sliderCutOffValue = Math.ceil(this.maxSliderValue/2);
-        this.maxSliderValue > 1 ? this.sliderValue = sliderCutOffValue : this.sliderValue = 1 ;
-        this.selected = [];
-        var len = this.items.length;
-        for(var i=0; i<len; i++){
-          if(this.items[i].hpoSource >= sliderCutOffValue) {
-            this.selected.push(this.items[i]);
-          }
-          else {
-            break;
-          }
-        }
-        // this.selected = this.items.slice();
+        this.maxSliderValue > 1 ? this.sliderValue = Math.ceil(this.maxSliderValue/2) : this.sliderValue = 1 ;
+        this.updateSelectionOnSliderValue(this.sliderValue);
       },
       remove(term){
         this.checked = true;
