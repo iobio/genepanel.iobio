@@ -409,25 +409,23 @@ import fetchJsonp from 'fetch-jsonp';
         }
       },
       showGeneInfo(gene){
-        this.dialog = true;
         console.log("gene", gene)
         this.clickedGene = gene;
+
         geneModel.promiseGetNCBIGeneSummary(gene.name)
         .then((data)=>{
           console.log("data", data)
           this.ncbiSummary = data;
         })
 
-        fetchJsonp(`http://localhost:4000/${gene.name}`, {
+        fetchJsonp(`http://localhost:4000/gene?name=${gene.name}&fda_approved_drug=false`, {
           timeout: 5000,
           jsonpCallback:'callback',
         })
         .then((response)=>{
           return response.json()
-          // console.log('response json', response)
         }).then((json) => {
           var arr = [];
-          console.log('parsed json', json.matchedTerms)
           json.matchedTerms[0].interactions.map(x=>{
             arr.push(x.drugName);
           })
@@ -435,6 +433,7 @@ import fetchJsonp from 'fetch-jsonp';
         }).catch(function(ex) {
           console.log('parsing failed', ex)
         })
+        this.dialog = true;
       }
     }
   }

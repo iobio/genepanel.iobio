@@ -55,7 +55,6 @@ var model = new Model();
     },
     mounted(){
       this.drawChromosome();
-      console.log("this.drugs", this.drugs)
     },
     updated(){
 
@@ -63,7 +62,7 @@ var model = new Model();
     watch: {
       ncbiSummary: function(){
         this.drawChromosome();
-      }
+      },
     },
     methods:{
       drawChromosome: function(){
