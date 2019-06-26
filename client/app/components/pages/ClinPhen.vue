@@ -195,7 +195,7 @@
                                     {{header.text}}
                                     <v-tooltip bottom>
                                       <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
-                                      <span>The slider above sets the cut off value for the panels. Ex. If the slider value is 12, all the genes present in 12 or more panels are selected.</span>
+                                      <span>The slider above sets the cut off value for gene selection. Ex. If the slider value is 4, it would select all the genes present in 4 or more HPO terms.</span>
                                     </v-tooltip>
                                   </center>
                                 </div>
@@ -583,12 +583,8 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         this.selected = [];
         var len = this.items.length;
         for(var i=0; i<len; i++){
-          if(this.items[i].hpoSource >= sliderValue) {
-            this.selected.push(this.items[i]);
-          }
-          else {
-            break;
-          }
+          if(this.items[i].hpoSource >= sliderValue) this.selected.push(this.items[i]);
+          else break;
         }
       },
       searchForTheInputTerm(){
