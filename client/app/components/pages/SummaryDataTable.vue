@@ -216,7 +216,7 @@ import fetchJsonp from 'fetch-jsonp';
       },
       launchedFromClin: {
         type: Boolean
-      }
+      },
     },
     data: () => ({
       pagination: {
@@ -260,8 +260,7 @@ import fetchJsonp from 'fetch-jsonp';
       },
       clinGenesSummary: function(){
         this.clinGenesSummaryData = this.clinGenesSummary;
-      }
-
+      },
     },
     mounted(){
       this.clinGenesSummaryData = this.clinGenesSummary;
@@ -418,21 +417,21 @@ import fetchJsonp from 'fetch-jsonp';
           this.ncbiSummary = data;
         })
 
-        fetchJsonp(`http://localhost:4000/gene?name=${gene.name}&fda_approved_drug=false`, {
-          timeout: 5000,
-          jsonpCallback:'callback',
-        })
-        .then((response)=>{
-          return response.json()
-        }).then((json) => {
-          var arr = [];
-          json.matchedTerms[0].interactions.map(x=>{
-            arr.push(x.drugName);
-          })
-          this.drugs = arr;
-        }).catch(function(ex) {
-          console.log('parsing failed', ex)
-        })
+        // fetchJsonp(`http://localhost:4000/gene?name=${gene.name}&fda_approved_drug=false`, {
+        //   timeout: 5000,
+        //   jsonpCallback:'callback',
+        // })
+        // .then((response)=>{
+        //   return response.json()
+        // }).then((json) => {
+        //   var arr = [];
+        //   json.matchedTerms[0].interactions.map(x=>{
+        //     arr.push(x.drugName);
+        //   })
+        //   this.drugs = arr;
+        // }).catch(function(ex) {
+        //   console.log('parsing failed', ex)
+        // })
         this.dialog = true;
       }
     }

@@ -47,7 +47,7 @@ var model = new Model();
       },
       drugs: {
         type: Array
-      }
+      },
     },
     data(){
       return {

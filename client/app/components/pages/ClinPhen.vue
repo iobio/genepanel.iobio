@@ -171,6 +171,57 @@
                              </v-layout>
                            </div>
                           </span>
+                          <span v-else-if="header.text==='Search Terms'">
+                            <v-layout style="margin-left: -20px; width:65%">
+                              <v-flex xs1 style="margin-top:40px; padding-left:20px">
+                                <small >{{minSliderValue}}</small>
+                              </v-flex>
+                              <v-flex xs8 style="padding-top:12px">
+                                <div >
+                                  <v-slider
+                                     v-if="sliderValue>=0"
+                                     :track-color="color"
+                                     thumb-label="always"
+                                     :color="sliderColor"
+                                     :thumb-color="color"
+                                     v-model="sliderValue"
+                                     :thumb-size="20"
+                                     :max="maxSliderValue"
+                                     :min="minSliderValue"
+                                  ></v-slider>
+                                </div>
+                                <div style="margin-top:-20px; padding-bottom:10px">
+                                  <center>
+                                    {{header.text}}
+                                    <v-tooltip bottom>
+                                      <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
+                                      <span>The slider above sets the cut off value for the panels. Ex. If the slider value is 12, all the genes present in 12 or more panels are selected.</span>
+                                    </v-tooltip>
+                                  </center>
+                                </div>
+
+                              </v-flex>
+                              <v-flex xs1 style="margin-top:40px;">
+                                <small >{{maxSliderValue}}</small>
+                              </v-flex>
+                              <v-flex xs2>
+                                <v-flex>
+                                  <v-text-field
+                                    style="font-size:14px"
+                                    v-model="sliderValue"
+                                    class="mt-0"
+                                    type="number"
+                                  ></v-text-field>
+                                  <v-tooltip bottom>
+                                    <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
+                                    <span>This numeric entry can be used to set the slider value.</span>
+                                  </v-tooltip>
+                                </v-flex>
+                              </v-flex>
+                              <v-flex>
+                              </v-flex>
+                            </v-layout>
+                          </span>
                           <span v-else>{{ header.text }}</span>
 
                         </th>
@@ -443,7 +494,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             value: 'gene',
             sortable: false,
           },
-          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG'},
+          { text: 'Search Terms', align: 'center', sortable: false, value: 'searchTermIndexSVG'},
           {
             text: '',
             align: 'left',
@@ -486,6 +537,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         openSearchBox: false,
         search: '',
         submitButtonEnabled: false,
+        sliderValue: 1,
+        minSliderValue: 1,
+        maxSliderValue: 1,
+        sliderColor: 'grey lighten-1',
+        color: 'blue darken-3',
       }
     },
     beforeCreate(){
@@ -634,7 +690,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         this.checked = false;
         this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
-        this.selected = this.items.slice();
+        this.selectGenes();
       },
       noOfSourcesSvg: function(){
         this.items.map((x, i)=>{
@@ -652,6 +708,24 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
           x.clinGenLink = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.gene}`;
 
         });
+      },
+      selectGenes(){
+        console.log("items", this.items)
+        this.maxSliderValue = this.items[0].hpoSource;
+        console.log("this.maxSliderValue", this.maxSliderValue);
+        var sliderCutOffValue = Math.ceil(this.maxSliderValue/2);
+        this.maxSliderValue > 1 ? this.sliderValue = sliderCutOffValue : this.sliderValue = 1 ;
+        this.selected = [];
+        var len = this.items.length;
+        for(var i=0; i<len; i++){
+          if(this.items[i].hpoSource >= sliderCutOffValue) {
+            this.selected.push(this.items[i]);
+          }
+          else {
+            break;
+          }
+        }
+        // this.selected = this.items.slice();
       },
       remove(term){
         this.checked = true;

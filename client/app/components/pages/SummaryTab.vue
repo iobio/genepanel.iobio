@@ -424,7 +424,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
         this.selected = [];
         this.items = [];
         this.HpoTerms = [];
-        this.geneSearch = ''; 
+        this.geneSearch = '';
       });
     },
     methods: {
