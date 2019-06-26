@@ -70,27 +70,12 @@
                     <v-layout row wrap>
                       <v-flex style="margin-left:20px">
                         <div v-if="items.length>0">
-                          <v-card>
-                            <v-card-text>
-                              <center>
-                                <span class="Rightbar_CardHeading" style="font-size:15px">
-                                  GENES
-                                </span>
-                                <v-divider class="Rightbar_card_divider"></v-divider>
-                                <span class="Rightbar_card_content_subheading">
-                                  <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected
-                                </span>
-                              </center>
-                              <div class="text-xs-center">
-                                <progressCircularDonut
-                                  v-if="items.length>0"
-                                  :selectedNumber="selected.length"
-                                  :totalNumber="items.length"
-                                >
-                                </progressCircularDonut>
-                              </div>
-                            </v-card-text>
-                          </v-card>
+                          <GenesSelectionCard
+                            :items="items"
+                            :selected="selected"
+                            :multipleSearchTerms="multipleSearchTerms"
+                            v-on:selectNgenes="selectNgenes($event)"
+                          />
                         </div>
                       </v-flex>
                     </v-layout>
@@ -438,6 +423,7 @@ import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
+import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
 
   export default {
     components: {
@@ -446,6 +432,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       'progressCircularDonut': progressCircularDonut,
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
+      'GenesSelectionCard': GenesSelectionCard,
       Typeahead
     },
     props: {
@@ -630,7 +617,6 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         var terms = [];
         res.split("\n").forEach(function(rec){
           var fields = rec.split("\t");
-          console.log("fields", fields)
           if(fields.length===5){
             var hpoNumber = fields[0];
             var phenotype = fields[1];
@@ -721,9 +707,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         });
       },
       selectGenes(){
-        this.maxSliderValue = this.items[0].hpoSource;
-        this.maxSliderValue > 1 ? this.sliderValue = Math.ceil(this.maxSliderValue/2) : this.sliderValue = 1 ;
-        this.updateSelectionOnSliderValue(this.sliderValue);
+        if(this.multipleSearchTerms.length){
+          this.maxSliderValue = this.items[0].hpoSource;
+          this.maxSliderValue > 1 ? this.sliderValue = Math.ceil(this.maxSliderValue/2) : this.sliderValue = 1 ;
+          this.updateSelectionOnSliderValue(this.sliderValue);
+        }
       },
       remove(term){
         this.checked = true;
@@ -752,6 +740,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         document.getElementById("hpo_input").value="";
         document.getElementById("hpo_input").focus();
       },
+      selectNgenes: function(number){
+        if(number>0){
+          this.selected = this.items.slice(0,number);
+        }
+      }
     }
   }
 </script>
