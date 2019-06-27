@@ -38,6 +38,7 @@
                       Generate Gene List
                     </v-btn>
                     <p>
+                      <br>
                       ------ <i>OR</i> ------
                     </p>
 
@@ -355,7 +356,8 @@
                 <td >{{ props.item.occurrences }}</td>
                 <td >{{ props.item.earliness }}</td>
                 <td style="padding-top:20px">
-                  <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch>
+                  <!-- <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch> -->
+                  <v-checkbox color="success" v-model="confirmationSelected" :value="props.item"></v-checkbox>
                 </td>
               </template>
             </v-data-table>
@@ -641,7 +643,8 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         // this.multipleSearchTerms = terms;
         // this.HpoTerms = hpoTermArr;
         this.confirmationItems = hpoTermArr;
-        this.confirmationSelected = hpoTermArr;
+        // this.confirmationSelected = hpoTermArr;
+        this.confirmationSelected = [];
         this.loadingDialog = false;
         this.confirmationDialog = true;
       },
@@ -767,7 +770,7 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
     width: 600px
     height: 40px
     margin-top: 4px
-    // background-color: $search-box-color
+    background-color: $search-box-color
     border-color: $search-box-color
 
 
