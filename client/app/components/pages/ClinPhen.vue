@@ -7,28 +7,9 @@
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text style="margin-bottom:-5px">
-                <h3>ClinPhen <small><i> [ alpha ] </i></small></h3>
+                <h3>HPO <small><i> [ beta ] </i></small></h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
-                    <label>Enter or paste clinical notes</label>
-
-                    <v-layout row wrap>
-                      <v-flex lg8>
-                        <v-textarea
-                          solo
-                          v-model="notes"
-                          name="input-7-4"
-                          rows="4"
-                          label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
-                        ></v-textarea>
-                      </v-flex>
-                      <v-flex lg4>
-                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit</v-btn>
-                      </v-flex>
-                    </v-layout>
-                    <p>
-                      ------ <i>OR</i> ------
-                    </p>
                     <div id="HPOInput" style="display:inline-block; padding-top:5px;">
                       <label>Enter Phenotype or HPO term</label>
                       <input
@@ -56,9 +37,32 @@
                         >
                       Generate Gene List
                     </v-btn>
-                    <p></p>
-                    <div v-if="this.HpoTerms.length">
+                    <p>
                       <br>
+                      ------ <i>OR</i> ------
+                    </p>
+
+                    <!-- Clinical notes text entry box -->
+                    <label>Enter or paste clinical notes</label>
+
+                    <v-layout row wrap>
+                      <v-flex lg8>
+                        <v-textarea
+                          solo
+                          v-model="notes"
+                          name="input-7-4"
+                          rows="4"
+                          label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
+                        ></v-textarea>
+                      </v-flex>
+                      <v-flex lg4>
+                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit</v-btn>
+                      </v-flex>
+                    </v-layout>
+
+                    <p></p>
+
+                    <div v-if="this.HpoTerms.length">
                         HPO Terms:
                       <v-chip  color="primary" text-color="white" close v-for="(term, i) in HpoTerms" :key="i" @input="remove(term)">
                         {{ i+1 }}. <b> {{ term.hpoNumber }} </b> &nbsp; <i> ({{term.phenotype}}) </i>
@@ -70,27 +74,12 @@
                     <v-layout row wrap>
                       <v-flex style="margin-left:20px">
                         <div v-if="items.length>0">
-                          <v-card>
-                            <v-card-text>
-                              <center>
-                                <span class="Rightbar_CardHeading" style="font-size:15px">
-                                  GENES
-                                </span>
-                                <v-divider class="Rightbar_card_divider"></v-divider>
-                                <span class="Rightbar_card_content_subheading">
-                                  <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> of {{ items.length }} genes selected
-                                </span>
-                              </center>
-                              <div class="text-xs-center">
-                                <progressCircularDonut
-                                  v-if="items.length>0"
-                                  :selectedNumber="selected.length"
-                                  :totalNumber="items.length"
-                                >
-                                </progressCircularDonut>
-                              </div>
-                            </v-card-text>
-                          </v-card>
+                          <GenesSelectionCard
+                            :items="items"
+                            :selected="selected"
+                            :multipleSearchTerms="multipleSearchTerms"
+                            v-on:selectNgenes="selectNgenes($event)"
+                          />
                         </div>
                       </v-flex>
                     </v-layout>
@@ -170,6 +159,59 @@
                                </v-flex>
                              </v-layout>
                            </div>
+                          </span>
+                          <span v-else-if="header.text==='Search Terms'">
+                            <v-layout style="margin-left: -20px; width:65%">
+                              <v-flex xs1 style="margin-top:40px; padding-left:20px">
+                                <small >{{minSliderValue}}</small>
+                              </v-flex>
+                              <v-flex xs8 style="padding-top:12px">
+                                <div >
+                                  <v-slider
+                                     v-if="sliderValue>=0"
+                                     :track-color="color"
+                                     thumb-label="always"
+                                     :color="sliderColor"
+                                     :thumb-color="color"
+                                     v-model="sliderValue"
+                                     :thumb-size="20"
+                                     :max="maxSliderValue"
+                                     :min="minSliderValue"
+                                     ticks="always"
+                                     tick-size="2"
+                                  ></v-slider>
+                                </div>
+                                <div style="margin-top:-20px; padding-bottom:10px">
+                                  <center>
+                                    {{header.text}}
+                                    <v-tooltip bottom>
+                                      <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
+                                      <span>The slider above sets the cut off value for gene selection. Ex. If the slider value is 4, it would select all the genes present in 4 or more HPO terms.</span>
+                                    </v-tooltip>
+                                  </center>
+                                </div>
+
+                              </v-flex>
+                              <v-flex xs1 style="margin-top:40px;">
+                                <small >{{maxSliderValue}}</small>
+                              </v-flex>
+                              <v-flex xs2>
+                                <v-flex>
+                                  <v-text-field
+                                    style="font-size:14px"
+                                    v-model="sliderValue"
+                                    class="mt-0"
+                                    type="number"
+                                  ></v-text-field>
+                                  <v-tooltip bottom>
+                                    <span style="cursor:pointer" slot="activator"><v-icon>help</v-icon> </span>
+                                    <span>This numeric entry can be used to set the slider value.</span>
+                                  </v-tooltip>
+                                </v-flex>
+                              </v-flex>
+                              <v-flex>
+                              </v-flex>
+                            </v-layout>
                           </span>
                           <span v-else>{{ header.text }}</span>
 
@@ -302,6 +344,9 @@
             </i>
           </v-card-text>
           <v-card-text>
+            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = confirmationItems">Select All</v-btn>
+            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = []">Deselect All</v-btn>
+            <br>
             <!-- Datatable -->
             <v-data-table
               v-if="confirmationItems.length"
@@ -311,21 +356,30 @@
               hide-actions=false
             >
               <template v-slot:items="props">
+                <td style="padding-top:20px">
+                  <!-- <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch> -->
+                  <v-checkbox color="primary" v-model="confirmationSelected" :value="props.item"></v-checkbox>
+                </td>
                 <td>{{ props.item.hpoNumber }}</td>
                 <td >{{ props.item.phenotype }}</td>
-                <td style="padding-top:20px">
-                  <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch>
-                </td>
+                <td >{{ props.item.occurrences }}</td>
+                <td >{{ props.item.earliness }}</td>
               </template>
             </v-data-table>
             <div v-if="confirmationItems.length===0">
               <center> <strong><i>No HPO terms found for the entered text</i></strong> </center>
             </div>
           </v-card-text>
+          <v-card-text>
+            <i style="text-align:justify" v-if="confirmationItems.length">
+              Phenotypes extracted from the clinical notes are prioritized, first by number of occurrences in the notes (phenotypes that likely pertain to a genetic disease are usually mentioned in multiple clinical notes, and even multiple times in the same note), <br>
+              then by earliest occurrence in the notes (clinicians usually begin a note with a summary of the phenotypes that seem striking and indicative of a genetic disease).
+            </i>
+          </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="updateHPOtermsSelection">Save and Generate Gene list</v-btn>
+            <v-btn color="blue darken-1" :disabled="!confirmationSelected.length" flat @click="updateHPOtermsSelection">Generate Gene list</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -379,6 +433,7 @@ import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
+import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
 
   export default {
     components: {
@@ -387,6 +442,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
       'progressCircularDonut': progressCircularDonut,
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
+      'GenesSelectionCard': GenesSelectionCard,
       Typeahead
     },
     props: {
@@ -424,6 +480,12 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         selected: [],
         headers: [
           {
+            text: '',
+            align: 'left',
+            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
+            sortable: false,
+          },
+          {
             text: 'Number',
             value: 'index',
             sortable: false,
@@ -435,13 +497,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             value: 'gene',
             sortable: false,
           },
-          { text: 'Search Terms', align: 'left', sortable: false, value: 'searchTermIndexSVG'},
-          {
-            text: '',
-            align: 'left',
-            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
-            sortable: false,
-          },
+          { text: 'Search Terms', align: 'center', sortable: false, value: 'searchTermIndexSVG'},
         ],
         confirmationItems: [],
         confirmationSelected: [],
@@ -459,13 +515,30 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
             align: 'left'
           },
           {
+            text: 'No. occurrences',
+            value: 'occurrences',
+            sortable: false,
+            align: 'left'
+          },
+          {
+            text: 'Earliness',
+            value: 'earliness',
+            sortable: false,
+            align: 'left'
+          },
+          {
             text: 'Selection',
             sortable: false,
-          }
+          },
         ],
         openSearchBox: false,
         search: '',
         submitButtonEnabled: false,
+        sliderValue: 1,
+        minSliderValue: 1,
+        maxSliderValue: 1,
+        sliderColor: 'grey lighten-1',
+        color: 'blue darken-3',
       }
     },
     beforeCreate(){
@@ -497,9 +570,20 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         else {
           this.submitButtonEnabled = true;
         }
-      }
+      },
+      sliderValue: function(){
+        this.updateSelectionOnSliderValue(this.sliderValue);
+      },
     },
     methods: {
+      updateSelectionOnSliderValue(sliderValue){
+        this.selected = [];
+        var len = this.items.length;
+        for(var i=0; i<len; i++){
+          if(this.items[i].hpoSource >= sliderValue) this.selected.push(this.items[i]);
+          else break;
+        }
+      },
       searchForTheInputTerm(){
         this.checked = true;
         var res = this.searchInput.HPO_Data.split(" - ");
@@ -546,8 +630,17 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
           if(fields.length===5){
             var hpoNumber = fields[0];
             var phenotype = fields[1];
+            var occurrences = fields[2];
+            var earliness = fields[3];
             terms.push(hpoNumber)
-            hpoTermArr.push({hpoNumber:hpoNumber, phenotype:phenotype})
+            hpoTermArr.push(
+              {
+                hpoNumber:hpoNumber,
+                phenotype:phenotype,
+                occurrences:occurrences,
+                earliness:earliness
+              }
+            )
           }
         })
         hpoTermArr.shift();
@@ -555,7 +648,8 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         // this.multipleSearchTerms = terms;
         // this.HpoTerms = hpoTermArr;
         this.confirmationItems = hpoTermArr;
-        this.confirmationSelected = hpoTermArr;
+        // this.confirmationSelected = hpoTermArr;
+        this.confirmationSelected = [];
         this.loadingDialog = false;
         this.confirmationDialog = true;
       },
@@ -604,7 +698,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         this.checked = false;
         this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
-        this.selected = this.items.slice();
+        this.selectGenes();
       },
       noOfSourcesSvg: function(){
         this.items.map((x, i)=>{
@@ -622,6 +716,13 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
           x.clinGenLink = `https://www.ncbi.nlm.nih.gov/projects/dbvar/clingen/clingen_gene.cgi?sym=${x.gene}`;
 
         });
+      },
+      selectGenes(){
+        if(this.multipleSearchTerms.length){
+          this.maxSliderValue = this.items[0].hpoSource;
+          this.maxSliderValue > 1 ? this.sliderValue = Math.ceil(this.maxSliderValue/2) : this.sliderValue = 1 ;
+          this.updateSelectionOnSliderValue(this.sliderValue);
+        }
       },
       remove(term){
         this.checked = true;
@@ -650,6 +751,11 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
         document.getElementById("hpo_input").value="";
         document.getElementById("hpo_input").focus();
       },
+      selectNgenes: function(number){
+        if(number>0){
+          this.selected = this.items.slice(0,number);
+        }
+      }
     }
   }
 </script>
@@ -669,7 +775,7 @@ import HpoTermsData from '../../../data/HpoTermsData.json';
     width: 600px
     height: 40px
     margin-top: 4px
-    // background-color: $search-box-color
+    background-color: $search-box-color
     border-color: $search-box-color
 
 

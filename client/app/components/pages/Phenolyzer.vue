@@ -400,7 +400,7 @@ import SvgBar from '../viz/SvgBar.vue'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
-
+import fetchJsonp from 'fetch-jsonp';
   export default {
     components: {
       'Dialogs': Dialogs,
@@ -523,6 +523,20 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
+      fetchJsonp('http://localhost:4000/cox1', {
+        timeout: 10000,
+        jsonpCallback:'callback',
+      })
+      .then(function(response) {
+        return response.json()
+        // console.log('response json', response)
+      }).then(function(json) {
+        console.log('parsed json', json)
+      }).catch(function(ex) {
+        console.log('parsing failed', ex)
+      })
+
+
       this.HelpDialogsData = HelpDialogs.data;
       bus.$on("clearClinGenesPhenolyzerArray", ()=>{
         this.includeClinPhenolyzerGenes = false;

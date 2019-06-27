@@ -49,8 +49,8 @@
             <td><v-btn style="cursor: move" icon class="sortHandle"><v-icon>drag_handle</v-icon></v-btn></td>
             <td>{{ props.item.SummaryIndex}}</td>
             <td>
-              <!-- <span style="font-size:14px; font-weight:600; margin-top:2px" @click="showGeneInfo(props.item)" slot="activator">{{ props.item.name }}</span> -->
-              <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span>
+              <span style="font-size:14px; font-weight:600; margin-top:2px; cursor:pointer" @click="showGeneInfo(props.item)" slot="activator">{{ props.item.name }}</span>
+              <!-- <span style="font-size:14px; font-weight:600; margin-top:2px" slot="activator">{{ props.item.name }}</span> -->
               <span v-if="props.item.isAssociatedGene===true">
                 <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
               </span>
@@ -169,12 +169,19 @@
       </v-data-table>
     </div>
     <br>
-    <v-dialog v-model="dialog" scrollable max-width="300px">
+    <v-dialog v-model="dialog" scrollable max-width="800px">
        <v-card>
-         <v-card-title>Gene</v-card-title>
+         <v-card-title>
+           <span class="headline">{{ clickedGene.name }}</span>
+         </v-card-title>
          <v-divider></v-divider>
-         <v-card-text>
-           {{clickedGene.name}}
+         <v-card-text v-if="ncbiSummary!==null && clickedGene.name === ncbiSummary.name">
+          <GeneCard
+            :gene="clickedGene.name"
+            :ncbiSummary="ncbiSummary"
+            :drugs="drugs"
+            >
+          </GeneCard>
          </v-card-text>
          <v-divider></v-divider>
          <v-card-actions>
@@ -188,7 +195,15 @@
 <script>
 import { bus } from '../../routes';
 import Sortable from 'sortablejs';
+import GeneModel from '../../models/GeneModel';
+var geneModel = new GeneModel();
+import GeneCard from './GeneCard.vue';
+import fetchJsonp from 'fetch-jsonp';
+
   export default {
+    components: {
+      'GeneCard': GeneCard,
+    },
     props:{
       summaryTableData:{
         type: Array
@@ -201,7 +216,7 @@ import Sortable from 'sortablejs';
       },
       launchedFromClin: {
         type: Boolean
-      }
+      },
     },
     data: () => ({
       pagination: {
@@ -219,7 +234,7 @@ import Sortable from 'sortablejs';
         { text: 'Number', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
-        { text: 'ClinPhen', align: 'left', sortable: false, value: 'isClinPhen' },
+        { text: 'HPO', align: 'left', sortable: false, value: 'isClinPhen' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
@@ -232,7 +247,9 @@ import Sortable from 'sortablejs';
       clinGenesSummaryData: [],
       includeClinGenes: 0,
       dialog: false,
-      clickedGene: {}
+      clickedGene: {},
+      ncbiSummary: null,
+      drugs: [],
     }),
     watch: {
       summaryTableData: function(){
@@ -243,8 +260,7 @@ import Sortable from 'sortablejs';
       },
       clinGenesSummary: function(){
         this.clinGenesSummaryData = this.clinGenesSummary;
-      }
-
+      },
     },
     mounted(){
       this.clinGenesSummaryData = this.clinGenesSummary;
@@ -392,8 +408,31 @@ import Sortable from 'sortablejs';
         }
       },
       showGeneInfo(gene){
-        this.dialog = true;
+        console.log("gene", gene)
         this.clickedGene = gene;
+
+        geneModel.promiseGetNCBIGeneSummary(gene.name)
+        .then((data)=>{
+          console.log("data", data)
+          this.ncbiSummary = data;
+        })
+
+        // fetchJsonp(`http://localhost:4000/gene?name=${gene.name}&fda_approved_drug=false`, {
+        //   timeout: 5000,
+        //   jsonpCallback:'callback',
+        // })
+        // .then((response)=>{
+        //   return response.json()
+        // }).then((json) => {
+        //   var arr = [];
+        //   json.matchedTerms[0].interactions.map(x=>{
+        //     arr.push(x.drugName);
+        //   })
+        //   this.drugs = arr;
+        // }).catch(function(ex) {
+        //   console.log('parsing failed', ex)
+        // })
+        this.dialog = true;
       }
     }
   }
