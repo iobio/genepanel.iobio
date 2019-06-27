@@ -480,12 +480,6 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         selected: [],
         headers: [
           {
-            text: '',
-            align: 'left',
-            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
-            sortable: false,
-          },
-          {
             text: 'Number',
             value: 'index',
             sortable: false,
@@ -498,10 +492,20 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
             sortable: false,
           },
           { text: 'Search Terms', align: 'center', sortable: false, value: 'searchTermIndexSVG'},
+          {
+            text: '',
+            align: 'left',
+            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
+            sortable: false,
+          },
         ],
         confirmationItems: [],
         confirmationSelected: [],
         confirmationTableHeader: [
+          {
+            text: 'Selection',
+            sortable: false,
+          },
           {
             text: 'HPO ID',
             value: 'hpoNumber',
@@ -525,10 +529,6 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
             value: 'earliness',
             sortable: false,
             align: 'left'
-          },
-          {
-            text: 'Selection',
-            sortable: false,
           },
         ],
         openSearchBox: false,
