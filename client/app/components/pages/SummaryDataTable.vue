@@ -234,7 +234,7 @@ import fetchJsonp from 'fetch-jsonp';
         { text: 'Number', align: 'left', sortable: false, value:'SummaryIndex' },
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
-        { text: 'ClinPhen', align: 'left', sortable: false, value: 'isClinPhen' },
+        { text: 'HPO', align: 'left', sortable: false, value: 'isClinPhen' },
         { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },

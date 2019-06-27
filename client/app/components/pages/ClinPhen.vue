@@ -7,7 +7,7 @@
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text style="margin-bottom:-5px">
-                <h3>ClinPhen <small><i> [ alpha ] </i></small></h3>
+                <h3>HPO <small><i> [ beta ] </i></small></h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
                     <label>Enter or paste clinical notes</label>

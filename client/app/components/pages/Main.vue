@@ -81,7 +81,7 @@
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title v-bind:class="[component==='ClinPhen' ? 'activeTabText' : '']">
-          ClinPhen & HPO terms
+          HPO &nbsp;
             <v-badge color="primary darken-1" right class="badge-bg-color">
             <span  slot="badge">{{ clinPhenSelectedGenes.length }}</span>
             </v-badge>
@@ -194,10 +194,10 @@
           </div>
           <div v-else-if="component==='ClinPhen'">
             <v-list-tile @click="copyClinPhenGenes">
-              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy ClinPhen genes to clipboard</v-list-tile-title>
+              <v-list-tile-title><v-icon>content_copy</v-icon>&nbsp; &nbsp;Copy HPO genes to clipboard</v-list-tile-title>
             </v-list-tile>
             <v-list-tile @click="exportClinPhenGenes">
-              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export ClinPhen genes to file</v-list-tile-title>
+              <v-list-tile-title><v-icon>input</v-icon>&nbsp; &nbsp;Export HPO genes to file</v-list-tile-title>
             </v-list-tile>
             <hr>
           </div>
@@ -817,7 +817,7 @@ import ClinPhen from './ClinPhen.vue'
           useBom: true,
           // useKeysAsHeaders: true,
           filename: 'Genes',
-          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'ClinPhen Gene', 'Phenolyzer Gene', 'Added Gene']
+          headers: ['Rank', 'Gene Name', 'Sources', 'GTR Search terms', 'Phenolyzer Search terms', 'Gene ID', 'GTR Gene', 'HPO Gene', 'Phenolyzer Gene', 'Added Gene']
         };
         const csvExporter = new ExportToCsv(options);
         csvExporter.generateCsv(clinData);
@@ -1133,7 +1133,7 @@ import ClinPhen from './ClinPhen.vue'
         var geneNamesToExport = geneNames.toString();
         if(this.clinPhenSelectedGenes.length>0){
           var blob = new Blob([geneNamesToExport], {type: "text/plain;charset=utf-8"});
-          FileSaver.saveAs(blob, "ClinPhen Genes.txt");
+          FileSaver.saveAs(blob, "HPO Genes.txt");
         }
         else {
           this.snackbarText = "You need to select genes inorder to use this feature";

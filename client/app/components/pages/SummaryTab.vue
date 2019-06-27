@@ -855,7 +855,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
             {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
             {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
             {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count},
-            {"sets" : [3], "label" : "ClinPhen", "size":summaryObj.ClinPhen.count},
+            {"sets" : [3], "label" : "HPO", "size":summaryObj.ClinPhen.count},
             {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
             {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
             {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count},
