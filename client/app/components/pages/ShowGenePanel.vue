@@ -388,6 +388,11 @@ var model = new Model();
       bus.$on("includeClinGenesArr", ()=>{
         this.includeClinGenes = true;
       })
+      bus.$on("newAnalysis", ()=>{
+        this.items = [];
+        this.selected = [];
+        this.openSearchBox = false;
+      })
 
     },
     updated(){

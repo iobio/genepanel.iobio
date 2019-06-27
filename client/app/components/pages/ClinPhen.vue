@@ -553,7 +553,9 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         this.selected = [];
         this.multipleSearchTerms = [];
         this.notes = "";
+        this.openSearchBox = false;
         this.HpoTerms = [];
+        this.search = "";
         this.$emit("ClinPhenGenes", []);
         this.$emit("clinphenTerms", []);
         document.getElementById("hpo_input").value="";
@@ -720,7 +722,7 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
       selectGenes(){
         if(this.multipleSearchTerms.length){
           this.maxSliderValue = this.items[0].hpoSource;
-          
+
           this.maxSliderValue > 1 ?
             this.maxSliderValue === 2 ?
               this.sliderValue = 2 :
