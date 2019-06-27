@@ -177,6 +177,8 @@
                                      :thumb-size="20"
                                      :max="maxSliderValue"
                                      :min="minSliderValue"
+                                     ticks="always"
+                                     tick-size="2"
                                   ></v-slider>
                                 </div>
                                 <div style="margin-top:-20px; padding-bottom:10px">
@@ -342,6 +344,9 @@
             </i>
           </v-card-text>
           <v-card-text>
+            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = confirmationItems">Select All</v-btn>
+            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = []">Deselect All</v-btn>
+            <br>
             <!-- Datatable -->
             <v-data-table
               v-if="confirmationItems.length"
@@ -351,14 +356,14 @@
               hide-actions=false
             >
               <template v-slot:items="props">
+                <td style="padding-top:20px">
+                  <!-- <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch> -->
+                  <v-checkbox color="primary" v-model="confirmationSelected" :value="props.item"></v-checkbox>
+                </td>
                 <td>{{ props.item.hpoNumber }}</td>
                 <td >{{ props.item.phenotype }}</td>
                 <td >{{ props.item.occurrences }}</td>
                 <td >{{ props.item.earliness }}</td>
-                <td style="padding-top:20px">
-                  <!-- <v-switch color="success" v-model="confirmationSelected" :value="props.item"></v-switch> -->
-                  <v-checkbox color="success" v-model="confirmationSelected" :value="props.item"></v-checkbox>
-                </td>
               </template>
             </v-data-table>
             <div v-if="confirmationItems.length===0">
@@ -374,7 +379,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
-            <v-btn color="blue darken-1" flat @click="updateHPOtermsSelection">Save and Generate Gene list</v-btn>
+            <v-btn color="blue darken-1" :disabled="!confirmationSelected.length" flat @click="updateHPOtermsSelection">Generate Gene list</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -475,6 +480,12 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         selected: [],
         headers: [
           {
+            text: '',
+            align: 'left',
+            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
+            sortable: false,
+          },
+          {
             text: 'Number',
             value: 'index',
             sortable: false,
@@ -487,12 +498,6 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
             sortable: false,
           },
           { text: 'Search Terms', align: 'center', sortable: false, value: 'searchTermIndexSVG'},
-          {
-            text: '',
-            align: 'left',
-            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
-            sortable: false,
-          },
         ],
         confirmationItems: [],
         confirmationSelected: [],
