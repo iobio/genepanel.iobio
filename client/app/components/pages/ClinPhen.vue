@@ -720,7 +720,13 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
       selectGenes(){
         if(this.multipleSearchTerms.length){
           this.maxSliderValue = this.items[0].hpoSource;
-          this.maxSliderValue > 1 ? this.sliderValue = Math.ceil(this.maxSliderValue/2) : this.sliderValue = 1 ;
+          
+          this.maxSliderValue > 1 ?
+            this.maxSliderValue === 2 ?
+              this.sliderValue = 2 :
+                this.sliderValue = Math.ceil(this.maxSliderValue/2) :
+            this.sliderValue = 1 ;
+
           this.updateSelectionOnSliderValue(this.sliderValue);
         }
       },
