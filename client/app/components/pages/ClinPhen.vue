@@ -10,25 +10,6 @@
                 <h3>HPO <small><i> [ beta ] </i></small></h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
-                    <label>Enter or paste clinical notes</label>
-
-                    <v-layout row wrap>
-                      <v-flex lg8>
-                        <v-textarea
-                          solo
-                          v-model="notes"
-                          name="input-7-4"
-                          rows="4"
-                          label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
-                        ></v-textarea>
-                      </v-flex>
-                      <v-flex lg4>
-                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit</v-btn>
-                      </v-flex>
-                    </v-layout>
-                    <p>
-                      ------ <i>OR</i> ------
-                    </p>
                     <div id="HPOInput" style="display:inline-block; padding-top:5px;">
                       <label>Enter Phenotype or HPO term</label>
                       <input
@@ -56,9 +37,31 @@
                         >
                       Generate Gene List
                     </v-btn>
+                    <p>
+                      ------ <i>OR</i> ------
+                    </p>
+
+                    <!-- Clinical notes text entry box -->
+                    <label>Enter or paste clinical notes</label>
+
+                    <v-layout row wrap>
+                      <v-flex lg8>
+                        <v-textarea
+                          solo
+                          v-model="notes"
+                          name="input-7-4"
+                          rows="4"
+                          label="Patient has symptoms such as Mandibulofacial dysostosis, Lactic acidosis.."
+                        ></v-textarea>
+                      </v-flex>
+                      <v-flex lg4>
+                        <v-btn style="text-transform:none" v-on:click="fetchHpoTerm" color="primary">Submit</v-btn>
+                      </v-flex>
+                    </v-layout>
+
                     <p></p>
+
                     <div v-if="this.HpoTerms.length">
-                      <br>
                         HPO Terms:
                       <v-chip  color="primary" text-color="white" close v-for="(term, i) in HpoTerms" :key="i" @input="remove(term)">
                         {{ i+1 }}. <b> {{ term.hpoNumber }} </b> &nbsp; <i> ({{term.phenotype}}) </i>
