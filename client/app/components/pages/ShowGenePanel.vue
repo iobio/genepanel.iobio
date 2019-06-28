@@ -134,7 +134,7 @@
                </div>
               </span> -->
               <span v-else-if="header.text===''" >
-                <v-layout row wrap>
+                <!-- <v-layout row wrap>
                   <v-flex xs11 style="margin-top:-30px">
                     <v-text-field
                       label="Search for gene"
@@ -147,7 +147,11 @@
                 <v-flex xs1 style="margin-top:-5px; margin-left:-22px">
                   <v-icon style="opacity:2; color:#222;">search</v-icon>
                 </v-flex>
-              </v-layout>
+              </v-layout> -->
+              <GeneSearchBox
+                v-on:search="searchedGeneName($event)"
+              >
+              </GeneSearchBox>
               </span>
               <span v-else>{{ header.text }}</span>
 
@@ -282,9 +286,11 @@ import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
 var model = new Model();
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
     components: {
+      GeneSearchBox
     },
     //props: ['GeneData'],
     props: {
@@ -933,6 +939,9 @@ var model = new Model();
         this.search = "";
         this.openSearchBox=false;
       },
+      searchedGeneName: function(gene){
+        this.search = gene;
+      }
     }
   }
 
