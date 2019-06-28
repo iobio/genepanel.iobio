@@ -254,8 +254,7 @@
                             </span>
                           </td>
                         <td ><span v-html="props.item.htmlData"></span></td>
-                        <td style="font-size:0px;">{{ props.item.score }}</td>
-                        <td class="text-xs-left">
+                        <td class="text-xs-right">
                           <v-menu bottom offset-y style="color:black">
                             <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                             <v-card>
@@ -334,6 +333,7 @@
 
                           </v-menu>
                         </td>
+                        <td style="font-size:0px;">{{ props.item.score }}</td>
                       </tr>
                     </template>
                     <template slot="footer">

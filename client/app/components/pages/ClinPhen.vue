@@ -219,7 +219,7 @@
                             <span v-html="x"></span>
                           </span>
                         </td>
-                        <td>
+                        <td class="text-xs-right">
                           <v-menu bottom offset-y style="color:black">
                             <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                             <v-card>
