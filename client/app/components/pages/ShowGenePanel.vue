@@ -29,6 +29,22 @@
       >
         Genes marked with the <v-icon style="font-size:20px">verified_user</v-icon> icon are reported to be associated with the condition; it is possible that they do not appear on any panels that test for the condition. These genes will always appear at the top of the gene list.
       </v-alert>
+      <v-card-title style="padding-top:12px">
+        <!-- <v-spacer></v-spacer> -->
+        <!-- <v-layout row wrap>
+          <v-flex offset-xs9 xs3 >
+            <v-text-field
+              label="Search for gene"
+              append-icon="search"
+              single-line
+              hide-details
+              v-model="search"
+              solo
+              style="min-height:20px !important"
+            ></v-text-field>
+          </v-flex>
+        </v-layout> -->
+      </v-card-title>
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -91,8 +107,8 @@
                   <v-flex xs1 style="margin-top:40px;">
                     <small >{{maxSliderValue}}</small>
                   </v-flex>
-                  <v-flex xs2>
-                    <v-flex>
+                  <v-flex>
+                    <v-flex xs4>
                       <v-text-field
                         style="font-size:14px"
                         v-model="sliderValue"
@@ -109,7 +125,7 @@
                   </v-flex>
                 </v-layout>
               </span>
-              <span v-else-if="header.text==='Gene Name'">
+              <!-- <span v-else-if="header.text==='Gene Name'">
                <div v-show="!openSearchBox">
                  {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
                </div>
@@ -131,8 +147,22 @@
                    </v-flex>
                  </v-layout>
                </div>
-              </span>
+              </span> -->
               <span v-else-if="header.text===''" >
+                <v-layout row wrap>
+                  <v-flex xs11 style="margin-top:-30px">
+                    <v-text-field
+                      label="Search for gene"
+                      single-line
+                      hide-details
+                      v-model="search"
+                      style="min-height:20px !important"
+                    ></v-text-field>
+                  </v-flex>
+                <v-flex xs1 style="margin-top:-5px; margin-left:-22px">
+                  <v-icon style="opacity:2; color:#222;">search</v-icon>
+                </v-flex>
+              </v-layout>
               </span>
               <span v-else>{{ header.text }}</span>
 
@@ -174,7 +204,7 @@
                 v-html="props.item.htmlData">
               </span>
             </td>
-            <td>
+            <td class="text-xs-right">
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                 <v-card>
@@ -980,5 +1010,9 @@ div.tooltip
 
 #geneSearchBox .v-label
   font-size: 12px
+
+.v-input .v-label
+  font-size: 14px !important
+
 
 </style>
