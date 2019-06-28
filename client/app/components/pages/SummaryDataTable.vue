@@ -15,6 +15,7 @@
           v-bind:search="search"
           no-data-text="No Genes Available Currently"
           :custom-filter="filterItemsOnSearch"
+          :rows-per-page-items="[5, 10, 25, 50]"
         >
         <template slot="headers" slot-scope="props">
           <tr >

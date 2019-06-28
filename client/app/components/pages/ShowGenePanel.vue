@@ -29,22 +29,6 @@
       >
         Genes marked with the <v-icon style="font-size:20px">verified_user</v-icon> icon are reported to be associated with the condition; it is possible that they do not appear on any panels that test for the condition. These genes will always appear at the top of the gene list.
       </v-alert>
-      <v-card-title style="padding-top:12px">
-        <!-- <v-spacer></v-spacer> -->
-        <!-- <v-layout row wrap>
-          <v-flex offset-xs9 xs3 >
-            <v-text-field
-              label="Search for gene"
-              append-icon="search"
-              single-line
-              hide-details
-              v-model="search"
-              solo
-              style="min-height:20px !important"
-            ></v-text-field>
-          </v-flex>
-        </v-layout> -->
-      </v-card-title>
       <v-data-table
           id="genes-table"
           v-model="selected"
@@ -57,6 +41,7 @@
           :search="search"
           :custom-filter="filterItemsOnSearch"
           no-data-text="No Genes Available Currently"
+          :rows-per-page-items="[5, 10, 25, 50]"
         >
         <template slot="headers" slot-scope="props">
           <tr>
