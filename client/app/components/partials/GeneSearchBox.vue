@@ -10,7 +10,7 @@
           style="min-height:20px !important"
         ></v-text-field>
       </v-flex>
-    <v-flex xs1 style="margin-top:-5px; margin-left:-22px">
+    <v-flex xs1 style="margin-top:-5px; margin-left:-22px; ">
       <v-icon style="opacity:2; color:#222;">search</v-icon>
     </v-flex>
   </v-layout>

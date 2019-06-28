@@ -204,8 +204,8 @@
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
                           <!-- {{ header.text }} -->
-                          <span v-if="header.text==='Gene Name'">
-                           <div v-show="!openSearchBox">
+                          <span v-if="header.text===''">
+                           <!-- <div v-show="!openSearchBox">
                              {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
                            </div>
                            <div v-show="openSearchBox">
@@ -220,13 +220,16 @@
                                      v-model="search"
                                    ></v-text-field>
                                  </div>
-                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
+                                 <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
                                </v-flex>
                                <v-flex xs1>
                                  <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
                                </v-flex>
                              </v-layout>
-                           </div>
+                           </div> -->
+                           <GeneSearchBox
+                             v-on:search="searchedGeneName($event)">
+                           </GeneSearchBox>
                           </span>
                           <span v-else>{{ header.text }}</span>
                         </th>
@@ -252,7 +255,7 @@
                           </td>
                         <td ><span v-html="props.item.htmlData"></span></td>
                         <td style="font-size:0px;">{{ props.item.score }}</td>
-                        <td>
+                        <td class="text-xs-left">
                           <v-menu bottom offset-y style="color:black">
                             <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                             <v-card>
@@ -403,6 +406,8 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import fetchJsonp from 'fetch-jsonp';
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
+
   export default {
     components: {
       'Dialogs': Dialogs,
@@ -410,6 +415,7 @@ import fetchJsonp from 'fetch-jsonp';
       'progressCircularDonut': progressCircularDonut,
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
+      'GeneSearchBox': GeneSearchBox,
       Typeahead
     },
     props: {
@@ -1117,6 +1123,9 @@ import fetchJsonp from 'fetch-jsonp';
       closeSearchBox: function(){
         this.search = "";
         this.openSearchBox=false;
+      },
+      searchedGeneName: function(gene){
+        this.search = gene;
       },
     }
   }

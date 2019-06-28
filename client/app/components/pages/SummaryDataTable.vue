@@ -1,8 +1,11 @@
 <template>
   <div>
     <v-card-title>
-      <v-spacer></v-spacer>
       <v-btn v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes as CSV</v-btn>
+      <v-spacer></v-spacer>
+      <GeneSearchBox
+        v-on:search="searchedGeneName($event)">
+      </GeneSearchBox>
     </v-card-title>
     <div id="summaryDataTableId">
       <v-data-table
@@ -200,10 +203,12 @@ import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import GeneCard from './GeneCard.vue';
 import fetchJsonp from 'fetch-jsonp';
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
     components: {
       'GeneCard': GeneCard,
+      'GeneSearchBox': GeneSearchBox
     },
     props:{
       summaryTableData:{
@@ -407,6 +412,9 @@ import fetchJsonp from 'fetch-jsonp';
           this.pagination.sortBy = column
           this.pagination.descending = false
         }
+      },
+      searchedGeneName: function(gene){
+        this.search = gene;
       },
       showGeneInfo(gene){
         console.log("gene", gene)

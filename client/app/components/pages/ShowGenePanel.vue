@@ -149,8 +149,7 @@
                 </v-flex>
               </v-layout> -->
               <GeneSearchBox
-                v-on:search="searchedGeneName($event)"
-              >
+                v-on:search="searchedGeneName($event)">
               </GeneSearchBox>
               </span>
               <span v-else>{{ header.text }}</span>
@@ -941,7 +940,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       },
       searchedGeneName: function(gene){
         this.search = gene;
-      }
+      },
     }
   }
 

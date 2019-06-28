@@ -137,29 +137,10 @@
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
                           <!-- {{ header.text }} -->
-                          <span v-if="header.text==='Gene Name'">
-                           <div v-show="!openSearchBox">
-                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
-                           </div>
-                           <div v-show="openSearchBox">
-                             <v-layout >
-                               <v-flex xs8 style="margin-top:-30px">
-                                 <div id="geneSearchBoxPhenolyzer">
-                                   <v-text-field
-                                     label="Search for Gene"
-                                     prepend-icon="search"
-                                     single-line
-                                     hide-details
-                                     v-model="search"
-                                   ></v-text-field>
-                                 </div>
-                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
-                               </v-flex>
-                               <v-flex xs1>
-                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
-                               </v-flex>
-                             </v-layout>
-                           </div>
+                          <span v-if="header.text===''">
+                            <GeneSearchBox
+                              v-on:search="searchedGeneName($event)">
+                            </GeneSearchBox>
                           </span>
                           <span v-else-if="header.text==='Search Terms'">
                             <v-layout style="margin-left: -20px; width:65%">
@@ -435,6 +416,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
 import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
     components: {
@@ -444,6 +426,7 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
       'GenesSelectionCard': GenesSelectionCard,
+      'GeneSearchBox': GeneSearchBox,
       Typeahead
     },
     props: {
@@ -764,7 +747,10 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         if(number>0){
           this.selected = this.items.slice(0,number);
         }
-      }
+      },
+      searchedGeneName: function(gene){
+        this.search = gene;
+      },
     }
   }
 </script>
@@ -815,5 +801,4 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
 
     .btnColor
       margin-top: 2px
-
 </style>

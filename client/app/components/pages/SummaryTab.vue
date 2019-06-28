@@ -95,20 +95,6 @@
                 <!-- start side bar -->
                 <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
                   <div class="d-flex mb-2 xs12">
-                    <v-card v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 ||  manuallyAddedGenes.length>0 || clinPhenGenesArr.length>0">
-                      <v-card-title primary-title>
-                        <v-text-field
-                          append-icon="search"
-                          label="Search for Gene"
-                          single-line
-                          hide-details
-                          v-model="geneSearch"
-                        ></v-text-field>
-                      </v-card-title>
-                      <br>
-                    </v-card>
-                  </div>
-                  <div class="d-flex mt-3 mb-2 xs12">
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
                       <v-card-text>
                       <center>
