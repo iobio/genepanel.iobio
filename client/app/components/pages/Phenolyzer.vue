@@ -94,11 +94,6 @@
                                 </span>
                               <v-divider class="Rightbar_card_divider"></v-divider>
                               <span class="Rightbar_card_content_subheading">
-                                <!-- <span v-if="!openEditBoxPhenolyzer" @click="openEditBoxPhenolyzer=true">
-                                  <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong>
-                                </span> -->
-                                <!-- <span v-else> -->
-
                                 <v-tooltip bottom>
                                   <span slot="activator">
                                     <div style="display:inline-block; padding-top:5px; width:25%">
@@ -112,35 +107,11 @@
                                         v-model="genesTop"
                                         autocomplete="off"
                                         >
-                                        <!-- <datalist id="genes">
-                                          <option v-for="genesCount in genesTopCounts">
-                                            {{ genesCount }}
-                                          </option>
-                                        </datalist> -->
                                     </div>
                                   </span>
-
                                   <span>Click to edit the number of genes selected </span>
                                 </v-tooltip>
                                   of {{ items.length }} genes selected
-                                  <!-- <v-tooltip bottom v-if="!openEditBoxPhenolyzer">
-                                   <v-icon
-                                     slot="activator"
-                                     v-on:click="openEditBoxPhenolyzer=true"
-                                   >
-                                     edit
-                                   </v-icon>
-                                   <span>Edit the number of genes selected</span>
-                                 </v-tooltip>
-                                 <v-tooltip bottom v-else>
-                                  <v-icon
-                                    slot="activator"
-                                    v-on:click="openEditBoxPhenolyzer=false"
-                                  >
-                                    close
-                                  </v-icon>
-                                  <span>Close the edit box</span>
-                                </v-tooltip> -->
                               </span>
                               </center>
                               <div class="text-xs-center">
