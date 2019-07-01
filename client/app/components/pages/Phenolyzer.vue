@@ -94,27 +94,36 @@
                                 </span>
                               <v-divider class="Rightbar_card_divider"></v-divider>
                               <span class="Rightbar_card_content_subheading">
-                                <span v-if="!openEditBoxPhenolyzer"><strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> </span>
-                                <span v-else>
-                                  <div style="display:inline-block; padding-top:5px;">
-                                    <input
-                                      :disabled="multipleSearchTerms.length<1"
-                                      id="top-genes-phenolyzer"
-                                      class="form-control"
-                                      style="margin-bottom:8px; width:82%"
-                                      type="text"
-                                      v-model="genesTop"
-                                      autocomplete="off"
-                                      list="genes">
-                                      <datalist id="genes">
-                                        <option v-for="genesCount in genesTopCounts">
-                                          {{ genesCount }}
-                                        </option>
-                                      </datalist>
-                                  </div>
-                                </span>
+                                <!-- <span v-if="!openEditBoxPhenolyzer" @click="openEditBoxPhenolyzer=true">
+                                  <strong class="Rightbar_card_content_heading">{{ selected.length }}</strong>
+                                </span> -->
+                                <!-- <span v-else> -->
+
+                                <v-tooltip bottom>
+                                  <span slot="activator">
+                                    <div style="display:inline-block; padding-top:5px; width:25%">
+                                      <input
+                                        :disabled="multipleSearchTerms.length<1"
+                                        id="top-genes-phenolyzer"
+                                        class="form-control editTextInput"
+                                        type="number"
+                                        min="0"
+                                        max="10000"
+                                        v-model="genesTop"
+                                        autocomplete="off"
+                                        >
+                                        <!-- <datalist id="genes">
+                                          <option v-for="genesCount in genesTopCounts">
+                                            {{ genesCount }}
+                                          </option>
+                                        </datalist> -->
+                                    </div>
+                                  </span>
+
+                                  <span>Click to edit the number of genes selected </span>
+                                </v-tooltip>
                                   of {{ items.length }} genes selected
-                                  <v-tooltip bottom v-if="!openEditBoxPhenolyzer">
+                                  <!-- <v-tooltip bottom v-if="!openEditBoxPhenolyzer">
                                    <v-icon
                                      slot="activator"
                                      v-on:click="openEditBoxPhenolyzer=true"
@@ -131,7 +140,7 @@
                                     close
                                   </v-icon>
                                   <span>Close the edit box</span>
-                                </v-tooltip>
+                                </v-tooltip> -->
                               </span>
                               </center>
                               <div class="text-xs-center">
@@ -1138,6 +1147,18 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
 <style lang="sass">
 
   @import ../assets/sass/variables
+
+  .editTextInput
+    margin-bottom: 12px
+    width: 95%
+    font-size: 24px !important
+    font-weight: bolder
+    box-sizing: border-box
+    border: none
+    border-bottom: 3px dashed rgb(66, 103, 178)
+    padding-bottom: 10px
+    padding-top: 10px
+    text-align: center
 
   .btnColor, .btn__content
     color: white
