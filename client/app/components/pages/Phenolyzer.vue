@@ -86,44 +86,13 @@
                     <v-layout row wrap>
                       <v-flex >
                         <div v-if="items.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
-                          <v-card>
-                            <v-card-text>
-                              <center>
-                                <span class="Rightbar_CardHeading">
-                                GENES
-                                </span>
-                              <v-divider class="Rightbar_card_divider"></v-divider>
-                              <span class="Rightbar_card_content_subheading">
-                                <v-tooltip bottom>
-                                  <span slot="activator">
-                                    <div style="display:inline-block; padding-top:5px; width:25%">
-                                      <input
-                                        :disabled="multipleSearchTerms.length<1"
-                                        id="top-genes-phenolyzer"
-                                        class="form-control editTextInput"
-                                        type="number"
-                                        min="0"
-                                        max="10000"
-                                        v-model="genesTop"
-                                        autocomplete="off"
-                                        >
-                                    </div>
-                                  </span>
-                                  <span>Click to edit the number of genes selected </span>
-                                </v-tooltip>
-                                  of {{ items.length }} genes selected
-                              </span>
-                              </center>
-                              <div class="text-xs-center">
-                                <progressCircularDonut
-                                  v-if="items.length>0"
-                                  :selectedNumber="selected.length"
-                                  :totalNumber="items.length"
-                                >
-                                </progressCircularDonut>
-                              </div>
-                            </v-card-text>
-                          </v-card>
+                          <GenesSelection
+                            :items="items"
+                            :selected="selected"
+                            :multipleSearchTerms="multipleSearchTerms"
+                            v-on:selectNgenes="selectNgenes($event)"
+                          >
+                          </GenesSelection>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -185,28 +154,6 @@
                         >
                           <!-- {{ header.text }} -->
                           <span v-if="header.text===''">
-                           <!-- <div v-show="!openSearchBox">
-                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
-                           </div>
-                           <div v-show="openSearchBox">
-                             <v-layout >
-                               <v-flex xs8 style="margin-top:-30px">
-                                 <div id="geneSearchBoxPhenolyzer">
-                                   <v-text-field
-                                     label="Search for Gene"
-                                     prepend-icon="search"
-                                     single-line
-                                     hide-details
-                                     v-model="search"
-                                   ></v-text-field>
-                                 </div>
-                                 <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div>
-                               </v-flex>
-                               <v-flex xs1>
-                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
-                               </v-flex>
-                             </v-layout>
-                           </div> -->
                            <GeneSearchBox
                              v-on:search="searchedGeneName($event)">
                            </GeneSearchBox>
@@ -387,6 +334,7 @@ import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import fetchJsonp from 'fetch-jsonp';
 import GeneSearchBox from '../partials/GeneSearchBox.vue';
+import GenesSelection from '../partials/GenesSelection.vue';
 
   export default {
     components: {
@@ -396,6 +344,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
       'GeneSearchBox': GeneSearchBox,
+      'GenesSelection': GenesSelection,
       Typeahead
     },
     props: {
@@ -601,6 +550,9 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       }
     },
     methods: {
+      selectNgenes: function(data){
+        this.genesTop = data;
+      },
       EnterForSearch(){
         if(event.key==='Enter'){
           setTimeout(()=>{

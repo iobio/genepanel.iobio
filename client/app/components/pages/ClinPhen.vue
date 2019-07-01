@@ -74,7 +74,7 @@
                     <v-layout row wrap>
                       <v-flex style="margin-left:20px">
                         <div v-if="items.length>0">
-                          <GenesSelectionCard
+                          <GenesSelection
                             :items="items"
                             :selected="selected"
                             :multipleSearchTerms="multipleSearchTerms"
@@ -415,7 +415,7 @@ import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
-import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
+import GenesSelection from '../partials/GenesSelection.vue';
 import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
@@ -425,7 +425,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       'progressCircularDonut': progressCircularDonut,
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
-      'GenesSelectionCard': GenesSelectionCard,
+      'GenesSelection': GenesSelection,
       'GeneSearchBox': GeneSearchBox,
       Typeahead
     },
