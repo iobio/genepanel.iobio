@@ -3,10 +3,10 @@
     <v-card>
       <v-card-text>
         <center>
-          <span class="Rightbar_CardHeading">
+          <span v-if="multipleSearchTerms[0]!=='Summary data'" class="Rightbar_CardHeading">
           GENES
           </span>
-        <v-divider class="Rightbar_card_divider"></v-divider>
+        <v-divider v-if="multipleSearchTerms[0]!=='Summary data'" class="Rightbar_card_divider"></v-divider>
         <span class="Rightbar_card_content_subheading">
           <v-tooltip bottom>
             <span slot="activator">
@@ -22,7 +22,7 @@
                   >
               </div>
             </span>
-            <span>Click to edit the number of genes selected </span>
+            <span>Change the number of genes selected </span>
           </v-tooltip>
             of {{ items }} genes selected
         </span>

@@ -100,7 +100,7 @@
                         <v-card-text>
                         <center>
                           <span class="Rightbar_CardHeading">
-                           SUMMARY
+                            GENES SUMMARY
                           </span>
                           <Dialogs
                             id="genesDialog"
@@ -119,97 +119,6 @@
                       >
                       </GenesSelection>
                     </div>
-
-                    <!--
-                    <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
-                      <v-card-text>
-                      <center>
-                        <span class="Rightbar_CardHeading">
-                        GENES SUMMARY
-                        </span>
-                        <Dialogs
-                          id="genesDialog"
-                          class="dialogBox"
-                          :HeadlineText="HelpDialogsData[5].HeadlineText"
-                          :ContentText="HelpDialogsData[5].Content">
-                        </Dialogs>
-                        <v-divider class="Rightbar_card_divider"></v-divider>
-
-
-                         <span class="Rightbar_card_content_subheading">
-                           <span v-if="!openEditBox"><strong class="Rightbar_card_content_heading">{{ selectedGenes }}</strong></span>
-                           <span v-else>
-                             <div style="display:inline-block; padding-top:5px;">
-                               <input
-                                 id="top-genes-summary"
-                                 class="form-control"
-                                 style="margin-bottom:8px; width:82%"
-                                 type="text"
-                                 v-model="genesTop"
-                                 placeholder="10"
-                                 autocomplete="off"
-                                 list="genes">
-                                 <datalist id="genes">
-                                   <option v-for="genesCount in genesTopCounts">
-                                     {{ genesCount }}
-                                   </option>
-                                 </datalist>
-                             </div>
-                           </span>
-                           of {{ totalGenes }} genes selected
-                           <v-tooltip bottom v-if="!openEditBox">
-                            <v-icon
-                              slot="activator"
-                              v-on:click="openEditBox=true"
-                            >
-                              edit
-                            </v-icon>
-                            <span>Edit the number of genes selected</span>
-                          </v-tooltip>
-                          <v-tooltip bottom v-if="openEditBox">
-                           <v-icon
-                             slot="activator"
-                             v-on:click="openEditBox=false"
-                           >
-                             close
-                           </v-icon>
-                           <span>Close the edit box</span>
-                         </v-tooltip>
-                         </span>
-                         <br>
-                         <a v-on:click="openEditBox=true" v-if="!openEditBox"> <i><v-icon style="color:#4267b2">edit</v-icon> Edit the number of genes selected </i></a>
-                         <br><br>
-                       </center>
-                       <SvgBar
-                       v-if="totalGenes"
-                        class="SvgBarClass"
-                        id="genesSvgBox"
-                        :selectedNumber="selectedGenes"
-                        :totalNumber="totalGenes">
-                       </SvgBar>
-                       <br>
-                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
-                         <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
-                           <v-flex xs6>
-                             <div class="Rightbar_card_content_subheading" style="margin-left:10px">
-                               {{ item.name }}
-                             </div>
-                           </v-flex>
-                           <v-flex xs6>
-                             <div>
-                               <SummarySvgBar
-                               v-if="totalGenes"
-                                class="SvgBarClass"
-                                id="genesbar"
-                                :selectedNumber="item.count"
-                                :totalNumber="totalGenes">
-                               </SummarySvgBar>
-                             </div>
-                           </v-flex>
-                         </v-layout>
-                       </div>
-                     </v-card-text>
-                    </v-card> -->
                   </div>
 
                   <div class="d-flex mb-2 xs12"
@@ -218,7 +127,17 @@
                           (PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
                           (GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0)">
                     <v-card>
-                      <div id="venn"></div>
+                      <v-card-text>
+                        <center>
+                          <span class="Rightbar_CardHeading">
+                            GENES OVERVIEW
+                          </span>
+                        </center>
+                        <v-divider></v-divider>
+                      </v-card-text>
+                      <center>
+                        <div id="venn" style="margin-top:-40px; margin-bottom:-10px"></div>
+                      </center>
                     </v-card>
                   </div>
 
@@ -1226,8 +1145,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
         d3.select("#venn").select("svg").remove();
         var x = require('venn.js')
         var chart = x.VennDiagram()
-                 .width(400)
-                 .height(400);
+                 .width(325)
+                 .height(325);
       var div = d3.select("#venn")
       div.datum(this.vennData.data).call(chart);
       var tooltip = d3.select("body").append("div")
