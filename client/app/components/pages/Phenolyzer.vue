@@ -49,7 +49,7 @@
                         style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
-                      Generate Gene List
+                      Search
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">

@@ -35,7 +35,7 @@
                         class="btnColor"
                         v-on:click="searchForTheInputTerm"
                         >
-                      Generate Gene List
+                      Search
                     </v-btn>
                     <p>
                       <br>
@@ -361,7 +361,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
-            <v-btn color="blue darken-1" :disabled="!confirmationSelected.length" flat @click="updateHPOtermsSelection">Generate Gene list</v-btn>
+            <v-btn color="blue darken-1" :disabled="!confirmationSelected.length" flat @click="updateHPOtermsSelection">Generate Gene List</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
