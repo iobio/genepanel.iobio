@@ -23,9 +23,6 @@
                 <h3>Phenolyzer</h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
-                    <v-btn v-on:click="sortSources" color="primary">sort </v-btn>
-                    <v-btn v-on:click="sortScores" color="primary">sortScores </v-btn>
-
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Enter Phenotype</label>
                       <input
@@ -126,6 +123,29 @@
               </v-flex>
                 <v-flex xs12>
                 <v-card v-if="multipleSearchTerms.length">
+                  <v-card-title v-if="multipleSearchTerms.length>1">
+                      <span>
+                        Sort the list by:
+                      </span>
+                      <v-chip
+                        color="blue darken-2"
+                        :outline="!scoreBasedSort"
+                        :disabled="scoreBasedSort"
+                        :text-color=" !scoreBasedSort ? 'blue darken-2' : 'white' "
+                        v-on:click="sortScores"
+                      >Phenolyzer Score
+                      </v-chip>
+
+                      <v-chip
+                        color="blue darken-2"
+                        :outline="scoreBasedSort"
+                        :disabled="sourceBasedSort"
+                        :text-color=" !sourceBasedSort ? 'blue darken-2' : 'white' "
+                        v-on:click="sortSources"
+                      >Number of Sources
+                      </v-chip>
+                      <v-spacer></v-spacer>
+                    </v-card-title>
                   <v-data-table
                       id="genes-table"
                       v-model="selected"
@@ -456,6 +476,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
         openSearchBox: false,
         openEditBoxPhenolyzer: false,
         genesSearchTermObj: {},
+        scoreBasedSort: true,
+        sourceBasedSort: false,
       }
     },
     beforeCreate(){
@@ -701,11 +723,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
         });
       },
       remove (item) {
-        // this.pagination = {
-        //   sortBy: 'rank',
-        //   // descending: true,
-        //   rowsPerPage: 25
-        // };
+        this.scoreBasedSort = true;
+        this.sourceBasedSort = false;
         this.items = [];
         this.selected = [];
         this.search = '';
@@ -868,41 +887,42 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   }
                   this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
 
-                  var combinedList = self.combineList(self.dictionaryArr);
-                  var createdObj = self.createObj(combinedList);
-                  var averagedData = self.performMeanOperation(combinedList, createdObj);
-                  var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
-                  var sortedPhenotypeData = self.sortTheOrder(meanData);
-                  self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-                  // sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
-                  // let data = self.drawSvgBars(sortedPhenotypeData);
-                  var rankedList = self.rankTheList(sortedPhenotypeData)
-                  // let data = self.drawSvgBars(sortedPhenotypeData);
-                  let data = self.drawSvgBars(rankedList);
-                  self.items = data;
-
-                  self.noOfSourcesSvg();
-                  if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
-                    self.selected = [];
-                  // if(self.launchedFromClin && self.clinGenes.length>0){
-                    self.items.map(x=>{
-                      if(self.clinGenes.includes(x.geneName)){
-                        self.selected.push(x);
-                      }
-                    })
-                  }
-                  else {
-                    self.selected = self.items.slice(0, self.genesTop);
-
-                  }
-                  // self.selected = self.items.slice(0,50);
-                  self.phenolyzerStatus = null;
-                  self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-                  self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-                  self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-                  self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-                  this.$emit("PhenolyzerFullGeneList", this.items);
-
+                  self.scoreBasedSort? self.sortScores() : self.sortSources();
+                  // var combinedList = self.combineList(self.dictionaryArr);
+                  // var createdObj = self.createObj(combinedList);
+                  // var averagedData = self.performMeanOperation(combinedList, createdObj);
+                  // var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
+                  // var sortedPhenotypeData = self.sortTheOrder(meanData);
+                  // self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+                  // // sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
+                  // // let data = self.drawSvgBars(sortedPhenotypeData);
+                  // var rankedList = self.rankTheList(sortedPhenotypeData)
+                  // // let data = self.drawSvgBars(sortedPhenotypeData);
+                  // let data = self.drawSvgBars(rankedList);
+                  // self.items = data;
+                  //
+                  // self.noOfSourcesSvg();
+                  // if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+                  //   self.selected = [];
+                  // // if(self.launchedFromClin && self.clinGenes.length>0){
+                  //   self.items.map(x=>{
+                  //     if(self.clinGenes.includes(x.geneName)){
+                  //       self.selected.push(x);
+                  //     }
+                  //   })
+                  // }
+                  // else {
+                  //   self.selected = self.items.slice(0, self.genesTop);
+                  //
+                  // }
+                  // // self.selected = self.items.slice(0,50);
+                  // self.phenolyzerStatus = null;
+                  // self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+                  // self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+                  // self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+                  // self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+                  // this.$emit("PhenolyzerFullGeneList", this.items);
+                  //
                 }
               } else {
                 self.phenolyzerStatus = status;
@@ -1043,6 +1063,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       sortSources(){
         let self = this;
+        self.sourceBasedSort = true;
+        self.scoreBasedSort = false;
         var combinedList = self.combineList(self.dictionaryArr);
         var createdObj = self.createObj(combinedList);
         var averagedData = self.performMeanOperation(combinedList, createdObj);
@@ -1079,6 +1101,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       sortScores(){
         let self = this;
+        self.scoreBasedSort = true;
+        self.sourceBasedSort = false;
         var combinedList = self.combineList(self.dictionaryArr);
         var createdObj = self.createObj(combinedList);
         var averagedData = self.performMeanOperation(combinedList, createdObj);
