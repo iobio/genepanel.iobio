@@ -124,9 +124,18 @@
                 <v-flex xs12>
                 <v-card v-if="multipleSearchTerms.length">
                   <v-card-title v-if="multipleSearchTerms.length>1">
-                      <span>
-                        Sort the list by:
+                      <span class="body-2">
+                        Sort the list by: &nbsp;
                       </span>
+                      <v-tooltip bottom style="margin-top:-20px" >
+                        <span slot="activator">
+                          <v-icon size="16">help</v-icon>
+                        </span>
+                        <span>
+                          The gene list is sorted in descending order based on the phenolyzer score. <br>
+                          You can change to sort the list based on the "Number of Sources", so that the genes present in multiple sources will rank higher.
+                        </span>
+                      </v-tooltip>
                       <v-chip
                         color="blue darken-2"
                         :outline="!scoreBasedSort"
@@ -888,41 +897,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
 
                   self.scoreBasedSort? self.sortScores() : self.sortSources();
-                  // var combinedList = self.combineList(self.dictionaryArr);
-                  // var createdObj = self.createObj(combinedList);
-                  // var averagedData = self.performMeanOperation(combinedList, createdObj);
-                  // var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
-                  // var sortedPhenotypeData = self.sortTheOrder(meanData);
-                  // self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-                  // // sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
-                  // // let data = self.drawSvgBars(sortedPhenotypeData);
-                  // var rankedList = self.rankTheList(sortedPhenotypeData)
-                  // // let data = self.drawSvgBars(sortedPhenotypeData);
-                  // let data = self.drawSvgBars(rankedList);
-                  // self.items = data;
-                  //
-                  // self.noOfSourcesSvg();
-                  // if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
-                  //   self.selected = [];
-                  // // if(self.launchedFromClin && self.clinGenes.length>0){
-                  //   self.items.map(x=>{
-                  //     if(self.clinGenes.includes(x.geneName)){
-                  //       self.selected.push(x);
-                  //     }
-                  //   })
-                  // }
-                  // else {
-                  //   self.selected = self.items.slice(0, self.genesTop);
-                  //
-                  // }
-                  // // self.selected = self.items.slice(0,50);
-                  // self.phenolyzerStatus = null;
-                  // self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-                  // self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-                  // self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-                  // self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-                  // this.$emit("PhenolyzerFullGeneList", this.items);
-                  //
                 }
               } else {
                 self.phenolyzerStatus = status;
