@@ -23,6 +23,8 @@
                 <h3>Phenolyzer</h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
+                    <v-btn v-on:click="sortSources" color="primary">sort </v-btn>
+
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Enter Phenotype</label>
                       <input
@@ -426,6 +428,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         ],
         tempItems: [],
         items: [],
+        sortItems: [],
         NumberOfTopPhenolyzerGenes: 50,
         selectedGenesText: "",
         checked: false,
@@ -503,6 +506,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       }
     },
     updated(){
+      console.log("updated")
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -574,6 +578,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       updateTableHeaders(){
         if(this.multipleSearchTerms.length>1){
+          this.pagination = {
+            sortBy: 'indexVal',
+            // descending: true,
+            rowsPerPage: 25
+          };
           this.headers = [
             {
               text: 'Rank',
@@ -609,6 +618,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
           ];
         }
         else if(this.multipleSearchTerms.length<2){
+          this.pagination = {
+            sortBy: 'indexVal',
+            // descending: true,
+            rowsPerPage: 25
+          };
           this.headers = [
             {
               text: 'Rank',
@@ -851,7 +865,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
                   var sortedPhenotypeData = self.sortTheOrder(meanData);
                   self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-
+                  // sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
                   let data = self.drawSvgBars(sortedPhenotypeData);
                   self.items = data;
 
@@ -1009,7 +1023,45 @@ import GenesSelection from '../partials/GenesSelection.vue';
           })
         }
       },
+      sortSources(){
+        let self = this;
+        self.items = [];
+        self.selected = [];
+        var combinedList = self.combineList(self.dictionaryArr);
+        var createdObj = self.createObj(combinedList);
+        var averagedData = self.performMeanOperation(combinedList, createdObj);
+        var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
+        var sortedPhenotypeData = self.sortTheOrder(meanData);
+        self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+        sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
+        let data = self.drawSvgBars(sortedPhenotypeData);
+        self.items = data;
 
+        self.noOfSourcesSvg();
+        if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+          self.selected = [];
+        // if(self.launchedFromClin && self.clinGenes.length>0){
+          self.items.map(x=>{
+            if(self.clinGenes.includes(x.geneName)){
+              self.selected.push(x);
+            }
+          })
+        }
+        else {
+          self.selected = self.items.slice(0, self.genesTop);
+
+        }
+        // self.selected = self.items.slice(0,50);
+        self.phenolyzerStatus = null;
+        self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+        self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+        self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+        self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
+
+
+
+      },
       drawSvgBars: function(tempItems){
         var svgWidth = 270;
         var firstBarWidth = tempItems[0].score * 220;

@@ -127,7 +127,12 @@
                           (PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
                           (GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0)">
                     <v-card>
-                      <v-card-text>
+                      <v-card-text
+                        v-show="(GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0) ||
+                              (GtrGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
+                              (PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
+                              (GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0)"
+                      >
                         <center>
                           <span class="Rightbar_CardHeading">
                             GENES OVERVIEW
