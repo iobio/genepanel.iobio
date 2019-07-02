@@ -87,8 +87,8 @@
                       <v-flex >
                         <div v-if="items.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
                           <GenesSelection
-                            :items="items"
-                            :selected="selected"
+                            :items="items.length"
+                            :selected="selected.length"
                             :multipleSearchTerms="multipleSearchTerms"
                             v-on:selectNgenes="selectNgenes($event)"
                           >

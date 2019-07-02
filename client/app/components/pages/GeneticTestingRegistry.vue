@@ -43,7 +43,16 @@
                       <v-layout row wrap>
                         <v-flex >
                           <div v-if="geneProps.length && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
-                            <v-card class="" style="margin-left:20px">
+                            <GenesSelection
+                              style="margin-left:20px"
+                              :items="TotalGtrGenes"
+                              :selected="GtrGenesTabNumber"
+                              :multipleSearchTerms="multipleSearchItems"
+                              v-on:selectNgenes="selectNgenes($event)"
+                            >
+                            </GenesSelection>
+
+                            <!-- <v-card class="" style="margin-left:20px">
                               <v-card-text>
                                 <center>
                                   <span class="Rightbar_CardHeading" style="font-size:15px">
@@ -101,7 +110,7 @@
                                   </progressCircularDonut>
                                 </div>
                               </v-card-text>
-                            </v-card>
+                            </v-card> -->
                           </div>
 
                           <div v-else-if="geneProps.length===0 && modeOfInheritanceProps.length && multipleSearchItems.length" class="d-flex mb-2 xs12 mb-3">
@@ -987,6 +996,7 @@ import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import LoadingTemplate from './LoadingTemplate.vue';
 import DiseasePanelIndividual from './DiseasePanelIndividual.vue'
 import GenePanelIndividual from './GenePanelIndividual.vue'
+import GenesSelection from '../partials/GenesSelection.vue';
 
 export default {
   components: { //Registering locally for nesting!
@@ -1007,7 +1017,8 @@ export default {
     'ContentLoaderSidebar': ContentLoaderSidebar,
     'LoadingTemplate': LoadingTemplate,
     'DiseasePanelIndividual': DiseasePanelIndividual,
-    'GenePanelIndividual': GenePanelIndividual
+    'GenePanelIndividual': GenePanelIndividual,
+    'GenesSelection': GenesSelection,
   },
   name: 'home',
   props: {
@@ -1303,6 +1314,9 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
+    selectNgenes: function(data){
+      this.NumberOfTopGenes = data;
+    },
     individualGenesObj: function(obj){
       this.$emit("individualGenesGtr", obj)
     },

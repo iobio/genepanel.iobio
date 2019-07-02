@@ -24,14 +24,14 @@
             </span>
             <span>Click to edit the number of genes selected </span>
           </v-tooltip>
-            of {{ items.length }} genes selected
+            of {{ items }} genes selected
         </span>
         </center>
         <div class="text-xs-center">
           <progressCircularDonut
-            v-if="items.length>0"
-            :selectedNumber="selected.length"
-            :totalNumber="items.length"
+            v-if="items>0"
+            :selectedNumber="selected"
+            :totalNumber="items"
           >
           </progressCircularDonut>
         </div>
@@ -55,10 +55,10 @@ var model = new Model();
     },
     props: {
       items:{
-        type: Array
+        type: Number
       },
       selected: {
-        type: Array
+        type: Number
       },
       multipleSearchTerms: {
         type: Array
@@ -70,7 +70,7 @@ var model = new Model();
       }
     },
     mounted(){
-      this.genesTop = this.selected.length;
+      this.genesTop = this.selected;
     },
     updated(){
 
@@ -78,6 +78,9 @@ var model = new Model();
     watch: {
       genesTop(){
         this.$emit("selectNgenes", this.genesTop)
+      },
+      selected(){
+        this.genesTop = this.selected;
       }
     },
     methods:{

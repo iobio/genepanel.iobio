@@ -3,7 +3,7 @@
     <v-layout row wrap>
       <v-flex xs11 style="margin-top:-30px">
         <v-text-field
-          label="Search for gene"
+          label="Gene name..."
           single-line
           hide-details
           v-model="search"

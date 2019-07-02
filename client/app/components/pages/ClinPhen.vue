@@ -75,8 +75,8 @@
                       <v-flex style="margin-left:20px">
                         <div v-if="items.length>0">
                           <GenesSelection
-                            :items="items"
-                            :selected="selected"
+                            :items="items.length"
+                            :selected="selected.length"
                             :multipleSearchTerms="multipleSearchTerms"
                             v-on:selectNgenes="selectNgenes($event)"
                           />

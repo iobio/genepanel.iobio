@@ -95,6 +95,32 @@
                 <!-- start side bar -->
                 <div v-bind:class="[(browser==='Chrome' && isMobile===false) || (browser==='Firefox' && isMobile===false) ? 'flex xs12 sm12 md4 lg4 pr-2 pl-2': 'flex xs12 sm12 md2 lg3 pr-2 pl-2']" >
                   <div class="d-flex mb-2 xs12">
+                    <div v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
+                      <v-card>
+                        <v-card-text>
+                        <center>
+                          <span class="Rightbar_CardHeading">
+                           SUMMARY
+                          </span>
+                          <Dialogs
+                            id="genesDialog"
+                            class="dialogBox"
+                            :HeadlineText="HelpDialogsData[5].HeadlineText"
+                            :ContentText="HelpDialogsData[5].Content">
+                          </Dialogs>
+                        </center>
+                        </v-card-text>
+                      </v-card>
+                      <GenesSelection
+                        :items="totalGenes"
+                        :selected="selectedGenes"
+                        :multipleSearchTerms="['Summary data']"
+                        v-on:selectNgenes="selectNgenes($event)"
+                      >
+                      </GenesSelection>
+                    </div>
+
+                    <!--
                     <v-card v-bind:class="[chartComponent===null ? 'activeCardBox' : 'rightbarCard']" v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
                       <v-card-text>
                       <center>
@@ -131,7 +157,7 @@
                              </div>
                            </span>
                            of {{ totalGenes }} genes selected
-                           <!-- <v-tooltip bottom v-if="!openEditBox">
+                           <v-tooltip bottom v-if="!openEditBox">
                             <v-icon
                               slot="activator"
                               v-on:click="openEditBox=true"
@@ -139,7 +165,7 @@
                               edit
                             </v-icon>
                             <span>Edit the number of genes selected</span>
-                          </v-tooltip> -->
+                          </v-tooltip>
                           <v-tooltip bottom v-if="openEditBox">
                            <v-icon
                              slot="activator"
@@ -162,7 +188,7 @@
                         :totalNumber="totalGenes">
                        </SvgBar>
                        <br>
-                       <!-- <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
+                       <div v-if="GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0">
                          <v-layout row wrap v-for="(item, i) in pieChartdataArr" :key="i">
                            <v-flex xs6>
                              <div class="Rightbar_card_content_subheading" style="margin-left:10px">
@@ -181,9 +207,9 @@
                              </div>
                            </v-flex>
                          </v-layout>
-                       </div> -->
+                       </div>
                      </v-card-text>
-                    </v-card>
+                    </v-card> -->
                   </div>
 
                   <div class="d-flex mb-2 xs12"
@@ -224,6 +250,7 @@ import SvgBar from '../viz/SvgBar.vue'
 import Alerts from '../partials/Alerts.vue';
 import SummarySvgBar from '../viz/SummarySvgBar.vue';
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
+import GenesSelection from '../partials/GenesSelection.vue';
 
 
   export default {
@@ -234,6 +261,7 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       'Alerts': Alerts,
       'SummarySvgBar': SummarySvgBar,
       'progressCircularDonut': progressCircularDonut,
+      'GenesSelection': GenesSelection,
     },
     props:{
       NumberOfGtrGenes:{
@@ -414,6 +442,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
       });
     },
     methods: {
+      selectNgenes: function(data){
+        this.genesTop = data;
+      },
       selectNumberOfSummaryGenes: function(){
         if(this.genesTop>0){
           bus.$emit('SelectedNumberOfSummaryGenes', this.genesTop);
