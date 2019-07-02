@@ -24,6 +24,7 @@
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
                     <v-btn v-on:click="sortSources" color="primary">sort </v-btn>
+                    <v-btn v-on:click="sortScores" color="primary">sortScores </v-btn>
 
                     <div id="phenotype-input" style="display:inline-block;padding-top:5px;">
                       <label>Enter Phenotype</label>
@@ -578,11 +579,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       updateTableHeaders(){
         if(this.multipleSearchTerms.length>1){
-          this.pagination = {
-            sortBy: 'indexVal',
-            // descending: true,
-            rowsPerPage: 25
-          };
+          // this.pagination = {
+          //   sortBy: 'indexVal',
+          //   // descending: true,
+          //   rowsPerPage: 25
+          // };
           this.headers = [
             {
               text: 'Rank',
@@ -618,11 +619,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
           ];
         }
         else if(this.multipleSearchTerms.length<2){
-          this.pagination = {
-            sortBy: 'indexVal',
-            // descending: true,
-            rowsPerPage: 25
-          };
+          // this.pagination = {
+          //   sortBy: 'indexVal',
+          //   // descending: true,
+          //   rowsPerPage: 25
+          // };
           this.headers = [
             {
               text: 'Rank',
@@ -700,6 +701,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
         });
       },
       remove (item) {
+        // this.pagination = {
+        //   sortBy: 'rank',
+        //   // descending: true,
+        //   rowsPerPage: 25
+        // };
         this.items = [];
         this.selected = [];
         this.search = '';
@@ -718,7 +724,10 @@ import GenesSelection from '../partials/GenesSelection.vue';
         // var sortedPhenotypeData = this.sortTheOrder(averagedData);
 
         if(this.multipleSearchTerms.length>0){
-          let data = this.drawSvgBars(sortedPhenotypeData);
+          // let data = this.drawSvgBars(sortedPhenotypeData);
+          var rankedList = this.rankTheList(sortedPhenotypeData)
+          // let data = self.drawSvgBars(sortedPhenotypeData);
+          let data = this.drawSvgBars(rankedList);
           this.items = data;
           this.noOfSourcesSvg();
           if(this.launchedFromClin){
@@ -866,7 +875,10 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   var sortedPhenotypeData = self.sortTheOrder(meanData);
                   self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
                   // sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
-                  let data = self.drawSvgBars(sortedPhenotypeData);
+                  // let data = self.drawSvgBars(sortedPhenotypeData);
+                  var rankedList = self.rankTheList(sortedPhenotypeData)
+                  // let data = self.drawSvgBars(sortedPhenotypeData);
+                  let data = self.drawSvgBars(rankedList);
                   self.items = data;
 
                   self.noOfSourcesSvg();
@@ -988,10 +1000,16 @@ import GenesSelection from '../partials/GenesSelection.vue';
              return -1;
           }
          })
-         for(var i=0; i<arr.length; i++){
-           arr[i].rank = i+1;
-         }
+         // for(var i=0; i<arr.length; i++){
+         //   arr[i].rank = i+1;
+         // }
          return arr;
+      },
+      rankTheList(arr){
+        for(var i=0; i<arr.length; i++){
+          arr[i].rank = i+1;
+        }
+        return arr;
       },
       dataForPieChart(arr){
         var obj = {};
@@ -1025,8 +1043,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       sortSources(){
         let self = this;
-        self.items = [];
-        self.selected = [];
         var combinedList = self.combineList(self.dictionaryArr);
         var createdObj = self.createObj(combinedList);
         var averagedData = self.performMeanOperation(combinedList, createdObj);
@@ -1034,7 +1050,9 @@ import GenesSelection from '../partials/GenesSelection.vue';
         var sortedPhenotypeData = self.sortTheOrder(meanData);
         self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
         sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
-        let data = self.drawSvgBars(sortedPhenotypeData);
+        var rankedList = self.rankTheList(sortedPhenotypeData)
+        // let data = self.drawSvgBars(sortedPhenotypeData);
+        let data = self.drawSvgBars(rankedList);
         self.items = data;
 
         self.noOfSourcesSvg();
@@ -1058,9 +1076,41 @@ import GenesSelection from '../partials/GenesSelection.vue';
         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
         self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
         this.$emit("PhenolyzerFullGeneList", this.items);
+      },
+      sortScores(){
+        let self = this;
+        var combinedList = self.combineList(self.dictionaryArr);
+        var createdObj = self.createObj(combinedList);
+        var averagedData = self.performMeanOperation(combinedList, createdObj);
+        var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
+        var sortedPhenotypeData = self.sortTheOrder(meanData);
+        self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+        var rankedList = self.rankTheList(sortedPhenotypeData)
+        // let data = self.drawSvgBars(sortedPhenotypeData);
+        let data = self.drawSvgBars(rankedList);
+        self.items = data;
 
+        self.noOfSourcesSvg();
+        if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+          self.selected = [];
+        // if(self.launchedFromClin && self.clinGenes.length>0){
+          self.items.map(x=>{
+            if(self.clinGenes.includes(x.geneName)){
+              self.selected.push(x);
+            }
+          })
+        }
+        else {
+          self.selected = self.items.slice(0, self.genesTop);
 
-
+        }
+        // self.selected = self.items.slice(0,50);
+        self.phenolyzerStatus = null;
+        self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+        self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+        self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+        self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
       },
       drawSvgBars: function(tempItems){
         var svgWidth = 270;
