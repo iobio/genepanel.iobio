@@ -1,7 +1,19 @@
 <template>
   <div>
     <div style="background-color:#f9fbff">
-
+      <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
@@ -532,6 +544,12 @@ import HPO_Terms from '../../../data/HPO_Terms';
         color: 'blue darken-3',
         HPO_Phenotypes_data: null,
         HPO_Terms_data: null,
+        snackbar: false,
+        snackbarText: "",
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
       }
     },
     beforeCreate(){
@@ -621,7 +639,8 @@ import HPO_Terms from '../../../data/HPO_Terms';
               }
             }
             else {
-              alert("Please select an option from the autocomplete");
+              this.snackbarText = "Please select an option from the autocomplete";
+              this.snackbar = true;
               this.checked = false;
             }
           }
@@ -643,7 +662,8 @@ import HPO_Terms from '../../../data/HPO_Terms';
               }
             }
             else {
-              alert("Please select an option from the autocomplete");
+              this.snackbarText = "Please select an option from the autocomplete";
+              this.snackbar = true;
               this.checked = false;
             }
           }
@@ -663,7 +683,8 @@ import HPO_Terms from '../../../data/HPO_Terms';
             this.getGenesForHpoTerms();
           }
           else {
-            alert("This HPO Term already exists");
+            this.snackbarText = "This HPO Term already exists";
+            this.snackbar = true;
             this.checked = false;
           }
         }
