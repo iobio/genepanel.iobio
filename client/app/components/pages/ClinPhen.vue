@@ -324,7 +324,7 @@
       <!-- Confirmation Dialog box -->
       <v-dialog
         v-model="confirmationDialog"
-        max-width="850px"
+        max-width="950px"
         persistent
       >
         <v-card>
@@ -361,6 +361,7 @@
                 <td >{{ props.item.phenotype }}</td>
                 <td >{{ props.item.occurrences }}</td>
                 <td >{{ props.item.earliness }}</td>
+                <td >{{ props.item.sentence }}</td>
               </template>
             </v-data-table>
             <div v-if="confirmationItems.length===0">
@@ -530,6 +531,12 @@ import HPO_Terms from '../../../data/HPO_Terms';
           {
             text: 'Earliness',
             value: 'earliness',
+            sortable: false,
+            align: 'left'
+          },
+          {
+            text: 'Example sentence',
+            value: 'sentence',
             sortable: false,
             align: 'left'
           },
@@ -718,13 +725,15 @@ import HPO_Terms from '../../../data/HPO_Terms';
             var phenotype = fields[1];
             var occurrences = fields[2];
             var earliness = fields[3];
+            var sentence = fields[4];
             terms.push(hpoNumber)
             hpoTermArr.push(
               {
                 hpoNumber:hpoNumber,
                 phenotype:phenotype,
                 occurrences:occurrences,
-                earliness:earliness
+                earliness:earliness,
+                sentence:sentence
               }
             )
           }
