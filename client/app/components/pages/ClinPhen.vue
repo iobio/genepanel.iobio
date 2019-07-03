@@ -38,6 +38,8 @@
                         >
                       Search
                     </v-btn>
+                    <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
+
                     <p>
                       <br>
                       ------ <i>OR</i> ------
@@ -407,6 +409,8 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
+import Model from '../../models/Model';
+var model = new Model();
 import IntroductionText from '../../../data/IntroductionText.json'
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
@@ -418,6 +422,8 @@ import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
 import GenesSelection from '../partials/GenesSelection.vue';
 import GeneSearchBox from '../partials/GeneSearchBox.vue';
+import HPO_Phenotypes from '../../../data/HPO_Phenotypes';
+import HPO_Terms from '../../../data/HPO_Terms';
 
   export default {
     components: {
@@ -524,6 +530,8 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         maxSliderValue: 1,
         sliderColor: 'grey lighten-1',
         color: 'blue darken-3',
+        HPO_Phenotypes_data: null,
+        HPO_Terms_data: null,
       }
     },
     beforeCreate(){
@@ -533,6 +541,8 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
     mounted(){
       this.HpoGenesData = hpo_genes;
       this.HpoTermsTypeaheadData  = HpoTermsData.data;
+      this.HPO_Terms_data = HPO_Terms;
+      this.HPO_Phenotypes_data = HPO_Phenotypes;
       bus.$on("newAnalysis", ()=>{
         this.items = [];
         this.selected = [];
@@ -577,27 +587,85 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
           setTimeout(()=>{
             this.searchForTheInputTerm();
             document.getElementById("hpo_input").blur();
-          }, 100)
+          }, 500)
         }
       },
+
       searchForTheInputTerm(){
         this.checked = true;
-        var res = this.searchInput.HPO_Data.split(" - ");
-        var hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
-        var phenoTerm = res[0];
-        if(!this.multipleSearchTerms.includes(hpoId)){
-          this.multipleSearchTerms.push(hpoId);
-          this.HpoTerms.push(
-            {
-              hpoNumber:hpoId,
-              phenotype:phenoTerm
+        var inputString = document.getElementById("hpo_input").value;
+        inputString = inputString.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").trim();
+
+        var cleanedInputString;
+        var idx;
+        var hpoId;
+        var phenoTerm;
+
+        if(this.searchInput===undefined){ //If the input is not selected from the typeahead
+          if(inputString.substr(0,2).toUpperCase() === "HP"){ //Check if the input is in HP: format
+            cleanedInputString = [inputString.slice(0,2), ":" , inputString.slice(2)].join('');
+            cleanedInputString = cleanedInputString.toUpperCase();
+            if(this.HPO_Terms_data.includes(cleanedInputString)){
+              idx = this.HPO_Terms_data.indexOf(cleanedInputString);
+              hpoId = cleanedInputString;
+              phenoTerm = this.HPO_Phenotypes_data[idx];
+              if(!this.multipleSearchTerms.includes(hpoId)){
+                this.multipleSearchTerms.push(hpoId);
+                this.HpoTerms.push(
+                  {
+                    hpoNumber:hpoId,
+                    phenotype:phenoTerm
+                  }
+                )
+                this.getGenesForHpoTerms();
+              }
             }
-          )
-          this.getGenesForHpoTerms();
+            else {
+              alert("Please select an option from the autocomplete");
+              this.checked = false;
+            }
+          }
+          else { //checks if the input is a phenotype term
+            cleanedInputString = model.capitalizeFirstLetter(inputString.toLowerCase());
+            if(this.HPO_Phenotypes_data.includes(cleanedInputString)){
+              idx = this.HPO_Phenotypes_data.indexOf(cleanedInputString);
+              phenoTerm = cleanedInputString;
+              hpoId = this.HPO_Terms_data[idx];
+              if(!this.multipleSearchTerms.includes(hpoId)){
+                this.multipleSearchTerms.push(hpoId);
+                this.HpoTerms.push(
+                  {
+                    hpoNumber:hpoId,
+                    phenotype:phenoTerm
+                  }
+                )
+                this.getGenesForHpoTerms();
+              }
+            }
+            else {
+              alert("Please select an option from the autocomplete");
+              this.checked = false;
+            }
+          }
         }
-        else {
-          alert("This HPO Term already exists");
-          this.checked = false;
+        else { //If the input is selected from the typeahead
+          var res = this.searchInput.HPO_Data.split(" - ");
+          hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
+          phenoTerm = res[0];
+          if(!this.multipleSearchTerms.includes(hpoId)){
+            this.multipleSearchTerms.push(hpoId);
+            this.HpoTerms.push(
+              {
+                hpoNumber:hpoId,
+                phenotype:phenoTerm
+              }
+            )
+            this.getGenesForHpoTerms();
+          }
+          else {
+            alert("This HPO Term already exists");
+            this.checked = false;
+          }
         }
       },
       fetchHpoTerm: function(){
