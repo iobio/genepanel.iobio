@@ -123,7 +123,7 @@
               </v-flex>
                 <v-flex xs12>
                 <v-card v-if="multipleSearchTerms.length">
-                  <v-card-title v-if="multipleSearchTerms.length>1">
+                  <v-card-title>
                       <span class="body-2">
                         Sort the list by: &nbsp;
                       </span>
@@ -138,19 +138,17 @@
                       </v-tooltip>
                       <v-chip
                         color="blue darken-2"
-                        :outline="!scoreBasedSort"
-                        :disabled="scoreBasedSort"
-                        :text-color=" !scoreBasedSort ? 'blue darken-2' : 'white' "
+                        outline
                         v-on:click="sortScores"
+                        :selected="scoreBasedSort"
                       >Phenolyzer Score
                       </v-chip>
 
                       <v-chip
                         color="blue darken-2"
-                        :outline="scoreBasedSort"
-                        :disabled="sourceBasedSort"
-                        :text-color=" !sourceBasedSort ? 'blue darken-2' : 'white' "
+                        outline
                         v-on:click="sortSources"
+                        :selected="sourceBasedSort"
                       >Number of Sources
                       </v-chip>
                       <v-spacer></v-spacer>

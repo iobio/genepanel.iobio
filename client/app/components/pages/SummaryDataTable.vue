@@ -241,7 +241,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: 'HPO', align: 'left', sortable: false, value: 'isClinPhen' },
-        { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
+        { text: 'GTR', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
