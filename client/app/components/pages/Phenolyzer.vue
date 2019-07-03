@@ -123,7 +123,7 @@
               </v-flex>
                 <v-flex xs12>
                 <v-card v-if="multipleSearchTerms.length">
-                  <v-card-title>
+                  <v-card-title v-if="multipleSearchTerms.length>1">
                       <span class="body-2">
                         Sort the list by: &nbsp;
                       </span>
@@ -608,11 +608,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       updateTableHeaders(){
         if(this.multipleSearchTerms.length>1){
-          // this.pagination = {
-          //   sortBy: 'indexVal',
-          //   // descending: true,
-          //   rowsPerPage: 25
-          // };
           this.headers = [
             {
               text: 'Rank',
@@ -648,11 +643,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
           ];
         }
         else if(this.multipleSearchTerms.length<2){
-          // this.pagination = {
-          //   sortBy: 'indexVal',
-          //   // descending: true,
-          //   rowsPerPage: 25
-          // };
           this.headers = [
             {
               text: 'Rank',
@@ -729,7 +719,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
             }
         });
       },
-      remove (item) {
+      remove(item) {
         this.scoreBasedSort = true;
         this.sourceBasedSort = false;
         this.items = [];
@@ -760,7 +750,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
             this.selected = this.items.slice(0,10);
           }
           else {
-            this.selected = this.items.slice(0,25);
+            this.selected = this.items.slice(0,this.genesTop);
           }
           this.phenolyzerStatus = null;
           this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -1109,18 +1099,18 @@ import GenesSelection from '../partials/GenesSelection.vue';
         this.$emit("PhenolyzerFullGeneList", this.items);
       },
       drawSvgBars: function(tempItems){
-        var svgWidth = 270;
+        var svgWidth = 280;
         var firstBarWidth = tempItems[0].score * 220;
-        var score2Decimals;
+        var score3Decimals;
         tempItems.map(function(gene){
-          score2Decimals = Number(gene.score).toFixed(2);
+          score3Decimals = Number(gene.score).toFixed(3);
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <rect class="genepanelsRect"
                                   x="1" y="3" rx="5" width="${gene.score * 220}" height="16"/>
                             <rect class="grayRect"
                                   x="${(gene.score * 220)+3}" y="3" rx="5" width="${(firstBarWidth - (gene.score * 220))}" height="16"/>
                             <text class="tableRectBarText"
-                                x="${(firstBarWidth + 15)}" y="14" font-size="13">${score2Decimals}</text>
+                                x="${(firstBarWidth + 15)}" y="14" font-size="13">${score3Decimals}</text>
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
           gene.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.geneName}`;
