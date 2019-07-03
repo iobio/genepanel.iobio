@@ -18,6 +18,7 @@
                         type="text"
                         autocomplete="off"
                         v-on:focus="ClearInputForNewSearch"
+                        v-on:keydown="EnterForSearch"
                         placeholder="Search phenotype (Mandibulofacial dysostosis) or HPO term (HP:0005321)">
                       <typeahead
                         v-model="searchInput"
@@ -570,6 +571,15 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
           else break;
         }
       },
+      EnterForSearch(){
+        if(event.key==='Enter'){
+          this.checked = true;
+          setTimeout(()=>{
+            this.searchForTheInputTerm();
+            document.getElementById("hpo_input").blur();
+          }, 100)
+        }
+      },
       searchForTheInputTerm(){
         this.checked = true;
         var res = this.searchInput.HPO_Data.split(" - ");
@@ -587,6 +597,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         }
         else {
           alert("This HPO Term already exists");
+          this.checked = false;
         }
       },
       fetchHpoTerm: function(){
