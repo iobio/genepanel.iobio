@@ -721,12 +721,18 @@ import HPO_Terms from '../../../data/HPO_Terms';
       updateHPOtermsSelection: function(){
         this.checked = true;
         this.confirmationDialog = false;
-        this.HpoTerms = this.confirmationSelected;
+        // this.HpoTerms = this.confirmationSelected; => this is replacing the hpo terms chips
         var temp = [];
         this.confirmationSelected.map(term =>{
           temp.push(term.hpoNumber)
         })
-        this.multipleSearchTerms = temp;
+        // this.multipleSearchTerms = temp;  => this is replacing the hpo terms searched
+        temp.map((hpoId, idx) => {
+          if(!this.multipleSearchTerms.includes(hpoId)){
+            this.multipleSearchTerms.push(hpoId);
+            this.HpoTerms.push(this.confirmationSelected[idx])
+          }
+        })
         this.getGenesForHpoTerms();
       },
       getGenesForHpoTerms: function(){
