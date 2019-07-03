@@ -41,6 +41,7 @@
           :search="search"
           :custom-filter="filterItemsOnSearch"
           no-data-text="No Genes Available Currently"
+          :rows-per-page-items="[5, 10, 25, 50]"
         >
         <template slot="headers" slot-scope="props">
           <tr>
@@ -91,8 +92,8 @@
                   <v-flex xs1 style="margin-top:40px;">
                     <small >{{maxSliderValue}}</small>
                   </v-flex>
-                  <v-flex xs2>
-                    <v-flex>
+                  <v-flex>
+                    <v-flex xs4>
                       <v-text-field
                         style="font-size:14px"
                         v-model="sliderValue"
@@ -109,7 +110,7 @@
                   </v-flex>
                 </v-layout>
               </span>
-              <span v-else-if="header.text==='Gene Name'">
+              <!-- <span v-else-if="header.text==='Gene Name'">
                <div v-show="!openSearchBox">
                  {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
                </div>
@@ -131,8 +132,25 @@
                    </v-flex>
                  </v-layout>
                </div>
-              </span>
+              </span> -->
               <span v-else-if="header.text===''" >
+                <!-- <v-layout row wrap>
+                  <v-flex xs11 style="margin-top:-30px">
+                    <v-text-field
+                      label="Search for gene"
+                      single-line
+                      hide-details
+                      v-model="search"
+                      style="min-height:20px !important"
+                    ></v-text-field>
+                  </v-flex>
+                <v-flex xs1 style="margin-top:-5px; margin-left:-22px">
+                  <v-icon style="opacity:2; color:#222;">search</v-icon>
+                </v-flex>
+              </v-layout> -->
+              <GeneSearchBox
+                v-on:search="searchedGeneName($event)">
+              </GeneSearchBox>
               </span>
               <span v-else>{{ header.text }}</span>
 
@@ -174,7 +192,7 @@
                 v-html="props.item.htmlData">
               </span>
             </td>
-            <td>
+            <td class="text-xs-right">
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                 <v-card>
@@ -267,9 +285,11 @@ import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
 var model = new Model();
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
     components: {
+      GeneSearchBox
     },
     //props: ['GeneData'],
     props: {
@@ -387,6 +407,11 @@ var model = new Model();
       });
       bus.$on("includeClinGenesArr", ()=>{
         this.includeClinGenes = true;
+      })
+      bus.$on("newAnalysis", ()=>{
+        this.items = [];
+        this.selected = [];
+        this.openSearchBox = false;
       })
 
     },
@@ -913,6 +938,9 @@ var model = new Model();
         this.search = "";
         this.openSearchBox=false;
       },
+      searchedGeneName: function(gene){
+        this.search = gene;
+      },
     }
   }
 
@@ -975,5 +1003,9 @@ div.tooltip
 
 #geneSearchBox .v-label
   font-size: 12px
+
+.v-input .v-label
+  font-size: 14px !important
+
 
 </style>

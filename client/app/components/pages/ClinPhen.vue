@@ -35,7 +35,7 @@
                         class="btnColor"
                         v-on:click="searchForTheInputTerm"
                         >
-                      Generate Gene List
+                      Search
                     </v-btn>
                     <p>
                       <br>
@@ -74,9 +74,9 @@
                     <v-layout row wrap>
                       <v-flex style="margin-left:20px">
                         <div v-if="items.length>0">
-                          <GenesSelectionCard
-                            :items="items"
-                            :selected="selected"
+                          <GenesSelection
+                            :items="items.length"
+                            :selected="selected.length"
                             :multipleSearchTerms="multipleSearchTerms"
                             v-on:selectNgenes="selectNgenes($event)"
                           />
@@ -120,6 +120,7 @@
                       v-bind:search="search"
                       no-data-text="No pheotype genes Available Currently"
                       :custom-filter="filterItemsOnSearchClinPhen"
+                      :rows-per-page-items="[5, 10, 25, 50]"
                     >
                     <template slot="headers" slot-scope="props">
                       <tr>
@@ -136,29 +137,10 @@
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
                           <!-- {{ header.text }} -->
-                          <span v-if="header.text==='Gene Name'">
-                           <div v-show="!openSearchBox">
-                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
-                           </div>
-                           <div v-show="openSearchBox">
-                             <v-layout >
-                               <v-flex xs8 style="margin-top:-30px">
-                                 <div id="geneSearchBoxPhenolyzer">
-                                   <v-text-field
-                                     label="Search for Gene"
-                                     prepend-icon="search"
-                                     single-line
-                                     hide-details
-                                     v-model="search"
-                                   ></v-text-field>
-                                 </div>
-                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
-                               </v-flex>
-                               <v-flex xs1>
-                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
-                               </v-flex>
-                             </v-layout>
-                           </div>
+                          <span v-if="header.text===''">
+                            <GeneSearchBox
+                              v-on:search="searchedGeneName($event)">
+                            </GeneSearchBox>
                           </span>
                           <span v-else-if="header.text==='Search Terms'">
                             <v-layout style="margin-left: -20px; width:65%">
@@ -237,7 +219,7 @@
                             <span v-html="x"></span>
                           </span>
                         </td>
-                        <td>
+                        <td class="text-xs-right">
                           <v-menu bottom offset-y style="color:black">
                             <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                             <v-card>
@@ -379,7 +361,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
-            <v-btn color="blue darken-1" :disabled="!confirmationSelected.length" flat @click="updateHPOtermsSelection">Generate Gene list</v-btn>
+            <v-btn color="blue darken-1" :disabled="!confirmationSelected.length" flat @click="updateHPOtermsSelection">Generate Gene List</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -433,7 +415,8 @@ import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
-import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
+import GenesSelection from '../partials/GenesSelection.vue';
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
     components: {
@@ -442,7 +425,8 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
       'progressCircularDonut': progressCircularDonut,
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
-      'GenesSelectionCard': GenesSelectionCard,
+      'GenesSelection': GenesSelection,
+      'GeneSearchBox': GeneSearchBox,
       Typeahead
     },
     props: {
@@ -480,12 +464,6 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         selected: [],
         headers: [
           {
-            text: '',
-            align: 'left',
-            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
-            sortable: false,
-          },
-          {
             text: 'Number',
             value: 'index',
             sortable: false,
@@ -498,10 +476,20 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
             sortable: false,
           },
           { text: 'Search Terms', align: 'center', sortable: false, value: 'searchTermIndexSVG'},
+          {
+            text: '',
+            align: 'left',
+            value: [, 'omimSrc', 'clinGenLink', 'medGenSrc', 'geneCardsSrc', 'ghrSrc' ] ,
+            sortable: false,
+          },
         ],
         confirmationItems: [],
         confirmationSelected: [],
         confirmationTableHeader: [
+          {
+            text: 'Selection',
+            sortable: false,
+          },
           {
             text: 'HPO ID',
             value: 'hpoNumber',
@@ -526,10 +514,6 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
             sortable: false,
             align: 'left'
           },
-          {
-            text: 'Selection',
-            sortable: false,
-          },
         ],
         openSearchBox: false,
         search: '',
@@ -553,7 +537,9 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         this.selected = [];
         this.multipleSearchTerms = [];
         this.notes = "";
+        this.openSearchBox = false;
         this.HpoTerms = [];
+        this.search = "";
         this.$emit("ClinPhenGenes", []);
         this.$emit("clinphenTerms", []);
         document.getElementById("hpo_input").value="";
@@ -720,7 +706,13 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
       selectGenes(){
         if(this.multipleSearchTerms.length){
           this.maxSliderValue = this.items[0].hpoSource;
-          this.maxSliderValue > 1 ? this.sliderValue = Math.ceil(this.maxSliderValue/2) : this.sliderValue = 1 ;
+
+          this.maxSliderValue > 1 ?
+            this.maxSliderValue === 2 ?
+              this.sliderValue = 2 :
+                this.sliderValue = Math.ceil(this.maxSliderValue/2) :
+            this.sliderValue = 1 ;
+
           this.updateSelectionOnSliderValue(this.sliderValue);
         }
       },
@@ -755,7 +747,10 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
         if(number>0){
           this.selected = this.items.slice(0,number);
         }
-      }
+      },
+      searchedGeneName: function(gene){
+        this.search = gene;
+      },
     }
   }
 </script>
@@ -806,5 +801,4 @@ import GenesSelectionCard from '../partials/GenesSelectionCard.vue';
 
     .btnColor
       margin-top: 2px
-
 </style>

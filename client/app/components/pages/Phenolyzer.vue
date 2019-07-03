@@ -49,7 +49,7 @@
                         style="margin-top:-0.35px; text-transform: none; color:white"
                         class="btnColor"
                         v-on:click="getPhenotypeData">
-                      Generate Gene List
+                      Search
                     </v-btn>
 
                     <div v-if="phenolyzerStatus!==null">
@@ -86,64 +86,13 @@
                     <v-layout row wrap>
                       <v-flex >
                         <div v-if="items.length" class="d-flex mb-2 xs12 mb-3 genes-card-placeholder">
-                          <v-card>
-                            <v-card-text>
-                              <center>
-                                <span class="Rightbar_CardHeading">
-                                GENES
-                                </span>
-                              <v-divider class="Rightbar_card_divider"></v-divider>
-                              <span class="Rightbar_card_content_subheading">
-                                <span v-if="!openEditBoxPhenolyzer"><strong class="Rightbar_card_content_heading">{{ selected.length }}</strong> </span>
-                                <span v-else>
-                                  <div style="display:inline-block; padding-top:5px;">
-                                    <input
-                                      :disabled="multipleSearchTerms.length<1"
-                                      id="top-genes-phenolyzer"
-                                      class="form-control"
-                                      style="margin-bottom:8px; width:82%"
-                                      type="text"
-                                      v-model="genesTop"
-                                      autocomplete="off"
-                                      list="genes">
-                                      <datalist id="genes">
-                                        <option v-for="genesCount in genesTopCounts">
-                                          {{ genesCount }}
-                                        </option>
-                                      </datalist>
-                                  </div>
-                                </span>
-                                  of {{ items.length }} genes selected
-                                  <v-tooltip bottom v-if="!openEditBoxPhenolyzer">
-                                   <v-icon
-                                     slot="activator"
-                                     v-on:click="openEditBoxPhenolyzer=true"
-                                   >
-                                     edit
-                                   </v-icon>
-                                   <span>Edit the number of genes selected</span>
-                                 </v-tooltip>
-                                 <v-tooltip bottom v-else>
-                                  <v-icon
-                                    slot="activator"
-                                    v-on:click="openEditBoxPhenolyzer=false"
-                                  >
-                                    close
-                                  </v-icon>
-                                  <span>Close the edit box</span>
-                                </v-tooltip>
-                              </span>
-                              </center>
-                              <div class="text-xs-center">
-                                <progressCircularDonut
-                                  v-if="items.length>0"
-                                  :selectedNumber="selected.length"
-                                  :totalNumber="items.length"
-                                >
-                                </progressCircularDonut>
-                              </div>
-                            </v-card-text>
-                          </v-card>
+                          <GenesSelection
+                            :items="items.length"
+                            :selected="selected.length"
+                            :multipleSearchTerms="multipleSearchTerms"
+                            v-on:selectNgenes="selectNgenes($event)"
+                          >
+                          </GenesSelection>
                         </div>
                       </v-flex>
                     </v-layout>
@@ -174,6 +123,36 @@
               </v-flex>
                 <v-flex xs12>
                 <v-card v-if="multipleSearchTerms.length">
+                  <v-card-title v-if="multipleSearchTerms.length>1">
+                      <span class="body-2">
+                        Sort the list by: &nbsp;
+                      </span>
+                      <v-tooltip bottom style="margin-top:-20px" >
+                        <span slot="activator">
+                          <v-icon size="16">help</v-icon>
+                        </span>
+                        <span>
+                          The gene list is sorted in descending order based on the phenolyzer score. <br>
+                          You can change to sort the list based on the "Number of Sources", so that the genes present in multiple sources will rank higher.
+                        </span>
+                      </v-tooltip>
+                      <v-chip
+                        color="blue darken-2"
+                        outline
+                        v-on:click="sortScores"
+                        :selected="scoreBasedSort"
+                      >Phenolyzer Score
+                      </v-chip>
+
+                      <v-chip
+                        color="blue darken-2"
+                        outline
+                        v-on:click="sortSources"
+                        :selected="sourceBasedSort"
+                      >Number of Sources
+                      </v-chip>
+                      <v-spacer></v-spacer>
+                    </v-card-title>
                   <v-data-table
                       id="genes-table"
                       v-model="selected"
@@ -186,6 +165,8 @@
                       v-bind:search="search"
                       no-data-text="No pheotype genes Available Currently"
                       :custom-filter="filterItemsOnSearchPhenolyzer"
+                      :rows-per-page-items="[5, 10, 25, 50]"
+
                     >
                     <template slot="headers" slot-scope="props">
                       <tr>
@@ -202,29 +183,10 @@
                           :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                         >
                           <!-- {{ header.text }} -->
-                          <span v-if="header.text==='Gene Name'">
-                           <div v-show="!openSearchBox">
-                             {{header.text}} &nbsp; &nbsp; <v-icon right style="opacity:2; color:#222; cursor: pointer" v-on:click="openSearchBox = true">search</v-icon>
-                           </div>
-                           <div v-show="openSearchBox">
-                             <v-layout >
-                               <v-flex xs8 style="margin-top:-30px">
-                                 <div id="geneSearchBoxPhenolyzer">
-                                   <v-text-field
-                                     label="Search for Gene"
-                                     prepend-icon="search"
-                                     single-line
-                                     hide-details
-                                     v-model="search"
-                                   ></v-text-field>
-                                 </div>
-                                 <!-- <div style="margin-top:-20px; padding-bottom:10px"><center>{{header.text}}</center></div> -->
-                               </v-flex>
-                               <v-flex xs1>
-                                 <v-icon style="opacity:2; color:#222; cursor: pointer" v-on:click="closeSearchBox">close</v-icon>
-                               </v-flex>
-                             </v-layout>
-                           </div>
+                          <span v-if="header.text===''">
+                           <GeneSearchBox
+                             v-on:search="searchedGeneName($event)">
+                           </GeneSearchBox>
                           </span>
                           <span v-else>{{ header.text }}</span>
                         </th>
@@ -249,8 +211,7 @@
                             </span>
                           </td>
                         <td ><span v-html="props.item.htmlData"></span></td>
-                        <td style="font-size:0px;">{{ props.item.score }}</td>
-                        <td>
+                        <td class="text-xs-right">
                           <v-menu bottom offset-y style="color:black">
                             <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                             <v-card>
@@ -329,6 +290,7 @@
 
                           </v-menu>
                         </td>
+                        <td style="font-size:0px;">{{ props.item.score }}</td>
                       </tr>
                     </template>
                     <template slot="footer">
@@ -401,6 +363,9 @@ import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import ContentLoaderPlaceholder from '../partials/ContentLoaderPlaceholder.vue';
 import ContentLoaderSidebar from '../partials/ContentLoaderSidebar.vue';
 import fetchJsonp from 'fetch-jsonp';
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
+import GenesSelection from '../partials/GenesSelection.vue';
+
   export default {
     components: {
       'Dialogs': Dialogs,
@@ -408,6 +373,8 @@ import fetchJsonp from 'fetch-jsonp';
       'progressCircularDonut': progressCircularDonut,
       'ContentLoaderPlaceholder': ContentLoaderPlaceholder,
       'ContentLoaderSidebar': ContentLoaderSidebar,
+      'GeneSearchBox': GeneSearchBox,
+      'GenesSelection': GenesSelection,
       Typeahead
     },
     props: {
@@ -489,6 +456,7 @@ import fetchJsonp from 'fetch-jsonp';
         ],
         tempItems: [],
         items: [],
+        sortItems: [],
         NumberOfTopPhenolyzerGenes: 50,
         selectedGenesText: "",
         checked: false,
@@ -515,6 +483,8 @@ import fetchJsonp from 'fetch-jsonp';
         openSearchBox: false,
         openEditBoxPhenolyzer: false,
         genesSearchTermObj: {},
+        scoreBasedSort: true,
+        sourceBasedSort: false,
       }
     },
     beforeCreate(){
@@ -566,6 +536,7 @@ import fetchJsonp from 'fetch-jsonp';
       }
     },
     updated(){
+      console.log("updated")
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -613,6 +584,9 @@ import fetchJsonp from 'fetch-jsonp';
       }
     },
     methods: {
+      selectNgenes: function(data){
+        this.genesTop = data;
+      },
       EnterForSearch(){
         if(event.key==='Enter'){
           setTimeout(()=>{
@@ -745,7 +719,9 @@ import fetchJsonp from 'fetch-jsonp';
             }
         });
       },
-      remove (item) {
+      remove(item) {
+        this.scoreBasedSort = true;
+        this.sourceBasedSort = false;
         this.items = [];
         this.selected = [];
         this.search = '';
@@ -764,14 +740,17 @@ import fetchJsonp from 'fetch-jsonp';
         // var sortedPhenotypeData = this.sortTheOrder(averagedData);
 
         if(this.multipleSearchTerms.length>0){
-          let data = this.drawSvgBars(sortedPhenotypeData);
+          // let data = this.drawSvgBars(sortedPhenotypeData);
+          var rankedList = this.rankTheList(sortedPhenotypeData)
+          // let data = self.drawSvgBars(sortedPhenotypeData);
+          let data = this.drawSvgBars(rankedList);
           this.items = data;
           this.noOfSourcesSvg();
           if(this.launchedFromClin){
             this.selected = this.items.slice(0,10);
           }
           else {
-            this.selected = this.items.slice(0,25);
+            this.selected = this.items.slice(0,this.genesTop);
           }
           this.phenolyzerStatus = null;
           this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -905,38 +884,7 @@ import fetchJsonp from 'fetch-jsonp';
                   }
                   this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
 
-                  var combinedList = self.combineList(self.dictionaryArr);
-                  var createdObj = self.createObj(combinedList);
-                  var averagedData = self.performMeanOperation(combinedList, createdObj);
-                  var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
-                  var sortedPhenotypeData = self.sortTheOrder(meanData);
-                  self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
-
-                  let data = self.drawSvgBars(sortedPhenotypeData);
-                  self.items = data;
-
-                  self.noOfSourcesSvg();
-                  if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
-                    self.selected = [];
-                  // if(self.launchedFromClin && self.clinGenes.length>0){
-                    self.items.map(x=>{
-                      if(self.clinGenes.includes(x.geneName)){
-                        self.selected.push(x);
-                      }
-                    })
-                  }
-                  else {
-                    self.selected = self.items.slice(0, self.genesTop);
-
-                  }
-                  // self.selected = self.items.slice(0,50);
-                  self.phenolyzerStatus = null;
-                  self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
-                  self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
-                  self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
-                  self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
-                  this.$emit("PhenolyzerFullGeneList", this.items);
-
+                  self.scoreBasedSort? self.sortScores() : self.sortSources();
                 }
               } else {
                 self.phenolyzerStatus = status;
@@ -1034,10 +982,16 @@ import fetchJsonp from 'fetch-jsonp';
              return -1;
           }
          })
-         for(var i=0; i<arr.length; i++){
-           arr[i].rank = i+1;
-         }
+         // for(var i=0; i<arr.length; i++){
+         //   arr[i].rank = i+1;
+         // }
          return arr;
+      },
+      rankTheList(arr){
+        for(var i=0; i<arr.length; i++){
+          arr[i].rank = i+1;
+        }
+        return arr;
       },
       dataForPieChart(arr){
         var obj = {};
@@ -1069,20 +1023,94 @@ import fetchJsonp from 'fetch-jsonp';
           })
         }
       },
+      sortSources(){
+        let self = this;
+        self.sourceBasedSort = true;
+        self.scoreBasedSort = false;
+        var combinedList = self.combineList(self.dictionaryArr);
+        var createdObj = self.createObj(combinedList);
+        var averagedData = self.performMeanOperation(combinedList, createdObj);
+        var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
+        var sortedPhenotypeData = self.sortTheOrder(meanData);
+        self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+        sortedPhenotypeData = sortedPhenotypeData.sort((a,b)=> b.sources - a.sources );
+        var rankedList = self.rankTheList(sortedPhenotypeData)
+        // let data = self.drawSvgBars(sortedPhenotypeData);
+        let data = self.drawSvgBars(rankedList);
+        self.items = data;
 
+        self.noOfSourcesSvg();
+        if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+          self.selected = [];
+        // if(self.launchedFromClin && self.clinGenes.length>0){
+          self.items.map(x=>{
+            if(self.clinGenes.includes(x.geneName)){
+              self.selected.push(x);
+            }
+          })
+        }
+        else {
+          self.selected = self.items.slice(0, self.genesTop);
+
+        }
+        // self.selected = self.items.slice(0,50);
+        self.phenolyzerStatus = null;
+        self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+        self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+        self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+        self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
+      },
+      sortScores(){
+        let self = this;
+        self.scoreBasedSort = true;
+        self.sourceBasedSort = false;
+        var combinedList = self.combineList(self.dictionaryArr);
+        var createdObj = self.createObj(combinedList);
+        var averagedData = self.performMeanOperation(combinedList, createdObj);
+        var meanData = self.getMeanData(averagedData, self.multipleSearchTerms.length)
+        var sortedPhenotypeData = self.sortTheOrder(meanData);
+        self.pieChartdataArr = self.dataForPieChart(sortedPhenotypeData)
+        var rankedList = self.rankTheList(sortedPhenotypeData)
+        // let data = self.drawSvgBars(sortedPhenotypeData);
+        let data = self.drawSvgBars(rankedList);
+        self.items = data;
+
+        self.noOfSourcesSvg();
+        if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
+          self.selected = [];
+        // if(self.launchedFromClin && self.clinGenes.length>0){
+          self.items.map(x=>{
+            if(self.clinGenes.includes(x.geneName)){
+              self.selected.push(x);
+            }
+          })
+        }
+        else {
+          self.selected = self.items.slice(0, self.genesTop);
+
+        }
+        // self.selected = self.items.slice(0,50);
+        self.phenolyzerStatus = null;
+        self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
+        self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
+        self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
+        self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
+        this.$emit("PhenolyzerFullGeneList", this.items);
+      },
       drawSvgBars: function(tempItems){
-        var svgWidth = 270;
+        var svgWidth = 280;
         var firstBarWidth = tempItems[0].score * 220;
-        var score2Decimals;
+        var score3Decimals;
         tempItems.map(function(gene){
-          score2Decimals = Number(gene.score).toFixed(2);
+          score3Decimals = Number(gene.score).toFixed(3);
           gene.htmlData = `<svg width="${svgWidth}" height="25" xmlns="http://www.w3.org/2000/svg">
                             <rect class="genepanelsRect"
                                   x="1" y="3" rx="5" width="${gene.score * 220}" height="16"/>
                             <rect class="grayRect"
                                   x="${(gene.score * 220)+3}" y="3" rx="5" width="${(firstBarWidth - (gene.score * 220))}" height="16"/>
                             <text class="tableRectBarText"
-                                x="${(firstBarWidth + 15)}" y="14" font-size="13">${score2Decimals}</text>
+                                x="${(firstBarWidth + 15)}" y="14" font-size="13">${score3Decimals}</text>
                           </svg>`;
           gene.omimSrc = `https://www.ncbi.nlm.nih.gov/omim/?term=${gene.geneName}`;
           gene.medGenSrc = `https://www.ncbi.nlm.nih.gov/medgen/?term=${gene.geneName}`;
@@ -1116,6 +1144,9 @@ import fetchJsonp from 'fetch-jsonp';
         this.search = "";
         this.openSearchBox=false;
       },
+      searchedGeneName: function(gene){
+        this.search = gene;
+      },
     }
   }
 </script>
@@ -1127,6 +1158,18 @@ import fetchJsonp from 'fetch-jsonp';
 <style lang="sass">
 
   @import ../assets/sass/variables
+
+  .editTextInput
+    margin-bottom: 12px
+    width: 95%
+    font-size: 24px !important
+    font-weight: bolder
+    box-sizing: border-box
+    border: none
+    border-bottom: 3px dashed rgb(66, 103, 178)
+    padding-bottom: 10px
+    padding-top: 10px
+    text-align: center
 
   .btnColor, .btn__content
     color: white

@@ -1,8 +1,11 @@
 <template>
   <div>
     <v-card-title>
-      <v-spacer></v-spacer>
       <v-btn v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes as CSV</v-btn>
+      <v-spacer></v-spacer>
+      <GeneSearchBox
+        v-on:search="searchedGeneName($event)">
+      </GeneSearchBox>
     </v-card-title>
     <div id="summaryDataTableId">
       <v-data-table
@@ -15,6 +18,7 @@
           v-bind:search="search"
           no-data-text="No Genes Available Currently"
           :custom-filter="filterItemsOnSearch"
+          :rows-per-page-items="[5, 10, 25, 50]"
         >
         <template slot="headers" slot-scope="props">
           <tr >
@@ -199,10 +203,12 @@ import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
 import GeneCard from './GeneCard.vue';
 import fetchJsonp from 'fetch-jsonp';
+import GeneSearchBox from '../partials/GeneSearchBox.vue';
 
   export default {
     components: {
       'GeneCard': GeneCard,
+      'GeneSearchBox': GeneSearchBox
     },
     props:{
       summaryTableData:{
@@ -235,7 +241,7 @@ import fetchJsonp from 'fetch-jsonp';
         { text: 'Gene Name', align: 'left', sortable: false, value:'name' },
         { text: 'Added Genes', align: 'left', sortable: false, value: 'isImportedGenes' },
         { text: 'HPO', align: 'left', sortable: false, value: 'isClinPhen' },
-        { text: 'GTR Conditions', align: 'left', sortable: false, value: 'sourceGTR' },
+        { text: 'GTR', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
@@ -406,6 +412,9 @@ import fetchJsonp from 'fetch-jsonp';
           this.pagination.sortBy = column
           this.pagination.descending = false
         }
+      },
+      searchedGeneName: function(gene){
+        this.search = gene;
       },
       showGeneInfo(gene){
         console.log("gene", gene)

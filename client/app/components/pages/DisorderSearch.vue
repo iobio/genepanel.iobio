@@ -40,7 +40,7 @@
           style="margin-top:-0.35px; text-transform: none"
           class="btnColor"
           v-on:click.prevent="checkBeforePerformSearch">
-        Generate Gene List
+        Search
       </v-btn>
       <br>
       <v-menu  style="box-shadow: 0 6px 12px rgba(0,0,0,.175); border-radius:4px; border:1px solid rgba(0,0,0,.15) " v-model="singleItemTypeAhead" bottom offset-y>
