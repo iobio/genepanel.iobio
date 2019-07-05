@@ -361,7 +361,9 @@
                 <td >{{ props.item.phenotype }}</td>
                 <td >{{ props.item.occurrences }}</td>
                 <td >{{ props.item.earliness }}</td>
-                <td >{{ props.item.sentence }}</td>
+                <td>
+                  <TruncatedSentence :exampleSentence="props.item.sentence" />
+                </td>
               </template>
             </v-data-table>
             <div v-if="confirmationItems.length===0">
@@ -437,6 +439,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
 import GeneSearchBox from '../partials/GeneSearchBox.vue';
 import HPO_Phenotypes from '../../../data/HPO_Phenotypes';
 import HPO_Terms from '../../../data/HPO_Terms';
+import TruncatedSentence from '../partials/TruncatedSentence.vue';
 
   export default {
     components: {
@@ -447,6 +450,7 @@ import HPO_Terms from '../../../data/HPO_Terms';
       'ContentLoaderSidebar': ContentLoaderSidebar,
       'GenesSelection': GenesSelection,
       'GeneSearchBox': GeneSearchBox,
+      'TruncatedSentence': TruncatedSentence,
       Typeahead
     },
     props: {
