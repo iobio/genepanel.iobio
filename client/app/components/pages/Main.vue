@@ -901,6 +901,8 @@ import ClinPhen from './ClinPhen.vue'
         return arr;
       },
       setSearchTermsPhenolyzer: function(searchTermPheno, geneName){
+        console.log("searchTermPheno", searchTermPheno)
+        console.log("this.individualGenesSearchTermPhenolyzer", this.individualGenesSearchTermPhenolyzer)
         var arr =[];
         if(this.individualGenesSearchTermPhenolyzer){
           searchTermPheno.map(x=>{
