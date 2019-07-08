@@ -16,7 +16,7 @@
                 <div v-else-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || manuallyAddedGenes.length>0 || HpoTerms.length>0">
                   <v-flex  d-flex xs12 >
                     <v-layout row wrap>
-                      <v-flex xs6>
+                      <v-flex xs9>
                         <v-card-text>
                           <strong>GTR Conditions:</strong>
                           <br>
@@ -55,6 +55,8 @@
                         </v-card-text>
                       </v-flex>
                     </v-layout>
+                  </v-flex>
+                  <v-flex>
                     <v-layout row wrap v-if="HpoTerms.length>0">
                       <v-flex>
                         <v-card-text>
