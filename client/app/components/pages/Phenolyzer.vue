@@ -493,18 +493,18 @@ import GenesSelection from '../partials/GenesSelection.vue';
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
-      fetchJsonp('http://localhost:4000/cox1', {
-        timeout: 10000,
-        jsonpCallback:'callback',
-      })
-      .then(function(response) {
-        return response.json()
-        // console.log('response json', response)
-      }).then(function(json) {
-        console.log('parsed json', json)
-      }).catch(function(ex) {
-        console.log('parsing failed', ex)
-      })
+      // fetchJsonp('http://localhost:4000/cox1', {
+      //   timeout: 10000,
+      //   jsonpCallback:'callback',
+      // })
+      // .then(function(response) {
+      //   return response.json()
+      //   // console.log('response json', response)
+      // }).then(function(json) {
+      //   console.log('parsed json', json)
+      // }).catch(function(ex) {
+      //   console.log('parsing failed', ex)
+      // })
 
 
       this.HelpDialogsData = HelpDialogs.data;
@@ -1086,7 +1086,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
         self.items.map(x=>{
           x.individualRank = self.getRankForEachTerm(x.geneName)
         })
-
         if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
           self.selected = [];
         // if(self.launchedFromClin && self.clinGenes.length>0){

@@ -542,6 +542,10 @@ import ClinPhen from './ClinPhen.vue'
         window.scrollTo(0,0);
         this.component = "Phenolyzer";
       })
+      bus.$on("openClinphen", ()=>{
+        window.scrollTo(0,0);
+        this.component = "ClinPhen";
+      })
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);
       });
