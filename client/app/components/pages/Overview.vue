@@ -63,7 +63,7 @@
                             <v-tooltip top>
                               <span style="cursor:pointer" slot="activator" ><v-icon color="white" small>help</v-icon></span>
                               <v-container grid-list-xs,sm,md,lg,xl>
-                                <span style="margin:auto; margin-left:20px; margin-right:20px">Generate a gene list for HPO Terms (Eg. Mandibulofacial dysostosis) or enter Clinical Notes. </span>
+                                <span style="margin:auto; margin-left:20px; margin-right:20px">Generate a gene list for HPO Terms (Eg. HP:0005321) or enter Clinical Notes. </span>
                               </v-container>
                             </v-tooltip>
                             <br><br>
