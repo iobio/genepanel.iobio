@@ -719,6 +719,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         });
       },
       remove(item) {
+        bus.$emit("clearSearchInput");
         this.scoreBasedSort = true;
         this.sourceBasedSort = false;
         this.items = [];
@@ -810,6 +811,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
       },
       getPhenotypeDataSearch(){
+        bus.$emit("clearSearchInput");
         let self = this;
         self.phenotypeSearchedByUser = true;
         self.search = '';

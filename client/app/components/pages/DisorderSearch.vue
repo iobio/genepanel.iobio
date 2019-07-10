@@ -300,6 +300,7 @@ var model = new Model();
       },
       removeItem(item){
         bus.$emit("removeClinGenesArray");
+        bus.$emit("clearSearchInput");
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.$emit('search-gtr', this.multipleSearchTerms);
@@ -400,6 +401,7 @@ var model = new Model();
             this.$emit("currentSearchTerm", searchTerm)
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
+            bus.$emit("clearSearchInput");
             var diseases;
             var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)

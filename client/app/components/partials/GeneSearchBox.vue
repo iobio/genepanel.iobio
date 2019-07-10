@@ -46,6 +46,9 @@ var model = new Model();
       bus.$on("newAnalysis", ()=>{
         this.search = "";
       })
+      bus.$on("clearSearchInput", ()=>{
+        this.search = "";
+      })
     },
     updated(){
 

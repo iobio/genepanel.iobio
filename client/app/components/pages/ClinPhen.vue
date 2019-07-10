@@ -621,6 +621,7 @@ import TruncatedSentence from '../partials/TruncatedSentence.vue';
       },
 
       searchForTheInputTerm(){
+        bus.$emit("clearSearchInput");
         this.checked = true;
         var inputString = document.getElementById("hpo_input").value;
         inputString = inputString.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").trim();
@@ -770,6 +771,7 @@ import TruncatedSentence from '../partials/TruncatedSentence.vue';
         this.getGenesForHpoTerms();
       },
       getGenesForHpoTerms: function(){
+        bus.$emit("clearSearchInput");
         var genes = [];
         this.items = [];
         this.selected = [];
@@ -836,6 +838,7 @@ import TruncatedSentence from '../partials/TruncatedSentence.vue';
         }
       },
       remove(term){
+        bus.$emit("clearSearchInput");
         this.checked = true;
         var idx = this.multipleSearchTerms.indexOf(term.hpoNumber);
         this.HpoTerms.splice(idx,1);
