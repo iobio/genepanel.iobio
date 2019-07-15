@@ -334,16 +334,23 @@
 
           <v-card-text>
             <b>Clinical Note: </b>  {{notes}}
-            <br><br>
-            <i v-if="confirmationItems.length">
-              The following phenotypes have been identified from the entered Clinical note entered.
-              Use the toggle to accept or reject the phenotype(s).
-            </i>
+            <v-alert
+                v-if="confirmationItems.length>0"
+                dismissible
+                :value="true"
+                color="blue darken-1"
+                outline
+                style="border-style:none; border-color:white !important; border:0px !important"
+              >
+              ClinPhen uses natural language processing to extract HPO terms from clinical notes. This is a difficult problem, and unexpected results can occur. We highly recommend ensuring the accuracy of the clinical note, and that all returned HPO terms are reviewed for relevance.
+            </v-alert>
           </v-card-text>
           <v-card-text>
-            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = confirmationItems">Select All</v-btn>
-            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = []">Deselect All</v-btn>
-            <br>
+            <div v-if="confirmationItems.length>0">
+              <v-btn small color="blue darken-1" round outline dark v-on:click="confirmationSelected = confirmationItems">Select All</v-btn>
+              <v-btn small color="blue darken-1" round outline dark v-on:click="confirmationSelected = []">Deselect All</v-btn>
+              <br>
+            </div>
             <!-- Datatable -->
             <v-data-table
               v-if="confirmationItems.length"
@@ -367,15 +374,24 @@
               </template>
             </v-data-table>
             <div v-if="confirmationItems.length===0">
-              <center> <strong><i>No HPO terms found for the entered text</i></strong> </center>
+              <center>
+                <v-alert
+                    :value="true"
+                    color="error"
+                    outline
+                    icon="priority_high"
+                  >
+                  No HPO terms found for the entered text
+                </v-alert>
+              </center>
             </div>
           </v-card-text>
-          <v-card-text>
+          <!-- <v-card-text>
             <i style="text-align:justify" v-if="confirmationItems.length">
               Phenotypes extracted from the clinical notes are prioritized, first by number of occurrences in the notes (phenotypes that likely pertain to a genetic disease are usually mentioned in multiple clinical notes, and even multiple times in the same note), <br>
               then by earliest occurrence in the notes (clinicians usually begin a note with a summary of the phenotypes that seem striking and indicative of a genetic disease).
             </i>
-          </v-card-text>
+          </v-card-text> -->
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
