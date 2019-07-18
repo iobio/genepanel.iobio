@@ -723,21 +723,9 @@ const api = new Client('backend.iobio.io', { secure: true });
         // this.HpoTerms = [];
         this.loadingDialog = true;
         const cmd = api.clinphen({ notes: `${this.notes}`});
-        cmd.run();
-
-        let fullData = "";
-        cmd.on('data', (data) => {
-          fullData += data;
+        cmd.then((data) => {
+          this.parseTerms(data);
         });
-
-        cmd.on('end', () => {
-          this.parseTerms(fullData);
-        });
-
-        cmd.on('error', (e) => {
-          console.error(e);
-        });
-
       },
       parseTerms: function(res){
         var count = 0;
