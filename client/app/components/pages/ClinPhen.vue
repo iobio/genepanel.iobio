@@ -456,6 +456,8 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
 import HPO_Phenotypes from '../../../data/HPO_Phenotypes';
 import HPO_Terms from '../../../data/HPO_Terms';
 import TruncatedSentence from '../partials/TruncatedSentence.vue';
+import { Client } from 'iobio-api-client';
+const api = new Client('backend.iobio.io', { secure: true });
 
   export default {
     components: {
@@ -720,20 +722,22 @@ import TruncatedSentence from '../partials/TruncatedSentence.vue';
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
         this.loadingDialog = true;
-        var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
-        return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
-          .then((response) => {
-            response.body
-              .getReader()
-              .read()
-              .then((value, done) => {
-                // console.log(value.value) //gets the unit8Array
-                var decoder = new TextDecoder('utf-8');
-                // console.log(decoder.decode(value.value));
-                var res = decoder.decode(value.value);
-                this.parseTerms(res);
-              });
-          });
+        const cmd = api.clinphen({ notes: `${this.notes}`});
+        cmd.run();
+
+        let fullData = "";
+        cmd.on('data', (data) => {
+          fullData += data;
+        });
+
+        cmd.on('end', () => {
+          this.parseTerms(fullData);
+        });
+
+        cmd.on('error', (e) => {
+          console.error(e);
+        });
+
       },
       parseTerms: function(res){
         var count = 0;
