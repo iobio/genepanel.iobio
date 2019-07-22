@@ -795,21 +795,21 @@ import GenesSelection from '../partials/GenesSelection.vue';
       generateVennDiagramData(summaryObj){
         this.vennData = {
           "data": [
-            {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
-            {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
-            {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count},
-            {"sets" : [3], "label" : "HPO", "size":summaryObj.ClinPhen.count},
-            {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
-            {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
-            {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count},
-            {"sets" : [1,2],  "size":summaryObj.phenolyzer_ImportedGenes.count},
-            {"sets" : [1,3],  "size":summaryObj.phenolyzer_ClinPhen.count},
-            {"sets" : [2,3],  "size":summaryObj.ImportedGenes_ClinPhen.count},
-            {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2],  "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
-            {"sets" : [0,1,3],  "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
-            {"sets" : [1,2,3],  "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count}
+            {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count, "isGtr":true, "isImportedGenes":false, "isPheno": false, "isClinPhen": false},
+            {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count, "isGtr":false, "isImportedGenes":false, "isPheno": true, "isClinPhen": false},
+            {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count, "isGtr":false, "isImportedGenes":true, "isPheno": false, "isClinPhen": false},
+            {"sets" : [3], "label" : "HPO", "size":summaryObj.ClinPhen.count, "isGtr":false, "isImportedGenes":false, "isPheno": false, "isClinPhen": true},
+            {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count, "isGtr":true, "isImportedGenes":false, "isPheno": true, "isClinPhen": false},
+            {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count, "isGtr":true, "isImportedGenes":true, "isPheno": false, "isClinPhen": false},
+            {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count, "isGtr":true, "isImportedGenes":false, "isPheno": false, "isClinPhen": true},
+            {"sets" : [1,2],  "size":summaryObj.phenolyzer_ImportedGenes.count, "isGtr":false, "isImportedGenes":true, "isPheno": true, "isClinPhen": false},
+            {"sets" : [1,3],  "size":summaryObj.phenolyzer_ClinPhen.count, "isGtr":false, "isImportedGenes":false, "isPheno": true, "isClinPhen": true},
+            {"sets" : [2,3],  "size":summaryObj.ImportedGenes_ClinPhen.count, "isGtr":false, "isImportedGenes":true, "isPheno": false, "isClinPhen": true},
+            {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count, "isGtr":true, "isImportedGenes":true, "isPheno": false, "isClinPhen": true},
+            {"sets" : [0,1,2],  "size":summaryObj.gtr_phenolyzer_ImportedGenes.count, "isGtr":true, "isImportedGenes":true, "isPheno": true, "isClinPhen": false},
+            {"sets" : [0,1,3],  "size":summaryObj.gtr_phenolyzer_ClinPhen.count, "isGtr":true, "isImportedGenes":false, "isPheno": true, "isClinPhen": true},
+            {"sets" : [1,2,3],  "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count, "isGtr":false, "isImportedGenes":true, "isPheno": true, "isClinPhen": true},
+            {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count, "isGtr":true, "isImportedGenes":true, "isPheno": true, "isClinPhen": true}
           ]
         }
 
@@ -1185,6 +1185,15 @@ import GenesSelection from '../partials/GenesSelection.vue';
               selection.select("path")
                   .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                   .style("stroke-opacity", 0);
+          })
+          .on("click", function(d, i) {
+              // sort all the areas relative to the current item
+              x.sortAreas(div, d);
+              console.log("d", d);
+              console.log("sets", d.sets);
+              console.log("size", d.size);
+              console.log("index", i);
+              bus.$emit("selectionFromVennDiagram", d);
           });
       },
       setPieChartData(){

@@ -10,7 +10,7 @@
         <span class="Rightbar_card_content_subheading">
           <v-tooltip bottom>
             <span slot="activator">
-              <div style="display:inline-block; padding-top:5px; width:25%">
+              <div style="display:inline-block; padding-top:5px; width:25%" v-on:click="setInputComponent=true">
                 <input
                   :disabled="multipleSearchTerms.length<1"
                   class="form-control editTextInput"
@@ -19,6 +19,8 @@
                   max="10000"
                   v-model="genesTop"
                   autocomplete="off"
+                  v-on:change="updateGenesTop"
+                  v-on:input="updateGenesTop"
                   >
               </div>
             </span>
@@ -67,6 +69,7 @@ var model = new Model();
     data(){
       return {
         genesTop: null,
+        setInputComponent: false,
       }
     },
     mounted(){
@@ -77,13 +80,20 @@ var model = new Model();
     },
     watch: {
       genesTop(){
-        this.$emit("selectNgenes", this.genesTop)
+        // if(this.setInputComponent){
+        //   this.$emit("selectNgenes", this.genesTop);
+        //   this.setInputComponent=false;
+        // }
       },
       selected(){
         this.genesTop = this.selected;
-      }
+      },
     },
     methods:{
+      updateGenesTop(e){
+        console.log("changing", e, " model val: ", this.genesTop);
+        this.$emit("selectNgenes", this.genesTop);
+      }
     }
   }
 
