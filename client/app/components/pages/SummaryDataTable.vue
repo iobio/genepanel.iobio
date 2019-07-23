@@ -274,7 +274,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         $("#summaryDataTableId").find(".v-datatable tbody").attr('id', 'v-datatble-summary');
       }
       bus.$on("selectionFromVennDiagram", (data)=>{
-        // this.selectGenesFromVennDiagram(data);
+        this.selectGenesFromVennDiagram(data);
       })
       let table = document.querySelector("#v-datatble-summary");
       const _Self = this;
@@ -386,6 +386,62 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         else if(JSON.stringify(data.sets) === "[0,3]"){
           this.items.map(x=>{
             if(x.isGtr === data.isGtr && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1,2]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1,3]"){
+          this.items.map(x=>{
+            if(x.isPheno === data.isPheno && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[2,3]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,2,3]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1,2]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1,3]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isClinPhen === data.isClinPhen && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1,2,3]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes && x.isClinPhen === data.isClinPhen && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1,2,3]"){
+          this.items.map(x=>{
+              if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes &&  x.isPheno === data.isPheno && x.isClinPhen === data.isClinPhen){
               this.selected.push(x);
             }
           })
