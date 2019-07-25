@@ -184,6 +184,7 @@
             :gene="clickedGene.name"
             :ncbiSummary="ncbiSummary"
             :drugs="drugs"
+            :geneData="clickedGene"
             >
           </GeneCard>
          </v-card-text>
@@ -537,12 +538,10 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         this.search = gene;
       },
       showGeneInfo(gene){
-        console.log("gene", gene)
         this.clickedGene = gene;
 
         geneModel.promiseGetNCBIGeneSummary(gene.name)
         .then((data)=>{
-          console.log("data", data)
           this.ncbiSummary = data;
         })
 

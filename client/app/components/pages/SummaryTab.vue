@@ -1190,10 +1190,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
           .on("click", function(d, i) {
               // sort all the areas relative to the current item
               x.sortAreas(div, d);
-              console.log("d", d);
-              console.log("sets", d.sets);
-              console.log("size", d.size);
-              console.log("index", i);
               bus.$emit("selectionFromVennDiagram", d);
           });
       },
