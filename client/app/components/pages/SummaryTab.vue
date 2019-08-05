@@ -167,6 +167,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
 import IntroductionText from '../../../data/IntroductionText.json';
@@ -368,6 +369,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       });
     },
     methods: {
+      ...mapActions(['addSummaryGenesFullList']), 
       selectNgenes: function(data){
         this.genesTop = data;
       },
@@ -1146,7 +1148,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
         var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         this.summaryTableArrayFullList = tableGenes;
-        this.$emit('summaryGenesFullList', this.summaryTableArrayFullList);
+        // this.$emit('summaryGenesFullList', this.summaryTableArrayFullList);
+        this.addSummaryGenesFullList(this.summaryTableArrayFullList);
       },
       drawVennDiagram(){
         d3.select("#venn").select("svg").remove();

@@ -328,10 +328,10 @@
               v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
               v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
               v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
-              v-on:summaryGenesFullList="summaryGenesFullList($event)"
               v-bind:phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
               v-bind:isMobile="isMobile">
             </SummaryTab>
+            <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
           </keep-alive>
         </div>
       </v-content>
@@ -342,6 +342,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { bus } from '../../routes';
 import GeneticTestingRegistry from './GeneticTestingRegistry.vue';
 import Phenolyzer from './Phenolyzer.vue';
@@ -558,6 +559,7 @@ import ClinPhen from './ClinPhen.vue'
     },
     updated(){
     },
+    computed: mapGetters(['getSummaryGenesFullList']),
     methods: {
       AllSelectedpanels: function(panels){
         this.AllSelectedGtrPanels = panels;
@@ -905,8 +907,6 @@ import ClinPhen from './ClinPhen.vue'
         return arr;
       },
       setSearchTermsPhenolyzer: function(searchTermPheno, geneName){
-        console.log("searchTermPheno", searchTermPheno)
-        console.log("this.individualGenesSearchTermPhenolyzer", this.individualGenesSearchTermPhenolyzer)
         var arr =[];
         if(this.individualGenesSearchTermPhenolyzer){
           searchTermPheno.map(x=>{
@@ -928,6 +928,8 @@ import ClinPhen from './ClinPhen.vue'
         this.genesToCopy = this.uniqueGenes.toString();
         this.getIndividualGeneList();
 
+        this.summaryAllGenes = this.getSummaryGenesFullList; //gets the data from store
+        console.log("this.summaryAllGenes", this.summaryAllGenes)
         var clinData = this.summaryAllGenes.map(gene=> {
           return {
             name: gene.name,
