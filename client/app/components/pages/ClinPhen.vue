@@ -1,7 +1,19 @@
 <template>
   <div>
     <div style="background-color:#f9fbff">
-
+      <v-snackbar
+        :timeout="snackbarTimeout"
+        :top="y === 'top'"
+        :bottom="y === 'bottom'"
+        :right="x === 'right'"
+        :left="x === 'left'"
+        :multi-line="mode === 'multi-line'"
+        :vertical="mode === 'vertical'"
+        v-model="snackbar"
+      >
+        {{ snackbarText }}
+        <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
@@ -18,6 +30,7 @@
                         type="text"
                         autocomplete="off"
                         v-on:focus="ClearInputForNewSearch"
+                        v-on:keydown="EnterForSearch"
                         placeholder="Search phenotype (Mandibulofacial dysostosis) or HPO term (HP:0005321)">
                       <typeahead
                         v-model="searchInput"
@@ -37,6 +50,8 @@
                         >
                       Search
                     </v-btn>
+                    <p v-if="checked" ><v-progress-linear height="3" color="primary" :indeterminate="true"></v-progress-linear></p>
+
                     <p>
                       <br>
                       ------ <i>OR</i> ------
@@ -309,7 +324,7 @@
       <!-- Confirmation Dialog box -->
       <v-dialog
         v-model="confirmationDialog"
-        max-width="850px"
+        max-width="950px"
         persistent
       >
         <v-card>
@@ -319,16 +334,23 @@
 
           <v-card-text>
             <b>Clinical Note: </b>  {{notes}}
-            <br><br>
-            <i v-if="confirmationItems.length">
-              The following phenotypes have been identified from the entered Clinical note entered.
-              Use the toggle to accept or reject the phenotype(s).
-            </i>
+            <v-alert
+                v-if="confirmationItems.length>0"
+                dismissible
+                :value="true"
+                color="blue darken-1"
+                outline
+                style="border-style:none; border-color:white !important; border:0px !important"
+              >
+              ClinPhen uses natural language processing to extract HPO terms from clinical notes. This is a difficult problem, and unexpected results can occur. We highly recommend ensuring the accuracy of the clinical note, and that all returned HPO terms are reviewed for relevance.
+            </v-alert>
           </v-card-text>
           <v-card-text>
-            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = confirmationItems">Select All</v-btn>
-            <v-btn small color="primary" round outline dark v-on:click="confirmationSelected = []">Deselect All</v-btn>
-            <br>
+            <div v-if="confirmationItems.length>0">
+              <v-btn small color="blue darken-1" round outline dark v-on:click="confirmationSelected = confirmationItems">Select All</v-btn>
+              <v-btn small color="blue darken-1" round outline dark v-on:click="confirmationSelected = []">Deselect All</v-btn>
+              <br>
+            </div>
             <!-- Datatable -->
             <v-data-table
               v-if="confirmationItems.length"
@@ -346,18 +368,30 @@
                 <td >{{ props.item.phenotype }}</td>
                 <td >{{ props.item.occurrences }}</td>
                 <td >{{ props.item.earliness }}</td>
+                <td>
+                  <TruncatedSentence :exampleSentence="props.item.sentence" />
+                </td>
               </template>
             </v-data-table>
             <div v-if="confirmationItems.length===0">
-              <center> <strong><i>No HPO terms found for the entered text</i></strong> </center>
+              <center>
+                <v-alert
+                    :value="true"
+                    color="error"
+                    outline
+                    icon="priority_high"
+                  >
+                  No HPO terms found for the entered text
+                </v-alert>
+              </center>
             </div>
           </v-card-text>
-          <v-card-text>
+          <!-- <v-card-text>
             <i style="text-align:justify" v-if="confirmationItems.length">
               Phenotypes extracted from the clinical notes are prioritized, first by number of occurrences in the notes (phenotypes that likely pertain to a genetic disease are usually mentioned in multiple clinical notes, and even multiple times in the same note), <br>
               then by earliest occurrence in the notes (clinicians usually begin a note with a summary of the phenotypes that seem striking and indicative of a genetic disease).
             </i>
-          </v-card-text>
+          </v-card-text> -->
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="confirmationDialog=false">Cancel</v-btn>
@@ -406,6 +440,8 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import GeneModel from '../../models/GeneModel';
 var geneModel = new GeneModel();
+import Model from '../../models/Model';
+var model = new Model();
 import IntroductionText from '../../../data/IntroductionText.json'
 import Dialogs from '../partials/Dialogs.vue';
 import HelpDialogs from '../../../data/HelpDialogs.json';
@@ -417,6 +453,11 @@ import hpo_genes from '../../../data/hpo_genes.json';
 import HpoTermsData from '../../../data/HpoTermsData.json';
 import GenesSelection from '../partials/GenesSelection.vue';
 import GeneSearchBox from '../partials/GeneSearchBox.vue';
+import HPO_Phenotypes from '../../../data/HPO_Phenotypes';
+import HPO_Terms from '../../../data/HPO_Terms';
+import TruncatedSentence from '../partials/TruncatedSentence.vue';
+import { Client } from 'iobio-api-client';
+const api = new Client('backend.iobio.io', { secure: true });
 
   export default {
     components: {
@@ -427,6 +468,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       'ContentLoaderSidebar': ContentLoaderSidebar,
       'GenesSelection': GenesSelection,
       'GeneSearchBox': GeneSearchBox,
+      'TruncatedSentence': TruncatedSentence,
       Typeahead
     },
     props: {
@@ -514,6 +556,12 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
             sortable: false,
             align: 'left'
           },
+          {
+            text: 'Example sentence',
+            value: 'sentence',
+            sortable: false,
+            align: 'left'
+          },
         ],
         openSearchBox: false,
         search: '',
@@ -523,6 +571,14 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         maxSliderValue: 1,
         sliderColor: 'grey lighten-1',
         color: 'blue darken-3',
+        HPO_Phenotypes_data: null,
+        HPO_Terms_data: null,
+        snackbar: false,
+        snackbarText: "",
+        y: 'top',
+        x: null,
+        mode: '',
+        snackbarTimeout: 4000,
       }
     },
     beforeCreate(){
@@ -532,6 +588,8 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
     mounted(){
       this.HpoGenesData = hpo_genes;
       this.HpoTermsTypeaheadData  = HpoTermsData.data;
+      this.HPO_Terms_data = HPO_Terms;
+      this.HPO_Phenotypes_data = HPO_Phenotypes;
       bus.$on("newAnalysis", ()=>{
         this.items = [];
         this.selected = [];
@@ -570,42 +628,104 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
           else break;
         }
       },
-      searchForTheInputTerm(){
-        this.checked = true;
-        var res = this.searchInput.HPO_Data.split(" - ");
-        var hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
-        var phenoTerm = res[0];
-        if(!this.multipleSearchTerms.includes(hpoId)){
-          this.multipleSearchTerms.push(hpoId);
-          this.HpoTerms.push(
-            {
-              hpoNumber:hpoId,
-              phenotype:phenoTerm
-            }
-          )
-          this.getGenesForHpoTerms();
+      EnterForSearch(){
+        if(event.key==='Enter'){
+          this.checked = true;
+          setTimeout(()=>{
+            this.searchForTheInputTerm();
+            document.getElementById("hpo_input").blur();
+          }, 500)
         }
-        else {
-          alert("This HPO Term already exists");
+      },
+
+      searchForTheInputTerm(){
+        bus.$emit("clearSearchInput");
+        this.checked = true;
+        var inputString = document.getElementById("hpo_input").value;
+        inputString = inputString.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " ").trim();
+
+        var cleanedInputString;
+        var idx;
+        var hpoId;
+        var phenoTerm;
+
+        if(this.searchInput===undefined){ //If the input is not selected from the typeahead
+          if(inputString.substr(0,2).toUpperCase() === "HP"){ //Check if the input is in HP: format
+            cleanedInputString = [inputString.slice(0,2), ":" , inputString.slice(2)].join('');
+            cleanedInputString = cleanedInputString.toUpperCase();
+            if(this.HPO_Terms_data.includes(cleanedInputString)){
+              idx = this.HPO_Terms_data.indexOf(cleanedInputString);
+              hpoId = cleanedInputString;
+              phenoTerm = this.HPO_Phenotypes_data[idx];
+              if(!this.multipleSearchTerms.includes(hpoId)){
+                this.multipleSearchTerms.push(hpoId);
+                this.HpoTerms.push(
+                  {
+                    hpoNumber:hpoId,
+                    phenotype:phenoTerm
+                  }
+                )
+                this.getGenesForHpoTerms();
+              }
+            }
+            else {
+              this.snackbarText = "Please select an option from the autocomplete";
+              this.snackbar = true;
+              this.checked = false;
+            }
+          }
+          else { //checks if the input is a phenotype term
+            cleanedInputString = model.capitalizeFirstLetter(inputString.toLowerCase());
+            if(this.HPO_Phenotypes_data.includes(cleanedInputString)){
+              idx = this.HPO_Phenotypes_data.indexOf(cleanedInputString);
+              phenoTerm = cleanedInputString;
+              hpoId = this.HPO_Terms_data[idx];
+              if(!this.multipleSearchTerms.includes(hpoId)){
+                this.multipleSearchTerms.push(hpoId);
+                this.HpoTerms.push(
+                  {
+                    hpoNumber:hpoId,
+                    phenotype:phenoTerm
+                  }
+                )
+                this.getGenesForHpoTerms();
+              }
+            }
+            else {
+              this.snackbarText = "Please select an option from the autocomplete";
+              this.snackbar = true;
+              this.checked = false;
+            }
+          }
+        }
+        else { //If the input is selected from the typeahead
+          var res = this.searchInput.HPO_Data.split(" - ");
+          hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
+          phenoTerm = res[0];
+          if(!this.multipleSearchTerms.includes(hpoId)){
+            this.multipleSearchTerms.push(hpoId);
+            this.HpoTerms.push(
+              {
+                hpoNumber:hpoId,
+                phenotype:phenoTerm
+              }
+            )
+            this.getGenesForHpoTerms();
+          }
+          else {
+            this.snackbarText = "This HPO Term already exists";
+            this.snackbar = true;
+            this.checked = false;
+          }
         }
       },
       fetchHpoTerm: function(){
         // this.HpoTerms = [];
         this.loadingDialog = true;
-        var u = `http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`
-        return fetch(`http://nv-dev-new.iobio.io/clinphen/?cmd=${this.notes}`)
-          .then((response) => {
-            response.body
-              .getReader()
-              .read()
-              .then((value, done) => {
-                // console.log(value.value) //gets the unit8Array
-                var decoder = new TextDecoder('utf-8');
-                // console.log(decoder.decode(value.value));
-                var res = decoder.decode(value.value);
-                this.parseTerms(res);
-              });
-          });
+        const cmd = api.clinphen({ notes: `${this.notes}`});
+        cmd.then((data) => {
+          this.parseTerms(data);
+        });
       },
       parseTerms: function(res){
         var count = 0;
@@ -618,13 +738,15 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
             var phenotype = fields[1];
             var occurrences = fields[2];
             var earliness = fields[3];
+            var sentence = fields[4];
             terms.push(hpoNumber)
             hpoTermArr.push(
               {
                 hpoNumber:hpoNumber,
                 phenotype:phenotype,
                 occurrences:occurrences,
-                earliness:earliness
+                earliness:earliness,
+                sentence:sentence
               }
             )
           }
@@ -642,15 +764,22 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       updateHPOtermsSelection: function(){
         this.checked = true;
         this.confirmationDialog = false;
-        this.HpoTerms = this.confirmationSelected;
+        // this.HpoTerms = this.confirmationSelected; => this is replacing the hpo terms chips
         var temp = [];
         this.confirmationSelected.map(term =>{
           temp.push(term.hpoNumber)
         })
-        this.multipleSearchTerms = temp;
+        // this.multipleSearchTerms = temp;  => this is replacing the hpo terms searched
+        temp.map((hpoId, idx) => {
+          if(!this.multipleSearchTerms.includes(hpoId)){
+            this.multipleSearchTerms.push(hpoId);
+            this.HpoTerms.push(this.confirmationSelected[idx])
+          }
+        })
         this.getGenesForHpoTerms();
       },
       getGenesForHpoTerms: function(){
+        bus.$emit("clearSearchInput");
         var genes = [];
         this.items = [];
         this.selected = [];
@@ -717,6 +846,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         }
       },
       remove(term){
+        bus.$emit("clearSearchInput");
         this.checked = true;
         var idx = this.multipleSearchTerms.indexOf(term.hpoNumber);
         this.HpoTerms.splice(idx,1);

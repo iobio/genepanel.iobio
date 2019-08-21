@@ -184,6 +184,7 @@
             :gene="clickedGene.name"
             :ncbiSummary="ncbiSummary"
             :drugs="drugs"
+            :geneData="clickedGene"
             >
           </GeneCard>
          </v-card-text>
@@ -273,6 +274,9 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       if($('.v-datatable tbody').parents("#summaryDataTableId").length===1){
         $("#summaryDataTableId").find(".v-datatable tbody").attr('id', 'v-datatble-summary');
       }
+      bus.$on("selectionFromVennDiagram", (data)=>{
+        this.selectGenesFromVennDiagram(data);
+      })
       let table = document.querySelector("#v-datatble-summary");
       const _Self = this;
       Sortable.create(table, {
@@ -321,6 +325,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       })
 
       bus.$on("SelectedNumberOfSummaryGenes", (data)=>{
+        console.log("am i changing?")
         this.selected = this.items.slice(0,data);
       })
 
@@ -333,6 +338,122 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
     methods: {
       exportGenesCSV: function(){
         bus.$emit("exportSummaryGenesAsCSV")
+      },
+      selectGenesFromVennDiagram(data){
+        this.selected = [];
+        var tempSelectedArray = [];
+        if(JSON.stringify(data.sets) === "[0]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1]"){
+          this.items.map(x=>{
+            if(x.isPheno === data.isPheno ){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[2]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes ){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[3]"){
+          this.items.map(x=>{
+            if(x.isClinPhen === data.isClinPhen ){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,2]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,3]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1,2]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1,3]"){
+          this.items.map(x=>{
+            if(x.isPheno === data.isPheno && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[2,3]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,2,3]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1,2]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1,3]"){
+          this.items.map(x=>{
+            if(x.isGtr === data.isGtr && x.isClinPhen === data.isClinPhen && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[1,2,3]"){
+          this.items.map(x=>{
+            if(x.isImportedGenes === data.isImportedGenes && x.isClinPhen === data.isClinPhen && x.isPheno === data.isPheno){
+              this.selected.push(x);
+            }
+          })
+        }
+        else if(JSON.stringify(data.sets) === "[0,1,2,3]"){
+          this.items.map(x=>{
+              if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes &&  x.isPheno === data.isPheno && x.isClinPhen === data.isClinPhen){
+              this.selected.push(x);
+            }
+          })
+        }
+
+        // this.items.map(x=>{
+        //   if(x.isGtr === data.isGtr && x.isImportedGenes === data.isImportedGenes &&  x.isPheno === data.isPheno && x.isClinPhen === data.isClinPhen){
+        //     tempSelectedArray.push(x);
+        //   }
+        // })
+        // this.selected = tempSelectedArray;
       },
       addTableData(){
         var xtableData = [];
@@ -417,12 +538,10 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         this.search = gene;
       },
       showGeneInfo(gene){
-        console.log("gene", gene)
         this.clickedGene = gene;
 
         geneModel.promiseGetNCBIGeneSummary(gene.name)
         .then((data)=>{
-          console.log("data", data)
           this.ncbiSummary = data;
         })
 

@@ -493,18 +493,18 @@ import GenesSelection from '../partials/GenesSelection.vue';
       this.IntroductionTextData = IntroductionText.data[1];
     },
     mounted(){
-      fetchJsonp('http://localhost:4000/cox1', {
-        timeout: 10000,
-        jsonpCallback:'callback',
-      })
-      .then(function(response) {
-        return response.json()
-        // console.log('response json', response)
-      }).then(function(json) {
-        console.log('parsed json', json)
-      }).catch(function(ex) {
-        console.log('parsing failed', ex)
-      })
+      // fetchJsonp('http://localhost:4000/cox1', {
+      //   timeout: 10000,
+      //   jsonpCallback:'callback',
+      // })
+      // .then(function(response) {
+      //   return response.json()
+      //   // console.log('response json', response)
+      // }).then(function(json) {
+      //   console.log('parsed json', json)
+      // }).catch(function(ex) {
+      //   console.log('parsing failed', ex)
+      // })
 
 
       this.HelpDialogsData = HelpDialogs.data;
@@ -536,7 +536,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
       }
     },
     updated(){
-      console.log("updated")
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
         this.filterGenesOnSelectedNumber(data);
         this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
@@ -720,6 +719,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         });
       },
       remove(item) {
+        bus.$emit("clearSearchInput");
         this.scoreBasedSort = true;
         this.sourceBasedSort = false;
         this.items = [];
@@ -746,6 +746,10 @@ import GenesSelection from '../partials/GenesSelection.vue';
           let data = this.drawSvgBars(rankedList);
           this.items = data;
           this.noOfSourcesSvg();
+          this.items.map(x=>{
+            x.individualRank = this.getRankForEachTerm(x.geneName)
+          })
+
           if(this.launchedFromClin){
             this.selected = this.items.slice(0,10);
           }
@@ -807,6 +811,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
       },
       getPhenotypeDataSearch(){
+        bus.$emit("clearSearchInput");
         let self = this;
         self.phenotypeSearchedByUser = true;
         self.search = '';
@@ -883,7 +888,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
                     })
                   }
                   this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
-
                   self.scoreBasedSort? self.sortScores() : self.sortSources();
                 }
               } else {
@@ -1040,6 +1044,10 @@ import GenesSelection from '../partials/GenesSelection.vue';
         self.items = data;
 
         self.noOfSourcesSvg();
+        self.items.map(x=>{
+          x.individualRank = self.getRankForEachTerm(x.geneName)
+        })
+
         if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
           self.selected = [];
         // if(self.launchedFromClin && self.clinGenes.length>0){
@@ -1077,6 +1085,9 @@ import GenesSelection from '../partials/GenesSelection.vue';
         self.items = data;
 
         self.noOfSourcesSvg();
+        self.items.map(x=>{
+          x.individualRank = self.getRankForEachTerm(x.geneName)
+        })
         if(self.includeClinPhenolyzerGenes && self.clinGenes.length>0){
           self.selected = [];
         // if(self.launchedFromClin && self.clinGenes.length>0){
@@ -1097,6 +1108,22 @@ import GenesSelection from '../partials/GenesSelection.vue';
         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
         self.$emit("SelectedPhenolyzerGenesToCopy", self.selected);
         this.$emit("PhenolyzerFullGeneList", this.items);
+      },
+      getRankForEachTerm: function(geneName){
+        var arr = [];
+        if(this.genesSearchTermObj){
+          this.multipleSearchTerms.map(x=>{
+            var idx = this.genesSearchTermObj[x].findIndex(obj=>obj.name === geneName);
+            if(this.genesSearchTermObj.hasOwnProperty(x)){
+              var y = this.genesSearchTermObj[x];
+              arr.push({
+                searchTerm: x,
+                score: idx > -1 ? Number(y[idx].score) : 0
+              })
+            }
+          })
+        }
+        return arr;
       },
       drawSvgBars: function(tempItems){
         var svgWidth = 280;

@@ -12,6 +12,7 @@ import App from './App.vue'
 import GeneticTestingRegistry from './components/pages/GeneticTestingRegistry.vue';
 import Main from './components/pages/Main.vue'
 import phenolyzer from './components/pages/Phenolyzer.vue'
+import store from './store'
 // import Sortable from 'sortablejs'
 import { Typeahead } from 'uiv';
 
@@ -98,5 +99,6 @@ export const bus = new Vue();
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
+  router,
+  store
 })

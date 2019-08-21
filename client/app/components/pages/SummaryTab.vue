@@ -16,7 +16,7 @@
                 <div v-else-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || manuallyAddedGenes.length>0 || HpoTerms.length>0">
                   <v-flex  d-flex xs12 >
                     <v-layout row wrap>
-                      <v-flex xs6>
+                      <v-flex xs9>
                         <v-card-text>
                           <strong>GTR Conditions:</strong>
                           <br>
@@ -55,6 +55,8 @@
                         </v-card-text>
                       </v-flex>
                     </v-layout>
+                  </v-flex>
+                  <v-flex>
                     <v-layout row wrap v-if="HpoTerms.length>0">
                       <v-flex>
                         <v-card-text>
@@ -165,6 +167,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import SummaryDataTable from './SummaryDataTable.vue';
 import { bus } from '../../routes';
 import IntroductionText from '../../../data/IntroductionText.json';
@@ -366,6 +369,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       });
     },
     methods: {
+      ...mapActions(['addSummaryGenesFullList']), 
       selectNgenes: function(data){
         this.genesTop = data;
       },
@@ -793,21 +797,21 @@ import GenesSelection from '../partials/GenesSelection.vue';
       generateVennDiagramData(summaryObj){
         this.vennData = {
           "data": [
-            {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count},
-            {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count},
-            {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count},
-            {"sets" : [3], "label" : "HPO", "size":summaryObj.ClinPhen.count},
-            {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count},
-            {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count},
-            {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count},
-            {"sets" : [1,2],  "size":summaryObj.phenolyzer_ImportedGenes.count},
-            {"sets" : [1,3],  "size":summaryObj.phenolyzer_ClinPhen.count},
-            {"sets" : [2,3],  "size":summaryObj.ImportedGenes_ClinPhen.count},
-            {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2],  "size":summaryObj.gtr_phenolyzer_ImportedGenes.count},
-            {"sets" : [0,1,3],  "size":summaryObj.gtr_phenolyzer_ClinPhen.count},
-            {"sets" : [1,2,3],  "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count},
-            {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count}
+            {"sets" : [0], "label" : "GTR", "size" : summaryObj.gtr.count, "isGtr":true, "isImportedGenes":false, "isPheno": false, "isClinPhen": false},
+            {"sets" : [1], "label" : "Phenolyzer", "size": summaryObj.phenolyzer.count, "isGtr":false, "isImportedGenes":false, "isPheno": true, "isClinPhen": false},
+            {"sets" : [2], "label" : "Added", "size" : summaryObj.ImportedGenes.count, "isGtr":false, "isImportedGenes":true, "isPheno": false, "isClinPhen": false},
+            {"sets" : [3], "label" : "HPO", "size":summaryObj.ClinPhen.count, "isGtr":false, "isImportedGenes":false, "isPheno": false, "isClinPhen": true},
+            {"sets" : [0,1], "size":summaryObj.gtr_phenolyzer.count, "isGtr":true, "isImportedGenes":false, "isPheno": true, "isClinPhen": false},
+            {"sets" : [0,2], "size":summaryObj.gtr_ImportedGenes.count, "isGtr":true, "isImportedGenes":true, "isPheno": false, "isClinPhen": false},
+            {"sets" : [0,3],  "size":summaryObj.gtr_ClinPhen.count, "isGtr":true, "isImportedGenes":false, "isPheno": false, "isClinPhen": true},
+            {"sets" : [1,2],  "size":summaryObj.phenolyzer_ImportedGenes.count, "isGtr":false, "isImportedGenes":true, "isPheno": true, "isClinPhen": false},
+            {"sets" : [1,3],  "size":summaryObj.phenolyzer_ClinPhen.count, "isGtr":false, "isImportedGenes":false, "isPheno": true, "isClinPhen": true},
+            {"sets" : [2,3],  "size":summaryObj.ImportedGenes_ClinPhen.count, "isGtr":false, "isImportedGenes":true, "isPheno": false, "isClinPhen": true},
+            {"sets" : [0,2,3], "size":summaryObj.gtr_ImportedGenes_ClinPhen.count, "isGtr":true, "isImportedGenes":true, "isPheno": false, "isClinPhen": true},
+            {"sets" : [0,1,2],  "size":summaryObj.gtr_phenolyzer_ImportedGenes.count, "isGtr":true, "isImportedGenes":true, "isPheno": true, "isClinPhen": false},
+            {"sets" : [0,1,3],  "size":summaryObj.gtr_phenolyzer_ClinPhen.count, "isGtr":true, "isImportedGenes":false, "isPheno": true, "isClinPhen": true},
+            {"sets" : [1,2,3],  "size":summaryObj.phenolyzer_ImportedGenes_ClinPhen.count, "isGtr":false, "isImportedGenes":true, "isPheno": true, "isClinPhen": true},
+            {"sets" : [0,1,2,3],  "size":summaryObj.gtr_phenolyzer_ImportedGenes_ClinPhen.count, "isGtr":true, "isImportedGenes":true, "isPheno": true, "isClinPhen": true}
           ]
         }
 
@@ -1144,7 +1148,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
         var tableGenes = [...allSourcesGenes, ...threeSourcesGenes, ...twoSourcesGenes, ...uniqueAddedGenes, ...uniqueGTR, ...uniqueClinPhen, ...uniquePheno];
         this.summaryTableArrayFullList = tableGenes;
-        this.$emit('summaryGenesFullList', this.summaryTableArrayFullList);
+        // this.$emit('summaryGenesFullList', this.summaryTableArrayFullList);
+        this.addSummaryGenesFullList(this.summaryTableArrayFullList);
       },
       drawVennDiagram(){
         d3.select("#venn").select("svg").remove();
@@ -1171,7 +1176,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
               var selection = d3.select(this).transition("tooltip").duration(400);
               selection.select("path")
                   .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
-                  .style("stroke-opacity", 1);
+                  .style("stroke-opacity", 1)
+                  .style("cursor", "pointer");
           })
           .on("mousemove", function() {
               tooltip.style("left", (d3.event.pageX) + "px")
@@ -1183,6 +1189,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
               selection.select("path")
                   .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
                   .style("stroke-opacity", 0);
+          })
+          .on("click", function(d, i) {
+              // sort all the areas relative to the current item
+              x.sortAreas(div, d);
+              bus.$emit("selectionFromVennDiagram", d);
           });
       },
       setPieChartData(){

@@ -12,9 +12,9 @@
                     <h4  class="subheading" style="font-size:17px !important">Generate list of genes based on suspected conditions and phenotypes.</h4>
                     <br><br><br>
                     <v-layout row wrap>
-                      <v-flex xs12 md1 lg3 xl3>
+                      <v-flex xs12 md1 lg1 xl1>
                       </v-flex>
-                      <v-flex xs12 md5 lg3 xl3>
+                      <v-flex xs12 md12 lg3 xl3>
                         <v-flex text-xs-center>
                           <h4 style="color:white; display:inline">Suspected Conditions </h4>
                           <v-tooltip top>
@@ -22,14 +22,16 @@
                             <span>Generate a gene list for suspected condition (Eg. Treacher Collins Syndrome)</span>
                           </v-tooltip>
                           <br><br>
-                          <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('gtr')">
+                        <div style="padding:0 20px">
+                          <v-btn block round color="white" style="color:#0D47A1" @click="getStarted('gtr')">
                             Genetic Testing Registry <v-icon>play_arrow</v-icon>
                           </v-btn>
+                        </div>
                         </v-flex>
                       </v-flex>
                       <div class="vl"></div>
 
-                      <v-flex xs12 md5 lg3 xl3>
+                      <v-flex xs12 md12 lg3 xl3>
                         <v-flex text-xs-center>
                           <div class="hl">
                           </div>
@@ -42,13 +44,36 @@
                               </v-container>
                             </v-tooltip>
                             <br><br>
-                            <v-btn  round color="white" style="color:#0D47A1" @click="getStarted('phenolyzer')">
-                              Phenolyzer <v-icon>play_arrow</v-icon>
-                            </v-btn>
+                            <div style="padding:0 35px">
+                              <v-btn block round color="white" style="color:#0D47A1" @click="getStarted('phenolyzer')">
+                                Phenolyzer  <v-icon>play_arrow</v-icon>
+                              </v-btn>
+                            </div>
                           </div>
                         </v-flex>
                       </v-flex>
-                      <v-flex xs12 md1 lg3 xl3>
+                      <div class="vl"></div>
+
+                      <v-flex xs12 md12 lg3 xl3>
+                        <v-flex text-xs-center>
+                          <div class="hl">
+                          </div>
+                          <div class="phenolyzer-button-div">
+                            <h4 style="color:white; display:inline">HPO Terms & Clinical Notes </h4>
+                            <v-tooltip top>
+                              <span style="cursor:pointer" slot="activator" ><v-icon color="white" small>help</v-icon></span>
+                              <v-container grid-list-xs,sm,md,lg,xl>
+                                <span style="margin:auto; margin-left:20px; margin-right:20px">Generate a gene list for HPO Terms (Eg. HP:0005321) or enter Clinical Notes. </span>
+                              </v-container>
+                            </v-tooltip>
+                            <br><br>
+                            <div style="padding:0 40px">
+                              <v-btn block round color="white" style="color:#0D47A1" @click="getStarted('clinphen')">
+                                HPO <v-icon>play_arrow</v-icon>
+                              </v-btn>
+                            </div>
+                          </div>
+                        </v-flex>
                       </v-flex>
                     </v-layout>
                   </v-flex>
@@ -179,6 +204,9 @@ var model = new Model();
         else if(component==='phenolyzer'){
           bus.$emit('openPhenolyzer')
         }
+        else if(component==='clinphen'){
+          bus.$emit('openClinphen')
+        }
       }
     }
   }
@@ -202,12 +230,12 @@ var model = new Model();
     height: 100px
 
 
-@media screen and (max-width: 959px)
+@media screen and (max-width: 1263px)
   .vl
     height: 0
 
   .overview-jumbotron
-    height: 540px !important
+    height: 670px !important
 
   .phenolyzer-button-div
     margin-top: 30px
