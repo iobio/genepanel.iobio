@@ -38,6 +38,20 @@
        </v-list-tile>
 
        <v-list-tile
+          v-bind:class="[component==='SingleEntry' ? 'activeTab' : '']"
+          @click="selectComponent('SingleEntry')">
+         <v-list-tile-action v-bind:class="[component==='SingleEntry' ? 'margin_ActiveTab' : '']">
+           <span v-if="component==='SingleEntry'"><v-icon color="primary darken-1">dashboard</v-icon></span>
+           <span v-else><v-icon color="blue-grey darken-2">dashboard</v-icon></span>
+         </v-list-tile-action>
+         <v-list-tile-content>
+           <v-list-tile-title v-bind:class="[component==='SingleEntry' ? 'activeTabText' : '']">
+             Single Entry
+           </v-list-tile-title>
+         </v-list-tile-content>
+       </v-list-tile>
+
+       <v-list-tile
           v-bind:class="[component==='GeneticTestingRegistry' ? 'activeTab' : '']"
           @click="selectComponent('GeneticTestingRegistry')">
          <v-list-tile-action v-bind:class="[component==='GeneticTestingRegistry' ? 'margin_ActiveTab' : '']">
@@ -242,9 +256,13 @@
           </v-card-text>
         </div>
         <div style="background:white; height:auto">
-          <keep-alive>
+            <keep-alive>
               <!-- <AddGenes></AddGenes> -->
               <Overview v-show="component==='OverviewPage'"></Overview>
+            </keep-alive>
+            <keep-alive>
+              <!-- <AddGenes></AddGenes> -->
+              <SingleEntry v-show="component==='SingleEntry'"></SingleEntry>
             </keep-alive>
             <keep-alive>
               <GeneticTestingRegistry
@@ -360,8 +378,8 @@ import { ExportToCsv } from 'export-to-csv';
 import knownGenes from '../../../data/knownGenes'
 import Model from '../../models/Model';
 var model = new Model();
-import ClinPhen from './ClinPhen.vue'
-
+import ClinPhen from './ClinPhen.vue';
+import SingleEntry from './SingleEntry.vue';
 
 // var fs = require('fs');
 
@@ -376,7 +394,8 @@ import ClinPhen from './ClinPhen.vue'
       'Overview':Overview,
       'Footer': Footer,
       'AddGenes': AddGenes,
-      'ClinPhen' : ClinPhen
+      'ClinPhen' : ClinPhen,
+      'SingleEntry': SingleEntry
     },
     props: {
       paramLaunchedFromClin: null
@@ -624,6 +643,14 @@ import ClinPhen from './ClinPhen.vue'
         }
         else if(componentName === 'OverviewPage'){
           this.$ga.event('component', 'visit', 'OverviewPage')
+          window.scrollTo(0,0);
+        }
+        else if(componentName === 'ClinPhen'){
+          this.$ga.event('component', 'visit', 'ClinPhen')
+          window.scrollTo(0,0);
+        }
+        else if(componentName === 'SingleEntry'){
+          this.$ga.event('component', 'visit', 'SingleEntry')
           window.scrollTo(0,0);
         }
       },
