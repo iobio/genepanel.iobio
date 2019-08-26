@@ -16,7 +16,7 @@
                         class="form-control"
                         type="text"
                         autocomplete="off"
-                        placeholder="Search condition (E.g. Treacher Collins Syndrome)">
+                        placeholder="Search Clinical Conditions or Phenotypes (E.g. Treacher Collins Syndrome)">
                       <typeahead
                         match-start
                         v-model="search"
@@ -28,31 +28,27 @@
                     </div>
                     <v-btn
                         style="margin-top:-0.35px; text-transform: none"
-                        class="btnColor"
+                        color="primary"
+                        round
                         v-on:click.prevent="checkBeforeAddTerm">
                       Add
                     </v-btn>
+                    <v-btn color="primary" @click="performSearchEvent">Search</v-btn>
 
                     <br>
 
                     <div v-if="multipleSearchTerms.length">
                       <br>
-                        Conditions Searched:
                         <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
-                          <v-chip slot="activator" color="primary" text-color="white" close :key="i">
+                          <v-chip slot="activator" outline color="primary" text-color="primary" close :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
                         </span>
                     </div>
-
                     <br>
-
-                    <v-btn color="primary" @click="performSearchEvent">Search</v-btn>
-
-
                     <!-- Datatable -->
                     <v-data-table
-                      v-if="searchTermsObj.length"
+                      v-if="searchStatus"
                       :headers="searchTermsObjHeaders"
                       :items="searchTermsObj"
                       hide-actions=false
@@ -69,7 +65,7 @@
                             ></v-progress-circular>
                           </span>
                           <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
-                          <span v-else> <v-icon color="gray">queue</v-icon>  </span>
+                          <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
                         </td>
                         <td >
                           <span v-if="props.item.phenolyzerSearchStatus==='Searching'">
@@ -81,7 +77,7 @@
                             ></v-progress-circular>
                           </span>
                           <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
-                          <span v-else> <v-icon color="gray">queue</v-icon> </span>
+                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
                         </td>
                       </template>
                     </v-data-table>
@@ -94,9 +90,37 @@
             </v-card>
           </v-flex>
 
+          <v-flex xs12>
+            <v-flex xs4>
 
+            </v-flex>
+            <v-flex xs4>
+
+            </v-flex>
+            <v-flex xs4>
+              <v-card  v-if="summaryGenes.length">
+                <v-card-text>
+                  <!-- Datatable -->
+                  <v-data-table
+                    :headers="summaryGenesHeader"
+                    :items="summaryGenes"
+                    class="elevation-1"
+                    hide-actions=false
+                  >
+                    <template v-slot:items="props">
+                      <td>{{ props.item.name }}</td>
+                    </template>
+                  </v-data-table>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+
+          </v-flex>
         </v-layout>
       </v-container>
+      <v-container fluid grid-list-md style="min-height:800px">
+      </v-container>
+
     </div>
   </div>
 </template>
@@ -131,7 +155,10 @@ var model = new Model();
           {text: 'Phenolyzer Search status', sortable: false, value: 'phenolyzerSearchStatus'},
         ],
         summaryGenes: [],
-
+        searchStatus: false,
+        summaryGenesHeader: [
+          {text: 'Gene', sortable: false, value: 'name'},
+        ]
       }
     },
     mounted(){
@@ -155,7 +182,7 @@ var model = new Model();
           }
           else {
             console.log("getSummaryGenes in main", this.getSummaryGenes);
-            this.summaryGenes = this.getSummaryGenes // Gets data from store
+            this.summaryGenes = this.getSummaryGenes.slice(0,10) // Gets data from store
 
           }
         }
@@ -173,15 +200,13 @@ var model = new Model();
         this.addTerm();
       },
       performSearchEvent(){
+        this.searchStatus = true;
         this.gtrFetchCompleted = false;
         this.phenolyzerFetchCompleted = false;
         console.log("searching term: ", this.searchTermsObj[this.idx].DiseaseName);
-        // this.searchTermsObj[this.idx].status = "Searching";
-        // this.searchTermsObj[this.idx].gtrSearchStatus = "Searching";
         this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
         this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
         this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-        // this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Searching";
         bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
         bus.$emit("singleTermSearchPhenolyzer", this.multipleSearchTerms[this.idx]);
       },
@@ -193,9 +218,6 @@ var model = new Model();
         this.$set(this.search, 'status', "Not started");
         this.$set(this.search, 'gtrSearchStatus', "Not started");
         this.$set(this.search, 'phenolyzerSearchStatus', "Not started");
-        // this.search.status = "Not started";
-        // this.search.gtrSearchStatus = "Not started";
-        // this.search.phenolyzerSearchStatus = "Not started";
         if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
           if(searchTerm.length>1){
             this.multipleSearchTerms.push(searchTerm);
