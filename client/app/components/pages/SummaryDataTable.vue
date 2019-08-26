@@ -198,6 +198,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { bus } from '../../routes';
 import Sortable from 'sortablejs';
 import GeneModel from '../../models/GeneModel';
@@ -325,9 +326,10 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       })
 
       bus.$on("SelectedNumberOfSummaryGenes", (data)=>{
-        console.log("am i changing?")
         this.selected = this.items.slice(0,data);
       })
+
+      this.addSummaryGenes(this.items); //Send the summary genes to the Vuex store
 
       this.$emit("TotalSummaryGenes", this.items.length);
       this.$emit("TotalSummarySelectedGenes", this.selected.length);
@@ -336,6 +338,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
+      ...mapActions(['addSummaryGenes']), 
       exportGenesCSV: function(){
         bus.$emit("exportSummaryGenesAsCSV")
       },

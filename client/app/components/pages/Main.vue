@@ -578,7 +578,7 @@ import SingleEntry from './SingleEntry.vue';
     },
     updated(){
     },
-    computed: mapGetters(['getSummaryGenesFullList']),
+    computed: mapGetters(['getSummaryGenesFullList', 'getSummaryGenes']),
     methods: {
       AllSelectedpanels: function(panels){
         this.AllSelectedGtrPanels = panels;

@@ -49,40 +49,52 @@
 
                     <v-btn color="primary" @click="performSearchEvent">Search</v-btn>
 
-                    <br>
 
-                    <div v-if="multipleSearchTerms.length">
-                      <div v-for="(item, i) in searchTermsObj">
-                        {{ item.DiseaseName }}
-                        <span v-if="item.gtrSearchStatus==='Searching'">
-                          <v-progress-circular
-                            :width="3"
-                            :size="30"
-                            indeterminate
-                            color="primary"
-                          ></v-progress-circular>
-                        </span>
-                        <span v-else-if="item.gtrSearchStatus==='Completed'"><v-icon large color="green">done_outline</v-icon></span>
-                        <span v-else> <v-icon color="gray">queue</v-icon>  </span>
+                    <!-- Datatable -->
+                    <v-data-table
+                      v-if="searchTermsObj.length"
+                      :headers="searchTermsObjHeaders"
+                      :items="searchTermsObj"
+                      hide-actions=false
+                    >
+                      <template v-slot:items="props">
+                        <td>{{ props.item.DiseaseName }}</td>
+                        <td >
+                          <span v-if="props.item.gtrSearchStatus==='Searching'">
+                            <v-progress-circular
+                              :width="2"
+                              :size="20"
+                              indeterminate
+                              color="primary"
+                            ></v-progress-circular>
+                          </span>
+                          <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
+                          <span v-else> <v-icon color="gray">queue</v-icon>  </span>
+                        </td>
+                        <td >
+                          <span v-if="props.item.phenolyzerSearchStatus==='Searching'">
+                            <v-progress-circular
+                              :width="2"
+                              :size="20"
+                              indeterminate
+                              color="primary"
+                            ></v-progress-circular>
+                          </span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
+                          <span v-else> <v-icon color="gray">queue</v-icon> </span>
+                        </td>
+                      </template>
+                    </v-data-table>
 
-                        <span v-if="item.phenolyzerSearchStatus==='Searching'">
-                          <v-progress-circular
-                            :width="3"
-                            :size="30"
-                            indeterminate
-                            color="primary"
-                          ></v-progress-circular>
-                        </span>
-                        <span v-else-if="item.phenolyzerSearchStatus==='Completed'"><v-icon large color="green">done_outline</v-icon></span>
-                        <span v-else> <v-icon color="gray">queue</v-icon> </span>
-
-                      </div>
-                    </div>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 lg4 xl4>
                   </v-flex>
                 </v-layout>
               </v-card-text>
             </v-card>
           </v-flex>
+
+
         </v-layout>
       </v-container>
     </div>
@@ -90,6 +102,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
@@ -111,7 +124,14 @@ var model = new Model();
         searchTermsObj: [],
         idx: 0,
         gtrFetchCompleted: false,
-        phenolyzerFetchCompleted: false
+        phenolyzerFetchCompleted: false,
+        searchTermsObjHeaders: [
+          {text: 'Search Term', sortable: false, value: 'DiseaseName'},
+          {text: 'GTR Search status', sortable: false, value: 'gtrSearchStatus'},
+          {text: 'Phenolyzer Search status', sortable: false, value: 'phenolyzerSearchStatus'},
+        ],
+        summaryGenes: [],
+
       }
     },
     mounted(){
@@ -133,11 +153,15 @@ var model = new Model();
           if(this.idx < this.multipleSearchTerms.length){
             this.performSearchEvent();
           }
+          else {
+            console.log("getSummaryGenes in main", this.getSummaryGenes);
+            this.summaryGenes = this.getSummaryGenes // Gets data from store
+
+          }
         }
       })
     },
     updated(){
-
     },
     watch: {
       searchTermsObj(){
@@ -181,6 +205,7 @@ var model = new Model();
       },
     },
     computed: {
+      ...mapGetters(['getSummaryGenes']),
       DiseaseNames: function() {
         return DiseaseNames.data.sort(function(a,b) {
           if (a.DiseaseName < b.DiseaseName) {
