@@ -534,6 +534,14 @@ import GenesSelection from '../partials/GenesSelection.vue';
         this.DisorderFromGtr = this.SearchTheDisorderInPhenolyzer;
         this.getPhenotypeData();
       }
+      bus.$on("singleTermSearchPhenolyzer", (x) =>{
+        this.phenotypeTerm = {
+          id: x,
+          label: x,
+          value: x,
+        }
+        this.getPhenotypeData();
+      })
     },
     updated(){
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{
@@ -889,6 +897,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   }
                   this.$emit("individualGenesObjPhenolyzer", self.genesSearchTermObj)
                   self.scoreBasedSort? self.sortScores() : self.sortSources();
+                  bus.$emit("completeFetchRequest", "Phenolyzer")
                 }
               } else {
                 self.phenolyzerStatus = status;

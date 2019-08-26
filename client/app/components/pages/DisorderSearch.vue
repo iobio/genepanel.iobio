@@ -214,6 +214,10 @@ var model = new Model();
          this.checked = false;
          bus.$emit("hideContentLoader");
        });
+       bus.$on("singleTermSearchGTR", (x)=>{
+         this.search = x;
+         this.checkBeforePerformSearch();
+       })
     },
     computed:  {
 
