@@ -262,7 +262,13 @@
             </keep-alive>
             <keep-alive>
               <!-- <AddGenes></AddGenes> -->
-              <SingleEntry v-show="component==='SingleEntry'"></SingleEntry>
+              <SingleEntry
+                v-show="component==='SingleEntry'"
+                :selectedGtrGenes="selectedGtrGenes"
+                :gtrCompleteGeneList="gtrCompleteGeneList"
+                :selectedPhenolyzerGenes="selectedPhenolyzerGenes"
+                :phenolyzerCompleteGeneList="phenolyzerCompleteGeneList">
+              </SingleEntry>
             </keep-alive>
             <keep-alive>
               <GeneticTestingRegistry
@@ -565,6 +571,10 @@ import SingleEntry from './SingleEntry.vue';
       bus.$on("openClinphen", ()=>{
         window.scrollTo(0,0);
         this.component = "ClinPhen";
+      })
+      bus.$on("openSummary", ()=>{
+        window.scrollTo(0,0);
+        this.component = "SummaryTab";
       })
       bus.$on("updateAllGenes", (data)=>{
         this.updateAllGenesFromSelection(data);

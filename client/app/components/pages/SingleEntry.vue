@@ -6,7 +6,7 @@
           <v-flex d-flex xs12>
             <v-card>
               <v-card-text>
-                <h3>Single Term Entry</h3>
+                <h3>Dashboard</h3>
                 <v-layout row wrap>
                   <v-flex xs12 sm12 md12 lg8 xl8>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
@@ -28,12 +28,12 @@
                     </div>
                     <v-btn
                         style="margin-top:-0.35px; text-transform: none"
-                        color="primary"
                         round
+                        class="btnColor"
                         v-on:click.prevent="checkBeforeAddTerm">
                       Add
                     </v-btn>
-                    <v-btn color="primary" @click="performSearchEvent">Search</v-btn>
+                    <v-btn class="btnColor" @click="performSearchEvent">Search</v-btn>
 
                     <br>
 
@@ -88,33 +88,80 @@
                 </v-layout>
               </v-card-text>
             </v-card>
+
           </v-flex>
+        </v-layout>
+      </v-container>
 
-          <v-flex xs12>
-            <v-flex xs4>
+      <v-container fluid grid-list-md>
+        <v-layout row wrap>
+          <v-flex d-flex xs12>
+            <!-- <v-card>
+              <v-card-text> -->
+                <v-layout row wrap>
+                  <div class="col-md-12">
+                    <!-- <v-card>
+                      <v-card-text> -->
+                        <div class="col-md-4">
+                          <v-card v-if="summaryGenes.length">
+                            <v-card-text class="text-md-center">
+                              <strong>GTR Genes: </strong>
+                              <br>
+                              {{selectedGtrGenes.length}} of {{gtrCompleteGeneList.length}} selected
+                              <progressCircularDonut
+                                :selectedNumber="selectedGtrGenes.length"
+                                :totalNumber="gtrCompleteGeneList.length"
+                              >
+                              </progressCircularDonut>
+                              <v-btn round small outline color="primary" @click="selectComponent('gtr')"> Change in GTR </v-btn>
+                            </v-card-text>
+                          </v-card>
+                        </div>
+                        <div class="col-md-4">
+                          <v-card v-if="summaryGenes.length">
+                            <v-card-text class="text-md-center">
+                              <strong>Phenolyzer Genes: </strong>
+                              <br>
+                              {{selectedPhenolyzerGenes.length}} of {{phenolyzerCompleteGeneList.length}} selected
+                              <progressCircularDonut
+                                :selectedNumber="selectedPhenolyzerGenes.length"
+                                :totalNumber="phenolyzerCompleteGeneList.length"
+                              >
+                              </progressCircularDonut>
+                              <v-btn round small outline color="primary" @click="selectComponent('phenolyzer')"> Change in Phenolyzer </v-btn>
+                            </v-card-text>
+                          </v-card>
+                        </div>
+                        <div class="col-md-4">
+                          <v-card  v-if="summaryGenes.length">
+                            <v-card-text>
+                              <strong>Summary Genes: </strong>
+                              <br>
 
-            </v-flex>
-            <v-flex xs4>
+                              <!-- Datatable -->
+                              <v-data-table
+                                :headers="summaryGenesHeader"
+                                :items="summaryGenes"
+                                class="elevation-1"
+                                hide-actions=false
+                              >
+                                <template v-slot:items="props">
+                                  <td>{{ props.item.name }}</td>
+                                </template>
+                              </v-data-table>
+                              <div class="text-md-center">
+                                <v-btn round small outline color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
+                              </div>
+                            </v-card-text>
+                          </v-card>
+                        </div>
+                      <!-- </v-card-text>
+                    </v-card> -->
 
-            </v-flex>
-            <v-flex xs4>
-              <v-card  v-if="summaryGenes.length">
-                <v-card-text>
-                  <!-- Datatable -->
-                  <v-data-table
-                    :headers="summaryGenesHeader"
-                    :items="summaryGenes"
-                    class="elevation-1"
-                    hide-actions=false
-                  >
-                    <template v-slot:items="props">
-                      <td>{{ props.item.name }}</td>
-                    </template>
-                  </v-data-table>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-
+                  </div>
+                </v-layout>
+              <!-- </v-card-text>
+            </v-card> -->
           </v-flex>
         </v-layout>
       </v-container>
@@ -132,14 +179,27 @@ import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
 import DiseaseNames from '../../../data/DiseaseNames.json'
+import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
 var model = new Model();
 
   export default {
     components: {
+      'progressCircularDonut': progressCircularDonut
     },
     props: {
-
+      selectedGtrGenes: {
+        type: Array
+      },
+      gtrCompleteGeneList: {
+        type: Array
+      },
+      selectedPhenolyzerGenes: {
+        type: Array
+      },
+      phenolyzerCompleteGeneList: {
+        type: Array
+      }
     },
     data(){
       return {
@@ -182,7 +242,7 @@ var model = new Model();
           }
           else {
             console.log("getSummaryGenes in main", this.getSummaryGenes);
-            this.summaryGenes = this.getSummaryGenes.slice(0,10) // Gets data from store
+            this.summaryGenes = this.getSummaryGenes.slice(0,5) // Gets data from store
 
           }
         }
@@ -196,6 +256,20 @@ var model = new Model();
       }
     },
     methods:{
+      selectComponent(component){
+        if(component==='gtr'){
+          bus.$emit('openGtrComponent');
+        }
+        else if(component==='phenolyzer'){
+          bus.$emit('openPhenolyzer')
+        }
+        else if(component==='clinphen'){
+          bus.$emit('openClinphen')
+        }
+        else if(component==='summary'){
+          bus.$emit('openSummary')
+        }
+      },
       checkBeforeAddTerm(){
         this.addTerm();
       },
