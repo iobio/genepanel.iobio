@@ -281,8 +281,9 @@ var model = new Model();
         this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
         this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
         this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
+        var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
         bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
-        bus.$emit("singleTermSearchPhenolyzer", this.multipleSearchTerms[this.idx]);
+        bus.$emit("singleTermSearchPhenolyzer", str);
       },
       addTerm(){
         var searchTerm ="";
