@@ -216,6 +216,7 @@ var model = new Model();
        });
        bus.$on("singleTermSearchGTR", (x)=>{
          this.search = x;
+         this.checked = false;
          this.checkBeforePerformSearch();
        })
     },
@@ -560,9 +561,11 @@ var model = new Model();
             var addFilteredDiseases = (filteredDiseases) =>{
               if (filteredDiseases.length===0) {
                 this.alert= true;
+                bus.$emit("completeFetchRequest", "noGenePanels");
               }
               this.checked=false;
               bus.$emit("hideContentLoader");
+              bus.$emit("completeFetchRequest", "GTR");
               if(this.multipleSearchTerms.includes(searchTerm)){ //this avoids adding an index when the term is deleted
                 filteredDiseases.map(x=>{
                   x["searchTerm"]="ip"+searchTerm+"ip";

@@ -741,7 +741,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         this.$emit("TotalNoOfGenesFromGTR", this.items.length);
         bus.$emit("GeneDistributionChartData", this.items);
 
-        bus.$emit("completeFetchRequest", "GTR")
+        // bus.$emit("completeFetchRequest", "GTR")
         this.dataForTables = data.slice(0,10);
       },
       AddGeneDataIndividual: function(){

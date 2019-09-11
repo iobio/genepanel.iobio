@@ -65,6 +65,7 @@
                             ></v-progress-circular>
                           </span>
                           <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
+                          <span v-else-if="props.item.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
                         </td>
                         <td >
@@ -77,6 +78,7 @@
                             ></v-progress-circular>
                           </span>
                           <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
                         </td>
                       </template>
@@ -201,7 +203,7 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
-import DiseaseNames from '../../../data/DiseaseNames.json'
+import DiseaseNames from '../../../data/DiseaseNamesCleaned.json'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 
 var model = new Model();
@@ -253,20 +255,30 @@ var model = new Model();
           this.searchTermsObj[this.idx].gtrSearchStatus = "Completed";
           this.gtrFetchCompleted = true;
         }
-        else if(component = "Phenolyzer"){
+        else if(component === "Phenolyzer"){
           console.log("Phenolyzer completed!");
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed"
+          this.phenolyzerFetchCompleted = true;
+        }
+        else if(component === "noGenePanels"){
+          // console.log("here")
+          this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
+          this.gtrFetchCompleted = true;
+        }
+        else if(component === "noPhenolyzerGenes"){
+          // console.log("Phenolyzer completed!");
+          this.searchTermsObj[this.idx].phenolyzerSearchStatus = "NoGenes"
           this.phenolyzerFetchCompleted = true;
         }
         console.log("searchTermsObj", this.searchTermsObj)
         if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted){
           this.searchTermsObj[this.idx].status = "Completed";
-          this.idx++;
+          this.idx = this.idx + 1;
           if(this.idx < this.multipleSearchTerms.length){
             this.performSearchEvent();
           }
           else {
-            console.log("getSummaryGenes in main", this.getSummaryGenes);
+            // console.log("getSummaryGenes in main", this.getSummaryGenes);
             this.summaryGenes = this.getSummaryGenes.slice(0,5) // Gets data from store
 
           }
@@ -274,7 +286,6 @@ var model = new Model();
       })
 
       bus.$on("handleGeneralTermsInSingleEntry", (diseases)=>{
-        console.log("diseases in singleEntry", diseases);
         this.alertWarning = true;
         this.generalTermsHint = diseases;
       })
@@ -283,7 +294,6 @@ var model = new Model();
     },
     watch: {
       searchTermsObj(){
-        console.log("searchTermsObj changing")
       }
     },
     methods:{
@@ -308,7 +318,6 @@ var model = new Model();
         this.searchStatus = true;
         this.gtrFetchCompleted = false;
         this.phenolyzerFetchCompleted = false;
-        console.log("searching term: ", this.searchTermsObj[this.idx].DiseaseName);
         this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
         this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
         this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
