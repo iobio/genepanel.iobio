@@ -91,6 +91,29 @@
 
           </v-flex>
         </v-layout>
+
+        <v-dialog
+          v-model="alertWarning"
+          scrollable
+          persistent
+          :overlay="false"
+          max-width="500px"
+          transition="dialog-transition"
+        >
+          <v-card>
+            <v-card-text>
+              Show dialog:
+              <br>
+              <li style="cursor: pointer" v-if="generalTermsHint.length>0" v-for="(hint, i) in generalTermsHint" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
+            </v-card-text>
+            <v-card-actions>
+              <div class="flex-grow-1"></div>
+              <v-btn color="green" text @click="alertWarning = false">Disagree</v-btn>
+              <v-btn color="green" text @click="alertWarning = false">Agree</v-btn>
+            </v-card-actions>
+
+          </v-card>
+        </v-dialog>
       </v-container>
 
       <v-container fluid grid-list-md>
@@ -218,7 +241,9 @@ var model = new Model();
         searchStatus: false,
         summaryGenesHeader: [
           {text: 'Gene', sortable: false, value: 'name'},
-        ]
+        ],
+        alertWarning: false,
+        generalTermsHint: [],
       }
     },
     mounted(){
@@ -246,6 +271,12 @@ var model = new Model();
 
           }
         }
+      })
+
+      bus.$on("handleGeneralTermsInSingleEntry", (diseases)=>{
+        console.log("diseases in singleEntry", diseases);
+        this.alertWarning = true;
+        this.generalTermsHint = diseases;
       })
     },
     updated(){
@@ -300,6 +331,12 @@ var model = new Model();
           }
         }
       },
+      setInputValueFromHint(hint){
+        this.searchTermsObj[this.idx].DiseaseName = hint.Title;
+        this.searchTermsObj[this.idx].ConceptID = hint.ConceptId;
+        bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
+        this.alertWarning = false;
+      }
     },
     computed: {
       ...mapGetters(['getSummaryGenes']),

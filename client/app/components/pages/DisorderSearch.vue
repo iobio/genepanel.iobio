@@ -515,6 +515,7 @@ var model = new Model();
             }
 
             var comeOutOfPromise1 =(diseases)=>{
+              bus.$emit("handleGeneralTermsInSingleEntry", diseases);
               this.warningHints = diseases.slice(3, 7);
               this.alertWarningHints = true
               this.checked=false;
