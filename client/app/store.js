@@ -27,10 +27,14 @@ export default new Vuex.Store({
     addGtrGenes({ commit }, genes){
       commit('gtrGeneList', genes)
     },
+    addPhenolyzerGenes({ commit }, genes){
+      commit('phenolyzerGeneList', genes)
+    },
   },
   mutations: {
     summaryFullGeneList: (state, genes) => state.summaryGenesFullList = genes,
     summaryGeneList: (state, genes) => state.summaryGenes = genes,
     gtrGeneList: (state, genes) => state.gtrGenes = genes,
+    phenolyzerGeneList: (state, genes) => state.phenolyzerGenes = genes,
   }
 })

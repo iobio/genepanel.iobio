@@ -152,11 +152,22 @@
                               <strong>Phenolyzer Genes: </strong>
                               <br>
                               {{selectedPhenolyzerGenes.length}} of {{phenolyzerCompleteGeneList.length}} selected
-                              <progressCircularDonut
-                                :selectedNumber="selectedPhenolyzerGenes.length"
-                                :totalNumber="phenolyzerCompleteGeneList.length"
-                              >
-                              </progressCircularDonut>
+                              <v-card>
+                                <progressCircularDonut
+                                  :selectedNumber="selectedPhenolyzerGenes.length"
+                                  :totalNumber="phenolyzerCompleteGeneList.length"
+                                >
+                                </progressCircularDonut>
+                              </v-card>
+                              <br>
+                              <v-card>
+                                <BarChartSingleEntry
+                                  v-if="Object.entries(phenolyzerVizData).length !== 0"
+                                  idValue="phenolyzerChart"
+                                  label="Phenolyzer score (Top 5 genes)"
+                                  :VizData="phenolyzerVizData">
+                                </BarChartSingleEntry>
+                              </v-card>
                               <v-btn round small outline color="primary" @click="selectComponent('phenolyzer')"> Change in Phenolyzer </v-btn>
                             </v-card-text>
                           </v-card>
@@ -248,6 +259,7 @@ var model = new Model();
         ],
         summaryGenes: [],
         gtrGenes: [],
+        phenolyzerGenes: [],
         searchStatus: false,
         summaryGenesHeader: [
           {text: 'Gene', sortable: false, value: 'name'},
@@ -255,6 +267,7 @@ var model = new Model();
         alertWarning: false,
         generalTermsHint: [],
         gtrVizData: {},
+        phenolyzerVizData: {},
       }
     },
     mounted(){
@@ -288,7 +301,7 @@ var model = new Model();
           }
           else {
             // console.log("getSummaryGenes in main", this.getSummaryGenes);
-            this.summaryGenes = this.getSummaryGenes.slice(0,5) // Gets data from store
+            this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
           }
         }
       })
@@ -307,21 +320,27 @@ var model = new Model();
       },
       getGtrGenes(){
         this.gtrGenes = this.getGtrGenes.slice(0, 5);
-        console.log(this.gtrGenes)
-        this.gtrVizData = {};
         var geneNames = [];
         var genepanelCounts = [];
         this.gtrGenes.map(gene => {
           geneNames.push(gene.name);
           genepanelCounts.push(gene.value)
         })
-        // this.gtrVizData = {
-        //   geneNames,
-        //   genepanelCounts
-        // }
         this.gtrVizData.geneNames = geneNames;
         this.gtrVizData.genepanelCounts = genepanelCounts;
-        console.log("gtrVizData in SingleEntryInput", this.gtrVizData)
+      },
+      getPhenolyzerGenes(){
+        this.phenolyzerGenes = this.getPhenolyzerGenes.slice(0,5);
+        console.log("this.phenolyzerGenes", this.phenolyzerGenes)
+        var geneNames = [];
+        var genepanelCounts = [];
+        this.phenolyzerGenes.map(gene => {
+          geneNames.push(gene.geneName);
+          genepanelCounts.push(gene.score)
+        })
+        this.phenolyzerVizData.geneNames = geneNames;
+        this.phenolyzerVizData.genepanelCounts = genepanelCounts;
+        console.log("phenolyzerVizData", this.phenolyzerVizData)
       }
     },
     methods:{
@@ -376,7 +395,7 @@ var model = new Model();
       }
     },
     computed: {
-      ...mapGetters(['getSummaryGenes', 'getGtrGenes']),
+      ...mapGetters(['getSummaryGenes', 'getGtrGenes', 'getPhenolyzerGenes']),
       DiseaseNames: function() {
         return DiseaseNames.data.sort(function(a,b) {
           if (a.DiseaseName < b.DiseaseName) {

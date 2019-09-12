@@ -351,6 +351,7 @@
 
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import GeneModel from '../../models/GeneModel';
@@ -572,6 +573,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
         this.$emit("SelectedPhenolyzerGenesToCopy", this.selected);
       }
       this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
+      this.addPhenolyzerGenes(this.selected); //Send the GTR genes to the Vuex store
+
     },
     watch: {
       clinsearchedPhenolyzer: function(){
@@ -591,6 +594,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       }
     },
     methods: {
+      ...mapActions(['addPhenolyzerGenes']),
       selectNgenes: function(data){
         this.genesTop = data;
       },
