@@ -26,13 +26,10 @@
                         :preselect="false"
                         item-key="DiseaseName"/>
                     </div>
-                    <v-btn
-                        style="margin-top:-0.35px; text-transform: none"
-                        round
-                        class="btnColor"
-                        v-on:click.prevent="checkBeforeAddTerm">
-                      Add
+                    <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="checkBeforeAddTerm">
+                      <v-icon color="white">add</v-icon>
                     </v-btn>
+
                     <v-btn class="btnColor" @click="performSearchEvent">Search</v-btn>
 
                     <br>
@@ -138,6 +135,13 @@
                                 :totalNumber="gtrCompleteGeneList.length"
                               >
                               </progressCircularDonut>
+                              <br>
+                              <BarChartSingleEntry
+                                v-if="Object.entries(gtrVizData).length !== 0"
+                                idValue="GtrChart"
+                                label="# of Genepanels (Top 5 genes)"
+                                :VizData="gtrVizData">
+                              </BarChartSingleEntry>
                               <v-btn round small outline color="primary" @click="selectComponent('gtr')"> Change in GTR </v-btn>
                             </v-card-text>
                           </v-card>
@@ -205,12 +209,15 @@ import d3 from 'd3';
 import Model from '../../models/Model';
 import DiseaseNames from '../../../data/DiseaseNamesCleaned.json'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
+import Chart from 'chart.js';
+import BarChartSingleEntry from '../viz/BarChartSingleEntry.vue';
 
 var model = new Model();
 
   export default {
     components: {
-      'progressCircularDonut': progressCircularDonut
+      'progressCircularDonut': progressCircularDonut,
+      'BarChartSingleEntry': BarChartSingleEntry
     },
     props: {
       selectedGtrGenes: {
@@ -240,12 +247,14 @@ var model = new Model();
           {text: 'Phenolyzer Search status', sortable: false, value: 'phenolyzerSearchStatus'},
         ],
         summaryGenes: [],
+        gtrGenes: [],
         searchStatus: false,
         summaryGenesHeader: [
           {text: 'Gene', sortable: false, value: 'name'},
         ],
         alertWarning: false,
         generalTermsHint: [],
+        gtrVizData: {},
       }
     },
     mounted(){
@@ -280,7 +289,6 @@ var model = new Model();
           else {
             // console.log("getSummaryGenes in main", this.getSummaryGenes);
             this.summaryGenes = this.getSummaryGenes.slice(0,5) // Gets data from store
-
           }
         }
       })
@@ -289,11 +297,31 @@ var model = new Model();
         this.alertWarning = true;
         this.generalTermsHint = diseases;
       })
+
+
     },
     updated(){
     },
     watch: {
       searchTermsObj(){
+      },
+      getGtrGenes(){
+        this.gtrGenes = this.getGtrGenes.slice(0, 5);
+        console.log(this.gtrGenes)
+        this.gtrVizData = {};
+        var geneNames = [];
+        var genepanelCounts = [];
+        this.gtrGenes.map(gene => {
+          geneNames.push(gene.name);
+          genepanelCounts.push(gene.value)
+        })
+        // this.gtrVizData = {
+        //   geneNames,
+        //   genepanelCounts
+        // }
+        this.gtrVizData.geneNames = geneNames;
+        this.gtrVizData.genepanelCounts = genepanelCounts;
+        console.log("gtrVizData in SingleEntryInput", this.gtrVizData)
       }
     },
     methods:{
@@ -348,7 +376,7 @@ var model = new Model();
       }
     },
     computed: {
-      ...mapGetters(['getSummaryGenes']),
+      ...mapGetters(['getSummaryGenes', 'getGtrGenes']),
       DiseaseNames: function() {
         return DiseaseNames.data.sort(function(a,b) {
           if (a.DiseaseName < b.DiseaseName) {

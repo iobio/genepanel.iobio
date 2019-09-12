@@ -8,10 +8,14 @@ export default new Vuex.Store({
   state: {
     summaryGenesFullList: [],
     summaryGenes: [],
+    gtrGenes: [],
+    phenolyzerGenes: [],
   },
   getters: {
     getSummaryGenesFullList: state => state.summaryGenesFullList,
     getSummaryGenes: state => state.summaryGenes,
+    getGtrGenes: state => state.gtrGenes,
+    getPhenolyzerGenes: state => state.phenolyzerGenes,
   },
   actions: {
     addSummaryGenesFullList({ commit }, genes){
@@ -19,10 +23,14 @@ export default new Vuex.Store({
     },
     addSummaryGenes({ commit }, genes){
       commit('summaryGeneList', genes)
-    }
+    },
+    addGtrGenes({ commit }, genes){
+      commit('gtrGeneList', genes)
+    },
   },
   mutations: {
     summaryFullGeneList: (state, genes) => state.summaryGenesFullList = genes,
-    summaryGeneList: (state, genes) => state.summaryGenes = genes
+    summaryGeneList: (state, genes) => state.summaryGenes = genes,
+    gtrGeneList: (state, genes) => state.gtrGenes = genes,
   }
 })

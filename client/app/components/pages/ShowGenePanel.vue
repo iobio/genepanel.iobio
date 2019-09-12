@@ -280,6 +280,7 @@
 
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
@@ -450,6 +451,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       this.$emit("GtrFullGeneList", this.items);
       this.$emit("TotalNoOfGenesFromGTR", this.items.length);
 
+      this.addGtrGenes(this.selected); //Send the GTR genes to the Vuex store
     },
     watch: {
       sliderValue: function(){
@@ -514,6 +516,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       }
     },
     methods:{
+      ...mapActions(['addGtrGenes']),
       sliderClicked() {
         this.includeClinGenes = false;
       },
