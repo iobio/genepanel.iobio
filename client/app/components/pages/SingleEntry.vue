@@ -4,19 +4,30 @@
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
-            <v-card>
+            <v-card v-if="!summaryGenes.length">
               <v-card-text>
                 <h3>Dashboard</h3>
                 <v-layout row wrap>
-                  <v-flex xs12 sm12 md12 lg8 xl8>
+                  <v-flex xs12 sm12 md12 lg2 xl2>
+                    <div id="dropdown-example">
+                      <v-overflow-btn
+                         :items="dropdown_tool"
+                         label="Select tool"
+                         hint="Select the tool"
+                         persistent-hint
+                         target="#dropdown-example"
+                         v-model="dropdown_tool_value"
+                       ></v-overflow-btn>
+                    </div>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 lg10 xl10>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
-                      <label>Enter Clinical Conditions or Phenotypes</label>
                       <input
                         id="single-entry-input"
                         class="form-control"
                         type="text"
                         autocomplete="off"
-                        placeholder="Search Clinical Conditions or Phenotypes (E.g. Treacher Collins Syndrome)">
+                        placeholder="Enter Clinical Conditions or Phenotypes">
                       <typeahead
                         match-start
                         v-model="search"
@@ -43,8 +54,7 @@
                     <br>
 
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg4 xl4>
-                  </v-flex>
+
                 </v-layout>
               </v-card-text>
             </v-card>
@@ -292,6 +302,8 @@ var model = new Model();
         gtrVizData: {},
         phenolyzerVizData: {},
         expansionpanlExpand: ['true'],
+        dropdown_tool: ['All resources', 'GTR', 'Phenolyzer'],
+        dropdown_tool_value: 'All resources'
       }
     },
     mounted(){
@@ -386,15 +398,28 @@ var model = new Model();
         this.addTerm();
       },
       performSearchEvent(){
-        this.searchStatus = true;
-        this.gtrFetchCompleted = false;
-        this.phenolyzerFetchCompleted = false;
-        this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-        this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
-        this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-        var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
-        bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
-        bus.$emit("singleTermSearchPhenolyzer", str);
+        if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
+          this.searchStatus = true;
+          this.gtrFetchCompleted = false;
+          this.phenolyzerFetchCompleted = false;
+          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
+          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+          bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
+          bus.$emit("singleTermSearchPhenolyzer", str);
+        }
+        else if(this.searchTermsObj[this.idx].tool_to_search === "Phenolyzer"){
+          this.searchStatus = true;
+          // this.gtrFetchCompleted = false;
+          this.phenolyzerFetchCompleted = false;
+          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Completed");
+          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
+          this.gtrFetchCompleted = true;
+          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+          bus.$emit("singleTermSearchPhenolyzer", str);
+        }
       },
       addTerm(){
         var searchTerm ="";
@@ -404,6 +429,7 @@ var model = new Model();
         this.$set(this.search, 'status', "Not started");
         this.$set(this.search, 'gtrSearchStatus', "Not started");
         this.$set(this.search, 'phenolyzerSearchStatus', "Not started");
+        this.$set(this.search, 'tool_to_search', this.dropdown_tool_value);
         if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
           if(searchTerm.length>1){
             this.multipleSearchTerms.push(searchTerm);
@@ -444,10 +470,13 @@ var model = new Model();
 
 #single-entry-input
   width: 600px
-  height: 40px
-  margin-top: 4px
-  background-color: $search-box-color
-  border-color: $search-box-color
+  height: 49px
+  margin-top: 7px
+  // background-color: $search-box-color
+  border-bottom-color: #949494
+  border-right-color: white
+  border-top-color: #e9e9e9
+  border-left-color: white
 
 
 @media screen and (max-width: 1620px)
