@@ -17,7 +17,8 @@
     "test:watch": "npm test -- --auto-watch --no-single-run",
     "build": "./node_modules/webpack/bin/webpack.js",
     "deploy:prod": "sh deploy.sh prod",
-    "deploy:dev": "sh deploy.sh"
+    "deploy:dev": "sh deploy.sh",
+    "deploy:stage": "sh deploy_stage.sh"
   },
   "dependencies": {
     "axios": "^0.18.0",
