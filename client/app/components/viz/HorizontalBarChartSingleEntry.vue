@@ -46,7 +46,7 @@ var model = new Model();
         }
         var ctx = document.getElementById(`${this.idValue}`);
         var myChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'horizontalBar',
             data: {
                 labels: this.VizData.geneNames,
                 datasets: [{
@@ -62,9 +62,13 @@ var model = new Model();
                     yAxes: [{
                         ticks: {
                             beginAtZero: true
-                        }
+                        },
+                        barThickness: 22
                     }],
                     xAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      },
                       barThickness: 22  // number (pixels) or 'flex'
                     }]
                 }

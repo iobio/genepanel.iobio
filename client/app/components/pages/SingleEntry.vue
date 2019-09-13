@@ -194,12 +194,12 @@
                               </v-card>
                               <br>
                               <v-card class="mb-2">
-                                <BarChartSingleEntry
+                                <HorizontalBarChartSingleEntry
                                   v-if="Object.entries(phenolyzerVizData).length !== 0"
                                   idValue="phenolyzerChart"
                                   label="Phenolyzer score (Top 5 genes)"
                                   :VizData="phenolyzerVizData">
-                                </BarChartSingleEntry>
+                                </HorizontalBarChartSingleEntry>
                               </v-card>
                               <v-btn round small outline color="primary" @click="selectComponent('phenolyzer')"> Change in Phenolyzer </v-btn>
                             </v-card-text>
@@ -255,13 +255,15 @@ import DiseaseNames from '../../../data/DiseaseNamesCleaned.json'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import Chart from 'chart.js';
 import BarChartSingleEntry from '../viz/BarChartSingleEntry.vue';
+import HorizontalBarChartSingleEntry from '../viz/HorizontalBarChartSingleEntry.vue'
 
 var model = new Model();
 
   export default {
     components: {
       'progressCircularDonut': progressCircularDonut,
-      'BarChartSingleEntry': BarChartSingleEntry
+      'BarChartSingleEntry': BarChartSingleEntry,
+      'HorizontalBarChartSingleEntry': HorizontalBarChartSingleEntry
     },
     props: {
       selectedGtrGenes: {
