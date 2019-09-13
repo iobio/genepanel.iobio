@@ -31,9 +31,7 @@
                     </v-btn>
 
                     <v-btn class="btnColor" @click="performSearchEvent">Search</v-btn>
-
                     <br>
-
                     <div v-if="multipleSearchTerms.length">
                       <br>
                         <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
@@ -43,6 +41,30 @@
                         </span>
                     </div>
                     <br>
+
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 lg4 xl4>
+                  </v-flex>
+                </v-layout>
+              </v-card-text>
+            </v-card>
+
+          </v-flex>
+        </v-layout>
+
+      </v-container>
+
+
+      <v-container fluid grid-list-md>
+        <v-layout row wrap style="margin-top:-20px;">
+          <v-flex d-flex xs12>
+            <v-expansion-panel v-if="searchStatus" expand v-model="expansionpanlExpand">
+              <v-expansion-panel-content>
+                <template v-slot:header>
+                  <div>Search Status</div>
+                </template>
+                <v-card>
+                  <v-card-text>
                     <!-- Datatable -->
                     <v-data-table
                       v-if="searchStatus"
@@ -61,7 +83,7 @@
                               color="primary"
                             ></v-progress-circular>
                           </span>
-                          <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
+                          <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
                           <span v-else-if="props.item.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
                         </td>
@@ -74,45 +96,42 @@
                               color="primary"
                             ></v-progress-circular>
                           </span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done_outline</v-icon></span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
                           <span v-else-if="props.item.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
                         </td>
                       </template>
                     </v-data-table>
+                  </v-card-text>
+                </v-card>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-card>
+              <v-dialog
+                v-model="alertWarning"
+                scrollable
+                persistent
+                :overlay="false"
+                max-width="500px"
+                transition="dialog-transition"
+              >
+                <v-card>
+                  <v-card-text>
+                    Show dialog:
+                    <br>
+                    <li style="cursor: pointer" v-if="generalTermsHint.length>0" v-for="(hint, i) in generalTermsHint" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
+                  </v-card-text>
+                  <v-card-actions>
+                    <div class="flex-grow-1"></div>
+                    <v-btn color="green" text @click="alertWarning = false">Disagree</v-btn>
+                    <v-btn color="green" text @click="alertWarning = false">Agree</v-btn>
+                  </v-card-actions>
 
-                  </v-flex>
-                  <v-flex xs12 sm12 md12 lg4 xl4>
-                  </v-flex>
-                </v-layout>
-              </v-card-text>
+                </v-card>
+              </v-dialog>
             </v-card>
-
           </v-flex>
         </v-layout>
-
-        <v-dialog
-          v-model="alertWarning"
-          scrollable
-          persistent
-          :overlay="false"
-          max-width="500px"
-          transition="dialog-transition"
-        >
-          <v-card>
-            <v-card-text>
-              Show dialog:
-              <br>
-              <li style="cursor: pointer" v-if="generalTermsHint.length>0" v-for="(hint, i) in generalTermsHint" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
-            </v-card-text>
-            <v-card-actions>
-              <div class="flex-grow-1"></div>
-              <v-btn color="green" text @click="alertWarning = false">Disagree</v-btn>
-              <v-btn color="green" text @click="alertWarning = false">Agree</v-btn>
-            </v-card-actions>
-
-          </v-card>
-        </v-dialog>
       </v-container>
 
       <v-container fluid grid-list-md>
@@ -121,7 +140,7 @@
             <!-- <v-card>
               <v-card-text> -->
                 <v-layout row wrap>
-                  <div class="col-md-12">
+                  <div class="col-md-12" style="padding-right:4px; padding-left:4px">
                     <!-- <v-card>
                       <v-card-text> -->
                         <div class="col-md-4">
@@ -130,18 +149,22 @@
                               <strong>GTR Genes: </strong>
                               <br>
                               {{selectedGtrGenes.length}} of {{gtrCompleteGeneList.length}} selected
-                              <progressCircularDonut
-                                :selectedNumber="selectedGtrGenes.length"
-                                :totalNumber="gtrCompleteGeneList.length"
-                              >
-                              </progressCircularDonut>
+                              <v-card class="mt-3">
+                                <progressCircularDonut
+                                  :selectedNumber="selectedGtrGenes.length"
+                                  :totalNumber="gtrCompleteGeneList.length"
+                                >
+                                </progressCircularDonut>
+                              </v-card>
                               <br>
-                              <BarChartSingleEntry
-                                v-if="Object.entries(gtrVizData).length !== 0"
-                                idValue="GtrChart"
-                                label="# of Genepanels (Top 5 genes)"
-                                :VizData="gtrVizData">
-                              </BarChartSingleEntry>
+                              <v-card class="mb-2">
+                                <BarChartSingleEntry
+                                  v-if="Object.entries(gtrVizData).length !== 0"
+                                  idValue="GtrChart"
+                                  label="# of Genepanels (Top 5 genes)"
+                                  :VizData="gtrVizData">
+                                </BarChartSingleEntry>
+                              </v-card>
                               <v-btn round small outline color="primary" @click="selectComponent('gtr')"> Change in GTR </v-btn>
                             </v-card-text>
                           </v-card>
@@ -152,7 +175,7 @@
                               <strong>Phenolyzer Genes: </strong>
                               <br>
                               {{selectedPhenolyzerGenes.length}} of {{phenolyzerCompleteGeneList.length}} selected
-                              <v-card>
+                              <v-card class="mt-3">
                                 <progressCircularDonut
                                   :selectedNumber="selectedPhenolyzerGenes.length"
                                   :totalNumber="phenolyzerCompleteGeneList.length"
@@ -160,7 +183,7 @@
                                 </progressCircularDonut>
                               </v-card>
                               <br>
-                              <v-card>
+                              <v-card class="mb-2">
                                 <BarChartSingleEntry
                                   v-if="Object.entries(phenolyzerVizData).length !== 0"
                                   idValue="phenolyzerChart"
@@ -268,6 +291,7 @@ var model = new Model();
         generalTermsHint: [],
         gtrVizData: {},
         phenolyzerVizData: {},
+        expansionpanlExpand: ['true'],
       }
     },
     mounted(){
