@@ -369,7 +369,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       });
     },
     methods: {
-      ...mapActions(['addSummaryGenesFullList']), 
+      ...mapActions(['addSummaryGenesFullList']),
       selectNgenes: function(data){
         this.genesTop = data;
       },
@@ -380,9 +380,11 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       TotalSummaryGenes: function(e){
         this.totalGenes = e;
+        bus.$emit("TotalGenesInSummary", this.totalGenes); 
       },
       TotalSummarySelectedGenes: function(e){
         this.selectedGenes = e;
+        bus.$emit("TotalSelectedGenesInSummary", this.selectedGenes);
       },
       performSetOperations: function(){
         //Create an array of GTR Gene Names

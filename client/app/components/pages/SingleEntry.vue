@@ -210,6 +210,15 @@
                             <v-card-text>
                               <strong>Summary Genes: </strong>
                               <br>
+                              {{TotalSummarySelectedGenes}} of {{TotalSummaryGenes}} selected
+                              <v-card class="mt-3">
+                                <progressCircularDonut
+                                  :selectedNumber="TotalSummarySelectedGenes"
+                                  :totalNumber="TotalSummaryGenes"
+                                >
+                                </progressCircularDonut>
+                              </v-card>
+                              <br>
 
                               <!-- Datatable -->
                               <v-data-table
@@ -238,7 +247,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-container fluid grid-list-md style="min-height:800px">
+      <v-container fluid grid-list-md style="min-height:300px">
       </v-container>
 
     </div>
@@ -305,7 +314,9 @@ var model = new Model();
         phenolyzerVizData: {},
         expansionpanlExpand: ['true'],
         dropdown_tool: ['All resources', 'GTR', 'Phenolyzer'],
-        dropdown_tool_value: 'All resources'
+        dropdown_tool_value: 'All resources',
+        TotalSummaryGenes: 0,
+        TotalSummarySelectedGenes: 0,
       }
     },
     mounted(){
@@ -340,6 +351,7 @@ var model = new Model();
           else {
             // console.log("getSummaryGenes in main", this.getSummaryGenes);
             this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
+            this.expansionpanlExpand = []; 
           }
         }
       })
@@ -349,7 +361,13 @@ var model = new Model();
         this.generalTermsHint = diseases;
       })
 
+      bus.$on("TotalGenesInSummary", (genes)=>{
+        this.TotalSummaryGenes = genes;
+      })
 
+      bus.$on("TotalSelectedGenesInSummary", (genes) =>{
+        this.TotalSummarySelectedGenes = genes;
+      })
     },
     updated(){
     },
