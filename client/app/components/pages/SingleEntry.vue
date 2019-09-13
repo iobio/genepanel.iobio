@@ -206,11 +206,13 @@
                           </v-card>
                         </div>
                         <div class="col-md-4">
-                          <v-card  v-if="summaryGenes.length">
+                          <v-card v-if="summaryGenes.length">
                             <v-card-text>
-                              <strong>Summary Genes: </strong>
-                              <br>
-                              {{TotalSummarySelectedGenes}} of {{TotalSummaryGenes}} selected
+                              <div class="text-md-center">
+                                <strong>Summary Genes: </strong>
+                                <br>
+                                {{TotalSummarySelectedGenes}} of {{TotalSummaryGenes}} selected
+                              </div>
                               <v-card class="mt-3">
                                 <progressCircularDonut
                                   :selectedNumber="TotalSummarySelectedGenes"
@@ -219,7 +221,11 @@
                                 </progressCircularDonut>
                               </v-card>
                               <br>
-
+                            <div v-if="summaryGenes.length">
+                              <v-btn small v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes</v-btn>
+                            </div>
+                          <v-card >
+                            <v-card-text>
                               <!-- Datatable -->
                               <v-data-table
                                 :headers="summaryGenesHeader"
@@ -231,14 +237,16 @@
                                   <td>{{ props.item.name }}</td>
                                 </template>
                               </v-data-table>
-                              <div class="text-md-center">
-                                <v-btn round small outline color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
-                              </div>
                             </v-card-text>
                           </v-card>
+
+                          <div class="text-md-center">
+                            <v-btn round small outline color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
+                          </div>
+                        </v-card-text>
+                      </v-card>
+
                         </div>
-                      <!-- </v-card-text>
-                    </v-card> -->
 
                   </div>
                 </v-layout>
@@ -351,7 +359,7 @@ var model = new Model();
           else {
             // console.log("getSummaryGenes in main", this.getSummaryGenes);
             this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
-            this.expansionpanlExpand = []; 
+            this.expansionpanlExpand = [];
           }
         }
       })
@@ -400,6 +408,9 @@ var model = new Model();
       }
     },
     methods:{
+      exportGenesCSV: function(){
+        bus.$emit("exportSummaryGenesAsCSV")
+      },
       selectComponent(component){
         if(component==='gtr'){
           bus.$emit('openGtrComponent');
