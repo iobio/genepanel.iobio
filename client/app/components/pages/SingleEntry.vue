@@ -95,6 +95,7 @@
                           </span>
                           <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
                           <span v-else-if="props.item.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                          <span v-else-if="props.item.gtrSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
                         </td>
                         <td >
@@ -108,6 +109,7 @@
                           </span>
                           <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
                           <span v-else-if="props.item.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
                         </td>
                       </template>
@@ -357,7 +359,6 @@ var model = new Model();
             this.performSearchEvent();
           }
           else {
-            // console.log("getSummaryGenes in main", this.getSummaryGenes);
             this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
             this.expansionpanlExpand = [];
           }
@@ -405,6 +406,8 @@ var model = new Model();
         this.phenolyzerVizData.geneNames = geneNames;
         this.phenolyzerVizData.genepanelCounts = genepanelCounts;
         console.log("phenolyzerVizData", this.phenolyzerVizData)
+      },
+      getSummaryGenes(){
       }
     },
     methods:{
@@ -429,26 +432,35 @@ var model = new Model();
         this.addTerm();
       },
       performSearchEvent(){
+        this.searchStatus = true;
+        var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+
         if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
-          this.searchStatus = true;
           this.gtrFetchCompleted = false;
           this.phenolyzerFetchCompleted = false;
           this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+          // var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
           bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
           bus.$emit("singleTermSearchPhenolyzer", str);
         }
+        else if(this.searchTermsObj[this.idx].tool_to_search === "GTR"){
+          this.gtrFetchCompleted = false;
+          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
+          this.phenolyzerFetchCompleted = true;
+          bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
+        }
         else if(this.searchTermsObj[this.idx].tool_to_search === "Phenolyzer"){
-          this.searchStatus = true;
+          // this.searchStatus = true;
           // this.gtrFetchCompleted = false;
           this.phenolyzerFetchCompleted = false;
           this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Completed");
+          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
           this.gtrFetchCompleted = true;
-          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
           bus.$emit("singleTermSearchPhenolyzer", str);
         }
       },
