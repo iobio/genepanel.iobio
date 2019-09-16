@@ -130,19 +130,29 @@
                 scrollable
                 persistent
                 :overlay="false"
-                max-width="500px"
+                max-width="800px"
                 transition="dialog-transition"
               >
                 <v-card>
                   <v-card-text>
-                    Show dialog:
+                    <v-alert
+                       :value="true"
+                       color="info"
+                       icon="info"
+                       outline
+                     >
+                        This search term is too general to search in GTR. Please select a more specific term from the options below:
+                        <br>
+                     </v-alert>
                     <br>
-                    <li style="cursor: pointer" v-if="generalTermsHint.length>0" v-for="(hint, i) in generalTermsHint" :key="i" v-on:click="setInputValueFromHint(hint)" > {{hint.Title}} </li>
+                    <li style="cursor: pointer" v-if="generalTermsHint.length>0" v-for="(hint, i) in generalTermsHint" :key="i" v-on:click="selectNewTerm(hint)" > {{hint.Title}} <br> </li>
+                    <hr>
+                    New option selected: {{ NewOptionFromGeneralTerm }}
                   </v-card-text>
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
-                    <v-btn color="green" text @click="alertWarning = false">Disagree</v-btn>
-                    <v-btn color="green" text @click="alertWarning = false">Agree</v-btn>
+                    <v-btn small color="blue darken-1" round outline dark text @click="skipGtrSearch">Skip search in GTR</v-btn>
+                    <v-btn small color="blue darken-1" round outline dark text @click="setInputValueFromHint">Confirm</v-btn>
                   </v-card-actions>
 
                 </v-card>
@@ -261,7 +271,7 @@
                             </v-card-text>
                           </v-card>
 
-                          <div class="text-md-center">
+                          <div class="text-md-center mt-3">
                             <v-btn round small outline style="text-transform:none" color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
                           </div>
                         </v-card-text>
@@ -347,6 +357,7 @@ var model = new Model();
         TotalSummaryGenes: 0,
         TotalSummarySelectedGenes: 0,
         searchComplete: false,
+        NewOptionFromGeneralTerm: ''
       }
     },
     mounted(){
@@ -370,6 +381,12 @@ var model = new Model();
           // console.log("Phenolyzer completed!");
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "NoGenes"
           this.phenolyzerFetchCompleted = true;
+        }
+        else if(component === "skipGtr"){
+          console.log("here in skipGtr")
+          // this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
+          this.searchTermsObj[this.idx].gtrSearchStatus = "NotAvailable"
+          this.gtrFetchCompleted = true;
         }
         console.log("searchTermsObj", this.searchTermsObj)
         if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted){
@@ -452,8 +469,6 @@ var model = new Model();
         this.multipleSearchTerms = [...this.multipleSearchTerms];
         this.searchTermsObj.splice(idxOf, 1)
         this.searchTermsObj = [...this.searchTermsObj];
-
-
       },
       sortOrder(arr){
         arr.sort(function(a,b){
@@ -536,11 +551,21 @@ var model = new Model();
           }
         }
       },
-      setInputValueFromHint(hint){
+      selectNewTerm(hint){
+        this.NewOptionFromGeneralTerm = hint.Title;
         this.searchTermsObj[this.idx].DiseaseName = hint.Title;
         this.searchTermsObj[this.idx].ConceptID = hint.ConceptId;
+      },
+      setInputValueFromHint(){
+        // this.searchTermsObj[this.idx].DiseaseName = hint.Title;
+        // this.searchTermsObj[this.idx].ConceptID = hint.ConceptId;
         bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
         this.alertWarning = false;
+        this.NewOptionFromGeneralTerm = '';
+      },
+      skipGtrSearch(){
+        this.alertWarning = false;
+        bus.$emit("completeFetchRequest", "skipGtr")
       }
     },
     computed: {
