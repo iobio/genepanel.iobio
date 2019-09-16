@@ -4,7 +4,7 @@
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
-            <v-card v-if="!summaryGenes.length">
+            <v-card v-if="!searchComplete">
               <v-card-text>
                 <h3>Dashboard</h3>
                 <v-layout row wrap>
@@ -156,7 +156,7 @@
                     <!-- <v-card>
                       <v-card-text> -->
                         <div class="col-md-4">
-                          <v-card v-if="summaryGenes.length">
+                          <v-card v-if="searchComplete">
                             <v-card-text class="text-md-center">
                               <strong>GTR Genes: </strong>
                               <br>
@@ -182,7 +182,7 @@
                           </v-card>
                         </div>
                         <div class="col-md-4">
-                          <v-card v-if="summaryGenes.length">
+                          <v-card v-if="searchComplete">
                             <v-card-text class="text-md-center">
                               <strong>Phenolyzer Genes: </strong>
                               <br>
@@ -195,9 +195,8 @@
                                 </progressCircularDonut>
                               </v-card>
                               <br>
-                              <v-card class="mb-2">
+                              <v-card class="mb-2" v-if="phenolyzerVizData.geneNames.length">
                                 <HorizontalBarChartSingleEntry
-                                  v-if="Object.entries(phenolyzerVizData).length !== 0"
                                   idValue="phenolyzerChart"
                                   label="Phenolyzer score (Top 5 genes)"
                                   :VizData="phenolyzerVizData">
@@ -208,7 +207,7 @@
                           </v-card>
                         </div>
                         <div class="col-md-4">
-                          <v-card v-if="summaryGenes.length">
+                          <v-card v-if="searchComplete">
                             <v-card-text>
                               <div class="text-md-center">
                                 <strong>Summary Genes: </strong>
@@ -233,7 +232,7 @@
                                 :headers="summaryGenesHeader"
                                 :items="summaryGenes"
                                 class="elevation-1"
-                                hide-actions=false
+                                :hide-actions=false
                               >
                                 <template v-slot:items="props">
                                   <td>{{ props.item.name }}</td>
@@ -327,6 +326,7 @@ var model = new Model();
         dropdown_tool_value: 'All resources',
         TotalSummaryGenes: 0,
         TotalSummarySelectedGenes: 0,
+        searchComplete: false,
       }
     },
     mounted(){
@@ -361,6 +361,7 @@ var model = new Model();
           else {
             this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
             this.expansionpanlExpand = [];
+            this.searchComplete = true;
           }
         }
       })
@@ -397,17 +398,27 @@ var model = new Model();
       getPhenolyzerGenes(){
         this.phenolyzerGenes = this.getPhenolyzerGenes.slice(0,5);
         console.log("this.phenolyzerGenes", this.phenolyzerGenes)
+        this.$set(this.phenolyzerVizData, 'geneNames', [])
+        this.$set(this.phenolyzerVizData, 'genepanelCounts', [])
+
         var geneNames = [];
         var genepanelCounts = [];
         this.phenolyzerGenes.map(gene => {
           geneNames.push(gene.geneName);
           genepanelCounts.push(gene.score)
         })
-        this.phenolyzerVizData.geneNames = geneNames;
-        this.phenolyzerVizData.genepanelCounts = genepanelCounts;
+        this.$set(this.phenolyzerVizData, 'geneNames', geneNames)
+        this.$set(this.phenolyzerVizData, 'genepanelCounts', genepanelCounts)
+
+        // this.phenolyzerVizData.geneNames = geneNames;
+        // this.phenolyzerVizData.genepanelCounts = genepanelCounts;
         console.log("phenolyzerVizData", this.phenolyzerVizData)
       },
       getSummaryGenes(){
+        this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
+      },
+      phenolyzerVizData(){
+        console.log("phenolyzerVizData is changing")
       }
     },
     methods:{

@@ -32,11 +32,13 @@ var model = new Model();
     },
     mounted(){
       this.drawChart();
+      console.log("mounted: ", this.VizData)
     },
     updated(){
     },
     watch: {
       VizData(){
+        console.log("watching bar chart data: ", this.VizData)
       }
     },
     methods:{
