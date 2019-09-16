@@ -591,6 +591,9 @@ import GenesSelection from '../partials/GenesSelection.vue';
         document.getElementById("phenotype-term").value = "";
         this.DisorderFromGtr = this.SearchTheDisorderInPhenolyzer;
         this.getPhenotypeData();
+      },
+      selected(){
+        // this.sortTheOrder(this.selected); 
       }
     },
     methods: {

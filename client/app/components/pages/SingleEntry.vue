@@ -8,6 +8,9 @@
               <v-card-text>
                 <h3>Dashboard</h3>
                 <v-layout row wrap>
+                  <v-flex xs1 sm1 md1 lg1 xl1>
+
+                  </v-flex>
                   <v-flex xs12 sm12 md12 lg2 xl2>
                     <div id="dropdown-example">
                       <v-overflow-btn
@@ -20,7 +23,7 @@
                        ></v-overflow-btn>
                     </div>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg10 xl10>
+                  <v-flex xs12 sm12 md12 lg9 xl9>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
                       <input
                         id="single-entry-input"
@@ -41,17 +44,20 @@
                       <v-icon color="white">add</v-icon>
                     </v-btn>
 
-                    <v-btn class="btnColor" @click="performSearchEvent">Search</v-btn>
                     <br>
                     <div v-if="multipleSearchTerms.length">
                       <br>
                         <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
-                          <v-chip slot="activator" outline color="primary" text-color="primary" close :key="i">
+                          <v-chip slot="activator" outline color="primary" text-color="primary" close :key="i" @input="remove(searchItem)">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
                         </span>
                     </div>
                     <br>
+                    <div>
+                      <v-btn class="btnColor" :disabled="!multipleSearchTerms.length" @click="performSearchEvent">Search</v-btn>
+
+                    </div>
 
                   </v-flex>
 
@@ -195,11 +201,11 @@
                                 </progressCircularDonut>
                               </v-card>
                               <br>
-                              <v-card class="mb-2" v-if="phenolyzerVizData.geneNames.length">
+                              <v-card class="mb-2" v-if="phenolyzerGenes.length">
                                 <HorizontalBarChartSingleEntry
                                   idValue="phenolyzerChart"
                                   label="Phenolyzer score (Top 5 genes)"
-                                  :VizData="phenolyzerVizData">
+                                  :VizData="phenolyzerGenes">
                                 </HorizontalBarChartSingleEntry>
                               </v-card>
                               <v-btn round small outline color="primary" @click="selectComponent('phenolyzer')"> Change in Phenolyzer </v-btn>
@@ -232,7 +238,7 @@
                                 :headers="summaryGenesHeader"
                                 :items="summaryGenes"
                                 class="elevation-1"
-                                :hide-actions=false
+                                hide-actions=false
                               >
                                 <template v-slot:items="props">
                                   <td>{{ props.item.name }}</td>
@@ -396,6 +402,10 @@ var model = new Model();
         this.gtrVizData.genepanelCounts = genepanelCounts;
       },
       getPhenolyzerGenes(){
+        console.log(":getPhenolyzerGenes: ", this.getPhenolyzerGenes)
+        // var sortedGenes = this.sortOrder(this.getPhenolyzerGenes);
+        //
+        // this.phenolyzerGenes = sortedGenes.slice(0,5);
         this.phenolyzerGenes = this.getPhenolyzerGenes.slice(0,5);
         console.log("this.phenolyzerGenes", this.phenolyzerGenes)
         this.$set(this.phenolyzerVizData, 'geneNames', [])
@@ -412,7 +422,7 @@ var model = new Model();
 
         // this.phenolyzerVizData.geneNames = geneNames;
         // this.phenolyzerVizData.genepanelCounts = genepanelCounts;
-        console.log("phenolyzerVizData", this.phenolyzerVizData)
+        // console.log("phenolyzerVizData", this.phenolyzerVizData)
       },
       getSummaryGenes(){
         this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
@@ -422,6 +432,27 @@ var model = new Model();
       }
     },
     methods:{
+      remove(item){
+        var idxOf = this.multipleSearchTerms.indexOf(item);
+        this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
+        this.multipleSearchTerms = [...this.multipleSearchTerms];
+        this.searchTermsObj.splice(idxOf, 1)
+        this.searchTermsObj = [...this.searchTermsObj];
+
+
+      },
+      sortOrder(arr){
+        arr.sort(function(a,b){
+          if (a.score===b.score){
+             return (b.score-a.score);
+          } else if(a.score<b.score){
+             return 1;
+          } else if(a.score>b.score){
+             return -1;
+          }
+         })
+         return arr;
+      },
       exportGenesCSV: function(){
         bus.$emit("exportSummaryGenesAsCSV")
       },

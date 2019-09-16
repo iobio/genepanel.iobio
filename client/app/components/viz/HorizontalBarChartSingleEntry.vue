@@ -20,7 +20,7 @@ var model = new Model();
         type: String,
       },
       VizData: {
-        type: Object
+        type: Array
       },
       label: {
         type: String
@@ -39,6 +39,7 @@ var model = new Model();
     watch: {
       VizData(){
         console.log("watching bar chart data: ", this.VizData)
+        this.drawChart();
       }
     },
     methods:{
@@ -46,14 +47,20 @@ var model = new Model();
         if(myChart!==undefined){
           myChart.destroy();
         }
+        var geneNames = [];
+        var genepanelCounts = [];
+        this.VizData.map(gene => {
+          geneNames.push(gene.geneName);
+          genepanelCounts.push(gene.score)
+        })
         var ctx = document.getElementById(`${this.idValue}`);
         var myChart = new Chart(ctx, {
             type: 'horizontalBar',
             data: {
-                labels: this.VizData.geneNames,
+                labels: geneNames,
                 datasets: [{
                     label: this.label,
-                    data: this.VizData.genepanelCounts,
+                    data: genepanelCounts,
                     backgroundColor:'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
