@@ -7,7 +7,7 @@
             <v-card v-if="!searchComplete">
               <v-card-text>
                 <h3>Dashboard</h3>
-                <v-layout row wrap>
+                <v-layout row wrap class="mt-3">
                   <v-flex xs1 sm1 md1 lg1 xl1>
 
                   </v-flex>
@@ -168,11 +168,18 @@
                               <br>
                               {{selectedGtrGenes.length}} of {{gtrCompleteGeneList.length}} selected
                               <v-card class="mt-3">
-                                <progressCircularDonut
-                                  :selectedNumber="selectedGtrGenes.length"
-                                  :totalNumber="gtrCompleteGeneList.length"
-                                >
-                                </progressCircularDonut>
+                                <div v-if="!selectedGtrGenes.length">
+                                  <v-card-text>
+                                    No conditions searched in GTR...
+                                  </v-card-text>
+                                </div>
+                                <div v-else>
+                                  <progressCircularDonut
+                                    :selectedNumber="selectedGtrGenes.length"
+                                    :totalNumber="gtrCompleteGeneList.length"
+                                  >
+                                  </progressCircularDonut>
+                                </div>
                               </v-card>
                               <br>
                               <v-card class="mb-2">
@@ -183,7 +190,7 @@
                                   :VizData="gtrVizData">
                                 </BarChartSingleEntry>
                               </v-card>
-                              <v-btn round small outline color="primary" @click="selectComponent('gtr')"> Change in GTR </v-btn>
+                              <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('gtr')"> Add/ Update in GTR </v-btn>
                             </v-card-text>
                           </v-card>
                         </div>
@@ -194,11 +201,18 @@
                               <br>
                               {{selectedPhenolyzerGenes.length}} of {{phenolyzerCompleteGeneList.length}} selected
                               <v-card class="mt-3">
-                                <progressCircularDonut
-                                  :selectedNumber="selectedPhenolyzerGenes.length"
-                                  :totalNumber="phenolyzerCompleteGeneList.length"
-                                >
-                                </progressCircularDonut>
+                                <div v-if="!selectedPhenolyzerGenes.length">
+                                  <v-card-text>
+                                    No phenotypes searched in Phenolyzer...
+                                  </v-card-text>
+                                </div>
+                                <div v-else>
+                                  <progressCircularDonut
+                                    :selectedNumber="selectedPhenolyzerGenes.length"
+                                    :totalNumber="phenolyzerCompleteGeneList.length"
+                                  >
+                                  </progressCircularDonut>
+                                </div>
                               </v-card>
                               <br>
                               <v-card class="mb-2" v-if="phenolyzerGenes.length">
@@ -208,7 +222,7 @@
                                   :VizData="phenolyzerGenes">
                                 </HorizontalBarChartSingleEntry>
                               </v-card>
-                              <v-btn round small outline color="primary" @click="selectComponent('phenolyzer')"> Change in Phenolyzer </v-btn>
+                              <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('phenolyzer')"> Add/ Update in Phenolyzer </v-btn>
                             </v-card-text>
                           </v-card>
                         </div>
@@ -248,7 +262,7 @@
                           </v-card>
 
                           <div class="text-md-center">
-                            <v-btn round small outline color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
+                            <v-btn round small outline style="text-transform:none" color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
                           </div>
                         </v-card-text>
                       </v-card>
