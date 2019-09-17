@@ -47,9 +47,13 @@
                     <br>
                     <div v-if="multipleSearchTerms.length">
                       <br>
-                        <span id="conditionChips" v-for="(searchItem, i) in multipleSearchTerms">
+                        <span id="conditionChips" v-for="(searchItem, i) in searchTermsObj">
                           <v-chip slot="activator" outline color="primary" text-color="primary" close :key="i" @input="remove(searchItem)">
-                            {{ i+1 }}. {{ searchItem }}
+                            {{ i+1 }}. {{ searchItem.DiseaseName }}  &nbsp;
+                            <span v-if="searchItem.tool_to_search==='All resources'"> <i> * </i> </span>
+                            <span v-if="searchItem.tool_to_search==='GTR'"> <i> ( G ) </i> </span>
+                            <span v-if="searchItem.tool_to_search==='Phenolyzer'"> <i> ( P ) </i> </span>
+
                           </v-chip>
                         </span>
                     </div>
@@ -361,6 +365,29 @@ var model = new Model();
       }
     },
     mounted(){
+      bus.$on("newAnalysis", ()=>{
+        this.multipleSearchTerms = [];
+        this.searchTermsObj = [];
+        this.idx = 0;
+        this.gtrFetchCompleted = false;
+        this.phenolyzerFetchCompleted = false;
+        this.summaryGenes = [];
+        this.gtrGenes = [];
+        this.phenolyzerGenes = [];
+        this.searchStatus = false;
+        this.alertWarning = false;
+        this.generalTermsHint = [];
+        this.gtrVizData = {};
+        this.phenolyzerVizData = {};
+        this.expansionpanlExpand = ['true'];
+        this.dropdown_tool = ['All resources', 'GTR', 'Phenolyzer'];
+        this.dropdown_tool_value = 'All resources',
+        this.TotalSummaryGenes = 0;
+        this.TotalSummarySelectedGenes = 0;
+        this.searchComplete = false;
+        this.NewOptionFromGeneralTerm = ''
+
+      })
       bus.$on("completeFetchRequest", (component)=>{
         if(component === "GTR"){
           console.log(" GTR completed!")
@@ -383,7 +410,6 @@ var model = new Model();
           this.phenolyzerFetchCompleted = true;
         }
         else if(component === "skipGtr"){
-          console.log("here in skipGtr")
           // this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
           this.searchTermsObj[this.idx].gtrSearchStatus = "NotAvailable"
           this.gtrFetchCompleted = true;
