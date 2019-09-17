@@ -194,7 +194,7 @@
                     </template>
                     <template slot="items" slot-scope="props">
                       <tr :active="props.selected">
-                        <td>
+                        <td @click="itemSelected">
                           <v-checkbox
                             primary
                             hide-details
@@ -593,13 +593,17 @@ import GenesSelection from '../partials/GenesSelection.vue';
         this.getPhenotypeData();
       },
       selected(){
-        // this.sortTheOrder(this.selected); 
+        // this.sortTheOrder(this.selected);
       }
     },
     methods: {
       ...mapActions(['addPhenolyzerGenes']),
       selectNgenes: function(data){
         this.genesTop = data;
+      },
+      itemSelected(){
+        console.log("hello from itemSelected");
+        this.sortTheOrder(this.selected);
       },
       EnterForSearch(){
         if(event.key==='Enter'){

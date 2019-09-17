@@ -28,6 +28,7 @@ var model = new Model();
     },
     data(){
       return {
+        myChart: null,
       }
     },
     mounted(){
@@ -42,15 +43,16 @@ var model = new Model();
     },
     methods:{
       drawChart(){
-        if(myChart!==undefined){
-          myChart.destroy();
-        }
         var geneNames = [];
         var genepanelCounts = [];
         this.VizData.map(gene => {
           geneNames.push(gene.name);
           genepanelCounts.push(gene.value)
         })
+        
+        if(this.myChart!==null){
+          this.myChart.destroy();
+        }
 
         var ctx = document.getElementById(`${this.idValue}`);
         var myChart = new Chart(ctx, {

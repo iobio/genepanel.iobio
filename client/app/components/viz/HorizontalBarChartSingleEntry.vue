@@ -28,9 +28,12 @@ var model = new Model();
     },
     data(){
       return {
+        chartData: [],
+        myChart: null,
       }
     },
     mounted(){
+      this.chartData = this.VizData;
       this.drawChart();
       console.log("mounted: ", this.VizData)
     },
@@ -38,23 +41,28 @@ var model = new Model();
     },
     watch: {
       VizData(){
+        this.chartData = [];
+        this.chartData = this.VizData;
         console.log("watching bar chart data: ", this.VizData)
-        this.drawChart();
+        setTimeout(()=>{
+          this.drawChart();
+        },1200)
       }
     },
     methods:{
       drawChart(){
-        if(myChart!==undefined){
-          myChart.destroy();
-        }
         var geneNames = [];
         var genepanelCounts = [];
-        this.VizData.map(gene => {
+        this.chartData.map(gene => {
           geneNames.push(gene.geneName);
           genepanelCounts.push(gene.score)
         })
+        if(this.myChart!==null){
+          this.myChart.destroy();
+        }
+
         var ctx = document.getElementById(`${this.idValue}`);
-        var myChart = new Chart(ctx, {
+        this.myChart = new Chart(ctx, {
             type: 'horizontalBar',
             data: {
                 labels: geneNames,
