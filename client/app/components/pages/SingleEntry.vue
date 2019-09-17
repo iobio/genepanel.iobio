@@ -196,12 +196,11 @@
                                 </div>
                               </v-card>
                               <br>
-                              <v-card class="mb-2">
+                              <v-card class="mb-2" v-if="gtrGenes.length">
                                 <BarChartSingleEntry
-                                  v-if="Object.entries(gtrVizData).length !== 0"
                                   idValue="GtrChart"
                                   label="# of Genepanels (Top 5 genes)"
-                                  :VizData="gtrVizData">
+                                  :VizData="gtrGenes">
                                 </BarChartSingleEntry>
                               </v-card>
                               <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('gtr')"> Add/ Update in GTR </v-btn>
