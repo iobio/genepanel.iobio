@@ -32,17 +32,20 @@
                         autocomplete="off"
                         placeholder="Enter Clinical Conditions or Phenotypes">
                       <typeahead
-                        match-start
                         v-model="search"
+                        hide-details="false"
                         target="#single-entry-input"
+                        force-select :force-clear="true"
                         :data="DiseaseNames"
                         :limit="parseInt(100)"
-                        :preselect="false"
+                        v-on:keydown="EnterForSearch"
+                        v-on:input="mouseSelect"
                         item-key="DiseaseName"/>
                     </div>
-                    <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="checkBeforeAddTerm">
+
+                   <!--   <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="checkBeforeAddTerm">
                       <v-icon color="white">add</v-icon>
-                    </v-btn>
+                    </v-btn> -->
 
                     <br>
                     <div v-if="multipleSearchTerms.length">
@@ -489,6 +492,18 @@ var model = new Model();
       }
     },
     methods:{
+      mouseSelect(){
+        if(this.search!==undefined){
+          this.checkBeforeAddTerm();
+        }
+      },
+      EnterForSearch(){
+        if(event.key === 'Enter') {
+          setTimeout(()=>{
+            this.checkBeforeAddTerm();
+          }, 10)
+        }
+      },
       remove(item){
         var idxOf = this.multipleSearchTerms.indexOf(item);
         this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item), 1)
@@ -574,6 +589,7 @@ var model = new Model();
           if(searchTerm.length>1){
             this.multipleSearchTerms.push(searchTerm);
             this.searchTermsObj.push(this.search);
+            this.search = '';
           }
         }
       },
