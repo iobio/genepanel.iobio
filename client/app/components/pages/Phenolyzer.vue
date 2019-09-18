@@ -1006,11 +1006,8 @@ import GenesSelection from '../partials/GenesSelection.vue';
           } else if(a.score>b.score){
              return -1;
           }
-         })
-         // for(var i=0; i<arr.length; i++){
-         //   arr[i].rank = i+1;
-         // }
-         return arr;
+        })
+        return arr;
       },
       rankTheList(arr){
         for(var i=0; i<arr.length; i++){

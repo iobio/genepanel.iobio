@@ -161,7 +161,7 @@
         <template slot="items" slot-scope="props">
           <!-- <tr :active="props.selected" @click="props.selected = !props.selected"> -->
           <tr :active="props.selected">
-            <td>
+            <td @click="itemSelected">
               <v-checkbox
                 primary
                 hide-details
@@ -519,6 +519,21 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       ...mapActions(['addGtrGenes']),
       sliderClicked() {
         this.includeClinGenes = false;
+      },
+      itemSelected(){
+        this.sortTheOrder(this.selected);
+      },
+      sortTheOrder(arr){
+        arr.sort(function(a,b){
+          if (a.value===b.value){
+             return (b.value.value);
+          } else if(a.value<b.value){
+             return 1;
+          } else if(a.value>b.value){
+             return -1;
+          }
+        })
+        return arr;
       },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()
