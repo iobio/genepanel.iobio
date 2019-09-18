@@ -42,7 +42,7 @@
         </template>
         <template slot="items" slot-scope="props">
           <tr :active="props.selected" :key="props.item.name">
-            <td>
+            <td @click="itemSelected(props.item.name)">
               <v-checkbox
                 primary
                 hide-details
@@ -328,8 +328,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       bus.$on("SelectedNumberOfSummaryGenes", (data)=>{
         this.selected = this.items.slice(0,data);
       })
-
-      this.addSummaryGenes(this.items); //Send the summary genes to the Vuex store
+      this.addSummaryGenes(this.selected); //Send the summary genes to the Vuex store
 
       this.$emit("TotalSummaryGenes", this.items.length);
       this.$emit("TotalSummarySelectedGenes", this.selected.length);
@@ -338,9 +337,39 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
       bus.$emit("updateAllGenes", this.selected);
     },
     methods: {
-      ...mapActions(['addSummaryGenes']), 
+      ...mapActions(['addSummaryGenes']),
       exportGenesCSV: function(){
         bus.$emit("exportSummaryGenesAsCSV")
+      },
+      itemSelected(item){
+        // this.sortTheOrder(this.selected);
+        // console.log("itemSelected : ", item)
+        var idx = this.items.findIndex(i => i.name === item);
+        // console.log("idx", idx)
+        // console.log("items ", this.items[idx].name)
+        // console.log("selected ", this.selected[idx].name)
+
+        if(this.items[idx].selected){
+          this.items[idx].selected = false;
+        }
+        else if(!this.items[idx].selected){
+          this.selected.splice(idx, 0, this.items[idx])
+          this.items[idx].selected = true;
+          this.selected.pop();
+          // console.log("selected bback", this.selected[idx].name)
+        }
+      },
+      sortTheOrder(arr){
+        arr.sort(function(a,b){
+          if (a.score===b.score){
+             return (b.score-a.score);
+          } else if(a.score<b.score){
+             return 1;
+          } else if(a.score>b.score){
+             return -1;
+          }
+        })
+        return arr;
       },
       selectGenesFromVennDiagram(data){
         this.selected = [];
@@ -482,6 +511,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         }
 
         this.items.map((x,i)=>{
+          x.selected = true;
           x.SummaryIndex = i + 1;
         })
 
@@ -504,7 +534,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
           // console.log("selected summary", this.selected)
 
         }
-
+        console.log("items: ", this.items)
       },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()

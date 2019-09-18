@@ -481,6 +481,7 @@ var model = new Model();
         // console.log("phenolyzerVizData", this.phenolyzerVizData)
       },
       getSummaryGenes(){
+        console.log("changing!!")
         this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
       },
       phenolyzerVizData(){
