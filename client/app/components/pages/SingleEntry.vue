@@ -165,6 +165,27 @@
                 </v-card>
               </v-dialog>
             </v-card>
+
+            <v-card>
+              <v-dialog
+                v-model="termsReviewDialog"
+                scrollable
+                persistent :overlay="false"
+                max-width="800px"
+                transition="dialog-transition"
+              >
+                <v-card>
+                  <v-card-text>
+                    Gtr terms:
+                    <div v-if="GtrReviewTerms.length" v-for="(term, i) in GtrReviewTerms" :key="i">
+                      {{ term.DiseaseName }}
+
+                    </div>
+                  </v-card-text>
+                </v-card>
+
+              </v-dialog>
+            </v-card>
           </v-flex>
         </v-layout>
       </v-container>
@@ -305,6 +326,7 @@ import { bus } from '../../routes';
 import { Typeahead, Btn } from 'uiv';
 import d3 from 'd3';
 import Model from '../../models/Model';
+import DiseaseNamesData from '../../../data/DiseaseNames.json'
 import DiseaseNames from '../../../data/DiseaseNamesCleaned.json'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import Chart from 'chart.js';
@@ -354,6 +376,7 @@ var model = new Model();
           {text: 'Gene', sortable: false, value: 'name'},
         ],
         alertWarning: false,
+        termsReviewDialog: false,
         generalTermsHint: [],
         gtrVizData: {},
         phenolyzerVizData: {},
@@ -363,7 +386,8 @@ var model = new Model();
         TotalSummaryGenes: 0,
         TotalSummarySelectedGenes: 0,
         searchComplete: false,
-        NewOptionFromGeneralTerm: ''
+        NewOptionFromGeneralTerm: '',
+        GtrReviewTerms: [],
       }
     },
     mounted(){
@@ -494,15 +518,38 @@ var model = new Model();
     methods:{
       mouseSelect(){
         if(this.search!==undefined){
-          this.checkBeforeAddTerm();
+          // this.checkBeforeAddTerm();
+          this.openReviewDialog();
         }
       },
       EnterForSearch(){
         if(event.key === 'Enter') {
           setTimeout(()=>{
-            this.checkBeforeAddTerm();
+            // this.checkBeforeAddTerm();
+            this.openReviewDialog();
           }, 10)
         }
+      },
+      openReviewDialog(){
+        this.GtrReviewTerms = [];
+
+        var term = this.search.DiseaseName.toLowerCase();
+        term = term.replace("disease", "");
+        term = term.replace("syndrome", "");
+        term = term.trim();
+        console.log("term is ",term)
+        DiseaseNamesData.data.forEach(x => {
+          // if(x.DiseaseName.toLowerCase().split(' ').includes(term)){
+          //   this.GtrReviewTerms.push(x);
+          // }
+          if(x.DiseaseName.toLowerCase().includes(term)){
+            this.GtrReviewTerms.push(x);
+          }
+        })
+      setTimeout(()=>{
+          this.termsReviewDialog = true;
+      },500)
+
       },
       remove(item){
         var idxOf = this.multipleSearchTerms.indexOf(item);

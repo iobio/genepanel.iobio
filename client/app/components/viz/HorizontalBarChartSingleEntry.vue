@@ -63,7 +63,7 @@ var model = new Model();
 
         var ctx = document.getElementById(`${this.idValue}`);
         this.myChart = new Chart(ctx, {
-            type: 'horizontalBar',
+            type: 'bar',
             data: {
                 labels: geneNames,
                 datasets: [{
