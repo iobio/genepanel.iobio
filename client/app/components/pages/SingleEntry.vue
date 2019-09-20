@@ -176,11 +176,17 @@
               >
                 <v-card>
                   <v-card-text>
-                    Gtr terms:
+                    Gtr terms: {{ GtrReviewTerms.length }}
                     <div v-if="GtrReviewTerms.length" v-for="(term, i) in GtrReviewTerms" :key="i">
                       {{ term.DiseaseName }}
-
                     </div>
+
+                    <br><hr>
+                    Phenolyzer terms: {{ phenolyzerReviewTerms.length }}
+                    <div v-if="phenolyzerReviewTerms.length" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value">
+                      {{ term.value }}
+                    </div>
+
                   </v-card-text>
                 </v-card>
 
@@ -388,6 +394,8 @@ var model = new Model();
         searchComplete: false,
         NewOptionFromGeneralTerm: '',
         GtrReviewTerms: [],
+        phenolyzerReviewTerms: [],
+        hpoLookupUrl:  "https://nv-prod.iobio.io/hpo/hot/lookup/?term=",
       }
     },
     mounted(){
@@ -516,6 +524,12 @@ var model = new Model();
       }
     },
     methods:{
+      setPhenolyzerTerms(str){
+        console.log("str", `https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
+        return fetch(`https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
+            .then(response => response.json())
+            .then(data => data)
+      },
       mouseSelect(){
         if(this.search!==undefined){
           // this.checkBeforeAddTerm();
@@ -546,6 +560,17 @@ var model = new Model();
             this.GtrReviewTerms.push(x);
           }
         })
+
+        var str = this.search.DiseaseName.replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+        str = str.replace("disease", "");
+        str = str.replace("syndrome", "");
+        str = str.trim();
+
+        var data = this.setPhenolyzerTerms(str);
+        data.then(res => {
+          this.phenolyzerReviewTerms = res;
+        })
+
       setTimeout(()=>{
           this.termsReviewDialog = true;
       },500)

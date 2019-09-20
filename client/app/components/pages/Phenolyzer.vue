@@ -733,6 +733,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   return 0;
                 }
               });
+              console.log("sortedTerms: ", sortedTerms)
               done(sortedTerms);
             }
         });
