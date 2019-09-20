@@ -42117,10 +42117,6 @@
    "ConceptID": "C1860850"
  },
  {
-   "DiseaseName": "Familial multiple trichoepitheliomata",
-   "ConceptID": "C1275122"
- },
- {
    "DiseaseName": "Familial normokalemic periodic paralysis",
    "ConceptID": "C0268445"
  },
@@ -97317,68 +97313,12 @@
    "ConceptID": "CN236585"
  },
  {
-   "DiseaseName": "Treacher Collins syndrome 1",
-   "ConceptID": "CN119605"
- },
- {
-   "DiseaseName": "Treacher Collins syndrome 2",
-   "ConceptID": "C3150983"
- },
- {
    "DiseaseName": "Treacher Collins syndrome",
    "ConceptID": "C0242387"
  },
  {
-   "DiseaseName": "Treacher Collins Syndrome, Dominant",
-   "ConceptID": "CN239287"
- },
- {
-   "DiseaseName": "Treacher Collins Syndrome, Recessive",
-   "ConceptID": "CN239289"
- },
- {
-   "DiseaseName": "Tremor by anatomical site",
-   "ConceptID": "C4022593"
- },
- {
    "DiseaseName": "Tremor",
    "ConceptID": "C0040822"
- },
- {
-   "DiseaseName": "Tremor",
-   "ConceptID": "C1963252"
- },
- {
-   "DiseaseName": "Tremor hereditary essential, 2",
-   "ConceptID": "C1865810"
- },
- {
-   "DiseaseName": "Tremor, hereditary essential, 3",
-   "ConceptID": "C1969617"
- },
- {
-   "DiseaseName": "Tremor, hereditary essential, 4",
-   "ConceptID": "C3539195"
- },
- {
-   "DiseaseName": "Tremor, hereditary essential, 5",
-   "ConceptID": "C4225223"
- },
- {
-   "DiseaseName": "Tremor, hereditary essential, and idiopathic normal pressure hydrocephalus",
-   "ConceptID": "C2678494"
- },
- {
-   "DiseaseName": "Tremor, nystagmus, and duodenal ulcer",
-   "ConceptID": "C1860860"
- },
- {
-   "DiseaseName": "Tremor of intention, ataxia, and lipofuscinosis",
-   "ConceptID": "C1860872"
- },
- {
-   "DiseaseName": "tremors",
-   "ConceptID": "CN225586"
  },
  {
    "DiseaseName": "Tretinoin response",
@@ -97399,70 +97339,6 @@
  {
    "DiseaseName": "Triangular epiphyses",
    "ConceptID": "C4023784"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 2nd finger",
-   "ConceptID": "C4024328"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 2nd toe",
-   "ConceptID": "C4022367"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 3rd finger",
-   "ConceptID": "C4021479"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 3rd toe",
-   "ConceptID": "C4022356"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 4th finger",
-   "ConceptID": "C4021482"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 4th toe",
-   "ConceptID": "C4022345"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 5th finger",
-   "ConceptID": "C4021483"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the 5th toe",
-   "ConceptID": "C4022334"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the distal phalanges of the hand",
-   "ConceptID": "C4023944"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the hallux",
-   "ConceptID": "C4024036"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the metacarpals",
-   "ConceptID": "C4024558"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the middle phalanges of the hand",
-   "ConceptID": "C4023934"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the phalanges of the hand",
-   "ConceptID": "C4021303"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the proximal phalanges of the hand",
-   "ConceptID": "C4023923"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the thumb",
-   "ConceptID": "C4024231"
- },
- {
-   "DiseaseName": "Triangular epiphyses of the toes",
-   "ConceptID": "C4023988"
  },
  {
    "DiseaseName": "Triangular epiphysis of the 1st metacarpal",
@@ -97825,20 +97701,8 @@
    "ConceptID": "C4020850"
  },
  {
-   "DiseaseName": "Trichodysplasia-xeroderma",
-   "ConceptID": "C1860822"
- },
- {
    "DiseaseName": "Trichoepithelioma",
    "ConceptID": "C0349658"
- },
- {
-   "DiseaseName": "Trichoepithelioma multiple familial 2",
-   "ConceptID": "C2677505"
- },
- {
-   "DiseaseName": "Trichoepitheliomas, multiple desmoplastic",
-   "ConceptID": "C1860849"
  },
  {
    "DiseaseName": "Trichohepatoenteric syndrome 1",
@@ -97857,24 +97721,12 @@
    "ConceptID": "C0854699"
  },
  {
-   "DiseaseName": "Trichomegaly with mental retardation, dwarfism and pigmentary degeneration of retina",
-   "ConceptID": "C1848745"
- },
- {
    "DiseaseName": "Trichoodontoonychial dysplasia",
    "ConceptID": "C3279457"
  },
  {
-   "DiseaseName": "Trichorhinophalangeal dysplasia type I",
-   "ConceptID": "C0432233"
- },
- {
    "DiseaseName": "Trichorhinophalangeal Syndrome",
    "ConceptID": "C0265255"
- },
- {
-   "DiseaseName": "Trichorhinophalangeal syndrome type 3",
-   "ConceptID": "C1860823"
  },
  {
    "DiseaseName": "Trichorrhexis nodosa",
@@ -97885,36 +97737,8 @@
    "ConceptID": "C1864943"
  },
  {
-   "DiseaseName": "Trichothiodystrophy 1, photosensitive",
-   "ConceptID": "C1866504"
- },
- {
-   "DiseaseName": "Trichothiodystrophy 2, photosensitive",
-   "ConceptID": "C4225344"
- },
- {
-   "DiseaseName": "Trichothiodystrophy 3, photosensitive",
-   "ConceptID": "C4017171"
- },
- {
-   "DiseaseName": "Trichothiodystrophy 5, nonphotosensitive",
-   "ConceptID": "C4225420"
- },
- {
-   "DiseaseName": "Trichothiodystrophy 6, nonphotosensitive",
-   "ConceptID": "C4310785"
- },
- {
    "DiseaseName": "Trichothiodystrophy",
    "ConceptID": "C1955934"
- },
- {
-   "DiseaseName": "Trichothiodystrophy, nonphotosensitive 1",
-   "ConceptID": "C1961117"
- },
- {
-   "DiseaseName": "Trichothiodystrophy, type 1",
-   "ConceptID": "C1848413"
  },
  {
    "DiseaseName": "Tricuspid atresia",
@@ -97945,10 +97769,6 @@
    "ConceptID": "C0155707"
  },
  {
-   "DiseaseName": "Trifascicular block on electrocardiogram",
-   "ConceptID": "C2216155"
- },
- {
    "DiseaseName": "Trifunctional protein deficiency with myopathy and neuropathy",
    "ConceptID": "C1969443"
  },
@@ -97969,14 +97789,6 @@
    "ConceptID": "C0268238"
  },
  {
-   "DiseaseName": "Trigonocephaly 1",
-   "ConceptID": "C0432122"
- },
- {
-   "DiseaseName": "Trigonocephaly 2",
-   "ConceptID": "C3280974"
- },
- {
    "DiseaseName": "Trigonocephaly",
    "ConceptID": "C0265535"
  },
@@ -97985,16 +97797,8 @@
    "ConceptID": "C0342739"
  },
  {
-   "DiseaseName": "Trimethylaminuria, mild",
-   "ConceptID": "C4016101"
- },
- {
    "DiseaseName": "Trimipramine response",
    "ConceptID": "CN221259"
- },
- {
-   "DiseaseName": "trimipramine response - Dosage, Toxicity/ADR",
-   "ConceptID": "CN236546"
  },
  {
    "DiseaseName": "Triosephosphate isomerase deficiency",
@@ -98007,26 +97811,6 @@
  {
    "DiseaseName": "Triphalangeal thumb",
    "ConceptID": "C0241397"
- },
- {
-   "DiseaseName": "Triphalangeal thumb",
-   "ConceptID": "C1835605"
- },
- {
-   "DiseaseName": "Triphalangeal thumb, nonopposable",
-   "ConceptID": "C1860806"
- },
- {
-   "DiseaseName": "Triphalangeal thumb polysyndactyly syndrome",
-   "ConceptID": "C1969369"
- },
- {
-   "DiseaseName": "Triphalangeal thumbs brachyectrodactyly",
-   "ConceptID": "C1860804"
- },
- {
-   "DiseaseName": "Triphalangeal thumb with double phalanges",
-   "ConceptID": "C1860807"
  },
  {
    "DiseaseName": "Triple-negative breast cancer",
