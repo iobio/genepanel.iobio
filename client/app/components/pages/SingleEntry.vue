@@ -12,7 +12,7 @@
 
                   </v-flex>
                   <v-flex xs12 sm12 md12 lg2 xl2>
-                    <div id="dropdown-example">
+                    <!-- <div id="dropdown-example">
                       <v-overflow-btn
                          :items="dropdown_tool"
                          label="Select tool"
@@ -21,7 +21,7 @@
                          target="#dropdown-example"
                          v-model="dropdown_tool_value"
                        ></v-overflow-btn>
-                    </div>
+                    </div> -->
                   </v-flex>
                   <v-flex xs12 sm12 md12 lg9 xl9>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
@@ -181,6 +181,19 @@
                     Phenolyzer terms: {{ phenolyzerReviewTerms.length }}
 
                     <hr>
+                    GTR terms added:
+                    <span v-for="(term, i) in GtrTermsAdded">
+                      <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
+                        {{ i+1 }}. {{ term }}
+                      </v-chip>
+                    </span>
+                    <hr>
+                    Phenolyzer terms added:
+                    <span v-for="(term, i) in phenolyzerTermsAdded">
+                      <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
+                        {{ i+1 }}. {{ term }}
+                      </v-chip>
+                    </span>
 
                     <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1" v-for="(term, i) in GtrReviewTerms" :key="i" v-on:click="selectGtrTerm(term)">
                       {{ term.DiseaseName }}
@@ -404,6 +417,9 @@ var model = new Model();
         GtrReviewTerms: [],
         phenolyzerReviewTerms: [],
         hpoLookupUrl:  "https://nv-prod.iobio.io/hpo/hot/lookup/?term=",
+        GtrTermsAdded: [],
+        phenolyzerTermsAdded: [],
+
       }
     },
     mounted(){
@@ -677,19 +693,26 @@ var model = new Model();
         }
       },
       selectGtrTerm(term){
-        var searchTerm ="";
-        var conceptId = ""
-        searchTerm = term.DiseaseName;
-        conceptId = term.ConceptID;
-        this.$set(term, 'status', "Not started");
-        this.$set(term, 'gtrSearchStatus', "Not started");
-        this.$set(term, 'phenolyzerSearchStatus', "Not started");
-        this.$set(term, 'tool_to_search', 'GTR');
-        if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
-          if(searchTerm.length>1){
-            this.multipleSearchTerms.push(searchTerm);
-            this.searchTermsObj.push(term);
-            this.search = '';
+        if(this.GtrTermsAdded.length>=4){
+          alert("Max terms added in Gtr")
+        }
+        else {
+          var searchTerm ="";
+          var conceptId = ""
+          searchTerm = term.DiseaseName;
+          conceptId = term.ConceptID;
+          this.$set(term, 'status', "Not started");
+          this.$set(term, 'gtrSearchStatus', "Not started");
+          this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          this.$set(term, 'tool_to_search', 'GTR');
+
+          if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+            if(searchTerm.length>1){
+              this.multipleSearchTerms.push(searchTerm);
+              this.searchTermsObj.push(term);
+              this.GtrTermsAdded.push(searchTerm);
+              this.search = '';
+            }
           }
         }
       },
@@ -707,6 +730,7 @@ var model = new Model();
           if(searchTerm.length>1){
             this.multipleSearchTerms.push(searchTerm);
             this.searchTermsObj.push(term);
+            this.phenolyzerTermsAdded.push(searchTerm);
             this.search = '';
           }
         }

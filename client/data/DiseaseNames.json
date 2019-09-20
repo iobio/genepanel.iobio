@@ -16269,10 +16269,6 @@
    "ConceptID": "CN033664"
  },
  {
-   "DiseaseName": "Autosomal recessive Dejerine-Sottas syndrome",
-   "ConceptID": "CN069172"
- },
- {
    "DiseaseName": "Autosomal recessive distal hereditary motor neuropathy",
    "ConceptID": "CN228931"
  },
@@ -30965,72 +30961,12 @@
    "ConceptID": "C1852406"
  },
  {
-   "DiseaseName": "Cutis laxa, autosomal dominant 1",
-   "ConceptID": "C3276539"
- },
- {
-   "DiseaseName": "Cutis laxa, autosomal dominant 2",
-   "ConceptID": "C3280794"
- },
- {
-   "DiseaseName": "Cutis laxa, autosomal dominant 3",
-   "ConceptID": "C4225268"
- },
- {
-   "DiseaseName": "Cutis laxa, autosomal dominant",
-   "ConceptID": "C0268350"
- },
- {
-   "DiseaseName": "Cutis laxa, autosomal recessive",
-   "ConceptID": "C0268351"
- },
- {
-   "DiseaseName": "CUTIS LAXA, AUTOSOMAL RECESSIVE, TYPE IIC",
-   "ConceptID": "C4479387"
- },
- {
-   "DiseaseName": "CUTIS LAXA, AUTOSOMAL RECESSIVE, TYPE IID",
-   "ConceptID": "C4479409"
- },
- {
    "DiseaseName": "Cutis laxa",
    "ConceptID": "C0010495"
  },
  {
-   "DiseaseName": "Cutis laxa-corneal clouding-oligophrenia syndrome",
-   "ConceptID": "C0268354"
- },
- {
-   "DiseaseName": "Cutis Laxa, Dominant/Recessive",
-   "ConceptID": "CN239277"
- },
- {
-   "DiseaseName": "Cutis laxa, neonatal, with marfanoid phenotype",
-   "ConceptID": "C0432335"
- },
- {
-   "DiseaseName": "Cutis laxa, recessive",
-   "ConceptID": "C2931134"
- },
- {
-   "DiseaseName": "Cutis laxa with osteodystrophy",
-   "ConceptID": "C0268355"
- },
- {
-   "DiseaseName": "Cutis laxa with severe pulmonary, gastrointestinal, and urinary abnormalities",
-   "ConceptID": "C2750804"
- },
- {
-   "DiseaseName": "Cutis laxa, X-linked",
-   "ConceptID": "C0268353"
- },
- {
    "DiseaseName": "Cutis marmorata",
    "ConceptID": "C0263401"
- },
- {
-   "DiseaseName": "Cutis marmorata telangiectatica congenita",
-   "ConceptID": "CN241198"
  },
  {
    "DiseaseName": "Cutis verticis gyrata and mental retardation",
@@ -31049,16 +30985,8 @@
    "ConceptID": "C1844681"
  },
  {
-   "DiseaseName": "Cyanosis and hepatic disease",
-   "ConceptID": "C1857443"
- },
- {
    "DiseaseName": "Cyanosis",
    "ConceptID": "C0010520"
- },
- {
-   "DiseaseName": "Cyanosis, transient neonatal",
-   "ConceptID": "C3151421"
  },
  {
    "DiseaseName": "Cyanotic episode",
@@ -33427,18 +33355,6 @@
  {
    "DiseaseName": "Dejerine-Sottas disease",
    "ConceptID": "C0011195"
- },
- {
-   "DiseaseName": "Dejerine-sottas neuropathy, autosomal dominant",
-   "ConceptID": "C4016028"
- },
- {
-   "DiseaseName": "Dejerine-Sottas syndrome, autosomal dominant",
-   "ConceptID": "C4016264"
- },
- {
-   "DiseaseName": "Dejerine-sottas syndrome, sporadic",
-   "ConceptID": "C4016265"
  },
  {
    "DiseaseName": "de la Chapelle dysplasia",
