@@ -176,20 +176,27 @@
               >
                 <v-card>
                   <v-card-text>
+                    termsReviewDialogPage: {{ termsReviewDialogPage }}
                     Gtr terms: {{ GtrReviewTerms.length }}
-                    <div v-if="GtrReviewTerms.length" v-for="(term, i) in GtrReviewTerms" :key="i">
+                    Phenolyzer terms: {{ phenolyzerReviewTerms.length }}
+
+                    <hr>
+
+                    <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1" v-for="(term, i) in GtrReviewTerms" :key="i" v-on:click="selectGtrTerm(term)">
                       {{ term.DiseaseName }}
                     </div>
 
-                    <br><hr>
-                    Phenolyzer terms: {{ phenolyzerReviewTerms.length }}
-                    <div v-if="phenolyzerReviewTerms.length" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value">
+                    <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value" v-on:click="selectPhenolyzerTerm(term)">
                       {{ term.value }}
                     </div>
-
                   </v-card-text>
+                  <v-card-actions>
+                    <div class="flex-grow-1"></div>
+                    <v-btn small color="blue darken-1" round outline dark text @click="termsReviewDialog=false">Skip</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage===1" small color="blue darken-1" round outline dark text @click="--termsReviewDialogPage">Back</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage>1" small color="blue darken-1" round outline dark text @click="++termsReviewDialogPage">Next</v-btn>
+                  </v-card-actions>
                 </v-card>
-
               </v-dialog>
             </v-card>
           </v-flex>
@@ -383,6 +390,7 @@ var model = new Model();
         ],
         alertWarning: false,
         termsReviewDialog: false,
+        termsReviewDialogPage: 0,
         generalTermsHint: [],
         gtrVizData: {},
         phenolyzerVizData: {},
@@ -525,7 +533,6 @@ var model = new Model();
     },
     methods:{
       setPhenolyzerTerms(str){
-        console.log("str", `https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
         return fetch(`https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
             .then(response => response.json())
             .then(data => data)
@@ -551,7 +558,6 @@ var model = new Model();
         term = term.replace("disease", "");
         term = term.replace("syndrome", "");
         term = term.trim();
-        console.log("term is ",term)
         DiseaseNamesData.data.forEach(x => {
           // if(x.DiseaseName.toLowerCase().split(' ').includes(term)){
           //   this.GtrReviewTerms.push(x);
@@ -561,7 +567,7 @@ var model = new Model();
           }
         })
 
-        var str = this.search.DiseaseName.replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+        var str = this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
         str = str.replace("disease", "");
         str = str.replace("syndrome", "");
         str = str.trim();
@@ -573,8 +579,13 @@ var model = new Model();
 
       setTimeout(()=>{
           this.termsReviewDialog = true;
+          this.termsReviewDialogPage = 1;
       },500)
 
+      },
+      closeReviewDialog(){
+        this.termsReviewDialog=false;
+        this.termsReviewDialogPage = 0;
       },
       remove(item){
         var idxOf = this.multipleSearchTerms.indexOf(item);
@@ -664,6 +675,42 @@ var model = new Model();
             this.search = '';
           }
         }
+      },
+      selectGtrTerm(term){
+        var searchTerm ="";
+        var conceptId = ""
+        searchTerm = term.DiseaseName;
+        conceptId = term.ConceptID;
+        this.$set(term, 'status', "Not started");
+        this.$set(term, 'gtrSearchStatus', "Not started");
+        this.$set(term, 'phenolyzerSearchStatus', "Not started");
+        this.$set(term, 'tool_to_search', 'GTR');
+        if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+          if(searchTerm.length>1){
+            this.multipleSearchTerms.push(searchTerm);
+            this.searchTermsObj.push(term);
+            this.search = '';
+          }
+        }
+      },
+      selectPhenolyzerTerm(term){
+        console.log("Term", term)
+        var searchTerm ="";
+        searchTerm = term.value;
+        console.log("searchTerm", searchTerm)
+        this.$set(term, 'status', "Not started");
+        this.$set(term, 'gtrSearchStatus', "Not started");
+        this.$set(term, 'phenolyzerSearchStatus', "Not started");
+        this.$set(term, 'tool_to_search', 'Phenolyzer');
+        this.$set(term, 'DiseaseName', term.value);
+        if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+          if(searchTerm.length>1){
+            this.multipleSearchTerms.push(searchTerm);
+            this.searchTermsObj.push(term);
+            this.search = '';
+          }
+        }
+        console.log("multipleSearchTerms", this.multipleSearchTerms)
       },
       selectNewTerm(hint){
         this.NewOptionFromGeneralTerm = hint.Title;
