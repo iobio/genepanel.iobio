@@ -327,7 +327,21 @@
                                   :VizData="gtrGenes">
                                 </BarChartSingleEntry>
                               </v-card>
-                              <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('gtr')"> Add/ Update in GTR </v-btn>
+                              <!-- <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('gtr')"> Add/ Update in GTR </v-btn> -->
+                            </v-card-text>
+                          </v-card>
+
+                          <v-card v-if="searchComplete" class="mt-4">
+                            <v-card-text>
+                              <div class="text-md-center">
+                                <strong>Search terms summary</strong>
+                              </div>
+                              <v-card class="mt-3 mb-3 pl-3 pr-3 pt-3 pb-3">
+                                <DoughnutChartSingleEntry
+                                  :GtrTermsLength="GtrTermsAdded.length"
+                                  :PhenolyzerTermsLength="phenolyzerTermsAdded.length">
+                                </DoughnutChartSingleEntry>
+                              </v-card>
                             </v-card-text>
                           </v-card>
                         </div>
@@ -359,7 +373,7 @@
                                   :VizData="phenolyzerGenes">
                                 </HorizontalBarChartSingleEntry>
                               </v-card>
-                              <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('phenolyzer')"> Add/ Update in Phenolyzer </v-btn>
+                              <!-- <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('phenolyzer')"> Add/ Update in Phenolyzer </v-btn> -->
                             </v-card-text>
                           </v-card>
                         </div>
@@ -379,32 +393,46 @@
                                 </progressCircularDonut>
                               </v-card>
                               <br>
-                            <div v-if="summaryGenes.length">
-                              <v-btn small v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes</v-btn>
-                            </div>
-                          <v-card >
-                            <v-card-text>
-                              <!-- Datatable -->
-                              <v-data-table
-                                :headers="summaryGenesHeader"
-                                :items="summaryGenes"
-                                class="elevation-1"
-                                hide-actions=false
-                              >
-                                <template v-slot:items="props">
-                                  <td>{{ props.item.name }}</td>
-                                </template>
-                              </v-data-table>
+                              <div v-if="summaryGenes.length">
+                                <v-btn small v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes</v-btn>
+                              </div>
+                              <v-card >
+                                <v-card-text>
+                                  <!-- Datatable -->
+                                  <v-data-table
+                                    :headers="summaryGenesHeader"
+                                    :items="summaryGenes"
+                                    class="elevation-1"
+                                    hide-actions=false
+                                  >
+                                    <template v-slot:items="props">
+                                      <td>{{ props.item.name }}</td>
+                                    </template>
+                                  </v-data-table>
+                                </v-card-text>
+                              </v-card>
+                              <div class="text-md-center mt-3">
+                                <v-btn round small outline style="text-transform:none" color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
+                              </div>
                             </v-card-text>
                           </v-card>
-
-                          <div class="text-md-center mt-3">
-                            <v-btn round small outline style="text-transform:none" color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
-                          </div>
-                        </v-card-text>
-                      </v-card>
-
                         </div>
+<!--
+                        <div class="col-md-4">
+                          <v-card v-if="searchComplete">
+                            <v-card-text>
+                              <div class="text-md-center">
+                                <strong>Search terms summary</strong>
+                              </div>
+                              <v-card class="mt-3 mb-3 pl-3 pr-3 pt-3 pb-3">
+                                <DoughnutChartSingleEntry
+                                  :GtrTermsLength="GtrTermsAdded.length"
+                                  :PhenolyzerTermsLength="phenolyzerTermsAdded.length">
+                                </DoughnutChartSingleEntry>
+                              </v-card>
+                            </v-card-text>
+                          </v-card>
+                        </div> -->
 
                   </div>
                 </v-layout>
@@ -431,15 +459,16 @@ import DiseaseNames from '../../../data/DiseaseNamesCleaned.json'
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import Chart from 'chart.js';
 import BarChartSingleEntry from '../viz/BarChartSingleEntry.vue';
-import HorizontalBarChartSingleEntry from '../viz/HorizontalBarChartSingleEntry.vue'
-
+import HorizontalBarChartSingleEntry from '../viz/HorizontalBarChartSingleEntry.vue';
+import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
 var model = new Model();
 
   export default {
     components: {
       'progressCircularDonut': progressCircularDonut,
       'BarChartSingleEntry': BarChartSingleEntry,
-      'HorizontalBarChartSingleEntry': HorizontalBarChartSingleEntry
+      'HorizontalBarChartSingleEntry': HorizontalBarChartSingleEntry,
+      'DoughnutChartSingleEntry': DoughnutChartSingleEntry
     },
     props: {
       selectedGtrGenes: {
@@ -555,7 +584,7 @@ var model = new Model();
             this.performSearchEvent();
           }
           else {
-            this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
+            this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
             this.expansionpanlExpand = [];
             this.searchComplete = true;
           }
@@ -616,7 +645,7 @@ var model = new Model();
       },
       getSummaryGenes(){
         console.log("changing!!")
-        this.summaryGenes = this.getSummaryGenes.slice(0,15) // Gets data from store
+        this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
       },
       phenolyzerVizData(){
         console.log("phenolyzerVizData is changing")
