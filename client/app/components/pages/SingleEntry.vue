@@ -191,7 +191,7 @@
                     Phenolyzer terms added:
                     <span v-for="(term, i) in phenolyzerTermsAdded">
                       <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
-                        {{ term }}
+                        {{ term.value }}
                       </v-chip>
                     </span>
                     <hr>
@@ -199,21 +199,21 @@
                       {{ term.DiseaseName }}
                     </div> -->
 
-                    <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value" v-on:click="selectPhenolyzerTerm(term)">
+                    <!-- <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value" v-on:click="selectPhenolyzerTerm(term)">
                       {{ term.value }}
-                    </div>
+                    </div> -->
 
 
+                    <!-- GTR review terms table -->
                     <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1">
-
                       <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th scope="col">Selection</th>
-                            <th scope="col">Term</th>
+                            <!-- <th scope="col">Selection</th>
+                            <th scope="col">Term</th> -->
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="review-table">
                           <tr v-for="(term, i) in GtrReviewTerms" :key="i">
                             <th scope="row">
                               <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="term"></v-checkbox>
@@ -222,8 +222,28 @@
                           </tr>
                         </tbody>
                       </table>
-
                     </div>
+
+                    <!-- Phenolyzer review terms table -->
+                    <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <!-- <th scope="col">Selection</th>
+                            <th scope="col">Term</th> -->
+                          </tr>
+                        </thead>
+                        <tbody class="review-table">
+                          <tr v-for="(term, i) in phenolyzerReviewTerms" :key="i">
+                            <th scope="row">
+                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="term"></v-checkbox>
+                            </th>
+                            <td>{{ term.value }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
 
                   </v-card-text>
                   <v-card-actions>
@@ -776,7 +796,23 @@ var model = new Model();
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
-              // this.GtrTermsAdded.push(searchTerm);
+              this.search = '';
+            }
+          }
+        })
+
+        this.phenolyzerTermsAdded.map(term => {
+          var searchTerm ="";
+          searchTerm = term.value;
+          this.$set(term, 'status', "Not started");
+          this.$set(term, 'gtrSearchStatus', "Not started");
+          this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          this.$set(term, 'tool_to_search', 'Phenolyzer');
+          this.$set(term, 'DiseaseName', term.value);
+          if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+            if(searchTerm.length>1){
+              this.multipleSearchTerms.push(searchTerm);
+              this.searchTermsObj.push(term);
               this.search = '';
             }
           }
@@ -862,4 +898,9 @@ var model = new Model();
 
 .v-progress-circular
   margin: 1rem
+
+.review-table
+  display: block
+  height: 300px
+  overflow-y: scroll
 </style>
