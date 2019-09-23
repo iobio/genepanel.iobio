@@ -166,6 +166,32 @@
               </v-dialog>
             </v-card>
 
+
+            <!-- Loading dialog box -->
+            <v-dialog
+              v-model="loadingDialog"
+              hide-overlay
+              persistent
+              width="300"
+            >
+              <v-card
+                color="primary"
+                dark
+              >
+                <v-card-text>
+                    <p style="color:white">Fetching terms for review...</p>
+                  <v-progress-linear
+                    indeterminate
+                    color="white"
+                    class="mb-0"
+                  ></v-progress-linear>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+            <!-- End Loading dialog box -->
+
+
+            <!-- Terms review dialog box -->
             <v-card>
               <v-dialog
                 v-model="termsReviewDialog"
@@ -463,6 +489,7 @@ var model = new Model();
         hpoLookupUrl:  "https://nv-prod.iobio.io/hpo/hot/lookup/?term=",
         GtrTermsAdded: [],
         phenolyzerTermsAdded: [],
+        loadingDialog: false,
 
       }
     },
@@ -599,8 +626,12 @@ var model = new Model();
       },
       mouseSelect(){
         if(this.search!==undefined){
+          this.loadingDialog = true;
           // this.checkBeforeAddTerm();
-          this.openReviewDialog();
+          setTimeout(()=>{
+            // this.checkBeforeAddTerm();
+            this.openReviewDialog();
+          }, 1000)
         }
       },
       EnterForSearch(){
@@ -608,7 +639,7 @@ var model = new Model();
           setTimeout(()=>{
             // this.checkBeforeAddTerm();
             this.openReviewDialog();
-          }, 10)
+          }, 1000)
         }
       },
       openReviewDialog(){
@@ -640,6 +671,7 @@ var model = new Model();
       setTimeout(()=>{
           this.termsReviewDialog = true;
           this.termsReviewDialogPage = 1;
+          this.loadingDialog = false;
       },500)
 
       },
