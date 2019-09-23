@@ -197,12 +197,16 @@
                 v-model="termsReviewDialog"
                 scrollable
                 persistent :overlay="false"
-                max-width="800px"
+                max-width="600px"
                 transition="dialog-transition"
               >
                 <v-card>
-                  <v-card-text>
-                    termsReviewDialogPage: {{ termsReviewDialogPage }}
+                  <v-card-title class="headline">Review Terms</v-card-title>
+                  <v-card-title v-if="termsReviewDialogPage===1">Select the terms to be searched in GTR:</v-card-title>
+                  <v-card-title v-if="termsReviewDialogPage===2">Select the terms to be searched in Phenolyzer:</v-card-title>
+
+                  <v-card-text style="height: 430px;">
+                    <!-- termsReviewDialogPage: {{ termsReviewDialogPage }}
                     Gtr terms: {{ GtrReviewTerms.length }}
                     Phenolyzer terms: {{ phenolyzerReviewTerms.length }}
 
@@ -219,8 +223,7 @@
                       <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
                         {{ term.value }}
                       </v-chip>
-                    </span>
-                    <hr>
+                    </span> -->
                     <!-- <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1" v-for="(term, i) in GtrReviewTerms" :key="i" v-on:click="selectGtrTerm(term)">
                       {{ term.DiseaseName }}
                     </div> -->
@@ -239,7 +242,7 @@
                             <th scope="col">Term</th> -->
                           </tr>
                         </thead>
-                        <tbody class="review-table">
+                        <tbody>
                           <tr v-for="(term, i) in GtrReviewTerms" :key="i">
                             <th scope="row">
                               <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="term"></v-checkbox>
@@ -259,7 +262,7 @@
                             <th scope="col">Term</th> -->
                           </tr>
                         </thead>
-                        <tbody class="review-table">
+                        <tbody>
                           <tr v-for="(term, i) in phenolyzerReviewTerms" :key="i">
                             <th scope="row">
                               <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="term"></v-checkbox>
@@ -274,10 +277,11 @@
                   </v-card-text>
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
-                    <v-btn small color="blue darken-1" round outline dark text @click="termsReviewDialog=false">Skip</v-btn>
-                    <v-btn :disabled="termsReviewDialogPage===1" small color="blue darken-1" round outline dark text @click="--termsReviewDialogPage">Back</v-btn>
-                    <v-btn :disabled="termsReviewDialogPage>1" small color="blue darken-1" round outline dark text @click="++termsReviewDialogPage">Next</v-btn>
-                    <v-btn :disabled="termsReviewDialogPage!==2" small color="blue darken-1" round outline dark text @click="selectReviewTerms">Done</v-btn>
+                    <!-- <v-btn small color="blue darken-1" round outline dark text @click="termsReviewDialog=false">Skip</v-btn> -->
+                    <v-btn :disabled="termsReviewDialogPage===1" small color="blue darken-1" flat @click="--termsReviewDialogPage">Back</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage>1" small color="blue darken-1" flat @click="++termsReviewDialogPage">Next</v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn :disabled="termsReviewDialogPage!==2" small color="blue darken-1" flat @click="selectReviewTerms">Done</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -828,7 +832,6 @@ var model = new Model();
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
-              this.search = '';
             }
           }
         })
@@ -845,11 +848,12 @@ var model = new Model();
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
-              this.search = '';
             }
           }
         })
         this.termsReviewDialog = false;
+        this.search = '';
+        this.termsReviewDialogPage = 0;
       },
       selectNewTerm(hint){
         this.NewOptionFromGeneralTerm = hint.Title;
