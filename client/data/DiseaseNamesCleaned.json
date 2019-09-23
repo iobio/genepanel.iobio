@@ -557,18 +557,6 @@
    "ConceptID": "CN185447"
  },
  {
-   "DiseaseName": "Abdominal obesity-metabolic syndrome 3",
-   "ConceptID": "C4014361"
- },
- {
-   "DiseaseName": "Abdominal obesity-metabolic syndrome",
-   "ConceptID": "C2930930"
- },
- {
-   "DiseaseName": "Abdominal obesity-metabolic syndrome quantitative trait locus 2",
-   "ConceptID": "C1854170"
- },
- {
    "DiseaseName": "Abdominal pain",
    "ConceptID": "C0000737"
  },
@@ -16267,10 +16255,6 @@
  {
    "DiseaseName": "Autosomal recessive cutis laxa type IA",
    "ConceptID": "CN033664"
- },
- {
-   "DiseaseName": "Autosomal recessive Dejerine-Sottas syndrome",
-   "ConceptID": "CN069172"
  },
  {
    "DiseaseName": "Autosomal recessive distal hereditary motor neuropathy",
@@ -33069,18 +33053,6 @@
    "ConceptID": "C0011195"
  },
  {
-   "DiseaseName": "Dejerine-sottas neuropathy, autosomal dominant",
-   "ConceptID": "C4016028"
- },
- {
-   "DiseaseName": "Dejerine-Sottas syndrome, autosomal dominant",
-   "ConceptID": "C4016264"
- },
- {
-   "DiseaseName": "Dejerine-sottas syndrome, sporadic",
-   "ConceptID": "C4016265"
- },
- {
    "DiseaseName": "de la Chapelle dysplasia",
    "ConceptID": "C1850555"
  },
@@ -33231,10 +33203,6 @@
  {
    "DiseaseName": "Delayed Puberty",
    "ConceptID": "C0034012"
- },
- {
-   "DiseaseName": "Delayed puberty",
-   "ConceptID": "C1838105"
  },
  {
    "DiseaseName": "Delayed pubic bone ossification",
@@ -40149,58 +40117,6 @@
    "ConceptID": "C1720189"
  },
  {
-   "DiseaseName": "Episodic Ataxia Type 10",
-   "ConceptID": "CN230101"
- },
- {
-   "DiseaseName": "Episodic Ataxia Type 11",
-   "ConceptID": "CN230102"
- },
- {
-   "DiseaseName": "Episodic Ataxia Type 12",
-   "ConceptID": "CN230103"
- },
- {
-   "DiseaseName": "Episodic ataxia type 1",
-   "ConceptID": "C1719788"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 2, and epilepsy",
-   "ConceptID": "C4016713"
- },
- {
-   "DiseaseName": "Episodic ataxia type 2",
-   "ConceptID": "C1720416"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 3",
-   "ConceptID": "C1847839"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 4",
-   "ConceptID": "C1847843"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 5",
-   "ConceptID": "C1866039"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 6",
-   "ConceptID": "C2675211"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 7",
-   "ConceptID": "C2677843"
- },
- {
-   "DiseaseName": "Episodic ataxia, type 8",
-   "ConceptID": "C4015108"
- },
- {
-   "DiseaseName": "Episodic Ataxia Type 9",
-   "ConceptID": "CN230100"
- },
- {
    "DiseaseName": "Episodic fatigue",
    "ConceptID": "C4022907"
  },
@@ -40335,10 +40251,6 @@
  {
    "DiseaseName": "ERBB2 expression",
    "ConceptID": "CN186049"
- },
- {
-   "DiseaseName": "ERCC1-Related Xeroderma Pigmentosum",
-   "ConceptID": "CN119607"
  },
  {
    "DiseaseName": "ERCC2-Related Disorders",
@@ -55491,10 +55403,6 @@
  {
    "DiseaseName": "Intellectual disability, TBR1 related",
    "ConceptID": "CN236386"
- },
- {
-   "DiseaseName": "Intellectual disability with episodic ataxia and congenital arthrogryposis",
-   "ConceptID": "CN228792"
  },
  {
    "DiseaseName": "Intellectual Disability with Language Impairment and Autistic Features",
@@ -101561,56 +101469,8 @@
    "ConceptID": "C0272051"
  },
  {
-   "DiseaseName": "Xeroderma pigmentosum and Cockayne syndrome complex",
-   "ConceptID": "C4304411"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, autosomal dominant, mild",
-   "ConceptID": "C1860231"
- },
- {
    "DiseaseName": "Xeroderma pigmentosum",
    "ConceptID": "C0043346"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, complementation group b",
-   "ConceptID": "C1970808"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, group C",
-   "ConceptID": "C2752147"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, group D",
-   "ConceptID": "C0268138"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, group E",
-   "ConceptID": "C1848411"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, group F",
-   "ConceptID": "C0268140"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, group G",
-   "ConceptID": "C0268141"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum group g/Cockayne syndrome",
-   "ConceptID": "C1968561"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, type 1",
-   "ConceptID": "C0268135"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, type f/Cockayne syndrome",
-   "ConceptID": "C3806565"
- },
- {
-   "DiseaseName": "Xeroderma pigmentosum, variant type",
-   "ConceptID": "C1848410"
  },
  {
    "DiseaseName": "Xerostomia",
