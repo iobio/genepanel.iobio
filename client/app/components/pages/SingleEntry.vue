@@ -183,31 +183,55 @@
                     <hr>
                     GTR terms added:
                     <span v-for="(term, i) in GtrTermsAdded">
-                      <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
-                        {{ i+1 }}. {{ term }}
+                      <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term.DiseaseName" >
+                        {{ term.DiseaseName }}
                       </v-chip>
                     </span>
                     <hr>
                     Phenolyzer terms added:
                     <span v-for="(term, i) in phenolyzerTermsAdded">
                       <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
-                        {{ i+1 }}. {{ term }}
+                        {{ term }}
                       </v-chip>
                     </span>
-
-                    <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1" v-for="(term, i) in GtrReviewTerms" :key="i" v-on:click="selectGtrTerm(term)">
+                    <hr>
+                    <!-- <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1" v-for="(term, i) in GtrReviewTerms" :key="i" v-on:click="selectGtrTerm(term)">
                       {{ term.DiseaseName }}
-                    </div>
+                    </div> -->
 
                     <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value" v-on:click="selectPhenolyzerTerm(term)">
                       {{ term.value }}
                     </div>
+
+
+                    <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1">
+
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Selection</th>
+                            <th scope="col">Term</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(term, i) in GtrReviewTerms" :key="i">
+                            <th scope="row">
+                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="term"></v-checkbox>
+                            </th>
+                            <td>{{ term.DiseaseName }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </div>
+
                   </v-card-text>
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
                     <v-btn small color="blue darken-1" round outline dark text @click="termsReviewDialog=false">Skip</v-btn>
                     <v-btn :disabled="termsReviewDialogPage===1" small color="blue darken-1" round outline dark text @click="--termsReviewDialogPage">Back</v-btn>
                     <v-btn :disabled="termsReviewDialogPage>1" small color="blue darken-1" round outline dark text @click="++termsReviewDialogPage">Next</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage!==2" small color="blue darken-1" round outline dark text @click="selectReviewTerms">Done</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -735,6 +759,29 @@ var model = new Model();
           }
         }
         console.log("multipleSearchTerms", this.multipleSearchTerms)
+      },
+      selectReviewTerms(){
+
+        this.GtrTermsAdded.map(term=>{
+          var searchTerm ="";
+          var conceptId = ""
+          searchTerm = term.DiseaseName;
+          conceptId = term.ConceptID;
+          this.$set(term, 'status', "Not started");
+          this.$set(term, 'gtrSearchStatus', "Not started");
+          this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          this.$set(term, 'tool_to_search', 'GTR');
+
+          if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+            if(searchTerm.length>1){
+              this.multipleSearchTerms.push(searchTerm);
+              this.searchTermsObj.push(term);
+              // this.GtrTermsAdded.push(searchTerm);
+              this.search = '';
+            }
+          }
+        })
+        this.termsReviewDialog = false;
       },
       selectNewTerm(hint){
         this.NewOptionFromGeneralTerm = hint.Title;
