@@ -26,15 +26,27 @@
                   <v-flex xs12 sm12 md12 lg9 xl9>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
                       <input
-                        id="single-entry-input"
+                        v-show="inputVal.length<10"
+                        v-model="inputVal"
+                        id="single_entry_input"
+                        ref="single_entry_input"
                         class="form-control"
                         type="text"
                         autocomplete="off"
                         placeholder="Enter Clinical Conditions or Phenotypes">
+                        <v-textarea
+                          solo
+                          v-show="inputVal.length>=10"
+                          v-model="inputVal"
+                          ref="single_entry_input_textarea"
+                          id="single_entry_input_textarea"
+                          name="input-7-4"
+                          rows="4"
+                        ></v-textarea>
                       <typeahead
                         v-model="search"
                         hide-details="false"
-                        target="#single-entry-input"
+                        target="#single_entry_input"
                         force-select :force-clear="true"
                         :data="DiseaseNames"
                         :limit="parseInt(100)"
@@ -43,9 +55,9 @@
                         item-key="DiseaseName"/>
                     </div>
 
-                   <!--   <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="checkBeforeAddTerm">
+                     <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="putFocus">
                       <v-icon color="white">add</v-icon>
-                    </v-btn> -->
+                    </v-btn>
 
                     <br>
                     <div v-if="multipleSearchTerms.length">
@@ -523,7 +535,7 @@ var model = new Model();
         GtrTermsAdded: [],
         phenolyzerTermsAdded: [],
         loadingDialog: false,
-
+        inputVal: ''
       }
     },
     mounted(){
@@ -607,6 +619,18 @@ var model = new Model();
     updated(){
     },
     watch: {
+      inputVal(){
+        if(this.inputVal.length===10){
+          setTimeout(()=>{
+            this.$refs.single_entry_input_textarea.focus();
+          },10)
+        }
+        else if(this.inputVal.length===9){
+          setTimeout(()=>{
+            this.$refs.single_entry_input.focus();
+          },10)
+        }
+      },
       searchTermsObj(){
       },
       getGtrGenes(){
@@ -925,37 +949,46 @@ var model = new Model();
 .form-control
   font-size: 15px
 
-#single-entry-input
+#single_entry_input
   width: 600px
   height: 49px
   margin-top: 7px
   // background-color: $search-box-color
   border-bottom-color: #949494
-  border-right-color: white
+  border-right-color: #e9e9e9
   border-top-color: #e9e9e9
-  border-left-color: white
+  border-left-color: #e9e9e9
+  // border-color: #e9e9e9
 
+#single_entry_input_textarea
+  width: 600px
+  margin-top: 7px
+  // // background-color: $search-box-color
+  // border-bottom-color: #949494
+  // border-right-color: #e9e9e9
+  // border-top-color: #e9e9e9
+  // border-left-color: #e9e9e9
 
 @media screen and (max-width: 1620px)
-  #single-entry-input
+  #single_entry_input
     width: 420px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 1050px)
-  #single-entry-input
+  #single_entry_input
     width: 450px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 950px)
-  #single-entry-input
+  #single_entry_input
     width: 290px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 700px)
-  #single-entry-input
+  #single_entry_input
     width: 300px
     height: 40px
     margin-top: 4px
