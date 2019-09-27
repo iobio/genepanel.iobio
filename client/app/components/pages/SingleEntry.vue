@@ -26,15 +26,13 @@
                   <v-flex xs12 sm12 md12 lg9 xl9>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
                       <input
-                        v-show="inputVal.length<10"
-                        v-model="inputVal"
                         id="single_entry_input"
                         ref="single_entry_input"
                         class="form-control"
                         type="text"
                         autocomplete="off"
                         placeholder="Enter Clinical Conditions or Phenotypes">
-                        <v-textarea
+                        <!-- <v-textarea
                           solo
                           v-show="inputVal.length>=10"
                           v-model="inputVal"
@@ -42,7 +40,7 @@
                           id="single_entry_input_textarea"
                           name="input-7-4"
                           rows="4"
-                        ></v-textarea>
+                        ></v-textarea> -->
                       <typeahead
                         v-model="search"
                         hide-details="false"
@@ -55,7 +53,7 @@
                         item-key="DiseaseName"/>
                     </div>
 
-                     <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="putFocus">
+                     <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="mouseSelect">
                       <v-icon color="white">add</v-icon>
                     </v-btn>
 
@@ -619,18 +617,18 @@ var model = new Model();
     updated(){
     },
     watch: {
-      inputVal(){
-        if(this.inputVal.length===10){
-          setTimeout(()=>{
-            this.$refs.single_entry_input_textarea.focus();
-          },10)
-        }
-        else if(this.inputVal.length===9){
-          setTimeout(()=>{
-            this.$refs.single_entry_input.focus();
-          },10)
-        }
-      },
+      // inputVal(){
+      //   if(this.inputVal.length===10){
+      //     setTimeout(()=>{
+      //       this.$refs.single_entry_input_textarea.focus();
+      //     },10)
+      //   }
+      //   else if(this.inputVal.length===9){
+      //     setTimeout(()=>{
+      //       this.$refs.single_entry_input.focus();
+      //     },10)
+      //   }
+      // },
       searchTermsObj(){
       },
       getGtrGenes(){

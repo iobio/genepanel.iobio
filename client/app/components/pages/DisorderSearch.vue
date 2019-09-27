@@ -410,7 +410,9 @@ var model = new Model();
             var diseases;
             var dataMain;
             model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
+            // fetch(`http://localhost:4046/conditions/?term=Treacher Collins syndrome 1`).then(res => res.json())
             .then(function(data){
+              // var data = dataItem.Item
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
