@@ -243,6 +243,16 @@ promiseGetGenePanels(disease) {
 
 }
 
+promiseGetGenePanelsWithAPI(disease){
+  return new Promise(function(resolve, reject){
+    var diseaseTitle = encodeURIComponent(disease.Title.trim());
+    fetch(`http://localhost:4046/genepanels/?term=${diseaseTitle}`)
+      .then(res => res.json())
+      .then(data => {
+        resolve({'disease': disease, 'genePanels': data.Item.genePanels})
+      })
+  })
+}
 
 promiseGetGenePanelsUsingSearchTerm(disease) {
   var me = this;
@@ -262,6 +272,8 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
         var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
         $.ajax( summaryUrl )
         .done(function(sumData) {
+          // console.log("data", sumData)
+
           if (sumData.result == null) {
             if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
               sumData.esummaryresult.forEach( function(message) {
@@ -275,6 +287,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
                 genePanels.push(sumData.result[key]);
               }
             }
+            // console.log("{'disease': disease, 'genePanels': genePanels}", {'disease': disease, 'genePanels': genePanels})
             resolve({'disease': disease, 'genePanels': genePanels});
           }
         })

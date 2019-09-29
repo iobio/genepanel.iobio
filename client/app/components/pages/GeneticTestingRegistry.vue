@@ -1405,7 +1405,7 @@ export default {
     checkForAssociatedGenes: function(){
       var temp = [];
       this.diseasesProps.map(x=>{
-        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!==""){
+        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!=="" && x.ConceptMeta.AssociatedGenes!=="EMPTY_STRING"){
           if(x.ConceptMeta.AssociatedGenes.Gene.__text!==undefined){
             temp.push({
               name: x.ConceptMeta.AssociatedGenes.Gene.__text,
@@ -1429,7 +1429,7 @@ export default {
     checkForAssociatedGenesIndividual: function(){
       var temp = [];
       this.diseasesPropsIndividual.map(x=>{
-        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!==""){
+        if(x.ConceptMeta.AssociatedGenes!==undefined && x.ConceptMeta.AssociatedGenes!=="" && x.ConceptMeta.AssociatedGenes!=="EMPTY_STRING"){
           if(x.ConceptMeta.AssociatedGenes.Gene.__text!==undefined){
             temp.push({
               name: x.ConceptMeta.AssociatedGenes.Gene.__text,

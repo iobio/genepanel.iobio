@@ -409,10 +409,13 @@ var model = new Model();
             bus.$emit("clearSearchInput");
             var diseases;
             var dataMain;
-            model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
-            // fetch(`http://localhost:4046/conditions/?term=Treacher Collins syndrome 1`).then(res => res.json())
-            .then(function(data){
-              // var data = dataItem.Item
+            // model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
+            // .then(function(data){
+            fetch(`http://localhost:4046/conditions/?term=${searchTerm}`).then(res => res.json())
+            .then(function(dataItem){
+              var data = dataItem.Item
+              console.log(dataItem)
+              console.log(data)
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
@@ -426,8 +429,10 @@ var model = new Model();
               else {
                 if(diseases.length>0){
                   diseases.forEach((disease)=>{
-                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
+                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
+                  var p = model.promiseGetGenePanelsWithAPI(disease);
                     p.then((data)=>{
+                      console.log(data)
                         var filteredGenePanels = model.processGenePanelData(data.genePanels);
                         data.disease.genePanels = filteredGenePanels;
                     },
@@ -438,6 +443,7 @@ var model = new Model();
                   })
                 }
                 else {
+                  console.log(" I am here")
                   data.diseases = [
                     {
                       ConceptId:"",
