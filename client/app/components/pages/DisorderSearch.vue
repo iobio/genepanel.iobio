@@ -409,19 +409,20 @@ var model = new Model();
             bus.$emit("clearSearchInput");
             var diseases;
             var dataMain;
-            // model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
-            // .then(function(data){
-            fetch(`http://localhost:4046/conditions/?term=${searchTerm}`).then(res => res.json())
-            .then(function(dataItem){
-              var data = dataItem.Item
-              console.log(dataItem)
-              console.log(data)
+            model.promiseGetDiseases(searchTerm, conceptId, this.HierarchyRelations, this.HierarchyParentData)
+            .then(function(data){
+            // fetch(`http://localhost:4046/conditions/?term=${searchTerm}`).then(res => res.json())
+            // .then(function(dataItem){
+            //   var data = dataItem.Item
+            //   console.log(dataItem)
+            //   console.log(data)
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
               var promises = [];
               var filteredDiseases;
               var maxDiseasesLimit = false;
+              // if(diseases.length>7){
               if(diseases.length>7){
                 maxDiseasesLimit = true;
                 comeOutOfPromise1(diseases);
@@ -429,8 +430,8 @@ var model = new Model();
               else {
                 if(diseases.length>0){
                   diseases.forEach((disease)=>{
-                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
-                  var p = model.promiseGetGenePanelsWithAPI(disease);
+                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
+                  // var p = model.promiseGetGenePanelsWithAPI(disease);
                     p.then((data)=>{
                       console.log(data)
                         var filteredGenePanels = model.processGenePanelData(data.genePanels);
@@ -443,7 +444,6 @@ var model = new Model();
                   })
                 }
                 else {
-                  console.log(" I am here")
                   data.diseases = [
                     {
                       ConceptId:"",

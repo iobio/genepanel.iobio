@@ -1,8 +1,13 @@
 const x2js = require('x2js');
+const LZUTF8 = require('lzutf8');
+// var brotli = require('brotli');
+const { StringDecoder } = require('string_decoder');
+
 
 export default class Model {
   constructor() {
   this.x2js = new x2js();
+  // this.lzwCompress = new lzwCompress();
   this.mergedGenes = null;
   this.selectedGenes = null;
 }
@@ -244,12 +249,33 @@ promiseGetGenePanels(disease) {
 }
 
 promiseGetGenePanelsWithAPI(disease){
+  const decoder = new StringDecoder('utf8');
+
   return new Promise(function(resolve, reject){
     var diseaseTitle = encodeURIComponent(disease.Title.trim());
     fetch(`http://localhost:4046/genepanels/?term=${diseaseTitle}`)
       .then(res => res.json())
       .then(data => {
-        resolve({'disease': disease, 'genePanels': data.Item.genePanels})
+        console.log(data.Item.genePanels.data)
+        console.log(data.Item)
+        var output = data.Item.genePanels.data;
+
+        // const cent = Buffer.from(data.Item.genePanels.data);
+        // // console.log(decoder.write(cent));
+        // var x = decoder.write(cent)
+        //
+        // var obj = JSON.parse(x);
+        // console.log(obj)
+
+        const buf = new Buffer(output);
+        console.log(buf)
+
+
+        var decompressed = LZUTF8.decompress(buf, {"outputEncoding" : "String"})
+        console.log(decompressed)
+        var obj = JSON.parse(decompressed);
+        console.log(obj)
+        resolve({'disease': disease, 'genePanels': obj.genePanels})
       })
   })
 }
