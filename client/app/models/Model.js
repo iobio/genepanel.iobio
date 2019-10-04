@@ -116,6 +116,26 @@ export default class Model {
                     })
                   })
                 }
+
+                //To get all the conditions even of the children
+                // var queue = [];
+                // queue.push(conceptId);
+                // while(queue.length>0){
+                //   var current = queue.shift();
+                //   if(HierarchyParentIds.includes(current)){
+                //     var i = HierarchyParentIds.indexOf(current);
+                //     HierarchyRelations[i].children.map(x=>{
+                //       diseases.push({
+                //         ConceptId: x.id,
+                //         Title: x.name,
+                //         ConceptMeta: x.ConceptMeta
+                //       })
+                //       queue.push(x.id);
+                //     })
+                //   }
+                // }
+
+
                 resolve({'searchTerm': searchTerm, 'diseases': Array.isArray(diseases) ? diseases : diseases});
               }
             }

@@ -4,14 +4,15 @@
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
-            <v-card v-if="!searchComplete">
+            <!-- <v-card v-if="!searchComplete"> -->
+            <v-card>
               <v-card-text>
                 <h3>Dashboard</h3>
                 <v-layout row wrap class="mt-3">
                   <v-flex xs1 sm1 md1 lg1 xl1>
 
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg2 xl2>
+                  <v-flex xs12 sm12 md12 lg3 xl3>
                     <!-- <div id="dropdown-example">
                       <v-overflow-btn
                          :items="dropdown_tool"
@@ -22,8 +23,35 @@
                          v-model="dropdown_tool_value"
                        ></v-overflow-btn>
                     </div> -->
+                    <i>(For testing: This extracts disorders from the clinical note)</i>
+                    <br>
+                    <v-textarea
+                      solo
+                      v-model="textNotes"
+                      ref="single_entry_input_textarea"
+                      id="single_entry_input_textarea"
+                      name="input-7-4"
+                      rows="3"
+                    ></v-textarea>
+                    <v-btn @click="extract" color="primary">Submit</v-btn>
+                    <br><hr><p></p>
+                    <strong>JaroWinkler terms: </strong>
+                    <span v-for="term in JaroWinkler">
+                      <v-chip >{{ term }}</v-chip>
+                    </span>
+                    <p></p>
+                    <br>
+                    <strong>fuzzy terms: </strong>
+                    <span v-for="term in fuzzyResults">
+                      <v-chip >{{ term }}</v-chip>
+                    </span>
+                    <p></p>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg9 xl9>
+                  <v-flex xs1 sm1 md1 lg1 xl1>
+                  </v-flex>
+                  <v-flex xs12 sm12 md12 lg7 xl7>
+                    <i>(Select a term from typeahead, review the options and click the search button)</i>
+                    <br>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
                       <input
                         id="single_entry_input"
@@ -53,9 +81,9 @@
                         item-key="DiseaseName"/>
                     </div>
 
-                     <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="mouseSelect">
+                     <!-- <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="mouseSelect">
                       <v-icon color="white">add</v-icon>
-                    </v-btn>
+                    </v-btn> -->
 
                     <br>
                     <div v-if="multipleSearchTerms.length">
@@ -533,7 +561,10 @@ var model = new Model();
         GtrTermsAdded: [],
         phenolyzerTermsAdded: [],
         loadingDialog: false,
-        inputVal: ''
+        inputVal: '',
+        textNotes: '',
+        JaroWinkler: [],
+        fuzzyResults: [],
       }
     },
     mounted(){
@@ -679,6 +710,19 @@ var model = new Model();
             .then(response => response.json())
             .then(data => data)
       },
+      extract(){
+        this.JaroWinkler = [];
+        this.fuzzyResults = [];
+        this.loadingDialog = true;
+        fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
+          .then(res => res.json())
+          .then(data => {
+            this.JaroWinkler = data.JaroWinkler;
+            this.fuzzyResults = data.fuzzyResults ;
+            console.log(data)
+            this.loadingDialog = false;
+          })
+      },
       mouseSelect(){
         if(this.search!==undefined){
           this.loadingDialog = true;
@@ -775,6 +819,8 @@ var model = new Model();
       },
       performSearchEvent(){
         this.searchStatus = true;
+        this.searchComplete = false;
+        this.expansionpanlExpand = ['true'];
         var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
 
         if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
