@@ -5,7 +5,7 @@
         <v-container fluid grid-list-md>
           <v-layout row wrap style="margin-top:-20px;">
             <!-- show description -->
-            <v-flex xs12 style="margin-bottom:5px">
+            <!-- <v-flex xs12 style="margin-bottom:5px">
               <v-card>
                 <div v-if="GtrGenesArr.length===0 && PhenolyzerGenesArr.length===0 && manuallyAddedGenes.length===0 && clinPhenSelectedGenes.length===0">
                   <v-card-text>
@@ -29,7 +29,6 @@
                                 No conditions
                              </v-chip>
                           </div>
-                          <!-- outline color="blue-grey darken-3" -->
                           <v-chip v-if="GtrGenesArr.length>0" disabled color="primary" text-color="white" v-for="(searchItem, i) in GtrSearchTerms" :key="i">
                             {{ i+1 }}. {{ searchItem }}
                           </v-chip>
@@ -72,7 +71,7 @@
                   </v-flex>
                 </div>
               </v-card>
-            </v-flex>
+            </v-flex> -->
             <!-- End description -->
 
             <!-- show main content -->
@@ -380,7 +379,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       TotalSummaryGenes: function(e){
         this.totalGenes = e;
-        bus.$emit("TotalGenesInSummary", this.totalGenes); 
+        bus.$emit("TotalGenesInSummary", this.totalGenes);
       },
       TotalSummarySelectedGenes: function(e){
         this.selectedGenes = e;

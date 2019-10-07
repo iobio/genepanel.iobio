@@ -349,7 +349,7 @@
             </AddGenes>
           </keep-alive>
 
-          <keep-alive>
+          <!-- <keep-alive>
             <SummaryTab
               v-show="component==='SummaryTab'"
               v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
@@ -368,7 +368,7 @@
               v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
               v-bind:phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
               v-bind:isMobile="isMobile">
-            </SummaryTab>
+            </SummaryTab> -->
             <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
           </keep-alive>
         </div>

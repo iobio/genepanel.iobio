@@ -116,6 +116,42 @@
       </v-container>
 
 
+      <!-- Terms expansion panel:  -->
+      <v-container fluid grid-list-md>
+        <v-layout row wrap style="margin-top:-20px;">
+          <v-flex d-flex xs12>
+            <v-expansion-panel expand v-model="termsExpansionPanel">
+              <v-expansion-panel-content>
+                <template slot="header">
+                  <div>
+                    Search terms:
+                  </div>
+                </template>
+                <v-card>
+                  <v-card-text>
+                    <strong>GTR Terms: </strong>
+                    <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
+                      <v-chip slot="activator" color="primary" text-color="white"  :key="term.DiseaseName" >
+                        {{ term.DiseaseName }}
+                      </v-chip>
+                    </span>
+                    <br>
+                    <strong>Phenolyzer Terms: </strong>
+                    <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
+                      <v-chip slot="activator" color="primary" text-color="white"  :key="term.value" >
+                        {{ term.value }}
+                      </v-chip>
+                    </span>
+                  </v-card-text>
+                </v-card>
+
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-flex>
+        </v-layout>
+      </v-container>
+
+
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
@@ -240,7 +276,10 @@
               >
                 <v-card>
                   <v-card-title class="headline">Review Terms</v-card-title>
-                  <v-card-title v-if="termsReviewDialogPage===1">Select the terms to be searched in GTR:</v-card-title>
+                  <v-card-title v-if="termsReviewDialogPage===1">Select the terms to be searched in GTR:  </v-card-title>
+                  <div  v-if="termsReviewDialogPage===1">
+                    <br><br> <i>Please limit to 5 terms in GTR </i>
+                  </div>
                   <v-card-title v-if="termsReviewDialogPage===2">Select the terms to be searched in Phenolyzer:</v-card-title>
 
                   <v-card-text style="height: 430px;">
@@ -612,6 +651,7 @@ var model = new Model();
         generalTermsHint: [],
         gtrVizData: {},
         phenolyzerVizData: {},
+        termsExpansionPanel: ['true'],
         expansionpanlExpand: ['true'],
         dropdown_tool: ['All resources', 'GTR', 'Phenolyzer'],
         dropdown_tool_value: 'All resources',
@@ -646,6 +686,7 @@ var model = new Model();
         this.generalTermsHint = [];
         this.gtrVizData = {};
         this.phenolyzerVizData = {};
+        this.expansionpanlExpand = ['true'];
         this.expansionpanlExpand = ['true'];
         this.dropdown_tool = ['All resources', 'GTR', 'Phenolyzer'];
         this.dropdown_tool_value = 'All resources',
@@ -724,6 +765,13 @@ var model = new Model();
       //     },10)
       //   }
       // },
+      GtrTermsAdded(){
+        if(this.GtrTermsAdded.length > 5){
+          alert("max limit reached for GTR");
+          this.GtrTermsAdded.pop();
+        }
+
+      },
       searchTermsObj(){
       },
       getGtrGenes(){

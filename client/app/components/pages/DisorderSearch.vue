@@ -369,7 +369,7 @@ var model = new Model();
 
       },
       checkBeforePerformSearch(){
-        if(this.multipleSearchTerms.length<4){
+        if(this.multipleSearchTerms.length<5){
           this.performSearch();
         }
         else {
