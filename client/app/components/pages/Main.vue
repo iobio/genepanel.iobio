@@ -267,7 +267,21 @@
                 :selectedGtrGenes="selectedGtrGenes"
                 :gtrCompleteGeneList="gtrCompleteGeneList"
                 :selectedPhenolyzerGenes="selectedPhenolyzerGenes"
-                :phenolyzerCompleteGeneList="phenolyzerCompleteGeneList">
+                :phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
+                v-bind:NumberOfGtrGenes="NumberOfGenesSelectedFromGTR"
+                v-bind:NumberOfPhenolyzerGenes="NumberOfGenesSelectedFromPhenolyzer"
+                v-bind:GtrGenesForSummary="selectedGtrGenes"
+                v-bind:searchTermGTR="searchTermGTR"
+                v-bind:PhenolyzerGenesForSummary="selectedPhenolyzerGenes"
+                v-bind:onSearchPhenotype="phenotypeSearches"
+                v-bind:manuallyAddedGenes="manuallyAddedGenes"
+                :chartColor="ordinalColor"
+                v-bind:browser="browser"
+                v-bind:clinGenesSummary="clinGenesSummary"
+                v-bind:launchedFromClin="launchedFromClin"
+                v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
+                v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
+                v-bind:isMobile="isMobile">
               </SingleEntry>
             </keep-alive>
             <keep-alive>

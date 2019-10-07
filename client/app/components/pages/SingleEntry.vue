@@ -328,6 +328,28 @@
         </v-layout>
       </v-container>
 
+      <keep-alive>
+        <SummaryTab
+          v-bind:NumberOfGtrGenes="NumberOfGtrGenes"
+          v-bind:NumberOfPhenolyzerGenes="NumberOfPhenolyzerGenes"
+          v-bind:GtrGenesForSummary="GtrGenesForSummary"
+          v-bind:searchTermGTR="searchTermGTR"
+          v-bind:PhenolyzerGenesForSummary="PhenolyzerGenesForSummary"
+          v-bind:onSearchPhenotype="onSearchPhenotype"
+          v-bind:manuallyAddedGenes="manuallyAddedGenes"
+          :chartColor="chartColor"
+          v-bind:browser="browser"
+          v-bind:clinGenesSummary="clinGenesSummary"
+          v-bind:launchedFromClin="launchedFromClin"
+          v-bind:clinPhenSelectedGenes="clinPhenSelectedGenes"
+          v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
+          v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
+          v-bind:phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
+          v-bind:isMobile="isMobile">
+        </SummaryTab>
+        <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
+      </keep-alive>
+
       <v-container fluid grid-list-md>
         <v-layout row wrap>
           <v-flex d-flex xs12>
@@ -499,6 +521,7 @@ import Chart from 'chart.js';
 import BarChartSingleEntry from '../viz/BarChartSingleEntry.vue';
 import HorizontalBarChartSingleEntry from '../viz/HorizontalBarChartSingleEntry.vue';
 import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
+import SummaryTab from './SummaryTab.vue';
 var model = new Model();
 
   export default {
@@ -506,7 +529,8 @@ var model = new Model();
       'progressCircularDonut': progressCircularDonut,
       'BarChartSingleEntry': BarChartSingleEntry,
       'HorizontalBarChartSingleEntry': HorizontalBarChartSingleEntry,
-      'DoughnutChartSingleEntry': DoughnutChartSingleEntry
+      'DoughnutChartSingleEntry': DoughnutChartSingleEntry,
+      'SummaryTab': SummaryTab
     },
     props: {
       selectedGtrGenes: {
@@ -520,7 +544,47 @@ var model = new Model();
       },
       phenolyzerCompleteGeneList: {
         type: Array
-      }
+      },
+      NumberOfGtrGenes:{
+        type: Number
+      },
+      NumberOfPhenolyzerGenes:{
+        type:Number
+      },
+      GtrGenesForSummary:{
+        type:Array
+      },
+      PhenolyzerGenesForSummary:{
+        type:Array
+      },
+      searchTermGTR: {
+        type:Array
+      },
+      onSearchPhenotype: {
+        type: Array
+      },
+      manuallyAddedGenes: {
+        type:Array
+      },
+      chartColor: null,
+      isMobile: {
+        type: Boolean
+      },
+      browser: {
+        type: String
+      },
+      clinGenesSummary: {
+        type: Array
+      },
+      launchedFromClin: {
+        type: Boolean
+      },
+      clinPhenSelectedGenes: {
+        type: Array
+      },
+      hpoClinPhenTerms: {
+        type: Array
+      },
     },
     data(){
       return {
@@ -1005,7 +1069,7 @@ var model = new Model();
   // border-color: #e9e9e9
 
 #single_entry_input_textarea
-  width: 600px
+  // width: 600px
   margin-top: 7px
   // // background-color: $search-box-color
   // border-bottom-color: #949494
@@ -1015,25 +1079,25 @@ var model = new Model();
 
 @media screen and (max-width: 1620px)
   #single_entry_input
-    width: 420px
+    // width: 420px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 1050px)
   #single_entry_input
-    width: 450px
+    // width: 450px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 950px)
   #single_entry_input
-    width: 290px
+    // width: 290px
     height: 40px
     margin-top: 4px
 
 @media screen and (max-width: 700px)
   #single_entry_input
-    width: 300px
+    // width: 300px
     height: 40px
     margin-top: 4px
     box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)

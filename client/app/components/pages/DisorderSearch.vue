@@ -423,12 +423,13 @@ var model = new Model();
               var filteredDiseases;
               var maxDiseasesLimit = false;
               // if(diseases.length>7){
-              if(diseases.length>7){
+              if(diseases.length>700){
                 maxDiseasesLimit = true;
                 comeOutOfPromise1(diseases);
               }
               else {
                 if(diseases.length>0){
+                  // loopFunc(diseases);
                   diseases.forEach((disease)=>{
                   var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
                   // var p = model.promiseGetGenePanelsWithAPI(disease);
@@ -514,6 +515,43 @@ var model = new Model();
                   }
                 }
               })
+            }
+
+            var loopFunc = (diseases) => {
+              console.log("inside loop");
+              // for(let i=0; i<diseases.length; i++){
+              //
+              // }
+              // setInterval(frame.bind(null, diseases), 7000);
+              var i = 0;
+              var len = diseases.length
+              setTimeout(()=>{
+                if(i < len){
+                  frame(diseases[i], i);
+                }
+              }, 1000)
+
+            }
+
+            var frame = (disease) => {
+                console.log("inside frame")
+                getAndPushData(disease)
+            }
+
+
+            var getAndPushData = async (disease) =>{
+              console.log("inside getAndPushData")
+              var p = await model.promiseGetGenePanelsUsingSearchTerm(disease);
+              // var p = model.promiseGetGenePanelsWithAPI(disease);
+                p.then((data)=>{
+                  console.log(data)
+                    var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                    data.disease.genePanels = filteredGenePanels;
+                },
+                function(error) {
+                  console.log("error", error)
+                })
+                 promises.push(p);
             }
 
 
