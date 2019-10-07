@@ -34,7 +34,7 @@
                       rows="3"
                     ></v-textarea>
                     <v-btn @click="extract" color="primary">Submit</v-btn>
-                    <br><hr><p></p>
+                    <!-- <br><hr><p></p>
                     <strong>JaroWinkler terms: </strong>
                     <span v-for="term in JaroWinkler">
                       <v-chip >{{ term }}</v-chip>
@@ -45,7 +45,7 @@
                     <span v-for="term in fuzzyResults">
                       <v-chip >{{ term }}</v-chip>
                     </span>
-                    <p></p>
+                    <p></p> -->
                   </v-flex>
                   <v-flex xs1 sm1 md1 lg1 xl1>
                   </v-flex>
@@ -85,7 +85,7 @@
                       <v-icon color="white">add</v-icon>
                     </v-btn> -->
 
-                    <br>
+                    <!-- <br>
                     <div v-if="multipleSearchTerms.length">
                       <br>
                         <span id="conditionChips" v-for="(searchItem, i) in searchTermsObj">
@@ -97,12 +97,12 @@
 
                           </v-chip>
                         </span>
-                    </div>
-                    <br>
+                    </div> -->
+                    <!-- <br>
                     <div>
                       <v-btn class="btnColor" :disabled="!multipleSearchTerms.length" @click="performSearchEvent">Search</v-btn>
 
-                    </div>
+                    </div> -->
 
                   </v-flex>
 
@@ -1063,6 +1063,7 @@ var model = new Model();
         this.termsReviewDialog = false;
         this.search = '';
         this.termsReviewDialogPage = 0;
+        this.performSearchEvent();
       },
       selectNewTerm(hint){
         this.NewOptionFromGeneralTerm = hint.Title;
