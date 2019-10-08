@@ -127,7 +127,7 @@
                           (GtrGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
                           (PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
                           (GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0 && clinPhenSelectedGenes.length>0)">
-                    <v-card>
+                    <v-card v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
                       <v-card-text
                         v-show="(GtrGenesArr.length>0 && PhenolyzerGenesArr.length>0) ||
                               (GtrGenesArr.length>0 && clinPhenSelectedGenes.length>0) ||
@@ -145,6 +145,26 @@
                         <div id="venn" style="margin-top:-40px; margin-bottom:-10px"></div>
                       </center>
                     </v-card>
+
+                  </div>
+
+                  <br>
+                  <div class="d-flex mb-2 xs12">
+                    <v-card v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
+                      <v-card-text v-if="GtrGenesArr.length>0 || PhenolyzerGenesArr.length>0 || clinPhenGenesArr.length>0">
+                      <center>
+                        <span class="Rightbar_CardHeading">
+                          SEARCH TERMS SUMMARY
+                        </span>
+                        <DoughnutChartSingleEntry
+                          :GtrTermsLength="GtrTermsLength"
+                          :PhenolyzerTermsLength="PhenolyzerTermsLength"
+                          :HpoTermsLength="HpoTermsLength">
+                        </DoughnutChartSingleEntry>
+                      </center>
+                      </v-card-text>
+                    </v-card>
+
                   </div>
 
                   <br>
@@ -177,6 +197,7 @@ import Alerts from '../partials/Alerts.vue';
 import SummarySvgBar from '../viz/SummarySvgBar.vue';
 import progressCircularDonut from '../partials/progressCircularDonut.vue';
 import GenesSelection from '../partials/GenesSelection.vue';
+import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
 
 
   export default {
@@ -188,6 +209,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       'SummarySvgBar': SummarySvgBar,
       'progressCircularDonut': progressCircularDonut,
       'GenesSelection': GenesSelection,
+      'DoughnutChartSingleEntry': DoughnutChartSingleEntry
     },
     props:{
       NumberOfGtrGenes:{
@@ -235,6 +257,15 @@ import GenesSelection from '../partials/GenesSelection.vue';
       },
       phenolyzerCompleteGeneList: {
         type: Array
+      },
+      GtrTermsLength: {
+        type: Number,
+      },
+      PhenolyzerTermsLength: {
+        type: Number
+      },
+      HpoTermsLength: {
+        type: Number
       }
     },
     data: () => ({

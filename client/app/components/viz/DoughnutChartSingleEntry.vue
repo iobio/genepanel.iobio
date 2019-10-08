@@ -24,6 +24,9 @@ var model = new Model();
       PhenolyzerTermsLength: {
         type: Number
       },
+      HpoTermsLength: {
+        type: Number
+      }
     },
     data(){
       return {
@@ -45,6 +48,11 @@ var model = new Model();
         setTimeout(()=>{
           this.drawChart();
         },1200)
+      },
+      HpoTermsLength(){
+        setTimeout(()=>{
+          this.drawChart();
+        },1200)
       }
     },
     methods:{
@@ -61,16 +69,20 @@ var model = new Model();
               labels: [
                     'Gtr Terms',
                     'Phenolyzer Terms',
+                    'HPO Terms'
                 ],
                 datasets: [{
-                    data: [this.GtrTermsLength, this.PhenolyzerTermsLength],
+                    data: [this.GtrTermsLength, this.PhenolyzerTermsLength, this.HpoTermsLength],
                     backgroundColor: [
                       'rgb(255, 159, 64, 0.4)',
-                      'rgba(54, 162, 235, 0.4)'
+                      'rgba(54, 162, 235, 0.4)',
+                      'rgba(255, 195, 51, 0.4)'
+
                     ],
                     borderColor: [
                       'rgb(255, 159, 64, 1)',
-                      'rgba(54, 162, 235, 1)'
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 195, 51, 1)'
                     ],
                     borderWidth: 1
                 }]

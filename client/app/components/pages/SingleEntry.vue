@@ -411,7 +411,10 @@
           v-bind:hpoClinPhenTerms="hpoClinPhenTerms"
           v-bind:gtrCompleteGeneList="gtrCompleteGeneList"
           v-bind:phenolyzerCompleteGeneList="phenolyzerCompleteGeneList"
-          v-bind:isMobile="isMobile">
+          v-bind:isMobile="isMobile"
+          :GtrTermsLength="GtrTermsAdded.length"
+          :PhenolyzerTermsLength="phenolyzerTermsAdded.length"
+          :HpoTermsLength="hpoTermsAdded.length">
         </SummaryTab>
         <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
       </keep-alive>
@@ -457,7 +460,7 @@
                             </v-card-text>
                           </v-card>
 
-                          <v-card v-if="searchComplete" class="mt-4">
+                          <!-- <v-card v-if="searchComplete" class="mt-4">
                             <v-card-text>
                               <div class="text-md-center">
                                 <strong>Search terms summary</strong>
@@ -465,11 +468,12 @@
                               <v-card class="mt-3 mb-3 pl-3 pr-3 pt-3 pb-3">
                                 <DoughnutChartSingleEntry
                                   :GtrTermsLength="GtrTermsAdded.length"
-                                  :PhenolyzerTermsLength="phenolyzerTermsAdded.length">
+                                  :PhenolyzerTermsLength="phenolyzerTermsAdded.length"
+                                  :HpoTermsLength="hpoTermsAdded.length">
                                 </DoughnutChartSingleEntry>
                               </v-card>
                             </v-card-text>
-                          </v-card>
+                          </v-card> -->
                         </div>
                         <div class="col-md-4">
                           <v-card v-if="searchComplete">
