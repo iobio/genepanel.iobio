@@ -223,6 +223,20 @@
                           <span v-else-if="props.item.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
                         </td>
+                        <td >
+                          <span v-if="props.item.hpoSearchStatus==='Searching'">
+                            <v-progress-circular
+                              :width="2"
+                              :size="20"
+                              indeterminate
+                              color="primary"
+                            ></v-progress-circular>
+                          </span>
+                          <span v-else-if="props.item.hpoSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                          <span v-else-if="props.item.hpoSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                          <span v-else-if="props.item.hpoSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
+                        </td>
                       </template>
                     </v-data-table>
                   </v-card-text>
@@ -302,7 +316,7 @@
                   <v-card-title class="headline">Review Terms</v-card-title>
                   <v-card-title v-if="termsReviewDialogPage===1">Select the terms to be searched in GTR:  </v-card-title>
                   <div  v-if="termsReviewDialogPage===1">
-                    <br><br> <i>Please limit to 5 terms in GTR </i>
+                    <br><center><i>Please limit to 5 terms in GTR </i></center>
                   </div>
                   <v-card-title v-if="termsReviewDialogPage===2">Select the terms to be searched in Phenolyzer:</v-card-title>
                   <v-card-title v-if="termsReviewDialogPage===3">Select the terms to be searched in HPO:</v-card-title>
@@ -375,6 +389,9 @@
                         </tbody>
                       </table>
                     </div>
+                    <div v-if="!phenolyzerReviewTerms.length && termsReviewDialogPage===2">
+                      Currently unavailable.
+                    </div>
 
 
                     <!-- HPO review terms table -->
@@ -394,6 +411,10 @@
                         </tbody>
                       </table>
                     </div>
+                    <div v-if="!HpoReviewTerms.length && termsReviewDialogPage===3">
+                      Currently unavailable.
+                    </div>
+
 
 
                   </v-card-text>
@@ -690,6 +711,7 @@ var model = new Model();
           {text: 'Search Term', sortable: false, value: 'DiseaseName'},
           {text: 'GTR Search status', sortable: false, value: 'gtrSearchStatus'},
           {text: 'Phenolyzer Search status', sortable: false, value: 'phenolyzerSearchStatus'},
+          {text: 'HPO Search status', sortable: false, value: 'hpoSearchStatus'},
         ],
         summaryGenes: [],
         gtrGenes: [],
