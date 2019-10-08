@@ -602,6 +602,12 @@ const api = new Client('backend.iobio.io', { secure: true });
         this.$emit("clinphenTerms", []);
         document.getElementById("hpo_input").value="";
       })
+      bus.$on("singleTermSearchHPO", (x)=>{
+        this.searchInput = x;
+        this.checked = false;
+        document.getElementById("hpo_input").value = x.HPO_Data
+        this.searchForTheInputTerm();
+      })
     },
     updated(){
       this.$emit("ClinPhenGenes", this.selected);
@@ -814,6 +820,7 @@ const api = new Client('backend.iobio.io', { secure: true });
         this.items.sort((a,b)=> b.hpoSource - a.hpoSource );
         this.noOfSourcesSvg();
         this.selectGenes();
+        bus.$emit("completeFetchRequest", "hpo");
       },
       noOfSourcesSvg: function(){
         this.items.map((x, i)=>{

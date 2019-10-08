@@ -663,6 +663,7 @@ var model = new Model();
         idx: 0,
         gtrFetchCompleted: false,
         phenolyzerFetchCompleted: false,
+        hpoFetchCompleted: false,
         searchTermsObjHeaders: [
           {text: 'Search Term', sortable: false, value: 'DiseaseName'},
           {text: 'GTR Search status', sortable: false, value: 'gtrSearchStatus'},
@@ -745,6 +746,10 @@ var model = new Model();
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed"
           this.phenolyzerFetchCompleted = true;
         }
+        else if(component === "hpo"){
+          this.searchTermsObj[this.idx].hpoSearchStatus = "Completed"
+          this.hpoFetchCompleted = true;
+        }
         else if(component === "noGenePanels"){
           // console.log("here")
           this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
@@ -761,7 +766,7 @@ var model = new Model();
           this.gtrFetchCompleted = true;
         }
         console.log("searchTermsObj", this.searchTermsObj)
-        if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted){
+        if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted && this.hpoFetchCompleted){
           this.searchTermsObj[this.idx].status = "Completed";
           this.idx = this.idx + 1;
           if(this.idx < this.multipleSearchTerms.length){
@@ -979,7 +984,7 @@ var model = new Model();
         this.searchStatus = true;
         this.searchComplete = false;
         this.expansionpanlExpand = ['true'];
-        var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+        // var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
 
         if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
           this.gtrFetchCompleted = false;
@@ -987,7 +992,8 @@ var model = new Model();
           this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-          // var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
+          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
           bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
           bus.$emit("singleTermSearchPhenolyzer", str);
         }
@@ -996,19 +1002,35 @@ var model = new Model();
           this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
+          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
           this.phenolyzerFetchCompleted = true;
+          this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
         }
         else if(this.searchTermsObj[this.idx].tool_to_search === "Phenolyzer"){
           // this.searchStatus = true;
           // this.gtrFetchCompleted = false;
+          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
           this.phenolyzerFetchCompleted = false;
           this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
           this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
           this.gtrFetchCompleted = true;
+          this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchPhenolyzer", str);
         }
+        else if(this.searchTermsObj[this.idx].tool_to_search === "Hpo"){
+          this.hpoFetchCompleted = false;
+          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
+          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
+          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
+          this.gtrFetchCompleted = true;
+          this.phenolyzerFetchCompleted = true;
+          bus.$emit("singleTermSearchHPO", this.searchTermsObj[this.idx]);
+        }
+
       },
       addTerm(){
         var searchTerm ="";
@@ -1081,6 +1103,7 @@ var model = new Model();
           this.$set(term, 'status', "Not started");
           this.$set(term, 'gtrSearchStatus', "Not started");
           this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          this.$set(term, 'hpoSearchStatus', "Not started");
           this.$set(term, 'tool_to_search', 'GTR');
 
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
@@ -1097,6 +1120,7 @@ var model = new Model();
           this.$set(term, 'status', "Not started");
           this.$set(term, 'gtrSearchStatus', "Not started");
           this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          this.$set(term, 'hpoSearchStatus', "Not started");
           this.$set(term, 'tool_to_search', 'Phenolyzer');
           this.$set(term, 'DiseaseName', term.value);
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
@@ -1106,6 +1130,24 @@ var model = new Model();
             }
           }
         })
+
+        this.hpoTermsAdded.map(term => {
+          var searchTerm ="";
+          searchTerm = term.HPO_Data;
+          this.$set(term, 'status', "Not started");
+          this.$set(term, 'gtrSearchStatus', "Not started");
+          this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          this.$set(term, 'hpoSearchStatus', "Not started");
+          this.$set(term, 'tool_to_search', 'Hpo');
+          this.$set(term, 'DiseaseName', term.HPO_Data);
+          if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+            if(searchTerm.length>1){
+              this.multipleSearchTerms.push(searchTerm);
+              this.searchTermsObj.push(term);
+            }
+          }
+        })
+
         this.termsReviewDialog = false;
         this.search = '';
         this.termsReviewDialogPage = 0;
