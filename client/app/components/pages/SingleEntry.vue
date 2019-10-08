@@ -12,7 +12,7 @@
                   <v-flex xs1 sm1 md1 lg1 xl1>
 
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg3 xl3>
+                  <v-flex xs12 sm12 md12 lg4 xl4>
                     <!-- <div id="dropdown-example">
                       <v-overflow-btn
                          :items="dropdown_tool"
@@ -49,7 +49,7 @@
                   </v-flex>
                   <v-flex xs1 sm1 md1 lg1 xl1>
                   </v-flex>
-                  <v-flex xs12 sm12 md12 lg7 xl7>
+                  <v-flex xs12 sm12 md12 lg6 xl6>
                     <i>(Select a term from typeahead, review the options and click the search button)</i>
                     <br>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
@@ -129,16 +129,20 @@
                 </template>
                 <v-card>
                   <v-card-text>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-2">
                       <strong>GTR Terms: </strong>
                       <br>
                       <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
-                        <v-chip slot="activator" color="primary" text-color="white"  :key="term.DiseaseName" >
-                          {{ i+1 }} . {{ term.DiseaseName }}
+                        <v-chip slot="activator" color="primary" text-color="white"  :key="i" >
+                          <span v-if="term.DiseaseName!==undefined">{{ i+1 }} . {{ term.DiseaseName }}</span>
+                          <span v-else> {{ i+1 }} . {{ term }}</span>
                         </v-chip>
                       </span>
+                      <span v-if="GtrTermsAdded.length===0">
+                        <v-chip ><v-icon left>error_outline</v-icon> No conditions</v-chip>
+                      </span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-2">
                       <strong>Phenolyzer Terms: </strong>
                       <br>
                       <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
@@ -146,14 +150,20 @@
                         {{ i+1 }} . {{ term.value }}
                         </v-chip>
                       </span>
+                      <span v-if="phenolyzerTermsAdded.length===0">
+                        <v-chip ><v-icon left>error_outline</v-icon> No phenotypeSearchTerm</v-chip>
+                      </span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 mb-2">
                       <strong>HPO Terms: </strong>
                       <br>
                       <span v-for="(term, i) in hpoTermsAdded" v-if="hpoTermsAdded.length">
                         <v-chip slot="activator" color="primary" text-color="white"  :key="term.HPO_Data" >
                         {{ i+1 }} . {{ term.HPO_Data }}
                         </v-chip>
+                      </span>
+                      <span v-if="hpoTermsAdded.length===0">
+                        <v-chip ><v-icon left>error_outline</v-icon> No HPO terms</v-chip>
                       </span>
                     </div>
                   </v-card-text>
@@ -339,7 +349,8 @@
                             <th scope="row">
                               <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="term"></v-checkbox>
                             </th>
-                            <td>{{ term.DiseaseName }}</td>
+                            <td v-if="term.DiseaseName!==undefined">{{ term.DiseaseName }}</td>
+                            <td v-else>{{term}}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -716,6 +727,8 @@ var model = new Model();
         HpoTermsTypeaheadData: null,
         HpoReviewTerms: [],
         hpoTermsAdded: [],
+        extractedTerms: [],
+        extractedTermsObj: [],
       }
     },
     mounted(){
@@ -820,6 +833,7 @@ var model = new Model();
       //   }
       // },
       GtrTermsAdded(){
+        console.log("GtrTermsAdded", this.GtrTermsAdded)
         if(this.GtrTermsAdded.length > 5){
           alert("max limit reached for GTR");
           this.GtrTermsAdded.pop();
@@ -885,8 +899,27 @@ var model = new Model();
           .then(data => {
             this.JaroWinkler = data.JaroWinkler;
             this.fuzzyResults = data.fuzzyResults ;
-            console.log(data)
+            data.JaroWinkler.map(x=>{
+              x = x.trim();
+              if(!this.extractedTerms.includes(x)){
+                this.extractedTerms.push(x);
+              }
+            })
+            data.fuzzyResults.map(x=>{
+              x = x.trim()
+              if(!this.extractedTerms.includes(x)){
+                this.extractedTerms.push(x);
+              }
+            })
+            console.log(this.extractedTerms)
+            this.extractedTerms.map(x=>{
+              this.extractedTermsObj.push({
+                DiseaseName: x,
+                ConceptID: ""
+              })
+            })
             this.loadingDialog = false;
+            this.openReviewDialogForExtractedTerms();
           })
       },
       mouseSelect(){
@@ -907,6 +940,16 @@ var model = new Model();
           }, 1000)
         }
       },
+      openReviewDialogForExtractedTerms(){
+        this.GtrReviewTerms = this.extractedTermsObj;
+        console.log("this.GtrReviewTerms", this.GtrReviewTerms)
+        setTimeout(()=>{
+            this.termsReviewDialog = true;
+            this.termsReviewDialogPage = 1;
+            this.loadingDialog = false;
+        },500)
+
+      },
       openReviewDialog(){
         this.GtrReviewTerms = [];
         this.termsExpansionPanel = ['true']
@@ -922,6 +965,7 @@ var model = new Model();
             this.GtrReviewTerms.push(x);
           }
         })
+        console.log("this.GtrReviewTerms", this.GtrReviewTerms)
 
         var str = this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
         str = str.replace("disease", "");
@@ -940,7 +984,6 @@ var model = new Model();
         })
 
         console.log("HpoReviewTerms", this.HpoReviewTerms)
-
 
       setTimeout(()=>{
           this.termsReviewDialog = true;
