@@ -132,14 +132,21 @@
                     <strong>GTR Terms: </strong>
                     <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
                       <v-chip slot="activator" color="primary" text-color="white"  :key="term.DiseaseName" >
-                        {{ term.DiseaseName }}
+                        {{ i+1 }} . {{ term.DiseaseName }}
                       </v-chip>
                     </span>
                     <br>
                     <strong>Phenolyzer Terms: </strong>
                     <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
                       <v-chip slot="activator" color="primary" text-color="white"  :key="term.value" >
-                        {{ term.value }}
+                      {{ i+1 }} . {{ term.value }}
+                      </v-chip>
+                    </span>
+                    <br>
+                    <strong>HPO Terms: </strong>
+                    <span v-for="(term, i) in hpoTermsAdded" v-if="hpoTermsAdded.length">
+                      <v-chip slot="activator" color="primary" text-color="white"  :key="term.HPO_Data" >
+                      {{ i+1 }} . {{ term.HPO_Data }}
                       </v-chip>
                     </span>
                   </v-card-text>
@@ -281,6 +288,7 @@
                     <br><br> <i>Please limit to 5 terms in GTR </i>
                   </div>
                   <v-card-title v-if="termsReviewDialogPage===2">Select the terms to be searched in Phenolyzer:</v-card-title>
+                  <v-card-title v-if="termsReviewDialogPage===3">Select the terms to be searched in HPO:</v-card-title>
 
                   <v-card-text style="height: 430px;">
                     <!-- termsReviewDialogPage: {{ termsReviewDialogPage }}
@@ -351,14 +359,33 @@
                     </div>
 
 
+                    <!-- HPO review terms table -->
+                    <div v-if="HpoReviewTerms.length && termsReviewDialogPage===3">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(term, i) in HpoReviewTerms" :key="i">
+                            <th scope="row">
+                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="hpoTermsAdded" :value="term"></v-checkbox>
+                            </th>
+                            <td>{{ term.HPO_Data }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+
                   </v-card-text>
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
                     <!-- <v-btn small color="blue darken-1" round outline dark text @click="termsReviewDialog=false">Skip</v-btn> -->
                     <v-btn :disabled="termsReviewDialogPage===1" small color="blue darken-1" flat @click="--termsReviewDialogPage">Back</v-btn>
-                    <v-btn :disabled="termsReviewDialogPage>1" small color="blue darken-1" flat @click="++termsReviewDialogPage">Next</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage>2" small color="blue darken-1" flat @click="++termsReviewDialogPage">Next</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn :disabled="termsReviewDialogPage!==2" small color="blue darken-1" flat @click="selectReviewTerms">Done</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage!==3" small color="blue darken-1" flat @click="selectReviewTerms">Done</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -561,6 +588,9 @@ import BarChartSingleEntry from '../viz/BarChartSingleEntry.vue';
 import HorizontalBarChartSingleEntry from '../viz/HorizontalBarChartSingleEntry.vue';
 import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
 import SummaryTab from './SummaryTab.vue';
+import HPO_Phenotypes from '../../../data/HPO_Phenotypes';
+import HPO_Terms from '../../../data/HPO_Terms';
+import HpoTermsData from '../../../data/HpoTermsData'
 var model = new Model();
 
   export default {
@@ -669,9 +699,17 @@ var model = new Model();
         textNotes: '',
         JaroWinkler: [],
         fuzzyResults: [],
+        HPO_Phenotypes_data: null,
+        HPO_Terms_data: null,
+        HpoTermsTypeaheadData: null,
+        HpoReviewTerms: [],
+        hpoTermsAdded: [],
       }
     },
     mounted(){
+      this.HPO_Terms_data = HPO_Terms;
+      this.HPO_Phenotypes_data = HPO_Phenotypes;
+      this.HpoTermsTypeaheadData  = HpoTermsData.data;
       bus.$on("newAnalysis", ()=>{
         this.multipleSearchTerms = [];
         this.searchTermsObj = [];
@@ -855,7 +893,6 @@ var model = new Model();
       },
       openReviewDialog(){
         this.GtrReviewTerms = [];
-
         var term = this.search.DiseaseName.toLowerCase();
         term = term.replace("disease", "");
         term = term.replace("syndrome", "");
@@ -878,6 +915,15 @@ var model = new Model();
         data.then(res => {
           this.phenolyzerReviewTerms = res;
         })
+
+        this.HpoTermsTypeaheadData.forEach(x => {
+          if(x.HPO_Data.toLowerCase().includes(str)){
+            this.HpoReviewTerms.push(x);
+          }
+        })
+
+        console.log("HpoReviewTerms", this.HpoReviewTerms)
+
 
       setTimeout(()=>{
           this.termsReviewDialog = true;
