@@ -129,26 +129,33 @@
                 </template>
                 <v-card>
                   <v-card-text>
-                    <strong>GTR Terms: </strong>
-                    <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
-                      <v-chip slot="activator" color="primary" text-color="white"  :key="term.DiseaseName" >
-                        {{ i+1 }} . {{ term.DiseaseName }}
-                      </v-chip>
-                    </span>
-                    <br>
-                    <strong>Phenolyzer Terms: </strong>
-                    <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
-                      <v-chip slot="activator" color="primary" text-color="white"  :key="term.value" >
-                      {{ i+1 }} . {{ term.value }}
-                      </v-chip>
-                    </span>
-                    <br>
-                    <strong>HPO Terms: </strong>
-                    <span v-for="(term, i) in hpoTermsAdded" v-if="hpoTermsAdded.length">
-                      <v-chip slot="activator" color="primary" text-color="white"  :key="term.HPO_Data" >
-                      {{ i+1 }} . {{ term.HPO_Data }}
-                      </v-chip>
-                    </span>
+                    <div class="col-md-4">
+                      <strong>GTR Terms: </strong>
+                      <br>
+                      <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
+                        <v-chip slot="activator" color="primary" text-color="white"  :key="term.DiseaseName" >
+                          {{ i+1 }} . {{ term.DiseaseName }}
+                        </v-chip>
+                      </span>
+                    </div>
+                    <div class="col-md-4">
+                      <strong>Phenolyzer Terms: </strong>
+                      <br>
+                      <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
+                        <v-chip slot="activator" color="primary" text-color="white"  :key="term.value" >
+                        {{ i+1 }} . {{ term.value }}
+                        </v-chip>
+                      </span>
+                    </div>
+                    <div class="col-md-4">
+                      <strong>HPO Terms: </strong>
+                      <br>
+                      <span v-for="(term, i) in hpoTermsAdded" v-if="hpoTermsAdded.length">
+                        <v-chip slot="activator" color="primary" text-color="white"  :key="term.HPO_Data" >
+                        {{ i+1 }} . {{ term.HPO_Data }}
+                        </v-chip>
+                      </span>
+                    </div>
                   </v-card-text>
                 </v-card>
 
@@ -686,7 +693,7 @@ var model = new Model();
         generalTermsHint: [],
         gtrVizData: {},
         phenolyzerVizData: {},
-        termsExpansionPanel: ['true'],
+        termsExpansionPanel: ['false'],
         expansionpanlExpand: ['true'],
         dropdown_tool: ['All resources', 'GTR', 'Phenolyzer'],
         dropdown_tool_value: 'All resources',
@@ -902,6 +909,7 @@ var model = new Model();
       },
       openReviewDialog(){
         this.GtrReviewTerms = [];
+        this.termsExpansionPanel = ['true']
         var term = this.search.DiseaseName.toLowerCase();
         term = term.replace("disease", "");
         term = term.replace("syndrome", "");
