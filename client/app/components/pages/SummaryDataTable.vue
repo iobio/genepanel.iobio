@@ -75,16 +75,22 @@
             </td>
             <td>
               <center>
-                <span v-for="x in props.item.sourceGTR">
-                  <span v-html="x"></span>
+                <span v-if="props.item.isGtr">
+                  <v-icon style="color:#455A64">check_circle_outline</v-icon>
                 </span>
+                <!-- <span v-for="x in props.item.sourceGTR">
+                  <span v-html="x"></span>
+                </span> -->
               </center>
             </td>
             <td>
               <center>
-                <span v-for="x in props.item.sourcePheno">
-                  <span v-html="x"></span>
+                <span v-if="props.item.isPheno">
+                  <v-icon style="color:#455A64">check_circle_outline</v-icon>
                 </span>
+                <!-- <span v-for="x in props.item.sourcePheno">
+                  <span v-html="x"></span>
+                </span> -->
               </center>
             </td>
             <td>

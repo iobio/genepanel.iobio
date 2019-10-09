@@ -46,7 +46,10 @@
          </v-list-tile-action>
          <v-list-tile-content>
            <v-list-tile-title v-bind:class="[component==='SingleEntry' ? 'activeTabText' : '']">
-             Single Entry
+             Dashboard
+             <v-badge color="primary" right class="badge-bg-color">
+              <span slot="badge">{{ NumberOfAllGenes }}</span>
+            </v-badge>
            </v-list-tile-title>
          </v-list-tile-content>
        </v-list-tile>
@@ -120,7 +123,7 @@
          </v-list-tile-content>
        </v-list-tile>
 
-       <v-list-tile
+       <!-- <v-list-tile
           v-bind:class="[component==='SummaryTab' ? 'activeTab' : '']"
           @click="selectComponent('SummaryTab')">
          <v-list-tile-action v-bind:class="[component==='SummaryTab' ? 'margin_ActiveTab' : '']">
@@ -135,7 +138,7 @@
             </v-badge>
            </v-list-tile-title>
          </v-list-tile-content>
-       </v-list-tile>
+       </v-list-tile> -->
 
        <v-divider
          dark

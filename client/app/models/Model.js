@@ -88,6 +88,7 @@ export default class Model {
           var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
           $.ajax( summaryUrl )
           .done(function(data) {
+            console.log("data in summaryUrl", data)
             if (data.childNodes.length < 2) {
               if (data.esummaryresult && data.esummaryresult.length > 0) {
                 sumData.esummaryresult.forEach( function(message) {
@@ -306,10 +307,11 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
 
   var diseaseTitle = encodeURIComponent(disease.Title.trim());
     var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
-    var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+    var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=xml&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
     $.ajax( searchUrl )
     .done(function(data) {
-      console.log("XMLsearchUrl", XMLsearchUrl)
+      // console.log("data innerHTML", data.childNodes[1].innerHTML)
+      // console.log("XMLsearchUrl", XMLsearchUrl)
       if (data["esearchresult"]["ERROR"] != undefined) {
         msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
         reject(msg);

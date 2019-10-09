@@ -7,7 +7,7 @@
             <!-- <v-card v-if="!searchComplete"> -->
             <v-card>
               <v-card-text>
-                <h3>Dashboard</h3>
+                <!-- <center><h3>Dashboard</h3></center> -->
                 <v-layout row wrap class="mt-3">
                   <v-flex xs1 sm1 md1 lg1 xl1>
 
@@ -32,6 +32,7 @@
                       id="single_entry_input_textarea"
                       name="input-7-4"
                       rows="3"
+                      style="padding-top:5px"
                     ></v-textarea>
                     <v-btn @click="extract" color="primary">Submit</v-btn>
                     <!-- <br><hr><p></p>
@@ -816,7 +817,9 @@ var model = new Model();
           this.searchTermsObj[this.idx].status = "Completed";
           this.idx = this.idx + 1;
           if(this.idx < this.multipleSearchTerms.length){
-            this.performSearchEvent();
+            setTimeout(()=>{
+              this.performSearchEvent();
+            },5000)
           }
           else {
             this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
