@@ -88,7 +88,6 @@ export default class Model {
           var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&WebEnv=" + webenv + "&usehistory=y"
           $.ajax( summaryUrl )
           .done(function(data) {
-            console.log("data in summaryUrl", data)
             if (data.childNodes.length < 2) {
               if (data.esummaryresult && data.esummaryresult.length > 0) {
                 sumData.esummaryresult.forEach( function(message) {
@@ -321,65 +320,61 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
     var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=xml&term=${diseaseTitle}%5D&retmax=499&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
 
     setTimeout(()=>{
-      console.log("setting delay")
+      $.ajax( searchUrl )
+      .done(function(data) {
+        setTimeout(()=>{
+          // If using xml url
+          // var r = data.childNodes[1].innerHTML
+          // r = `<esearchresult>${r}</esearchresult>`
+          // data = me.x2js.xml2js(r);
 
-          $.ajax( searchUrl )
-          .done(function(data) {
-            console.log("request sent")
-            setTimeout(()=>{
-              console.log("delaying")
-              // If using xml url
-              // var r = data.childNodes[1].innerHTML
-              // r = `<esearchresult>${r}</esearchresult>`
-              // data = me.x2js.xml2js(r);
-
-              if (data["esearchresult"]["ERROR"] != undefined) {
-                msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
-                reject(msg);
+          if (data["esearchresult"]["ERROR"] != undefined) {
+            msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
+            reject(msg);
+          } else {
+            var webenv = data["esearchresult"]["webenv"];
+            var queryKey = data["esearchresult"]["querykey"];
+            // If using XML url
+            // var webenv = data["esearchresult"]["WebEnv"];
+            // var queryKey = data["esearchresult"]["QueryKey"];
+            var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&retmax=499&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+            var xmlSummaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=xml&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+            $.ajax( summaryUrl )
+            .done(function(sumData) {
+              if (sumData.result == null) {
+                if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
+                  sumData.esummaryresult.forEach( function(message) {
+                  });
+                }
+                resolve({'disease': disease, 'genePanels': []})
               } else {
-                var webenv = data["esearchresult"]["webenv"];
-                var queryKey = data["esearchresult"]["querykey"];
-                // If using XML url
-                // var webenv = data["esearchresult"]["WebEnv"];
-                // var queryKey = data["esearchresult"]["QueryKey"];
-                var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&retmax=499&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
-                var xmlSummaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=xml&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
-                $.ajax( summaryUrl )
-                .done(function(sumData) {
-                  if (sumData.result == null) {
-                    if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
-                      sumData.esummaryresult.forEach( function(message) {
-                      });
-                    }
-                    resolve({'disease': disease, 'genePanels': []})
-                  } else {
-                    var genePanels = [];
-                    for (var key in sumData.result) {
-                      if (key != 'uids') {
-                        genePanels.push(sumData.result[key]);
-                      }
-                    }
-                    // console.log("{'disease': disease, 'genePanels': genePanels}", {'disease': disease, 'genePanels': genePanels})
-                    resolve({'disease': disease, 'genePanels': genePanels});
+                var genePanels = [];
+                for (var key in sumData.result) {
+                  if (key != 'uids') {
+                    genePanels.push(sumData.result[key]);
                   }
-                })
-                .fail(function(err) {
-                  var msg = "Error in gtr summary. ";
-                  console.log(msg);
-                  console.log(err)
-                  // reject(msg);
-                  resolve({'disease': disease, 'genePanels': []})
-                })
+                }
+                // console.log("{'disease': disease, 'genePanels': genePanels}", {'disease': disease, 'genePanels': genePanels})
+                resolve({'disease': disease, 'genePanels': genePanels});
               }
+            })
+            .fail(function(err) {
+              var msg = "Error in gtr summary. ";
+              // console.log(msg);
+              console.log(err)
+              // reject(msg);
+              resolve({'disease': disease, 'genePanels': []})
+            })
+          }
 
-            },2000)
-          })
-          .fail(function(data) {
-              var msg = "Error in gtr search. ";
-              console.log(msg)
-              reject(msg);
-          })
-    }, 1000);
+        },200)
+      })
+      .fail(function(data) {
+          var msg = "Error in gtr search. ";
+          console.log(msg)
+          reject(msg);
+      })
+    }, 200);
 
 
 

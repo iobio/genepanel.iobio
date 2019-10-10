@@ -429,36 +429,24 @@ var model = new Model();
               }
               else {
                 if(diseases.length>0){
-                  // loopFunc(diseases);
-                  // diseases.forEach((disease)=>{
-                  //   // var p = model.promiseGetGenePanelsUsingSearchTermEsearch(disease);
-                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
-                  // // var p = model.promiseGetGenePanelsWithAPI(disease);
-                  //   p.then((data)=>{
-                  //       var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                  //       data.disease.genePanels = filteredGenePanels;
-                  //   },
-                  //   function(error) {
-                  //     console.log("error", error)
-                  //   })
-                  //    promises.push(p);
-                  // })
                   data.diseases.forEach((disease, i) => {
-                    (function(ind) {
-                      setTimeout(function(){
-                        console.log(disease);
+                    ((ind) =>{
+                      setTimeout(() =>{
                         var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
                           .then((data)=>{
-                            console.log("data received", data)
                               var filteredGenePanels = model.processGenePanelData(data.genePanels);
                               data.disease.genePanels = filteredGenePanels;
                           },
                           function(error) {
                             console.log("error", error)
                           })
-                           promises.push(p);
-                      }, 1000 + (3000 * ind));
+                          promises.push(p);
+                          if(ind===diseases.length-1){
+                            checkPromisesLength(promises);
+                          }
+                      }, 1000 + (1000 * ind));
                     })(i);
+
                   })
                 }
                 else {
@@ -494,27 +482,46 @@ var model = new Model();
                       console.log("error", error)
                     })
                      promises.push(p);
+                     checkPromisesLength(promises);
                   })
-
 
                 }
               }
 
+              var checkPromisesLength = (promises)=>{
+                Promise.all(promises).then(function(){
+                  if(diseases.length===1 && diseases[0].genePanels===undefined){
+                    comeOutOfPromise();
+                  }
+                  else {
+                    filteredDiseases = model.processDiseaseData(diseases);
+                    if(filteredDiseases.length<1 && diseases.length<8){
+                      filteredDiseases = tryByUsingConceptId();
+                    }
+                    else if(!maxDiseasesLimit){
+                      addFilteredDiseases(filteredDiseases);
+                    }
+                  }
+                })
 
-              Promise.all(promises).then(function(){
-                if(diseases.length===1 && diseases[0].genePanels===undefined){
-                  comeOutOfPromise();
-                }
-                else {
-                  filteredDiseases = model.processDiseaseData(diseases);
-                  if(filteredDiseases.length<1 && diseases.length<8){
-                    filteredDiseases = tryByUsingConceptId();
-                  }
-                  else if(!maxDiseasesLimit){
-                    addFilteredDiseases(filteredDiseases);
-                  }
-                }
-              })
+              }
+              // Promise.all(promises).then(function(){
+              //   console.log("four")
+              //
+              //   if(diseases.length===1 && diseases[0].genePanels===undefined){
+              //     comeOutOfPromise();
+              //   }
+              //   else {
+              //     console.log("five")
+              //     filteredDiseases = model.processDiseaseData(diseases);
+              //     if(filteredDiseases.length<1 && diseases.length<8){
+              //       filteredDiseases = tryByUsingConceptId();
+              //     }
+              //     else if(!maxDiseasesLimit){
+              //       addFilteredDiseases(filteredDiseases);
+              //     }
+              //   }
+              // })
             })
 
             var callAfunction = (promises)=>{
@@ -533,39 +540,6 @@ var model = new Model();
                   }
                 }
               })
-            }
-
-            var loopFunc = (diseases) => {
-              console.log("inside loop");
-              var i = 0;
-              var len = diseases.length
-              setTimeout(()=>{
-                if(i < len){
-                  frame(diseases[i], i);
-                }
-              }, 1000)
-
-            }
-
-            var frame = (disease, i) => {
-                console.log("inside frame", i)
-                getAndPushData(disease)
-            }
-
-
-            var getAndPushData = async (disease) =>{
-              console.log("inside getAndPushData")
-              var p = await model.promiseGetGenePanelsUsingSearchTerm(disease);
-              // var p = model.promiseGetGenePanelsWithAPI(disease);
-                p.then((data)=>{
-                  console.log(data)
-                    var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                    data.disease.genePanels = filteredGenePanels;
-                },
-                function(error) {
-                  console.log("error", error)
-                })
-                 promises.push(p);
             }
 
 
