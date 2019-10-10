@@ -423,25 +423,42 @@ var model = new Model();
               var filteredDiseases;
               var maxDiseasesLimit = false;
               // if(diseases.length>7){
-              if(diseases.length>700){
+              if(diseases.length>70){
                 maxDiseasesLimit = true;
                 comeOutOfPromise1(diseases);
               }
               else {
                 if(diseases.length>0){
                   // loopFunc(diseases);
-                  diseases.forEach((disease)=>{
-                  var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
-                  // var p = model.promiseGetGenePanelsWithAPI(disease);
-                    p.then((data)=>{
-                      console.log(data)
-                        var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                        data.disease.genePanels = filteredGenePanels;
-                    },
-                    function(error) {
-                      console.log("error", error)
-                    })
-                     promises.push(p);
+                  // diseases.forEach((disease)=>{
+                  //   // var p = model.promiseGetGenePanelsUsingSearchTermEsearch(disease);
+                  // var p = model.promiseGetGenePanelsUsingSearchTerm(disease);
+                  // // var p = model.promiseGetGenePanelsWithAPI(disease);
+                  //   p.then((data)=>{
+                  //       var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                  //       data.disease.genePanels = filteredGenePanels;
+                  //   },
+                  //   function(error) {
+                  //     console.log("error", error)
+                  //   })
+                  //    promises.push(p);
+                  // })
+                  data.diseases.forEach((disease, i) => {
+                    (function(ind) {
+                      setTimeout(function(){
+                        console.log(disease);
+                        var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                          .then((data)=>{
+                            console.log("data received", data)
+                              var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                              data.disease.genePanels = filteredGenePanels;
+                          },
+                          function(error) {
+                            console.log("error", error)
+                          })
+                           promises.push(p);
+                      }, 1000 + (3000 * ind));
+                    })(i);
                   })
                 }
                 else {
@@ -478,9 +495,10 @@ var model = new Model();
                     })
                      promises.push(p);
                   })
+
+
                 }
               }
-
 
 
               Promise.all(promises).then(function(){
@@ -519,10 +537,6 @@ var model = new Model();
 
             var loopFunc = (diseases) => {
               console.log("inside loop");
-              // for(let i=0; i<diseases.length; i++){
-              //
-              // }
-              // setInterval(frame.bind(null, diseases), 7000);
               var i = 0;
               var len = diseases.length
               setTimeout(()=>{
@@ -533,8 +547,8 @@ var model = new Model();
 
             }
 
-            var frame = (disease) => {
-                console.log("inside frame")
+            var frame = (disease, i) => {
+                console.log("inside frame", i)
                 getAndPushData(disease)
             }
 

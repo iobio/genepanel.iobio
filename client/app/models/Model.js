@@ -1,7 +1,7 @@
 const x2js = require('x2js');
 const LZUTF8 = require('lzutf8');
 // var brotli = require('brotli');
-const { StringDecoder } = require('string_decoder');
+// const { StringDecoder } = require('string_decoder');
 
 
 export default class Model {
@@ -301,61 +301,87 @@ promiseGetGenePanelsWithAPI(disease){
   })
 }
 
+promiseGetGenePanelsUsingSearchTermEsearch(disease){
+  return new Promise(function(resolve, reject) {
+    var diseaseTitle = encodeURIComponent(disease.Title.trim());
+    var searchUrl = `http://localhost:4048/esearch-wrapper/?diseaseName=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+    $.ajax(searchUrl)
+      .done(function(data){
+        console.log(data)
+      })
+  });
+}
+
 promiseGetGenePanelsUsingSearchTerm(disease) {
   var me = this;
   return new Promise(function(resolve, reject) {
 
   var diseaseTitle = encodeURIComponent(disease.Title.trim());
-    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
-    var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=xml&term=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
-    $.ajax( searchUrl )
-    .done(function(data) {
-      // console.log("data innerHTML", data.childNodes[1].innerHTML)
-      // console.log("XMLsearchUrl", XMLsearchUrl)
-      if (data["esearchresult"]["ERROR"] != undefined) {
-        msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
-        reject(msg);
-      } else {
-        var webenv = data["esearchresult"]["webenv"];
-        var queryKey = data["esearchresult"]["querykey"];
-        var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
-        var xmlSummaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=xml&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
-        console.log(xmlSummaryUrl)
-        $.ajax( summaryUrl )
-        .done(function(sumData) {
-          console.log("data", sumData)
+    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=499&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+    var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=xml&term=${diseaseTitle}%5D&retmax=499&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
 
-          if (sumData.result == null) {
-            if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
-              sumData.esummaryresult.forEach( function(message) {
-              });
-            }
-            resolve({'disease': disease, 'genePanels': []})
-          } else {
-            var genePanels = [];
-            for (var key in sumData.result) {
-              if (key != 'uids') {
-                genePanels.push(sumData.result[key]);
+    setTimeout(()=>{
+      console.log("setting delay")
+
+          $.ajax( searchUrl )
+          .done(function(data) {
+            console.log("request sent")
+            setTimeout(()=>{
+              console.log("delaying")
+              // If using xml url
+              // var r = data.childNodes[1].innerHTML
+              // r = `<esearchresult>${r}</esearchresult>`
+              // data = me.x2js.xml2js(r);
+
+              if (data["esearchresult"]["ERROR"] != undefined) {
+                msg = "gene panel search error: " + data["esearchresult"]["ERROR"];
+                reject(msg);
+              } else {
+                var webenv = data["esearchresult"]["webenv"];
+                var queryKey = data["esearchresult"]["querykey"];
+                // If using XML url
+                // var webenv = data["esearchresult"]["WebEnv"];
+                // var queryKey = data["esearchresult"]["QueryKey"];
+                var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&retmax=499&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+                var xmlSummaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=xml&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+                $.ajax( summaryUrl )
+                .done(function(sumData) {
+                  if (sumData.result == null) {
+                    if (sumData.esummaryresult && sumData.esummaryresult.length > 0) {
+                      sumData.esummaryresult.forEach( function(message) {
+                      });
+                    }
+                    resolve({'disease': disease, 'genePanels': []})
+                  } else {
+                    var genePanels = [];
+                    for (var key in sumData.result) {
+                      if (key != 'uids') {
+                        genePanels.push(sumData.result[key]);
+                      }
+                    }
+                    // console.log("{'disease': disease, 'genePanels': genePanels}", {'disease': disease, 'genePanels': genePanels})
+                    resolve({'disease': disease, 'genePanels': genePanels});
+                  }
+                })
+                .fail(function(err) {
+                  var msg = "Error in gtr summary. ";
+                  console.log(msg);
+                  console.log(err)
+                  // reject(msg);
+                  resolve({'disease': disease, 'genePanels': []})
+                })
               }
-            }
-            // console.log("{'disease': disease, 'genePanels': genePanels}", {'disease': disease, 'genePanels': genePanels})
-            resolve({'disease': disease, 'genePanels': genePanels});
-          }
-        })
-        .fail(function() {
-          var msg = "Error in gtr summary. ";
-          console.log(msg);
-          // reject(msg);
-          resolve({'disease': disease, 'genePanels': []})
-        })
-      }
 
-    })
-    .fail(function(data) {
-        var msg = "Error in gtr search. ";
-        console.log(msg)
-        reject(msg);
-    })
+            },2000)
+          })
+          .fail(function(data) {
+              var msg = "Error in gtr search. ";
+              console.log(msg)
+              reject(msg);
+          })
+    }, 1000);
+
+
 
   })
 
