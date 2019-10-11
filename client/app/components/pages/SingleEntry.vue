@@ -953,6 +953,7 @@ var model = new Model();
               var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
               str = str.replace("disease", "");
               str = str.replace("syndrome", "");
+              str = str.replace("disorder", "");
               str = str.trim();
               this.phenolyzerReviewTerms.push({
                 id: str,
@@ -1043,6 +1044,7 @@ var model = new Model();
         var term = this.search.DiseaseName.toLowerCase();
         term = term.replace("disease", "");
         term = term.replace("syndrome", "");
+        term = term.replace("disorder", "");
         term = term.trim();
         DiseaseNamesData.data.forEach(x => {
           // if(x.DiseaseName.toLowerCase().split(' ').includes(term)){
@@ -1057,6 +1059,7 @@ var model = new Model();
         var str = this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
         str = str.replace("disease", "");
         str = str.replace("syndrome", "");
+        str = str.replace("disorder", "");
         str = str.trim();
 
         var data = this.setPhenolyzerTerms(str);
