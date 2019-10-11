@@ -622,7 +622,10 @@ import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
 import SummaryTab from './SummaryTab.vue';
 import HPO_Phenotypes from '../../../data/HPO_Phenotypes';
 import HPO_Terms from '../../../data/HPO_Terms';
-import HpoTermsData from '../../../data/HpoTermsData'
+import HpoTermsData from '../../../data/HpoTermsData';
+import { Client } from 'iobio-api-client';
+const api = new Client('backend.iobio.io', { secure: true });
+
 var model = new Model();
 
   export default {
@@ -930,6 +933,7 @@ var model = new Model();
             })
             console.log(this.extractedTerms);
 
+            // If fine tuning of phenotypes required:
             // var phenotypeTerms = [];
             // var promises = [];
             // this.extractedTerms.map(x => {
@@ -956,8 +960,9 @@ var model = new Model();
                 label: str
               })
             })
-
             console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
+
+            this.fetchHpoTerm();
 
             this.extractedTerms.map(x=>{
               this.extractedTermsObj.push({
@@ -995,6 +1000,42 @@ var model = new Model();
             this.loadingDialog = false;
         },500)
 
+      },
+      fetchHpoTerm(){
+        const cmd = api.clinphen({ notes: `${this.textNotes}`});
+        cmd.then((data) => {
+          this.parseTerms(data);
+        });
+      },
+      parseTerms(res){
+        var count = 0;
+        var hpoTermArr = [];
+        var terms = [];
+        res.split("\n").forEach(function(rec){
+          var fields = rec.split("\t");
+          if(fields.length===5){
+            var hpoNumber = fields[0];
+            var phenotype = fields[1];
+            var occurrences = fields[2];
+            var earliness = fields[3];
+            var sentence = fields[4];
+            terms.push(hpoNumber)
+            hpoTermArr.push(
+              {
+                hpoNumber:hpoNumber,
+                phenotype:phenotype,
+                occurrences:occurrences,
+                earliness:earliness,
+                sentence:sentence,
+                HPO_Data: `${phenotype} - [ ${hpoNumber} ]`
+              }
+            )
+          }
+        })
+        hpoTermArr.shift();
+        terms.shift();
+        console.log("hpoTermArr", hpoTermArr)
+        this.HpoReviewTerms = hpoTermArr;
       },
       openReviewDialog(){
         this.GtrReviewTerms = [];
