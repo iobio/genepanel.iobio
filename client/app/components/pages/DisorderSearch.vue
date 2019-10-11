@@ -215,6 +215,7 @@ var model = new Model();
          bus.$emit("hideContentLoader");
        });
        bus.$on("singleTermSearchGTR", (x)=>{
+         console.log("x", x)
          this.search = x;
          this.checked = false;
          this.checkBeforePerformSearch();
@@ -380,11 +381,17 @@ var model = new Model();
       },
       performSearch: function(){
         // this.$emit('showDiseases', []);
+        console.log("search concept id", this.search.conceptId)
         this.singleItemTypeAhead = false;
         $("#addedterm").remove();
         var searchTerm ="";
-        var conceptId = ""
-        if(this.search.DiseaseName!==undefined){
+        var conceptId = "";
+        if(this.search.DiseaseName!==undefined && this.search.ConceptID===undefined){
+          console.log("here")
+          searchTerm = this.search.DiseaseName;
+          conceptId = this.getConcpetId(searchTerm);
+        }
+        else if(this.search.DiseaseName!==undefined){
           searchTerm = this.search.DiseaseName;
           conceptId = this.search.ConceptID;
         }
@@ -415,10 +422,11 @@ var model = new Model();
             // .then(function(dataItem){
             //   var data = dataItem.Item
             //   console.log(dataItem)
-            //   console.log(data)
+              console.log(data)
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
+              console.log("diseases", diseases)
               var promises = [];
               var filteredDiseases;
               var maxDiseasesLimit = false;
@@ -482,7 +490,7 @@ var model = new Model();
                       console.log("error", error)
                     })
                      promises.push(p);
-                     checkPromisesLength(promises);
+                      // checkPromisesLength(promises);
                   })
 
                 }

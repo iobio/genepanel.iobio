@@ -968,7 +968,6 @@ var model = new Model();
             this.extractedTerms.map(x=>{
               this.extractedTermsObj.push({
                 DiseaseName: x,
-                ConceptID: "",
               })
             })
             this.loadingDialog = false;
