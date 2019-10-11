@@ -35,18 +35,6 @@
                       style="padding-top:5px"
                     ></v-textarea>
                     <v-btn @click="extract" color="primary">Submit</v-btn>
-                    <!-- <br><hr><p></p>
-                    <strong>JaroWinkler terms: </strong>
-                    <span v-for="term in JaroWinkler">
-                      <v-chip >{{ term }}</v-chip>
-                    </span>
-                    <p></p>
-                    <br>
-                    <strong>fuzzy terms: </strong>
-                    <span v-for="term in fuzzyResults">
-                      <v-chip >{{ term }}</v-chip>
-                    </span>
-                    <p></p> -->
                   </v-flex>
                   <v-flex xs1 sm1 md1 lg1 xl1>
                   </v-flex>
@@ -911,9 +899,13 @@ var model = new Model();
     },
     methods:{
       setPhenolyzerTerms(str){
+        console.log("str in setPhenolyzerTerms", str)
         return fetch(`https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
             .then(response => response.json())
-            .then(data => data)
+            .then(data => {
+              console.log(data);
+              return data
+            })
       },
       extract(){
         this.JaroWinkler = [];
@@ -936,11 +928,41 @@ var model = new Model();
                 this.extractedTerms.push(x);
               }
             })
-            console.log(this.extractedTerms)
+            console.log(this.extractedTerms);
+
+            // var phenotypeTerms = [];
+            // var promises = [];
+            // this.extractedTerms.map(x => {
+            //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+            //   str = str.replace("disease", "");
+            //   str = str.replace("syndrome", "");
+            //   str = str.trim();
+            //   var data = this.setPhenolyzerTerms(str);
+            //   data.then(res => {
+            //     console.log("res", res)
+            //     phenotypeTerms = [...phenotypeTerms, ...res];
+            //     console.log("phenotypeTerms", phenotypeTerms)
+            //   })
+            // })
+
+            this.extractedTerms.map(x => {
+              var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+              str = str.replace("disease", "");
+              str = str.replace("syndrome", "");
+              str = str.trim();
+              this.phenolyzerReviewTerms.push({
+                id: str,
+                value: str,
+                label: str
+              })
+            })
+
+            console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
+
             this.extractedTerms.map(x=>{
               this.extractedTermsObj.push({
                 DiseaseName: x,
-                ConceptID: ""
+                ConceptID: "",
               })
             })
             this.loadingDialog = false;
@@ -967,7 +989,6 @@ var model = new Model();
       },
       openReviewDialogForExtractedTerms(){
         this.GtrReviewTerms = this.extractedTermsObj;
-        console.log("this.GtrReviewTerms", this.GtrReviewTerms)
         setTimeout(()=>{
             this.termsReviewDialog = true;
             this.termsReviewDialogPage = 1;
