@@ -175,8 +175,94 @@
                 </template>
                 <v-card>
                   <v-card-text>
-                    <!-- Datatable -->
-                    <v-data-table
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-4">
+                          <table class="table">
+                            <thead>
+                              <tr> <strong>GTR Search status</strong></tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(term, i) in Gtr_searchTermsObj" :key="i">
+                                <td>{{ term.DiseaseName }}</td>
+                                <td >
+                                  <span v-if="term.gtrSearchStatus==='Searching'">
+                                    <v-progress-circular
+                                      :width="2"
+                                      :size="20"
+                                      indeterminate
+                                      color="primary"
+                                    ></v-progress-circular>
+                                  </span>
+                                  <span v-else-if="term.gtrSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                                  <span v-else-if="term.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                                  <span v-else-if="term.gtrSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                                  <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div class="col-md-4">
+                          <table class="table">
+                            <thead>
+                              <tr> <strong>Phenolyzer Search status</strong></tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(term, i) in Phenolyzer_searchTermsObj" :key="i">
+                                <td>{{ term.value }}</td>
+                                <td >
+                                  <span v-if="term.phenolyzerSearchStatus==='Searching'">
+                                    <v-progress-circular
+                                      :width="2"
+                                      :size="20"
+                                      indeterminate
+                                      color="primary"
+                                    ></v-progress-circular>
+                                  </span>
+                                  <span v-else-if="term.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                                  <span v-else-if="term.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                                  <span v-else-if="term.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                                  <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div class="col-md-4">
+                          <table class="table">
+                            <thead>
+                              <tr> <strong>HPO Search status</strong></tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(term, i) in Hpo_searchTermsObj" :key="i">
+                                <td>{{ term.HPO_Data }}</td>
+                                <td >
+                                  <span v-if="term.hpoSearchStatus==='Searching'">
+                                    <v-progress-circular
+                                      :width="2"
+                                      :size="20"
+                                      indeterminate
+                                      color="primary"
+                                    ></v-progress-circular>
+                                  </span>
+                                  <span v-else-if="term.hpoSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                                  <span v-else-if="term.hpoSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                                  <span v-else-if="term.hpoSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                                  <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+                    <!-- <v-data-table
                       v-if="searchStatus"
                       :headers="searchTermsObjHeaders"
                       :items="searchTermsObj"
@@ -227,11 +313,14 @@
                           <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
                         </td>
                       </template>
-                    </v-data-table>
+                    </v-data-table> -->
+
                   </v-card-text>
                 </v-card>
               </v-expansion-panel-content>
             </v-expansion-panel>
+
+
             <v-card>
               <v-dialog
                 v-model="alertWarning"
@@ -447,15 +536,11 @@
         <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
       </keep-alive>
 
-      <v-container fluid grid-list-md>
+      <!-- <v-container fluid grid-list-md>
         <v-layout row wrap>
           <v-flex d-flex xs12>
-            <!-- <v-card>
-              <v-card-text> -->
                 <v-layout row wrap>
                   <div class="col-md-12" style="padding-right:4px; padding-left:4px">
-                    <!-- <v-card>
-                      <v-card-text> -->
                         <div class="col-md-4">
                           <v-card v-if="searchComplete">
                             <v-card-text class="text-md-center">
@@ -484,9 +569,8 @@
                                   :VizData="gtrGenes">
                                 </BarChartSingleEntry>
                               </v-card>
-                              <!-- <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('gtr')"> Add/ Update in GTR </v-btn> -->
                             </v-card-text>
-                          </v-card>
+                          </v-card> -->
 
                           <!-- <v-card v-if="searchComplete" class="mt-4">
                             <v-card-text>
@@ -502,7 +586,7 @@
                               </v-card>
                             </v-card-text>
                           </v-card> -->
-                        </div>
+                        <!-- </div>
                         <div class="col-md-4">
                           <v-card v-if="searchComplete">
                             <v-card-text class="text-md-center">
@@ -531,7 +615,6 @@
                                   :VizData="phenolyzerGenes">
                                 </HorizontalBarChartSingleEntry>
                               </v-card>
-                              <!-- <v-btn round small style="text-transform:none" outline color="primary" @click="selectComponent('phenolyzer')"> Add/ Update in Phenolyzer </v-btn> -->
                             </v-card-text>
                           </v-card>
                         </div>
@@ -556,7 +639,6 @@
                               </div>
                               <v-card >
                                 <v-card-text>
-                                  <!-- Datatable -->
                                   <v-data-table
                                     :headers="summaryGenesHeader"
                                     :items="summaryGenes"
@@ -574,7 +656,7 @@
                               </div>
                             </v-card-text>
                           </v-card>
-                        </div>
+                        </div> -->
 <!--
                         <div class="col-md-4">
                           <v-card v-if="searchComplete">
@@ -592,13 +674,11 @@
                           </v-card>
                         </div> -->
 
-                  </div>
+                  <!-- </div>
                 </v-layout>
-              <!-- </v-card-text>
-            </v-card> -->
           </v-flex>
         </v-layout>
-      </v-container>
+      </v-container> -->
       <v-container fluid grid-list-md style="min-height:300px">
       </v-container>
 
@@ -743,6 +823,12 @@ var model = new Model();
         hpoTermsAdded: [],
         extractedTerms: [],
         extractedTermsObj: [],
+        Gtr_searchTermsObj: [],
+        Phenolyzer_searchTermsObj: [],
+        Hpo_searchTermsObj: [],
+        Gtr_idx: 0,
+        Phenolyzer_idx: 0,
+        Hpo_idx: 0,
       }
     },
     mounted(){
@@ -775,18 +861,43 @@ var model = new Model();
       })
       bus.$on("completeFetchRequest", (component)=>{
         if(component === "GTR"){
-          console.log(" GTR completed!")
           this.searchTermsObj[this.idx].gtrSearchStatus = "Completed";
           this.gtrFetchCompleted = true;
+          this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "Completed";
+          this.Gtr_idx = this.Gtr_idx + 1;
+          if(this.Gtr_idx < this.Gtr_searchTermsObj.length){
+            setTimeout(()=>{
+              this.Gtr_performSearchEvent();
+            },1000)
+          }
+          else {
+            //checkToCloseSearchStatusDialog
+          }
         }
         else if(component === "Phenolyzer"){
           console.log("Phenolyzer completed!");
-          this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed"
+          this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed";
           this.phenolyzerFetchCompleted = true;
+          this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Completed";
+          this.Phenolyzer_idx = this.Phenolyzer_idx + 1;
+          if(this.Phenolyzer_idx < this.Phenolyzer_searchTermsObj.length){
+            setTimeout(()=>{
+              this.Phenolyzer_performSearchEvent();
+            },1000)
+          }
         }
         else if(component === "hpo"){
-          this.searchTermsObj[this.idx].hpoSearchStatus = "Completed"
+          this.searchTermsObj[this.idx].hpoSearchStatus = "Completed";
           this.hpoFetchCompleted = true;
+          this.Hpo_searchTermsObj[this.Hpo_idx].hpoSearchStatus = "Completed";
+          this.Hpo_idx = this.Hpo_idx + 1;
+          if(this.Hpo_idx < this.Hpo_searchTermsObj.length){
+            setTimeout(()=>{
+              this.Hpo_performSearchEvent();
+            },1000)
+          }
+
+
         }
         else if(component === "noGenePanels"){
           // console.log("here")
@@ -803,21 +914,21 @@ var model = new Model();
           this.searchTermsObj[this.idx].gtrSearchStatus = "NotAvailable"
           this.gtrFetchCompleted = true;
         }
-        console.log("searchTermsObj", this.searchTermsObj)
-        if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted && this.hpoFetchCompleted){
-          this.searchTermsObj[this.idx].status = "Completed";
-          this.idx = this.idx + 1;
-          if(this.idx < this.multipleSearchTerms.length){
-            setTimeout(()=>{
-              this.performSearchEvent();
-            },5000)
-          }
-          else {
-            this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
-            this.expansionpanlExpand = [];
-            this.searchComplete = true;
-          }
-        }
+        // console.log("searchTermsObj", this.searchTermsObj)
+        // if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted && this.hpoFetchCompleted){
+        //   this.searchTermsObj[this.idx].status = "Completed";
+        //   this.idx = this.idx + 1;
+        //   if(this.idx < this.multipleSearchTerms.length){
+        //     setTimeout(()=>{
+        //       this.performSearchEvent();
+        //     },5000)
+        //   }
+        //   else {
+        //     this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
+        //     this.expansionpanlExpand = [];
+        //     this.searchComplete = true;
+        //   }
+        // }
       })
 
       bus.$on("handleGeneralTermsInSingleEntry", (diseases)=>{
@@ -1124,56 +1235,110 @@ var model = new Model();
       checkBeforeAddTerm(){
         this.addTerm();
       },
-      performSearchEvent(){
-        this.searchStatus = true;
-        this.searchComplete = false;
-        this.expansionpanlExpand = ['true'];
-        // var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+      Gtr_performSearchEvent(){
+        if(this.Gtr_searchTermsObj.length){
+          this.searchStatus = true;
+          this.searchComplete = false;
+          this.expansionpanlExpand = ['true'];
 
-        if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
           this.gtrFetchCompleted = false;
-          this.phenolyzerFetchCompleted = false;
-          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
-          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
-          bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
-          bus.$emit("singleTermSearchPhenolyzer", str);
-        }
-        else if(this.searchTermsObj[this.idx].tool_to_search === "GTR"){
-          this.gtrFetchCompleted = false;
-          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
-          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
+          this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'status', "Searching");
+          this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'gtrSearchStatus', "Searching");
+          this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'phenolyzerSearchStatus', "NotAvailable");
+          this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'hpoSearchStatus', "NotAvailable");
           this.phenolyzerFetchCompleted = true;
           this.hpoFetchCompleted = true;
-          bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
+          bus.$emit("singleTermSearchGTR", this.Gtr_searchTermsObj[this.Gtr_idx]);
         }
-        else if(this.searchTermsObj[this.idx].tool_to_search === "Phenolyzer"){
-          // this.searchStatus = true;
-          // this.gtrFetchCompleted = false;
-          var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+
+      },
+      Phenolyzer_performSearchEvent(){
+        if(this.Phenolyzer_searchTermsObj.length){
+          this.searchStatus = true;
+          this.searchComplete = false;
+          this.expansionpanlExpand = ['true'];
+
+          var str = this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].value.replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
           this.phenolyzerFetchCompleted = false;
-          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
-          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
+          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'status', "Searching");
+          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'gtrSearchStatus', "NotAvailable");
+          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "Searching");
+          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'hpoSearchStatus', "NotAvailable");
           this.gtrFetchCompleted = true;
           this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchPhenolyzer", str);
+
         }
-        else if(this.searchTermsObj[this.idx].tool_to_search === "Hpo"){
+      },
+      Hpo_performSearchEvent(){
+        if(this.Hpo_searchTermsObj.length){
+          this.searchStatus = true;
+          this.searchComplete = false;
+          this.expansionpanlExpand = ['true'];
+
           this.hpoFetchCompleted = false;
-          this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-          this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
-          this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
-          this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
+          this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'status', "Searching");
+          this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'gtrSearchStatus', "NotAvailable");
+          this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'phenolyzerSearchStatus', "NotAvailable");
+          this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'hpoSearchStatus', "Searching");
           this.gtrFetchCompleted = true;
           this.phenolyzerFetchCompleted = true;
-          bus.$emit("singleTermSearchHPO", this.searchTermsObj[this.idx]);
+          bus.$emit("singleTermSearchHPO", this.Hpo_searchTermsObj[this.Hpo_idx]);
+
         }
+
+      },
+      performSearchEvent(){
+        this.Gtr_performSearchEvent();
+        this.Phenolyzer_performSearchEvent();
+        this.Hpo_performSearchEvent();
+        // this.searchStatus = true;
+        // this.searchComplete = false;
+        // this.expansionpanlExpand = ['true'];
+        // // var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+        //
+        // if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
+        //   this.gtrFetchCompleted = false;
+        //   this.phenolyzerFetchCompleted = false;
+        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
+        //   var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+        //   bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
+        //   bus.$emit("singleTermSearchPhenolyzer", str);
+        // }
+        // else if(this.searchTermsObj[this.idx].tool_to_search === "GTR"){
+        //   this.gtrFetchCompleted = false;
+        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
+        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
+        //   this.phenolyzerFetchCompleted = true;
+        //   this.hpoFetchCompleted = true;
+        //   bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
+        // }
+        // else if(this.searchTermsObj[this.idx].tool_to_search === "Phenolyzer"){
+        //   var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
+        //   this.phenolyzerFetchCompleted = false;
+        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
+        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
+        //   this.gtrFetchCompleted = true;
+        //   this.hpoFetchCompleted = true;
+        //   bus.$emit("singleTermSearchPhenolyzer", str);
+        // }
+        // else if(this.searchTermsObj[this.idx].tool_to_search === "Hpo"){
+        //   this.hpoFetchCompleted = false;
+        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
+        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
+        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
+        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
+        //   this.gtrFetchCompleted = true;
+        //   this.phenolyzerFetchCompleted = true;
+        //   bus.$emit("singleTermSearchHPO", this.searchTermsObj[this.idx]);
+        // }
 
       },
       addTerm(){
@@ -1254,6 +1419,7 @@ var model = new Model();
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
+              this.Gtr_searchTermsObj.push(term);
             }
           }
         })
@@ -1271,9 +1437,12 @@ var model = new Model();
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
+              this.Phenolyzer_searchTermsObj.push(term);
             }
           }
         })
+
+        console.log("this.Phenolyzer_searchTermsObj", this.Phenolyzer_searchTermsObj)
 
         this.hpoTermsAdded.map(term => {
           var searchTerm ="";
@@ -1288,9 +1457,12 @@ var model = new Model();
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
+              this.Hpo_searchTermsObj.push(term);
             }
           }
         })
+
+        console.log("this.Hpo_searchTermsObj", this.Hpo_searchTermsObj)
 
         this.termsReviewDialog = false;
         this.search = '';
