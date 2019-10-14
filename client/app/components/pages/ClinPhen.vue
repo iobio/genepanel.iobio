@@ -608,6 +608,9 @@ const api = new Client('backend.iobio.io', { secure: true });
         document.getElementById("hpo_input").value = x.HPO_Data
         this.searchForTheInputTerm();
       })
+      bus.$on("removeHpoTerm", (term) => {
+        this.remove(term);
+      })
     },
     updated(){
       this.$emit("ClinPhenGenes", this.selected);

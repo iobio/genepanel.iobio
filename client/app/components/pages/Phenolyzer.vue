@@ -543,6 +543,9 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
         this.getPhenotypeData();
       })
+      bus.$on("removePhenolyzerTerm", (item)=>{
+        this.remove(item);
+      })
     },
     updated(){
       bus.$on('SelectNumberOfPhenolyzerGenes', (data)=>{

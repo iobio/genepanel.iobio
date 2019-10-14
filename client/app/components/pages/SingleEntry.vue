@@ -135,7 +135,7 @@
                       <strong>Phenolyzer Terms: </strong>
                       <br>
                       <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
-                        <v-chip slot="activator" color="primary" text-color="white"  :key="term.value" >
+                        <v-chip slot="activator" color="primary" text-color="white" close :key="i" @input="remove(term, i, 'phenolyzer')">
                         {{ i+1 }} . {{ term.value }}
                         </v-chip>
                       </span>
@@ -147,7 +147,7 @@
                       <strong>HPO Terms: </strong>
                       <br>
                       <span v-for="(term, i) in hpoTermsAdded" v-if="hpoTermsAdded.length">
-                        <v-chip slot="activator" color="primary" text-color="white"  :key="term.HPO_Data" >
+                        <v-chip slot="activator" color="primary" text-color="white" close :key="i" @input="remove(term, i, 'HPO')">
                         {{ i+1 }} . {{ term.HPO_Data }}
                         </v-chip>
                       </span>
@@ -979,7 +979,6 @@ var model = new Model();
     },
     methods:{
       setPhenolyzerTerms(str){
-        console.log("str in setPhenolyzerTerms", str)
         return fetch(`https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
             .then(response => response.json())
             .then(data => {
@@ -1353,10 +1352,8 @@ var model = new Model();
         }
       },
       selectPhenolyzerTerm(term){
-        console.log("Term", term)
         var searchTerm ="";
         searchTerm = term.value;
-        console.log("searchTerm", searchTerm)
         this.$set(term, 'status', "Not started");
         this.$set(term, 'gtrSearchStatus', "Not started");
         this.$set(term, 'phenolyzerSearchStatus', "Not started");
@@ -1370,7 +1367,6 @@ var model = new Model();
             this.search = '';
           }
         }
-        console.log("multipleSearchTerms", this.multipleSearchTerms)
       },
       selectReviewTerms(){
 
@@ -1412,8 +1408,6 @@ var model = new Model();
           }
         })
 
-        console.log("this.Phenolyzer_searchTermsObj", this.Phenolyzer_searchTermsObj)
-
         this.hpoTermsAdded.map(term => {
           var searchTerm ="";
           searchTerm = term.HPO_Data;
@@ -1423,6 +1417,14 @@ var model = new Model();
           this.$set(term, 'hpoSearchStatus', "Not started");
           this.$set(term, 'tool_to_search', 'Hpo');
           this.$set(term, 'DiseaseName', term.HPO_Data);
+
+          var res = searchTerm.split(" - ");
+          var hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
+          var phenoTerm = res[0];
+          term.hpoNumber = hpoId;
+          term.phenotype = phenoTerm;
+
+
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
@@ -1431,8 +1433,6 @@ var model = new Model();
             }
           }
         })
-
-        console.log("this.Hpo_searchTermsObj", this.Hpo_searchTermsObj)
 
         this.termsReviewDialog = false;
         this.search = '';
@@ -1463,12 +1463,20 @@ var model = new Model();
         }
       },
       remove(item, idx, component){
-        console.log("item: ", item, " -- component: ", component);
         if(component === 'GTR'){
           bus.$emit("removeGtrTerm", item.DiseaseName)
           this.GtrTermsAdded.splice(idx, 1)
           this.GtrTermsAdded = [...this.GtrTermsAdded];
-
+        }
+        else if(component === 'phenolyzer'){
+          bus.$emit("removePhenolyzerTerm", item.value)
+          this.phenolyzerTermsAdded.splice(idx, 1)
+          this.phenolyzerTermsAdded = [...this.phenolyzerTermsAdded];
+        }
+        else if(component === 'HPO'){
+          bus.$emit("removeHpoTerm", item)
+          this.hpoTermsAdded.splice(idx, 1)
+          this.hpoTermsAdded = [...this.hpoTermsAdded];
         }
       }
     },
