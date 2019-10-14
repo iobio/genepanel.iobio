@@ -175,6 +175,80 @@
                 </template>
                 <v-card>
                   <v-card-text>
+
+
+                    <!-- <v-data-table
+                      v-if="searchStatus"
+                      :headers="searchTermsObjHeaders"
+                      :items="searchTermsObj"
+                      hide-actions=false
+                    >
+                      <template v-slot:items="props">
+                        <td>{{ props.item.DiseaseName }}</td>
+                        <td >
+                          <span v-if="props.item.gtrSearchStatus==='Searching'">
+                            <v-progress-circular
+                              :width="2"
+                              :size="20"
+                              indeterminate
+                              color="primary"
+                            ></v-progress-circular>
+                          </span>
+                          <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                          <span v-else-if="props.item.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                          <span v-else-if="props.item.gtrSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                          <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
+                        </td>
+                        <td >
+                          <span v-if="props.item.phenolyzerSearchStatus==='Searching'">
+                            <v-progress-circular
+                              :width="2"
+                              :size="20"
+                              indeterminate
+                              color="primary"
+                            ></v-progress-circular>
+                          </span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                          <span v-else-if="props.item.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
+                        </td>
+                        <td >
+                          <span v-if="props.item.hpoSearchStatus==='Searching'">
+                            <v-progress-circular
+                              :width="2"
+                              :size="20"
+                              indeterminate
+                              color="primary"
+                            ></v-progress-circular>
+                          </span>
+                          <span v-else-if="props.item.hpoSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
+                          <span v-else-if="props.item.hpoSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
+                          <span v-else-if="props.item.hpoSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
+                        </td>
+                      </template>
+                    </v-data-table> -->
+
+                  </v-card-text>
+                </v-card>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+
+
+            <v-card>
+              <v-dialog
+                v-model="searchStatusDialog"
+                scrollable
+                persistent
+                :overlay="false"
+                max-width="1000px"
+                transition="dialog-transition"
+              >
+                <v-card>
+                  <v-card-title>Search Status</v-card-title>
+                  <v-divider></v-divider>
+                  <v-card-text>
                     <div class="container">
                       <div class="row">
                         <div class="col-md-4">
@@ -261,64 +335,10 @@
 
                       </div>
                     </div>
-
-                    <!-- <v-data-table
-                      v-if="searchStatus"
-                      :headers="searchTermsObjHeaders"
-                      :items="searchTermsObj"
-                      hide-actions=false
-                    >
-                      <template v-slot:items="props">
-                        <td>{{ props.item.DiseaseName }}</td>
-                        <td >
-                          <span v-if="props.item.gtrSearchStatus==='Searching'">
-                            <v-progress-circular
-                              :width="2"
-                              :size="20"
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </span>
-                          <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
-                          <span v-else-if="props.item.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
-                          <span v-else-if="props.item.gtrSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
-                          <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
-                        </td>
-                        <td >
-                          <span v-if="props.item.phenolyzerSearchStatus==='Searching'">
-                            <v-progress-circular
-                              :width="2"
-                              :size="20"
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
-                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
-                        </td>
-                        <td >
-                          <span v-if="props.item.hpoSearchStatus==='Searching'">
-                            <v-progress-circular
-                              :width="2"
-                              :size="20"
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </span>
-                          <span v-else-if="props.item.hpoSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
-                          <span v-else-if="props.item.hpoSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
-                          <span v-else-if="props.item.hpoSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
-                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
-                        </td>
-                      </template>
-                    </v-data-table> -->
-
                   </v-card-text>
                 </v-card>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
+              </v-dialog>
+            </v-card>
 
 
             <v-card>
@@ -829,6 +849,7 @@ var model = new Model();
         Gtr_idx: 0,
         Phenolyzer_idx: 0,
         Hpo_idx: 0,
+        searchStatusDialog: false,
       }
     },
     mounted(){
@@ -870,9 +891,7 @@ var model = new Model();
               this.Gtr_performSearchEvent();
             },1000)
           }
-          else {
-            //checkToCloseSearchStatusDialog
-          }
+          else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "Phenolyzer"){
           console.log("Phenolyzer completed!");
@@ -885,6 +904,7 @@ var model = new Model();
               this.Phenolyzer_performSearchEvent();
             },1000)
           }
+          else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "hpo"){
           this.searchTermsObj[this.idx].hpoSearchStatus = "Completed";
@@ -896,8 +916,7 @@ var model = new Model();
               this.Hpo_performSearchEvent();
             },1000)
           }
-
-
+          else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "noGenePanels"){
           // console.log("here")
@@ -1246,10 +1265,11 @@ var model = new Model();
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'gtrSearchStatus', "Searching");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'hpoSearchStatus', "NotAvailable");
-          this.phenolyzerFetchCompleted = true;
-          this.hpoFetchCompleted = true;
+          // this.phenolyzerFetchCompleted = true;
+          // this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchGTR", this.Gtr_searchTermsObj[this.Gtr_idx]);
         }
+        else { this.gtrFetchCompleted = true; }
 
       },
       Phenolyzer_performSearchEvent(){
@@ -1264,11 +1284,12 @@ var model = new Model();
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "Searching");
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'hpoSearchStatus', "NotAvailable");
-          this.gtrFetchCompleted = true;
-          this.hpoFetchCompleted = true;
+          // this.gtrFetchCompleted = true;
+          // this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchPhenolyzer", str);
 
         }
+        else { this.phenolyzerFetchCompleted = true; }
       },
       Hpo_performSearchEvent(){
         if(this.Hpo_searchTermsObj.length){
@@ -1281,17 +1302,19 @@ var model = new Model();
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'hpoSearchStatus', "Searching");
-          this.gtrFetchCompleted = true;
-          this.phenolyzerFetchCompleted = true;
+          // this.gtrFetchCompleted = true;
+          // this.phenolyzerFetchCompleted = true;
           bus.$emit("singleTermSearchHPO", this.Hpo_searchTermsObj[this.Hpo_idx]);
 
         }
+        else { this.hpoFetchCompleted = true; }
 
       },
       performSearchEvent(){
         this.Gtr_performSearchEvent();
         this.Phenolyzer_performSearchEvent();
         this.Hpo_performSearchEvent();
+        this.searchStatusDialog = true;
         // this.searchStatus = true;
         // this.searchComplete = false;
         // this.expansionpanlExpand = ['true'];
@@ -1484,6 +1507,13 @@ var model = new Model();
       skipGtrSearch(){
         this.alertWarning = false;
         bus.$emit("completeFetchRequest", "skipGtr")
+      },
+      checkToCloseSearchStatusDialog(){
+        if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted && this.hpoFetchCompleted){
+          setTimeout(()=>{
+            this.searchStatusDialog = false;
+          }, 2000)
+        }
       }
     },
     computed: {
