@@ -218,7 +218,10 @@ var model = new Model();
          this.search = x;
          this.checked = false;
          this.checkBeforePerformSearch();
-       })
+       });
+      bus.$on("removeGtrTerm", (item)=>{
+        this.remove(item);
+      })
     },
     computed:  {
 

@@ -122,7 +122,7 @@
                       <strong>GTR Terms: </strong>
                       <br>
                       <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
-                        <v-chip slot="activator" color="primary" text-color="white"  :key="i" >
+                        <v-chip slot="activator" color="primary" text-color="white" close :key="i" @input="remove(term, i, 'GTR')">
                           <span v-if="term.DiseaseName!==undefined">{{ i+1 }} . {{ term.DiseaseName }}</span>
                           <span v-else> {{ i+1 }} . {{ term }}</span>
                         </v-chip>
@@ -168,7 +168,8 @@
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
-            <v-expansion-panel v-if="searchStatus" expand v-model="expansionpanlExpand">
+
+            <!-- <v-expansion-panel v-if="searchStatus" expand v-model="expansionpanlExpand">
               <v-expansion-panel-content>
                 <template v-slot:header>
                   <div>Search Status</div>
@@ -176,64 +177,10 @@
                 <v-card>
                   <v-card-text>
 
-
-                    <!-- <v-data-table
-                      v-if="searchStatus"
-                      :headers="searchTermsObjHeaders"
-                      :items="searchTermsObj"
-                      hide-actions=false
-                    >
-                      <template v-slot:items="props">
-                        <td>{{ props.item.DiseaseName }}</td>
-                        <td >
-                          <span v-if="props.item.gtrSearchStatus==='Searching'">
-                            <v-progress-circular
-                              :width="2"
-                              :size="20"
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </span>
-                          <span v-else-if="props.item.gtrSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
-                          <span v-else-if="props.item.gtrSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
-                          <span v-else-if="props.item.gtrSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
-                          <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
-                        </td>
-                        <td >
-                          <span v-if="props.item.phenolyzerSearchStatus==='Searching'">
-                            <v-progress-circular
-                              :width="2"
-                              :size="20"
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
-                          <span v-else-if="props.item.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
-                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
-                        </td>
-                        <td >
-                          <span v-if="props.item.hpoSearchStatus==='Searching'">
-                            <v-progress-circular
-                              :width="2"
-                              :size="20"
-                              indeterminate
-                              color="primary"
-                            ></v-progress-circular>
-                          </span>
-                          <span v-else-if="props.item.hpoSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
-                          <span v-else-if="props.item.hpoSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
-                          <span v-else-if="props.item.hpoSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
-                          <span v-else> <v-icon color="gray lighten-4">error</v-icon> </span>
-                        </td>
-                      </template>
-                    </v-data-table> -->
-
                   </v-card-text>
                 </v-card>
               </v-expansion-panel-content>
-            </v-expansion-panel>
+            </v-expansion-panel> -->
 
 
             <v-card>
@@ -1513,6 +1460,15 @@ var model = new Model();
           setTimeout(()=>{
             this.searchStatusDialog = false;
           }, 2000)
+        }
+      },
+      remove(item, idx, component){
+        console.log("item: ", item, " -- component: ", component);
+        if(component === 'GTR'){
+          bus.$emit("removeGtrTerm", item.DiseaseName)
+          this.GtrTermsAdded.splice(idx, 1)
+          this.GtrTermsAdded = [...this.GtrTermsAdded];
+
         }
       }
     },
