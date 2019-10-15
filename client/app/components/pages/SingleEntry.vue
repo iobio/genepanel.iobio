@@ -401,6 +401,51 @@
 
                     <!-- GTR review terms table -->
                     <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1">
+                      <div v-if="GtrReviewTerms.length===1">
+                        <div v-for="(item, i) in GtrReviewTerms" :key="i">
+                          <v-expansion-panel v-model="gtrExpansionPanel" expand focusable
+                          >
+                            <div style="width:100%; padding-top:5px;">
+                              <div class="col-md-2">
+                                <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="item"></v-checkbox>
+                              </div>
+                              <div class="col-md-10">
+                                {{ item.DiseaseName }}
+                              </div>
+                            </div>
+                            <v-expansion-panel-content>
+                              <v-card>
+                                <v-card-text>
+                                  <div v-for="sub in item.reviewTerms_gtr" class="row">
+                                    <div class="col-md-2">
+                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
+                                    </div>
+                                    <div class="col-md-10">
+                                      {{ sub.DiseaseName }}
+                                    </div>
+                                  </div>
+                                </v-card-text>
+                              </v-card>
+                            </v-expansion-panel-content>
+
+                          </v-expansion-panel>
+                        </div>
+                      </div>
+
+                      <div class="content">
+                        <ul v-for="(item, i) in GtrReviewTerms">
+                          <li>
+                            <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="item"></v-checkbox>
+                            {{ item.DiseaseName }}
+                          </li>
+                          <ul v-for="sub in item.reviewTerms_gtr">
+                            <li>
+                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
+                              {{ sub.DiseaseName }}
+                            </li>
+                          </ul>
+                        </ul>
+                      </div>
                       <table class="table table-hover">
                         <thead>
                           <tr>
@@ -415,6 +460,7 @@
                             </th>
                             <td v-if="term.DiseaseName!==undefined">{{ term.DiseaseName }}</td>
                             <td v-else>{{term}}</td>
+                            <br>
                           </tr>
                         </tbody>
                       </table>
@@ -807,6 +853,7 @@ var model = new Model();
         Phenolyzer_idx: 0,
         Hpo_idx: 0,
         searchStatusDialog: false,
+        gtrExpansionPanel: ['true']
       }
     },
     mounted(){
@@ -1134,20 +1181,27 @@ var model = new Model();
         this.HpoReviewTerms = hpoTermArr;
       },
       openReviewDialog(){
+        console.log("search", this.search)
         this.textNotes = this.search.DiseaseName;
         this.GtrReviewTerms = [];
-        this.termsExpansionPanel = ['true']
+        this.termsExpansionPanel = ['true'];
+        // this.GtrReviewTerms = this.search;
+        // this.GtrReviewTerms.reviewTerms_gtr = [];
+
+        this.GtrReviewTerms.push(this.search);
+        this.GtrReviewTerms[0].reviewTerms_gtr = []
+
         var term = this.search.DiseaseName.toLowerCase();
         term = term.replace("disease", "");
         term = term.replace("syndrome", "");
         // term = term.replace("disorder", "");
         term = term.trim();
         DiseaseNamesData.data.forEach(x => {
-          // if(x.DiseaseName.toLowerCase().split(' ').includes(term)){
-          //   this.GtrReviewTerms.push(x);
-          // }
           if(x.DiseaseName.toLowerCase().includes(term)){
-            this.GtrReviewTerms.push(x);
+            // this.GtrReviewTerms.push(x);
+            if(x.DiseaseName !== this.search.DiseaseName){
+              this.search.reviewTerms_gtr.push(x)
+            }
           }
         })
         console.log("this.GtrReviewTerms", this.GtrReviewTerms)
