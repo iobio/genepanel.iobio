@@ -391,7 +391,11 @@
                                       <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
                                     </div>
                                     <div class="col-md-10">
-                                      {{ sub.DiseaseName }}
+                                      <!-- {{ sub.DiseaseName }} -->
+                                      <span v-if="sub.general">
+                                        <span class="highlighted_condition">{{ sub.DiseaseName }}</span>
+                                      </span>
+                                      <span v-else>{{ sub.DiseaseName }}</span>
                                     </div>
                                   </div>
                                 </v-card-text>
@@ -417,7 +421,11 @@
                                         <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
                                       </div>
                                       <div class="col-md-10">
-                                        {{ sub.DiseaseName }}
+                                        <span v-if="sub.general">
+                                          <span class="highlighted_condition">{{ sub.DiseaseName }}</span>
+                                        </span>
+                                        <span v-else>{{ sub.DiseaseName }}</span>
+                                        <!-- {{ sub.DiseaseName }} -->
                                       </div>
                                     </div>
                                   </div>
@@ -454,7 +462,11 @@
                                       <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
                                     </div>
                                     <div class="col-md-10">
-                                      {{ sub.value }}
+                                      <!-- {{ sub.value }} -->
+                                      <span v-if="sub.general">
+                                        <span class="highlighted_condition">{{ sub.value }}</span>
+                                      </span>
+                                      <span v-else>{{ sub.value }}</span>
                                     </div>
                                   </div>
                                 </v-card-text>
@@ -480,7 +492,12 @@
                                         <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
                                       </div>
                                       <div class="col-md-10">
-                                        {{ sub.value }}
+                                        <!-- {{ sub.value }} -->
+                                        <span v-if="sub.general">
+                                          <span class="highlighted_condition">{{ sub.value }}</span>
+                                        </span>
+                                        <span v-else>{{ sub.value }}</span>
+
                                       </div>
                                     </div>
                                   </div>
@@ -491,20 +508,6 @@
                           </v-expansion-panel>
                         </div>
                       </div>
-                      <!-- <table class="table table-hover">
-                        <thead>
-                          <tr>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(term, i) in phenolyzerReviewTerms" :key="i">
-                            <th scope="row">
-                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="term"></v-checkbox>
-                            </th>
-                            <td>{{ term.DiseaseName }}</td>
-                          </tr>
-                        </tbody>
-                      </table> -->
                     </div>
                     <div v-if="!phenolyzerReviewTerms.length && termsReviewDialogPage===2">
                       Currently unavailable.
@@ -1165,6 +1168,7 @@ var model = new Model();
                     }
                     else if(x.value.toLowerCase().trim() === item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
                       item.reviewTerms_phenolyzer.unshift(x);
+                      item.reviewTerms_phenolyzer[0].general = true;
                     }
                   })
                 })
@@ -1212,6 +1216,8 @@ var model = new Model();
               }
               else if(x.DiseaseName === item.DiseaseName){
                 item.reviewTerms_gtr.unshift(x);
+                item.reviewTerms_gtr[0].general = true;
+
               }
             }
           })
@@ -1276,10 +1282,11 @@ var model = new Model();
         DiseaseNamesData.data.forEach(x => {
           if(x.DiseaseName.toLowerCase().includes(term)){
             if(x.DiseaseName !== this.search.DiseaseName){
-              this.search.reviewTerms_gtr.push(x)
+              this.GtrReviewTerms[0].reviewTerms_gtr.push(x)
             }
             else if(x.DiseaseName === this.search.DiseaseName){
-              this.search.reviewTerms_gtr.unshift(x)
+              this.GtrReviewTerms[0].reviewTerms_gtr.unshift(x);
+              this.GtrReviewTerms[0].reviewTerms_gtr[0].general = true;
             }
           }
         })
@@ -1303,6 +1310,7 @@ var model = new Model();
             }
             else if(x.value.toLowerCase().trim() === this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
               this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer.unshift(x);
+              this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer[0].general = true;
             }
           })
 
@@ -1729,4 +1737,12 @@ var model = new Model();
   display: block
   height: 300px
   overflow-y: scroll
+
+.highlighted_condition
+  background: #2c7adc38
+  padding: 5px
+  border-radius: 10px
+  padding-left: 20px
+  padding-right: 20px
+  color: #22227d
 </style>
