@@ -359,7 +359,7 @@
                 v-model="termsReviewDialog"
                 scrollable
                 persistent :overlay="false"
-                max-width="600px"
+                max-width="900px"
                 transition="dialog-transition"
               >
                 <v-card>
@@ -372,32 +372,6 @@
                   <v-card-title v-if="termsReviewDialogPage===3">Select the terms to be searched in HPO:</v-card-title>
 
                   <v-card-text style="height: 430px;">
-                    <!-- termsReviewDialogPage: {{ termsReviewDialogPage }}
-                    Gtr terms: {{ GtrReviewTerms.length }}
-                    Phenolyzer terms: {{ phenolyzerReviewTerms.length }}
-
-                    <hr>
-                    GTR terms added:
-                    <span v-for="(term, i) in GtrTermsAdded">
-                      <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term.DiseaseName" >
-                        {{ term.DiseaseName }}
-                      </v-chip>
-                    </span>
-                    <hr>
-                    Phenolyzer terms added:
-                    <span v-for="(term, i) in phenolyzerTermsAdded">
-                      <v-chip slot="activator" outline color="primary" text-color="primary"  :key="term" >
-                        {{ term.value }}
-                      </v-chip>
-                    </span> -->
-                    <!-- <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1" v-for="(term, i) in GtrReviewTerms" :key="i" v-on:click="selectGtrTerm(term)">
-                      {{ term.DiseaseName }}
-                    </div> -->
-
-                    <!-- <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2" v-for="(term, i) in phenolyzerReviewTerms" :key="term.value" v-on:click="selectPhenolyzerTerm(term)">
-                      {{ term.value }}
-                    </div> -->
-
 
                     <!-- GTR review terms table -->
                     <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1">
@@ -436,13 +410,15 @@
                                 <div>{{ item.DiseaseName }}</div>
                               </template>
                               <v-card>
-                                <v-card-text>
-                                  <div v-for="sub in item.reviewTerms_gtr" class="row">
-                                    <div class="col-md-2">
-                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
-                                    </div>
-                                    <div class="col-md-10">
-                                      {{ sub.DiseaseName }}
+                                <v-card-text >
+                                  <div v-for="sub in item.reviewTerms_gtr" >
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                        <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
+                                      </div>
+                                      <div class="col-md-10">
+                                        {{ sub.DiseaseName }}
+                                      </div>
                                     </div>
                                   </div>
                                 </v-card-text>
@@ -462,11 +438,35 @@
 
                     <!-- Phenolyzer review terms table -->
                     <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2">
-                      <table class="table table-hover">
+                      <div v-if="phenolyzerReviewTerms.length===1">
+                        <div >
+                          <v-expansion-panel v-model="phenolyzerExpansionPanel" expand popout focusable
+                          >
+                            <v-expansion-panel-content v-for="(item, i) in phenolyzerReviewTerms" :key="i">
+                              <template v-slot:header>
+                                <div>{{ item.DiseaseName }}</div>
+                              </template>
+
+                              <v-card>
+                                <v-card-text>
+                                  <div v-for="sub in item.reviewTerms_phenolyzer" class="row">
+                                    <div class="col-md-2">
+                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
+                                    </div>
+                                    <div class="col-md-10">
+                                      {{ sub.value }}
+                                    </div>
+                                  </div>
+                                </v-card-text>
+                              </v-card>
+                            </v-expansion-panel-content>
+
+                          </v-expansion-panel>
+                        </div>
+                      </div>
+                      <!-- <table class="table table-hover">
                         <thead>
                           <tr>
-                            <!-- <th scope="col">Selection</th>
-                            <th scope="col">Term</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -474,10 +474,10 @@
                             <th scope="row">
                               <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="term"></v-checkbox>
                             </th>
-                            <td>{{ term.value }}</td>
+                            <td>{{ term.DiseaseName }}</td>
                           </tr>
                         </tbody>
-                      </table>
+                      </table> -->
                     </div>
                     <div v-if="!phenolyzerReviewTerms.length && termsReviewDialogPage===2">
                       Currently unavailable.
@@ -844,6 +844,7 @@ var model = new Model();
         searchStatusDialog: false,
         gtrExpansionPanel: ['true'],
         gtrExpansionPanelMultiple: [],
+        phenolyzerExpansionPanel: ['true'],
       }
     },
     mounted(){
@@ -1213,7 +1214,10 @@ var model = new Model();
             }
           }
         })
-        console.log("this.GtrReviewTerms", this.GtrReviewTerms)
+
+        this.phenolyzerReviewTerms = [];
+        this.phenolyzerReviewTerms.push(this.search);
+        this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer = []
 
         var str = this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
         str = str.replace("disease", "");
@@ -1223,7 +1227,16 @@ var model = new Model();
 
         var data = this.setPhenolyzerTerms(str);
         data.then(res => {
-          this.phenolyzerReviewTerms = res;
+          // this.phenolyzerReviewTerms = res;
+          res.forEach(x => {
+            if(x.value.toLowerCase().trim() !== this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+              this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer.push(x);
+            }
+            else if(x.value.toLowerCase().trim() === this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+              this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer.unshift(x);
+            }
+          })
+
         })
 
         this.HpoTermsTypeaheadData.forEach(x => {
