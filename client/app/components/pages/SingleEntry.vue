@@ -464,6 +464,33 @@
                           </v-expansion-panel>
                         </div>
                       </div>
+                      <div v-if="phenolyzerReviewTerms.length>1">
+                        <div>
+                          <v-expansion-panel v-model="phenolyzerExpansionPanelMultiple" expand popout focusable>
+                            <v-expansion-panel-content
+                              v-for="(item, i) in phenolyzerReviewTerms" :key="i">
+                              <template v-slot:header>
+                                <div>{{ item.DiseaseName }}</div>
+                              </template>
+                              <v-card>
+                                <v-card-text >
+                                  <div v-for="sub in item.reviewTerms_phenolyzer" >
+                                    <div class="row">
+                                      <div class="col-md-2">
+                                        <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
+                                      </div>
+                                      <div class="col-md-10">
+                                        {{ sub.value }}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </v-card-text>
+                              </v-card>
+                            </v-expansion-panel-content>
+
+                          </v-expansion-panel>
+                        </div>
+                      </div>
                       <!-- <table class="table table-hover">
                         <thead>
                           <tr>
@@ -845,6 +872,7 @@ var model = new Model();
         gtrExpansionPanel: ['true'],
         gtrExpansionPanelMultiple: [],
         phenolyzerExpansionPanel: ['true'],
+        phenolyzerExpansionPanelMultiple: [],
       }
     },
     mounted(){
@@ -1027,6 +1055,29 @@ var model = new Model();
       }
     },
     methods:{
+      async setAsyncPhenolyzerReviewTerms(str, idx){
+        await this.AsyncsetPhenolyzerTerms(str)
+                  .then(res => {
+                    // this.phenolyzerReviewTerms = res;
+                    res.forEach(x => {
+                      if(x.value.toLowerCase().trim() !== item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+                        this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer.push(x);
+                      }
+                      else if(x.value.toLowerCase().trim() === item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+                        this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer.unshift(x);
+                      }
+                    })
+
+                  })
+      },
+      AsyncsetPhenolyzerTerms(str){
+        return fetch(`https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              return data
+            })
+      },
       setPhenolyzerTerms(str){
         return fetch(`https://nv-prod.iobio.io/hpo/hot/lookup/?term=${str}`)
             .then(response => response.json())
@@ -1066,35 +1117,18 @@ var model = new Model();
               })
               console.log(this.extractedTerms);
 
-              // If fine tuning of phenotypes required:
-              // var phenotypeTerms = [];
-              // var promises = [];
               // this.extractedTerms.map(x => {
               //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
               //   str = str.replace("disease", "");
               //   str = str.replace("syndrome", "");
+              //   str = str.replace("disorder", "");
               //   str = str.trim();
-              //   var data = this.setPhenolyzerTerms(str);
-              //   data.then(res => {
-              //     console.log("res", res)
-              //     phenotypeTerms = [...phenotypeTerms, ...res];
-              //     console.log("phenotypeTerms", phenotypeTerms)
+              //   this.phenolyzerReviewTerms.push({
+              //     id: str,
+              //     value: str,
+              //     label: str
               //   })
               // })
-
-              this.extractedTerms.map(x => {
-                var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
-                str = str.replace("disease", "");
-                str = str.replace("syndrome", "");
-                str = str.replace("disorder", "");
-                str = str.trim();
-                this.phenolyzerReviewTerms.push({
-                  id: str,
-                  value: str,
-                  label: str
-                })
-              })
-              console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
 
               this.fetchHpoTerm();
 
@@ -1103,6 +1137,41 @@ var model = new Model();
                   DiseaseName: x,
                 })
               })
+
+              this.phenolyzerReviewTerms = this.extractedTermsObj;
+              this.phenolyzerReviewTerms.map((item, i) => {
+                item.reviewTerms_phenolyzer = [];
+
+                var str = item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+                str = str.replace("disease", "");
+                str = str.replace("syndrome", "");
+                str = str.trim();
+
+                // this.setAsyncPhenolyzerReviewTerms(str, i);
+
+                var data = this.setPhenolyzerTerms(str);
+                data.then(res => {
+                  if(res.length<1){
+                    var phenotype = item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()
+                    item.reviewTerms_phenolyzer.push({
+                      id: phenotype,
+                      label: phenotype,
+                      value: phenotype,
+                    })
+                  }
+                  res.forEach(x => {
+                    if(x.value.toLowerCase().trim() !== item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+                      item.reviewTerms_phenolyzer.push(x);
+                    }
+                    else if(x.value.toLowerCase().trim() === item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+                      item.reviewTerms_phenolyzer.unshift(x);
+                    }
+                  })
+                })
+
+              })
+              console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
+
               this.loadingDialog = false;
               this.openReviewDialogForExtractedTerms();
             })
