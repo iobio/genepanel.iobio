@@ -10385,14 +10385,6 @@
    "ConceptID": "CN236463"
  },
  {
-   "DiseaseName": "ALG12-congenital disorder of glycosylation",
-   "ConceptID": "C2931001"
- },
- {
-   "DiseaseName": "ALG9 congenital disorder of glycosylation",
-   "ConceptID": "C2931006"
- },
- {
    "DiseaseName": "Al Gazali Hirschsprung syndrome",
    "ConceptID": "C1856110"
  },
@@ -25125,14 +25117,6 @@
    "ConceptID": "C0795900"
  },
  {
-   "DiseaseName": "COG1 congenital disorder of glycosylation",
-   "ConceptID": "C1970016"
- },
- {
-   "DiseaseName": "COG7 congenital disorder of glycosylation",
-   "ConceptID": "C2931010"
- },
- {
    "DiseaseName": "Cogan's syndrome",
    "ConceptID": "C0271270"
  },
@@ -26791,150 +26775,6 @@
  {
    "DiseaseName": "Congenital disorder of glycosylation",
    "ConceptID": "C0282577"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1B",
-   "ConceptID": "C1865145"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1C",
-   "ConceptID": "C2930997"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1D",
-   "ConceptID": "C1832736"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1E",
-   "ConceptID": "C1837396"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1F",
-   "ConceptID": "C1836669"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1H",
-   "ConceptID": "C2931002"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1I",
-   "ConceptID": "C1842836"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1J",
-   "ConceptID": "C2931004"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1K",
-   "ConceptID": "C2931005"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1M",
-   "ConceptID": "C1835849"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1N",
-   "ConceptID": "C2677590"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1O",
-   "ConceptID": "C2752007"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1P",
-   "ConceptID": "C3150913"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1Q",
-   "ConceptID": "C3150191"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1t",
-   "ConceptID": "C2752015"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1u",
-   "ConceptID": "C3554385"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1w",
-   "ConceptID": "C3810062"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1x",
-   "ConceptID": "C2931007"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 1y",
-   "ConceptID": "C4012395"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2B",
-   "ConceptID": "C1853736"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2C",
-   "ConceptID": "C0398739"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2D",
-   "ConceptID": "C1846816"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2F",
-   "ConceptID": "C1970344"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2H",
-   "ConceptID": "C1970021"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2i",
-   "ConceptID": "C3150876"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2J",
-   "ConceptID": "C3150736"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2k",
-   "ConceptID": "C3553571"
- },
- {
-   "DiseaseName": "Congenital disorder of glycosylation type 2L",
-   "ConceptID": "C3553230"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE Iaa",
-   "ConceptID": "C4310727"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE Ibb",
-   "ConceptID": "CN769091"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE IIm",
-   "ConceptID": "C3806688"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE IIn",
-   "ConceptID": "C4225234"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE IIo",
-   "ConceptID": "C4225191"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE IIp",
-   "ConceptID": "C4225190"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION, TYPE IIq",
-   "ConceptID": "C4479353"
- },
- {
-   "DiseaseName": "CONGENITAL DISORDER OF GLYCOSYLATION WITH DEFECTIVE FUCOSYLATION",
-   "ConceptID": "CN248517"
  },
  {
    "DiseaseName": "Congenital disorders of glycosylation type II",
@@ -33291,14 +33131,6 @@
  {
    "DiseaseName": "Diamond-Blackfan anemia 13",
    "ConceptID": "C4014641"
- },
- {
-   "DiseaseName": "Diamond-Blackfan anemia 14 with mandibulofacial dysostosis",
-   "ConceptID": "C4225422"
- },
- {
-   "DiseaseName": "Diamond-Blackfan anemia 15 with mandibulofacial dysostosis",
-   "ConceptID": "C1853576"
  },
  {
    "DiseaseName": "Diamond-Blackfan anemia 16",
@@ -60785,28 +60617,8 @@
    "ConceptID": "C1837756"
  },
  {
-   "DiseaseName": "Mandibulofacial dysostosis syndrome, bauru type",
-   "ConceptID": "C1858101"
- },
- {
-   "DiseaseName": "Mandibulofacial dysostosis, Treacher Collins type, autosomal recessive",
-   "ConceptID": "C1855433"
- },
- {
-   "DiseaseName": "Mandibulofacial dysostosis with alopecia",
-   "ConceptID": "C4225349"
- },
- {
-   "DiseaseName": "Mandibulofacial dysostosis with macroblepharon and macrostomia",
-   "ConceptID": "C1865181"
- },
- {
-   "DiseaseName": "Mandibulofacial dysostosis with mental deficiency",
-   "ConceptID": "C1855432"
- },
- {
-   "DiseaseName": "Mandibulofacial dysostosis with ptosis, autosomal dominant",
-   "ConceptID": "C1842349"
+   "DiseaseName": "Mandibulofacial dysostosis",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Mania",

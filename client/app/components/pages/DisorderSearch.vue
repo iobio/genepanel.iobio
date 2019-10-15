@@ -450,7 +450,7 @@ var model = new Model();
                           if(ind===diseases.length-1){
                             checkPromisesLength(promises);
                           }
-                      }, 1000 + (1000 * ind));
+                      }, 200 + (2000 * ind));
                     })(i);
 
                   })

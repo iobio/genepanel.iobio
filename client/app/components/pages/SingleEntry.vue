@@ -7,12 +7,9 @@
             <!-- <v-card v-if="!searchComplete"> -->
             <v-card>
               <v-card-text>
-                <!-- <center><h3>Dashboard</h3></center> -->
+                <h3>Dashboard</h3>
                 <v-layout row wrap class="mt-3">
-                  <v-flex xs1 sm1 md1 lg1 xl1>
-
-                  </v-flex>
-                  <v-flex xs12 sm12 md12 lg4 xl4>
+                  <!-- <v-flex xs12 sm12 md12 lg4 xl4> -->
                     <!-- <div id="dropdown-example">
                       <v-overflow-btn
                          :items="dropdown_tool"
@@ -23,7 +20,7 @@
                          v-model="dropdown_tool_value"
                        ></v-overflow-btn>
                     </div> -->
-                    <i>(For testing: This extracts disorders from the clinical note)</i>
+                    <!-- <i>(For testing: This extracts disorders from the clinical note)</i>
                     <br>
                     <v-textarea
                       solo
@@ -33,31 +30,32 @@
                       name="input-7-4"
                       rows="3"
                       style="padding-top:5px"
-                    ></v-textarea>
-                    <v-btn @click="extract" color="primary">Submit</v-btn>
-                  </v-flex>
-                  <v-flex xs1 sm1 md1 lg1 xl1>
-                  </v-flex>
-                  <v-flex xs12 sm12 md12 lg6 xl6>
-                    <i>(Select a term from typeahead, review the options and click the search button)</i>
-                    <br>
+                    ></v-textarea> -->
+                  <!-- </v-flex> -->
+
+                  <v-flex xs12 sm12 md12 lg10 xl10>
+                    <!-- <i>(Select a term from typeahead, review the options and click the search button)</i>
+                    <br> -->
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
                       <input
                         id="single_entry_input"
                         ref="single_entry_input"
                         class="form-control"
                         type="text"
+                        v-model="textNotes"
+                        v-show="textNotes.length<45"
                         autocomplete="off"
-                        placeholder="Enter Clinical Conditions or Phenotypes">
-                        <!-- <v-textarea
+                        placeholder="Enter Phenotypes or Type (paste) Clinical Note">
+                        <v-textarea
                           solo
-                          v-show="inputVal.length>=10"
-                          v-model="inputVal"
+                          v-show="textNotes.length>=45"
+                          v-model="textNotes"
                           ref="single_entry_input_textarea"
                           id="single_entry_input_textarea"
                           name="input-7-4"
-                          rows="4"
-                        ></v-textarea> -->
+                          rows="2"
+                          style="padding-top:5px"
+                        ></v-textarea>
                       <typeahead
                         v-model="search"
                         hide-details="false"
@@ -69,6 +67,7 @@
                         v-on:input="mouseSelect"
                         item-key="DiseaseName"/>
                     </div>
+                    <v-btn @click="extract" color="primary">Submit</v-btn>
 
                      <!-- <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="mouseSelect">
                       <v-icon color="white">add</v-icon>
@@ -94,6 +93,10 @@
                     </div> -->
 
                   </v-flex>
+                  <v-flex xs1 sm1 md1 lg1 xl1>
+                  </v-flex>
+
+
 
                 </v-layout>
               </v-card-text>
@@ -414,6 +417,11 @@
                         </tbody>
                       </table>
                     </div>
+                    <div v-if="!GtrReviewTerms.length && termsReviewDialogPage===1">
+                      Currently unavailable.
+                    </div>
+
+
 
                     <!-- Phenolyzer review terms table -->
                     <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2">
@@ -913,18 +921,19 @@ var model = new Model();
     updated(){
     },
     watch: {
-      // inputVal(){
-      //   if(this.inputVal.length===10){
-      //     setTimeout(()=>{
-      //       this.$refs.single_entry_input_textarea.focus();
-      //     },10)
-      //   }
-      //   else if(this.inputVal.length===9){
-      //     setTimeout(()=>{
-      //       this.$refs.single_entry_input.focus();
-      //     },10)
-      //   }
-      // },
+      textNotes(){
+        console.log("this.textNotes", this.textNotes.length)
+        if(this.textNotes.length===45){
+          setTimeout(()=>{
+            this.$refs.single_entry_input_textarea.focus();
+          },10)
+        }
+        else if(this.textNotes.length===44){
+          setTimeout(()=>{
+            this.$refs.single_entry_input.focus();
+          },10)
+        }
+      },
       GtrTermsAdded(){
         console.log("GtrTermsAdded", this.GtrTermsAdded)
         if(this.GtrTermsAdded.length > 5){
@@ -987,68 +996,77 @@ var model = new Model();
             })
       },
       extract(){
-        this.JaroWinkler = [];
-        this.fuzzyResults = [];
-        this.loadingDialog = true;
-        fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
-          .then(res => res.json())
-          .then(data => {
-            this.JaroWinkler = data.JaroWinkler;
-            this.fuzzyResults = data.fuzzyResults ;
-            data.JaroWinkler.map(x=>{
-              x = x.trim();
-              if(!this.extractedTerms.includes(x)){
-                this.extractedTerms.push(x);
-              }
-            })
-            data.fuzzyResults.map(x=>{
-              x = x.trim()
-              if(!this.extractedTerms.includes(x)){
-                this.extractedTerms.push(x);
-              }
-            })
-            console.log(this.extractedTerms);
-
-            // If fine tuning of phenotypes required:
-            // var phenotypeTerms = [];
-            // var promises = [];
-            // this.extractedTerms.map(x => {
-            //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
-            //   str = str.replace("disease", "");
-            //   str = str.replace("syndrome", "");
-            //   str = str.trim();
-            //   var data = this.setPhenolyzerTerms(str);
-            //   data.then(res => {
-            //     console.log("res", res)
-            //     phenotypeTerms = [...phenotypeTerms, ...res];
-            //     console.log("phenotypeTerms", phenotypeTerms)
-            //   })
-            // })
-
-            this.extractedTerms.map(x => {
-              var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
-              str = str.replace("disease", "");
-              str = str.replace("syndrome", "");
-              str = str.replace("disorder", "");
-              str = str.trim();
-              this.phenolyzerReviewTerms.push({
-                id: str,
-                value: str,
-                label: str
+        if(this.textNotes.length<45 && this.search === undefined){
+          alert("Please select from typeahaead");
+        }
+        else if(this.textNotes.length<45 && this.search!==undefined){
+          this.mouseSelect()
+        }
+        else {
+          this.JaroWinkler = [];
+          this.fuzzyResults = [];
+          this.loadingDialog = true;
+          // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
+          fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
+            .then(res => res.json())
+            .then(data => {
+              this.JaroWinkler = data.JaroWinkler;
+              this.fuzzyResults = data.fuzzyResults ;
+              data.JaroWinkler.map(x=>{
+                x = x.trim();
+                if(!this.extractedTerms.includes(x)){
+                  this.extractedTerms.push(x);
+                }
               })
-            })
-            console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
-
-            this.fetchHpoTerm();
-
-            this.extractedTerms.map(x=>{
-              this.extractedTermsObj.push({
-                DiseaseName: x,
+              data.fuzzyResults.map(x=>{
+                x = x.trim()
+                if(!this.extractedTerms.includes(x)){
+                  this.extractedTerms.push(x);
+                }
               })
+              console.log(this.extractedTerms);
+
+              // If fine tuning of phenotypes required:
+              // var phenotypeTerms = [];
+              // var promises = [];
+              // this.extractedTerms.map(x => {
+              //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+              //   str = str.replace("disease", "");
+              //   str = str.replace("syndrome", "");
+              //   str = str.trim();
+              //   var data = this.setPhenolyzerTerms(str);
+              //   data.then(res => {
+              //     console.log("res", res)
+              //     phenotypeTerms = [...phenotypeTerms, ...res];
+              //     console.log("phenotypeTerms", phenotypeTerms)
+              //   })
+              // })
+
+              this.extractedTerms.map(x => {
+                var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+                str = str.replace("disease", "");
+                str = str.replace("syndrome", "");
+                str = str.replace("disorder", "");
+                str = str.trim();
+                this.phenolyzerReviewTerms.push({
+                  id: str,
+                  value: str,
+                  label: str
+                })
+              })
+              console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
+
+              this.fetchHpoTerm();
+
+              this.extractedTerms.map(x=>{
+                this.extractedTermsObj.push({
+                  DiseaseName: x,
+                })
+              })
+              this.loadingDialog = false;
+              this.openReviewDialogForExtractedTerms();
             })
-            this.loadingDialog = false;
-            this.openReviewDialogForExtractedTerms();
-          })
+        }
       },
       mouseSelect(){
         if(this.search!==undefined){
@@ -1114,12 +1132,13 @@ var model = new Model();
         this.HpoReviewTerms = hpoTermArr;
       },
       openReviewDialog(){
+        this.textNotes = this.search.DiseaseName;
         this.GtrReviewTerms = [];
         this.termsExpansionPanel = ['true']
         var term = this.search.DiseaseName.toLowerCase();
         term = term.replace("disease", "");
         term = term.replace("syndrome", "");
-        term = term.replace("disorder", "");
+        // term = term.replace("disorder", "");
         term = term.trim();
         DiseaseNamesData.data.forEach(x => {
           // if(x.DiseaseName.toLowerCase().split(' ').includes(term)){
@@ -1134,7 +1153,7 @@ var model = new Model();
         var str = this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
         str = str.replace("disease", "");
         str = str.replace("syndrome", "");
-        str = str.replace("disorder", "");
+        // str = str.replace("disorder", "");
         str = str.trim();
 
         var data = this.setPhenolyzerTerms(str);
@@ -1436,8 +1455,11 @@ var model = new Model();
 
         this.termsReviewDialog = false;
         this.search = '';
+        this.textNotes = '';
         this.termsReviewDialogPage = 0;
-        this.performSearchEvent();
+        if(this.hpoTermsAdded.length || this.GtrTermsAdded.length || this.phenolyzerTermsAdded.length){
+          this.performSearchEvent();
+        }
       },
       selectNewTerm(hint){
         this.NewOptionFromGeneralTerm = hint.Title;
@@ -1509,14 +1531,19 @@ var model = new Model();
   height: 49px
   margin-top: 7px
   // background-color: $search-box-color
-  border-bottom-color: #949494
-  border-right-color: #e9e9e9
-  border-top-color: #e9e9e9
-  border-left-color: #e9e9e9
+  // border-bottom-color: #949494
+  // border-right-color: #e9e9e9
+  // border-top-color: #e9e9e9
+  // border-left-color: #e9e9e9
+  border: 0
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+  border-radius: 0
+  font-size: 16px
+  margin-bottom: 32px
   // border-color: #e9e9e9
 
 #single_entry_input_textarea
-  // width: 600px
+  width: 600px
   margin-top: 7px
   // // background-color: $search-box-color
   // border-bottom-color: #949494
