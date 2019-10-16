@@ -421,7 +421,7 @@ var model = new Model();
             // fetch(`http://localhost:4046/conditions/?term=${searchTerm}`).then(res => res.json())
             // .then(function(dataItem){
             //   var data = dataItem.Item
-            //   console.log(dataItem)
+              // console.log("data" , data)
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
@@ -456,6 +456,7 @@ var model = new Model();
                   })
                 }
                 else {
+                  console.log("there!")
                   data.diseases = [
                     {
                       ConceptId:"",
@@ -476,20 +477,41 @@ var model = new Model();
                     }]
                   diseases = data.diseases;
 
-                  data.diseases.forEach(function (disease){
-                    var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
-                    .then(function (data){
-                      if(data.genePanels.length>1){
-                        var filteredGenePanels = model.processGenePanelData(data.genePanels);
-                        data.disease.genePanels = filteredGenePanels;
-                      }
-                    },
-                    function(error) {
-                      console.log("error", error)
-                    })
-                     promises.push(p);
-                      // checkPromisesLength(promises);
+                  data.diseases.forEach((disease, i) => {
+                    ((ind) =>{
+                      setTimeout(() =>{
+                        var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                          .then((data)=>{
+                              var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                              data.disease.genePanels = filteredGenePanels;
+                          },
+                          function(error) {
+                            console.log("error", error)
+                          })
+                          promises.push(p);
+                          if(ind===diseases.length-1){
+                            checkPromisesLength(promises);
+                          }
+                      }, 200 + (2000 * ind));
+                    })(i);
+
                   })
+
+                  // data.diseases.forEach(function (disease){
+                  //   var p = model.promiseGetGenePanelsUsingSearchTerm(disease)
+                  //   .then(function (data){
+                  //     console.log("data in this function", data)
+                  //     if(data.genePanels.length>1){
+                  //       var filteredGenePanels = model.processGenePanelData(data.genePanels);
+                  //       data.disease.genePanels = filteredGenePanels;
+                  //     }
+                  //   },
+                  //   function(error) {
+                  //     console.log("error", error)
+                  //   })
+                  //    promises.push(p);
+                  //     // checkPromisesLength(promises);
+                  // })
 
                 }
               }

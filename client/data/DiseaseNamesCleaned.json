@@ -7589,10 +7589,6 @@
    "ConceptID": "C1837520"
  },
  {
-   "DiseaseName": "Abortive cerebellar ataxia",
-   "ConceptID": "C0221061"
- },
- {
    "DiseaseName": "Abruzzo Erickson syndrome",
    "ConceptID": "C1844862"
  },
@@ -11429,10 +11425,6 @@
    "ConceptID": "C2674249"
  },
  {
-   "DiseaseName": "Anemia sideroblastic and spinocerebellar ataxia",
-   "ConceptID": "C1845028"
- },
- {
    "DiseaseName": "Anemia, sideroblastic, pyridoxine-refractory, autosomal recessive",
    "ConceptID": "C2673914"
  },
@@ -11667,10 +11659,6 @@
  {
    "DiseaseName": "Aniridia, atypical",
    "ConceptID": "C4017066"
- },
- {
-   "DiseaseName": "Aniridia, Cerebellar Ataxia, And Intellectual Disability",
-   "ConceptID": "CN239197"
  },
  {
    "DiseaseName": "aniridia, cerebellar hypoplasia",
@@ -14613,128 +14601,8 @@
    "ConceptID": "CN240590"
  },
  {
-   "DiseaseName": "Ataxia and polyneuropathy, adult-onset",
-   "ConceptID": "C1838916"
- },
- {
-   "DiseaseName": "Ataxia and retinitis pigmentosa with isolated vitamin e deficiency",
-   "ConceptID": "C4016663"
- },
- {
-   "DiseaseName": "Ataxia   Audiologic/Otolaryngologic (child onset)",
-   "ConceptID": "CN232485"
- },
- {
    "DiseaseName": "Ataxia",
    "ConceptID": "C0004134"
- },
- {
-   "DiseaseName": "Ataxia   Craniofacial (child onset)",
-   "ConceptID": "CN232486"
- },
- {
-   "DiseaseName": "Ataxia, deafness and cardiomyopathy",
-   "ConceptID": "C1859645"
- },
- {
-   "DiseaseName": "Ataxia, Friedreich-like, with isolated vitamin E deficiency",
-   "ConceptID": "C4016662"
- },
- {
-   "DiseaseName": "Ataxia   Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232487"
- },
- {
-   "DiseaseName": "Ataxia   Neurologic (adult onset)",
-   "ConceptID": "CN232457"
- },
- {
-   "DiseaseName": "Ataxia   Neurologic (child onset)",
-   "ConceptID": "CN232488"
- },
- {
-   "DiseaseName": "Ataxia Neuropathy Spectrum Disorders",
-   "ConceptID": "CN239223"
- },
- {
-   "DiseaseName": "Ataxia-oculomotor apraxia 3",
-   "ConceptID": "C3554690"
- },
- {
-   "DiseaseName": "Ataxia-oculomotor apraxia 4",
-   "ConceptID": "C4225397"
- },
- {
-   "DiseaseName": "Ataxia-oculomotor apraxia type 1",
-   "ConceptID": "C1859598"
- },
- {
-   "DiseaseName": "Ataxia, sensory, autosomal dominant",
-   "ConceptID": "C1837015"
- },
- {
-   "DiseaseName": "Ataxia, spastic, 1, autosomal dominant",
-   "ConceptID": "C1970107"
- },
- {
-   "DiseaseName": "Ataxia, spastic, 2, autosomal recessive",
-   "ConceptID": "C1969796"
- },
- {
-   "DiseaseName": "Ataxia, spastic, 3, autosomal recessive",
-   "ConceptID": "C1969645"
- },
- {
-   "DiseaseName": "Ataxia, spastic, 4, autosomal recessive",
-   "ConceptID": "C3150925"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia, complementation group E",
-   "ConceptID": "C1859616"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia-like disorder 1",
-   "ConceptID": "C1858391"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia-like disorder 2",
-   "ConceptID": "C4014676"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia-like disorder",
-   "ConceptID": "CN239583"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia syndrome",
-   "ConceptID": "C0004135"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia variant",
-   "ConceptID": "C1876175"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia with generalized skin pigmentation and early death",
-   "ConceptID": "C1859615"
- },
- {
-   "DiseaseName": "Ataxia-telangiectasia without immunodeficiency",
-   "ConceptID": "C4017102"
- },
- {
-   "DiseaseName": "Ataxia with fasciculations",
-   "ConceptID": "C1862440"
- },
- {
-   "DiseaseName": "Ataxia with myoclonic epilepsy and presenile dementia",
-   "ConceptID": "C1859646"
- },
- {
-   "DiseaseName": "Ataxia with Oculomotor Apraxia",
-   "ConceptID": "CN239198"
- },
- {
-   "DiseaseName": "Ataxia with vitamin E deficiency",
-   "ConceptID": "C1848533"
  },
  {
    "DiseaseName": "Ataxic cerebral palsy",
@@ -15877,52 +15745,8 @@
    "ConceptID": "C0410204"
  },
  {
-   "DiseaseName": "Autosomal recessive cerebellar ataxia",
-   "ConceptID": "CN226644"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 10",
+   "DiseaseName": "Autosomal recessive congenital ichthyosis",
    "ConceptID": "C3554355"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 1",
-   "ConceptID": "C3536797"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 2",
-   "ConceptID": "C1855792"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 3",
-   "ConceptID": "C1847849"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 4A",
-   "ConceptID": "C1832550"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 4B",
-   "ConceptID": "C0239849"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 5",
-   "ConceptID": "C1858142"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 6",
-   "ConceptID": "C2677065"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 7",
-   "ConceptID": "C3554348"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 8",
-   "ConceptID": "C3553029"
- },
- {
-   "DiseaseName": "Autosomal recessive congenital ichthyosis 9",
-   "ConceptID": "C3554349"
  },
  {
    "DiseaseName": "Autosomal recessive cutis laxa type 1B",
@@ -60605,18 +60429,6 @@
    "ConceptID": "CN118835"
  },
  {
-   "DiseaseName": "Mandibuloacral dysplasia with type A lipodystrophy, atypical",
-   "ConceptID": "CN043412"
- },
- {
-   "DiseaseName": "Mandibuloacral dysplasia with type A lipodystrophy",
-   "ConceptID": "CN236772"
- },
- {
-   "DiseaseName": "Mandibuloacral dysplasia with type B lipodystrophy",
-   "ConceptID": "C1837756"
- },
- {
    "DiseaseName": "Mandibulofacial dysostosis",
    "ConceptID": ""
  },
@@ -76645,14 +76457,6 @@
    "ConceptID": "C0220723"
  },
  {
-   "DiseaseName": "Posterior column ataxia",
-   "ConceptID": "C1867923"
- },
- {
-   "DiseaseName": "Posterior column ataxia with retinitis pigmentosa",
-   "ConceptID": "C1836916"
- },
- {
    "DiseaseName": "Posterior cortical cataract",
    "ConceptID": "C4023650"
  },
@@ -77741,10 +77545,6 @@
    "ConceptID": "C4021566"
  },
  {
-   "DiseaseName": "Progressive cerebellar ataxia",
-   "ConceptID": "C0393525"
- },
- {
    "DiseaseName": "progressive cerebellar atrophy",
    "ConceptID": "C1864929"
  },
@@ -77877,10 +77677,6 @@
    "ConceptID": "C1861310"
  },
  {
-   "DiseaseName": "Progressive gait ataxia",
-   "ConceptID": "C1843885"
- },
- {
    "DiseaseName": "progressive   Gastrointestinal (child onset)",
    "ConceptID": "CN232515"
  },
@@ -77971,10 +77767,6 @@
  {
    "DiseaseName": "Progressive myoclonic epilepsy",
    "ConceptID": "C0751778"
- },
- {
-   "DiseaseName": "Progressive myoclonus epilepsy with ataxia",
-   "ConceptID": "C2676254"
  },
  {
    "DiseaseName": "Progressive myositis ossificans",
@@ -78085,16 +77877,8 @@
    "ConceptID": "C0917981"
  },
  {
-   "DiseaseName": "progressive spinocerebellar ataxia",
-   "ConceptID": "CN228657"
- },
- {
    "DiseaseName": "Progressive supranuclear ophthalmoplegia",
    "ConceptID": "C0038868"
- },
- {
-   "DiseaseName": "Progressive truncal ataxia",
-   "ConceptID": "C1849143"
  },
  {
    "DiseaseName": "Progressive ventriculomegaly",
@@ -80445,10 +80229,6 @@
    "ConceptID": "CN229801"
  },
  {
-   "DiseaseName": "Recessive mitochondrial ataxia syndrome",
-   "ConceptID": "CN206743"
- },
- {
    "DiseaseName": "Recombinant chromosome 8 syndrome",
    "ConceptID": "C0795822"
  },
@@ -81629,10 +81409,6 @@
    "ConceptID": "C1849438"
  },
  {
-   "DiseaseName": "Renal dysplasia, retinal pigmentary dystrophy, cerebellar ataxia and skeletal dysplasia",
-   "ConceptID": "C1849437"
- },
- {
    "DiseaseName": "Renal Fanconi syndrome",
    "ConceptID": "C1857397"
  },
@@ -81815,10 +81591,6 @@
  {
    "DiseaseName": "Renal tubular lysine transport defect",
    "ConceptID": "C4024714"
- },
- {
-   "DiseaseName": "Renal tubulopathy, diabetes mellitus, and cerebellar ataxia",
-   "ConceptID": "C3151959"
  },
  {
    "DiseaseName": "Renovascular hypertension",
@@ -84933,10 +84705,6 @@
    "ConceptID": "CN236426"
  },
  {
-   "DiseaseName": "Seizures, Sensorineural Deafness, Ataxia, Intellectual Disability, and Electrolyte Imbalance Syndrome",
-   "ConceptID": "CN239180"
- },
- {
    "DiseaseName": "selective beta-2-adrenoreceptor agonists response - Efficacy",
    "ConceptID": "CN236448"
  },
@@ -85091,10 +84859,6 @@
  {
    "DiseaseName": "Sensorineural deafness with mild renal dysfunction",
    "ConceptID": "C2748440"
- },
- {
-   "DiseaseName": "Sensory ataxia",
-   "ConceptID": "C0240991"
  },
  {
    "DiseaseName": "Sensory ataxic neuropathy",
@@ -86423,10 +86187,6 @@
  {
    "DiseaseName": "Sideroblastic anemia, acquired idiopathic",
    "ConceptID": "C4016601"
- },
- {
-   "DiseaseName": "Sideroblastic Anemia and Ataxia",
-   "ConceptID": "CN239162"
  },
  {
    "DiseaseName": "Sideroblastic anemia",
@@ -87841,40 +87601,12 @@
    "ConceptID": "C0546878"
  },
  {
-   "DiseaseName": "Spastic Ataxia 3",
-   "ConceptID": "CN230089"
- },
- {
-   "DiseaseName": "Spastic Ataxia 4",
-   "ConceptID": "CN230090"
- },
- {
-   "DiseaseName": "Spastic ataxia 5, autosomal recessive",
-   "ConceptID": "C3280977"
- },
- {
-   "DiseaseName": "Spastic ataxia 7, autosomal dominant",
-   "ConceptID": "C1862441"
- },
- {
-   "DiseaseName": "SPASTIC ATAXIA 8, AUTOSOMAL RECESSIVE, WITH HYPOMYELINATING LEUKODYSTROPHY",
-   "ConceptID": "C4479653"
- },
- {
    "DiseaseName": "Spastic ataxia",
    "ConceptID": "C1849156"
  },
  {
-   "DiseaseName": "Spastic ataxia Charlevoix-Saguenay type",
-   "ConceptID": "C1849140"
- },
- {
    "DiseaseName": "Spastic diplegia",
    "ConceptID": "C0023882"
- },
- {
-   "DiseaseName": "Spastic diplegia infantile type",
-   "ConceptID": "C1849139"
  },
  {
    "DiseaseName": "Spastic dysarthria",
@@ -88251,10 +87983,6 @@
  {
    "DiseaseName": "Spastic paraplegia and psychomotor retardation with or without seizures",
    "ConceptID": "C4225215"
- },
- {
-   "DiseaseName": "Spastic paraplegia, ataxia, and mental retardation",
-   "ConceptID": "C1843661"
  },
  {
    "DiseaseName": "Spastic paraplegia, autosomal dominant",
@@ -88833,304 +88561,8 @@
    "ConceptID": "CN219574"
  },
  {
-   "DiseaseName": "Spinocerebellar ataxia 10",
-   "ConceptID": "C1963674"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 11",
-   "ConceptID": "C1858351"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 12",
-   "ConceptID": "C1858501"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 13",
-   "ConceptID": "C1854488"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 14",
-   "ConceptID": "C1854369"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 15",
-   "ConceptID": "C1847725"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 17",
-   "ConceptID": "C1846707"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 18",
-   "ConceptID": "C1843884"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 19",
-   "ConceptID": "C1846367"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 1",
-   "ConceptID": "C0752120"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 20",
-   "ConceptID": "C1837541"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 21",
-   "ConceptID": "C1843891"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 23",
-   "ConceptID": "C1853250"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 25",
-   "ConceptID": "C1837518"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 26",
-   "ConceptID": "C1836395"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 27",
-   "ConceptID": "C1836383"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 28",
-   "ConceptID": "C1853249"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 29",
-   "ConceptID": "C1861732"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 2",
-   "ConceptID": "C0752121"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 30",
-   "ConceptID": "C2936793"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 31",
-   "ConceptID": "C1861736"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 32",
-   "ConceptID": "C3151343"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 35",
-   "ConceptID": "C3888031"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 36",
-   "ConceptID": "C3472711"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 37",
-   "ConceptID": "C3889636"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 38",
-   "ConceptID": "C4014812"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 40",
-   "ConceptID": "CN252333"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 41",
-   "ConceptID": "C4225158"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 42",
-   "ConceptID": "C4225205"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 43",
-   "ConceptID": "C4310763"
- },
- {
-   "DiseaseName": "SPINOCEREBELLAR ATAXIA 44",
-   "ConceptID": "C4521563"
- },
- {
-   "DiseaseName": "SPINOCEREBELLAR ATAXIA 45",
-   "ConceptID": "C4540400"
- },
- {
-   "DiseaseName": "SPINOCEREBELLAR ATAXIA 46",
-   "ConceptID": "C4540404"
- },
- {
-   "DiseaseName": "SPINOCEREBELLAR ATAXIA 47",
-   "ConceptID": "CN244564"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 4",
-   "ConceptID": "C0752122"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 5",
-   "ConceptID": "C0752123"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 6",
-   "ConceptID": "C0752124"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 7",
-   "ConceptID": "C0752125"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 8",
-   "ConceptID": "C1837454"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia 9",
-   "ConceptID": "C1421994"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 10",
-   "ConceptID": "C3150998"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 11",
-   "ConceptID": "C3280226"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 12",
-   "ConceptID": "C3280452"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 13",
-   "ConceptID": "C3553816"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 14",
-   "ConceptID": "C3809327"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 15",
-   "ConceptID": "C3810326"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 16",
-   "ConceptID": "C4014261"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 17",
-   "ConceptID": "C4015301"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 18",
-   "ConceptID": "C4015505"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia autosomal recessive 1",
-   "ConceptID": "C1853761"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 20",
-   "ConceptID": "C4225355"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 21",
-   "ConceptID": "C4225236"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 22",
-   "ConceptID": "C4310781"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 23",
-   "ConceptID": "C4310780"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 24",
-   "ConceptID": "C4310699"
- },
- {
-   "DiseaseName": "SPINOCEREBELLAR ATAXIA, AUTOSOMAL RECESSIVE 25",
-   "ConceptID": "C4539808"
- },
- {
-   "DiseaseName": "SPINOCEREBELLAR ATAXIA, AUTOSOMAL RECESSIVE 26",
-   "ConceptID": "C4539948"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 2",
-   "ConceptID": "C1859298"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia autosomal recessive 3",
-   "ConceptID": "C1849094"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia autosomal recessive 4",
-   "ConceptID": "C1846492"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia autosomal recessive 6",
-   "ConceptID": "C1842676"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, autosomal recessive 8",
-   "ConceptID": "C1853116"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia autosomal recessive with axonal neuropathy",
-   "ConceptID": "C1846574"
- },
- {
-   "DiseaseName": "Spinocerebellar Ataxia, Dominant",
-   "ConceptID": "CN227858"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia type 13",
-   "ConceptID": "C4304884"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia type 15/16",
-   "ConceptID": "C4274322"
- },
- {
-   "DiseaseName": "Spinocerebellar Ataxia Type19",
-   "ConceptID": "CN230137"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia with dysmorphism",
-   "ConceptID": "C1849088"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia with rigidity and peripheral neuropathy",
-   "ConceptID": "C1866770"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, X-linked 1",
-   "ConceptID": "C0796205"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, X-linked 5",
-   "ConceptID": "C2678048"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia, X-linked",
-   "ConceptID": "CN232400"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia X-linked type 2",
-   "ConceptID": "C1844885"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia X-linked type 3",
-   "ConceptID": "C1844936"
- },
- {
-   "DiseaseName": "Spinocerebellar ataxia X-linked type 4",
-   "ConceptID": "C1844933"
+   "DiseaseName": "Spinocerebellar ataxia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Spinocerebellar atrophy",
@@ -90403,10 +89835,6 @@
  {
    "DiseaseName": "Storm syndrome",
    "ConceptID": "C1861452"
- },
- {
-   "DiseaseName": "strabismus and ataxia, with loss of motor milestones",
-   "ConceptID": "CN235371"
  },
  {
    "DiseaseName": "Strabismus",
@@ -92059,10 +91487,6 @@
  {
    "DiseaseName": "Tapering pointed ends of distal finger phalanges",
    "ConceptID": "C4025078"
- },
- {
-   "DiseaseName": "Tapetoretinal degeneration with ataxia",
-   "ConceptID": "C1848932"
  },
  {
    "DiseaseName": "TARDBP-related frontotemporal dementia",
@@ -94855,10 +94279,6 @@
  {
    "DiseaseName": "True hermaphroditism",
    "ConceptID": "C0266361"
- },
- {
-   "DiseaseName": "Truncal ataxia",
-   "ConceptID": "C0427190"
  },
  {
    "DiseaseName": "Truncal obesity",
