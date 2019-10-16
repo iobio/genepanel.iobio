@@ -363,7 +363,13 @@
                 transition="dialog-transition"
               >
                 <v-card>
-                  <v-card-title class="headline">Review Terms</v-card-title>
+                  <v-card-title class="headline">
+                    <span>Review Terms</span>
+                    <v-spacer></v-spacer>
+                    <span>
+                      <v-btn flat icon @click="closeReviewDialog"><v-icon>close</v-icon></v-btn>
+                    </span>
+                  </v-card-title>
                   <v-card-title v-if="termsReviewDialogPage===1">Select the terms to be searched in GTR:  </v-card-title>
                   <div  v-if="termsReviewDialogPage===1">
                     <br><center><i>Please limit to 5 terms in GTR </i></center>
@@ -388,7 +394,7 @@
                                 <v-card-text>
                                   <div v-for="sub in item.reviewTerms_gtr" class="row">
                                     <div class="col-md-2">
-                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
+                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded_temp" :value="sub"></v-checkbox>
                                     </div>
                                     <div class="col-md-10">
                                       <span v-if="sub.general">
@@ -417,7 +423,7 @@
                                   <div v-for="sub in item.reviewTerms_gtr" >
                                     <div class="row">
                                       <div class="col-md-2">
-                                        <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
+                                        <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded_temp" :value="sub"></v-checkbox>
                                       </div>
                                       <div class="col-md-10">
                                         <span v-if="sub.general">
@@ -457,7 +463,7 @@
                                 <v-card-text>
                                   <div v-for="sub in item.reviewTerms_phenolyzer" class="row">
                                     <div class="col-md-2">
-                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
+                                      <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded_temp" :value="sub"></v-checkbox>
                                     </div>
                                     <div class="col-md-10">
                                       <span v-if="sub.general">
@@ -486,7 +492,7 @@
                                   <div v-for="sub in item.reviewTerms_phenolyzer" >
                                     <div class="row">
                                       <div class="col-md-2">
-                                        <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
+                                        <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded_temp" :value="sub"></v-checkbox>
                                       </div>
                                       <div class="col-md-10">
                                         <span v-if="sub.general">
@@ -520,7 +526,7 @@
                         <tbody>
                           <tr v-for="(term, i) in HpoReviewTerms" :key="i">
                             <th scope="row">
-                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="hpoTermsAdded" :value="term"></v-checkbox>
+                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="hpoTermsAdded_temp" :value="term"></v-checkbox>
                             </th>
                             <td>{{ term.HPO_Data }}</td>
                           </tr>
@@ -872,6 +878,9 @@ var model = new Model();
         gtrExpansionPanelMultiple: [],
         phenolyzerExpansionPanel: ['true'],
         phenolyzerExpansionPanelMultiple: [],
+        GtrTermsAdded_temp: [],
+        phenolyzerTermsAdded_temp: [],
+        hpoTermsAdded_temp: [],
       }
     },
     mounted(){
@@ -1310,8 +1319,6 @@ var model = new Model();
           }
         })
 
-        console.log("HpoReviewTerms", this.HpoReviewTerms)
-
       setTimeout(()=>{
           this.termsReviewDialog = true;
           this.termsReviewDialogPage = 1;
@@ -1322,6 +1329,9 @@ var model = new Model();
       closeReviewDialog(){
         this.termsReviewDialog=false;
         this.termsReviewDialogPage = 0;
+        this.GtrTermsAdded_temp = [];
+        this.phenolyzerTermsAdded_temp = [];
+        this.hpoTermsAdded_temp = [];
       },
       remove(item){
         var idxOf = this.multipleSearchTerms.indexOf(item);
@@ -1486,6 +1496,13 @@ var model = new Model();
         }
       },
       selectReviewTerms(){
+        this.GtrTermsAdded = [...this.GtrTermsAdded, ...this.GtrTermsAdded_temp];
+        this.phenolyzerTermsAdded = [...this.phenolyzerTermsAdded, ...this.phenolyzerTermsAdded_temp];
+        this.hpoTermsAdded = [...this.hpoTermsAdded, ...this.hpoTermsAdded_temp];
+
+        this.GtrTermsAdded_temp = [];
+        this.phenolyzerTermsAdded_temp = [];
+        this.hpoTermsAdded_temp = [];
 
         this.GtrTermsAdded.map(term=>{
           var searchTerm ="";
