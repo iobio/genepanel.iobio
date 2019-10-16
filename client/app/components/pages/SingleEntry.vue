@@ -975,21 +975,6 @@ var model = new Model();
           }
           else { this.checkToCloseSearchStatusDialog(); }
         }
-        // console.log("searchTermsObj", this.searchTermsObj)
-        // if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted && this.hpoFetchCompleted){
-        //   this.searchTermsObj[this.idx].status = "Completed";
-        //   this.idx = this.idx + 1;
-        //   if(this.idx < this.multipleSearchTerms.length){
-        //     setTimeout(()=>{
-        //       this.performSearchEvent();
-        //     },5000)
-        //   }
-        //   else {
-        //     this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
-        //     this.expansionpanlExpand = [];
-        //     this.searchComplete = true;
-        //   }
-        // }
       })
 
       bus.$on("handleGeneralTermsInSingleEntry", (diseases)=>{
@@ -1390,11 +1375,12 @@ var model = new Model();
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'gtrSearchStatus', "Searching");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'hpoSearchStatus', "NotAvailable");
-          // this.phenolyzerFetchCompleted = true;
-          // this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchGTR", this.Gtr_searchTermsObj[this.Gtr_idx]);
         }
-        else { this.gtrFetchCompleted = true; }
+        else {
+          this.gtrFetchCompleted = true;
+          this.checkToCloseSearchStatusDialog();
+         }
 
       },
       Phenolyzer_performSearchEvent(){
@@ -1409,12 +1395,13 @@ var model = new Model();
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "Searching");
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'hpoSearchStatus', "NotAvailable");
-          // this.gtrFetchCompleted = true;
-          // this.hpoFetchCompleted = true;
           bus.$emit("singleTermSearchPhenolyzer", str);
 
         }
-        else { this.phenolyzerFetchCompleted = true; }
+        else {
+          this.phenolyzerFetchCompleted = true;
+          this.checkToCloseSearchStatusDialog();
+         }
       },
       Hpo_performSearchEvent(){
         if(this.Hpo_searchTermsObj.length && this.Hpo_idx<this.Hpo_searchTermsObj.length){
@@ -1427,12 +1414,13 @@ var model = new Model();
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'hpoSearchStatus', "Searching");
-          // this.gtrFetchCompleted = true;
-          // this.phenolyzerFetchCompleted = true;
           bus.$emit("singleTermSearchHPO", this.Hpo_searchTermsObj[this.Hpo_idx]);
 
         }
-        else { this.hpoFetchCompleted = true; }
+        else {
+          this.hpoFetchCompleted = true;
+          this.checkToCloseSearchStatusDialog();
+         }
 
       },
       performSearchEvent(){
@@ -1440,54 +1428,6 @@ var model = new Model();
         this.Phenolyzer_performSearchEvent();
         this.Hpo_performSearchEvent();
         this.searchStatusDialog = true;
-        // this.searchStatus = true;
-        // this.searchComplete = false;
-        // this.expansionpanlExpand = ['true'];
-        // // var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
-        //
-        // if(this.searchTermsObj[this.idx].tool_to_search === "All resources"){
-        //   this.gtrFetchCompleted = false;
-        //   this.phenolyzerFetchCompleted = false;
-        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
-        //   var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
-        //   bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
-        //   bus.$emit("singleTermSearchPhenolyzer", str);
-        // }
-        // else if(this.searchTermsObj[this.idx].tool_to_search === "GTR"){
-        //   this.gtrFetchCompleted = false;
-        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
-        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
-        //   this.phenolyzerFetchCompleted = true;
-        //   this.hpoFetchCompleted = true;
-        //   bus.$emit("singleTermSearchGTR", this.searchTermsObj[this.idx]);
-        // }
-        // else if(this.searchTermsObj[this.idx].tool_to_search === "Phenolyzer"){
-        //   var str = this.multipleSearchTerms[this.idx].replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
-        //   this.phenolyzerFetchCompleted = false;
-        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
-        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "NotAvailable");
-        //   this.gtrFetchCompleted = true;
-        //   this.hpoFetchCompleted = true;
-        //   bus.$emit("singleTermSearchPhenolyzer", str);
-        // }
-        // else if(this.searchTermsObj[this.idx].tool_to_search === "Hpo"){
-        //   this.hpoFetchCompleted = false;
-        //   this.$set(this.searchTermsObj[this.idx], 'status', "Searching");
-        //   this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
-        //   this.$set(this.searchTermsObj[this.idx], 'phenolyzerSearchStatus', "NotAvailable");
-        //   this.$set(this.searchTermsObj[this.idx], 'hpoSearchStatus', "Searching");
-        //   this.gtrFetchCompleted = true;
-        //   this.phenolyzerFetchCompleted = true;
-        //   bus.$emit("singleTermSearchHPO", this.searchTermsObj[this.idx]);
-        // }
-
       },
       addTerm(){
         var searchTerm ="";
