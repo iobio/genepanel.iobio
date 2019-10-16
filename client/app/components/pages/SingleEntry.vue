@@ -209,7 +209,7 @@
                               <tr> <strong>GTR Search status</strong></tr>
                             </thead>
                             <tbody>
-                              <tr v-for="(term, i) in Gtr_searchTermsObj" :key="i">
+                              <tr v-if="Gtr_searchTermsObj.length" v-for="(term, i) in Gtr_searchTermsObj" :key="i">
                                 <td>{{ term.DiseaseName }}</td>
                                 <td >
                                   <span v-if="term.gtrSearchStatus==='Searching'">
@@ -228,6 +228,9 @@
                               </tr>
                             </tbody>
                           </table>
+                          <div v-if="Gtr_searchTermsObj.length<1">
+                            <span><i>Not Selected...</i></span>
+                          </div>
                         </div>
 
                         <div class="col-md-4">
@@ -255,6 +258,9 @@
                               </tr>
                             </tbody>
                           </table>
+                          <div v-if="Phenolyzer_searchTermsObj.length<1">
+                            <span><i>Not Selected...</i></span>
+                          </div>
                         </div>
 
                         <div class="col-md-4">
@@ -282,8 +288,10 @@
                               </tr>
                             </tbody>
                           </table>
+                          <div v-if="Hpo_searchTermsObj.length<1">
+                            <span><i>Not Selected...</i></span>
+                          </div>
                         </div>
-
 
                       </div>
                     </div>
