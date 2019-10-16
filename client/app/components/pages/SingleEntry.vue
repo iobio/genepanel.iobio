@@ -916,7 +916,6 @@ var model = new Model();
           else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "Phenolyzer"){
-          console.log("Phenolyzer completed!");
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed";
           this.phenolyzerFetchCompleted = true;
           this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Completed";
@@ -941,19 +940,40 @@ var model = new Model();
           else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "noGenePanels"){
-          // console.log("here")
           this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
           this.gtrFetchCompleted = true;
+          this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "NoGenes";
+          this.Gtr_idx = this.Gtr_idx + 1;
+          if(this.Gtr_idx < this.Gtr_searchTermsObj.length){
+            setTimeout(()=>{
+              this.Gtr_performSearchEvent();
+            },1000)
+          }
+          else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "noPhenolyzerGenes"){
-          // console.log("Phenolyzer completed!");
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "NoGenes"
           this.phenolyzerFetchCompleted = true;
+          this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "NoGenes";
+          this.Phenolyzer_idx = this.Phenolyzer_idx + 1;
+          if(this.Phenolyzer_idx < this.Phenolyzer_searchTermsObj.length){
+            setTimeout(()=>{
+              this.Phenolyzer_performSearchEvent();
+            },1000)
+          }
+          else { this.checkToCloseSearchStatusDialog(); }
         }
         else if(component === "skipGtr"){
-          // this.$set(this.searchTermsObj[this.idx], 'gtrSearchStatus', "NotAvailable");
           this.searchTermsObj[this.idx].gtrSearchStatus = "NotAvailable"
           this.gtrFetchCompleted = true;
+          this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "NotAvailable";
+          this.Gtr_idx = this.Gtr_idx + 1;
+          if(this.Gtr_idx < this.Gtr_searchTermsObj.length){
+            setTimeout(()=>{
+              this.Gtr_performSearchEvent();
+            },1000)
+          }
+          else { this.checkToCloseSearchStatusDialog(); }
         }
         // console.log("searchTermsObj", this.searchTermsObj)
         // if(this.gtrFetchCompleted && this.phenolyzerFetchCompleted && this.hpoFetchCompleted){
@@ -1023,10 +1043,6 @@ var model = new Model();
         this.gtrVizData.genepanelCounts = genepanelCounts;
       },
       getPhenolyzerGenes(){
-        console.log(":getPhenolyzerGenes: ", this.getPhenolyzerGenes)
-        // var sortedGenes = this.sortOrder(this.getPhenolyzerGenes);
-        //
-        // this.phenolyzerGenes = sortedGenes.slice(0,5);
         this.phenolyzerGenes = this.getPhenolyzerGenes.slice(0,5);
         console.log("this.phenolyzerGenes", this.phenolyzerGenes)
         this.$set(this.phenolyzerVizData, 'geneNames', [])
@@ -1040,17 +1056,11 @@ var model = new Model();
         })
         this.$set(this.phenolyzerVizData, 'geneNames', geneNames)
         this.$set(this.phenolyzerVizData, 'genepanelCounts', genepanelCounts)
-
-        // this.phenolyzerVizData.geneNames = geneNames;
-        // this.phenolyzerVizData.genepanelCounts = genepanelCounts;
-        // console.log("phenolyzerVizData", this.phenolyzerVizData)
       },
       getSummaryGenes(){
-        console.log("changing!!")
         this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
       },
       phenolyzerVizData(){
-        console.log("phenolyzerVizData is changing")
       }
     },
     methods:{
