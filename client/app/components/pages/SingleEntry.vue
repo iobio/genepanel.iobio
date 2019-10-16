@@ -1006,12 +1006,10 @@ var model = new Model();
         }
       },
       GtrTermsAdded(){
-        console.log("GtrTermsAdded", this.GtrTermsAdded)
         if(this.GtrTermsAdded.length > 5){
           alert("max limit reached for GTR");
           this.GtrTermsAdded.pop();
         }
-
       },
       searchTermsObj(){
       },
@@ -1028,7 +1026,6 @@ var model = new Model();
       },
       getPhenolyzerGenes(){
         this.phenolyzerGenes = this.getPhenolyzerGenes.slice(0,5);
-        console.log("this.phenolyzerGenes", this.phenolyzerGenes)
         this.$set(this.phenolyzerVizData, 'geneNames', [])
         this.$set(this.phenolyzerVizData, 'genepanelCounts', [])
 
@@ -1293,7 +1290,7 @@ var model = new Model();
 
         var data = this.setPhenolyzerTerms(str);
         data.then(res => {
-          // this.phenolyzerReviewTerms = res;
+          //TODO: If res.length is 0, see the example from extracted terms
           res.forEach(x => {
             if(x.value.toLowerCase().trim() !== this.search.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
               this.phenolyzerReviewTerms[0].reviewTerms_phenolyzer.push(x);
@@ -1306,6 +1303,7 @@ var model = new Model();
 
         })
 
+        this.HpoReviewTerms = [];
         this.HpoTermsTypeaheadData.forEach(x => {
           if(x.HPO_Data.toLowerCase().includes(str)){
             this.HpoReviewTerms.push(x);
