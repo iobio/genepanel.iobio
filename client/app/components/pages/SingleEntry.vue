@@ -1009,7 +1009,6 @@ var model = new Model();
     },
     watch: {
       textNotes(){
-        console.log("this.textNotes", this.textNotes.length)
         if(this.textNotes.length===45){
           setTimeout(()=>{
             this.$refs.single_entry_input_textarea.focus();
@@ -1381,7 +1380,7 @@ var model = new Model();
         this.addTerm();
       },
       Gtr_performSearchEvent(){
-        if(this.Gtr_searchTermsObj.length){
+        if(this.Gtr_searchTermsObj.length && this.Gtr_idx<this.Gtr_searchTermsObj.length){ //Second condition here ensures that the index does not become more than the length of the array, which would throw undefined error.
           this.searchStatus = true;
           this.searchComplete = false;
           this.expansionpanlExpand = ['true'];
@@ -1399,7 +1398,7 @@ var model = new Model();
 
       },
       Phenolyzer_performSearchEvent(){
-        if(this.Phenolyzer_searchTermsObj.length){
+        if(this.Phenolyzer_searchTermsObj.length && this.Phenolyzer_idx<this.Phenolyzer_searchTermsObj.length){
           this.searchStatus = true;
           this.searchComplete = false;
           this.expansionpanlExpand = ['true'];
@@ -1418,7 +1417,7 @@ var model = new Model();
         else { this.phenolyzerFetchCompleted = true; }
       },
       Hpo_performSearchEvent(){
-        if(this.Hpo_searchTermsObj.length){
+        if(this.Hpo_searchTermsObj.length && this.Hpo_idx<this.Hpo_searchTermsObj.length){
           this.searchStatus = true;
           this.searchComplete = false;
           this.expansionpanlExpand = ['true'];
@@ -1555,11 +1554,14 @@ var model = new Model();
           var conceptId = ""
           searchTerm = term.DiseaseName;
           conceptId = term.ConceptID;
-          this.$set(term, 'status', "Not started");
-          this.$set(term, 'gtrSearchStatus', "Not started");
-          this.$set(term, 'phenolyzerSearchStatus', "Not started");
-          this.$set(term, 'hpoSearchStatus', "Not started");
-          this.$set(term, 'tool_to_search', 'GTR');
+
+          if(term.gtrSearchStatus!=="Completed" || term.gtrSearchStatus===undefined){
+            this.$set(term, 'status', "Not started");
+            this.$set(term, 'gtrSearchStatus', "Not started");
+            this.$set(term, 'phenolyzerSearchStatus', "Not started");
+            this.$set(term, 'hpoSearchStatus', "Not started");
+            this.$set(term, 'tool_to_search', 'GTR');
+          }
 
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
             if(searchTerm.length>1){
@@ -1573,12 +1575,14 @@ var model = new Model();
         this.phenolyzerTermsAdded.map(term => {
           var searchTerm ="";
           searchTerm = term.value;
-          this.$set(term, 'status', "Not started");
-          this.$set(term, 'gtrSearchStatus', "Not started");
-          this.$set(term, 'phenolyzerSearchStatus', "Not started");
-          this.$set(term, 'hpoSearchStatus', "Not started");
-          this.$set(term, 'tool_to_search', 'Phenolyzer');
-          this.$set(term, 'DiseaseName', term.value);
+          if(term.phenolyzerSearchStatus!=="Completed" || term.phenolyzerSearchStatus===undefined){
+            this.$set(term, 'status', "Not started");
+            this.$set(term, 'gtrSearchStatus', "Not started");
+            this.$set(term, 'phenolyzerSearchStatus', "Not started");
+            this.$set(term, 'hpoSearchStatus', "Not started");
+            this.$set(term, 'tool_to_search', 'Phenolyzer');
+            this.$set(term, 'DiseaseName', term.value);
+          }
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
@@ -1591,12 +1595,14 @@ var model = new Model();
         this.hpoTermsAdded.map(term => {
           var searchTerm ="";
           searchTerm = term.HPO_Data;
-          this.$set(term, 'status', "Not started");
-          this.$set(term, 'gtrSearchStatus', "Not started");
-          this.$set(term, 'phenolyzerSearchStatus', "Not started");
-          this.$set(term, 'hpoSearchStatus', "Not started");
-          this.$set(term, 'tool_to_search', 'Hpo');
-          this.$set(term, 'DiseaseName', term.HPO_Data);
+          if(term.hpoSearchStatus!=="Completed" || term.hpoSearchStatus===undefined){
+            this.$set(term, 'status', "Not started");
+            this.$set(term, 'gtrSearchStatus', "Not started");
+            this.$set(term, 'phenolyzerSearchStatus', "Not started");
+            this.$set(term, 'hpoSearchStatus', "Not started");
+            this.$set(term, 'tool_to_search', 'Hpo');
+            this.$set(term, 'DiseaseName', term.HPO_Data);
+          }
 
           var res = searchTerm.split(" - ");
           var hpoId = res[1].replace(/[\])}[{(]/g, '').trim();
