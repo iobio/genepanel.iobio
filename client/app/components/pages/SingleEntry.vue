@@ -381,17 +381,16 @@
                           >
                             <v-expansion-panel-content v-for="(item, i) in GtrReviewTerms" :key="i">
                               <template v-slot:header>
-                                <div>{{ item.DiseaseName }}</div>
+                                <div><strong>{{ item.DiseaseName }}</strong></div>
                               </template>
 
-                              <v-card>
+                              <v-card class="reviewCard">
                                 <v-card-text>
                                   <div v-for="sub in item.reviewTerms_gtr" class="row">
                                     <div class="col-md-2">
                                       <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="GtrTermsAdded" :value="sub"></v-checkbox>
                                     </div>
                                     <div class="col-md-10">
-                                      <!-- {{ sub.DiseaseName }} -->
                                       <span v-if="sub.general">
                                         <span class="highlighted_condition">{{ sub.DiseaseName }}</span>
                                       </span>
@@ -411,9 +410,9 @@
                             <v-expansion-panel-content
                               v-for="(item, i) in GtrReviewTerms" :key="i">
                               <template v-slot:header>
-                                <div>{{ item.DiseaseName }}</div>
+                                <div><strong>{{ item.DiseaseName }}</strong></div>
                               </template>
-                              <v-card>
+                              <v-card class="reviewCard">
                                 <v-card-text >
                                   <div v-for="sub in item.reviewTerms_gtr" >
                                     <div class="row">
@@ -425,7 +424,6 @@
                                           <span class="highlighted_condition">{{ sub.DiseaseName }}</span>
                                         </span>
                                         <span v-else>{{ sub.DiseaseName }}</span>
-                                        <!-- {{ sub.DiseaseName }} -->
                                       </div>
                                     </div>
                                   </div>
@@ -452,17 +450,16 @@
                           >
                             <v-expansion-panel-content v-for="(item, i) in phenolyzerReviewTerms" :key="i">
                               <template v-slot:header>
-                                <div>{{ item.DiseaseName }}</div>
+                                <div><strong>{{ item.DiseaseName }}</strong></div>
                               </template>
 
-                              <v-card>
+                              <v-card class="reviewCard">
                                 <v-card-text>
                                   <div v-for="sub in item.reviewTerms_phenolyzer" class="row">
                                     <div class="col-md-2">
                                       <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
                                     </div>
                                     <div class="col-md-10">
-                                      <!-- {{ sub.value }} -->
                                       <span v-if="sub.general">
                                         <span class="highlighted_condition">{{ sub.value }}</span>
                                       </span>
@@ -482,9 +479,9 @@
                             <v-expansion-panel-content
                               v-for="(item, i) in phenolyzerReviewTerms" :key="i">
                               <template v-slot:header>
-                                <div>{{ item.DiseaseName }}</div>
+                                <div><strong>{{ item.DiseaseName }}</strong></div>
                               </template>
-                              <v-card>
+                              <v-card class="reviewCard">
                                 <v-card-text >
                                   <div v-for="sub in item.reviewTerms_phenolyzer" >
                                     <div class="row">
@@ -492,7 +489,6 @@
                                         <v-checkbox color="primary" style="margin-top:-2px; margin-bottom:-12px;" v-model="phenolyzerTermsAdded" :value="sub"></v-checkbox>
                                       </div>
                                       <div class="col-md-10">
-                                        <!-- {{ sub.value }} -->
                                         <span v-if="sub.general">
                                           <span class="highlighted_condition">{{ sub.value }}</span>
                                         </span>
@@ -1745,4 +1741,8 @@ var model = new Model();
   padding-left: 20px
   padding-right: 20px
   color: #22227d
+
+.reviewCard
+  height: 250px
+  overflow-y: auto
 </style>
