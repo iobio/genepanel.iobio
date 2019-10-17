@@ -17289,10 +17289,6 @@
    "ConceptID": "C1859468"
  },
  {
-   "DiseaseName": "Bird-headed dwarfism with progressive ataxia, insulin-resistant diabetes, goiter, and primary gonadal insufficiency",
-   "ConceptID": "C0342284"
- },
- {
    "DiseaseName": "Bird-like facies",
    "ConceptID": "C1837758"
  },
@@ -18323,10 +18319,6 @@
  {
    "DiseaseName": "Branchial fistula",
    "ConceptID": "C0546968"
- },
- {
-   "DiseaseName": "Branchial myoclonus with spastic paraparesis and cerebellar ataxia",
-   "ConceptID": "C1862071"
  },
  {
    "DiseaseName": "Branchial sinus",
@@ -20669,10 +20661,6 @@
    "ConceptID": "C1859315"
  },
  {
-   "DiseaseName": "Cataract ataxia deafness",
-   "ConceptID": "C0796123"
- },
- {
    "DiseaseName": "Cataract, autosomal dominant",
    "ConceptID": "C1858679"
  },
@@ -21197,72 +21185,8 @@
    "ConceptID": "C4022808"
  },
  {
-   "DiseaseName": "Cerebellar ataxia and hypergonadotropic hypogonadism",
-   "ConceptID": "C1854064"
- },
- {
-   "DiseaseName": "Cerebellar ataxia and mental retardation with quadrupedal locomotion 1",
-   "ConceptID": "C4016431"
- },
- {
-   "DiseaseName": "Cerebellar ataxia and neurosensory deafness",
-   "ConceptID": "C1859304"
- },
- {
-   "DiseaseName": "Cerebellar ataxia associated with quadrupedal gait",
-   "ConceptID": "C4024175"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, benign, with thermoanalgesia",
-   "ConceptID": "C1859303"
- },
- {
    "DiseaseName": "Cerebellar ataxia",
    "ConceptID": "C0007758"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, cataract, and diabetes mellitus",
-   "ConceptID": "C4016628"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, cayman type",
-   "ConceptID": "C1832585"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, deafness, and narcolepsy, autosomal dominant",
-   "ConceptID": "C1858804"
- },
- {
-   "DiseaseName": "Cerebellar ataxia ectodermal dysplasia",
-   "ConceptID": "C1859306"
- },
- {
-   "DiseaseName": "Cerebellar ataxia infantile with progressive external ophthalmoplegia",
-   "ConceptID": "C1850303"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, mental retardation, and dysequilibrium syndrome 1",
-   "ConceptID": "CN074243"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, mental retardation, and dysequilibrium syndrome 2",
-   "ConceptID": "C2750234"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, mental retardation, and dysequilibrium syndrome 3",
-   "ConceptID": "C2750509"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, mental retardation, and dysequilibrium syndrome 4",
-   "ConceptID": "C3808977"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, neuropathy, and vestibular areflexia syndrome",
-   "ConceptID": "C3281223"
- },
- {
-   "DiseaseName": "Cerebellar ataxia, nonprogressive, with mental retardation",
-   "ConceptID": "C3553661"
  },
  {
    "DiseaseName": "Cerebellar atrophy",
@@ -22089,10 +22013,6 @@
    "ConceptID": "CN169379"
  },
  {
-   "DiseaseName": "Childhood-onset autosomal recessive slowly progressive spinocerebellar ataxia",
-   "ConceptID": "C1836474"
- },
- {
    "DiseaseName": "Childhood-onset cerebral X-linked adrenoleukodystrophy",
    "ConceptID": "CN036464"
  },
@@ -22263,10 +22183,6 @@
  {
    "DiseaseName": "Cholestasis, progressive familial intrahepatic, 5",
    "ConceptID": "C4310747"
- },
- {
-   "DiseaseName": "Cholestasis with gallstone, ataxia, and visual disturbance",
-   "ConceptID": "C1859161"
  },
  {
    "DiseaseName": "Cholestatic liver disease",
@@ -23553,10 +23469,6 @@
    "ConceptID": "C0520463"
  },
  {
-   "DiseaseName": "Chronic and progressive ataxia",
-   "ConceptID": "CN225416"
- },
- {
    "DiseaseName": "Chronic atrial and intestinal dysrhythmia",
    "ConceptID": "C4015474"
  },
@@ -24629,48 +24541,8 @@
    "ConceptID": "C1837160"
  },
  {
-   "DiseaseName": "Coenzyme Q10 deficiency, Oculomotor Apraxia Type",
-   "ConceptID": "CN239212"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary 1",
-   "ConceptID": "C1843920"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 2",
-   "ConceptID": "C3553354"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 3",
-   "ConceptID": "C3553358"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 4",
-   "ConceptID": "C2677589"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 5",
-   "ConceptID": "C3553374"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 6",
-   "ConceptID": "C3553349"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 7",
-   "ConceptID": "C4225392"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary, 8",
-   "ConceptID": "C4225226"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, primary",
-   "ConceptID": "CN229570"
- },
- {
-   "DiseaseName": "Coenzyme Q10 deficiency, Spinocerebellar Ataxia Type",
-   "ConceptID": "CN239204"
+   "DiseaseName": "Coenzyme Q10 deficiency",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Coffin-Lowry syndrome",
@@ -24723,10 +24595,6 @@
  {
    "DiseaseName": "Cognitive impairment",
    "ConceptID": "C0683322"
- },
- {
-   "DiseaseName": "Cognitive impairment with or without cerebellar ataxia",
-   "ConceptID": "C3280415"
  },
  {
    "DiseaseName": "Cogwheel rigidity",
@@ -27899,10 +27767,6 @@
  {
    "DiseaseName": "Corpus callosum agenesis",
    "ConceptID": "C0175754"
- },
- {
-   "DiseaseName": "Corpus callosum, agenesis of, with facial anomalies and cerebellar ataxia",
-   "ConceptID": "C4225193"
  },
  {
    "DiseaseName": "Corpus callosum, agenesis of, with mental retardation, ocular coloboma, and micrognathia",
@@ -35505,10 +35369,6 @@
    "ConceptID": "CN241986"
  },
  {
-   "DiseaseName": "Early onset cerebellar ataxia with retained tendon reflexes",
-   "ConceptID": "C0393520"
- },
- {
    "DiseaseName": "Early-onset colorectal cancer",
    "ConceptID": "CN236728"
  },
@@ -38803,26 +38663,6 @@
  {
    "DiseaseName": "Erythrokeratodermia variabilis",
    "ConceptID": "C0265961"
- },
- {
-   "DiseaseName": "Erythrokeratodermia variabilis et progressiva 2",
-   "ConceptID": "C4479618"
- },
- {
-   "DiseaseName": "Erythrokeratodermia variabilis et progressiva 3",
-   "ConceptID": "C4479619"
- },
- {
-   "DiseaseName": "Erythrokeratodermia variabilis et progressiva 4",
-   "ConceptID": "C4479620"
- },
- {
-   "DiseaseName": "ERYTHROKERATODERMIA VARIABILIS ET PROGRESSIVA 5",
-   "ConceptID": "C4540331"
- },
- {
-   "DiseaseName": "Erythrokeratodermia with ataxia",
-   "ConceptID": "C1851481"
  },
  {
    "DiseaseName": "Erythropoietic protoporphyria",
@@ -42305,10 +42145,6 @@
    "ConceptID": "C0016667"
  },
  {
-   "DiseaseName": "Fragile X tremor/ataxia syndrome",
-   "ConceptID": "C1839780"
- },
- {
    "DiseaseName": "Fragmentation of the epiphyses of the 2nd finger",
    "ConceptID": "C4024333"
  },
@@ -42593,24 +42429,8 @@
    "ConceptID": "C1864825"
  },
  {
-   "DiseaseName": "Friedreich ataxia 1",
-   "ConceptID": "C1856689"
- },
- {
-   "DiseaseName": "Friedreich ataxia 2",
-   "ConceptID": "C1865981"
- },
- {
-   "DiseaseName": "Friedreich ataxia congenital glaucoma",
-   "ConceptID": "C1856688"
- },
- {
-   "DiseaseName": "Friedreich ataxia, so-called, with optic atrophy and sensorineural deafness",
-   "ConceptID": "C1850982"
- },
- {
-   "DiseaseName": "Friedreich ataxia with retained reflexes",
-   "ConceptID": "C1847416"
+   "DiseaseName": "Friedreich ataxia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Friedreich's ataxia",
@@ -43983,14 +43803,6 @@
  {
    "DiseaseName": "GI polyps",
    "ConceptID": "CN244038"
- },
- {
-   "DiseaseName": "GJB3-Related Erythrokeratodermia Variabilis",
-   "ConceptID": "CN229778"
- },
- {
-   "DiseaseName": "GJB4-Related Erythrokeratodermia Variabilis",
-   "ConceptID": "CN229779"
  },
  {
    "DiseaseName": "GJB6-related disorders",
@@ -52965,10 +52777,6 @@
    "ConceptID": "C4479636"
  },
  {
-   "DiseaseName": "INTELLECTUAL DEVELOPMENTAL DISORDER WITH OR WITHOUT EPILEPSY OR CEREBELLAR ATAXIA",
-   "ConceptID": "CN252646"
- },
- {
    "DiseaseName": "Intellectual developmental disorder with persistence of fetal hemoglobin",
    "ConceptID": "C4310833"
  },
@@ -56029,10 +55837,6 @@
    "ConceptID": "C1835564"
  },
  {
-   "DiseaseName": "Laryngeal abductor paralysis with cerebellar ataxia and motor neuropathy",
-   "ConceptID": "C1853556"
- },
- {
    "DiseaseName": "Laryngeal atresia",
    "ConceptID": "C0265756"
  },
@@ -57085,14 +56889,6 @@
    "ConceptID": "C4014588"
  },
  {
-   "DiseaseName": "Leukoencephalopathy with ataxia",
-   "ConceptID": "C3810242"
- },
- {
-   "DiseaseName": "Leukoencephalopathy with Ataxia due to ClC-2 Deficiency",
-   "ConceptID": "CN229794"
- },
- {
    "DiseaseName": "Leukoencephalopathy with Brainstem and Spinal Cord Involvement and Lactate Elevation",
    "ConceptID": "C1970180"
  },
@@ -57279,10 +57075,6 @@
  {
    "DiseaseName": "Limb apraxia",
    "ConceptID": "C4022574"
- },
- {
-   "DiseaseName": "Limb ataxia",
-   "ConceptID": "C0750937"
  },
  {
    "DiseaseName": "Limb defects, distal transverse, with mental retardation and spasticity",
@@ -62913,10 +62705,6 @@
    "ConceptID": "C1832903"
  },
  {
-   "DiseaseName": "Migraine, sporadic hemiplegic, with progressive cerebellar ataxia",
-   "ConceptID": "C1832885"
- },
- {
    "DiseaseName": "Migraine with aura 7",
    "ConceptID": "C1836670"
  },
@@ -62975,10 +62763,6 @@
  {
    "DiseaseName": "Mild assymetric left ventricular hypertrophy",
    "ConceptID": "CN235478"
- },
- {
-   "DiseaseName": "mild ataxia",
-   "ConceptID": "CN242258"
  },
  {
    "DiseaseName": "mild axonal motor neuropathy",
@@ -64969,10 +64753,6 @@
    "ConceptID": "C0151786"
  },
  {
-   "DiseaseName": "Muscular atrophy, ataxia, retinitis pigmentosa, and diabetes mellitus",
-   "ConceptID": "C0342281"
- },
- {
    "DiseaseName": "Muscular atrophy, malignant neurogenic",
    "ConceptID": "C1834689"
  },
@@ -65633,20 +65413,12 @@
    "ConceptID": "C1969656"
  },
  {
-   "DiseaseName": "Myoclonic epilepsy myopathy sensory ataxia",
-   "ConceptID": "C1843852"
- },
- {
    "DiseaseName": "Myoclonic spasms",
    "ConceptID": "C3806442"
  },
  {
    "DiseaseName": "Myoclonus",
    "ConceptID": "C0027066"
- },
- {
-   "DiseaseName": "Myoclonus, cerebellar ataxia, and deafness",
-   "ConceptID": "C1834579"
  },
  {
    "DiseaseName": "Myoclonus, familial cortical",
@@ -65851,10 +65623,6 @@
  {
    "DiseaseName": "Myopathy, lactic acidosis, and sideroblastic anemia 3",
    "ConceptID": "C4225415"
- },
- {
-   "DiseaseName": "MYOPATHY, MITOCHONDRIAL, AND ATAXIA",
-   "ConceptID": "C4540096"
  },
  {
    "DiseaseName": "Myopathy, mitochondrial, late-onset",
@@ -67365,10 +67133,6 @@
    "ConceptID": "C4283745"
  },
  {
-   "DiseaseName": "Neurodegeneration with ataxia, dystonia, and gaze palsy, childhood-onset",
-   "ConceptID": "C4310693"
- },
- {
    "DiseaseName": "Neurodegeneration with brain iron accumulation 1, atypical",
    "ConceptID": "C2751506"
  },
@@ -67675,10 +67439,6 @@
  {
    "DiseaseName": "Neuropathic arthropathy",
    "ConceptID": "C0003892"
- },
- {
-   "DiseaseName": "Neuropathy ataxia retinitis pigmentosa syndrome",
-   "ConceptID": "C1328349"
  },
  {
    "DiseaseName": "Neuropathy, axonal, with vocal cord paresis, autosomal recessive",
@@ -68259,10 +68019,6 @@
  {
    "DiseaseName": "Nonproductive cough",
    "ConceptID": "C0850149"
- },
- {
-   "DiseaseName": "Nonprogressive cerebellar ataxia",
-   "ConceptID": "C1845029"
  },
  {
    "DiseaseName": "Nonprogressive encephalopathy",
@@ -69427,10 +69183,6 @@
  {
    "DiseaseName": "Optically empty vitreous",
    "ConceptID": "C4073118"
- },
- {
-   "DiseaseName": "Optic atrophy 10 with or without ataxia, mental retardation, and seizures",
-   "ConceptID": "C4225227"
  },
  {
    "DiseaseName": "Optic atrophy 11",
@@ -72057,10 +71809,6 @@
    "ConceptID": "C0039236"
  },
  {
-   "DiseaseName": "Paroxysmal tonic upgaze, benign childhood, with ataxia",
-   "ConceptID": "C1868576"
- },
- {
    "DiseaseName": "Paroxysmal ventricular tachycardia",
    "ConceptID": "C0030591"
  },
@@ -73379,10 +73127,6 @@
  {
    "DiseaseName": "Peripheral neuroepithelioma",
    "ConceptID": "C3489398"
- },
- {
-   "DiseaseName": "Peripheral neuropathy, ataxia, focal necrotizing encephalopathy, and spongy degeneration of brain",
-   "ConceptID": "C1850022"
  },
  {
    "DiseaseName": "Peripheral neuropathy",
