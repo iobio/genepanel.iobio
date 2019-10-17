@@ -8593,48 +8593,8 @@
    "ConceptID": "C1860710"
  },
  {
-   "DiseaseName": "Achromatopsia 10",
-   "ConceptID": "CN230069"
- },
- {
-   "DiseaseName": "Achromatopsia 2",
-   "ConceptID": "C1857618"
- },
- {
-   "DiseaseName": "Achromatopsia 3",
-   "ConceptID": "C1849792"
- },
- {
-   "DiseaseName": "Achromatopsia 4",
-   "ConceptID": "C1841721"
- },
- {
-   "DiseaseName": "Achromatopsia 5",
-   "ConceptID": "C2751309"
- },
- {
-   "DiseaseName": "Achromatopsia 6",
-   "ConceptID": "C3552227"
- },
- {
-   "DiseaseName": "Achromatopsia 7",
-   "ConceptID": "C4225297"
- },
- {
-   "DiseaseName": "Achromatopsia 8",
-   "ConceptID": "CN230070"
- },
- {
-   "DiseaseName": "Achromatopsia 9",
-   "ConceptID": "CN230071"
- },
- {
    "DiseaseName": "Achromatopsia",
    "ConceptID": "C0152200"
- },
- {
-   "DiseaseName": "Achromatopsia incomplete X-linked",
-   "ConceptID": "CN036572"
  },
  {
    "DiseaseName": "Acid alpha-glucosidase, allele 2",
@@ -51323,10 +51283,6 @@
  {
    "DiseaseName": "Incomitant strabismus",
    "ConceptID": "C4476577"
- },
- {
-   "DiseaseName": "Incomplete achromatopsia",
-   "ConceptID": "CN233203"
  },
  {
    "DiseaseName": "Incomplete breech presentation",

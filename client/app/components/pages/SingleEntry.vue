@@ -959,6 +959,7 @@ var model = new Model();
         else if(component === "noGenePanels"){
           this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
           this.gtrFetchCompleted = true;
+          alert(`The search term did return any genes`); 
           this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "NoGenes";
           this.Gtr_idx = this.Gtr_idx + 1;
           if(this.Gtr_idx < this.Gtr_searchTermsObj.length){
