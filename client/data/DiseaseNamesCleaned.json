@@ -25,52 +25,12 @@
    "ConceptID": "C4022521"
  },
  {
-   "DiseaseName": "1-2 finger syndactyly",
-   "ConceptID": "C4023732"
- },
- {
-   "DiseaseName": "1-2 toe complete cutaneous syndactyly",
-   "ConceptID": "C4025140"
- },
- {
-   "DiseaseName": "1-2 toe syndactyly",
-   "ConceptID": "C4023726"
- },
- {
-   "DiseaseName": "1-3 finger syndactyly",
-   "ConceptID": "C4023730"
- },
- {
    "DiseaseName": "13q partial monosomy syndrome",
    "ConceptID": "C0265451"
  },
  {
-   "DiseaseName": "1-3 toe syndactyly",
-   "ConceptID": "C4025774"
- },
- {
-   "DiseaseName": "1-4 finger syndactyly",
-   "ConceptID": "C4023729"
- },
- {
-   "DiseaseName": "1-4 toe syndactyly",
-   "ConceptID": "C4023725"
- },
- {
-   "DiseaseName": "1-5 finger complete cutaneous syndactyly",
-   "ConceptID": "C1861357"
- },
- {
-   "DiseaseName": "1-5 finger syndactyly",
-   "ConceptID": "C4023728"
- },
- {
    "DiseaseName": "15q13.3 microdeletion syndrome",
    "ConceptID": "C2677613"
- },
- {
-   "DiseaseName": "1-5 toe syndactyly",
-   "ConceptID": "C4021235"
  },
  {
    "DiseaseName": "16p11.2 deletion syndrome",
@@ -89,32 +49,8 @@
    "ConceptID": "CN239160"
  },
  {
-   "DiseaseName": "1-minute APGAR score of 0",
-   "ConceptID": "C4476857"
- },
- {
-   "DiseaseName": "1-minute APGAR score of 1",
-   "ConceptID": "C0426279"
- },
- {
-   "DiseaseName": "1-minute APGAR score of 2",
-   "ConceptID": "C4476859"
- },
- {
-   "DiseaseName": "1-minute APGAR score of 3",
-   "ConceptID": "C4476860"
- },
- {
-   "DiseaseName": "1-minute APGAR score of 4",
-   "ConceptID": "C4476861"
- },
- {
-   "DiseaseName": "1-minute APGAR score of 5",
-   "ConceptID": "C4476862"
- },
- {
-   "DiseaseName": "1-minute APGAR score of 6",
-   "ConceptID": "C4476863"
+   "DiseaseName": "1-minute APGAR score",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "1q21.1 recurrent microdeletion",
@@ -133,40 +69,8 @@
    "ConceptID": "C1853490"
  },
  {
-   "DiseaseName": "2-3 finger syndactyly",
-   "ConceptID": "C0432055"
- },
- {
-   "DiseaseName": "2-3 toe cutaneous syndactyly",
-   "ConceptID": "C0432040"
- },
- {
-   "DiseaseName": "2-3 toe syndactyly",
-   "ConceptID": "C1861383"
- },
- {
    "DiseaseName": "2,4-Dienoyl-CoA reductase deficiency",
    "ConceptID": "C1857252"
- },
- {
-   "DiseaseName": "2-4 finger syndactyly",
-   "ConceptID": "C4021236"
- },
- {
-   "DiseaseName": "2-4 toe cutaneous syndactyly",
-   "ConceptID": "C4021622"
- },
- {
-   "DiseaseName": "2-4 toe syndactyly",
-   "ConceptID": "C4021234"
- },
- {
-   "DiseaseName": "2-5 finger syndactyly",
-   "ConceptID": "C4023736"
- },
- {
-   "DiseaseName": "2-5 toe syndactyly",
-   "ConceptID": "C4023724"
  },
  {
    "DiseaseName": "2-aminoadipic 2-oxoadipic aciduria",
@@ -183,26 +87,6 @@
  {
    "DiseaseName": "2p15-16.1 microdeletion syndrome",
    "ConceptID": "C2675875"
- },
- {
-   "DiseaseName": "3-4 finger cutaneous syndactyly",
-   "ConceptID": "C4023115"
- },
- {
-   "DiseaseName": "3-4 finger syndactyly",
-   "ConceptID": "C1856889"
- },
- {
-   "DiseaseName": "3-4 toe syndactyly",
-   "ConceptID": "C1834062"
- },
- {
-   "DiseaseName": "3-5 finger syndactyly",
-   "ConceptID": "C4023727"
- },
- {
-   "DiseaseName": "3-5 toe syndactyly",
-   "ConceptID": "C4023723"
  },
  {
    "DiseaseName": "3 beta-Hydroxysteroid dehydrogenase deficiency",
@@ -253,36 +137,12 @@
    "ConceptID": "C0265401"
  },
  {
-   "DiseaseName": "4-5 finger syndactyly",
-   "ConceptID": "C4023731"
- },
- {
-   "DiseaseName": "4-5 toe syndactyly",
-   "ConceptID": "C1837836"
- },
- {
    "DiseaseName": "46,XX gonadal dysgenesis",
    "ConceptID": "C0685837"
  },
  {
-   "DiseaseName": "46,xx gonadal dysgenesis, complete, sry-positive",
-   "ConceptID": "CN220534"
- },
- {
-   "DiseaseName": "46,XX sex reversal 2",
-   "ConceptID": "C2749215"
- },
- {
-   "DiseaseName": "46,XX sex reversal 4",
-   "ConceptID": "C4479552"
- },
- {
-   "DiseaseName": "46,XX sex reversal, type 1",
-   "ConceptID": "C2748895"
- },
- {
-   "DiseaseName": "46,XX sex reversal, type 3",
-   "ConceptID": "C3151782"
+   "DiseaseName": "46,XX sex reversal",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "46,XX testicular disorder of sex development",
@@ -305,44 +165,8 @@
    "ConceptID": "C2751325"
  },
  {
-   "DiseaseName": "46,XY sex reversal 10",
-   "ConceptID": "C4225331"
- },
- {
-   "DiseaseName": "46,XY sex reversal 8",
-   "ConceptID": "C1839840"
- },
- {
-   "DiseaseName": "46,XY sex reversal 9",
-   "ConceptID": "C4015129"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 1",
-   "ConceptID": "C2748896"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 2",
-   "ConceptID": "C1848296"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 3",
-   "ConceptID": "C2751824"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 4",
-   "ConceptID": "C2752149"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 5",
-   "ConceptID": "C2751317"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 6",
-   "ConceptID": "C3151064"
- },
- {
-   "DiseaseName": "46,XY sex reversal, type 7",
-   "ConceptID": "C1856273"
+   "DiseaseName": "46,XY sex reversal",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "46,XY true hermaphroditism, SRY-related",
@@ -369,36 +193,8 @@
    "ConceptID": "C1956097"
  },
  {
-   "DiseaseName": "5)",
-   "ConceptID": "CN237116"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 0",
-   "ConceptID": "C4476850"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 1",
-   "ConceptID": "C4476851"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 2",
-   "ConceptID": "C4476852"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 3",
-   "ConceptID": "C4476853"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 4",
-   "ConceptID": "C4476854"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 5",
-   "ConceptID": "C4476855"
- },
- {
-   "DiseaseName": "5-minute APGAR score of 6",
-   "ConceptID": "C4476856"
+   "DiseaseName": "5-minute APGAR score",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "5-Oxoprolinase deficiency",
@@ -447,10 +243,6 @@
  {
    "DiseaseName": "AA amyloidosis",
    "ConceptID": "C0221014"
- },
- {
-   "DiseaseName": "Aarskog syndrome, autosomal dominant",
-   "ConceptID": "C3149220"
  },
  {
    "DiseaseName": "Aarskog syndrome",
@@ -7301,10 +7093,6 @@
    "ConceptID": "C4531231"
  },
  {
-   "DiseaseName": "Abnormal thrombosis",
-   "ConceptID": "C4025731"
- },
- {
    "DiseaseName": "Abnormal thyroid hormone level",
    "ConceptID": "C4531077"
  },
@@ -8973,24 +8761,8 @@
    "ConceptID": "C1860157"
  },
  {
-   "DiseaseName": "Acrocephalopolysyndactyly type III",
-   "ConceptID": "C1275079"
- },
- {
    "DiseaseName": "Acrocephalosyndactyly",
    "ConceptID": "C1510455"
- },
- {
-   "DiseaseName": "Acrocephalosyndactyly type I",
-   "ConceptID": "C0001193"
- },
- {
-   "DiseaseName": "Acrocephalosyndactyly type II",
-   "ConceptID": "C1863389"
- },
- {
-   "DiseaseName": "Acrocephalosyndactyly type V",
-   "ConceptID": "C0265303"
  },
  {
    "DiseaseName": "Acrocyanosis",
@@ -13999,10 +13771,6 @@
  {
    "DiseaseName": "Arterial stenosis",
    "ConceptID": "C0038449"
- },
- {
-   "DiseaseName": "Arterial thrombosis",
-   "ConceptID": "C0151942"
  },
  {
    "DiseaseName": "Arterial tortuosity",
@@ -21809,10 +21577,6 @@
    "ConceptID": "C1956261"
  },
  {
-   "DiseaseName": "Cerebral venous thrombosis",
-   "ConceptID": "C0151945"
- },
- {
    "DiseaseName": "Cerebral ventricular adhesions",
    "ConceptID": "C4022152"
  },
@@ -27349,10 +27113,6 @@
    "ConceptID": "C1855459"
  },
  {
-   "DiseaseName": "Congenital talipes calcaneovalgus",
-   "ConceptID": "CN005157"
- },
- {
    "DiseaseName": "Congenital thrombocytopenia",
    "ConceptID": "C0272278"
  },
@@ -29389,24 +29149,12 @@
    "ConceptID": "C4022438"
  },
  {
-   "DiseaseName": "Cutaneous syndactyly between fingers 2 and 5",
-   "ConceptID": "C4025165"
- },
- {
    "DiseaseName": "Cutaneous syndactyly",
    "ConceptID": "C1861921"
  },
  {
-   "DiseaseName": "Cutaneous syndactyly of toes",
-   "ConceptID": "C1834737"
- },
- {
    "DiseaseName": "Cutaneous T-cell lymphoma",
    "ConceptID": "C0079773"
- },
- {
-   "DiseaseName": "Cutaneous telangiectasia and cancer syndrome, familial",
-   "ConceptID": "C3281203"
  },
  {
    "DiseaseName": "Cutis gyrata of scalp",
@@ -31601,10 +31349,6 @@
    "ConceptID": "C0149871"
  },
  {
-   "DiseaseName": "Deep venous thrombosis, protection against",
-   "ConceptID": "C3275410"
- },
- {
    "DiseaseName": "Deep white matter hypodensities",
    "ConceptID": "C1856979"
  },
@@ -33323,10 +33067,6 @@
  {
    "DiseaseName": "Diffuse swelling of cerebral white matter",
    "ConceptID": "C1858855"
- },
- {
-   "DiseaseName": "Diffuse telangiectasia",
-   "ConceptID": "C1265776"
  },
  {
    "DiseaseName": "Diffuse white matter abnormalities",
@@ -35995,14 +35735,6 @@
  {
    "DiseaseName": "Ectodermal dysplasia skin fragility syndrome",
    "ConceptID": "C1858302"
- },
- {
-   "DiseaseName": "Ectodermal dysplasia-syndactyly syndrome 1",
-   "ConceptID": "C3150807"
- },
- {
-   "DiseaseName": "Ectodermal dysplasia-syndactyly syndrome 2",
-   "ConceptID": "C3150809"
  },
  {
    "DiseaseName": "Ectodermal dysplasia-syndactyly syndrome",
@@ -40025,10 +39757,6 @@
    "ConceptID": "C0858684"
  },
  {
-   "DiseaseName": "Facial telangiectasia in butterfly midface distribution",
-   "ConceptID": "C4021632"
- },
- {
    "DiseaseName": "Facial wrinkling",
    "ConceptID": "C0262478"
  },
@@ -40089,10 +39817,6 @@
    "ConceptID": "C0015499"
  },
  {
-   "DiseaseName": "Factor V excess with spontaneous thrombosis",
-   "ConceptID": "C1851378"
- },
- {
    "DiseaseName": "Factor V Hong Kong",
    "ConceptID": "C4017271"
  },
@@ -40103,10 +39827,6 @@
  {
    "DiseaseName": "Factor VIII deficiency",
    "ConceptID": "CN239112"
- },
- {
-   "DiseaseName": "Factor VII Marburg I Variant Thrombophilia",
-   "ConceptID": "CN068943"
  },
  {
    "DiseaseName": "Factor VII Padua",
@@ -41647,10 +41367,6 @@
  {
    "DiseaseName": "Finger symphalangism",
    "ConceptID": "C4021399"
- },
- {
-   "DiseaseName": "Finger syndactyly",
-   "ConceptID": "C0221352"
  },
  {
    "DiseaseName": "Finnish congenital nephrotic syndrome",
@@ -45389,10 +45105,6 @@
    "ConceptID": "C0265306"
  },
  {
-   "DiseaseName": "Greig cephalopolysyndactyly syndrome, severe",
-   "ConceptID": "C4016299"
- },
- {
    "DiseaseName": "Griscelli disease",
    "ConceptID": "CN204933"
  },
@@ -45577,12 +45289,8 @@
    "ConceptID": "C2751878"
  },
  {
-   "DiseaseName": "Haemorrhagic telangiectasia 1",
-   "ConceptID": "CN221549"
- },
- {
-   "DiseaseName": "Haemorrhagic telangiectasia 2",
-   "ConceptID": "CN221551"
+   "DiseaseName": "Haemorrhagic telangiectasia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Haim-Munk syndrome",
@@ -46633,10 +46341,6 @@
    "ConceptID": "C1861790"
  },
  {
-   "DiseaseName": "Hepatic vein thrombosis",
-   "ConceptID": "C0019154"
- },
- {
    "DiseaseName": "Hepatic venoocclusive disease with immunodeficiency",
    "ConceptID": "C1856128"
  },
@@ -46861,20 +46565,8 @@
    "ConceptID": "C0392514"
  },
  {
-   "DiseaseName": "Hereditary hemorrhagic telangiectasia type 1",
-   "ConceptID": "CN034812"
- },
- {
-   "DiseaseName": "Hereditary hemorrhagic telangiectasia type 2",
-   "ConceptID": "C1838163"
- },
- {
-   "DiseaseName": "Hereditary hemorrhagic telangiectasia type 3",
-   "ConceptID": "C1832774"
- },
- {
-   "DiseaseName": "Hereditary hemorrhagic telangiectasia type 4",
-   "ConceptID": "C1857688"
+   "DiseaseName": "Hereditary hemorrhagic telangiectasia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hereditary insensitivity to pain with anhidrosis",
@@ -47091,10 +46783,6 @@
  {
    "DiseaseName": "Hereditary stomatocytosis",
    "ConceptID": "C1262483"
- },
- {
-   "DiseaseName": "Hereditary thrombophilia",
-   "ConceptID": "C2584620"
  },
  {
    "DiseaseName": "Hermansky-Pudlak syndrome",
@@ -51261,10 +50949,6 @@
    "ConceptID": "C0268654"
  },
  {
-   "DiseaseName": "Iminoglycinuria, digenic",
-   "ConceptID": "C3148959"
- },
- {
    "DiseaseName": "Imipramine response",
    "ConceptID": "CN221257"
  },
@@ -51275,14 +50959,6 @@
  {
    "DiseaseName": "Immotile cilia",
    "ConceptID": "C1855672"
- },
- {
-   "DiseaseName": "Immotile cilia syndrome due to defective radial spokes",
-   "ConceptID": "C0340035"
- },
- {
-   "DiseaseName": "Immotile cilia syndrome due to excessively long cilia",
-   "ConceptID": "C0340036"
  },
  {
    "DiseaseName": "Immune deficiency disease",
@@ -51309,300 +50985,16 @@
    "ConceptID": "CN201623"
  },
  {
-   "DiseaseName": "Immune response to synthetic polypeptide--IRGAT",
-   "ConceptID": "C1840267"
- },
- {
-   "DiseaseName": "Immune response to synthetic polypeptide--irhgal",
-   "ConceptID": "C1840260"
- },
- {
-   "DiseaseName": "Immune response to synthetic polypeptide--IRPHEGAL",
-   "ConceptID": "C1840268"
- },
- {
-   "DiseaseName": "Immune response to synthetic polypeptide--irtgal",
-   "ConceptID": "C1840259"
+   "DiseaseName": "Immune response to synthetic polypeptide",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Immune suppression",
    "ConceptID": "C1840264"
  },
  {
-   "DiseaseName": "IMMUNODEFICIENCY 11B WITH ATOPIC DERMATITIS",
-   "ConceptID": "C4539957"
- },
- {
-   "DiseaseName": "Immunodeficiency 11",
-   "ConceptID": "C3554686"
- },
- {
-   "DiseaseName": "Immunodeficiency 12",
-   "ConceptID": "C3809583"
- },
- {
-   "DiseaseName": "Immunodeficiency 13",
-   "ConceptID": "C3809768"
- },
- {
-   "DiseaseName": "Immunodeficiency 14",
-   "ConceptID": "C3714976"
- },
- {
-   "DiseaseName": "Immunodeficiency 15",
-   "ConceptID": "C3810043"
- },
- {
-   "DiseaseName": "Immunodeficiency 16",
-   "ConceptID": "C3810053"
- },
- {
-   "DiseaseName": "Immunodeficiency 17",
-   "ConceptID": "C3810107"
- },
- {
-   "DiseaseName": "Immunodeficiency 18",
-   "ConceptID": "C3810127"
- },
- {
-   "DiseaseName": "Immunodeficiency 18, scid variant",
-   "ConceptID": "C3810129"
- },
- {
-   "DiseaseName": "Immunodeficiency 18, severe combined immunodeficiency variant",
-   "ConceptID": "C3810128"
- },
- {
-   "DiseaseName": "Immunodeficiency 19",
-   "ConceptID": "C3810147"
- },
- {
-   "DiseaseName": "Immunodeficiency 20",
-   "ConceptID": "C3810342"
- },
- {
-   "DiseaseName": "Immunodeficiency 22",
-   "ConceptID": "C4014233"
- },
- {
-   "DiseaseName": "Immunodeficiency 23",
-   "ConceptID": "C4014371"
- },
- {
-   "DiseaseName": "Immunodeficiency 24",
-   "ConceptID": "C4014617"
- },
- {
-   "DiseaseName": "Immunodeficiency 26 with or without neurologic abnormalities",
-   "ConceptID": "C4014833"
- },
- {
-   "DiseaseName": "Immunodeficiency 26 without neurologic abnormalities",
-   "ConceptID": "C4016698"
- },
- {
-   "DiseaseName": "Immunodeficiency 27b",
-   "ConceptID": "C4014863"
- },
- {
-   "DiseaseName": "Immunodeficiency 28",
-   "ConceptID": "C4013947"
- },
- {
-   "DiseaseName": "Immunodeficiency 29",
-   "ConceptID": "C4013948"
- },
- {
-   "DiseaseName": "Immunodeficiency 30",
-   "ConceptID": "C4013949"
- },
- {
-   "DiseaseName": "Immunodeficiency 31a",
-   "ConceptID": "C4013950"
- },
- {
-   "DiseaseName": "Immunodeficiency 31C",
-   "ConceptID": "C3279990"
- },
- {
-   "DiseaseName": "Immunodeficiency 32a",
-   "ConceptID": "C3808589"
- },
- {
-   "DiseaseName": "Immunodeficiency 32b",
-   "ConceptID": "C4016741"
- },
- {
-   "DiseaseName": "Immunodeficiency 36",
-   "ConceptID": "C4014934"
- },
- {
-   "DiseaseName": "Immunodeficiency 37",
-   "ConceptID": "C4015195"
- },
- {
-   "DiseaseName": "Immunodeficiency 38 with basal ganglia calcification",
-   "ConceptID": "C4015293"
- },
- {
-   "DiseaseName": "Immunodeficiency 39",
-   "ConceptID": "C4225358"
- },
- {
-   "DiseaseName": "Immunodeficiency 40",
-   "ConceptID": "C4225328"
- },
- {
-   "DiseaseName": "Immunodeficiency 42",
-   "ConceptID": "C4225266"
- },
- {
-   "DiseaseName": "Immunodeficiency 44",
-   "ConceptID": "C4225260"
- },
- {
-   "DiseaseName": "Immunodeficiency 45",
-   "ConceptID": "C4225252"
- },
- {
-   "DiseaseName": "Immunodeficiency 46",
-   "ConceptID": "C4225219"
- },
- {
-   "DiseaseName": "Immunodeficiency 47",
-   "ConceptID": "C4310819"
- },
- {
-   "DiseaseName": "Immunodeficiency 49",
-   "ConceptID": "C4310656"
- },
- {
-   "DiseaseName": "Immunodeficiency 50",
-   "ConceptID": "C4310812"
- },
- {
-   "DiseaseName": "Immunodeficiency 51",
-   "ConceptID": "C3151402"
- },
- {
-   "DiseaseName": "Immunodeficiency 52",
-   "ConceptID": "C4479588"
- },
- {
-   "DiseaseName": "IMMUNODEFICIENCY 53",
-   "ConceptID": "C4539811"
- },
- {
-   "DiseaseName": "IMMUNODEFICIENCY 55",
-   "ConceptID": "CN737162"
- },
- {
-   "DiseaseName": "Immunodeficiency 8",
-   "ConceptID": "C3809383"
- },
- {
    "DiseaseName": "Immunodeficiency",
    "ConceptID": "C0021051"
- },
- {
-   "DiseaseName": "Immunodeficiency-centromeric instability-facial anomalies syndrome 2",
-   "ConceptID": "C3279748"
- },
- {
-   "DiseaseName": "Immunodeficiency-centromeric instability-facial anomalies syndrome 3",
-   "ConceptID": "C4310799"
- },
- {
-   "DiseaseName": "Immunodeficiency-centromeric instability-facial anomalies syndrome 4",
-   "ConceptID": "C4310798"
- },
- {
-   "DiseaseName": "Immunodeficiency, common variable, 12",
-   "ConceptID": "C4225277"
- },
- {
-   "DiseaseName": "Immunodeficiency, common variable, 13",
-   "ConceptID": "C4225173"
- },
- {
-   "DiseaseName": "IMMUNODEFICIENCY, COMMON VARIABLE, 14",
-   "ConceptID": "C4540380"
- },
- {
-   "DiseaseName": "Immunodeficiency due to a late component of complement deficiency",
-   "ConceptID": "CN924921"
- },
- {
-   "DiseaseName": "Immunodeficiency due to defect in cd3-epsilon",
-   "ConceptID": "C1861284"
- },
- {
-   "DiseaseName": "Immunodeficiency due to defect in CD3-gamma",
-   "ConceptID": "C1861297"
- },
- {
-   "DiseaseName": "Immunodeficiency due to defect in cd3-zeta",
-   "ConceptID": "C1857798"
- },
- {
-   "DiseaseName": "Immunodeficiency due to defect in mapbp-interacting protein",
-   "ConceptID": "C1835829"
- },
- {
-   "DiseaseName": "Immunodeficiency due to ficolin 3 deficiency",
-   "ConceptID": "C3151226"
- },
- {
-   "DiseaseName": "Immunodeficiency, ovarian dysgenesis, and pulmonary fibrosis",
-   "ConceptID": "C3150156"
- },
- {
-   "DiseaseName": "Immunodeficiency, partial combined, with absence of hla determinants and beta-2-microglobulin from lymphocytes",
-   "ConceptID": "C1855762"
- },
- {
-   "DiseaseName": "Immunodeficiency with defective leukocyte and lymphocyte function and with response to histamine-1 antagonist",
-   "ConceptID": "C1840265"
- },
- {
-   "DiseaseName": "Immunodeficiency with defective T-cell response to interleukin 1",
-   "ConceptID": "C1855735"
- },
- {
-   "DiseaseName": "Immunodeficiency with Hyper-IgM",
-   "ConceptID": "CN239447"
- },
- {
-   "DiseaseName": "Immunodeficiency with hyper IgM type 1",
-   "ConceptID": "C0398689"
- },
- {
-   "DiseaseName": "Immunodeficiency with hyper IgM type 2",
-   "ConceptID": "C1720956"
- },
- {
-   "DiseaseName": "Immunodeficiency with hyper IgM type 3",
-   "ConceptID": "C1720957"
- },
- {
-   "DiseaseName": "Immunodeficiency with hyper IgM type 4",
-   "ConceptID": "C1842413"
- },
- {
-   "DiseaseName": "Immunodeficiency with hyper IgM type 5",
-   "ConceptID": "C1720958"
- },
- {
-   "DiseaseName": "Immunodeficiency without anhidrotic ectodermal dysplasia",
-   "ConceptID": "C1845117"
- },
- {
-   "DiseaseName": "Immunodeficiency, X-linked, with deficiency of 115,000 dalton surface glycoprotein",
-   "ConceptID": "C1839982"
- },
- {
-   "DiseaseName": "Immunodeficiency, X-Linked, with magnesium defect, Epstein-Barr virus infection, and neoplasia",
-   "ConceptID": "C3275445"
  },
  {
    "DiseaseName": "Immunoerythromyeloid hypoplasia",
@@ -55587,26 +54979,6 @@
  {
    "DiseaseName": "Juvenile Polyposis",
    "ConceptID": "CN239474"
- },
- {
-   "DiseaseName": "Juvenile polyposis coli",
-   "ConceptID": "C1868081"
- },
- {
-   "DiseaseName": "Juvenile polyposis/hereditary hemorrhagic telangiectasia syndrome",
-   "ConceptID": "C1832942"
- },
- {
-   "DiseaseName": "Juvenile polyposis of infancy",
-   "ConceptID": "C2677103"
- },
- {
-   "DiseaseName": "Juvenile polyposis of stomach",
-   "ConceptID": "C1832940"
- },
- {
-   "DiseaseName": "Juvenile polyposis syndrome",
-   "ConceptID": "C0345893"
  },
  {
    "DiseaseName": "Juvenile polyps",
@@ -60717,10 +60089,6 @@
    "ConceptID": "C4023357"
  },
  {
-   "DiseaseName": "Maternal thrombophilia",
-   "ConceptID": "C4280721"
- },
- {
    "DiseaseName": "Maternal virilization in pregnancy",
    "ConceptID": "C4024735"
  },
@@ -62407,10 +61775,6 @@
  {
    "DiseaseName": "Mesenteric cyst",
    "ConceptID": "C0025467"
- },
- {
-   "DiseaseName": "Mesenteric venous thrombosis",
-   "ConceptID": "C0267412"
  },
  {
    "DiseaseName": "Mesiodens",
@@ -74073,10 +73437,6 @@
    "ConceptID": "C4024276"
  },
  {
-   "DiseaseName": "Peripheral thrombosis",
-   "ConceptID": "C1849749"
- },
- {
    "DiseaseName": "Peripheral traction retinal detachment",
    "ConceptID": "C4024825"
  },
@@ -75997,18 +75357,6 @@
    "ConceptID": "C0265553"
  },
  {
-   "DiseaseName": "Polysyndactyly, crossed",
-   "ConceptID": "C1867999"
- },
- {
-   "DiseaseName": "Polysyndactyly of hallux",
-   "ConceptID": "C4021618"
- },
- {
-   "DiseaseName": "Polysyndactyly with cardiac malformation",
-   "ConceptID": "C1849719"
- },
- {
    "DiseaseName": "Polyunsaturated fatty acids plasma level quantitative trait locus 1",
    "ConceptID": "C2748551"
  },
@@ -76329,10 +75677,6 @@
    "ConceptID": "C1832917"
  },
  {
-   "DiseaseName": "Portal vein thrombosis",
-   "ConceptID": "C0155773"
- },
- {
    "DiseaseName": "Portosystemic collateral veins",
    "ConceptID": "C4476620"
  },
@@ -76435,10 +75779,6 @@
  {
    "DiseaseName": "Postaxial polydactyly type A",
    "ConceptID": "C3887487"
- },
- {
-   "DiseaseName": "Postaxial polysyndactyly of foot",
-   "ConceptID": "C4021824"
  },
  {
    "DiseaseName": "Postductal coarctation of the aorta",
@@ -79377,10 +78717,6 @@
    "ConceptID": "C3203102"
  },
  {
-   "DiseaseName": "Pulmonary arterial hypertension related to hereditary hemorrhagic telangiectasia",
-   "ConceptID": "C1832529"
- },
- {
    "DiseaseName": "Pulmonary arterial medial hypertrophy",
    "ConceptID": "C1504382"
  },
@@ -79505,16 +78841,8 @@
    "ConceptID": "C0151701"
  },
  {
-   "DiseaseName": "Pulmonary hypertension, chronic thromboembolic, without deep vein thrombosis, susceptibility to",
-   "ConceptID": "C2748504"
- },
- {
    "DiseaseName": "Pulmonary hypertension, neonatal, susceptibility to",
    "ConceptID": "C0032768"
- },
- {
-   "DiseaseName": "Pulmonary hypertension, primary, 1, with hereditary hemorrhagic telangiectasia",
-   "ConceptID": "C2750262"
  },
  {
    "DiseaseName": "Pulmonary hypertension, primary, autosomal recessive",
@@ -79595,14 +78923,6 @@
  {
    "DiseaseName": "Pulmonary Surfactant Metabolism Dysfunction",
    "ConceptID": "C3711368"
- },
- {
-   "DiseaseName": "Pulmonary Surfactant Metabolism Dysfunction, Dominant",
-   "ConceptID": "CN239333"
- },
- {
-   "DiseaseName": "Pulmonary Surfactant Metabolism Dysfunction, Recessive",
-   "ConceptID": "CN239432"
  },
  {
    "DiseaseName": "Pulmonary valve atresia",
@@ -80369,10 +79689,6 @@
    "ConceptID": "C0581366"
  },
  {
-   "DiseaseName": "Recurrent deep vein thrombosis",
-   "ConceptID": "C1735901"
- },
- {
    "DiseaseName": "Recurrent depression",
    "ConceptID": "CN233206"
  },
@@ -80607,10 +79923,6 @@
  {
    "DiseaseName": "Recurrent thromboembolism",
    "ConceptID": "C0749398"
- },
- {
-   "DiseaseName": "Recurrent thrombophlebitis",
-   "ConceptID": "C3550150"
  },
  {
    "DiseaseName": "Recurrent upper and lower respiratory tract infections",
@@ -82103,10 +81415,6 @@
  {
    "DiseaseName": "Retinal racemose hemangioma",
    "ConceptID": "C4072993"
- },
- {
-   "DiseaseName": "Retinal telangiectasia and hypogammaglobulinemia",
-   "ConceptID": "C2930961"
  },
  {
    "DiseaseName": "Retinal telangiectasia",
@@ -85033,88 +84341,16 @@
    "ConceptID": "CN239264"
  },
  {
-   "DiseaseName": "Severe combined immunodeficiency, athabascan-type",
-   "ConceptID": "C1865371"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency, atypical",
-   "ConceptID": "C1849236"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency, autosomal recessive, T cell-negative, B cell-negative, NK cell-negative, due to adenosine deaminase deficiency",
-   "ConceptID": "C0392607"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency, autosomal recessive, T cell-negative, B cell-positive, NK cell-negative",
-   "ConceptID": "C1833275"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency, autosomal recessive, T cell-negative, B cell-positive, NK cell-positive",
-   "ConceptID": "C1837028"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency, B cell-negative",
-   "ConceptID": "C1867362"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency disease",
-   "ConceptID": "C0085110"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency due to ADA deficiency",
-   "ConceptID": "C1863236"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency due to IL2 deficiency",
-   "ConceptID": "CN236392"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency, partial",
-   "ConceptID": "C1865373"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency with sensitivity to ionizing radiation",
-   "ConceptID": "C1865370"
- },
- {
-   "DiseaseName": "Severe combined immunodeficiency with sensitivity to ionizing radiation due to nhej1 deficiency",
-   "ConceptID": "C1969800"
+   "DiseaseName": "Severe combined immunodeficiency",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Severe conductive hearing impairment",
    "ConceptID": "C4021074"
  },
  {
-   "DiseaseName": "Severe congenital neutropenia 2, autosomal dominant",
-   "ConceptID": "C2751288"
- },
- {
-   "DiseaseName": "Severe congenital neutropenia 3, autosomal recessive",
-   "ConceptID": "CN032247"
- },
- {
-   "DiseaseName": "Severe congenital neutropenia 4, autosomal recessive",
-   "ConceptID": "C2675526"
- },
- {
-   "DiseaseName": "Severe congenital neutropenia 5, autosomal recessive",
-   "ConceptID": "C3809031"
- },
- {
-   "DiseaseName": "Severe congenital neutropenia 6, autosomal recessive",
-   "ConceptID": "C4014954"
- },
- {
-   "DiseaseName": "Severe congenital neutropenia autosomal dominant",
-   "ConceptID": "C1859966"
- },
- {
    "DiseaseName": "Severe congenital neutropenia",
    "ConceptID": "C1853118"
- },
- {
-   "DiseaseName": "Severe congenital neutropenia X-linked",
-   "ConceptID": "C1845987"
  },
  {
    "DiseaseName": "Severe cystic degeneration of the brain",
@@ -86529,60 +85765,8 @@
    "ConceptID": "C1843292"
  },
  {
-   "DiseaseName": "Skin/hair/eye pigmentation 2, blond hair/fair skin",
-   "ConceptID": "C2675047"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation 2, red hair/fair skin",
-   "ConceptID": "C4016260"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation 3, blue/green eyes",
-   "ConceptID": "C3149136"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 10",
-   "ConceptID": "C2677088"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 11",
-   "ConceptID": "C2677086"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 1",
-   "ConceptID": "C1856895"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 2",
-   "ConceptID": "C1849452"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 3",
-   "ConceptID": "C2677190"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 4",
-   "ConceptID": "C2676042"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 5",
-   "ConceptID": "C2673584"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 6",
-   "ConceptID": "C2673866"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 7",
-   "ConceptID": "C2674081"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 8",
-   "ConceptID": "C2673265"
- },
- {
-   "DiseaseName": "Skin/hair/eye pigmentation, variation in, 9",
-   "ConceptID": "C2673200"
+   "DiseaseName": "Skin/hair/eye pigmentation",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Skin lesions",
@@ -88593,10 +87777,6 @@
    "ConceptID": "C4024830"
  },
  {
-   "DiseaseName": "Splanchnic vein thrombosis",
-   "ConceptID": "C4022560"
- },
- {
    "DiseaseName": "Splayed epiphyses",
    "ConceptID": "C4021906"
  },
@@ -88933,52 +88113,8 @@
    "ConceptID": "C1849011"
  },
  {
-   "DiseaseName": "Spondylometaphyseal dysplasia Algerian type",
-   "ConceptID": "C1866688"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia axial",
-   "ConceptID": "C1865695"
- },
- {
    "DiseaseName": "Spondylometaphyseal dysplasia",
    "ConceptID": "C0700635"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia East-African type",
-   "ConceptID": "C2673686"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia, Kozlowski type",
-   "ConceptID": "C0265280"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia, megarbane-dagher-melki type",
-   "ConceptID": "C2750075"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia Sedaghatian type",
-   "ConceptID": "C1855229"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia - Sutcliffe type",
-   "ConceptID": "C0432221"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia type A4",
-   "ConceptID": "C1836862"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia with bowed forearms and facial dysmorphism",
-   "ConceptID": "C1843706"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia with cone-rod dystrophy",
-   "ConceptID": "C1837073"
- },
- {
-   "DiseaseName": "Spondylometaphyseal dysplasia X-linked",
-   "ConceptID": "C0796172"
  },
  {
    "DiseaseName": "Spondyloocular syndrome, autosomal recessive",
@@ -89253,96 +88389,8 @@
    "ConceptID": "C1853477"
  },
  {
-   "DiseaseName": "Stature quantitative trait locus 10",
-   "ConceptID": "C2677152"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 11",
-   "ConceptID": "C2677134"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 12",
-   "ConceptID": "C2677133"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 13",
-   "ConceptID": "C2677131"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 14",
-   "ConceptID": "C2677124"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 15",
-   "ConceptID": "C2675490"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 16",
-   "ConceptID": "C2675489"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 17",
-   "ConceptID": "C2674783"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 18",
-   "ConceptID": "C2752065"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 19",
-   "ConceptID": "C2752064"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 20",
-   "ConceptID": "C2752063"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 21",
-   "ConceptID": "C3150694"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 22",
-   "ConceptID": "C3150793"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 23",
-   "ConceptID": "C3150794"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 24",
-   "ConceptID": "C3150795"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 2",
-   "ConceptID": "C1853476"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 3",
-   "ConceptID": "C1853475"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 4",
-   "ConceptID": "C1853474"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 5",
-   "ConceptID": "C1837024"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 6",
-   "ConceptID": "C1845115"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 7",
-   "ConceptID": "C1853277"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 8",
-   "ConceptID": "C1864691"
- },
- {
-   "DiseaseName": "Stature quantitative trait locus 9",
-   "ConceptID": "C1969061"
+   "DiseaseName": "Stature quantitative trait locus",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Status asthmaticus",
@@ -89469,38 +88517,6 @@
    "ConceptID": "C0265253"
  },
  {
-   "DiseaseName": "Stickler Syndrome, Dominant",
-   "ConceptID": "CN239460"
- },
- {
-   "DiseaseName": "Stickler Syndrome, Recessive",
-   "ConceptID": "CN239473"
- },
- {
-   "DiseaseName": "Stickler syndrome type 1",
-   "ConceptID": "C2020284"
- },
- {
-   "DiseaseName": "Stickler syndrome, type 2",
-   "ConceptID": "C1858084"
- },
- {
-   "DiseaseName": "Stickler syndrome, type 3",
-   "ConceptID": "C1861481"
- },
- {
-   "DiseaseName": "Stickler syndrome, type 4",
-   "ConceptID": "C3279941"
- },
- {
-   "DiseaseName": "Stickler syndrome, type 5",
-   "ConceptID": "C3280342"
- },
- {
-   "DiseaseName": "Stickler syndrome, type I, nonsyndromic ocular",
-   "ConceptID": "C1836080"
- },
- {
    "DiseaseName": "Stiff ankle",
    "ConceptID": "C0427032"
  },
@@ -89597,168 +88613,24 @@
    "ConceptID": "C4025679"
  },
  {
-   "DiseaseName": "Stippling of the epiphyses of the 2nd finger",
-   "ConceptID": "C4024329"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 2nd toe",
-   "ConceptID": "C4022368"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 3rd finger",
-   "ConceptID": "C4024375"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 3rd toe",
-   "ConceptID": "C4022357"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 4th finger",
-   "ConceptID": "C4024388"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 4th toe",
-   "ConceptID": "C4022346"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 5th finger",
-   "ConceptID": "C4024398"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the 5th toe",
-   "ConceptID": "C4022335"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the distal phalanges of the hand",
-   "ConceptID": "C4023945"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the hallux",
-   "ConceptID": "C4024037"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the middle phalanges of the hand",
-   "ConceptID": "C4023935"
- },
- {
-   "DiseaseName": "Stippling of the epiphyses of the proximal phalanges of the hand",
-   "ConceptID": "C4023924"
+   "DiseaseName": "Stippling of the epiphyses",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Stippling of the epiphysis of the 1st metatarsal",
    "ConceptID": "C4024001"
  },
  {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 2nd finger",
-   "ConceptID": "C4024320"
+   "DiseaseName": "Stippling of the epiphysis of the distal phalanx",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 2nd toe",
-   "ConceptID": "C4022312"
+   "DiseaseName": "Stippling of the epiphysis of the middle phalanx",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 3rd finger",
-   "ConceptID": "C4024423"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 3rd toe",
-   "ConceptID": "C4022277"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 4th finger",
-   "ConceptID": "C4024488"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 4th toe",
-   "ConceptID": "C4022243"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 5th finger",
-   "ConceptID": "C4024563"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the 5th toe",
-   "ConceptID": "C4022210"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the hallux",
-   "ConceptID": "C4024012"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the distal phalanx of the thumb",
-   "ConceptID": "C4024235"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 2nd finger",
-   "ConceptID": "C4024311"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 2nd toe",
-   "ConceptID": "C4022301"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 3rd finger",
-   "ConceptID": "C4024436"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 3rd toe",
-   "ConceptID": "C4022266"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 4th finger",
-   "ConceptID": "C4024518"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 4th toe",
-   "ConceptID": "C4022232"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 5th finger",
-   "ConceptID": "C4024528"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the middle phalanx of the 5th toe",
-   "ConceptID": "C4022199"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 2nd finger",
-   "ConceptID": "C4024303"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 2nd toe",
-   "ConceptID": "C4022290"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 3rd finger",
-   "ConceptID": "C4024414"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 3rd toe",
-   "ConceptID": "C4022255"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 4th finger",
-   "ConceptID": "C4024479"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 4th toe",
-   "ConceptID": "C4022221"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 5th finger",
-   "ConceptID": "C4024539"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the 5th toe",
-   "ConceptID": "C4022188"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the hallux",
-   "ConceptID": "C4024023"
- },
- {
-   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx of the thumb",
-   "ConceptID": "C4024244"
+   "DiseaseName": "Stippling of the epiphysis of the proximal phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Stippling of thumb epiphysis",
@@ -89775,10 +88647,6 @@
  {
    "DiseaseName": "Stomach cancer",
    "ConceptID": "C0699791"
- },
- {
-   "DiseaseName": "Stomach cancer, familial",
-   "ConceptID": "CN036072"
  },
  {
    "DiseaseName": "Stomach GIST",
@@ -89807,10 +88675,6 @@
  {
    "DiseaseName": "Stomatocytosis",
    "ConceptID": "C0677598"
- },
- {
-   "DiseaseName": "Stomatocytosis I",
-   "ConceptID": "C1861455"
  },
  {
    "DiseaseName": "Stooped posture",
@@ -90285,16 +89149,8 @@
    "ConceptID": "C0085298"
  },
  {
-   "DiseaseName": "Sudden cardiac death",
-   "ConceptID": "C1968862"
- },
- {
-   "DiseaseName": "Sudden cardiac failure, alcohol-induced",
-   "ConceptID": "C4310663"
- },
- {
-   "DiseaseName": "Sudden cardiac failure, infantile",
-   "ConceptID": "C4310664"
+   "DiseaseName": "Sudden cardiac failure",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Sudden death",
@@ -90315,10 +89171,6 @@
  {
    "DiseaseName": "Sudden loss of visual acuity",
    "ConceptID": "C4025803"
- },
- {
-   "DiseaseName": "Sudden, non painful, loss of vision associated to retinal central vein thrombosis",
-   "ConceptID": "CN235372"
  },
  {
    "DiseaseName": "Sudden unexplained death",
@@ -90371,10 +89223,6 @@
  {
    "DiseaseName": "Superficial spreading melanoma",
    "ConceptID": "C0334438"
- },
- {
-   "DiseaseName": "Superficial thrombophlebitis",
-   "ConceptID": "C1510431"
  },
  {
    "DiseaseName": "Superior-inferior ventricles without criss-cross atrioventricular valves",
@@ -90489,16 +89337,8 @@
    "ConceptID": "C1408507"
  },
  {
-   "DiseaseName": "Supranuclear palsy, progressive, 1, atypical",
-   "ConceptID": "C3151582"
- },
- {
-   "DiseaseName": "Supranuclear palsy, progressive, 2",
-   "ConceptID": "C1836148"
- },
- {
-   "DiseaseName": "Supranuclear palsy, progressive, 3",
-   "ConceptID": "C1970476"
+   "DiseaseName": "Supranuclear palsy",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Suprasellar arachnoid cyst",
@@ -90525,42 +89365,6 @@
    "ConceptID": "C0039240"
  },
  {
-   "DiseaseName": "Supraventricular tachycardia with a concealed accessory connection",
-   "ConceptID": "C4023231"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a concealed accessory pathway on the left free wall",
-   "ConceptID": "C4023230"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a concealed accessory pathway on the right free wall",
-   "ConceptID": "C4023229"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a concealed accessory pathway on the septum",
-   "ConceptID": "C4023228"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a manifest accessory pathway",
-   "ConceptID": "C4023227"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a manifest accessory pathway on the left free wall",
-   "ConceptID": "C4023226"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a manifest accessory pathway on the right free wall",
-   "ConceptID": "C4023225"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with a manifest accessory pathway on the septum",
-   "ConceptID": "C4023224"
- },
- {
-   "DiseaseName": "Supraventricular tachycardia with an accessory connection mediated pathway",
-   "ConceptID": "C4021132"
- },
- {
    "DiseaseName": "Surface antigen, glycoprotein 75",
    "ConceptID": "C1861423"
  },
@@ -90569,24 +89373,8 @@
    "ConceptID": "C1861417"
  },
  {
-   "DiseaseName": "Surfactant metabolism dysfunction, pulmonary, 1",
-   "ConceptID": "C1968602"
- },
- {
-   "DiseaseName": "Surfactant metabolism dysfunction, pulmonary, 2",
-   "ConceptID": "C1970470"
- },
- {
-   "DiseaseName": "Surfactant metabolism dysfunction, pulmonary, 3",
-   "ConceptID": "C1970456"
- },
- {
-   "DiseaseName": "Surfactant metabolism dysfunction, pulmonary, 4",
-   "ConceptID": "C2677877"
- },
- {
-   "DiseaseName": "Surfactant metabolism dysfunction, pulmonary, 5",
-   "ConceptID": "C3280574"
+   "DiseaseName": "Surfactant metabolism dysfunction",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Susceptibility to acute rheumatic fever",
@@ -90749,116 +89537,32 @@
    "ConceptID": "C4023978"
  },
  {
-   "DiseaseName": "Symphalangism affecting the distal phalanx of the 2nd toe",
-   "ConceptID": "C4023837"
- },
- {
-   "DiseaseName": "Symphalangism affecting the distal phalanx of the 3rd toe",
-   "ConceptID": "C4022051"
- },
- {
-   "DiseaseName": "Symphalangism affecting the distal phalanx of the 4th toe",
-   "ConceptID": "C4022050"
- },
- {
-   "DiseaseName": "Symphalangism affecting the distal phalanx of the 5th toe",
-   "ConceptID": "C4022049"
- },
- {
-   "DiseaseName": "Symphalangism affecting the distal phalanx of the hallux",
-   "ConceptID": "C4024063"
+   "DiseaseName": "Symphalangism affecting the distal phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Symphalangism affecting the middle phalanges of the toes",
    "ConceptID": "C4023973"
  },
  {
-   "DiseaseName": "Symphalangism affecting the middle phalanx of the 2nd toe",
-   "ConceptID": "C4023845"
- },
- {
-   "DiseaseName": "Symphalangism affecting the middle phalanx of the 3rd toe",
-   "ConceptID": "C4022057"
- },
- {
-   "DiseaseName": "Symphalangism affecting the middle phalanx of the 4th toe",
-   "ConceptID": "C4022056"
- },
- {
-   "DiseaseName": "Symphalangism affecting the middle phalanx of the 5th toe",
-   "ConceptID": "C4022055"
- },
- {
-   "DiseaseName": "Symphalangism affecting the phalanges of the 2nd toe",
-   "ConceptID": "C4023887"
- },
- {
-   "DiseaseName": "Symphalangism affecting the phalanges of the 3rd toe",
-   "ConceptID": "C4023880"
- },
- {
-   "DiseaseName": "Symphalangism affecting the phalanges of the 4th toe",
-   "ConceptID": "C4023872"
- },
- {
-   "DiseaseName": "Symphalangism affecting the phalanges of the 5th toe",
-   "ConceptID": "C4023864"
- },
- {
-   "DiseaseName": "Symphalangism affecting the phalanges of the hallux",
-   "ConceptID": "C1836216"
- },
- {
-   "DiseaseName": "Symphalangism affecting the phalanges of the hand",
-   "ConceptID": "C4021390"
+   "DiseaseName": "Symphalangism affecting the middle phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Symphalangism affecting the phalanges of the toes",
    "ConceptID": "C4023984"
  },
  {
-   "DiseaseName": "Symphalangism affecting the proximal phalanges of the hand",
-   "ConceptID": "C4024178"
+   "DiseaseName": "Symphalangism affecting the phalanges",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Symphalangism affecting the proximal phalanges of the toes",
-   "ConceptID": "C4023970"
+   "DiseaseName": "Symphalangism affecting the proximal phalanges",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 2nd finger",
-   "ConceptID": "C4024277"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 2nd toe",
-   "ConceptID": "C4023853"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 3rd finger",
-   "ConceptID": "C4024350"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 3rd toe",
-   "ConceptID": "C4022054"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 4th finger",
-   "ConceptID": "C4024448"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 4th toe",
-   "ConceptID": "C4022053"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 5th finger",
-   "ConceptID": "C4024512"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the 5th toe",
-   "ConceptID": "C4022052"
- },
- {
-   "DiseaseName": "Symphalangism affecting the proximal phalanx of the hallux",
-   "ConceptID": "C4024056"
+   "DiseaseName": "Symphalangism affecting the proximal phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Symphalangism-brachydactyly syndrome",
@@ -90873,28 +89577,8 @@
    "ConceptID": "C1861401"
  },
  {
-   "DiseaseName": "Symphalangism, distal, with microdontia, dental pulp stones, and narrowed zygomatic arch",
-   "ConceptID": "C1847185"
- },
- {
-   "DiseaseName": "Symphalangism of middle phalanx of 2nd finger",
-   "ConceptID": "C4024284"
- },
- {
-   "DiseaseName": "Symphalangism of middle phalanx of 3rd finger",
-   "ConceptID": "C4024363"
- },
- {
-   "DiseaseName": "Symphalangism of middle phalanx of 4th finger",
-   "ConceptID": "C4024453"
- },
- {
-   "DiseaseName": "Symphalangism of middle phalanx of 5th finger",
-   "ConceptID": "C4024554"
- },
- {
-   "DiseaseName": "Symphalangism of middle phalanx of finger",
-   "ConceptID": "C4024184"
+   "DiseaseName": "Symphalangism of middle phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Symphalangism of the 2nd finger",
@@ -90913,36 +89597,8 @@
    "ConceptID": "C4021676"
  },
  {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 2nd finger with the 2nd metatcarpal",
-   "ConceptID": "C4024274"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 2nd toe with the 2nd metatarsal",
-   "ConceptID": "C4022048"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 3rd finger with the 3rd metatcarpal",
-   "ConceptID": "C4024339"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 3rd toe with the 3rd metatarsal",
-   "ConceptID": "C4022047"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 4th finger with the 4th metatcarpal",
-   "ConceptID": "C4024341"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 4th toe with the 4th metatarsal",
-   "ConceptID": "C4022046"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 5th finger with the 5th metatcarpal",
-   "ConceptID": "C4024510"
- },
- {
-   "DiseaseName": "Symphalangism of the proximal phalanx of the 5th toe with the 5th metatarsal",
-   "ConceptID": "C4022045"
+   "DiseaseName": "Symphalangism of the proximal phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Symphalangism of the thumb",
@@ -90977,46 +89633,6 @@
    "ConceptID": "C0039075"
  },
  {
-   "DiseaseName": "Syndactyly",
-   "ConceptID": "C2117411"
- },
- {
-   "DiseaseName": "Syndactyly Cenani Lenz type",
-   "ConceptID": "C1859309"
- },
- {
-   "DiseaseName": "syndactyly of fingers 4-5",
-   "ConceptID": "CN238483"
- },
- {
-   "DiseaseName": "syndactyly of toes 2-3",
-   "ConceptID": "CN238482"
- },
- {
-   "DiseaseName": "Syndactyly-polydactyly-earlobe syndrome",
-   "ConceptID": "C1861347"
- },
- {
-   "DiseaseName": "Syndactyly type 1",
-   "ConceptID": "C1861380"
- },
- {
-   "DiseaseName": "Syndactyly type 3",
-   "ConceptID": "C1861366"
- },
- {
-   "DiseaseName": "Syndactyly type 9",
-   "ConceptID": "C1836206"
- },
- {
-   "DiseaseName": "Syndactyly, type IV",
-   "ConceptID": "C1861355"
- },
- {
-   "DiseaseName": "Syndactyly, type V",
-   "ConceptID": "C1861348"
- },
- {
    "DiseaseName": "Syndesmodysplasic dwarfism",
    "ConceptID": "C2931647"
  },
@@ -91029,10 +89645,6 @@
    "ConceptID": "CN225415"
  },
  {
-   "DiseaseName": "Syndromic intellectual disability, X-linked",
-   "ConceptID": "CN227788"
- },
- {
    "DiseaseName": "Syndromic mental retardation, Nascimento type, X-linked",
    "ConceptID": "C3275464"
  },
@@ -91041,24 +89653,12 @@
    "ConceptID": "CN226833"
  },
  {
-   "DiseaseName": "Syndromic Microphthalmia, Dominant",
-   "ConceptID": "CN239443"
- },
- {
-   "DiseaseName": "Syndromic Microphthalmia, Recessive",
-   "ConceptID": "CN239456"
- },
- {
    "DiseaseName": "Syndromic severe congenital neutropenia",
    "ConceptID": "CN239555"
  },
  {
-   "DiseaseName": "Syndromic X-linked mental retardation 16",
-   "ConceptID": "C3275558"
- },
- {
-   "DiseaseName": "Syndromic X-linked mental retardation, Cabezas type",
-   "ConceptID": "C1845861"
+   "DiseaseName": "Syndromic X-linked mental retardation",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Synesthesia",
@@ -91069,68 +89669,16 @@
    "ConceptID": "C0431447"
  },
  {
-   "DiseaseName": "Synostoses, tarsal, carpal, and digital",
-   "ConceptID": "C1876184"
+   "DiseaseName": "Synostoses",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Synostosis involving bones of the feet",
-   "ConceptID": "C4024575"
- },
- {
-   "DiseaseName": "Synostosis involving bones of the hand",
-   "ConceptID": "C4020831"
- },
- {
-   "DiseaseName": "Synostosis involving bones of the lower limbs",
-   "ConceptID": "C4024577"
- },
- {
-   "DiseaseName": "Synostosis involving bones of the toes",
-   "ConceptID": "C4022186"
- },
- {
-   "DiseaseName": "Synostosis involving bones of the upper limbs",
-   "ConceptID": "C4022184"
+   "DiseaseName": "Synostosis involving bones",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Synostosis involving digits",
    "ConceptID": "C4022178"
- },
- {
-   "DiseaseName": "Synostosis involving the 1st metacarpal",
-   "ConceptID": "C4021397"
- },
- {
-   "DiseaseName": "Synostosis involving the 1st metatarsal",
-   "ConceptID": "C4024071"
- },
- {
-   "DiseaseName": "Synostosis involving the 2nd metacarpal",
-   "ConceptID": "C4024228"
- },
- {
-   "DiseaseName": "Synostosis involving the 3rd metacarpal",
-   "ConceptID": "C4024227"
- },
- {
-   "DiseaseName": "Synostosis involving the 4th metacarpal",
-   "ConceptID": "C4024226"
- },
- {
-   "DiseaseName": "Synostosis involving the 5th metacarpal",
-   "ConceptID": "C4024225"
- },
- {
-   "DiseaseName": "Synostosis involving the elbow",
-   "ConceptID": "C4025494"
- },
- {
-   "DiseaseName": "Synostosis involving the fibula",
-   "ConceptID": "C4025104"
- },
- {
-   "DiseaseName": "Synostosis involving the tibia",
-   "ConceptID": "C4025103"
  },
  {
    "DiseaseName": "Synostosis of carpal bones",
@@ -91149,16 +89697,8 @@
    "ConceptID": "C4022177"
  },
  {
-   "DiseaseName": "Synostosis of second metacarpal-trapezoid",
-   "ConceptID": "C4021665"
- },
- {
-   "DiseaseName": "Synostosis of the proximal phalanx of the hallux with the 1st metatarsal",
-   "ConceptID": "C4022043"
- },
- {
-   "DiseaseName": "Synostosis of the proximal phalanx of the thumb with the 1st metatcarpal",
-   "ConceptID": "C4024262"
+   "DiseaseName": "Synostosis of the proximal phalanx",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Synostosis of thumb phalanx",
@@ -91189,28 +89729,8 @@
    "ConceptID": "C0039103"
  },
  {
-   "DiseaseName": "Synovitis, chronic, susceptibility to",
-   "ConceptID": "C1969756"
- },
- {
-   "DiseaseName": "Synpolydactyly 1",
-   "ConceptID": "C2699746"
- },
- {
-   "DiseaseName": "Synpolydactyly 2",
-   "ConceptID": "C1842422"
- },
- {
-   "DiseaseName": "Synpolydactyly 3",
-   "ConceptID": "C1853255"
- },
- {
    "DiseaseName": "synpolydactyly",
    "ConceptID": "CN238761"
- },
- {
-   "DiseaseName": "Synpolydactyly with foot anomalies",
-   "ConceptID": "C1861368"
  },
  {
    "DiseaseName": "Syringomas, multiple",
@@ -91221,96 +89741,8 @@
    "ConceptID": "C0039144"
  },
  {
-   "DiseaseName": "Syringomyelia, isolated",
-   "ConceptID": "C1861301"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 10",
-   "ConceptID": "C2677097"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 11",
-   "ConceptID": "C2677096"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 12",
-   "ConceptID": "C2677095"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 13",
-   "ConceptID": "C2676487"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 14",
-   "ConceptID": "C2751054"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 15",
-   "ConceptID": "C2749008"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 16",
-   "ConceptID": "C3280742"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 1",
-   "ConceptID": "C1866373"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 2",
-   "ConceptID": "C1854577"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 3",
-   "ConceptID": "C1854235"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 4",
-   "ConceptID": "C1842057"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 5",
-   "ConceptID": "C1835929"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 6",
-   "ConceptID": "C1835919"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 7",
-   "ConceptID": "C1864732"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 8",
-   "ConceptID": "C1864731"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus 9",
-   "ConceptID": "C1970455"
- },
- {
    "DiseaseName": "Systemic lupus erythematosus",
    "ConceptID": "C0024141"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus, resistance to, 1",
-   "ConceptID": "C1864265"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus with hemolytic anemia 1",
-   "ConceptID": "C1846533"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus with nephritis 1",
-   "ConceptID": "C1842757"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus with nephritis 2",
-   "ConceptID": "C1842756"
- },
- {
-   "DiseaseName": "Systemic lupus erythematosus with nephritis 3",
-   "ConceptID": "C1842755"
  },
  {
    "DiseaseName": "Systemic lupus erythmatosus, association with",
@@ -91347,22 +89779,6 @@
  {
    "DiseaseName": "Tacrolimus response",
    "ConceptID": "C3547403"
- },
- {
-   "DiseaseName": "tacrolimus response - Dosage",
-   "ConceptID": "CN236545"
- },
- {
-   "DiseaseName": "tacrolimus response - Dosage, Metabolism/PK",
-   "ConceptID": "CN236535"
- },
- {
-   "DiseaseName": "tacrolimus response due to donor genotype - Dosage, Metabolism/PK",
-   "ConceptID": "CN236528"
- },
- {
-   "DiseaseName": "tacrolimus response - Efficacy",
-   "ConceptID": "CN236583"
  },
  {
    "DiseaseName": "Takayasu arteritis",
@@ -91439,10 +89855,6 @@
  {
    "DiseaseName": "Tamoxifen response",
    "ConceptID": "CN078013"
- },
- {
-   "DiseaseName": "tamoxifen response - Efficacy, Toxicity/ADR",
-   "ConceptID": "CN236584"
  },
  {
    "DiseaseName": "Tangier disease",
@@ -91553,24 +89965,8 @@
    "ConceptID": "C2931372"
  },
  {
-   "DiseaseName": "Tay-Sachs disease, B1 variant",
-   "ConceptID": "C1848916"
- },
- {
    "DiseaseName": "Tay-Sachs disease",
    "ConceptID": "C0039373"
- },
- {
-   "DiseaseName": "Tay-sachs disease, juvenile",
-   "ConceptID": "C1848913"
- },
- {
-   "DiseaseName": "Tay-Sachs disease, pseudo-AB variant",
-   "ConceptID": "C1848917"
- },
- {
-   "DiseaseName": "Tay-Sachs disease, variant AB",
-   "ConceptID": "C0268275"
  },
  {
    "DiseaseName": "T-box 24",
@@ -91585,16 +89981,8 @@
    "ConceptID": "C4025181"
  },
  {
-   "DiseaseName": "T-cell immunodeficiency, congenital alopecia and nail dystrophy",
-   "ConceptID": "C1866426"
- },
- {
-   "DiseaseName": "T-cell immunodeficiency, recurrent infections, and autoimmunity with or without cardiac malformations",
-   "ConceptID": "C3553943"
- },
- {
-   "DiseaseName": "T-cell immunodeficiency with epidermodysplasia verruciformis",
-   "ConceptID": "CN714013"
+   "DiseaseName": "T-cell immunodeficiency",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "T-cell lymphoma",
@@ -91653,56 +90041,16 @@
    "ConceptID": "C1852514"
  },
  {
-   "DiseaseName": "tegafur response - Toxicity/ADR",
-   "ConceptID": "CN236622"
- },
- {
-   "DiseaseName": "tegafur response - Toxicity/ADR, Metabolism/PK",
-   "ConceptID": "CN240607"
- },
- {
    "DiseaseName": "Tegumentary leishmaniasis susceptibility",
    "ConceptID": "C2748501"
  },
  {
-   "DiseaseName": "Telangiectases in sun-exposed and nonexposed skin",
-   "ConceptID": "C1868184"
- },
- {
-   "DiseaseName": "Telangiectases of the cheeks",
-   "ConceptID": "C3554587"
- },
- {
-   "DiseaseName": "Telangiectases producing 'marbled' skin",
-   "ConceptID": "C4024839"
+   "DiseaseName": "Telangiectases",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Telangiectasia",
    "ConceptID": "C0039446"
- },
- {
-   "DiseaseName": "Telangiectasia, hereditary hemorrhagic, type 5",
-   "ConceptID": "C3809710"
- },
- {
-   "DiseaseName": "Telangiectasia macularis eruptiva perstans",
-   "ConceptID": "C0263402"
- },
- {
-   "DiseaseName": "Telangiectasia of extensor surfaces",
-   "ConceptID": "C4024827"
- },
- {
-   "DiseaseName": "Telangiectasia of the ear",
-   "ConceptID": "C4024169"
- },
- {
-   "DiseaseName": "Telangiectasia of the oral mucosa",
-   "ConceptID": "C4024882"
- },
- {
-   "DiseaseName": "Telangiectasia of the skin",
-   "ConceptID": "C4022018"
  },
  {
    "DiseaseName": "Telaprevir response",
@@ -91745,24 +90093,8 @@
    "ConceptID": "C1861242"
  },
  {
-   "DiseaseName": "Temperature sensitivity complementation, cell cycle specific, h142",
-   "ConceptID": "C1861252"
- },
- {
-   "DiseaseName": "Temperature sensitivity complementation, cell cycle specific, k12",
-   "ConceptID": "C1416535"
- },
- {
-   "DiseaseName": "TEMPERATURE SENSITIVITY COMPLEMENTATION, CELL CYCLE SPECIFIC, ts13",
-   "ConceptID": "C1861244"
- },
- {
-   "DiseaseName": "TEMPERATURE SENSITIVITY COMPLEMENTATION, CELL CYCLE SPECIFIC, ts546",
-   "ConceptID": "C1861243"
- },
- {
-   "DiseaseName": "TEMPERATURE SENSITIVITY COMPLEMENTATION, CELL CYCLE SPECIFIC, tsBN51",
-   "ConceptID": "C1861253"
+   "DiseaseName": "Temperature sensitivity complementation, cell cycle specific",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Temple-Baraitser syndrome",
@@ -92121,20 +90453,8 @@
    "ConceptID": "C1848866"
  },
  {
-   "DiseaseName": "Thanatophoric dysplasia Glasgow variant",
-   "ConceptID": "C1848865"
- },
- {
-   "DiseaseName": "Thanatophoric dysplasia, luton variant",
-   "ConceptID": "C1835439"
- },
- {
-   "DiseaseName": "Thanatophoric dysplasia type 1",
-   "ConceptID": "C1868678"
- },
- {
-   "DiseaseName": "Thanatophoric dysplasia, type 2",
-   "ConceptID": "C1300257"
+   "DiseaseName": "Thanatophoric dysplasia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Thauvin-Robinet-Faivre syndrome",
@@ -92573,40 +90893,8 @@
    "ConceptID": "C0040038"
  },
  {
-   "DiseaseName": "Thrombophilia due to activated protein C resistance",
-   "ConceptID": "C1861171"
- },
- {
-   "DiseaseName": "Thrombophilia due to factor V Leiden",
-   "ConceptID": "C2674152"
- },
- {
-   "DiseaseName": "Thrombophilia due to protein S deficiency, autosomal recessive",
-   "ConceptID": "C3281092"
- },
- {
-   "DiseaseName": "Thrombophilia due to thrombomodulin defect",
-   "ConceptID": "C3280976"
- },
- {
-   "DiseaseName": "Thrombophilia, familial, due to decreased release of tissue plasminogen activator",
-   "ConceptID": "C2676721"
- },
- {
-   "DiseaseName": "Thrombophilia, hereditary, due to protein C deficiency, autosomal dominant",
-   "ConceptID": "C2674321"
- },
- {
-   "DiseaseName": "Thrombophilia, hereditary, due to protein C deficiency, autosomal recessive",
-   "ConceptID": "C2676759"
- },
- {
-   "DiseaseName": "Thrombophilia, histidine-rich glycoprotein-related",
-   "ConceptID": "C2751090"
- },
- {
-   "DiseaseName": "Thrombophilia, X-linked, due to factor IX defect",
-   "ConceptID": "C2749016"
+   "DiseaseName": "Thrombophilia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Thrombophlebitis",
@@ -92661,10 +90949,6 @@
    "ConceptID": "C0040100"
  },
  {
-   "DiseaseName": "Thymoma, familial",
-   "ConceptID": "C1848814"
- },
- {
    "DiseaseName": "Thymus hyperplasia",
    "ConceptID": "C0040115"
  },
@@ -92705,28 +90989,8 @@
    "ConceptID": "C4023191"
  },
  {
-   "DiseaseName": "Thyroid cancer, childhood",
-   "ConceptID": "CN036501"
- },
- {
    "DiseaseName": "Thyroid cancer",
    "ConceptID": "CN221577"
- },
- {
-   "DiseaseName": "thyroid cancer",
-   "ConceptID": "CN235603"
- },
- {
-   "DiseaseName": "Thyroid cancer, nonmedullary, 3",
-   "ConceptID": "C4225410"
- },
- {
-   "DiseaseName": "Thyroid cancer, nonmedullary, 4",
-   "ConceptID": "C4225293"
- },
- {
-   "DiseaseName": "Thyroid cancer, nonmedullary, 5",
-   "ConceptID": "C4225292"
  },
  {
    "DiseaseName": "Thyroid carcinoma",
@@ -92759,14 +91023,6 @@
  {
    "DiseaseName": "Thyroid dysgenesis",
    "ConceptID": "C1563716"
- },
- {
-   "DiseaseName": "Thyroid dyshormonogenesis 1",
-   "ConceptID": "C1848805"
- },
- {
-   "DiseaseName": "Thyroid dyshormonogenesis 6",
-   "ConceptID": "C1846632"
  },
  {
    "DiseaseName": "Thyroid dyshormonogenesis",
@@ -92809,18 +91065,6 @@
    "ConceptID": "CN118820"
  },
  {
-   "DiseaseName": "Thyroid hormone resistance, generalized, autosomal dominant",
-   "ConceptID": "C2937288"
- },
- {
-   "DiseaseName": "Thyroid hormone resistance, generalized, autosomal recessive",
-   "ConceptID": "C3489796"
- },
- {
-   "DiseaseName": "Thyroid hormone resistance, selective pituitary",
-   "ConceptID": "C1840364"
- },
- {
    "DiseaseName": "Thyroid Hormonogenesis Defect",
    "ConceptID": "CN239261"
  },
@@ -92853,10 +91097,6 @@
    "ConceptID": "C0040137"
  },
  {
-   "DiseaseName": "Thyroid nodule",
-   "ConceptID": "CN911535"
- },
- {
    "DiseaseName": "Thyroid papillary adenoma",
    "ConceptID": "C4023192"
  },
@@ -92885,16 +91125,8 @@
    "ConceptID": "C0154141"
  },
  {
-   "DiseaseName": "Thyrotoxic periodic paralysis 2",
-   "ConceptID": "C2750473"
- },
- {
    "DiseaseName": "Thyrotoxic periodic paralysis",
    "ConceptID": "C0268446"
- },
- {
-   "DiseaseName": "Thyrotoxic periodic paralysis, susceptibility to, 3",
-   "ConceptID": "C3553839"
  },
  {
    "DiseaseName": "Thyrotropin-releasing hormone resistance, generalized",
@@ -92903,10 +91135,6 @@
  {
    "DiseaseName": "Thyroxine-binding globulin deficiency",
    "ConceptID": "C1839141"
- },
- {
-   "DiseaseName": "Thyroxine-binding globulin deficiency, partial",
-   "ConceptID": "C0271836"
  },
  {
    "DiseaseName": "Thyroxine-binding globulin quantitative trait locus",
@@ -93105,10 +91333,6 @@
    "ConceptID": "C1861058"
  },
  {
-   "DiseaseName": "Toe syndactyly",
-   "ConceptID": "C0265660"
- },
- {
    "DiseaseName": "Toe walking",
    "ConceptID": "C0427144"
  },
@@ -93189,44 +91413,8 @@
    "ConceptID": "C0518988"
  },
  {
-   "DiseaseName": "Tooth agenesis, selective, 2",
+   "DiseaseName": "Tooth agenesis, selective",
    "ConceptID": "C1865092"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 3",
-   "ConceptID": "C1970291"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 4",
-   "ConceptID": "C1835492"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 5",
-   "ConceptID": "C1858210"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 6",
-   "ConceptID": "C2751297"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 7",
-   "ConceptID": "C4225231"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 8",
-   "ConceptID": "C4310730"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, 9",
-   "ConceptID": "C4310638"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, with orofacial cleft",
-   "ConceptID": "C1970117"
- },
- {
-   "DiseaseName": "Tooth agenesis, selective, X-linked, 1",
-   "ConceptID": "C1970757"
  },
  {
    "DiseaseName": "Tooth size",
@@ -93353,12 +91541,8 @@
    "ConceptID": "C1862683"
  },
  {
-   "DiseaseName": "Townes-Brocks syndrome 1",
-   "ConceptID": "CN034849"
- },
- {
-   "DiseaseName": "Townes-Brocks syndrome 2",
-   "ConceptID": "C4479534"
+   "DiseaseName": "Townes-Brocks syndrome",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Townes syndrome",
@@ -93427,10 +91611,6 @@
  {
    "DiseaseName": "Tracheoesophageal fistula",
    "ConceptID": "C0040588"
- },
- {
-   "DiseaseName": "Tracheoesophageal fistula",
-   "ConceptID": "C1861028"
  },
  {
    "DiseaseName": "Tracheomalacia",
@@ -93537,28 +91717,12 @@
    "ConceptID": "C1834582"
  },
  {
-   "DiseaseName": "Transient Neonatal Diabetes, Dominant",
-   "ConceptID": "CN239283"
+   "DiseaseName": "Transient Neonatal Diabetes",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Transient Neonatal Diabetes, Dominant/Recessive",
-   "ConceptID": "CN239353"
- },
- {
-   "DiseaseName": "Transient neonatal diabetes mellitus 1",
-   "ConceptID": "C1832386"
- },
- {
-   "DiseaseName": "Transient neonatal diabetes mellitus 2",
-   "ConceptID": "C1835887"
- },
- {
-   "DiseaseName": "Transient neonatal diabetes mellitus 3",
-   "ConceptID": "C1864623"
- },
- {
-   "DiseaseName": "Transient Neonatal Diabetes, Recessive",
-   "ConceptID": "CN239376"
+   "DiseaseName": "Transient neonatal diabetes mellitus",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Transient neonatal jaundiced",
@@ -93603,18 +91767,6 @@
  {
    "DiseaseName": "Transposition of the great arteries",
    "ConceptID": "C0040761"
- },
- {
-   "DiseaseName": "Transposition of the great arteries",
-   "ConceptID": "C3536741"
- },
- {
-   "DiseaseName": "Transposition of the great arteries, dextro-looped 1",
-   "ConceptID": "C1837341"
- },
- {
-   "DiseaseName": "Transposition of the great arteries, dextro-looped 3",
-   "ConceptID": "C3151221"
  },
  {
    "DiseaseName": "Transsexuality",
@@ -96215,18 +94367,6 @@
  {
    "DiseaseName": "Venous thrombosis",
    "ConceptID": "C0042487"
- },
- {
-   "DiseaseName": "VENOUS THROMBOSIS",
-   "ConceptID": "C0398623"
- },
- {
-   "DiseaseName": "Venous thrombosis, protection against",
-   "ConceptID": "C2751120"
- },
- {
-   "DiseaseName": "Venous thrombosis, susceptibility to",
-   "ConceptID": "C4016042"
  },
  {
    "DiseaseName": "Venous varicosities of celiac and mesenteric vessels",
