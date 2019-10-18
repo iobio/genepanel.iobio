@@ -889,6 +889,7 @@ var model = new Model();
         GtrTermsAdded_temp: [],
         phenolyzerTermsAdded_temp: [],
         hpoTermsAdded_temp: [],
+        LevenshteinResults: [],
       }
     },
     mounted(){
@@ -959,7 +960,7 @@ var model = new Model();
         else if(component === "noGenePanels"){
           this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
           this.gtrFetchCompleted = true;
-          alert(`The search term did return any genes`); 
+          alert(`The search term did return any genes`);
           this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "NoGenes";
           this.Gtr_idx = this.Gtr_idx + 1;
           if(this.Gtr_idx < this.Gtr_searchTermsObj.length){
@@ -1104,6 +1105,7 @@ var model = new Model();
         else {
           this.JaroWinkler = [];
           this.fuzzyResults = [];
+          this.LevenshteinResults = [];
           this.loadingDialog = true;
           // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
           fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
@@ -1111,13 +1113,20 @@ var model = new Model();
             .then(data => {
               this.JaroWinkler = data.JaroWinkler;
               this.fuzzyResults = data.fuzzyResults ;
-              data.JaroWinkler.map(x=>{
-                x = x.trim();
-                if(!this.extractedTerms.includes(x)){
-                  this.extractedTerms.push(x);
-                }
-              })
-              data.fuzzyResults.map(x=>{
+              this.LevenshteinResults = data.LevenshteinResults
+              // data.JaroWinkler.map(x=>{
+              //   x = x.trim();
+              //   if(!this.extractedTerms.includes(x)){
+              //     this.extractedTerms.push(x);
+              //   }
+              // })
+              // data.fuzzyResults.map(x=>{
+              //   x = x.trim()
+              //   if(!this.extractedTerms.includes(x)){
+              //     this.extractedTerms.push(x);
+              //   }
+              // })
+              data.LevenshteinResults.map(x=>{
                 x = x.trim()
                 if(!this.extractedTerms.includes(x)){
                   this.extractedTerms.push(x);
