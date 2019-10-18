@@ -21165,10 +21165,6 @@
    "ConceptID": "C4023053"
  },
  {
-   "DiseaseName": "Cerebellar vermis aplasia with associated features suggesting Smith-Lemli-Opitz syndrome and Meckel syndrome",
-   "ConceptID": "C1859300"
- },
- {
    "DiseaseName": "Cerebellar vermis atrophy",
    "ConceptID": "C0742028"
  },
@@ -21711,10 +21707,6 @@
  {
    "DiseaseName": "CFHR5 deficiency",
    "ConceptID": "C3553720"
- },
- {
-   "DiseaseName": "CFHR5-Related Dense Deposit Disease / Membranoproliferative Glomerulonephritis Type II",
-   "ConceptID": "CN120381"
  },
  {
    "DiseaseName": "CFH-Related Disorders",
@@ -23891,10 +23883,6 @@
  {
    "DiseaseName": "Classical galactosemia, homozygous Duarte-type",
    "ConceptID": "C0268152"
- },
- {
-   "DiseaseName": "Classical maple syrup urine disease",
-   "ConceptID": "C0268568"
  },
  {
    "DiseaseName": "Classic congenital adrenal hyperplasia due to 21-hydroxylase deficiency",
@@ -40269,20 +40257,8 @@
    "ConceptID": "C0151638"
  },
  {
-   "DiseaseName": "Fanconi renotubular syndrome 1",
-   "ConceptID": "C0341703"
- },
- {
-   "DiseaseName": "Fanconi renotubular syndrome 2",
-   "ConceptID": "C3150652"
- },
- {
-   "DiseaseName": "Fanconi renotubular syndrome 3",
-   "ConceptID": "C3810100"
- },
- {
-   "DiseaseName": "Fanconi renotubular syndrome 4 with maturity-onset diabetes of the young",
-   "ConceptID": "C4014962"
+   "DiseaseName": "Fanconi renotubular syndrome",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Fanconi syndrome",
@@ -59233,30 +59209,6 @@
    "ConceptID": "C0024776"
  },
  {
-   "DiseaseName": "Maple syrup urine disease, mild variant",
-   "ConceptID": "C3554575"
- },
- {
-   "DiseaseName": "Maple syrup urine disease, thiamine-responsive, type II",
-   "ConceptID": "C4016440"
- },
- {
-   "DiseaseName": "Maple syrup urine disease type 1A",
-   "ConceptID": "C1855369"
- },
- {
-   "DiseaseName": "Maple syrup urine disease type 1B",
-   "ConceptID": "C1855370"
- },
- {
-   "DiseaseName": "Maple syrup urine disease type 2",
-   "ConceptID": "C1855371"
- },
- {
-   "DiseaseName": "Maple syrup urine disease, type 3",
-   "ConceptID": "CN043137"
- },
- {
    "DiseaseName": "MAPT-Related Spectrum Disorders",
    "ConceptID": "CN239327"
  },
@@ -59289,10 +59241,6 @@
    "ConceptID": "C1839796"
  },
  {
-   "DiseaseName": "Marfanoid habitus with situs inversus",
-   "ConceptID": "C1836994"
- },
- {
    "DiseaseName": "Marfanoid joint hypermobility syndrome",
    "ConceptID": "C0268365"
  },
@@ -59301,48 +59249,8 @@
    "ConceptID": "C1855347"
  },
  {
-   "DiseaseName": "Marfan syndrome, atypical",
-   "ConceptID": "C4016055"
- },
- {
-   "DiseaseName": "Marfan syndrome, autosomal recessive",
-   "ConceptID": "C4016059"
- },
- {
    "DiseaseName": "Marfan syndrome",
    "ConceptID": "C0024796"
- },
- {
-   "DiseaseName": "Marfan syndrome, incomplete",
-   "ConceptID": "CN221598"
- },
- {
-   "DiseaseName": "Marfan Syndrome/Loeys-Dietz Syndrome/Familial Thoracic Aortic Aneurysms and Dissections",
-   "ConceptID": "CN229799"
- },
- {
-   "DiseaseName": "Marfan syndrome, mild",
-   "ConceptID": "C4016056"
- },
- {
-   "DiseaseName": "Marfan syndrome, mild variable",
-   "ConceptID": "C4016053"
- },
- {
-   "DiseaseName": "Marfan syndrome, neonatal",
-   "ConceptID": "C4016054"
- },
- {
-   "DiseaseName": "Marfan syndrome, severe classic",
-   "ConceptID": "C4016052"
- },
- {
-   "DiseaseName": "Marfan Syndrome type 2",
-   "ConceptID": "C2931058"
- },
- {
-   "DiseaseName": "Marfan Syndrome type 3",
-   "ConceptID": "CN035813"
  },
  {
    "DiseaseName": "Marginal corneal dystrophy",
@@ -59505,52 +59413,8 @@
    "ConceptID": "C0342276"
  },
  {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 10",
-   "ConceptID": "C3150617"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 11",
-   "ConceptID": "C3150618"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 13",
-   "ConceptID": "C4225365"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 14",
-   "ConceptID": "C4225299"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 1",
-   "ConceptID": "C1852093"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 2",
-   "ConceptID": "C1841962"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 3",
-   "ConceptID": "C1838100"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 4",
-   "ConceptID": "C1833382"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 6",
-   "ConceptID": "C1853371"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 7",
-   "ConceptID": "C1864839"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 8",
-   "ConceptID": "C1853297"
- },
- {
-   "DiseaseName": "Maturity-onset diabetes of the young, type 9",
-   "ConceptID": "C2677132"
+   "DiseaseName": "Maturity-onset diabetes of the young",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Mauriac syndrome",
@@ -59605,28 +59469,8 @@
    "ConceptID": "C1837026"
  },
  {
-   "DiseaseName": "Mean platelet volume quantitative trait locus 1",
-   "ConceptID": "C2675495"
- },
- {
-   "DiseaseName": "Mean platelet volume quantitative trait locus 2",
-   "ConceptID": "C2675494"
- },
- {
-   "DiseaseName": "Mean platelet volume quantitative trait locus 3",
-   "ConceptID": "C2675493"
- },
- {
-   "DiseaseName": "Mean platelet volume quantitative trait locus 4",
-   "ConceptID": "C3553339"
- },
- {
-   "DiseaseName": "Mean platelet volume quantitative trait locus 5",
-   "ConceptID": "C3553340"
- },
- {
-   "DiseaseName": "Mean platelet volume quantitative trait locus 6",
-   "ConceptID": "C3553341"
+   "DiseaseName": "Mean platelet volume quantitative trait locus",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Mechanical ileus",
@@ -59641,56 +59485,8 @@
    "ConceptID": "C0265215"
  },
  {
-   "DiseaseName": "Meckel syndrome 12",
-   "ConceptID": "C4015701"
- },
- {
-   "DiseaseName": "Meckel syndrome 13",
-   "ConceptID": "C4539714"
- },
- {
-   "DiseaseName": "Meckel syndrome, type 10",
-   "ConceptID": "C3280036"
- },
- {
-   "DiseaseName": "Meckel syndrome, type 11",
-   "ConceptID": "C3809352"
- },
- {
-   "DiseaseName": "Meckel syndrome type 1",
-   "ConceptID": "C3714506"
- },
- {
-   "DiseaseName": "Meckel syndrome type 2",
-   "ConceptID": "C1864148"
- },
- {
-   "DiseaseName": "Meckel syndrome type 3",
-   "ConceptID": "C1846357"
- },
- {
-   "DiseaseName": "Meckel syndrome type 4",
-   "ConceptID": "C1970161"
- },
- {
-   "DiseaseName": "Meckel syndrome type 5",
-   "ConceptID": "C1969052"
- },
- {
-   "DiseaseName": "Meckel syndrome type 6",
-   "ConceptID": "C2676790"
- },
- {
-   "DiseaseName": "Meckel syndrome type 7",
-   "ConceptID": "C2673885"
- },
- {
-   "DiseaseName": "Meckel syndrome type 8",
-   "ConceptID": "C3836857"
- },
- {
-   "DiseaseName": "Meckel syndrome, type 9",
-   "ConceptID": "C3280155"
+   "DiseaseName": "Meckel syndrome",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Meconium ileus",
@@ -59833,12 +59629,8 @@
    "ConceptID": "CN229776"
  },
  {
-   "DiseaseName": "Medullary cystic kidney disease 1",
-   "ConceptID": "C1868139"
- },
- {
-   "DiseaseName": "Medullary cystic kidney disease 2",
-   "ConceptID": "C1859040"
+   "DiseaseName": "Medullary cystic kidney disease",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Medullary nephrocalcinosis",
@@ -59897,22 +59689,6 @@
    "ConceptID": "C1858312"
  },
  {
-   "DiseaseName": "Megalencephalic leukoencephalopathy with subcortical cysts 1",
-   "ConceptID": "C1858854"
- },
- {
-   "DiseaseName": "Megalencephalic leukoencephalopathy with subcortical cysts 2a",
-   "ConceptID": "C3151355"
- },
- {
-   "DiseaseName": "Megalencephalic leukoencephalopathy with subcortical cysts 2b, remitting, with mental retardation",
-   "ConceptID": "C4017257"
- },
- {
-   "DiseaseName": "Megalencephalic leukoencephalopathy with subcortical cysts 2b, remitting, with or without mental retardation",
-   "ConceptID": "C3151356"
- },
- {
    "DiseaseName": "Megalencephalic leukoencephalopathy with subcortical cysts",
    "ConceptID": "CN176898"
  },
@@ -59925,24 +59701,8 @@
    "ConceptID": "C1863924"
  },
  {
-   "DiseaseName": "Megaloblastic anemia 1, Finnish type",
-   "ConceptID": "C4016819"
- },
- {
-   "DiseaseName": "Megaloblastic anemia 1, Norwegian type",
-   "ConceptID": "C4016948"
- },
- {
    "DiseaseName": "Megaloblastic anemia",
    "ConceptID": "C0002888"
- },
- {
-   "DiseaseName": "Megaloblastic anemia due to dihydrofolate reductase deficiency",
-   "ConceptID": "C3151205"
- },
- {
-   "DiseaseName": "Megaloblastic anemia due to inborn errors of metabolism",
-   "ConceptID": "C1306856"
  },
  {
    "DiseaseName": "Megaloblastic bone marrow",
@@ -59955,14 +59715,6 @@
  {
    "DiseaseName": "Megalocornea",
    "ConceptID": "C0344530"
- },
- {
-   "DiseaseName": "Megalocornea",
-   "ConceptID": "C1167712"
- },
- {
-   "DiseaseName": "Megalocornea mental retardation syndrome",
-   "ConceptID": "C0796086"
  },
  {
    "DiseaseName": "Megarbane Jalkh syndrome",
@@ -59979,38 +59731,6 @@
  {
    "DiseaseName": "MEHMO syndrome",
    "ConceptID": "C1846278"
- },
- {
-   "DiseaseName": "Meier-Gorlin syndrome 1",
-   "ConceptID": "CN030358"
- },
- {
-   "DiseaseName": "Meier-Gorlin syndrome 2",
-   "ConceptID": "C3151097"
- },
- {
-   "DiseaseName": "Meier-Gorlin syndrome 3",
-   "ConceptID": "C3151113"
- },
- {
-   "DiseaseName": "Meier-Gorlin syndrome 4",
-   "ConceptID": "C3151120"
- },
- {
-   "DiseaseName": "Meier-Gorlin syndrome 5",
-   "ConceptID": "C3151126"
- },
- {
-   "DiseaseName": "Meier-gorlin syndrome 6",
-   "ConceptID": "C4225188"
- },
- {
-   "DiseaseName": "Meier-gorlin syndrome 7",
-   "ConceptID": "C4310738"
- },
- {
-   "DiseaseName": "MEIER-GORLIN SYNDROME 8",
-   "ConceptID": "C4479655"
  },
  {
    "DiseaseName": "Meier-Gorlin syndrome",
@@ -60039,34 +59759,6 @@
  {
    "DiseaseName": "Melanoma",
    "ConceptID": "CN911504"
- },
- {
-   "DiseaseName": "Melanoma",
-   "ConceptID": "CN971653"
- },
- {
-   "DiseaseName": "Melanoma, cutaneous malignant, susceptibility to, 10",
-   "ConceptID": "C4014476"
- },
- {
-   "DiseaseName": "Melanoma, malignant familial intraocular",
-   "ConceptID": "C1835043"
- },
- {
-   "DiseaseName": "Melanoma-pancreatic cancer syndrome",
-   "ConceptID": "C1838547"
- },
- {
-   "DiseaseName": "Melanoma tumor antigen gp90",
-   "ConceptID": "C1835040"
- },
- {
-   "DiseaseName": "Melanoma, uveal 1",
-   "ConceptID": "C1847724"
- },
- {
-   "DiseaseName": "Melanoma, uveal 2",
-   "ConceptID": "C1847723"
  },
  {
    "DiseaseName": "Melanonychia",
@@ -60113,12 +59805,8 @@
    "ConceptID": "CN533582"
  },
  {
-   "DiseaseName": "Membranoproliferative glomerulonephritis with complement factor h deficiency",
-   "ConceptID": "CN071292"
- },
- {
-   "DiseaseName": "Membranoproliferative glomerulonephritis, X-linked",
-   "ConceptID": "C1844501"
+   "DiseaseName": "Membranoproliferative glomerulonephritis",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Membranous cataract",
@@ -60135,10 +59823,6 @@
  {
    "DiseaseName": "Membranous nephropathy",
    "ConceptID": "C0017665"
- },
- {
-   "DiseaseName": "Membranous nephropathy, susceptibility to",
-   "ConceptID": "C3553496"
  },
  {
    "DiseaseName": "Membranous subvalvular aortic stenosis",
@@ -60169,16 +59853,8 @@
    "ConceptID": "CN076151"
  },
  {
-   "DiseaseName": "Menarche, age at, quantitative trait locus 1",
-   "ConceptID": "C1970484"
- },
- {
-   "DiseaseName": "Menarche, age at, quantitative trait locus 2",
-   "ConceptID": "C2752070"
- },
- {
-   "DiseaseName": "Menarche, age at, quantitative trait locus 3",
-   "ConceptID": "C2752069"
+   "DiseaseName": "Menarche, age at, quantitative trait locus",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "MEND syndrome",
@@ -60201,10 +59877,6 @@
    "ConceptID": "C0025286"
  },
  {
-   "DiseaseName": "Meningioma, familial",
-   "ConceptID": "C1333989"
- },
- {
    "DiseaseName": "Meningitis",
    "ConceptID": "C0025289"
  },
@@ -60217,12 +59889,8 @@
    "ConceptID": "C0266456"
  },
  {
-   "DiseaseName": "Menkes disease, copper-replacement responsive",
-   "ConceptID": "C4016447"
- },
- {
-   "DiseaseName": "Menkes disease, mild",
-   "ConceptID": "C4016446"
+   "DiseaseName": "Menkes disease",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Menkes kinky-hair syndrome",
@@ -60233,16 +59901,8 @@
    "ConceptID": "C0232943"
  },
  {
-   "DiseaseName": "Menopause, natural, age at, quantitative trait locus 1",
-   "ConceptID": "C1970897"
- },
- {
-   "DiseaseName": "Menopause, natural, age at, quantitative trait locus 2",
-   "ConceptID": "C2752068"
- },
- {
-   "DiseaseName": "Menopause, natural, age at, quantitative trait locus 4",
-   "ConceptID": "C2752066"
+   "DiseaseName": "Menopause, natural, age at, quantitative trait locus",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Menorrhagia",
@@ -60265,16 +59925,8 @@
    "ConceptID": "C0004936"
  },
  {
-   "DiseaseName": "Mental Disorders",
-   "ConceptID": "CN240636"
- },
- {
-   "DiseaseName": "Mental health wellness 1",
+   "DiseaseName": "Mental health wellness",
    "ConceptID": "C1863621"
- },
- {
-   "DiseaseName": "Mental health wellness 2",
-   "ConceptID": "C1863620"
  },
  {
    "DiseaseName": "Mental retardation 17, X-linked",
