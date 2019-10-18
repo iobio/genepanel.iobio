@@ -345,10 +345,6 @@
    "ConceptID": "C0000744"
  },
  {
-   "DiseaseName": "Abidi X-linked mental retardation syndrome",
-   "ConceptID": "C1846056"
- },
- {
    "DiseaseName": "Ablepharon",
    "ConceptID": "C4020757"
  },
@@ -9981,10 +9977,6 @@
    "ConceptID": "C0001889"
  },
  {
-   "DiseaseName": "Alacrima, achalasia, and mental retardation syndrome",
-   "ConceptID": "C3809738"
- },
- {
    "DiseaseName": "Alacrima",
    "ConceptID": "C0344505"
  },
@@ -10269,28 +10261,8 @@
    "ConceptID": "C3280428"
  },
  {
-   "DiseaseName": "Alpha plus thalassemia",
-   "ConceptID": "C1456873"
- },
- {
-   "DiseaseName": "Alpha-thalassemia-2, nondeletional",
-   "ConceptID": "C4016148"
- },
- {
    "DiseaseName": "alpha Thalassemia",
    "ConceptID": "C0002312"
- },
- {
-   "DiseaseName": "Alpha-thalassemia, Hmong type",
-   "ConceptID": "C4016158"
- },
- {
-   "DiseaseName": "Alpha thalassemia-mental retardation syndrome",
-   "ConceptID": "C0475813"
- },
- {
-   "DiseaseName": "Alpha-thalassemia, zf type",
-   "ConceptID": "C4016157"
  },
  {
    "DiseaseName": "Alpha trait thalassemia",
@@ -15493,10 +15465,6 @@
    "ConceptID": "C1275089"
  },
  {
-   "DiseaseName": "Autosomal recessive limb girdle muscular dystrophy type 2S",
-   "ConceptID": "C4517996"
- },
- {
    "DiseaseName": "Autosomal recessive non-syndromic intellectual disability",
    "ConceptID": "CN206293"
  },
@@ -16229,14 +16197,6 @@
    "ConceptID": "C3150939"
  },
  {
-   "DiseaseName": "Becker muscular dystrophy, atypical",
-   "ConceptID": "C4016475"
- },
- {
-   "DiseaseName": "Becker muscular dystrophy",
-   "ConceptID": "C0917713"
- },
- {
    "DiseaseName": "Becker nevus syndrome",
    "ConceptID": "C1858042"
  },
@@ -16347,10 +16307,6 @@
  {
    "DiseaseName": "Benign recurrent intrahepatic cholestasis 2",
    "ConceptID": "C2608083"
- },
- {
-   "DiseaseName": "Benign scapuloperoneal muscular dystrophy with cardiomyopathy",
-   "ConceptID": "C0410190"
  },
  {
    "DiseaseName": "Benign Soft Tissue Neoplasm of Uncertain Differentiation",
@@ -19651,10 +19607,6 @@
  {
    "DiseaseName": "Cantu syndrome, KCNJ8 related",
    "ConceptID": "CN235353"
- },
- {
-   "DiseaseName": "CAP-congenital myopathy with arthrogryposis multiplex congenita without heart involvement",
-   "ConceptID": "CN234897"
  },
  {
    "DiseaseName": "Capecitabine response",
@@ -23569,10 +23521,6 @@
    "ConceptID": "C0149521"
  },
  {
-   "DiseaseName": "Chronic progressive multiple sclerosis",
-   "ConceptID": "C0393665"
- },
- {
    "DiseaseName": "chronic recurrent pancreatitis",
    "ConceptID": "C2074913"
  },
@@ -24571,10 +24519,6 @@
  {
    "DiseaseName": "Collagenosis, familial reactive perforating",
    "ConceptID": "C1857624"
- },
- {
-   "DiseaseName": "Collagen Type VI-Related Autosomal Dominant Limb-girdle Muscular Dystrophy",
-   "ConceptID": "CN230143"
  },
  {
    "DiseaseName": "Collagen VI-related myopathy",
@@ -26433,92 +26377,12 @@
    "ConceptID": "CN227268"
  },
  {
-   "DiseaseName": "Congenital Muscular Dystrophy, alpha-dystroglycan related",
-   "ConceptID": "CN239202"
- },
- {
    "DiseaseName": "Congenital muscular dystrophy",
    "ConceptID": "C0699743"
  },
  {
-   "DiseaseName": "Congenital Muscular Dystrophy, CHKB-related",
-   "ConceptID": "CN239234"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy due to partial LAMA2 deficiency",
-   "ConceptID": "C1842898"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with brain and eye anomalies, type A2",
-   "ConceptID": "C3150411"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with brain and eye anomalies, type A4",
-   "ConceptID": "CN355827"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with brain and eye anomalies type A5",
-   "ConceptID": "C3150413"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with brain and eye anomalies, type A6",
-   "ConceptID": "C3150414"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with brain and eye anomalies, type A7",
-   "ConceptID": "C3553330"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with mental retardation, type B1",
-   "ConceptID": "C3150415"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with mental retardation, type B2",
-   "ConceptID": "C3150416"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with mental retardation, type B3",
-   "ConceptID": "C3150412"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with mental retardation, type B5",
-   "ConceptID": "CN068807"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy with mental retardation, type B6",
-   "ConceptID": "C1837229"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy (with or without mental retardation) type B5",
-   "ConceptID": "C1847759"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy without mental retardation, type B4",
-   "ConceptID": "C2751052"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy without mental retardation, type B5",
-   "ConceptID": "C4016970"
- },
- {
-   "DiseaseName": "Congenital Muscular Dystrophy, ITGA7-related",
-   "ConceptID": "CN239268"
- },
- {
-   "DiseaseName": "Congenital Muscular Dystrophy, LAMA2-related",
-   "ConceptID": "CN239326"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy, LMNA-related",
-   "ConceptID": "C2750785"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy, producing arthrogryposis",
-   "ConceptID": "C1850865"
- },
- {
-   "DiseaseName": "Congenital muscular dystrophy with rigid spine",
-   "ConceptID": "CN235626"
+   "DiseaseName": "Congenital muscular dystrophy-dystroglycanopathy",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Congenital muscular hypertrophy-cerebral syndrome",
@@ -26529,36 +26393,8 @@
    "ConceptID": "C0079352"
  },
  {
-   "DiseaseName": "Congenital myasthenic syndrome 12",
-   "ConceptID": "C3552335"
- },
- {
-   "DiseaseName": "Congenital myasthenic syndrome 13",
-   "ConceptID": "C3553645"
- },
- {
-   "DiseaseName": "Congenital myasthenic syndrome 1B, fast-channel",
-   "ConceptID": "C1837122"
- },
- {
-   "DiseaseName": "Congenital myasthenic syndrome, acetazolamide-responsive",
-   "ConceptID": "C3502630"
- },
- {
    "DiseaseName": "Congenital myasthenic syndrome",
    "ConceptID": "C0751882"
- },
- {
-   "DiseaseName": "Congenital Myasthenic Syndrome, Dominant/Recessive",
-   "ConceptID": "CN239246"
- },
- {
-   "DiseaseName": "Congenital Myasthenic Syndrome, Recessive",
-   "ConceptID": "CN239337"
- },
- {
-   "DiseaseName": "Congenital myasthenic syndrome with tubular aggregates",
-   "ConceptID": "CN228621"
  },
  {
    "DiseaseName": "Congenital mydriasis",
@@ -26567,10 +26403,6 @@
  {
    "DiseaseName": "Congenital myopathy",
    "ConceptID": "C0270960"
- },
- {
-   "DiseaseName": "Congenital myopathy with fiber type disproportion",
-   "ConceptID": "C0546264"
  },
  {
    "DiseaseName": "Congenital myotonia, autosomal dominant form",
@@ -26591,10 +26423,6 @@
  {
    "DiseaseName": "Congenital neuroblastoma",
    "ConceptID": "C4024986"
- },
- {
-   "DiseaseName": "congenital neutropenia",
-   "ConceptID": "C0340970"
  },
  {
    "DiseaseName": "Congenital neutropenia",
@@ -26725,76 +26553,8 @@
    "ConceptID": "C1866657"
  },
  {
-   "DiseaseName": "Congenital stationary night blindness, autosomal dominant 1",
-   "ConceptID": "C1864869"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, autosomal dominant 2",
-   "ConceptID": "C1876182"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, autosomal dominant 3",
-   "ConceptID": "C1864870"
- },
- {
    "DiseaseName": "Congenital stationary night blindness",
    "ConceptID": "C0339535"
- },
- {
-   "DiseaseName": "Congenital Stationary Night Blindness, Dominant",
-   "ConceptID": "CN239263"
- },
- {
-   "DiseaseName": "Congenital Stationary Night Blindness, Recessive",
-   "ConceptID": "CN239273"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 1A",
-   "ConceptID": "C3495587"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 1B",
-   "ConceptID": "C1850362"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 1C",
-   "ConceptID": "C2750747"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 1D",
-   "ConceptID": "C3151193"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 1E",
-   "ConceptID": "C3281215"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 1F",
-   "ConceptID": "C3554399"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 2A",
-   "ConceptID": "C1848172"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 2A, severe",
-   "ConceptID": "C4016457"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, type 2B",
-   "ConceptID": "C1864877"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness with abnormal fundus",
-   "ConceptID": "C4073106"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness with normal fundus",
-   "ConceptID": "C4073105"
- },
- {
-   "DiseaseName": "Congenital stationary night blindness, X-linked",
-   "ConceptID": "CN043584"
  },
  {
    "DiseaseName": "Congenital stenosis of pulmonary valve",
@@ -26997,36 +26757,8 @@
    "ConceptID": "C4073123"
  },
  {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 2nd finger",
-   "ConceptID": "C4024302"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 2nd toe",
-   "ConceptID": "C4021015"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 3rd finger",
-   "ConceptID": "C4024344"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 3rd toe",
-   "ConceptID": "C4022132"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 4th finger",
-   "ConceptID": "C4024476"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 4th toe",
-   "ConceptID": "C4022131"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the 5th finger",
-   "ConceptID": "C4024551"
- },
- {
-   "DiseaseName": "Contracture of the distal interphalangeal joint of the fingers",
-   "ConceptID": "C4024230"
+   "DiseaseName": "Contracture of the distal interphalangeal joint",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Contracture of the interphalangeal joint of the hallux",
@@ -27233,80 +26965,8 @@
    "ConceptID": "C1852556"
  },
  {
-   "DiseaseName": "Corneal dystrophy and perceptive deafness",
-   "ConceptID": "C1857572"
- },
- {
    "DiseaseName": "Corneal dystrophy",
    "ConceptID": "C0010036"
- },
- {
-   "DiseaseName": "Corneal Dystrophy, Dominant",
-   "ConceptID": "CN239349"
- },
- {
-   "DiseaseName": "Corneal Dystrophy, Dominant/Recessive",
-   "ConceptID": "CN239339"
- },
- {
-   "DiseaseName": "Corneal dystrophy, endothelial, X-linked",
-   "ConceptID": "C2749049"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial 1",
-   "ConceptID": "C1850959"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 2",
-   "ConceptID": "C1857800"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 3",
-   "ConceptID": "C2750451"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 4",
-   "ConceptID": "C2750450"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 5",
-   "ConceptID": "C2750449"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 6",
-   "ConceptID": "C2750448"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 7",
-   "ConceptID": "C2750447"
- },
- {
-   "DiseaseName": "Corneal dystrophy, Fuchs endothelial, 8",
-   "ConceptID": "C3809798"
- },
- {
-   "DiseaseName": "Corneal dystrophy, lisch epithelial",
-   "ConceptID": "C2749050"
- },
- {
-   "DiseaseName": "Corneal dystrophy, posterior amorphous",
-   "ConceptID": "C2748502"
- },
- {
-   "DiseaseName": "Corneal dystrophy, posterior polymorphous, 2",
-   "ConceptID": "C1852795"
- },
- {
-   "DiseaseName": "CORNEAL DYSTROPHY, POSTERIOR POLYMORPHOUS, 4",
-   "ConceptID": "CN248531"
- },
- {
-   "DiseaseName": "Corneal Dystrophy, Recessive",
-   "ConceptID": "CN239343"
- },
- {
-   "DiseaseName": "Corneal dystrophy, subepithelial mucinous",
-   "ConceptID": "C2748503"
  },
  {
    "DiseaseName": "Corneal endothelial dystrophy",
@@ -34041,14 +33701,6 @@
    "ConceptID": "C0175691"
  },
  {
-   "DiseaseName": "Duchenne muscular dystrophy",
-   "ConceptID": "C0013264"
- },
- {
-   "DiseaseName": "Duchenne muscular dystrophy, mental retardation, and absence of erg b-wave",
-   "ConceptID": "C4016476"
- },
- {
    "DiseaseName": "Ductal breast carcinoma",
    "ConceptID": "C1527349"
  },
@@ -36061,10 +35713,6 @@
    "ConceptID": "C0220679"
  },
  {
-   "DiseaseName": "Eichsfeld type congenital muscular dystrophy",
-   "ConceptID": "C0410180"
- },
- {
    "DiseaseName": "Eiken skeletal dysplasia",
    "ConceptID": "C1838779"
  },
@@ -36561,44 +36209,8 @@
    "ConceptID": "C0206656"
  },
  {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy 1, X-linked",
-   "ConceptID": "C0751337"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy 3, autosomal recessive",
-   "ConceptID": "C2750035"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy 4, autosomal dominant",
-   "ConceptID": "C2751807"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy 5, autosomal dominant",
-   "ConceptID": "C2751805"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy 6",
-   "ConceptID": "C2749106"
- },
- {
-   "DiseaseName": "EMERY-DREIFUSS MUSCULAR DYSTROPHY 6, X-LINKED",
-   "ConceptID": "CN356422"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy 7, autosomal dominant",
-   "ConceptID": "C3553060"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy, atypical, autosomal recessive",
-   "ConceptID": "C2750034"
- },
- {
    "DiseaseName": "Emery-Dreifuss muscular dystrophy",
    "ConceptID": "C0410189"
- },
- {
-   "DiseaseName": "Emery-Dreifuss muscular dystrophy, X-linked",
-   "ConceptID": "CN069573"
  },
  {
    "DiseaseName": "EMG abnormality",
@@ -36775,10 +36387,6 @@
  {
    "DiseaseName": "Encephalopathy, familial, with neuroserpin inclusion bodies",
    "ConceptID": "C1858680"
- },
- {
-   "DiseaseName": "Encephalopathy, neonatal severeMental retardation, X-linked, syndromic 13Rett syndrome",
-   "ConceptID": "CN221284"
  },
  {
    "DiseaseName": "ENCEPHALOPATHY, NEONATAL SEVERE, WITH LACTIC ACIDOSIS AND BRAIN ABNORMALITIES",
@@ -37445,10 +37053,6 @@
    "ConceptID": "C0014511"
  },
  {
-   "DiseaseName": "Epidermolysa bullosa simplex and limb girdle muscular dystrophy",
-   "ConceptID": "C2931072"
- },
- {
    "DiseaseName": "Epidermolysis bullosa",
    "ConceptID": "C0014527"
  },
@@ -37479,10 +37083,6 @@
  {
    "DiseaseName": "Epidermolysis bullosa, junctional, localisata variant",
    "ConceptID": "C2608084"
- },
- {
-   "DiseaseName": "Epidermolysis bullosa, late-onset localized junctional, with mental retardation",
-   "ConceptID": "C1856969"
  },
  {
    "DiseaseName": "Epidermolysis bullosa, lethal acantholytic",
@@ -37705,10 +37305,6 @@
    "ConceptID": "CN240377"
  },
  {
-   "DiseaseName": "Epilepsy, focal, with speech disorder and with or without mental retardation",
-   "ConceptID": "C1832814"
- },
- {
    "DiseaseName": "Epilepsy, hot water, 2",
    "ConceptID": "C3150536"
  },
@@ -37823,10 +37419,6 @@
  {
    "DiseaseName": "Epilepsy, partial, with pericentral spikes",
    "ConceptID": "C1846609"
- },
- {
-   "DiseaseName": "Epilepsy, photogenic, with spastic diplegia and mental retardation",
-   "ConceptID": "C1856931"
  },
  {
    "DiseaseName": "Epilepsy, progressive myoclonic, 10",
@@ -39257,10 +38849,6 @@
    "ConceptID": "C4280734"
  },
  {
-   "DiseaseName": "Facial abnormalities, kyphoscoliosis, and mental retardation",
-   "ConceptID": "C1856893"
- },
- {
    "DiseaseName": "facial abnormality",
    "ConceptID": "CN224012"
  },
@@ -39431,10 +39019,6 @@
  {
    "DiseaseName": "Faciomandibular myoclonus, nocturnal",
    "ConceptID": "C1847399"
- },
- {
-   "DiseaseName": "Facioscapulohumeral muscular dystrophy 2",
-   "ConceptID": "C1834671"
  },
  {
    "DiseaseName": "Facioscapulohumeral muscular dystrophy",
@@ -39983,10 +39567,6 @@
  {
    "DiseaseName": "Familial juvenile gout",
    "ConceptID": "C0268113"
- },
- {
-   "DiseaseName": "Familial juvenile hyperuricemic nephropathy",
-   "ConceptID": "CN239392"
  },
  {
    "DiseaseName": "Familial mediterranean fever, autosomal dominant",
@@ -40781,10 +40361,6 @@
    "ConceptID": "C4539942"
  },
  {
-   "DiseaseName": "Fibromatosis, gingival, with hypertrichosis and mental retardation",
-   "ConceptID": "C1854306"
- },
- {
    "DiseaseName": "Fibrosarcoma",
    "ConceptID": "C0016057"
  },
@@ -41215,10 +40791,6 @@
  {
    "DiseaseName": "Flat umbilicus familial",
    "ConceptID": "C1836682"
- },
- {
-   "DiseaseName": "Fleck corneal dystrophy",
-   "ConceptID": "C1562113"
  },
  {
    "DiseaseName": "Fleck retina, familial benign",
@@ -42417,10 +41989,6 @@
    "ConceptID": "CN280281"
  },
  {
-   "DiseaseName": "Fuchs endothelial corneal dystrophy",
-   "ConceptID": "CN207231"
- },
- {
    "DiseaseName": "Fucosidase regulator",
    "ConceptID": "C1850954"
  },
@@ -42435,10 +42003,6 @@
  {
    "DiseaseName": "Fuhrmann syndrome",
    "ConceptID": "C1856728"
- },
- {
-   "DiseaseName": "Fukuyama congenital muscular dystrophy",
-   "ConceptID": "C0410174"
  },
  {
    "DiseaseName": "Full cheeks",
@@ -44565,10 +44129,6 @@
    "ConceptID": "C0344391"
  },
  {
-   "DiseaseName": "Granular corneal dystrophy",
-   "ConceptID": "C0018179"
- },
- {
    "DiseaseName": "Granular macular appearance",
    "ConceptID": "C4024799"
  },
@@ -44713,10 +44273,6 @@
    "ConceptID": "C1836573"
  },
  {
-   "DiseaseName": "Groenouw corneal dystrophy type I",
-   "ConceptID": "C1641846"
- },
- {
    "DiseaseName": "Groin pain",
    "ConceptID": "C0239783"
  },
@@ -44747,10 +44303,6 @@
  {
    "DiseaseName": "Growth abnormality",
    "ConceptID": "C0262361"
- },
- {
-   "DiseaseName": "Growth and developmental retardation, ocular ptosis, cardiac defect, and anal atresia",
-   "ConceptID": "C1858182"
  },
  {
    "DiseaseName": "Growth arrest lines",
@@ -44889,10 +44441,6 @@
    "ConceptID": "C1855627"
  },
  {
-   "DiseaseName": "Hair defect with photosensitivity and mental retardation",
-   "ConceptID": "C1856241"
- },
- {
    "DiseaseName": "Hair follicle neoplasm",
    "ConceptID": "C0859920"
  },
@@ -44963,10 +44511,6 @@
  {
    "DiseaseName": "Hallermann-Streiff syndrome",
    "ConceptID": "C0018522"
- },
- {
-   "DiseaseName": "Hall Riggs mental retardation syndrome",
-   "ConceptID": "C1856198"
  },
  {
    "DiseaseName": "Hallucinations",
@@ -48149,96 +47693,24 @@
    "ConceptID": "C1855923"
  },
  {
-   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome 1",
-   "ConceptID": "CN030519"
- },
- {
-   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome 2",
-   "ConceptID": "C3553637"
- },
- {
-   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome 3",
-   "ConceptID": "C3280153"
- },
- {
-   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome 4",
-   "ConceptID": "C3810354"
- },
- {
-   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome 5",
-   "ConceptID": "C4014958"
- },
- {
-   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome 6",
-   "ConceptID": "C4225201"
+   "DiseaseName": "Hyperphosphatasia with mental retardation syndrome",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hyperphosphatemia",
    "ConceptID": "C0085681"
  },
  {
-   "DiseaseName": "Hyperphosphatemia, polyuria, and seizures",
-   "ConceptID": "C1855922"
- },
- {
    "DiseaseName": "Hyperphosphaturia",
    "ConceptID": "C0268079"
  },
  {
-   "DiseaseName": "Hyperpigmentation, familial progressive, 1",
-   "ConceptID": "C2681535"
+   "DiseaseName": "Hyperpigmentation",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Hyperpigmentation in sun-exposed areas",
-   "ConceptID": "C3805877"
- },
- {
-   "DiseaseName": "Hyperpigmentation of eyelid",
-   "ConceptID": "C0155211"
- },
- {
-   "DiseaseName": "Hyperpigmentation of eyelids",
-   "ConceptID": "C0854438"
- },
- {
-   "DiseaseName": "Hyperpigmentation of fuldauer and kuijpers",
-   "ConceptID": "C1840393"
- },
- {
-   "DiseaseName": "Hyperpigmentation of the fundus",
-   "ConceptID": "C4021146"
- },
- {
-   "DiseaseName": "Hyperpigmentation of the skin",
-   "ConceptID": "C0162834"
- },
- {
-   "DiseaseName": "Hyperpigmented genitalia",
-   "ConceptID": "C4022554"
- },
- {
-   "DiseaseName": "Hyperpigmented/hypopigmented macules",
-   "ConceptID": "C4024877"
- },
- {
-   "DiseaseName": "Hyperpigmented nevi and streak",
-   "ConceptID": "C3805692"
- },
- {
-   "DiseaseName": "Hyperpigmented nevi",
-   "ConceptID": "C0746889"
- },
- {
-   "DiseaseName": "Hyperpigmented nodule",
-   "ConceptID": "C3647360"
- },
- {
-   "DiseaseName": "Hyperpigmented papule",
-   "ConceptID": "C3647115"
- },
- {
-   "DiseaseName": "Hyperpigmented streaks",
-   "ConceptID": "C1866245"
+   "DiseaseName": "Hyperpigmented",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hyperpipecolatemia",
@@ -48249,28 +47721,8 @@
    "ConceptID": "C0020506"
  },
  {
-   "DiseaseName": "Hyperplasia of midface",
-   "ConceptID": "C3279459"
- },
- {
-   "DiseaseName": "Hyperplasia of the endometrium",
-   "ConceptID": "C0014173"
- },
- {
-   "DiseaseName": "Hyperplasia of the femoral trochanters",
-   "ConceptID": "C3277120"
- },
- {
-   "DiseaseName": "Hyperplasia of the Leydig cells",
-   "ConceptID": "C0023600"
- },
- {
-   "DiseaseName": "Hyperplasia of the maxilla",
-   "ConceptID": "C0266081"
- },
- {
-   "DiseaseName": "Hyperplasia of the premaxilla",
-   "ConceptID": "C4073210"
+   "DiseaseName": "Hyperplasia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hyperplastic callus formation",
@@ -48315,14 +47767,6 @@
  {
    "DiseaseName": "Hyperreflexia",
    "ConceptID": "C0151889"
- },
- {
-   "DiseaseName": "Hyperreflexia in upper limbs",
-   "ConceptID": "C1843175"
- },
- {
-   "DiseaseName": "Hyperreflexia proximally",
-   "ConceptID": "C1836012"
  },
  {
    "DiseaseName": "Hyperreninemic hypoaldosteronism, familial, 2",
@@ -48377,72 +47821,8 @@
    "ConceptID": "C3280065"
  },
  {
-   "DiseaseName": "Hypertension associated with pheochromocytoma",
-   "ConceptID": "C4025693"
- },
- {
    "DiseaseName": "Hypertension",
    "ConceptID": "C0020538"
- },
- {
-   "DiseaseName": "Hypertension",
-   "ConceptID": "C0497247"
- },
- {
-   "DiseaseName": "Hypertension, diastolic, resistance to",
-   "ConceptID": "C1837739"
- },
- {
-   "DiseaseName": "Hypertension, early-onset, autosomal dominant, with exacerbation in pregnancy",
-   "ConceptID": "C4016708"
- },
- {
-   "DiseaseName": "Hypertension, early-onset, autosomal dominant, with severe exacerbation in pregnancy",
-   "ConceptID": "C1854631"
- },
- {
-   "DiseaseName": "Hypertension, essential 1",
-   "ConceptID": "C1858967"
- },
- {
-   "DiseaseName": "Hypertension, essential 2",
-   "ConceptID": "C1858497"
- },
- {
-   "DiseaseName": "Hypertension, essential 3",
-   "ConceptID": "C1846430"
- },
- {
-   "DiseaseName": "Hypertension, essential 4",
-   "ConceptID": "C1837479"
- },
- {
-   "DiseaseName": "Hypertension, essential 5",
-   "ConceptID": "C1853227"
- },
- {
-   "DiseaseName": "Hypertension, essential 6",
-   "ConceptID": "C1853226"
- },
- {
-   "DiseaseName": "Hypertension, essential 7",
-   "ConceptID": "C1970439"
- },
- {
-   "DiseaseName": "Hypertension, essential 8",
-   "ConceptID": "C1970244"
- },
- {
-   "DiseaseName": "Hypertension, hypercholesterolemia, and hypomagnesemia, mitochondrial",
-   "ConceptID": "C1839021"
- },
- {
-   "DiseaseName": "Hypertension, pregnancy-induced, susceptibility to",
-   "ConceptID": "C1834154"
- },
- {
-   "DiseaseName": "Hypertension resistant to conventional therapy",
-   "ConceptID": "C1834155"
  },
  {
    "DiseaseName": "Hypertensive crisis",
@@ -48473,32 +47853,12 @@
    "ConceptID": "C0020550"
  },
  {
-   "DiseaseName": "Hyperthyroidism, familial gestational",
-   "ConceptID": "C1863959"
- },
- {
-   "DiseaseName": "Hyperthyroidism, nonautoimmune",
-   "ConceptID": "C1836706"
- },
- {
-   "DiseaseName": "Hyperthyroxinemia, dysalbuminemic",
-   "ConceptID": "C1863119"
- },
- {
-   "DiseaseName": "HYPERTHYROXINEMIA, EUTHYROID, CAUSED BY GENERALIZED 5-PRIME-DEIODINASE DEFICIENCY",
-   "ConceptID": "CN244571"
- },
- {
-   "DiseaseName": "Hyperthyroxinemia, familial dysalbuminemic",
-   "ConceptID": "C0342185"
+   "DiseaseName": "Hyperthyroxinemia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hypertonia",
    "ConceptID": "C0026826"
- },
- {
-   "DiseaseName": "hypertonia of extremities",
-   "ConceptID": "C2749427"
  },
  {
    "DiseaseName": "Hypertonic dehydration",
@@ -48609,16 +47969,8 @@
    "ConceptID": "C3151209"
  },
  {
-   "DiseaseName": "Hyperuricemic nephropathy, familial juvenile, 2",
-   "ConceptID": "C2751310"
- },
- {
-   "DiseaseName": "Hyperuricemic nephropathy, familial juvenile, 3",
-   "ConceptID": "C3280216"
- },
- {
-   "DiseaseName": "Hyperuricemic nephropathy, familial juvenile, 4",
-   "ConceptID": "C4310741"
+   "DiseaseName": "Hyperuricemic nephropathy",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hyperuricosuria",
@@ -48711,22 +48063,6 @@
  {
    "DiseaseName": "Hypobetalipoproteinemia, normotriglyceridemic",
    "ConceptID": "C1862599"
- },
- {
-   "DiseaseName": "Hypocalcemia, autosomal dominant 1",
-   "ConceptID": "C0342345"
- },
- {
-   "DiseaseName": "Hypocalcemia, autosomal dominant 1, with bartter syndrome",
-   "ConceptID": "C3715128"
- },
- {
-   "DiseaseName": "Hypocalcemia, autosomal dominant 2",
-   "ConceptID": "C3809243"
- },
- {
-   "DiseaseName": "Hypocalcemia, autosomal dominant, with bartter syndrome",
-   "ConceptID": "C1832612"
  },
  {
    "DiseaseName": "Hypocalcemia",
@@ -48893,16 +48229,8 @@
    "ConceptID": "C0020619"
  },
  {
-   "DiseaseName": "Hypogonadism, diabetes mellitus, alopecia, mental retardation and electrocardiographic abnormalities",
-   "ConceptID": "C0342286"
- },
- {
    "DiseaseName": "Hypogonadism hypogonadotropic due to mutations in GR hormone",
    "ConceptID": "CN072969"
- },
- {
-   "DiseaseName": "Hypogonadism, male, with mental retardation and skeletal anomalies",
-   "ConceptID": "C1843994"
  },
  {
    "DiseaseName": "Hypogonadism with anosmia",
@@ -49035,10 +48363,6 @@
  {
    "DiseaseName": "Hypomagnesemia",
    "ConceptID": "C0151723"
- },
- {
-   "DiseaseName": "Hypomagnesemia, seizures, and mental retardation",
-   "ConceptID": "C4225333"
  },
  {
    "DiseaseName": "Hypomagnesiuria",
@@ -49877,10 +49201,6 @@
    "ConceptID": "C1691215"
  },
  {
-   "DiseaseName": "Hypospadias mental retardation Goldblatt type",
-   "ConceptID": "C0795989"
- },
- {
    "DiseaseName": "Hypospermatogenesis, nonobstructive, Y-linked",
    "ConceptID": "C4016596"
  },
@@ -50097,116 +49417,12 @@
    "ConceptID": "C2673377"
  },
  {
-   "DiseaseName": "Ichthyosis alopecia eclabion ectropion mental retardation",
-   "ConceptID": "C1855788"
- },
- {
-   "DiseaseName": "Ichthyosis and male hypogonadism",
-   "ConceptID": "C1839989"
- },
- {
-   "DiseaseName": "Ichthyosis bullosa of Siemens",
-   "ConceptID": "C0432306"
- },
- {
    "DiseaseName": "Ichthyosis",
    "ConceptID": "C0020757"
  },
  {
-   "DiseaseName": "Ichthyosis, cerebellar degeneration and hepatosplenomegaly",
-   "ConceptID": "C1275088"
- },
- {
-   "DiseaseName": "Ichthyosis, congenital, autosomal recessive 11",
-   "ConceptID": "C1865595"
- },
- {
-   "DiseaseName": "Ichthyosis, congenital, autosomal recessive 12",
-   "ConceptID": "C4310621"
- },
- {
-   "DiseaseName": "ICHTHYOSIS, CONGENITAL, AUTOSOMAL RECESSIVE 13",
-   "ConceptID": "C4539772"
- },
- {
-   "DiseaseName": "ICHTHYOSIS, CONGENITAL, AUTOSOMAL RECESSIVE 14",
-   "ConceptID": "C4539754"
- },
- {
-   "DiseaseName": "Ichthyosis congenita with biliary atresia",
-   "ConceptID": "C0400974"
- },
- {
-   "DiseaseName": "Ichthyosis, cyclic, with epidermolytic hyperkeratosis",
-   "ConceptID": "C1843463"
- },
- {
-   "DiseaseName": "Ichthyosis exfoliativa",
-   "ConceptID": "C1838440"
- },
- {
-   "DiseaseName": "Ichthyosis follicularis",
-   "ConceptID": "C4531223"
- },
- {
-   "DiseaseName": "Ichthyosis histrix, curth-macklin type",
-   "ConceptID": "C4016141"
- },
- {
-   "DiseaseName": "Ichthyosis hystrix, Curth Macklin type",
-   "ConceptID": "C1840296"
- },
- {
-   "DiseaseName": "Ichthyosis lamellar, recessive",
-   "ConceptID": "CN073006"
- },
- {
-   "DiseaseName": "Ichthyosis, leukocyte vacuoles, alopecia, and sclerosing cholangitis",
-   "ConceptID": "C1843355"
- },
- {
-   "DiseaseName": "Ichthyosis, mental retardation, dwarfism and renal impairment",
-   "ConceptID": "C1855787"
- },
- {
-   "DiseaseName": "Ichthyosis-mental retardation syndrome with large keratohyalin granules in the skin",
-   "ConceptID": "C1832858"
- },
- {
-   "DiseaseName": "Ichthyosis prematurity syndrome",
-   "ConceptID": "C1837610"
- },
- {
-   "DiseaseName": "Ichthyosis, spastic quadriplegia, and mental retardation",
-   "ConceptID": "C3280856"
- },
- {
-   "DiseaseName": "Ichthyosis, Spastic Qudraplegia and Mental Retardation",
-   "ConceptID": "CN229780"
- },
- {
-   "DiseaseName": "Ichthyosis, split hairs, and amino aciduria",
-   "ConceptID": "C1855786"
- },
- {
-   "DiseaseName": "Ichthyosis tapered fingers midline groove up",
-   "ConceptID": "C1850268"
- },
- {
-   "DiseaseName": "Ichthyosis vulgaris",
-   "ConceptID": "C0079584"
- },
- {
-   "DiseaseName": "Ichthyosis, X-linked, without steroid sulfatase deficiency",
-   "ConceptID": "C1848387"
- },
- {
    "DiseaseName": "ID and poor night vision",
    "ConceptID": "CN238713"
- },
- {
-   "DiseaseName": "ID",
-   "ConceptID": "CN238748"
  },
  {
    "DiseaseName": "Idiopathic and/or familial pulmonary arterial hypertension",
@@ -55549,10 +54765,6 @@
    "ConceptID": "CN043623"
  },
  {
-   "DiseaseName": "Late-onset muscular dystrophy",
-   "ConceptID": "C4024942"
- },
- {
    "DiseaseName": "Late-onset proximal muscle weakness",
    "ConceptID": "C4025578"
  },
@@ -55623,18 +54835,6 @@
  {
    "DiseaseName": "Lattice corneal dystrophy",
    "ConceptID": "C0155127"
- },
- {
-   "DiseaseName": "Lattice corneal dystrophy type 3A",
-   "ConceptID": "C1837974"
- },
- {
-   "DiseaseName": "Lattice corneal dystrophy Type I",
-   "ConceptID": "C1690006"
- },
- {
-   "DiseaseName": "Lattice corneal dystrophy Type III",
-   "ConceptID": "C0339273"
  },
  {
    "DiseaseName": "Lattice degeneration of retina leading to retinal detachment",
@@ -56705,112 +55905,8 @@
    "ConceptID": "CN043626"
  },
  {
-   "DiseaseName": "Limb-girdle muscular dystrophy, autosomal recessive",
-   "ConceptID": "C2931907"
- },
- {
    "DiseaseName": "Limb-girdle muscular dystrophy",
    "ConceptID": "C0686353"
- },
- {
-   "DiseaseName": "Limb-Girdle Muscular Dystrophy, Dominant",
-   "ConceptID": "CN239426"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy-dystroglycanopathy, type C1",
-   "ConceptID": "C1836373"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy-dystroglycanopathy, type C2",
-   "ConceptID": "C3150418"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy-dystroglycanopathy, type C3",
-   "ConceptID": "C3150417"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy-dystroglycanopathy, type C4",
-   "ConceptID": "C1969040"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy-dystroglycanopathy, type C5",
-   "ConceptID": "C1846672"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy-dystroglycanopathy, type C9",
-   "ConceptID": "C3151184"
- },
- {
-   "DiseaseName": "Limb-Girdle Muscular Dystrophy, Recessive",
-   "ConceptID": "CN239352"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1A",
-   "ConceptID": "C1834659"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1B",
-   "ConceptID": "C1834653"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1C",
-   "ConceptID": "C1832567"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1E",
-   "ConceptID": "C3148763"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1F",
-   "ConceptID": "C1842062"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1G",
-   "ConceptID": "C1836765"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 1H",
-   "ConceptID": "C3150786"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2A",
-   "ConceptID": "C1869123"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2B",
-   "ConceptID": "C1850889"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2D",
-   "ConceptID": "C2936332"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2E",
-   "ConceptID": "C1858593"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2F",
-   "ConceptID": "C1832525"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2G",
-   "ConceptID": "C1866008"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2J",
-   "ConceptID": "C1837342"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2L",
-   "ConceptID": "C1969785"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2Q",
-   "ConceptID": "C3150989"
- },
- {
-   "DiseaseName": "Limb-girdle muscular dystrophy, type 2S",
-   "ConceptID": "C3809236"
  },
  {
    "DiseaseName": "Limb-girdle myasthenia, autoimmune",
@@ -58597,12 +57693,8 @@
    "ConceptID": "C1852767"
  },
  {
-   "DiseaseName": "Macular corneal dystrophy Type I",
-   "ConceptID": "C1636149"
- },
- {
-   "DiseaseName": "Macular corneal dystrophy, type II",
-   "ConceptID": "C1691013"
+   "DiseaseName": "Macular corneal dystrophy",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Macular cotton wool spot",
@@ -59201,10 +58293,6 @@
    "ConceptID": "C0334634"
  },
  {
-   "DiseaseName": "Map-dot-fingerprint corneal dystrophy",
-   "ConceptID": "C0271285"
- },
- {
    "DiseaseName": "Maple syrup urine disease",
    "ConceptID": "C0024776"
  },
@@ -59251,10 +58339,6 @@
  {
    "DiseaseName": "Marfan syndrome",
    "ConceptID": "C0024796"
- },
- {
-   "DiseaseName": "Marginal corneal dystrophy",
-   "ConceptID": "C4024779"
  },
  {
    "DiseaseName": "Marginal umbilical cord insertion",
@@ -59657,10 +58741,6 @@
    "ConceptID": "C0334596"
  },
  {
-   "DiseaseName": "Meesman's corneal dystrophy",
-   "ConceptID": "C0339277"
- },
- {
    "DiseaseName": "Meester-loeys syndrome",
    "ConceptID": "C4310811"
  },
@@ -59993,428 +59073,12 @@
    "ConceptID": "C3150924"
  },
  {
-   "DiseaseName": "Mental retardation, autosomal dominant 10",
-   "ConceptID": "C3280284"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 11",
-   "ConceptID": "C3280285"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 12",
-   "ConceptID": "C3281201"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 13",
-   "ConceptID": "C3281202"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 14",
-   "ConceptID": "C3553247"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 15",
-   "ConceptID": "C3553248"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 16",
-   "ConceptID": "C3553249"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 18",
-   "ConceptID": "C3554448"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 19",
-   "ConceptID": "C3554449"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 1",
-   "ConceptID": "C1969562"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 21",
-   "ConceptID": "C3809686"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 22",
-   "ConceptID": "C2676727"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 23",
-   "ConceptID": "C3810406"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 24",
-   "ConceptID": "C4014414"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 26",
-   "ConceptID": "C4014435"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 27",
-   "ConceptID": "C4014528"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 29",
-   "ConceptID": "C4015141"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 2",
-   "ConceptID": "C3279842"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 30",
-   "ConceptID": "C4015167"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 31",
-   "ConceptID": "C4015357"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 32",
-   "ConceptID": "C4225396"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 33",
-   "ConceptID": "C4225375"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 34",
-   "ConceptID": "C4225156"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 35",
-   "ConceptID": "C4225354"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 36",
-   "ConceptID": "C4225352"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 38",
-   "ConceptID": "C4225343"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 39",
-   "ConceptID": "C4225296"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 3",
-   "ConceptID": "C2675488"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 40",
-   "ConceptID": "C4225275"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 42",
-   "ConceptID": "C4310774"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 43",
-   "ConceptID": "C4310771"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 44",
-   "ConceptID": "C4310740"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 45",
-   "ConceptID": "C4539848"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 46",
-   "ConceptID": "C4539851"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 47",
-   "ConceptID": "C4539951"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 48",
-   "ConceptID": "C4540321"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 49",
-   "ConceptID": "C4540324"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 4",
-   "ConceptID": "C2675487"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 50",
-   "ConceptID": "C4540470"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 51",
-   "ConceptID": "C4540474"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 52",
-   "ConceptID": "C4540478"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 53",
-   "ConceptID": "C4540481"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 54",
-   "ConceptID": "C4540484"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 55, WITH SEIZURES",
-   "ConceptID": "CN757796"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 56",
-   "ConceptID": "CN787270"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL DOMINANT 57",
-   "ConceptID": "CN252334"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 5",
-   "ConceptID": "C2675473"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 6",
-   "ConceptID": "C3151411"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 7",
-   "ConceptID": "C3279839"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal dominant 9",
-   "ConceptID": "C3280283"
- },
- {
    "DiseaseName": "Mental retardation, autosomal dominant",
-   "ConceptID": "CN240835"
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Mental retardation, autosomal recessive 10",
-   "ConceptID": "C1970194"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 11",
-   "ConceptID": "C1970193"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 12",
-   "ConceptID": "C1970200"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 13",
-   "ConceptID": "C2750791"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 14",
-   "ConceptID": "C3151462"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 15",
-   "ConceptID": "C3280127"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 16",
-   "ConceptID": "C3280154"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 18",
-   "ConceptID": "C3280265"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 19",
-   "ConceptID": "C3280541"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 1",
-   "ConceptID": "C1855304"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 23",
-   "ConceptID": "C3280542"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 24",
-   "ConceptID": "C3280543"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 25",
-   "ConceptID": "C3280544"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 27",
-   "ConceptID": "C3280538"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 28",
-   "ConceptID": "C3280545"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 29",
-   "ConceptID": "C3280525"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 2",
-   "ConceptID": "C1843942"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 30",
-   "ConceptID": "C3280540"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 31",
-   "ConceptID": "C3280523"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 33",
-   "ConceptID": "C3280539"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 34",
-   "ConceptID": "C3281044"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 35",
-   "ConceptID": "C3554609"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 36",
-   "ConceptID": "C3809039"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 37",
-   "ConceptID": "C3809672"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 38",
-   "ConceptID": "C3809753"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 39",
-   "ConceptID": "C3809853"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 3",
-   "ConceptID": "C1838023"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 40",
-   "ConceptID": "C3810080"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 41",
-   "ConceptID": "C3810225"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 42",
-   "ConceptID": "C4014343"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 43",
-   "ConceptID": "C4014386"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 44",
-   "ConceptID": "C4014745"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 45",
-   "ConceptID": "C4014864"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 46",
-   "ConceptID": "C4015283"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 47",
-   "ConceptID": "C4015444"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 48",
-   "ConceptID": "C4225395"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 49",
-   "ConceptID": "C4225388"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 4",
-   "ConceptID": "C1970179"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 50",
-   "ConceptID": "C4225319"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 51",
-   "ConceptID": "C4225220"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 52",
-   "ConceptID": "C4225168"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 53",
-   "ConceptID": "C4310794"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 54",
-   "ConceptID": "C4310755"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 55",
-   "ConceptID": "C4310745"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 56",
-   "ConceptID": "C4310703"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 57",
-   "ConceptID": "C4310673"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 58",
-   "ConceptID": "C4310641"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 59",
-   "ConceptID": "C4310619"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 5",
-   "ConceptID": "C1970199"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 60",
-   "ConceptID": "C4479476"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, AUTOSOMAL RECESSIVE 61",
-   "ConceptID": "C4540424"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 6",
-   "ConceptID": "C1970198"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 7",
-   "ConceptID": "C1970197"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 8",
-   "ConceptID": "C1970196"
- },
- {
-   "DiseaseName": "Mental retardation, autosomal recessive 9",
-   "ConceptID": "C1970195"
+   "DiseaseName": "Mental retardation, autosomal recessive",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Mental retardation, CASK-related, X-linked",
@@ -60517,208 +59181,8 @@
    "ConceptID": "C1848439"
  },
  {
-   "DiseaseName": "Mental retardation, X-linked 100",
-   "ConceptID": "C3890167"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 101",
-   "ConceptID": "C3890168"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 102",
-   "ConceptID": "C4085582"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 103",
-   "ConceptID": "C4310818"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 104",
-   "ConceptID": "C4310817"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 105",
-   "ConceptID": "C4310816"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, X-LINKED 106",
-   "ConceptID": "C4478379"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, X-LINKED 107",
-   "ConceptID": "CN244560"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 12",
-   "ConceptID": "C0796218"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 14",
-   "ConceptID": "C0796220"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 18",
-   "ConceptID": "C0796224"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 19",
-   "ConceptID": "C0796225"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 1",
-   "ConceptID": "C2931498"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 20",
-   "ConceptID": "C0796226"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 2",
-   "ConceptID": "C0796207"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 45",
-   "ConceptID": "C1845333"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 50",
-   "ConceptID": "C1848087"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 52",
-   "ConceptID": "C1845298"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 53",
-   "ConceptID": "C1845889"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 61",
-   "ConceptID": "C4283894"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 72",
-   "ConceptID": "C1846038"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 73",
-   "ConceptID": "C1845860"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 77",
-   "ConceptID": "C1845499"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 81",
-   "ConceptID": "C1845531"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 82",
-   "ConceptID": "C1845286"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 84",
-   "ConceptID": "C1845297"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 93",
-   "ConceptID": "C1970841"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 96",
-   "ConceptID": "C3275408"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 98",
-   "ConceptID": "C3806730"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 99",
-   "ConceptID": "C3806746"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked 99, syndromic, female-restricted",
-   "ConceptID": "C4225416"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 10",
-   "ConceptID": "C1846168"
- },
- {
-   "DiseaseName": "Mental retardation X-linked syndromic 11",
-   "ConceptID": "C1846145"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 12",
-   "ConceptID": "C1839792"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 13",
-   "ConceptID": "C1968550"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 17",
-   "ConceptID": "C3275460"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 32",
-   "ConceptID": "C3550913"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 33",
-   "ConceptID": "C4225418"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic 34",
-   "ConceptID": "C4225417"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, X-LINKED, SYNDROMIC, 35",
-   "ConceptID": "C4478383"
- },
- {
-   "DiseaseName": "Mental retardation X-linked syndromic 7",
-   "ConceptID": "C1846170"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, Bain type",
-   "ConceptID": "C4310814"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, chudley-schwartz type",
-   "ConceptID": "C3275471"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, Hedera type",
-   "ConceptID": "C1845543"
- },
- {
-   "DiseaseName": "MENTAL RETARDATION, X-LINKED, SYNDROMIC, HOUGE TYPE",
-   "ConceptID": "C4538788"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, martin-probst type",
-   "ConceptID": "C1845285"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, Raymond type",
-   "ConceptID": "C3275406"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, turner type",
-   "ConceptID": "C2678046"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, syndromic, wu type",
-   "ConceptID": "C2678051"
- },
- {
-   "DiseaseName": "Mental retardation X-linked with cerebellar hypoplasia and distinctive facial appearance",
-   "ConceptID": "C1845366"
- },
- {
-   "DiseaseName": "Mental retardation, X-linked, with isolated growth hormone deficiency",
-   "ConceptID": "C1848068"
+   "DiseaseName": "Mental retardation, X-linked",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Meperidine response",
@@ -60763,10 +59227,6 @@
  {
    "DiseaseName": "Meromelia",
    "ConceptID": "C0265549"
- },
- {
-   "DiseaseName": "Merosin deficient congenital muscular dystrophy",
-   "ConceptID": "C1263858"
  },
  {
    "DiseaseName": "MERRF/MELAS overlap syndrome",
@@ -62565,16 +61025,8 @@
    "ConceptID": "C4021128"
  },
  {
-   "DiseaseName": "Miyoshi muscular dystrophy 1",
-   "ConceptID": "C1850808"
- },
- {
-   "DiseaseName": "Miyoshi muscular dystrophy 2",
-   "ConceptID": "C2750077"
- },
- {
-   "DiseaseName": "Miyoshi muscular dystrophy 3",
-   "ConceptID": "C2750076"
+   "DiseaseName": "Miyoshi muscular dystrophy",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Miyoshi myopathy",
@@ -62985,26 +61437,6 @@
    "ConceptID": "C4476755"
  },
  {
-   "DiseaseName": "Mosaic central corneal dystrophy",
-   "ConceptID": "C4021996"
- },
- {
-   "DiseaseName": "Mosaic corneal dystrophy",
-   "ConceptID": "C4024786"
- },
- {
-   "DiseaseName": "Mosaic variegated aneuploidy syndrome 1",
-   "ConceptID": "CN031748"
- },
- {
-   "DiseaseName": "Mosaic variegated aneuploidy syndrome 2",
-   "ConceptID": "C3279843"
- },
- {
-   "DiseaseName": "Mosaic variegated aneuploidy syndrome 3",
-   "ConceptID": "C4539839"
- },
- {
    "DiseaseName": "Mosaic variegated aneuploidy syndrome",
    "ConceptID": "C1850343"
  },
@@ -63095,26 +61527,6 @@
  {
    "DiseaseName": "Mowat-Wilson syndrome",
    "ConceptID": "C1856113"
- },
- {
-   "DiseaseName": "Moyamoya disease 1",
-   "ConceptID": "C2931384"
- },
- {
-   "DiseaseName": "Moyamoya disease 2",
-   "ConceptID": "C1846689"
- },
- {
-   "DiseaseName": "Moyamoya disease 3",
-   "ConceptID": "C1837418"
- },
- {
-   "DiseaseName": "Moyamoya disease 5",
-   "ConceptID": "C3279690"
- },
- {
-   "DiseaseName": "Moyamoya disease 6 with achalasia",
-   "ConceptID": "C3810403"
  },
  {
    "DiseaseName": "Moyamoya disease",
@@ -63221,28 +61633,8 @@
    "ConceptID": "C1334811"
  },
  {
-   "DiseaseName": "Mucolipidosis III alpha/beta, atypical",
-   "ConceptID": "C2673375"
- },
- {
-   "DiseaseName": "Mucolipidosis III Gamma",
-   "ConceptID": "C1854896"
- },
- {
-   "DiseaseName": "Mucolipidosis, Type II",
-   "ConceptID": "CN239398"
- },
- {
-   "DiseaseName": "Mucolipidosis, Type III Alpha/Beta",
-   "ConceptID": "CN239170"
- },
- {
-   "DiseaseName": "Mucolipidosis, Type III Gamma",
-   "ConceptID": "CN239396"
- },
- {
-   "DiseaseName": "Mucolipidosis type IV",
-   "ConceptID": "C0238286"
+   "DiseaseName": "Mucolipidosis",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Mucopolysaccharidoses, unclassified types",
@@ -63251,82 +61643,6 @@
  {
    "DiseaseName": "Mucopolysaccharidosis",
    "ConceptID": "C0026703"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-I-H/S",
-   "ConceptID": "C0086431"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-II",
-   "ConceptID": "C0026705"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-III-A",
-   "ConceptID": "C0086647"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-III-B",
-   "ConceptID": "C0086648"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-III-C",
-   "ConceptID": "C0086649"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-III-D",
-   "ConceptID": "C0086650"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-I-S",
-   "ConceptID": "C0026708"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-IV-A",
-   "ConceptID": "C0086651"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, MPS-IV-B",
-   "ConceptID": "C0086652"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis-plus syndrome",
-   "ConceptID": "C4310627"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis type I",
-   "ConceptID": "C0023786"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis Type I/II",
-   "ConceptID": "CN165613"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, type II, mild form",
-   "ConceptID": "C0342842"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, type II, severe form",
-   "ConceptID": "C0342841"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis type VI",
-   "ConceptID": "C0026709"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis type VII",
-   "ConceptID": "C0085132"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, type vi, intermediate",
-   "ConceptID": "C4017252"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, type vi, mild",
-   "ConceptID": "C4017254"
- },
- {
-   "DiseaseName": "Mucopolysaccharidosis, type vi, severe",
-   "ConceptID": "C4017253"
  },
  {
    "DiseaseName": "Mucopolysacchariduria",
@@ -63553,40 +61869,8 @@
    "ConceptID": "CN234398"
  },
  {
-   "DiseaseName": "Multiple epiphyseal dysplasia 1",
-   "ConceptID": "C1838280"
- },
- {
-   "DiseaseName": "Multiple epiphyseal dysplasia 2",
-   "ConceptID": "C1838429"
- },
- {
-   "DiseaseName": "Multiple epiphyseal dysplasia 3",
-   "ConceptID": "C1832998"
- },
- {
-   "DiseaseName": "Multiple epiphyseal dysplasia 4",
-   "ConceptID": "C1847593"
- },
- {
-   "DiseaseName": "Multiple epiphyseal dysplasia 5",
-   "ConceptID": "C1846843"
- },
- {
-   "DiseaseName": "Multiple epiphyseal dysplasia 6",
-   "ConceptID": "C2675767"
- },
- {
    "DiseaseName": "Multiple epiphyseal dysplasia",
    "ConceptID": "C0026760"
- },
- {
-   "DiseaseName": "Multiple Epiphyseal Dysplasia, Dominant",
-   "ConceptID": "CN043640"
- },
- {
-   "DiseaseName": "Multiple epiphyseal dysplasia with robin phenotype",
-   "ConceptID": "C1832112"
  },
  {
    "DiseaseName": "Multiple eruptive milia",
@@ -63643,30 +61927,6 @@
  {
    "DiseaseName": "Multiple mitochondrial DNA deletions",
    "ConceptID": "C3277376"
- },
- {
-   "DiseaseName": "Multiple mitochondrial dysfunctions syndrome 1",
-   "ConceptID": "C3276432"
- },
- {
-   "DiseaseName": "Multiple mitochondrial dysfunctions syndrome 2",
-   "ConceptID": "C3280378"
- },
- {
-   "DiseaseName": "Multiple mitochondrial dysfunctions syndrome 3",
-   "ConceptID": "C3809165"
- },
- {
-   "DiseaseName": "Multiple mitochondrial dysfunctions syndrome 4",
-   "ConceptID": "C4225348"
- },
- {
-   "DiseaseName": "MULTIPLE MITOCHONDRIAL DYSFUNCTIONS SYNDROME 5",
-   "ConceptID": "C4539919"
- },
- {
-   "DiseaseName": "MULTIPLE MITOCHONDRIAL DYSFUNCTIONS SYNDROME 6",
-   "ConceptID": "CN244567"
  },
  {
    "DiseaseName": "Multiple mitochondrial dysfunctions syndrome",
@@ -63757,34 +62017,6 @@
    "ConceptID": "C0026769"
  },
  {
-   "DiseaseName": "Multiple sclerosis modifier of disease progression",
-   "ConceptID": "CN069138"
- },
- {
-   "DiseaseName": "Multiple sclerosis susceptibility 1",
-   "ConceptID": "C1868685"
- },
- {
-   "DiseaseName": "Multiple sclerosis susceptibility",
-   "ConceptID": "CN031763"
- },
- {
-   "DiseaseName": "Multiple sclerosis, susceptibility to, 2",
-   "ConceptID": "C2675478"
- },
- {
-   "DiseaseName": "Multiple sclerosis, susceptibility to, 3",
-   "ConceptID": "C2675477"
- },
- {
-   "DiseaseName": "Multiple sclerosis, susceptibility to, 4",
-   "ConceptID": "C2675476"
- },
- {
-   "DiseaseName": "Multiple sclerosis, susceptibility to, 5",
-   "ConceptID": "C3553728"
- },
- {
    "DiseaseName": "Multiple self healing squamous epithelioma",
    "ConceptID": "C0546476"
  },
@@ -63817,16 +62049,8 @@
    "ConceptID": "C4021161"
  },
  {
-   "DiseaseName": "Multiple synostoses syndrome 2",
-   "ConceptID": "C1832708"
- },
- {
-   "DiseaseName": "Multiple synostoses syndrome 3",
-   "ConceptID": "C2751826"
- },
- {
-   "DiseaseName": "MULTIPLE SYNOSTOSES SYNDROME 4",
-   "ConceptID": "CN842246"
+   "DiseaseName": "Multiple synostoses syndrome",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Multiple trichilemmomata",
@@ -63981,176 +62205,12 @@
    "ConceptID": "C4022021"
  },
  {
-   "DiseaseName": "Muscular dystrophy, adult-onset, with leukoencephalopathy",
-   "ConceptID": "C1854646"
- },
- {
-   "DiseaseName": "Muscular dystrophy and arthrogryposis",
-   "ConceptID": "CN221559"
- },
- {
-   "DiseaseName": "Muscular dystrophy, barnes type",
-   "ConceptID": "C1834688"
- },
- {
    "DiseaseName": "Muscular dystrophy",
    "ConceptID": "C0026850"
  },
  {
-   "DiseaseName": "Muscular dystrophy",
-   "ConceptID": "C1864711"
- },
- {
-   "DiseaseName": "Muscular dystrophy, cardiac type",
-   "ConceptID": "C1442927"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, 1b",
-   "ConceptID": "C1858118"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, davignon-chauveau type",
-   "ConceptID": "C4310736"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, due to integrin alpha-7 deficiency",
-   "ConceptID": "C2750786"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, due to ITGA7 deficiency",
-   "ConceptID": "CN187051"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, infantile with cataract and hypogonadism",
-   "ConceptID": "C1850864"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, megaconial type",
-   "ConceptID": "C1865233"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, merosin-positive",
-   "ConceptID": "C1836133"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, with cataracts and intellectual disability",
-   "ConceptID": "C4479410"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, with cerebellar atrophy",
-   "ConceptID": "C1864028"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, with rapid progression",
-   "ConceptID": "C1850840"
- },
- {
-   "DiseaseName": "Muscular dystrophy, congenital, with severe central nervous system atrophy and absence of large myelinated fibers",
-   "ConceptID": "C1832665"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy",
-   "ConceptID": "CN229783"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 10",
-   "ConceptID": "C3554381"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 11",
-   "ConceptID": "C3554638"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 12",
-   "ConceptID": "C3808964"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 13",
-   "ConceptID": "C3809042"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 14",
-   "ConceptID": "C3809216"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 1",
-   "ConceptID": "CN033898"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type A, 3",
-   "ConceptID": "C3151519"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 8",
-   "ConceptID": "C3553813"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with brain and eye anomalies), type a, 9",
-   "ConceptID": "C4225291"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (congenital with mental retardation), type b, 14",
-   "ConceptID": "C3809221"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (limb-girdle), type c, 12",
-   "ConceptID": "C4015184"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (limb-girdle), type c, 14",
-   "ConceptID": "C3714932"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy (limb-girdle), type c, 7",
-   "ConceptID": "C4015095"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy, type B",
-   "ConceptID": "CN228400"
- },
- {
-   "DiseaseName": "Muscular dystrophy-dystroglycanopathy, type C",
-   "ConceptID": "CN262500"
- },
- {
-   "DiseaseName": "Muscular dystrophy, hemizygous lethal type",
-   "ConceptID": "C1839671"
- },
- {
-   "DiseaseName": "Muscular dystrophy, limb-girdle, type 2F, digenic",
-   "ConceptID": "C2677241"
- },
- {
-   "DiseaseName": "Muscular dystrophy, limb-girdle, type 2r",
-   "ConceptID": "C3809137"
- },
- {
-   "DiseaseName": "Muscular dystrophy, limb-girdle, type 2W",
-   "ConceptID": "C4225192"
- },
- {
-   "DiseaseName": "Muscular dystrophy, limb-girdle, type 2X",
-   "ConceptID": "C4225199"
- },
- {
-   "DiseaseName": "Muscular dystrophy, limb-girdle, type 2y",
-   "ConceptID": "C4310731"
- },
- {
-   "DiseaseName": "Muscular dystrophy, limb-girdle, type 2z",
-   "ConceptID": "C4310660"
- },
- {
-   "DiseaseName": "Muscular dystrophy, mabry type",
-   "ConceptID": "C1839670"
- },
- {
-   "DiseaseName": "Muscular dystrophy, progressive pectorodorsal",
-   "ConceptID": "C1839669"
- },
- {
-   "DiseaseName": "Muscular dystrophy, pseudohypertrophic, with internalized capillaries",
-   "ConceptID": "C1834652"
+   "DiseaseName": "Muscular dystrophy, limb-girdle",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Muscular edema",
@@ -67931,10 +65991,6 @@
  {
    "DiseaseName": "Oculopalatocerebral syndrome",
    "ConceptID": "C1850338"
- },
- {
-   "DiseaseName": "Oculopharyngeal muscular dystrophy",
-   "ConceptID": "C0270952"
  },
  {
    "DiseaseName": "Oculopharyngodistal myopathy",
@@ -71767,10 +69823,6 @@
  {
    "DiseaseName": "Pectus excavatum of inferior sternum",
    "ConceptID": "C1864796"
- },
- {
-   "DiseaseName": "Pediatric multiple sclerosis",
-   "ConceptID": "CN037005"
  },
  {
    "DiseaseName": "Peeling skin syndrome 3",
@@ -75621,10 +73673,6 @@
    "ConceptID": "C0282513"
  },
  {
-   "DiseaseName": "Primary progressive multiple sclerosis",
-   "ConceptID": "C0751964"
- },
- {
    "DiseaseName": "Primary pulmonary hypertension 2",
    "ConceptID": "C3888002"
  },
@@ -75967,10 +74015,6 @@
  {
    "DiseaseName": "Progressive muscle weakness",
    "ConceptID": "C0240421"
- },
- {
-   "DiseaseName": "Progressive muscular dystrophy",
-   "ConceptID": "CN241791"
  },
  {
    "DiseaseName": "progressive   Musculoskeletal/Structural (child onset)",
@@ -79429,10 +77473,6 @@
    "ConceptID": "C0339278"
  },
  {
-   "DiseaseName": "Relapsing remitting multiple sclerosis",
-   "ConceptID": "C0751967"
- },
- {
    "DiseaseName": "Relatively short spine",
    "ConceptID": "C3277114"
  },
@@ -81861,10 +79901,6 @@
    "ConceptID": "C0240953"
  },
  {
-   "DiseaseName": "Scapulohumeral muscular dystrophy",
-   "ConceptID": "C0410192"
- },
- {
    "DiseaseName": "Scapulohumeral synostosis",
    "ConceptID": "C1865362"
  },
@@ -83103,10 +81139,6 @@
  {
    "DiseaseName": "severe and debilitating arthropathy",
    "ConceptID": "CN230447"
- },
- {
-   "DiseaseName": "Severe autosomal recessive muscular dystrophy of childhood - North African type",
-   "ConceptID": "C0410173"
  },
  {
    "DiseaseName": "Severe B lymphocytopenia",
@@ -91681,22 +89713,6 @@
    "ConceptID": "C0009324"
  },
  {
-   "DiseaseName": "Ullrich congenital muscular dystrophy 1, autosomal dominant",
-   "ConceptID": "C4015958"
- },
- {
-   "DiseaseName": "Ullrich congenital muscular dystrophy 1",
-   "ConceptID": "CN033863"
- },
- {
-   "DiseaseName": "Ullrich congenital muscular dystrophy 2",
-   "ConceptID": "C4225314"
- },
- {
-   "DiseaseName": "Ullrich congenital muscular dystrophy",
-   "ConceptID": "C0410179"
- },
- {
    "DiseaseName": "Ulna and fibula absence of with severe limb deficiency",
    "ConceptID": "C1848651"
  },
@@ -93857,28 +91873,8 @@
    "ConceptID": "C1835192"
  },
  {
-   "DiseaseName": "Walker-Warburg congenital muscular dystrophy",
-   "ConceptID": "C0265221"
- },
- {
    "DiseaseName": "Walker-Warburg Syndrome",
    "ConceptID": "CN239483"
- },
- {
-   "DiseaseName": "Warburg micro syndrome 1",
-   "ConceptID": "C1838625"
- },
- {
-   "DiseaseName": "Warburg micro syndrome 2",
-   "ConceptID": "C3280214"
- },
- {
-   "DiseaseName": "Warburg micro syndrome 3",
-   "ConceptID": "C3280203"
- },
- {
-   "DiseaseName": "Warburg micro syndrome 4",
-   "ConceptID": "C3810265"
  },
  {
    "DiseaseName": "Warburg micro syndrome",
@@ -93891,22 +91887,6 @@
  {
    "DiseaseName": "Warfarin response",
    "ConceptID": "CN078029"
- },
- {
-   "DiseaseName": "warfarin response - Dosage",
-   "ConceptID": "CN236549"
- },
- {
-   "DiseaseName": "warfarin response - Dosage, Toxicity/ADR",
-   "ConceptID": "CN236547"
- },
- {
-   "DiseaseName": "warfarin response - Efficacy",
-   "ConceptID": "CN236588"
- },
- {
-   "DiseaseName": "warfarin response - Toxicity/ADR",
-   "ConceptID": "CN236624"
  },
  {
    "DiseaseName": "Warm reactive autoantibody positivity",
