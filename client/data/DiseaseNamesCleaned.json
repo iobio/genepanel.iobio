@@ -9369,10 +9369,6 @@
    "ConceptID": "CN244003"
  },
  {
-   "DiseaseName": "Adrenal insufficiency, progressive, and hypogonadotropic hypogonadism",
-   "ConceptID": "C1846221"
- },
- {
    "DiseaseName": "Adrenal medullary hypoplasia",
    "ConceptID": "C4024717"
  },
@@ -10039,14 +10035,6 @@
  {
    "DiseaseName": "Albinism, minimal pigment type",
    "ConceptID": "C2931403"
- },
- {
-   "DiseaseName": "Albinism, ocular, with late-onset sensorineural deafness",
-   "ConceptID": "C1845069"
- },
- {
-   "DiseaseName": "Albinism, ocular, with sensorineural deafness",
-   "ConceptID": "C1863198"
  },
  {
    "DiseaseName": "Albinism, oculocutaneous, type V",
@@ -13513,10 +13501,6 @@
    "ConceptID": "C2936786"
  },
  {
-   "DiseaseName": "Aqueductal stenosis, X-linked, Hydrocephalus due to congenital stenosis of aqueduct of sylvius, X-Linked Hydrocephalus with Stenosis of the Aqueduct of Sylvius, X-linked hydrocephalus",
-   "ConceptID": "CN220539"
- },
- {
    "DiseaseName": "Arachnodactyly",
    "ConceptID": "C0003706"
  },
@@ -13841,10 +13825,6 @@
    "ConceptID": "C1859723"
  },
  {
-   "DiseaseName": "Arthrogryposis-like hand anomaly and sensorineural deafness",
-   "ConceptID": "C1862471"
- },
- {
    "DiseaseName": "Arthrogryposis-like hand anomaly",
    "ConceptID": "C4025173"
  },
@@ -13975,10 +13955,6 @@
  {
    "DiseaseName": "ASD   Musculoskeletal/Structural (child onset)",
    "ConceptID": "CN232483"
- },
- {
-   "DiseaseName": "ASD   Neurologic (child onset)",
-   "ConceptID": "CN232484"
  },
  {
    "DiseaseName": "Aseptic leukocyturia",
@@ -15381,10 +15357,6 @@
    "ConceptID": "C1863416"
  },
  {
-   "DiseaseName": "Autosomal dominant epilepsy",
-   "ConceptID": "CN240682"
- },
- {
    "DiseaseName": "Autosomal dominant hypocalcemia",
    "ConceptID": "CN228164"
  },
@@ -15413,16 +15385,8 @@
    "ConceptID": "C0432304"
  },
  {
-   "DiseaseName": "Autosomal dominant nocturnal frontal lobe epilepsy",
-   "ConceptID": "C3696898"
- },
- {
    "DiseaseName": "Autosomal dominant non-syndromic intellectual disability",
    "ConceptID": "CN200399"
- },
- {
-   "DiseaseName": "Autosomal dominant non-syndromic sensorineural deafness type DFNA",
-   "ConceptID": "CN043649"
  },
  {
    "DiseaseName": "Autosomal dominant optic atrophy plus syndrome",
@@ -15521,10 +15485,6 @@
    "ConceptID": "CN237175"
  },
  {
-   "DiseaseName": "Autosomal recessive infantile epilepsy",
-   "ConceptID": "CN183915"
- },
- {
    "DiseaseName": "Autosomal recessive infantile hypercalcemia",
    "ConceptID": "CN203398"
  },
@@ -15539,10 +15499,6 @@
  {
    "DiseaseName": "Autosomal recessive non-syndromic intellectual disability",
    "ConceptID": "CN206293"
- },
- {
-   "DiseaseName": "Autosomal recessive non-syndromic sensorineural deafness type DFNB",
-   "ConceptID": "CN206424"
  },
  {
    "DiseaseName": "autosomal recessive PIEZO2 associated disease",
@@ -16373,10 +16329,6 @@
    "ConceptID": "C0027086"
  },
  {
-   "DiseaseName": "Benign Neonatal Epilepsy",
-   "ConceptID": "CN239199"
- },
- {
    "DiseaseName": "Benign neoplasm of brain",
    "ConceptID": "C0496899"
  },
@@ -16395,10 +16347,6 @@
  {
    "DiseaseName": "Benign recurrent intrahepatic cholestasis 2",
    "ConceptID": "C2608083"
- },
- {
-   "DiseaseName": "Benign Rolandic epilepsy",
-   "ConceptID": "C2363129"
  },
  {
    "DiseaseName": "Benign scapuloperoneal muscular dystrophy with cardiomyopathy",
@@ -17875,10 +17823,6 @@
  {
    "DiseaseName": "Borderline personality disorder",
    "ConceptID": "C0006012"
- },
- {
-   "DiseaseName": "BOR-Duane hydrocephalus contiguous gene syndrome",
-   "ConceptID": "C1838346"
  },
  {
    "DiseaseName": "Borjeson-Forssman-Lehmann syndrome",
@@ -21021,10 +20965,6 @@
    "ConceptID": "C0271801"
  },
  {
-   "DiseaseName": "Central hypotonia",
-   "ConceptID": "C1842364"
- },
- {
    "DiseaseName": "Central hypoventilation",
    "ConceptID": "C3805839"
  },
@@ -23533,10 +23473,6 @@
    "ConceptID": "C3808820"
  },
  {
-   "DiseaseName": "Chronic infantile neurological, cutaneous and articular syndrome",
-   "ConceptID": "C0409818"
- },
- {
    "DiseaseName": "Chronic infection",
    "ConceptID": "C0151317"
  },
@@ -25225,10 +25161,6 @@
    "ConceptID": "C0009447"
  },
  {
-   "DiseaseName": "Communicating hydrocephalus",
-   "ConceptID": "C0009451"
- },
- {
    "DiseaseName": "Compensated hemolytic anemia",
    "ConceptID": "C4025283"
  },
@@ -25703,10 +25635,6 @@
  {
    "DiseaseName": "Cone-Rod Dystrophy, Recessive",
    "ConceptID": "CN239309"
- },
- {
-   "DiseaseName": "Cone-rod dystrophy, sensorineural deafness, and Fanconi-type renal dysfunction",
-   "ConceptID": "C1849333"
  },
  {
    "DiseaseName": "Cone-rod dystrophy, X-linked 1",
@@ -26185,16 +26113,8 @@
    "ConceptID": "CN232319"
  },
  {
-   "DiseaseName": "Congenital disorder of deglycosylation",
-   "ConceptID": "C3808991"
- },
- {
    "DiseaseName": "Congenital disorder of glycosylation",
    "ConceptID": "C0282577"
- },
- {
-   "DiseaseName": "Congenital disorders of glycosylation type II",
-   "ConceptID": "CN234782"
  },
  {
    "DiseaseName": "CDG",
@@ -26345,44 +26265,12 @@
    "ConceptID": "C0149530"
  },
  {
-   "DiseaseName": "Congenital heart defects 1, nonsyndromic, 1",
-   "ConceptID": "CN239150"
- },
- {
-   "DiseaseName": "Congenital heart defects and ectodermal dysplasia",
-   "ConceptID": "C4479250"
- },
- {
-   "DiseaseName": "CONGENITAL HEART DEFECTS AND SKELETAL MALFORMATIONS SYNDROME",
-   "ConceptID": "C4539857"
- },
- {
-   "DiseaseName": "Congenital heart defects, multiple types, 1, X-linked",
-   "ConceptID": "C3151867"
- },
- {
-   "DiseaseName": "Congenital heart defects, multiple types, 2",
-   "ConceptID": "C3554279"
- },
- {
-   "DiseaseName": "Congenital heart defects, multiple types, 3",
-   "ConceptID": "C3554194"
- },
- {
-   "DiseaseName": "Congenital heart defects, multiple types, 4",
-   "ConceptID": "C4014310"
- },
- {
-   "DiseaseName": "CONGENITAL HEART DEFECTS, MULTIPLE TYPES, 5",
-   "ConceptID": "CN873437"
+   "DiseaseName": "Congenital heart defects",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Congenital heart disease",
    "ConceptID": "C0152021"
- },
- {
-   "DiseaseName": "Congenital heart disease (variable)",
-   "ConceptID": "C3805326"
  },
  {
    "DiseaseName": "Congenital heart malformation",
@@ -26419,10 +26307,6 @@
  {
    "DiseaseName": "Congenital hypertrophy of retinal pigment epithelium",
    "ConceptID": "C0339555"
- },
- {
-   "DiseaseName": "Congenital hypogonadotropic hypogonadism",
-   "ConceptID": "C3899503"
  },
  {
    "DiseaseName": "Congenital hypomyelinating neuropathy",
@@ -27463,10 +27347,6 @@
  {
    "DiseaseName": "Corneal hypesthesia, familial",
    "ConceptID": "C1852541"
- },
- {
-   "DiseaseName": "Corneal hypesthesia with retinal abnormalities, sensorineural deafness, unusual facies, persistent ductus arteriosus, and mental retardation",
-   "ConceptID": "C2930866"
  },
  {
    "DiseaseName": "Corneal keratic precipitates",
@@ -30129,10 +30009,6 @@
    "ConceptID": "C1857332"
  },
  {
-   "DiseaseName": "Deafness, sensorineural, with neurologic features",
-   "ConceptID": "C3151975"
- },
- {
    "DiseaseName": "Deafness, sensorineural, with peripheral neuropathy and arterial disease",
    "ConceptID": "C1852280"
  },
@@ -32463,10 +32339,6 @@
  {
    "DiseaseName": "Diabetes mellitus, permanent neonatal, with cerebellar agenesis",
    "ConceptID": "C1836780"
- },
- {
-   "DiseaseName": "Diabetes mellitus, permanent neonatal, with neurologic features",
-   "ConceptID": "C1833102"
  },
  {
    "DiseaseName": "Diabetes mellitus type 1",
@@ -35347,10 +35219,6 @@
  {
    "DiseaseName": "Early onset focal segmental glomerulosclerosis",
    "ConceptID": "CN228292"
- },
- {
-   "DiseaseName": "early onset hypotonia",
-   "ConceptID": "CN188068"
  },
  {
    "DiseaseName": "early onset infantile encephalopathy",
@@ -38333,10 +38201,6 @@
    "ConceptID": "CN232559"
  },
  {
-   "DiseaseName": "Episodic generalized hypotonia",
-   "ConceptID": "C4024976"
- },
- {
    "DiseaseName": "Episodic hemiplegia",
    "ConceptID": "C1863061"
  },
@@ -39495,10 +39359,6 @@
  {
    "DiseaseName": "Facial hypertrichosis",
    "ConceptID": "C1851400"
- },
- {
-   "DiseaseName": "Facial hypotonia",
-   "ConceptID": "C1845251"
  },
  {
    "DiseaseName": "Facial-lingual fasciculations",
@@ -40835,10 +40695,6 @@
  {
    "DiseaseName": "Fetal hemoglobin quantitative trait locus 6",
    "ConceptID": "C3150805"
- },
- {
-   "DiseaseName": "fetal hydrocephalus",
-   "ConceptID": "C1397626"
  },
  {
    "DiseaseName": "Fetal iodine deficiency disorder",
@@ -43409,14 +43265,6 @@
    "ConceptID": "C3805639"
  },
  {
-   "DiseaseName": "Appendicular hypotonia",
-   "ConceptID": "C4022919"
- },
- {
-   "DiseaseName": "Congenital hypotonia",
-   "ConceptID": "C0270971"
- },
- {
    "DiseaseName": "Generalized muscle weakness",
    "ConceptID": "C0746674"
  },
@@ -43427,10 +43275,6 @@
  {
    "DiseaseName": "Generalized myoclonic seizures",
    "ConceptID": "C4021759"
- },
- {
-   "DiseaseName": "Generalized neonatal hypotonia",
-   "ConceptID": "C1845123"
  },
  {
    "DiseaseName": "Generalized opacification of the cornea",
@@ -45853,10 +45697,6 @@
    "ConceptID": "C1838120"
  },
  {
-   "DiseaseName": "Hemolytic anemia, nonspherocytic, and neurologic deficits, due to glucose phosphate isomerase deficiency",
-   "ConceptID": "C4016321"
- },
- {
    "DiseaseName": "Hemolytic anemia, nonspherocytic, due to glucose phosphate isomerase deficiency",
    "ConceptID": "C3150730"
  },
@@ -46063,10 +45903,6 @@
  {
    "DiseaseName": "Hepatic failure",
    "ConceptID": "C0085605"
- },
- {
-   "DiseaseName": "Hepatic failure, early-onset, and neurologic disorder due to cytochrome C oxidase deficiency",
-   "ConceptID": "C0268237"
  },
  {
    "DiseaseName": "Hepatic fibrosis",
@@ -47433,48 +47269,8 @@
    "ConceptID": "C1720771"
  },
  {
-   "DiseaseName": "Hydrocephalus, autosomal dominant",
-   "ConceptID": "C1838347"
- },
- {
    "DiseaseName": "Hydrocephalus",
    "ConceptID": "C0020255"
- },
- {
-   "DiseaseName": "Hydrocephalus",
-   "ConceptID": "C1963137"
- },
- {
-   "DiseaseName": "HYDROCEPHALUS, CONGENITAL, 3, WITH BRAIN ANOMALIES",
-   "ConceptID": "CN252328"
- },
- {
-   "DiseaseName": "Hydrocephalus due to aqueductal stenosis",
-   "ConceptID": "CN221283"
- },
- {
-   "DiseaseName": "Hydrocephalus due to congenital stenosis of aqueduct of Sylvius",
-   "ConceptID": "CN074258"
- },
- {
-   "DiseaseName": "Hydrocephalus, nonsyndromic, autosomal recessive 2",
-   "ConceptID": "C3554691"
- },
- {
-   "DiseaseName": "Hydrocephalus, sprengel anomaly, and costovertebral dysplasia",
-   "ConceptID": "C1832948"
- },
- {
-   "DiseaseName": "Hydrocephalus with cerebellar agenesis",
-   "ConceptID": "C1844005"
- },
- {
-   "DiseaseName": "Hydrocephalus, X-linked, with congenital idiopathic intestinal pseudoobstruction",
-   "ConceptID": "C1844006"
- },
- {
-   "DiseaseName": "Hydrocephalus, X-linked, with hirschsprung disease",
-   "ConceptID": "C4017784"
  },
  {
    "DiseaseName": "hydrochlorothiazide response - Efficacy",
@@ -49137,116 +48933,16 @@
    "ConceptID": "C0162809"
  },
  {
-   "DiseaseName": "Hypogonadotropic hypogonadism 10 with or without anosmia",
-   "ConceptID": "C3553843"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 10 without anosmia",
-   "ConceptID": "C4016274"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 11 with or without anosmia",
-   "ConceptID": "C3553844"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 12 with or without anosmia",
-   "ConceptID": "C1856897"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 13 with or without anosmia",
-   "ConceptID": "C3541462"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 14 with anosmia",
-   "ConceptID": "C4016965"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 14 with or without anosmia",
-   "ConceptID": "C3540450"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 15 with or without anosmia",
-   "ConceptID": "C3553977"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 16 with or without anosmia",
-   "ConceptID": "C3554021"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 17 with or without anosmia",
-   "ConceptID": "C3808971"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 18 with anosmia",
-   "ConceptID": "C4016983"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 18 with or without anosmia",
-   "ConceptID": "C3808975"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 19 with or without anosmia",
-   "ConceptID": "C3808981"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 1 with or without anosmia (Kallmann syndrome 1)",
-   "ConceptID": "CN378675"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 20 with or without anosmia",
-   "ConceptID": "C3808983"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 20 without anosmia",
-   "ConceptID": "C4016855"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 21 with or without anosmia",
-   "ConceptID": "C3808986"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 22 with anosmia",
-   "ConceptID": "C4017302"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 22 with or without anosmia",
-   "ConceptID": "C4014988"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 2 with anosmia",
-   "ConceptID": "C4016104"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 3 without anosmia",
-   "ConceptID": "C4017072"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 5 without anosmia",
-   "ConceptID": "C3552136"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 7 with or without anosmia",
-   "ConceptID": "C0342384"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 8 with or without anosmia",
-   "ConceptID": "C3553841"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 8 without anosmia",
-   "ConceptID": "C4016875"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism 9 with or without anosmia",
-   "ConceptID": "C3553842"
- },
- {
-   "DiseaseName": "Hypogonadotropic hypogonadism with or without anosmia",
-   "ConceptID": "CN235466"
+   "DiseaseName": "Hypogonadotropic hypogonadism",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hypohaptoglobinemia",
    "ConceptID": "C3279787"
+ },
+ {
+   "DiseaseName": "hypotonia",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hypohidrosis",
@@ -49415,10 +49111,6 @@
  {
    "DiseaseName": "Hypomyelinating leukodystrophy 7",
    "ConceptID": "C2676243"
- },
- {
-   "DiseaseName": "Hypomyelinating leukodystrophy 8, with or without oligodontia and/or hypogonadotropic hypogonadism",
-   "ConceptID": "C3280644"
  },
  {
    "DiseaseName": "Hypomyelinating leukodystrophy",
@@ -53021,10 +52713,6 @@
    "ConceptID": "C1846829"
  },
  {
-   "DiseaseName": "Interphalangeal joint contracture of finger",
-   "ConceptID": "C4021784"
- },
- {
    "DiseaseName": "Interphalangeal joint erosions",
    "ConceptID": "C1850158"
  },
@@ -53969,10 +53657,6 @@
    "ConceptID": "CN229786"
  },
  {
-   "DiseaseName": "Isolated congenital hypogonadotropic hypogonadism",
-   "ConceptID": "CN924907"
- },
- {
    "DiseaseName": "Isolated coronal synostosis",
    "ConceptID": "CN043619"
  },
@@ -54421,24 +54105,8 @@
    "ConceptID": "C1859710"
  },
  {
-   "DiseaseName": "Joint contracture of the 3rd finger",
-   "ConceptID": "C4021492"
- },
- {
-   "DiseaseName": "Joint contracture of the 4th finger",
-   "ConceptID": "C4021504"
- },
- {
-   "DiseaseName": "Joint contracture of the 5th finger",
-   "ConceptID": "C1865702"
- },
- {
-   "DiseaseName": "Joint contracture of the hand",
-   "ConceptID": "C0158113"
- },
- {
-   "DiseaseName": "Joint contractures involving the joints of the feet",
-   "ConceptID": "C4022042"
+   "DiseaseName": "Joint contracture",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Joint dislocation",
@@ -56521,10 +56189,6 @@
    "ConceptID": "C0023374"
  },
  {
-   "DiseaseName": "Lesch-nyhan syndrome, neurologic variant",
-   "ConceptID": "C1845893"
- },
- {
    "DiseaseName": "Lesinurad response",
    "ConceptID": "CN248784"
  },
@@ -56835,10 +56499,6 @@
  {
    "DiseaseName": "Leukoencephalopathy",
    "ConceptID": "C0270612"
- },
- {
-   "DiseaseName": "Leukoencephalopathy, cystic, without megalencephaly",
-   "ConceptID": "C2751843"
  },
  {
    "DiseaseName": "Leukoencephalopathy, progressive, with ovarian failure",
@@ -57183,10 +56843,6 @@
  {
    "DiseaseName": "Limb hypertonia",
    "ConceptID": "C1838391"
- },
- {
-   "DiseaseName": "Limb joint contracture",
-   "ConceptID": "C1969879"
  },
  {
    "DiseaseName": "Limb-mammary syndrome",
@@ -60265,36 +59921,8 @@
    "ConceptID": "C0221355"
  },
  {
-   "DiseaseName": "Megalencephaly",
-   "ConceptID": "C2720434"
- },
- {
-   "DiseaseName": "Megalencephaly cutis marmorata telangiectatica congenita",
-   "ConceptID": "C1865285"
- },
- {
-   "DiseaseName": "Megalencephaly-polymicrogyria-polydactyly-hydrocephalus syndrome 1",
+   "DiseaseName": "Megalencephaly-polymicrogyria-polydactyly-hydrocephalus syndrome",
    "ConceptID": "C1863924"
- },
- {
-   "DiseaseName": "Megalencephaly-polymicrogyria-polydactyly-hydrocephalus syndrome 2",
-   "ConceptID": "C4014738"
- },
- {
-   "DiseaseName": "Megalencephaly-polymicrogyria-polydactyly-hydrocephalus syndrome 3",
-   "ConceptID": "C4014742"
- },
- {
-   "DiseaseName": "Megalencephaly-Polymicrogyria-Polydactyly-Hydrocephalus Syndrome, Somatic",
-   "ConceptID": "CN229784"
- },
- {
-   "DiseaseName": "Megalencephaly with dysmyelination",
-   "ConceptID": "C1855309"
- },
- {
-   "DiseaseName": "Megalencephaly with thick corpus callosum, cerebellar atrophy, and intellectual disability",
-   "ConceptID": "CN228136"
  },
  {
    "DiseaseName": "Megaloblastic anemia 1, Finnish type",
@@ -60315,10 +59943,6 @@
  {
    "DiseaseName": "Megaloblastic anemia due to inborn errors of metabolism",
    "ConceptID": "C1306856"
- },
- {
-   "DiseaseName": "Megaloblastic anemia, thiamine-responsive, with diabetes mellitus and sensorineural deafness",
-   "ConceptID": "C0342287"
  },
  {
    "DiseaseName": "Megaloblastic bone marrow",
@@ -63901,10 +63525,6 @@
    "ConceptID": "CN232520"
  },
  {
-   "DiseaseName": "MR/ID/DD   Neurologic (child onset)",
-   "ConceptID": "CN232521"
- },
- {
    "DiseaseName": "MRI findings",
    "ConceptID": "CN244036"
  },
@@ -64221,10 +63841,6 @@
    "ConceptID": "C0000772"
  },
  {
-   "DiseaseName": "Multiple congenital anomaly",
-   "ConceptID": "C0000772"
- },
- {
    "DiseaseName": "Multiple congenital exostosis",
    "ConceptID": "C0015306"
  },
@@ -64351,10 +63967,6 @@
  {
    "DiseaseName": "Multiple intestinal neurofibromatosis",
    "ConceptID": "C4025233"
- },
- {
-   "DiseaseName": "Multiple joint contractures",
-   "ConceptID": "C0158118"
  },
  {
    "DiseaseName": "Multiple joint dislocation",
@@ -67273,10 +66885,6 @@
    "ConceptID": "C4016629"
  },
  {
-   "DiseaseName": "Neurogenic bladder",
-   "ConceptID": "C0005697"
- },
- {
    "DiseaseName": "Neurohypophyseal diabetes insipidus",
    "ConceptID": "C0687720"
  },
@@ -67301,20 +66909,12 @@
    "ConceptID": "C0037822"
  },
  {
-   "DiseaseName": "  Neurologic (child onset)",
-   "ConceptID": "CN232526"
- },
- {
    "DiseaseName": "Neurologic (child onset)",
    "ConceptID": "CN232544"
  },
  {
-   "DiseaseName": "Neurologic disease, infantile multisystem, with osseous fragility",
-   "ConceptID": "C1850465"
- },
- {
-   "DiseaseName": "Neurologic, endocrine, and pancreatic disease, multisystem, infantile-onset",
-   "ConceptID": "C4015728"
+   "DiseaseName": "Neurologic disease",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Neuroma",
@@ -67869,10 +67469,6 @@
    "ConceptID": "C4022999"
  },
  {
-   "DiseaseName": "Noncommunicating hydrocephalus",
-   "ConceptID": "C0549423"
- },
- {
    "DiseaseName": "Noncompaction cardiomyopathy",
    "ConceptID": "C1839832"
  },
@@ -68207,10 +67803,6 @@
  {
    "DiseaseName": "Normal pregnancy",
    "ConceptID": "CN220684"
- },
- {
-   "DiseaseName": "Normal pressure hydrocephalus",
-   "ConceptID": "C0020258"
  },
  {
    "DiseaseName": "Normal Prothrombin time/Partial thromboplastin time",
@@ -69735,10 +69327,6 @@
  {
    "DiseaseName": "Osteochondrodysplasia, complex lethal, symoens-barnes-gistelinck type",
    "ConceptID": "C4225162"
- },
- {
-   "DiseaseName": "Osteochondrodysplasia, rhizomelic, with callosal agenesis, thrombocytopenia, hydrocephalus, and hypertension",
-   "ConceptID": "C1833688"
  },
  {
    "DiseaseName": "Osteochondroma",
@@ -72097,10 +71685,6 @@
    "ConceptID": "C4023257"
  },
  {
-   "DiseaseName": "partial sensorineural deafness",
-   "ConceptID": "CN220453"
- },
- {
    "DiseaseName": "Partial vaginal septum",
    "ConceptID": "C0750088"
  },
@@ -73897,10 +73481,6 @@
    "ConceptID": "C4016297"
  },
  {
-   "DiseaseName": "Piebaldism with sensorineural deafness",
-   "ConceptID": "C4016294"
- },
- {
    "DiseaseName": "Pierpont syndrome",
    "ConceptID": "C1865644"
  },
@@ -73943,10 +73523,6 @@
  {
    "DiseaseName": "Pigmentary retinal dystrophy",
    "ConceptID": "C0311338"
- },
- {
-   "DiseaseName": "Pigmentary retinopathy and sensorineural deafness",
-   "ConceptID": "C4016611"
  },
  {
    "DiseaseName": "Pigmentary retinopathy",
@@ -74825,56 +74401,12 @@
    "ConceptID": "C0032463"
  },
  {
-   "DiseaseName": "Polydactyly affecting the 2nd finger",
-   "ConceptID": "C4024152"
- },
- {
-   "DiseaseName": "Polydactyly affecting the 2nd toe",
-   "ConceptID": "C4023901"
- },
- {
-   "DiseaseName": "Polydactyly affecting the 3rd finger",
-   "ConceptID": "C4024144"
- },
- {
-   "DiseaseName": "Polydactyly affecting the 3rd toe",
-   "ConceptID": "C4023898"
- },
- {
-   "DiseaseName": "Polydactyly affecting the 4th finger",
-   "ConceptID": "C4024136"
- },
- {
-   "DiseaseName": "Polydactyly affecting the 4th toe",
-   "ConceptID": "C4023894"
- },
- {
    "DiseaseName": "Polydactyly",
    "ConceptID": "C0152427"
  },
  {
-   "DiseaseName": "Polydactyly",
-   "ConceptID": "C2117329"
- },
- {
    "DiseaseName": "POLYDACTYLY, POSTAXIAL, TYPE A7",
    "ConceptID": "C4539976"
- },
- {
-   "DiseaseName": "Polydactyly, postaxial, with dental and vertebral anomalies",
-   "ConceptID": "C1849732"
- },
- {
-   "DiseaseName": "Polydactyly, preaxial I",
-   "ConceptID": "C1868116"
- },
- {
-   "DiseaseName": "Polydactyly, preaxial II",
-   "ConceptID": "C1868114"
- },
- {
-   "DiseaseName": "Polydactyly, preaxial III",
-   "ConceptID": "C1868113"
  },
  {
    "DiseaseName": "Polydipsia",
@@ -74923,10 +74455,6 @@
  {
    "DiseaseName": "Polyhydramnios in utero",
    "ConceptID": "CN235281"
- },
- {
-   "DiseaseName": "Polyhydramnios, megalencephaly, and symptomatic epilepsy",
-   "ConceptID": "C1970203"
  },
  {
    "DiseaseName": "Polyhydromnios",
@@ -76277,10 +75805,6 @@
    "ConceptID": "C0405580"
  },
  {
-   "DiseaseName": "Primary aldosteronism, seizures, and neurologic abnormalities",
-   "ConceptID": "C3809609"
- },
- {
    "DiseaseName": "Primary amenorrhea",
    "ConceptID": "C0232939"
  },
@@ -76613,10 +76137,6 @@
    "ConceptID": "C1857025"
  },
  {
-   "DiseaseName": "Progressive deterioration of neurologic function",
-   "ConceptID": "CN234397"
- },
- {
    "DiseaseName": "Progressive distal muscle weakness",
    "ConceptID": "C1836609"
  },
@@ -76815,10 +76335,6 @@
  {
    "DiseaseName": "Progressive neurodegenerative disease",
    "ConceptID": "CN239854"
- },
- {
-   "DiseaseName": "progressive Neurologic (child onset)",
-   "ConceptID": "CN232527"
  },
  {
    "DiseaseName": "Progressive neurologic deterioration",
@@ -78299,10 +77815,6 @@
  {
    "DiseaseName": "Psychiatric   Musculoskeletal/Structural (child onset)",
    "ConceptID": "CN232524"
- },
- {
-   "DiseaseName": "Psychiatric   Neurologic (child onset)",
-   "ConceptID": "CN232528"
  },
  {
    "DiseaseName": "Psychic auras",
@@ -80229,10 +79741,6 @@
    "ConceptID": "CN238689"
  },
  {
-   "DiseaseName": "refractory epilepsy, decompensation during febrile episode",
-   "ConceptID": "CN238763"
- },
- {
    "DiseaseName": "Refractory macrocytic anemia",
    "ConceptID": "C2675059"
  },
@@ -80967,10 +80475,6 @@
  {
    "DiseaseName": "Retinal crystals",
    "ConceptID": "C4072992"
- },
- {
-   "DiseaseName": "Retinal degeneration and epilepsy",
-   "ConceptID": "C1849416"
  },
  {
    "DiseaseName": "Retinal degeneration, autosomal recessive, clumped pigment type",
@@ -82189,10 +81693,6 @@
    "ConceptID": "CN200685"
  },
  {
-   "DiseaseName": "Rolandic epilepsy with mental retardation and speech dyspraxia, X-linked",
-   "ConceptID": "C1845070"
- },
- {
    "DiseaseName": "Rolland-Debuqois syndrome",
    "ConceptID": "C0432209"
  },
@@ -83349,10 +82849,6 @@
    "ConceptID": "CN211065"
  },
  {
-   "DiseaseName": "SCN2A-related generalized epilepsy with febrile seizures plus",
-   "ConceptID": "CN120574"
- },
- {
    "DiseaseName": "SCN5A-Related Disorders",
    "ConceptID": "CN239302"
  },
@@ -83661,56 +83157,8 @@
    "ConceptID": "CN232558"
  },
  {
-   "DiseaseName": "Seizures/Epilepsy   Allergy/Immunologic/Infectious (child onset)",
-   "ConceptID": "CN232475"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Audiologic/Otolaryngologic (child onset)",
-   "ConceptID": "CN232492"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Cardiovascular (child onset)",
-   "ConceptID": "CN232505"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy  ",
+   "DiseaseName": "Seizures/Epilepsy ",
    "ConceptID": "CN232549"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy",
-   "ConceptID": "CN232555"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Craniofacial (child onset)",
-   "ConceptID": "CN232508"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Endocrine (child onset)",
-   "ConceptID": "CN232512"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Gastrointestinal (child onset)",
-   "ConceptID": "CN232516"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Genitourinary (child onset)",
-   "ConceptID": "CN232518"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Metabolic/ Biochemical (child onset)",
-   "ConceptID": "CN232495"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232525"
- },
- {
-   "DiseaseName": "Seizures/Epilepsy   Neurologic (child onset)",
-   "ConceptID": "CN232529"
- },
- {
-   "DiseaseName": "Seizures/epilespy",
-   "ConceptID": "CN236426"
  },
  {
    "DiseaseName": "selective beta-2-adrenoreceptor agonists response - Efficacy",
@@ -83857,16 +83305,8 @@
    "ConceptID": "C4024974"
  },
  {
-   "DiseaseName": "Sensorineural deafness and migraine",
-   "ConceptID": "C4016609"
- },
- {
-   "DiseaseName": "Sensorineural deafness with hypertrophic cardiomyopathy",
-   "ConceptID": "C3501265"
- },
- {
-   "DiseaseName": "Sensorineural deafness with mild renal dysfunction",
-   "ConceptID": "C2748440"
+   "DiseaseName": "Sensorineural deafness",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Sensory ataxic neuropathy",
@@ -84085,10 +83525,6 @@
    "ConceptID": "C3874334"
  },
  {
-   "DiseaseName": "Severe hydrocephalus",
-   "ConceptID": "C3278123"
- },
- {
    "DiseaseName": "Severe hydrops fetalis",
    "ConceptID": "C1866048"
  },
@@ -84139,10 +83575,6 @@
  {
    "DiseaseName": "severe motor delay",
    "ConceptID": "CN232328"
- },
- {
-   "DiseaseName": "Severe myoclonic epilepsy in infancy",
-   "ConceptID": "C0751122"
  },
  {
    "DiseaseName": "severe non-syndromic intellectual disability",
@@ -86881,10 +86313,6 @@
    "ConceptID": "C1846589"
  },
  {
-   "DiseaseName": "Spastic paraplegia epilepsy mental retardation",
-   "ConceptID": "C1866854"
- },
- {
    "DiseaseName": "Spastic paraplegia neuropathy poikiloderma",
    "ConceptID": "C1866851"
  },
@@ -86901,16 +86329,8 @@
    "ConceptID": "CN239433"
  },
  {
-   "DiseaseName": "Spastic paraplegia, sensorineural deafness, mental retardation, and progressive nephropathy",
-   "ConceptID": "C1866853"
- },
- {
    "DiseaseName": "Spastic paraplegia with associated extrapyramidal signs",
    "ConceptID": "C1866852"
- },
- {
-   "DiseaseName": "Spastic paraplegia with myoclonic epilepsy",
-   "ConceptID": "C1849114"
  },
  {
    "DiseaseName": "Spastic paraplegia with precocious puberty",
@@ -88355,10 +87775,6 @@
  {
    "DiseaseName": "Stomach Neoplasms",
    "ConceptID": "CN236630"
- },
- {
-   "DiseaseName": "Stomatin-deficient cryohydrocytosis with neurologic defects",
-   "ConceptID": "C1837206"
  },
  {
    "DiseaseName": "Stomatin-like protein-2, hyperphosphorylation of",
@@ -89817,10 +89233,6 @@
    "ConceptID": "C4024936"
  },
  {
-   "DiseaseName": "Temporal epilepsy, familial",
-   "ConceptID": "C1842564"
- },
- {
    "DiseaseName": "Temporal hypotrichosis",
    "ConceptID": "C4025316"
  },
@@ -90079,10 +89491,6 @@
  {
    "DiseaseName": "Tetramelic deficiencies, ectodermal dysplasia, deformed ears, and other abnormalities",
    "ConceptID": "CN074199"
- },
- {
-   "DiseaseName": "tetraology of fallot",
-   "ConceptID": "CN243979"
  },
  {
    "DiseaseName": "Tetraparesis",
@@ -93737,10 +93145,6 @@
    "ConceptID": "C1735591"
  },
  {
-   "DiseaseName": "VACTERL association with hydrocephalus",
-   "ConceptID": "C1848599"
- },
- {
    "DiseaseName": "VACTERL association with hydrocephaly, X-linked",
    "ConceptID": "C1839115"
  },
@@ -95547,10 +94951,6 @@
  {
    "DiseaseName": "X-linked hereditary motor and sensory neuropathy",
    "ConceptID": "C0393808"
- },
- {
-   "DiseaseName": "X-linked hydrocephalus syndrome",
-   "ConceptID": "C0265216"
  },
  {
    "DiseaseName": "X-linked ichthyosis with steryl-sulfatase deficiency",
