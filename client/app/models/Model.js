@@ -303,7 +303,7 @@ promiseGetGenePanelsWithAPI(disease){
 promiseGetGenePanelsUsingSearchTermEsearch(disease){
   return new Promise(function(resolve, reject) {
     var diseaseTitle = encodeURIComponent(disease.Title.trim());
-    var searchUrl = `http://localhost:4048/esearch-wrapper/?diseaseName=${diseaseTitle}%5D&retmax=1000&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+    var searchUrl = `http://localhost:4048/esearch-wrapper/?diseaseName=${diseaseTitle}%5D&retmax=99&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
     $.ajax(searchUrl)
       .done(function(data){
         console.log(data)
@@ -316,8 +316,8 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
   return new Promise(function(resolve, reject) {
 
   var diseaseTitle = encodeURIComponent(disease.Title.trim());
-    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=499&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
-    var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=xml&term=${diseaseTitle}%5D&retmax=499&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+    var searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=json&term=${diseaseTitle}%5D&retmax=99&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
+    var XMLsearchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gtr&retmode=xml&term=${diseaseTitle}%5D&retmax=99&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09`
 
     setTimeout(()=>{
       $.ajax( searchUrl )
@@ -337,7 +337,7 @@ promiseGetGenePanelsUsingSearchTerm(disease) {
             // If using XML url
             // var webenv = data["esearchresult"]["WebEnv"];
             // var queryKey = data["esearchresult"]["QueryKey"];
-            var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&retmax=499&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
+            var summaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=json&retmax=99&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
             var xmlSummaryUrl = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gtr" + "&query_key=" + queryKey + "&retmode=xml&WebEnv=" + webenv + "&usehistory=y&api_key=2ce5a212af98a07c6e770d1e95b99a2fef09"
             $.ajax( summaryUrl )
             .done(function(sumData) {

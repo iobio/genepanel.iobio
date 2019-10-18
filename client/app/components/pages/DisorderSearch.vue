@@ -421,7 +421,7 @@ var model = new Model();
             // fetch(`http://localhost:4046/conditions/?term=${searchTerm}`).then(res => res.json())
             // .then(function(dataItem){
             //   var data = dataItem.Item
-              // console.log("data" , data)
+              console.log("data" , data)
               createDefinitionsObj(data)
               dataMain = data;
               diseases = data.diseases;
@@ -435,6 +435,9 @@ var model = new Model();
               }
               else {
                 if(diseases.length>0){
+                  if(diseases.length>20){
+                    diseases = diseases.slice(0,20);
+                  }
                   data.diseases.forEach((disease, i) => {
                     ((ind) =>{
                       setTimeout(() =>{
