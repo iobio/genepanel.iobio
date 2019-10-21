@@ -58,6 +58,9 @@
               <span v-if="props.item.isAssociatedGene===true">
                 <v-icon style="font-size:20px" color="blue darken-2">verified_user</v-icon>
               </span>
+              <span v-if="props.item.reviewed===true">
+                <v-icon style="font-size:20px" color="green darken-2">rate_review</v-icon>
+              </span>
             </td>
             <td>
               <center>
@@ -516,31 +519,91 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
           this.items = this.tableData;
         }
 
-        this.items.map((x,i)=>{
-          x.selected = true;
-          x.SummaryIndex = i + 1;
-        })
+        fetch(`https://panelapp.genomicsengland.co.uk/api/v1/panels/Cholestasis/?LevelOfConfidence=HighEvidence`)
+          .then(res => res.json())
+          .then(data => {
+            var genes = [];
+            var genesDataObj = [];
 
-        if(this.launchedFromClin && this.clinGenesSummaryData.length>0 && this.includeClinGenes<3){
-          this.selected = [];
-          this.items.map(x=>{
-            if(this.clinGenesSummaryData.includes(x.name)){
-              this.selected.push(x);
+            data.genes.map(x=>{
+              genes.push(x.entity_name)
+              genesDataObj.push({
+                genes: x.entity_name,
+                condition: data.name
+              })
+            })
+
+            console.log("panel app data", genesDataObj)
+            console.log("panel app data genes", genes)
+
+            var reviewdGenes = [];
+            var nonReviewedGenes = [];
+            this.items.map(x=>{
+              if(genes.includes(x.name)){
+                reviewdGenes.push(x);
+                x.reviewed = true;
+              }
+              else{
+                nonReviewedGenes.push(x);
+                x.reviewed = false;
+              }
+            })
+            console.log("reviewdGenes", reviewdGenes);
+            console.log("nonReviewedGenes", nonReviewedGenes)
+            this.items = [...reviewdGenes, ...nonReviewedGenes];
+
+            this.items.map((x,i)=>{
+              x.selected = true;
+              x.SummaryIndex = i + 1;
+            })
+
+            if(this.launchedFromClin && this.clinGenesSummaryData.length>0 && this.includeClinGenes<3){
+              this.selected = [];
+              this.items.map(x=>{
+                if(this.clinGenesSummaryData.includes(x.name)){
+                  this.selected.push(x);
+                }
+              })
+              this.selectedTemp = this.selected;
+              this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+              bus.$emit("updateAllGenes", this.selected);
             }
-          })
-          this.selectedTemp = this.selected;
-          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
-          bus.$emit("updateAllGenes", this.selected);
-        }
-        else {
-          this.selected = this.items.slice();
-          this.selectedTemp = this.selected;
-          this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
-          bus.$emit("updateAllGenes", this.selected);
-          // console.log("selected summary", this.selected)
+            else {
+              this.selected = this.items.slice();
+              this.selectedTemp = this.selected;
+              this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+              bus.$emit("updateAllGenes", this.selected);
+              // console.log("selected summary", this.selected)
 
-        }
-        console.log("items: ", this.items)
+            }
+            console.log("items: ", this.items)
+          })
+
+        // this.items.map((x,i)=>{
+        //   x.selected = true;
+        //   x.SummaryIndex = i + 1;
+        // })
+        //
+        // if(this.launchedFromClin && this.clinGenesSummaryData.length>0 && this.includeClinGenes<3){
+        //   this.selected = [];
+        //   this.items.map(x=>{
+        //     if(this.clinGenesSummaryData.includes(x.name)){
+        //       this.selected.push(x);
+        //     }
+        //   })
+        //   this.selectedTemp = this.selected;
+        //   this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        //   bus.$emit("updateAllGenes", this.selected);
+        // }
+        // else {
+        //   this.selected = this.items.slice();
+        //   this.selectedTemp = this.selected;
+        //   this.selectedGenesText = ""+ this.selected.length + " of " + this.items.length + " genes selected";
+        //   bus.$emit("updateAllGenes", this.selected);
+        //   // console.log("selected summary", this.selected)
+        //
+        // }
+        // console.log("items: ", this.items)
       },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()

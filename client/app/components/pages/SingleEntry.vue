@@ -1107,13 +1107,14 @@ var model = new Model();
           this.fuzzyResults = [];
           this.LevenshteinResults = [];
           this.loadingDialog = true;
+          this.extractedTerms = []; 
           // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
           fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
             .then(res => res.json())
             .then(data => {
               this.JaroWinkler = data.JaroWinkler;
               this.fuzzyResults = data.fuzzyResults ;
-              this.LevenshteinResults = data.LevenshteinResults
+              this.LevenshteinResults = data.LevenshteinResults;
               // data.JaroWinkler.map(x=>{
               //   x = x.trim();
               //   if(!this.extractedTerms.includes(x)){
