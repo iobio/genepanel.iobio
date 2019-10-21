@@ -87,7 +87,8 @@
                       v-bind:geneSearch="geneSearch"
                       v-bind:clinGenesSummary="clinGenesSummary"
                       v-bind:launchedFromClin="launchedFromClin"
-                      v-bind:summaryTableData="summaryTableArray">
+                      v-bind:summaryTableData="summaryTableArray"
+                      :multipleSearchTerms="multipleSearchTerms">
                     </SummaryDataTable>
                   </v-card>
                 </v-flex>
@@ -266,6 +267,9 @@ import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
       },
       HpoTermsLength: {
         type: Number
+      },
+      multipleSearchTerms: {
+        type: Array
       }
     },
     data: () => ({
@@ -316,6 +320,9 @@ import DoughnutChartSingleEntry from '../viz/DoughnutChartSingleEntry.vue';
       PhenolyzerGenesArrFullList: [],
     }),
     watch: {
+      multipleSearchTerms: function(){
+        // console.log("multipleSearchTerms", this.multipleSearchTerms)
+      },
       genesTop: function(){
         this.selectNumberOfSummaryGenes();
       },

@@ -583,7 +583,8 @@
           v-bind:isMobile="isMobile"
           :GtrTermsLength="GtrTermsAdded.length"
           :PhenolyzerTermsLength="phenolyzerTermsAdded.length"
-          :HpoTermsLength="hpoTermsAdded.length">
+          :HpoTermsLength="hpoTermsAdded.length"
+          :multipleSearchTerms="multipleSearchTerms">
         </SummaryTab>
         <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
       </keep-alive>
@@ -1107,7 +1108,7 @@ var model = new Model();
           this.fuzzyResults = [];
           this.LevenshteinResults = [];
           this.loadingDialog = true;
-          this.extractedTerms = []; 
+          this.extractedTerms = [];
           // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
           fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
             .then(res => res.json())
@@ -1628,16 +1629,24 @@ var model = new Model();
       remove(item, idx, component){
         if(component === 'GTR'){
           bus.$emit("removeGtrTerm", item.DiseaseName)
+          this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item.DiseaseName), 1)
+          this.multipleSearchTerms = [...this.multipleSearchTerms];
           this.GtrTermsAdded.splice(idx, 1)
           this.GtrTermsAdded = [...this.GtrTermsAdded];
         }
         else if(component === 'phenolyzer'){
           bus.$emit("removePhenolyzerTerm", item.value)
+          this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item.value), 1)
+          this.multipleSearchTerms = [...this.multipleSearchTerms];
+
           this.phenolyzerTermsAdded.splice(idx, 1)
           this.phenolyzerTermsAdded = [...this.phenolyzerTermsAdded];
         }
         else if(component === 'HPO'){
           bus.$emit("removeHpoTerm", item)
+          this.multipleSearchTerms.splice(this.multipleSearchTerms.indexOf(item.HPO_Data), 1)
+          this.multipleSearchTerms = [...this.multipleSearchTerms];
+
           this.hpoTermsAdded.splice(idx, 1)
           this.hpoTermsAdded = [...this.hpoTermsAdded];
         }

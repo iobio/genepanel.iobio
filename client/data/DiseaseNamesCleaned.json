@@ -273,10 +273,6 @@
    "ConceptID": "CN239167"
  },
  {
-   "DiseaseName": "ABCB4-Related Intrahepatic Cholestasis",
-   "ConceptID": "CN239174"
- },
- {
    "DiseaseName": "ABCD syndrome",
    "ConceptID": "C1838099"
  },
@@ -13841,18 +13837,6 @@
    "ConceptID": "C3280309"
  },
  {
-   "DiseaseName": "Arthrogryposis, renal dysfunction, and cholestasis 2",
-   "ConceptID": "C3150672"
- },
- {
-   "DiseaseName": "Arthrogryposis, Renal Dysfunction, and Cholestasis Syndrome",
-   "ConceptID": "CN239176"
- },
- {
-   "DiseaseName": "Arthrogryposis renal dysfunction cholestasis syndrome",
-   "ConceptID": "C1859722"
- },
- {
    "DiseaseName": "Arthropathy",
    "ConceptID": "C0022408"
  },
@@ -16303,10 +16287,6 @@
  {
    "DiseaseName": "Benign prostatic hyperplasia",
    "ConceptID": "C1704272"
- },
- {
-   "DiseaseName": "Benign recurrent intrahepatic cholestasis 2",
-   "ConceptID": "C2608083"
  },
  {
    "DiseaseName": "Benign Soft Tissue Neoplasm of Uncertain Differentiation",
@@ -22001,32 +21981,8 @@
    "ConceptID": "C0238052"
  },
  {
-   "DiseaseName": "Cholestasis, benign recurrent intrahepatic 1",
-   "ConceptID": "C1855731"
- },
- {
    "DiseaseName": "Cholestasis",
    "ConceptID": "C0008370"
- },
- {
-   "DiseaseName": "Cholestasis-edema syndrome, Norwegian type",
-   "ConceptID": "C0268314"
- },
- {
-   "DiseaseName": "Cholestasis, infantile, NR1H4 related",
-   "ConceptID": "CN236387"
- },
- {
-   "DiseaseName": "Cholestasis, intrahepatic, of pregnancy 3",
-   "ConceptID": "C3554241"
- },
- {
-   "DiseaseName": "Cholestasis of pregnancy",
-   "ConceptID": "C0268318"
- },
- {
-   "DiseaseName": "Cholestasis, progressive familial intrahepatic, 5",
-   "ConceptID": "C4310747"
  },
  {
    "DiseaseName": "Cholestatic liver disease",
@@ -38661,10 +38617,6 @@
    "ConceptID": "C4520983"
  },
  {
-   "DiseaseName": "Extrahepatic cholestasis",
-   "ConceptID": "C0005398"
- },
- {
    "DiseaseName": "Extrahepatic portal hypertension",
    "ConceptID": "C4025268"
  },
@@ -39547,10 +39499,6 @@
  {
    "DiseaseName": "Familial infantile myasthenia",
    "ConceptID": "C0393929"
- },
- {
-   "DiseaseName": "Familial Intrahepatic Cholestasis",
-   "ConceptID": "CN239338"
  },
  {
    "DiseaseName": "Familial isolated complete right bundle branch block",
@@ -52145,14 +52093,6 @@
    "ConceptID": "C0008372"
  },
  {
-   "DiseaseName": "Intrahepatic cholestasis of pregnancy, NR1H4 related",
-   "ConceptID": "CN236385"
- },
- {
-   "DiseaseName": "Intrahepatic cholestasis with episodic jaundice",
-   "ConceptID": "C4025019"
- },
- {
    "DiseaseName": "Intrahepatic portal vein sclerosis",
    "ConceptID": "C4476912"
  },
@@ -56995,10 +56935,6 @@
  {
    "DiseaseName": "Low frustration tolerance",
    "ConceptID": "C0548883"
- },
- {
-   "DiseaseName": "Low Gamma-GT Familial Intrahepatic Cholestasis",
-   "ConceptID": "CN043628"
  },
  {
    "DiseaseName": "Low-grade fever",
@@ -63739,10 +63675,6 @@
  {
    "DiseaseName": "Neonatal intestinal obstruction",
    "ConceptID": "C0859974"
- },
- {
-   "DiseaseName": "Neonatal intrahepatic cholestasis caused by citrin deficiency",
-   "ConceptID": "C1853942"
  },
  {
    "DiseaseName": "neonatal lactic acidosis",
@@ -73909,18 +73841,6 @@
    "ConceptID": "C1841658"
  },
  {
-   "DiseaseName": "Progressive familial intrahepatic cholestasis 2",
-   "ConceptID": "C3489789"
- },
- {
-   "DiseaseName": "Progressive familial intrahepatic cholestasis 3",
-   "ConceptID": "C1865643"
- },
- {
-   "DiseaseName": "Progressive familial intrahepatic cholestasis 4",
-   "ConceptID": "C2931067"
- },
- {
    "DiseaseName": "Progressive flexion contractures",
    "ConceptID": "C3279322"
  },
@@ -73979,10 +73899,6 @@
  {
    "DiseaseName": "Progressive intervertebral space narrowing",
    "ConceptID": "C1837670"
- },
- {
-   "DiseaseName": "Progressive intrahepatic cholestasis",
-   "ConceptID": "C0268312"
  },
  {
    "DiseaseName": "Progressive joint destruction",
