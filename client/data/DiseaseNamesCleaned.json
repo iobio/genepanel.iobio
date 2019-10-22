@@ -63629,10 +63629,6 @@
    "ConceptID": "C3806216"
  },
  {
-   "DiseaseName": "Neonatal cholestatic liver disease",
-   "ConceptID": "C1859162"
- },
- {
    "DiseaseName": "Neonatal death",
    "ConceptID": "C0410916"
  },
@@ -64147,10 +64143,6 @@
  {
    "DiseaseName": "Nephropathy deafness hyperparathyroidism",
    "ConceptID": "C1850553"
- },
- {
-   "DiseaseName": "Nephropathy, progressive tubulointerstitial, with cholestatic liver disease",
-   "ConceptID": "C1865831"
  },
  {
    "DiseaseName": "Nephropathy, progressive, with deafness",

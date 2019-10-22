@@ -1109,6 +1109,7 @@ var model = new Model();
           this.LevenshteinResults = [];
           this.loadingDialog = true;
           this.extractedTerms = [];
+          this.extractedTermsObj = [];
           // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
           fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
             .then(res => res.json())
@@ -1516,6 +1517,9 @@ var model = new Model();
         }
       },
       selectReviewTerms(){
+        this.GtrTermsAdded_temp = this.GtrTermsAdded_temp.filter(o1 => this.GtrTermsAdded.every(o2 => {
+          return o1.DiseaseName !== o2.DiseaseName
+        }));
         this.GtrTermsAdded = [...this.GtrTermsAdded, ...this.GtrTermsAdded_temp];
         this.phenolyzerTermsAdded = [...this.phenolyzerTermsAdded, ...this.phenolyzerTermsAdded_temp];
         this.hpoTermsAdded = [...this.hpoTermsAdded, ...this.hpoTermsAdded_temp];
