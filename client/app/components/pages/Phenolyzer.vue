@@ -736,7 +736,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   return 0;
                 }
               });
-              console.log("sortedTerms: ", sortedTerms)
               done(sortedTerms);
             }
         });
@@ -865,6 +864,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
             this.$ga.event('SearchTerm', 'Phenolyzer', searchTerm); //Emit event for Google analytics
             self.$emit('search-phenotype', self.phenotypeTerm);
             self.$emit('phenotypeSearchTermArray', self.multipleSearchTerms);
+            bus.$emit('AddPhenolyzerTermsInSingleEntry', self.phenotypeTerm)
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             self.selectedGenesText = "";
             self.phenolyzerStatus = null;

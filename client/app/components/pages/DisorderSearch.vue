@@ -413,6 +413,7 @@ var model = new Model();
             this.$emit("currentSearchTerm", searchTerm)
             this.$emit('multipleSearchData', this.multipleSearchTerms);
             this.$emit('search-gtr', this.multipleSearchTerms);
+            bus.$emit("AddGtrTermsInSingleEntry", this.search)
             bus.$emit("clearSearchInput");
             var diseases;
             var dataMain;

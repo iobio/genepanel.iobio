@@ -713,6 +713,11 @@ const api = new Client('backend.iobio.io', { secure: true });
           phenoTerm = res[0];
           if(!this.multipleSearchTerms.includes(hpoId)){
             this.multipleSearchTerms.push(hpoId);
+            bus.$emit('AddHpoTermsInSingleEntry', {
+              HPO_Data: this.searchInput.HPO_Data,
+              hpoNumber:hpoId,
+              phenotype:phenoTerm
+            })
             this.HpoTerms.push(
               {
                 hpoNumber:hpoId,

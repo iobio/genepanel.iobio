@@ -1015,12 +1015,30 @@ var model = new Model();
       bus.$on("TotalSelectedGenesInSummary", (genes) =>{
         this.TotalSummarySelectedGenes = genes;
       })
+      bus.$on("AddPhenolyzerTermsInSingleEntry", (term) => {
+        if(!this.checkIfTermExists(term.value, "phenolyzer")){
+          this.phenolyzerTermsAdded.push(term);
+          this.multipleSearchTerms.push(term.value);
+        }
+      })
+      bus.$on("AddGtrTermsInSingleEntry", (term) => {
+        if(!this.checkIfTermExists(term.DiseaseName, "GTR")){
+          this.GtrTermsAdded.push(term);
+          this.multipleSearchTerms.push(term.DiseaseName);
+        }
+      })
+      bus.$on("AddHpoTermsInSingleEntry", (term) => {
+        if(!this.checkIfTermExists(term.HPO_Data, "HPO")){
+          this.hpoTermsAdded.push(term);
+          this.multipleSearchTerms.push(term.HPO_Data);
+        }
+      })
     },
     updated(){
     },
     watch: {
-      phenolyzerTermsAdded_temp(){
-        console.log("watching ", this.phenolyzerTermsAdded_temp)
+      hpoTermsAdded(){
+        console.log("hpoTermsAdded", this.hpoTermsAdded)
       },
       textNotes(){
         if(this.textNotes.length===45){
@@ -1649,11 +1667,20 @@ var model = new Model();
         }
       },
       searchFilter(item){
-        console.log("am i here?", item)
-        console.log("phenolyzerTermsAdded_temp", this.phenolyzerTermsAdded_temp)
         return item.filter(term => {
           return term.value.match(this.search_phenolyzerReview);
         })
+      },
+      checkIfTermExists(item, component){
+        if(component==="phenolyzer"){
+          return this.phenolyzerTermsAdded.some(el => el.value === item);
+        }
+        else if(component==="GTR"){
+          return this.GtrTermsAdded.some(el => el.DiseaseName === item);
+        }
+        else if(component==="HPO"){
+          return this.hpoTermsAdded.some(el => el.HPO_Data === item);
+        }
       }
     },
     computed: {
