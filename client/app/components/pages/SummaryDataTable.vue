@@ -595,7 +595,6 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
           // console.log("selected summary", this.selected)
 
         }
-        console.log("items: ", this.items)
       },
       filterItemsOnSearch(items, search, filter) {
         search = search.toString().toLowerCase()

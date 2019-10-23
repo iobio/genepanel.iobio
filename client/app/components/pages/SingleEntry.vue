@@ -497,6 +497,11 @@
                               </template>
                               <v-card class="reviewCard">
                                 <v-card-text >
+                                  <v-text-field
+                                    v-model="search_phenolyzerReview"
+                                    single-line
+                                  ></v-text-field>
+                                  <!-- <div v-for="sub in searchFilter(item.reviewTerms_phenolyzer)" > -->
                                   <div v-for="sub in item.reviewTerms_phenolyzer" >
                                     <div class="row">
                                       <div class="col-md-2">
@@ -1014,6 +1019,9 @@ var model = new Model();
     updated(){
     },
     watch: {
+      phenolyzerTermsAdded_temp(){
+        console.log("watching ", this.phenolyzerTermsAdded_temp)
+      },
       textNotes(){
         if(this.textNotes.length===45){
           setTimeout(()=>{
@@ -1098,106 +1106,90 @@ var model = new Model();
             })
       },
       extract(){
-        if(this.textNotes.length<45 && this.search === undefined){
-          alert("Please select from typeahaead");
-        }
-        else if(this.textNotes.length<45 && this.search!==undefined){
-          this.mouseSelect()
-        }
-        else {
-          this.JaroWinkler = [];
-          this.fuzzyResults = [];
-          this.LevenshteinResults = [];
-          this.loadingDialog = true;
-          this.extractedTerms = [];
-          this.extractedTermsObj = [];
-          // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
-          fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
-            .then(res => res.json())
-            .then(data => {
-              this.JaroWinkler = data.JaroWinkler;
-              this.fuzzyResults = data.fuzzyResults ;
-              this.LevenshteinResults = data.LevenshteinResults;
-              // data.JaroWinkler.map(x=>{
-              //   x = x.trim();
-              //   if(!this.extractedTerms.includes(x)){
-              //     this.extractedTerms.push(x);
-              //   }
-              // })
-              // data.fuzzyResults.map(x=>{
-              //   x = x.trim()
-              //   if(!this.extractedTerms.includes(x)){
-              //     this.extractedTerms.push(x);
-              //   }
-              // })
-              data.LevenshteinResults.map(x=>{
-                x = x.trim()
-                if(!this.extractedTerms.includes(x)){
-                  this.extractedTerms.push(x);
-                }
-              })
-              console.log(this.extractedTerms);
-
-              // this.extractedTerms.map(x => {
-              //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
-              //   str = str.replace("disease", "");
-              //   str = str.replace("syndrome", "");
-              //   str = str.replace("disorder", "");
-              //   str = str.trim();
-              //   this.phenolyzerReviewTerms.push({
-              //     id: str,
-              //     value: str,
-              //     label: str
-              //   })
-              // })
-
-              this.fetchHpoTerm();
-
-              this.extractedTerms.map(x=>{
-                this.extractedTermsObj.push({
-                  DiseaseName: x,
-                })
-              })
-
-              this.phenolyzerReviewTerms = this.extractedTermsObj;
-              this.phenolyzerReviewTerms.map((item, i) => {
-                item.reviewTerms_phenolyzer = [];
-
-                var str = item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
-                str = str.replace("disease", "");
-                str = str.replace("syndrome", "");
-                str = str.trim();
-
-                // this.setAsyncPhenolyzerReviewTerms(str, i);
-
-                var data = this.setPhenolyzerTerms(str);
-                data.then(res => {
-                  if(res.length<1){
-                    var phenotype = item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()
-                    item.reviewTerms_phenolyzer.push({
-                      id: phenotype,
-                      label: phenotype,
-                      value: phenotype,
-                    })
-                  }
-                  res.forEach(x => {
-                    if(x.value.toLowerCase().trim() !== item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
-                      item.reviewTerms_phenolyzer.push(x);
-                    }
-                    else if(x.value.toLowerCase().trim() === item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
-                      item.reviewTerms_phenolyzer.unshift(x);
-                      item.reviewTerms_phenolyzer[0].general = true;
-                    }
-                  })
-                })
-
-              })
-              console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
-
-              this.loadingDialog = false;
-              this.openReviewDialogForExtractedTerms();
+        // if(this.textNotes.length<45 && this.search === undefined){
+        //   alert("Please select from typeahaead");
+        // }
+        // else if(this.textNotes.length<45 && this.search!==undefined){
+        //   this.mouseSelect()
+        // }
+        this.JaroWinkler = [];
+        this.fuzzyResults = [];
+        this.LevenshteinResults = [];
+        this.loadingDialog = true;
+        this.extractedTerms = [];
+        this.extractedTermsObj = [];
+        // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
+        fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
+          .then(res => res.json())
+          .then(data => {
+            this.JaroWinkler = data.JaroWinkler;
+            this.fuzzyResults = data.fuzzyResults ;
+            this.LevenshteinResults = data.LevenshteinResults;
+            data.LevenshteinResults.map(x=>{
+              x = x.trim()
+              if(!this.extractedTerms.includes(x)){
+                this.extractedTerms.push(x);
+              }
             })
-        }
+            console.log(this.extractedTerms);
+
+            // this.extractedTerms.map(x => {
+            //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+            //   str = str.replace("disease", "");
+            //   str = str.replace("syndrome", "");
+            //   str = str.replace("disorder", "");
+            //   str = str.trim();
+            //   this.phenolyzerReviewTerms.push({
+            //     id: str,
+            //     value: str,
+            //     label: str
+            //   })
+            // })
+
+            this.fetchHpoTerm();
+
+            this.extractedTerms.map(x=>{
+              this.extractedTermsObj.push({
+                DiseaseName: x,
+              })
+            })
+
+            this.phenolyzerReviewTerms = this.extractedTermsObj;
+            this.phenolyzerReviewTerms.map((item, i) => {
+              item.reviewTerms_phenolyzer = [];
+
+              var str = item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
+              str = str.replace("disease", "");
+              str = str.replace("syndrome", "");
+              str = str.trim();
+
+              var data = this.setPhenolyzerTerms(str);
+              data.then(res => {
+                if(res.length<1){
+                  var phenotype = item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()
+                  item.reviewTerms_phenolyzer.push({
+                    id: phenotype,
+                    label: phenotype,
+                    value: phenotype,
+                  })
+                }
+                res.forEach(x => {
+                  if(x.value.toLowerCase().trim() !== item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+                    item.reviewTerms_phenolyzer.push(x);
+                  }
+                  else if(x.value.toLowerCase().trim() === item.DiseaseName.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase().trim()) {
+                    item.reviewTerms_phenolyzer.unshift(x);
+                    item.reviewTerms_phenolyzer[0].general = true;
+                  }
+                })
+              })
+
+            })
+            console.log("this.phenolyzerReviewTerms", this.phenolyzerReviewTerms)
+
+            this.loadingDialog = false;
+            this.openReviewDialogForExtractedTerms();
+          })
       },
       mouseSelect(){
         if(this.search!==undefined){
@@ -1655,6 +1647,13 @@ var model = new Model();
           this.hpoTermsAdded.splice(idx, 1)
           this.hpoTermsAdded = [...this.hpoTermsAdded];
         }
+      },
+      searchFilter(item){
+        console.log("am i here?", item)
+        console.log("phenolyzerTermsAdded_temp", this.phenolyzerTermsAdded_temp)
+        return item.filter(term => {
+          return term.value.match(this.search_phenolyzerReview);
+        })
       }
     },
     computed: {
