@@ -475,9 +475,9 @@
                                     </div>
                                     <div class="col-md-10">
                                       <span v-if="sub.general">
-                                        <span class="highlighted_condition">{{ sub.value }}</span>
+                                        <span class="highlighted_condition">{{ sub.value | to-firstCharacterUppercase }}</span>
                                       </span>
-                                      <span v-else>{{ sub.value }}</span>
+                                      <span v-else>{{ sub.value | to-firstCharacterUppercase }}</span>
                                     </div>
                                   </div>
                                 </v-card-text>
