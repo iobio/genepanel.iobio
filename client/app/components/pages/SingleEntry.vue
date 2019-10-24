@@ -65,7 +65,7 @@
                         v-on:input="mouseSelect"
                         item-key="DiseaseName"/>
                     </div>
-                    <v-btn @click="extract" color="primary">Submit</v-btn>
+                    <v-btn :disabled="textNotes.length<4" @click="extract" color="primary">Submit</v-btn>
 
                      <!-- <v-btn class="mx-2" fab dark small color="primary" v-on:click.prevent="mouseSelect">
                       <v-icon color="white">add</v-icon>
@@ -150,7 +150,7 @@
                         </v-chip>
                       </span>
                       <span v-if="phenolyzerTermsAdded.length===0">
-                        <v-chip ><v-icon left>error_outline</v-icon> No phenotypeSearchTerm</v-chip>
+                        <v-chip ><v-icon left>error_outline</v-icon> No phenotypes</v-chip>
                       </span>
                     </div>
                     <div class="col-md-4 mb-2">
