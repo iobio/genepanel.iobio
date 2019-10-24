@@ -34,8 +34,6 @@
                   <!-- </v-flex> -->
 
                   <v-flex xs12 sm12 md12 lg10 xl10>
-                    <!-- <i>(Select a term from typeahead, review the options and click the search button)</i>
-                    <br> -->
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
                       <input
                         id="single_entry_input"
@@ -99,6 +97,13 @@
 
 
                 </v-layout>
+                <br>
+                <div v-if="demoTermsFlag">
+                  <i>Try some suggestions:</i>
+                  <span v-for="(term, i) in demoTerms" :key=i>
+                    <a class="ml-1 mr-1 " @click="addDemoTerm(term)"> {{ term }} </a> <span v-if="i<demoTerms.length-1"> , </span>
+                  </span>
+                </div>
                 <div if="textNotes.length<45" style="margin-bottom:32px">
                 </div>
               </v-card-text>
@@ -896,7 +901,9 @@ var model = new Model();
         phenolyzerTermsAdded_temp: [],
         hpoTermsAdded_temp: [],
         LevenshteinResults: [],
-        search_phenolyzerReview: ''
+        search_phenolyzerReview: '',
+        demoTerms: ['Treacher Collins syndrome ', 'Dejerine-Sottas disease '],
+        demoTermsFlag: true,
       }
     },
     mounted(){
@@ -1681,6 +1688,10 @@ var model = new Model();
         else if(component==="HPO"){
           return this.hpoTermsAdded.some(el => el.HPO_Data === item);
         }
+      },
+      addDemoTerm(term){
+        this.textNotes = term;
+        this.demoTermsFlag = false;
       }
     },
     computed: {
