@@ -600,7 +600,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       }
     },
     methods: {
-      ...mapActions(['addPhenolyzerGenes']),
+      ...mapActions(['addPhenolyzerGenes', 'updatePhenolyzerStatusGlobal']),
       selectNgenes: function(data){
         this.genesTop = data;
       },
@@ -618,6 +618,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
       stopSearch: function(){
         geneModel.StopAjaxCall();
         this.phenolyzerStatus = null;
+        this.updatePhenolyzerStatusGlobal(null);
         this.checked = false;
         this.phenotypeTerm = "";
         this.phenotypeTermEntered = "";
@@ -779,6 +780,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
             this.selected = this.items.slice(0,this.genesTop);
           }
           this.phenolyzerStatus = null;
+          this.updatePhenolyzerStatusGlobal(null);
           this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
           this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
@@ -789,6 +791,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
           this.items = [];
           this.selected = [];
           this.phenolyzerStatus = null;
+          this.updatePhenolyzerStatusGlobal(null);
           this.selectedGenesText= ""+ this.selected.length + " of " + this.items.length + " genes selected";
           this.$emit("UpdatePhenolyzerSelectedGenesText", this.selectedGenesText);
           this.$emit("NoOfGenesSelectedFromPhenolyzer", this.selected.length);
@@ -868,6 +871,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
             self.phenotypeTermEntered = self.phenotypeTerm.value;
             self.selectedGenesText = "";
             self.phenolyzerStatus = null;
+            self.updatePhenolyzerStatusGlobal(null);
             self.genesToApply = "";
             self.NoOfGenesSelectedFromPhenolyzer = 0;
             if(!self.launchedFromClin){
@@ -881,6 +885,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
               if (status == 'done') {
                 if (geneModel.phenolyzerGenes.length == 0) {
                   self.phenolyzerStatus = "no genes found."
+                  this.updatePhenolyzerStatusGlobal("no genes found.");
                   self.genesToApply = "";
                   self.checked = false;
                   self.alert = true;
@@ -917,6 +922,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
                 }
               } else {
                 self.phenolyzerStatus = status;
+                self.updatePhenolyzerStatusGlobal(status);
               }
             });
           }
@@ -1085,6 +1091,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
         // self.selected = self.items.slice(0,50);
         self.phenolyzerStatus = null;
+        self.updatePhenolyzerStatusGlobal(null);
         self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
         self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);
@@ -1125,6 +1132,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         }
         // self.selected = self.items.slice(0,50);
         self.phenolyzerStatus = null;
+        self.updatePhenolyzerStatusGlobal(null);
         self.selectedGenesText= ""+ self.selected.length + " of " + self.items.length + " genes selected";
         self.$emit("UpdatePhenolyzerSelectedGenesText", self.selectedGenesText);
         self.$emit("NoOfGenesSelectedFromPhenolyzer", self.selected.length);

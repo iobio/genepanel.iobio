@@ -233,7 +233,17 @@
                         <div class="col-md-4">
                           <table class="table">
                             <thead>
-                              <tr> <strong>Phenolyzer Search status</strong></tr>
+                              <tr>
+                                <strong>Phenolyzer Search status</strong>
+                                <div v-if="phenolyzerRunningStatus!==null" class="row">
+                                  <div class="col-md-3">
+                                    <i>{{ phenolyzerRunningStatus | to-firstCharacterUppercase }} </i>
+                                  </div>
+                                  <div class="col-md-9">
+                                    <span><v-progress-linear :indeterminate="true" height="5"></v-progress-linear></span>
+                                  </div>
+                                </div>
+                              </tr>
                             </thead>
                             <tbody>
                               <tr v-for="(term, i) in Phenolyzer_searchTermsObj" :key="i">
@@ -898,6 +908,7 @@ var model = new Model();
         demoTerms: ['Treacher Collins syndrome ', 'Dejerine-Sottas disease '],
         demoTermsFlag: true,
         WorkflowStepsflag: true,
+        phenolyzerRunningStatus: null,
       }
     },
     mounted(){
@@ -1093,6 +1104,9 @@ var model = new Model();
         this.summaryGenes = this.getSummaryGenes.slice(0,12) // Gets data from store
       },
       phenolyzerVizData(){
+      },
+      getPhenolyzerStatusGlobal(){
+        this.phenolyzerRunningStatus = this.getPhenolyzerStatusGlobal;
       }
     },
     methods:{
@@ -1695,7 +1709,7 @@ var model = new Model();
       }
     },
     computed: {
-      ...mapGetters(['getSummaryGenes', 'getGtrGenes', 'getPhenolyzerGenes']),
+      ...mapGetters(['getSummaryGenes', 'getGtrGenes', 'getPhenolyzerGenes', 'getPhenolyzerStatusGlobal']),
       DiseaseNames: function() {
         return DiseaseNames.data.sort(function(a,b) {
           if (a.DiseaseName < b.DiseaseName) {
