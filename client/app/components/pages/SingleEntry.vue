@@ -174,25 +174,17 @@
         </v-layout>
       </v-container>
 
+      <!-- workflow steps -->
+      <v-container fluid grid-list-md v-if="WorkflowStepsflag">
+        <v-layout row wrap style="margin-top:-20px;">
+          <WorkflowSteps>
+          </WorkflowSteps>
+        </v-layout>
+      </v-container>
 
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
-
-            <!-- <v-expansion-panel v-if="searchStatus" expand v-model="expansionpanlExpand">
-              <v-expansion-panel-content>
-                <template v-slot:header>
-                  <div>Search Status</div>
-                </template>
-                <v-card>
-                  <v-card-text>
-
-                  </v-card-text>
-                </v-card>
-              </v-expansion-panel-content>
-            </v-expansion-panel> -->
-
-
             <v-card>
               <v-dialog
                 v-model="searchStatusDialog"
@@ -768,7 +760,7 @@ import HPO_Terms from '../../../data/HPO_Terms';
 import HpoTermsData from '../../../data/HpoTermsData';
 import { Client } from 'iobio-api-client';
 const api = new Client('backend.iobio.io', { secure: true });
-
+import WorkflowSteps from '../partials/WorkflowSteps.vue'
 var model = new Model();
 
   export default {
@@ -777,7 +769,8 @@ var model = new Model();
       'BarChartSingleEntry': BarChartSingleEntry,
       'HorizontalBarChartSingleEntry': HorizontalBarChartSingleEntry,
       'DoughnutChartSingleEntry': DoughnutChartSingleEntry,
-      'SummaryTab': SummaryTab
+      'SummaryTab': SummaryTab,
+      'WorkflowSteps': WorkflowSteps
     },
     props: {
       selectedGtrGenes: {
@@ -904,6 +897,7 @@ var model = new Model();
         search_phenolyzerReview: '',
         demoTerms: ['Treacher Collins syndrome ', 'Dejerine-Sottas disease '],
         demoTermsFlag: true,
+        WorkflowStepsflag: true,
       }
     },
     mounted(){
@@ -1040,6 +1034,9 @@ var model = new Model();
           this.multipleSearchTerms.push(term.HPO_Data);
         }
       })
+      bus.$on("closeWorkflowSteps", ()=>{
+        this.WorkflowStepsflag = false;
+      })
     },
     updated(){
     },
@@ -1137,6 +1134,7 @@ var model = new Model();
         // else if(this.textNotes.length<45 && this.search!==undefined){
         //   this.mouseSelect()
         // }
+        this.WorkflowStepsflag = false;
         this.JaroWinkler = [];
         this.fuzzyResults = [];
         this.LevenshteinResults = [];
@@ -1218,6 +1216,7 @@ var model = new Model();
       },
       mouseSelect(){
         if(this.search!==undefined){
+          this.WorkflowStepsflag = false;
           this.loadingDialog = true;
           // this.checkBeforeAddTerm();
           setTimeout(()=>{
@@ -1228,6 +1227,7 @@ var model = new Model();
       },
       EnterForSearch(){
         if(event.key === 'Enter') {
+          this.WorkflowStepsflag = false;
           setTimeout(()=>{
             // this.checkBeforeAddTerm();
             this.openReviewDialog();
