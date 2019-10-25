@@ -605,7 +605,6 @@ import GenesSelection from '../partials/GenesSelection.vue';
         this.genesTop = data;
       },
       itemSelected(){
-        console.log("hello from itemSelected");
         this.sortTheOrder(this.selected);
       },
       EnterForSearch(){

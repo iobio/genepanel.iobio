@@ -1052,8 +1052,11 @@ var model = new Model();
     updated(){
     },
     watch: {
+      searchStatusDialog(){
+      },
+      phenolyzerFetchCompleted(){
+      },
       hpoTermsAdded(){
-        console.log("hpoTermsAdded", this.hpoTermsAdded)
       },
       textNotes(){
         if(this.textNotes.length===45){
@@ -1440,7 +1443,9 @@ var model = new Model();
         }
         else {
           this.gtrFetchCompleted = true;
-          this.checkToCloseSearchStatusDialog();
+          setTimeout(()=>{
+            this.checkToCloseSearchStatusDialog();
+          }, 2000)
          }
 
       },
@@ -1461,7 +1466,9 @@ var model = new Model();
         }
         else {
           this.phenolyzerFetchCompleted = true;
-          this.checkToCloseSearchStatusDialog();
+          setTimeout(()=>{
+            this.checkToCloseSearchStatusDialog();
+          }, 2000)
          }
       },
       Hpo_performSearchEvent(){
@@ -1480,7 +1487,9 @@ var model = new Model();
         }
         else {
           this.hpoFetchCompleted = true;
-          this.checkToCloseSearchStatusDialog();
+          setTimeout(()=>{
+            this.checkToCloseSearchStatusDialog();
+          }, 2000)
          }
 
       },
