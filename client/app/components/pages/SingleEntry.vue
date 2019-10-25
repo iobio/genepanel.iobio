@@ -83,7 +83,7 @@
                 </div>
                 <div v-if="multipleSearchTerms.length && !searchStatusDialog">
                   <v-btn style="text-transform:none" round color="primary" small outline dark @click="DuplicateSearchStatusDialog=true">
-                    Show search status
+                    <i>Show search status</i>
                   </v-btn>
                 </div>
                 <div if="textNotes.length<45" style="margin-bottom:32px">
