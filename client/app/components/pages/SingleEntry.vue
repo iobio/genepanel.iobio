@@ -655,20 +655,24 @@
 
                     <!-- HPO review terms table -->
                     <div v-if="HpoReviewTerms.length && termsReviewDialogPage===3">
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(term, i) in HpoReviewTerms" :key="i">
-                            <th scope="row">
-                              <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="hpoTermsAdded_temp" :value="term"></v-checkbox>
-                            </th>
-                            <td>{{ term.HPO_Data }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <v-card class="elevation-4">
+                        <v-card-text>
+                          <table class="table table-hover">
+                            <thead>
+                              <tr>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(term, i) in HpoReviewTerms" :key="i">
+                                <th scope="row">
+                                  <v-checkbox color="primary" style="margin-top:8px; margin-bottom:-12px;" v-model="hpoTermsAdded_temp" :value="term"></v-checkbox>
+                                </th>
+                                <td>{{ term.HPO_Data }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </v-card-text>
+                      </v-card>
                     </div>
                     <div v-if="!HpoReviewTerms.length && termsReviewDialogPage===3">
                       Currently unavailable.
@@ -718,149 +722,6 @@
         <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
       </keep-alive>
 
-      <!-- <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <v-flex d-flex xs12>
-                <v-layout row wrap>
-                  <div class="col-md-12" style="padding-right:4px; padding-left:4px">
-                        <div class="col-md-4">
-                          <v-card v-if="searchComplete">
-                            <v-card-text class="text-md-center">
-                              <strong>GTR Genes: </strong>
-                              <br>
-                              {{selectedGtrGenes.length}} of {{gtrCompleteGeneList.length}} selected
-                              <v-card class="mt-3">
-                                <div v-if="!selectedGtrGenes.length">
-                                  <v-card-text>
-                                    No conditions searched in GTR...
-                                  </v-card-text>
-                                </div>
-                                <div v-else>
-                                  <progressCircularDonut
-                                    :selectedNumber="selectedGtrGenes.length"
-                                    :totalNumber="gtrCompleteGeneList.length"
-                                  >
-                                  </progressCircularDonut>
-                                </div>
-                              </v-card>
-                              <br>
-                              <v-card class="mb-2" v-if="gtrGenes.length">
-                                <BarChartSingleEntry
-                                  idValue="GtrChart"
-                                  label="# of Genepanels (Top 5 genes)"
-                                  :VizData="gtrGenes">
-                                </BarChartSingleEntry>
-                              </v-card>
-                            </v-card-text>
-                          </v-card> -->
-
-                          <!-- <v-card v-if="searchComplete" class="mt-4">
-                            <v-card-text>
-                              <div class="text-md-center">
-                                <strong>Search terms summary</strong>
-                              </div>
-                              <v-card class="mt-3 mb-3 pl-3 pr-3 pt-3 pb-3">
-                                <DoughnutChartSingleEntry
-                                  :GtrTermsLength="GtrTermsAdded.length"
-                                  :PhenolyzerTermsLength="phenolyzerTermsAdded.length"
-                                  :HpoTermsLength="hpoTermsAdded.length">
-                                </DoughnutChartSingleEntry>
-                              </v-card>
-                            </v-card-text>
-                          </v-card> -->
-                        <!-- </div>
-                        <div class="col-md-4">
-                          <v-card v-if="searchComplete">
-                            <v-card-text class="text-md-center">
-                              <strong>Phenolyzer Genes: </strong>
-                              <br>
-                              {{selectedPhenolyzerGenes.length}} of {{phenolyzerCompleteGeneList.length}} selected
-                              <v-card class="mt-3">
-                                <div v-if="!selectedPhenolyzerGenes.length">
-                                  <v-card-text>
-                                    No phenotypes searched in Phenolyzer...
-                                  </v-card-text>
-                                </div>
-                                <div v-else>
-                                  <progressCircularDonut
-                                    :selectedNumber="selectedPhenolyzerGenes.length"
-                                    :totalNumber="phenolyzerCompleteGeneList.length"
-                                  >
-                                  </progressCircularDonut>
-                                </div>
-                              </v-card>
-                              <br>
-                              <v-card class="mb-2" v-if="phenolyzerGenes.length">
-                                <HorizontalBarChartSingleEntry
-                                  idValue="phenolyzerChart"
-                                  label="Phenolyzer score (Top 5 genes)"
-                                  :VizData="phenolyzerGenes">
-                                </HorizontalBarChartSingleEntry>
-                              </v-card>
-                            </v-card-text>
-                          </v-card>
-                        </div>
-                        <div class="col-md-4">
-                          <v-card v-if="searchComplete">
-                            <v-card-text>
-                              <div class="text-md-center">
-                                <strong>Summary Genes: </strong>
-                                <br>
-                                {{TotalSummarySelectedGenes}} of {{TotalSummaryGenes}} selected
-                              </div>
-                              <v-card class="mt-3">
-                                <progressCircularDonut
-                                  :selectedNumber="TotalSummarySelectedGenes"
-                                  :totalNumber="TotalSummaryGenes"
-                                >
-                                </progressCircularDonut>
-                              </v-card>
-                              <br>
-                              <div v-if="summaryGenes.length">
-                                <v-btn small v-on:click="exportGenesCSV"><v-icon>save</v-icon>&nbsp; &nbsp;Export genes</v-btn>
-                              </div>
-                              <v-card >
-                                <v-card-text>
-                                  <v-data-table
-                                    :headers="summaryGenesHeader"
-                                    :items="summaryGenes"
-                                    class="elevation-1"
-                                    hide-actions=false
-                                  >
-                                    <template v-slot:items="props">
-                                      <td>{{ props.item.name }}</td>
-                                    </template>
-                                  </v-data-table>
-                                </v-card-text>
-                              </v-card>
-                              <div class="text-md-center mt-3">
-                                <v-btn round small outline style="text-transform:none" color="primary" @click="selectComponent('summary')"> View all genes in Summary </v-btn>
-                              </div>
-                            </v-card-text>
-                          </v-card>
-                        </div> -->
-<!--
-                        <div class="col-md-4">
-                          <v-card v-if="searchComplete">
-                            <v-card-text>
-                              <div class="text-md-center">
-                                <strong>Search terms summary</strong>
-                              </div>
-                              <v-card class="mt-3 mb-3 pl-3 pr-3 pt-3 pb-3">
-                                <DoughnutChartSingleEntry
-                                  :GtrTermsLength="GtrTermsAdded.length"
-                                  :PhenolyzerTermsLength="phenolyzerTermsAdded.length">
-                                </DoughnutChartSingleEntry>
-                              </v-card>
-                            </v-card-text>
-                          </v-card>
-                        </div> -->
-
-                  <!-- </div>
-                </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-container> -->
       <v-container fluid grid-list-md style="min-height:300px">
       </v-container>
 
@@ -1303,7 +1164,7 @@ var model = new Model();
             //     label: str
             //   })
             // })
-
+            this.HpoReviewTerms = [];
             this.fetchHpoTerm();
 
             this.extractedTerms.map(x=>{
@@ -1427,15 +1288,18 @@ var model = new Model();
                 occurrences:occurrences,
                 earliness:earliness,
                 sentence:sentence,
-                HPO_Data: `${phenotype} - [ ${hpoNumber} ]`
+                HPO_Data: `${phenotype} - [ ${hpoNumber} ] `
               }
             )
           }
         })
         hpoTermArr.shift();
         terms.shift();
-        console.log("hpoTermArr", hpoTermArr)
-        this.HpoReviewTerms = hpoTermArr;
+        hpoTermArr.forEach(x => {
+          var found = this.HpoReviewTerms.some(el => el.HPO_Data === x.HPO_Data);
+          if(!found){ this.HpoReviewTerms.push(x)}
+        })
+        // this.HpoReviewTerms = hpoTermArr;
       },
       openReviewDialog(){
         this.textNotes = this.search.DiseaseName;
@@ -1492,6 +1356,9 @@ var model = new Model();
             this.HpoReviewTerms.push(x);
           }
         })
+        this.fetchHpoTerm();
+
+
 
       setTimeout(()=>{
           this.termsReviewDialog = true;
