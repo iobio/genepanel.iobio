@@ -1,39 +1,37 @@
 <template>
   <div id="overview-panel">
     <!-- <v-layout row wrap style="margin-left:15px; margin-right:15px;" id="gtr">
-      <v-flex xs12 md12 sm12 lg6 xl6 >
-        <v-flex  style="margin-top:40px">
+      <v-flex xs12 md12 sm12 lg1 xl1 ></v-flex>
+      <v-flex xs12 md12 sm12 lg4 xl4 >
+        <v-flex  style="margin-top:80px">
           <v-container >
-            <h2  text-xs-center class="font-weight-thin mb-3" style="color:black">
-              genepanel.iobio
+            <h2  text-xs-center class="font-weight-thin mb-3" style="color:#5d5d5d; font-size:26px">
+              Genepanel.iobio helps to generate disease-and phenotype-associated gene lists
 
             </h2>
-            <p style="text-align: justify; font-size:14px">
-              The Genetic Testing Registry (GTR®) is an NCBI resource that compiles genetic test information that has been voluntarily submitted by multiple providers. <br>
-              Genepanel.iobio allows you to search for one or more disorders, and generates a list of all of genes appearing on panels associated with these disorders. The list is sorted with genes appearing on the most panels at the top. The list can then be filtered based on your own specific requirements.
-            </p>
             <br>
+              <v-btn color="primary" @click="getStarted('gtr')">
+                Get Started
+              </v-btn>
+
               <a href="http://iobio.io/user_guides/2018/10/28/how-to-use-gtr/" target="_blank">
                 <v-btn color="white" style="color:#0D47A1">
                 Learn More
                 </v-btn>
               </a>
-              <v-btn color="primary" @click="getStarted('gtr')">
-                Get Started
-              </v-btn>
           </v-container>
         </v-flex>
       </v-flex>
-
+      <v-flex xs12 md12 sm12 lg1 xl1 ></v-flex>
       <v-flex xs12 md12 sm12 lg5 xl5>
         <v-flex text-xs-center>
-            <img style="margin-top:68px; right: 0; width:590px;" src="../assets/images/new_bg.svg" alt="Gtr background image">
+            <img style="margin-top:72px; right: 0; width:610px;" src="../assets/images/new_bg.svg" alt="Gtr background image">
         </v-flex>
       </v-flex>
 
 
-    </v-layout>
-     -->
+    </v-layout> -->
+
     <v-layout row wrap style="margin-top:-10px;">
       <v-flex d-flex xs12>
         <v-card>
