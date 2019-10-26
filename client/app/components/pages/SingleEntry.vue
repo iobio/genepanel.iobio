@@ -919,7 +919,7 @@ var model = new Model();
 
       })
       bus.$on("completeFetchRequest", (component)=>{
-        if(component === "GTR"){
+        if(component === "GTR" && this.searchTermsObj[this.idx]!==undefined){ //The undefined check ensures that no error is thrown when the term is searched directly in GTR.
           this.searchTermsObj[this.idx].gtrSearchStatus = "Completed";
           this.gtrFetchCompleted = true;
           this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "Completed";
@@ -931,7 +931,7 @@ var model = new Model();
           }
           else { this.checkToCloseSearchStatusDialog(); }
         }
-        else if(component === "Phenolyzer"){
+        else if(component === "Phenolyzer" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed";
           this.phenolyzerFetchCompleted = true;
           this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Completed";
@@ -943,7 +943,7 @@ var model = new Model();
           }
           else { this.checkToCloseSearchStatusDialog(); }
         }
-        else if(component === "hpo"){
+        else if(component === "hpo" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].hpoSearchStatus = "Completed";
           this.hpoFetchCompleted = true;
           this.Hpo_searchTermsObj[this.Hpo_idx].hpoSearchStatus = "Completed";
@@ -955,7 +955,7 @@ var model = new Model();
           }
           else { this.checkToCloseSearchStatusDialog(); }
         }
-        else if(component === "noGenePanels"){
+        else if(component === "noGenePanels" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
           this.gtrFetchCompleted = true;
           alert(`The search term did return any genes`);
@@ -968,7 +968,7 @@ var model = new Model();
           }
           else { this.checkToCloseSearchStatusDialog(); }
         }
-        else if(component === "noPhenolyzerGenes"){
+        else if(component === "noPhenolyzerGenes" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "NoGenes"
           this.phenolyzerFetchCompleted = true;
           this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "NoGenes";
@@ -980,7 +980,7 @@ var model = new Model();
           }
           else { this.checkToCloseSearchStatusDialog(); }
         }
-        else if(component === "skipGtr"){
+        else if(component === "skipGtr" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].gtrSearchStatus = "NotAvailable"
           this.gtrFetchCompleted = true;
           this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "NotAvailable";
