@@ -225,8 +225,11 @@
                                   <div class="col-md-3">
                                     <i>{{ phenolyzerRunningStatus | to-firstCharacterUppercase }} </i>
                                   </div>
-                                  <div class="col-md-9">
+                                  <div class="col-md-7">
                                     <span><v-progress-linear :indeterminate="true" height="5"></v-progress-linear></span>
+                                  </div>
+                                  <div class="col-md-2">
+                                    <v-btn flat icon @click="stopPhenolyzerSearch"><v-icon>close</v-icon></v-btn>
                                   </div>
                                 </div>
                               </tr>
@@ -246,6 +249,7 @@
                                   <span v-else-if="term.phenolyzerSearchStatus==='Completed'"><v-icon color="green">done</v-icon></span>
                                   <span v-else-if="term.phenolyzerSearchStatus==='NoGenes'"><v-icon color="red">error</v-icon></span>
                                   <span v-else-if="term.phenolyzerSearchStatus==='NotAvailable'"><v-icon>indeterminate_check_box</v-icon></span>
+                                  <span v-else-if="term.phenolyzerSearchStatus==='Cancelled'">Cancelled</span>
                                   <span v-else> <v-icon color="gray lighten-4">error</v-icon>  </span>
                                 </td>
                               </tr>
@@ -621,10 +625,6 @@
                               </template>
                               <v-card class="reviewCard">
                                 <v-card-text >
-                                  <v-text-field
-                                    v-model="search_phenolyzerReview"
-                                    single-line
-                                  ></v-text-field>
                                   <!-- <div v-for="sub in searchFilter(item.reviewTerms_phenolyzer)" > -->
                                   <div v-for="sub in item.reviewTerms_phenolyzer" >
                                     <div class="row">
@@ -1710,6 +1710,20 @@ var model = new Model();
       addDemoTerm(term){
         this.textNotes = term;
         this.demoTermsFlag = false;
+      },
+      stopPhenolyzerSearch(){
+        bus.$emit('stopPhenolyzerQueued');
+        this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Cancelled";
+        this.phenolyzerFetchCompleted = true;
+        this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Cancelled";
+        this.Phenolyzer_idx = this.Phenolyzer_idx + 1;
+        if(this.Phenolyzer_idx < this.Phenolyzer_searchTermsObj.length){
+          setTimeout(()=>{
+            this.Phenolyzer_performSearchEvent();
+          },1000)
+        }
+        else { this.checkToCloseSearchStatusDialog(); }
+
       }
     },
     computed: {

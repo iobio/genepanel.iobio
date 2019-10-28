@@ -506,7 +506,9 @@ import GenesSelection from '../partials/GenesSelection.vue';
       // }).catch(function(ex) {
       //   console.log('parsing failed', ex)
       // })
-
+      bus.$on("stopPhenolyzerQueued", ()=>{
+        this.stopSearch();
+      })
 
       this.HelpDialogsData = HelpDialogs.data;
       bus.$on("clearClinGenesPhenolyzerArray", ()=>{
