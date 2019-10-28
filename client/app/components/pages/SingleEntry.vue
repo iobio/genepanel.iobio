@@ -721,7 +721,10 @@
         </SummaryTab>
         <!-- v-on:summaryGenesFullList="summaryGenesFullList($event)" //Deleted event -->
       </keep-alive>
-
+      <Snackbars
+        :snackbarText="snackbarText"
+        :snackbarFlag="snackbarFlag">
+      </Snackbars>
       <v-container fluid grid-list-md style="min-height:300px">
       </v-container>
 
@@ -748,7 +751,8 @@ import HPO_Terms from '../../../data/HPO_Terms';
 import HpoTermsData from '../../../data/HpoTermsData';
 import { Client } from 'iobio-api-client';
 const api = new Client('backend.iobio.io', { secure: true });
-import WorkflowSteps from '../partials/WorkflowSteps.vue'
+import WorkflowSteps from '../partials/WorkflowSteps.vue';
+import Snackbars from '../partials/Snackbars.vue';
 var model = new Model();
 
   export default {
@@ -758,7 +762,8 @@ var model = new Model();
       'HorizontalBarChartSingleEntry': HorizontalBarChartSingleEntry,
       'DoughnutChartSingleEntry': DoughnutChartSingleEntry,
       'SummaryTab': SummaryTab,
-      'WorkflowSteps': WorkflowSteps
+      'WorkflowSteps': WorkflowSteps,
+      'Snackbars': Snackbars
     },
     props: {
       selectedGtrGenes: {
@@ -887,7 +892,9 @@ var model = new Model();
         demoTermsFlag: true,
         WorkflowStepsflag: true,
         phenolyzerRunningStatus: null,
-        DuplicateSearchStatusDialog: false
+        DuplicateSearchStatusDialog: false,
+        snackbarText: "",
+        snackbarFlag: false,
       }
     },
     mounted(){
@@ -958,7 +965,8 @@ var model = new Model();
         else if(component === "noGenePanels" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].gtrSearchStatus = "NoGenes"
           this.gtrFetchCompleted = true;
-          alert(`The search term did return any genes`);
+          this.snackbarText = `The search term did return any genes`;
+          this.snackbarFlag = true;
           this.Gtr_searchTermsObj[this.Gtr_idx].gtrSearchStatus = "NoGenes";
           this.Gtr_idx = this.Gtr_idx + 1;
           if(this.Gtr_idx < this.Gtr_searchTermsObj.length){
@@ -1051,7 +1059,8 @@ var model = new Model();
       },
       GtrTermsAdded(){
         if(this.GtrTermsAdded.length > 5){
-          alert("max limit reached for GTR");
+          this.snackbarText = `max limit reached for GTR`;
+          this.snackbarFlag = true;
           this.GtrTermsAdded.pop();
         }
       },
@@ -1503,7 +1512,8 @@ var model = new Model();
       },
       selectGtrTerm(term){
         if(this.GtrTermsAdded.length>=4){
-          alert("Max terms added in Gtr")
+          this.snackbarText = `Max terms added in Gtr`;
+          this.snackbarFlag = true;
         }
         else {
           var searchTerm ="";
