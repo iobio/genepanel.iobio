@@ -1146,6 +1146,7 @@ var model = new Model();
         this.loadingDialog = true;
         this.extractedTerms = [];
         this.extractedTermsObj = [];
+        this.demoTermsFlag = false;
         // fetch(`http://localhost:4047/phenotype-extractor/?notes=${this.textNotes}`)
         fetch(`http://nv-dev-new.iobio.io/phenotype-extractor/?notes=${this.textNotes}`)
           .then(res => res.json())
@@ -1314,7 +1315,7 @@ var model = new Model();
         this.textNotes = this.search.DiseaseName;
         this.GtrReviewTerms = [];
         this.termsExpansionPanel = ['true'];
-
+        this.demoTermsFlag = false; 
         this.GtrReviewTerms.push(this.search);
         this.GtrReviewTerms[0].reviewTerms_gtr = []
 
