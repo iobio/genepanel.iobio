@@ -4,34 +4,10 @@
       <v-container fluid grid-list-md>
         <v-layout row wrap style="margin-top:-20px;">
           <v-flex d-flex xs12>
-            <!-- <v-card v-if="!searchComplete"> -->
             <v-card>
               <v-card-text>
                 <h3>Dashboard</h3>
                 <v-layout row wrap class="mt-3">
-                  <!-- <v-flex xs12 sm12 md12 lg4 xl4> -->
-                    <!-- <div id="dropdown-example">
-                      <v-overflow-btn
-                         :items="dropdown_tool"
-                         label="Select tool"
-                         hint="Select the tool"
-                         persistent-hint
-                         target="#dropdown-example"
-                         v-model="dropdown_tool_value"
-                       ></v-overflow-btn>
-                    </div> -->
-                    <!-- <i>(For testing: This extracts disorders from the clinical note)</i>
-                    <br>
-                    <v-textarea
-                      solo
-                      v-model="textNotes"
-                      ref="single_entry_input_textarea"
-                      id="single_entry_input_textarea"
-                      name="input-7-4"
-                      rows="3"
-                      style="padding-top:5px"
-                    ></v-textarea> -->
-                  <!-- </v-flex> -->
 
                   <v-flex xs12 sm12 md12 lg10 xl10>
                     <div id="SingleEntryInput" style="display:inline-block; padding-top:5px;">
@@ -221,15 +197,17 @@
                             <thead>
                               <tr>
                                 <strong>Phenolyzer Search status</strong>
-                                <div v-if="phenolyzerRunningStatus!==null" class="row">
-                                  <div class="col-md-3">
-                                    <i>{{ phenolyzerRunningStatus | to-firstCharacterUppercase }} </i>
-                                  </div>
-                                  <div class="col-md-7">
-                                    <span><v-progress-linear :indeterminate="true" height="5"></v-progress-linear></span>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <v-btn flat icon @click="stopPhenolyzerSearch"><v-icon>close</v-icon></v-btn>
+                                <div v-if="Phenolyzer_searchTermsObj.length>1">
+                                  <div v-if="phenolyzerRunningStatus!==null" class="row">
+                                    <div class="col-md-3">
+                                      <i>{{ phenolyzerRunningStatus | to-firstCharacterUppercase }} </i>
+                                    </div>
+                                    <div class="col-md-7">
+                                      <span><v-progress-linear :indeterminate="true" height="5"></v-progress-linear></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <v-btn flat icon @click="stopPhenolyzerSearch"><v-icon>close</v-icon></v-btn>
+                                    </div>
                                   </div>
                                 </div>
                               </tr>
@@ -356,12 +334,14 @@
                             <thead>
                               <tr>
                                 <strong>Phenolyzer Search status</strong>
-                                <div v-if="phenolyzerRunningStatus!==null" class="row">
-                                  <div class="col-md-3">
-                                    <i>{{ phenolyzerRunningStatus | to-firstCharacterUppercase }} </i>
-                                  </div>
-                                  <div class="col-md-9">
-                                    <span><v-progress-linear :indeterminate="true" height="5"></v-progress-linear></span>
+                                <div v-if="Phenolyzer_searchTermsObj.length>1">
+                                  <div v-if="phenolyzerRunningStatus!==null" class="row">
+                                    <div class="col-md-3">
+                                      <i>{{ phenolyzerRunningStatus | to-firstCharacterUppercase }} </i>
+                                    </div>
+                                    <div class="col-md-9">
+                                      <span><v-progress-linear :indeterminate="true" height="5"></v-progress-linear></span>
+                                    </div>
                                   </div>
                                 </div>
                               </tr>
@@ -896,6 +876,7 @@ var model = new Model();
         snackbarText: "",
         snackbarFlag: false,
         phenolyzer_push_idx: 0,
+        gtr_push_idx: 0,
       }
     },
     mounted(){
@@ -1140,12 +1121,6 @@ var model = new Model();
             })
       },
       extract(){
-        // if(this.textNotes.length<45 && this.search === undefined){
-        //   alert("Please select from typeahaead");
-        // }
-        // else if(this.textNotes.length<45 && this.search!==undefined){
-        //   this.mouseSelect()
-        // }
         this.WorkflowStepsflag = false;
         this.JaroWinkler = [];
         this.fuzzyResults = [];
@@ -1427,8 +1402,6 @@ var model = new Model();
           this.gtrFetchCompleted = false;
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'status', "Searching");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'gtrSearchStatus', "Searching");
-          // this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'phenolyzerSearchStatus', "NotAvailable");
-          this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'hpoSearchStatus', "NotAvailable");
           bus.$emit("singleTermSearchGTR", this.Gtr_searchTermsObj[this.Gtr_idx]);
         }
         else {
@@ -1449,9 +1422,7 @@ var model = new Model();
           var str = this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].value.replace("-", " ").replace(/\s\s+/g, ' ').toLowerCase();
           this.phenolyzerFetchCompleted = false;
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'status', "Searching");
-          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'gtrSearchStatus', "NotAvailable");
           this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "Searching");
-          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'hpoSearchStatus', "NotAvailable");
           bus.$emit("singleTermSearchPhenolyzer", str);
 
         }
@@ -1470,8 +1441,6 @@ var model = new Model();
 
           this.hpoFetchCompleted = false;
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'status', "Searching");
-          this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'gtrSearchStatus', "NotAvailable");
-          // this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'hpoSearchStatus', "Searching");
           bus.$emit("singleTermSearchHPO", this.Hpo_searchTermsObj[this.Hpo_idx]);
 
@@ -1561,28 +1530,24 @@ var model = new Model();
         this.phenolyzerTermsAdded_temp = [];
         this.hpoTermsAdded_temp = [];
 
-        this.GtrTermsAdded.map(term=>{
+        for (var i = this.gtr_push_idx; i < this.GtrTermsAdded.length; i++) {
+          var term = this.GtrTermsAdded[i];
           var searchTerm ="";
           var conceptId = ""
           searchTerm = term.DiseaseName;
           conceptId = term.ConceptID;
-
-          if(term.gtrSearchStatus!=="Completed" || term.gtrSearchStatus===undefined){
-            this.$set(term, 'status', "Not started");
-            this.$set(term, 'gtrSearchStatus', "Not started");
-            // this.$set(term, 'phenolyzerSearchStatus', "Not started");
-            this.$set(term, 'hpoSearchStatus', "Not started");
-            this.$set(term, 'tool_to_search', 'GTR');
-          }
 
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
             if(searchTerm.length>1){
               this.multipleSearchTerms.push(searchTerm);
               this.searchTermsObj.push(term);
               this.Gtr_searchTermsObj.push(term);
+              this.$set(this.Gtr_searchTermsObj[this.gtr_push_idx], 'gtrSearchStatus', "Not started");
+              this.gtr_push_idx = this.gtr_push_idx + 1;
             }
           }
-        })
+        }
+
 
 
         if(this.phenolyzer_push_idx===0){
@@ -1596,9 +1561,6 @@ var model = new Model();
 
         for (var i = this.phenolyzer_push_idx; i < this.phenolyzerTermsAdded.length; i++) {
           var term = this.phenolyzerTermsAdded[i];
-          console.log("here in term", this.phenolyzer_push_idx);
-          console.log("phenolyzerTermsAdded in term", this.phenolyzerTermsAdded[i]);
-          console.log("term", term)
           var searchTerm ="";
           searchTerm = term.value;
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
@@ -1608,79 +1570,9 @@ var model = new Model();
                 this.Phenolyzer_searchTermsObj.push(term);
                 this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
                 this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
-
-              // if(this.phenolyzer_push_idx === 0){
-              //   var tempTerm = {
-              //     id: "pqrst",
-              //     label: "pqrst",
-              //     value: "pqrst"
-              //   }
-              //   // this.multipleSearchTerms.push(searchTerm);
-              //   this.searchTermsObj.push(tempTerm);
-              //   this.Phenolyzer_searchTermsObj.push(tempTerm);
-              //   this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
-              //   // this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
-              //
-              //   this.multipleSearchTerms.push(searchTerm);
-              //   this.searchTermsObj.push(term);
-              //   this.Phenolyzer_searchTermsObj.push(term);
-              //   this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
-              //   this.phenolyzer_push_idx = this.phenolyzer_push_idx + 2;
-              // }
-              // else {
-              //   this.multipleSearchTerms.push(searchTerm);
-              //   this.searchTermsObj.push(term);
-              //   this.Phenolyzer_searchTermsObj.push(term);
-              //   this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
-              //   this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
-              // }
             }
           }
         }
-
-        // this.phenolyzerTermsAdded.map(term => {
-        //   console.log("here in term", this.phenolyzer_push_idx);
-        //   console.log("term", term)
-        //   var searchTerm ="";
-        //   searchTerm = term.value;
-        //   if(term.phenolyzerSearchStatus!=="Completed" || term.phenolyzerSearchStatus===undefined){
-        //     // this.$set(term, 'status', "Not started");
-        //     // this.$set(term, 'gtrSearchStatus', "Not started");
-        //     // this.$set(term, 'phenolyzerSearchStatus', "Not started");
-        //     // this.$set(term, 'hpoSearchStatus', "Not started");
-        //     // this.$set(term, 'tool_to_search', 'Phenolyzer');
-        //     // this.$set(term, 'DiseaseName', term.value);
-        //   }
-        //   if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
-        //     if(searchTerm.length>1){
-        //       if(this.phenolyzer_push_idx === 0){
-        //         var tempTerm = {
-        //           id: "ABCD",
-        //           label: "ABCD",
-        //           value: "ABCD"
-        //         }
-        //         // this.multipleSearchTerms.push(searchTerm);
-        //         this.searchTermsObj.push(tempTerm);
-        //         this.Phenolyzer_searchTermsObj.push(tempTerm);
-        //         this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
-        //         // this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
-        //
-        //         this.multipleSearchTerms.push(searchTerm);
-        //         this.searchTermsObj.push(term);
-        //         this.Phenolyzer_searchTermsObj.push(term);
-        //         this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
-        //         this.phenolyzer_push_idx = this.phenolyzer_push_idx + 2;
-        //       }
-        //       else {
-        //         this.multipleSearchTerms.push(searchTerm);
-        //         this.searchTermsObj.push(term);
-        //         this.Phenolyzer_searchTermsObj.push(term);
-        //         this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
-        //         this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
-        //       }
-        //     }
-        //   }
-        // })
 
         this.hpoTermsAdded.map(term => {
           var searchTerm ="";
