@@ -72,7 +72,7 @@ var model = new Model();
                     'HPO Terms'
                 ],
                 datasets: [{
-                    data: [this.GtrTermsLength, this.PhenolyzerTermsLength, this.HpoTermsLength],
+                    data: [this.GtrTermsLength, this.PhenolyzerTermsLength - 1, this.HpoTermsLength],
                     backgroundColor: [
                       'rgb(255, 159, 64, 0.4)',
                       'rgba(54, 162, 235, 0.4)',

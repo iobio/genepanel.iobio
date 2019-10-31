@@ -10141,12 +10141,8 @@
    "ConceptID": "C1527304"
  },
  {
-   "DiseaseName": "Allergy/Immunologic/Infectious (adult onset)",
-   "ConceptID": "CN232462"
- },
- {
-   "DiseaseName": "Allergy/Immunologic/Infectious (child onset)",
-   "ConceptID": "CN232532"
+   "DiseaseName": "Allergy/Immunologic/Infectious",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Alloalbuminemia",
@@ -13881,12 +13877,12 @@
    "ConceptID": "CN232550"
  },
  {
-   "DiseaseName": "ASD   Craniofacial (child onset)",
-   "ConceptID": "CN232482"
+   "DiseaseName": "ASD  Craniofacial",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "ASD   Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232483"
+   "DiseaseName": "ASD  Musculoskeletal/Structural",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Aseptic leukocyturia",
@@ -14865,16 +14861,8 @@
    "ConceptID": "C1266184"
  },
  {
-   "DiseaseName": "Audiologic/Otolaryngologic (adult onset)",
-   "ConceptID": "CN235928"
- },
- {
-   "DiseaseName": "  Audiologic/Otolaryngologic (child onset)",
-   "ConceptID": "CN232491"
- },
- {
-   "DiseaseName": "Audiologic/Otolaryngologic (child onset)",
-   "ConceptID": "CN232533"
+   "DiseaseName": "Audiologic/Otolaryngologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Auditory acuity",
@@ -27565,8 +27553,8 @@
    "ConceptID": "C4025320"
  },
  {
-   "DiseaseName": "Craniofacial (child onset)",
-   "ConceptID": "CN232536"
+   "DiseaseName": "Craniofacial",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Craniofacial deafness hand syndrome",
@@ -31197,14 +31185,6 @@
    "ConceptID": "C0011320"
  },
  {
-   "DiseaseName": "  Dental (child onset)",
-   "ConceptID": "CN232509"
- },
- {
-   "DiseaseName": "Dental (child onset)",
-   "ConceptID": "CN232537"
- },
- {
    "DiseaseName": "Dental crowding",
    "ConceptID": "C0040433"
  },
@@ -31449,8 +31429,8 @@
    "ConceptID": "C1857314"
  },
  {
-   "DiseaseName": "Dermatologic (adult onset)",
-   "ConceptID": "CN232464"
+   "DiseaseName": "Dermatologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Dermatological manifestations of systemic disorders",
@@ -31459,14 +31439,6 @@
  {
    "DiseaseName": "Dermatological phenotype",
    "ConceptID": "CN230737"
- },
- {
-   "DiseaseName": "  Dermatologic (child onset)",
-   "ConceptID": "CN232511"
- },
- {
-   "DiseaseName": "Dermatologic (child onset)",
-   "ConceptID": "CN232538"
  },
  {
    "DiseaseName": "Dermatopathia pigmentosa reticularis",
@@ -36093,16 +36065,12 @@
    "ConceptID": "C0014118"
  },
  {
-   "DiseaseName": "Endocrine (adult onset)",
+   "DiseaseName": "Endocrine",
    "ConceptID": "CN232465"
  },
  {
    "DiseaseName": "Endocrine-cerebroosteodysplasia",
    "ConceptID": "C2675227"
- },
- {
-   "DiseaseName": "Endocrine (child onset)",
-   "ConceptID": "CN232539"
  },
  {
    "DiseaseName": "Endocrinological phenotype",
@@ -41873,12 +41841,8 @@
    "ConceptID": "C0017168"
  },
  {
-   "DiseaseName": "  Gastrointestinal (adult onset)",
-   "ConceptID": "CN232460"
- },
- {
-   "DiseaseName": "Gastrointestinal (adult onset)",
-   "ConceptID": "CN232466"
+   "DiseaseName": "Gastrointestinal",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Gastrointestinal angiodysplasia",
@@ -41895,14 +41859,6 @@
  {
    "DiseaseName": "Gastrointestinal carcinoma",
    "ConceptID": "C0151544"
- },
- {
-   "DiseaseName": "  Gastrointestinal (child onset)",
-   "ConceptID": "CN232514"
- },
- {
-   "DiseaseName": "Gastrointestinal (child onset)",
-   "ConceptID": "CN232540"
  },
  {
    "DiseaseName": "Gastrointestinal duplication",
@@ -42371,10 +42327,6 @@
  {
    "DiseaseName": "Genitopatellar syndrome",
    "ConceptID": "C1853566"
- },
- {
-   "DiseaseName": "Genitourinary (child onset)",
-   "ConceptID": "CN232541"
  },
  {
    "DiseaseName": "Genitourinary tract anomalies",
@@ -44413,8 +44365,8 @@
    "ConceptID": "C2750092"
  },
  {
-   "DiseaseName": "Hematologic (child onset)",
-   "ConceptID": "CN232542"
+   "DiseaseName": "Hematologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Hematologic neoplasm",
@@ -58713,14 +58665,6 @@
    "ConceptID": "C0220983"
  },
  {
-   "DiseaseName": "Metabolic/ Biochemical (adult onset)",
-   "ConceptID": "CN235929"
- },
- {
-   "DiseaseName": "Metabolic/ Biochemical (child onset)",
-   "ConceptID": "CN232534"
- },
- {
    "DiseaseName": "Metabolic disease",
    "ConceptID": "C0025517"
  },
@@ -60825,32 +60769,12 @@
    "ConceptID": "CN244030"
  },
  {
-   "DiseaseName": "MR/ID/DD   Allergy/Immunologic/Infectious (child onset)",
-   "ConceptID": "CN232473"
- },
- {
-   "DiseaseName": "MR/ID/DD   Audiologic/Otolaryngologic (child onset)",
-   "ConceptID": "CN232490"
+   "DiseaseName": "MR/ID/DD  Allergy/Immunologic/Infectious",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "MR/ID/DD",
    "ConceptID": "CN232552"
- },
- {
-   "DiseaseName": "MR/ID/DD   Craniofacial (child onset)",
-   "ConceptID": "CN232506"
- },
- {
-   "DiseaseName": "MR/ID/DD   Dermatologic (child onset)",
-   "ConceptID": "CN232510"
- },
- {
-   "DiseaseName": "MR/ID/DD   Gastrointestinal (child onset)",
-   "ConceptID": "CN232513"
- },
- {
-   "DiseaseName": "MR/ID/DD   Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232520"
  },
  {
    "DiseaseName": "MRI findings",
@@ -61501,12 +61425,8 @@
    "ConceptID": "C0685707"
  },
  {
-   "DiseaseName": "  Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232522"
- },
- {
-   "DiseaseName": "Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232543"
+   "DiseaseName": "Musculoskeletal/Structural",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Musculotendinous retraction",
@@ -63849,7 +63769,7 @@
    "ConceptID": "C0687720"
  },
  {
-   "DiseaseName": "Neurologic (adult onset)",
+   "DiseaseName": "Neurologic",
    "ConceptID": "CN232467"
  },
  {
@@ -63869,8 +63789,8 @@
    "ConceptID": "C0037822"
  },
  {
-   "DiseaseName": "Neurologic (child onset)",
-   "ConceptID": "CN232544"
+   "DiseaseName": "Neurologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Neurologic disease",
@@ -65465,16 +65385,8 @@
    "ConceptID": "C1833883"
  },
  {
-   "DiseaseName": "  Oncologic (adult onset)",
-   "ConceptID": "CN232461"
- },
- {
-   "DiseaseName": "Oncologic (adult onset)",
-   "ConceptID": "CN232468"
- },
- {
-   "DiseaseName": "Oncologic (child onset)",
-   "ConceptID": "CN232545"
+   "DiseaseName": "Oncologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Ondansetron response",
@@ -65589,16 +65501,8 @@
    "ConceptID": "C2675973"
  },
  {
-   "DiseaseName": "Ophthalmologic (adult onset)",
-   "ConceptID": "CN232469"
- },
- {
-   "DiseaseName": "  Ophthalmologic (child onset)",
-   "ConceptID": "CN232530"
- },
- {
-   "DiseaseName": "Ophthalmologic (child onset)",
-   "ConceptID": "CN232546"
+   "DiseaseName": "Ophthalmologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Ophthalmoparesis",
@@ -72885,16 +72789,8 @@
    "ConceptID": "CN232337"
  },
  {
-   "DiseaseName": "Primary Open Angle Glaucoma (Adult Onset)",
-   "ConceptID": "CN118827"
- },
- {
    "DiseaseName": "Primary open angle glaucoma",
    "ConceptID": "C0339573"
- },
- {
-   "DiseaseName": "Primary open angle glaucoma juvenile onset 1",
-   "ConceptID": "C1842028"
  },
  {
    "DiseaseName": "primary peritoneal cancer",
@@ -73023,10 +72919,6 @@
  {
    "DiseaseName": "Progressive alveolar ridge hypertropy",
    "ConceptID": "C1854934"
- },
- {
-   "DiseaseName": "progressive   Audiologic/Otolaryngologic (adult onset)",
-   "ConceptID": "CN232458"
  },
  {
    "DiseaseName": "Progressive bowing of long bones",
@@ -73161,24 +73053,24 @@
    "ConceptID": "C1861310"
  },
  {
-   "DiseaseName": "progressive   Gastrointestinal (child onset)",
-   "ConceptID": "CN232515"
+   "DiseaseName": "progressive Gastrointestinal",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "progressive-generalized dystonia",
    "ConceptID": "CN232689"
  },
  {
-   "DiseaseName": "progressive   Genitourinary (child onset)",
-   "ConceptID": "CN232517"
+   "DiseaseName": "progressive Genitourinary",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Progressive hearing impairment",
    "ConceptID": "C1842138"
  },
  {
-   "DiseaseName": "progressive   Hematologic (child onset)",
-   "ConceptID": "CN232519"
+   "DiseaseName": "progressive Hematologic",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Progressive hereditary glomerulonephritis without deafness",
@@ -73225,7 +73117,7 @@
    "ConceptID": "C1837510"
  },
  {
-   "DiseaseName": "progressive   Metabolic/ Biochemical (child onset)",
+   "DiseaseName": "progressive Metabolic/ Biochemical",
    "ConceptID": "CN232493"
  },
  {
@@ -73233,8 +73125,8 @@
    "ConceptID": "C0240421"
  },
  {
-   "DiseaseName": "progressive   Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232523"
+   "DiseaseName": "progressive Musculoskeletal/Structural",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Progressive myoclonic epilepsy",
@@ -74709,24 +74601,24 @@
    "ConceptID": "C1835223"
  },
  {
-   "DiseaseName": "Psychiatric   Allergy/Immunologic/Infectious (child onset)",
-   "ConceptID": "CN232474"
+   "DiseaseName": "Psychiatric Allergy/Immunologic/Infectious",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Psychiatric",
    "ConceptID": "C1548428"
  },
  {
-   "DiseaseName": "Psychiatric   Craniofacial (child onset)",
+   "DiseaseName": "Psychiatric Craniofacial",
    "ConceptID": "CN232507"
  },
  {
-   "DiseaseName": "Psychiatric   Metabolic/ Biochemical (child onset)",
-   "ConceptID": "CN232494"
+   "DiseaseName": "Psychiatric Metabolic/ Biochemical",
+   "ConceptID": ""
  },
  {
-   "DiseaseName": "Psychiatric   Musculoskeletal/Structural (child onset)",
-   "ConceptID": "CN232524"
+   "DiseaseName": "Psychiatric Musculoskeletal/Structural",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Psychic auras",
@@ -74899,10 +74791,6 @@
  {
    "DiseaseName": "Pulmonary carcinoid tumor",
    "ConceptID": "C0280089"
- },
- {
-   "DiseaseName": "Pulmonary (child onset)",
-   "ConceptID": "CN232547"
  },
  {
    "DiseaseName": "Pulmonary chondroma",
@@ -76701,8 +76589,8 @@
    "ConceptID": "C4014891"
  },
  {
-   "DiseaseName": "Renal (adult onset)",
-   "ConceptID": "CN232470"
+   "DiseaseName": "Renal",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Renal adysplasia",
@@ -76765,12 +76653,8 @@
    "ConceptID": "C3275446"
  },
  {
-   "DiseaseName": "  Renal (child onset)",
-   "ConceptID": "CN232531"
- },
- {
-   "DiseaseName": "Renal (child onset)",
-   "ConceptID": "CN232548"
+   "DiseaseName": "Renal",
+   "ConceptID": ""
  },
  {
    "DiseaseName": "Renal chloride wasting",

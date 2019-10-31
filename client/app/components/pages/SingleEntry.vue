@@ -127,11 +127,11 @@
                       <strong>Phenolyzer Terms: </strong>
                       <br>
                       <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
-                        <v-chip slot="activator" color="primary" text-color="white" close :key="i" @input="remove(term, i, 'phenolyzer')">
-                        {{ i+1 }} . {{ term.value }}
+                        <v-chip v-if="i>0" slot="activator" color="primary" text-color="white" close :key="i" @input="remove(term, i, 'phenolyzer')">
+                        {{ i }} . {{ term.value }}
                         </v-chip>
                       </span>
-                      <span v-if="phenolyzerTermsAdded.length===0">
+                      <span v-if="phenolyzerTermsAdded.length===1 || phenolyzerTermsAdded.length===0">
                         <v-chip ><v-icon left>error_outline</v-icon> No phenotypes</v-chip>
                       </span>
                     </div>
@@ -236,8 +236,8 @@
                             </thead>
                             <tbody>
                               <tr v-for="(term, i) in Phenolyzer_searchTermsObj" :key="i">
-                                <td>{{ term.value }}</td>
-                                <td >
+                                <td v-if="i>0">{{ term.value }}</td>
+                                <td v-if="i>0" >
                                   <span v-if="term.phenolyzerSearchStatus==='Searching'">
                                     <v-progress-circular
                                       :width="2"
@@ -255,7 +255,7 @@
                               </tr>
                             </tbody>
                           </table>
-                          <div v-if="Phenolyzer_searchTermsObj.length<1">
+                          <div v-if="Phenolyzer_searchTermsObj.length<2">
                             <span><i>Not Selected...</i></span>
                           </div>
                         </div>
@@ -368,8 +368,8 @@
                             </thead>
                             <tbody>
                               <tr v-for="(term, i) in Phenolyzer_searchTermsObj" :key="i">
-                                <td>{{ term.value }}</td>
-                                <td >
+                                <td v-if="i>0">{{ term.value }}</td>
+                                <td v-if="i>0" >
                                   <span v-if="term.phenolyzerSearchStatus==='Searching'">
                                     <v-progress-circular
                                       :width="2"
@@ -386,7 +386,7 @@
                               </tr>
                             </tbody>
                           </table>
-                          <div v-if="Phenolyzer_searchTermsObj.length<1">
+                          <div v-if="Phenolyzer_searchTermsObj.length<2">
                             <span><i>Not Selected...</i></span>
                           </div>
                         </div>
@@ -895,6 +895,7 @@ var model = new Model();
         DuplicateSearchStatusDialog: false,
         snackbarText: "",
         snackbarFlag: false,
+        phenolyzer_push_idx: 0,
       }
     },
     mounted(){
@@ -941,7 +942,8 @@ var model = new Model();
         else if(component === "Phenolyzer" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Completed";
           this.phenolyzerFetchCompleted = true;
-          this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Completed";
+          // this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Completed";
+          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "Completed");
           this.Phenolyzer_idx = this.Phenolyzer_idx + 1;
           if(this.Phenolyzer_idx < this.Phenolyzer_searchTermsObj.length){
             setTimeout(()=>{
@@ -979,7 +981,8 @@ var model = new Model();
         else if(component === "noPhenolyzerGenes" && this.searchTermsObj[this.idx]!==undefined){
           this.searchTermsObj[this.idx].phenolyzerSearchStatus = "NoGenes"
           this.phenolyzerFetchCompleted = true;
-          this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "NoGenes";
+          // this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "NoGenes";
+          this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "NoGenes");
           this.Phenolyzer_idx = this.Phenolyzer_idx + 1;
           if(this.Phenolyzer_idx < this.Phenolyzer_searchTermsObj.length){
             setTimeout(()=>{
@@ -1045,6 +1048,9 @@ var model = new Model();
       },
       hpoTermsAdded(){
       },
+      Phenolyzer_searchTermsObj(){
+        console.log("Phenolyzer_searchTermsObj", this.Phenolyzer_searchTermsObj)
+      },
       textNotes(){
         if(this.textNotes.length===45){
           setTimeout(()=>{
@@ -1065,6 +1071,7 @@ var model = new Model();
         }
       },
       searchTermsObj(){
+        console.log("searchTermsObj is changing", this.searchTermsObj)
       },
       getGtrGenes(){
         this.gtrGenes = this.getGtrGenes.slice(0, 5);
@@ -1162,18 +1169,6 @@ var model = new Model();
             })
             console.log(this.extractedTerms);
 
-            // this.extractedTerms.map(x => {
-            //   var str = x.replace(/-/g, " ").replace(/\s\s+/g, ' ').toLowerCase();
-            //   str = str.replace("disease", "");
-            //   str = str.replace("syndrome", "");
-            //   str = str.replace("disorder", "");
-            //   str = str.trim();
-            //   this.phenolyzerReviewTerms.push({
-            //     id: str,
-            //     value: str,
-            //     label: str
-            //   })
-            // })
             this.HpoReviewTerms = [];
             this.fetchHpoTerm();
 
@@ -1315,7 +1310,7 @@ var model = new Model();
         this.textNotes = this.search.DiseaseName;
         this.GtrReviewTerms = [];
         this.termsExpansionPanel = ['true'];
-        this.demoTermsFlag = false; 
+        this.demoTermsFlag = false;
         this.GtrReviewTerms.push(this.search);
         this.GtrReviewTerms[0].reviewTerms_gtr = []
 
@@ -1432,7 +1427,7 @@ var model = new Model();
           this.gtrFetchCompleted = false;
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'status', "Searching");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'gtrSearchStatus', "Searching");
-          this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'phenolyzerSearchStatus', "NotAvailable");
+          // this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Gtr_searchTermsObj[this.Gtr_idx], 'hpoSearchStatus', "NotAvailable");
           bus.$emit("singleTermSearchGTR", this.Gtr_searchTermsObj[this.Gtr_idx]);
         }
@@ -1445,6 +1440,7 @@ var model = new Model();
 
       },
       Phenolyzer_performSearchEvent(){
+        console.log("here")
         if(this.Phenolyzer_searchTermsObj.length && this.Phenolyzer_idx<this.Phenolyzer_searchTermsObj.length){
           this.searchStatus = true;
           this.searchComplete = false;
@@ -1475,7 +1471,7 @@ var model = new Model();
           this.hpoFetchCompleted = false;
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'status', "Searching");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'gtrSearchStatus', "NotAvailable");
-          this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'phenolyzerSearchStatus', "NotAvailable");
+          // this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'phenolyzerSearchStatus', "NotAvailable");
           this.$set(this.Hpo_searchTermsObj[this.Hpo_idx], 'hpoSearchStatus', "Searching");
           bus.$emit("singleTermSearchHPO", this.Hpo_searchTermsObj[this.Hpo_idx]);
 
@@ -1501,7 +1497,7 @@ var model = new Model();
         conceptId = this.search.ConceptID;
         this.$set(this.search, 'status', "Not started");
         this.$set(this.search, 'gtrSearchStatus', "Not started");
-        this.$set(this.search, 'phenolyzerSearchStatus', "Not started");
+        // this.$set(this.search, 'phenolyzerSearchStatus', "Not started");
         this.$set(this.search, 'tool_to_search', this.dropdown_tool_value);
         if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
           if(searchTerm.length>1){
@@ -1523,7 +1519,7 @@ var model = new Model();
           conceptId = term.ConceptID;
           this.$set(term, 'status', "Not started");
           this.$set(term, 'gtrSearchStatus', "Not started");
-          this.$set(term, 'phenolyzerSearchStatus', "Not started");
+          // this.$set(term, 'phenolyzerSearchStatus', "Not started");
           this.$set(term, 'tool_to_search', 'GTR');
 
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
@@ -1541,7 +1537,7 @@ var model = new Model();
         searchTerm = term.value;
         this.$set(term, 'status', "Not started");
         this.$set(term, 'gtrSearchStatus', "Not started");
-        this.$set(term, 'phenolyzerSearchStatus', "Not started");
+        // this.$set(term, 'phenolyzerSearchStatus', "Not started");
         this.$set(term, 'tool_to_search', 'Phenolyzer');
         this.$set(term, 'DiseaseName', term.value);
         if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
@@ -1574,7 +1570,7 @@ var model = new Model();
           if(term.gtrSearchStatus!=="Completed" || term.gtrSearchStatus===undefined){
             this.$set(term, 'status', "Not started");
             this.$set(term, 'gtrSearchStatus', "Not started");
-            this.$set(term, 'phenolyzerSearchStatus', "Not started");
+            // this.$set(term, 'phenolyzerSearchStatus', "Not started");
             this.$set(term, 'hpoSearchStatus', "Not started");
             this.$set(term, 'tool_to_search', 'GTR');
           }
@@ -1588,25 +1584,103 @@ var model = new Model();
           }
         })
 
-        this.phenolyzerTermsAdded.map(term => {
+
+        if(this.phenolyzer_push_idx===0){
+          var tempTerm = {
+            id: "pqrst",
+            label: "pqrst",
+            value: "pqrst"
+          }
+          this.phenolyzerTermsAdded.unshift(tempTerm);
+        }
+
+        for (var i = this.phenolyzer_push_idx; i < this.phenolyzerTermsAdded.length; i++) {
+          var term = this.phenolyzerTermsAdded[i];
+          console.log("here in term", this.phenolyzer_push_idx);
+          console.log("phenolyzerTermsAdded in term", this.phenolyzerTermsAdded[i]);
+          console.log("term", term)
           var searchTerm ="";
           searchTerm = term.value;
-          if(term.phenolyzerSearchStatus!=="Completed" || term.phenolyzerSearchStatus===undefined){
-            this.$set(term, 'status', "Not started");
-            this.$set(term, 'gtrSearchStatus', "Not started");
-            this.$set(term, 'phenolyzerSearchStatus', "Not started");
-            this.$set(term, 'hpoSearchStatus', "Not started");
-            this.$set(term, 'tool_to_search', 'Phenolyzer');
-            this.$set(term, 'DiseaseName', term.value);
-          }
           if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
             if(searchTerm.length>1){
-              this.multipleSearchTerms.push(searchTerm);
-              this.searchTermsObj.push(term);
-              this.Phenolyzer_searchTermsObj.push(term);
+                this.multipleSearchTerms.push(searchTerm);
+                this.searchTermsObj.push(term);
+                this.Phenolyzer_searchTermsObj.push(term);
+                this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+                this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
+
+              // if(this.phenolyzer_push_idx === 0){
+              //   var tempTerm = {
+              //     id: "pqrst",
+              //     label: "pqrst",
+              //     value: "pqrst"
+              //   }
+              //   // this.multipleSearchTerms.push(searchTerm);
+              //   this.searchTermsObj.push(tempTerm);
+              //   this.Phenolyzer_searchTermsObj.push(tempTerm);
+              //   this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+              //   // this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
+              //
+              //   this.multipleSearchTerms.push(searchTerm);
+              //   this.searchTermsObj.push(term);
+              //   this.Phenolyzer_searchTermsObj.push(term);
+              //   this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+              //   this.phenolyzer_push_idx = this.phenolyzer_push_idx + 2;
+              // }
+              // else {
+              //   this.multipleSearchTerms.push(searchTerm);
+              //   this.searchTermsObj.push(term);
+              //   this.Phenolyzer_searchTermsObj.push(term);
+              //   this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+              //   this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
+              // }
             }
           }
-        })
+        }
+
+        // this.phenolyzerTermsAdded.map(term => {
+        //   console.log("here in term", this.phenolyzer_push_idx);
+        //   console.log("term", term)
+        //   var searchTerm ="";
+        //   searchTerm = term.value;
+        //   if(term.phenolyzerSearchStatus!=="Completed" || term.phenolyzerSearchStatus===undefined){
+        //     // this.$set(term, 'status', "Not started");
+        //     // this.$set(term, 'gtrSearchStatus', "Not started");
+        //     // this.$set(term, 'phenolyzerSearchStatus', "Not started");
+        //     // this.$set(term, 'hpoSearchStatus', "Not started");
+        //     // this.$set(term, 'tool_to_search', 'Phenolyzer');
+        //     // this.$set(term, 'DiseaseName', term.value);
+        //   }
+        //   if(!this.multipleSearchTerms.includes(searchTerm) && searchTerm!==undefined){
+        //     if(searchTerm.length>1){
+        //       if(this.phenolyzer_push_idx === 0){
+        //         var tempTerm = {
+        //           id: "ABCD",
+        //           label: "ABCD",
+        //           value: "ABCD"
+        //         }
+        //         // this.multipleSearchTerms.push(searchTerm);
+        //         this.searchTermsObj.push(tempTerm);
+        //         this.Phenolyzer_searchTermsObj.push(tempTerm);
+        //         this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+        //         // this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
+        //
+        //         this.multipleSearchTerms.push(searchTerm);
+        //         this.searchTermsObj.push(term);
+        //         this.Phenolyzer_searchTermsObj.push(term);
+        //         this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+        //         this.phenolyzer_push_idx = this.phenolyzer_push_idx + 2;
+        //       }
+        //       else {
+        //         this.multipleSearchTerms.push(searchTerm);
+        //         this.searchTermsObj.push(term);
+        //         this.Phenolyzer_searchTermsObj.push(term);
+        //         this.$set(this.Phenolyzer_searchTermsObj[this.phenolyzer_push_idx], 'phenolyzerSearchStatus', "Not started");
+        //         this.phenolyzer_push_idx = this.phenolyzer_push_idx + 1;
+        //       }
+        //     }
+        //   }
+        // })
 
         this.hpoTermsAdded.map(term => {
           var searchTerm ="";
@@ -1614,7 +1688,7 @@ var model = new Model();
           if(term.hpoSearchStatus!=="Completed" || term.hpoSearchStatus===undefined){
             this.$set(term, 'status', "Not started");
             this.$set(term, 'gtrSearchStatus', "Not started");
-            this.$set(term, 'phenolyzerSearchStatus', "Not started");
+            // this.$set(term, 'phenolyzerSearchStatus', "Not started");
             this.$set(term, 'hpoSearchStatus', "Not started");
             this.$set(term, 'tool_to_search', 'Hpo');
             this.$set(term, 'DiseaseName', term.HPO_Data);
@@ -1714,9 +1788,10 @@ var model = new Model();
       },
       stopPhenolyzerSearch(){
         bus.$emit('stopPhenolyzerQueued');
-        this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Cancelled";
+        // this.searchTermsObj[this.idx].phenolyzerSearchStatus = "Cancelled";
         this.phenolyzerFetchCompleted = true;
-        this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Cancelled";
+        // this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx].phenolyzerSearchStatus = "Cancelled";
+        this.$set(this.Phenolyzer_searchTermsObj[this.Phenolyzer_idx], 'phenolyzerSearchStatus', "Cancelled");
         this.Phenolyzer_idx = this.Phenolyzer_idx + 1;
         if(this.Phenolyzer_idx < this.Phenolyzer_searchTermsObj.length){
           setTimeout(()=>{

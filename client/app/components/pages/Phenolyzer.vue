@@ -890,9 +890,12 @@ import GenesSelection from '../partials/GenesSelection.vue';
                   self.genesToApply = "";
                   self.checked = false;
                   self.alert = true;
-                  if(!self.noResultsArr.includes(searchTerm))
-                  self.noResultsArr.push(searchTerm);
-                  bus.$emit("completeFetchRequest", "noPhenolyzerGenes");
+                  if(!self.noResultsArr.includes(searchTerm)) {
+                    if(searchTerm!=="pqrst"){
+                      self.noResultsArr.push(searchTerm);
+                    }
+                    bus.$emit("completeFetchRequest", "noPhenolyzerGenes");
+                  }
                 } else {
                   self.tempItems = geneModel.phenolyzerGenes;
 
