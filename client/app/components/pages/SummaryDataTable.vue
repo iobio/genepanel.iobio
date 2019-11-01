@@ -97,6 +97,9 @@
               </center>
             </td>
             <td>
+              <v-btn flat color="gray" small icon @click="showGeneInfo(props.item)"><v-icon>open_in_new</v-icon></v-btn>
+            </td>
+            <td>
               <v-menu bottom offset-y style="color:black">
                 <v-icon slot="activator" style="padding-right:4px">more_vert</v-icon>
                 <v-card>
@@ -257,6 +260,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         { text: 'HPO', align: 'left', sortable: false, value: 'isClinPhen' },
         { text: 'GTR', align: 'left', sortable: false, value: 'sourceGTR' },
         { text: 'Phenolyzer', align: 'left', sortable: false, value: ['isPheno', 'sourcePheno', ] },
+        { text: ' ', align: 'left', sortable: false, value: [] },
         { text: '', align: 'left', sortable: false, value: [ 'omimSrc', 'ghrSrc', 'medGenSrc', 'geneCardsSrc', 'clinGenLink', 'isAssociatedGene', 'geneId', 'geneIdLink'] },
 
       ],
