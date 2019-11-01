@@ -568,8 +568,7 @@
                     <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2">
                       <div v-if="phenolyzerReviewTerms.length===1">
                         <div >
-                          <v-expansion-panel v-model="phenolyzerExpansionPanel" expand popout focusable
-                          >
+                          <v-expansion-panel v-model="phenolyzerExpansionPanel" expand popout focusable>
                             <v-expansion-panel-content v-for="(item, i) in phenolyzerReviewTerms" :key="i">
                               <template v-slot:header>
                                 <div><strong>{{ item.DiseaseName }}</strong></div>
@@ -659,15 +658,73 @@
                     </div>
 
 
+                    <!-- All terms review page -->
+                    <div v-if="termsReviewDialogPage===4">
+                      <v-card>
+                        <v-card-text v-if="GtrTermsAdded_temp.length">
+                          <h4>GTR: </h4>
+                          <br>
+                          <p v-for="(term, i) in GtrTermsAdded_temp" v-if="GtrTermsAdded_temp.length">
+                            <v-chip outline color="primary">
+                              {{ term.DiseaseName }}
+                            </v-chip>
+                          </p>
+                        </v-card-text>
+                        <v-card v-else>
+                          <v-card-text>
+                            GTR Terms not selected
+                          </v-card-text>
+                        </v-card>
+                      </v-card>
+                      <br>
+
+                      <v-card>
+                        <v-card-text v-if="phenolyzerTermsAdded_temp.length">
+                          <h4>Phenolyzer: </h4>
+                          <br>
+                          <p v-for="(term, i) in phenolyzerTermsAdded_temp" v-if="phenolyzerTermsAdded_temp.length">
+                            <v-chip outline color="primary">
+                              {{ term.value }}
+                            </v-chip>
+                          </p>
+                        </v-card-text>
+                        <v-card v-else>
+                          <v-card-text>
+                            Phenolyzer Terms not selected
+                          </v-card-text>
+                        </v-card>
+                      </v-card>
+                      <br>
+
+                      <v-card>
+                        <v-card-text v-if="hpoTermsAdded_temp.length">
+                          <h4>HPO: </h4>
+                          <br>
+                          <p v-for="(term, i) in hpoTermsAdded_temp" v-if="hpoTermsAdded_temp.length">
+                            <v-chip outline color="primary">
+                              {{ term.HPO_Data }}
+                            </v-chip>
+                          </p>
+                        </v-card-text>
+                        <v-card v-else>
+                          <v-card-text>
+                            HPO Terms not selected
+                          </v-card-text>
+                        </v-card>
+                      </v-card>
+                      <br>
+
+                    </div>
+
 
                   </v-card-text>
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
                     <!-- <v-btn small color="blue darken-1" round outline dark text @click="termsReviewDialog=false">Skip</v-btn> -->
                     <v-btn :disabled="termsReviewDialogPage===1" small color="blue darken-1" flat @click="--termsReviewDialogPage">Back</v-btn>
-                    <v-btn :disabled="termsReviewDialogPage>2" small color="blue darken-1" flat @click="++termsReviewDialogPage">Next</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage>3" small color="blue darken-1" flat @click="++termsReviewDialogPage">Next</v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn :disabled="termsReviewDialogPage!==3" small color="blue darken-1" flat @click="selectReviewTerms">Done</v-btn>
+                    <v-btn :disabled="termsReviewDialogPage!==4" small color="blue darken-1" flat @click="selectReviewTerms">Done</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
