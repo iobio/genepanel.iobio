@@ -488,7 +488,7 @@
                   </v-card-title>
                   <v-card-title v-if="termsReviewDialogPage===1">Select the terms to be searched in GTR:  </v-card-title>
                   <div  v-if="termsReviewDialogPage===1">
-                    <br><center><i>Please limit to 5 terms in GTR </i></center>
+                    <center><i>Please limit to 5 terms in GTR </i></center>
                   </div>
                   <v-card-title v-if="termsReviewDialogPage===2">Select the terms to be searched in Phenolyzer:</v-card-title>
                   <v-card-title v-if="termsReviewDialogPage===3">Select the terms to be searched in HPO:</v-card-title>
@@ -497,6 +497,18 @@
 
                     <!-- GTR review terms table -->
                     <div v-if="GtrReviewTerms.length && termsReviewDialogPage===1">
+                      Terms Selected:
+                      <span v-for="(term, i) in GtrTermsAdded" v-if="GtrTermsAdded.length">
+                        <v-chip outline color="primary">
+                          {{ term.DiseaseName }}
+                        </v-chip>
+                      </span>
+                      <span v-for="(term, i) in GtrTermsAdded_temp" v-if="GtrTermsAdded_temp.length">
+                        <v-chip outline color="primary">
+                          {{ term.DiseaseName }}
+                        </v-chip>
+                      </span>
+
                       <div v-if="GtrReviewTerms.length===1">
                         <div >
                           <v-expansion-panel v-model="gtrExpansionPanel" expand popout focusable
@@ -566,6 +578,18 @@
 
                     <!-- Phenolyzer review terms table -->
                     <div v-if="phenolyzerReviewTerms.length && termsReviewDialogPage===2">
+                      Terms Selected:
+                      <span v-for="(term, i) in phenolyzerTermsAdded" v-if="phenolyzerTermsAdded.length">
+                        <v-chip outline color="primary">
+                          {{ term.value }}
+                        </v-chip>
+                      </span>
+                      <span v-for="(term, i) in phenolyzerTermsAdded_temp" v-if="phenolyzerTermsAdded_temp.length">
+                        <v-chip outline color="primary">
+                          {{ term.value }}
+                        </v-chip>
+                      </span>
+
                       <div v-if="phenolyzerReviewTerms.length===1">
                         <div >
                           <v-expansion-panel v-model="phenolyzerExpansionPanel" expand popout focusable>
@@ -634,6 +658,19 @@
 
                     <!-- HPO review terms table -->
                     <div v-if="HpoReviewTerms.length && termsReviewDialogPage===3">
+                      Terms Selected:
+                      <span v-for="(term, i) in hpoTermsAdded" v-if="hpoTermsAdded.length">
+                        <v-chip outline color="primary">
+                          {{ term.HPO_Data }}
+                        </v-chip>
+                      </span>
+                      <span v-for="(term, i) in hpoTermsAdded_temp" v-if="hpoTermsAdded_temp.length">
+                        <v-chip outline color="primary">
+                          {{ term.HPO_Data }}
+                        </v-chip>
+                      </span>
+
+
                       <v-card class="elevation-4">
                         <v-card-text>
                           <table class="table table-hover">
@@ -663,16 +700,16 @@
                       <v-card>
                         <v-card-text v-if="GtrTermsAdded_temp.length">
                           <h4>GTR: </h4>
-                          <br>
                           <p v-for="(term, i) in GtrTermsAdded_temp" v-if="GtrTermsAdded_temp.length">
                             <v-chip outline color="primary">
                               {{ term.DiseaseName }}
                             </v-chip>
                           </p>
+                          <a @click="termsReviewDialogPage=1"><small><i>Update</i></small></a>
                         </v-card-text>
                         <v-card v-else>
                           <v-card-text>
-                            GTR Terms not selected
+                            <p>GTR Terms not selected</p>
                           </v-card-text>
                         </v-card>
                       </v-card>
@@ -681,16 +718,16 @@
                       <v-card>
                         <v-card-text v-if="phenolyzerTermsAdded_temp.length">
                           <h4>Phenolyzer: </h4>
-                          <br>
                           <p v-for="(term, i) in phenolyzerTermsAdded_temp" v-if="phenolyzerTermsAdded_temp.length">
                             <v-chip outline color="primary">
                               {{ term.value }}
                             </v-chip>
                           </p>
+                          <a @click="termsReviewDialogPage=2"><small><i>Update</i></small></a>
                         </v-card-text>
                         <v-card v-else>
                           <v-card-text>
-                            Phenolyzer Terms not selected
+                            <p>Phenolyzer Terms not selected</p>
                           </v-card-text>
                         </v-card>
                       </v-card>
@@ -699,16 +736,16 @@
                       <v-card>
                         <v-card-text v-if="hpoTermsAdded_temp.length">
                           <h4>HPO: </h4>
-                          <br>
                           <p v-for="(term, i) in hpoTermsAdded_temp" v-if="hpoTermsAdded_temp.length">
                             <v-chip outline color="primary">
                               {{ term.HPO_Data }}
                             </v-chip>
+                            <a @click="termsReviewDialogPage=3"><small><i>Update</i></small></a>
                           </p>
                         </v-card-text>
                         <v-card v-else>
                           <v-card-text>
-                            HPO Terms not selected
+                            <p>HPO Terms not selected</p>
                           </v-card-text>
                         </v-card>
                       </v-card>
