@@ -649,6 +649,7 @@ var model = new Model();
 
               if(this.multipleSearchTerms.includes(searchTerm)){
                 bus.$emit("newSearch")
+                console.log("filteredDiseasesItems", this.filteredDiseasesItems)
                 this.$emit('showDiseases', this.filteredDiseasesItems);
                 this.filteredDiseasesItems = [];
                 filteredDiseases = null;

@@ -822,6 +822,7 @@ import GeneSearchBox from '../partials/GeneSearchBox.vue';
         }
         this.noOfSourcesSvg();
         this.createSeperateGenesObj();
+        console.log("this.itemsIndividual", this.itemsIndividual)
       },
       createSeperateGenesObj: function(){
         if(this.genesSearchTermObj[this.currentSearchTerm]===undefined){

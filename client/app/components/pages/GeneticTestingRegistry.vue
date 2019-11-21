@@ -1318,6 +1318,7 @@ export default {
       this.NumberOfTopGenes = data;
     },
     individualGenesObj: function(obj){
+      console.log("individualGenesObj", individualGenesObj)
       this.$emit("individualGenesGtr", obj)
     },
     currentSearchTerm: function(term){
@@ -1387,6 +1388,7 @@ export default {
       this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;
+      console.log("e in addDisease", e)
       this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];
@@ -1464,6 +1466,7 @@ export default {
       this.checkForAssociatedGenesIndividual();
     },
     selectPanels: function(e){
+      console.log("e in selectPanels", e)
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
           //set the items in the panels card
           this.multiSelectPanels = e;
