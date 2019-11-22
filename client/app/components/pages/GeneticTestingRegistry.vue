@@ -1318,7 +1318,6 @@ export default {
       this.NumberOfTopGenes = data;
     },
     individualGenesObj: function(obj){
-      console.log("individualGenesObj", individualGenesObj)
       this.$emit("individualGenesGtr", obj)
     },
     currentSearchTerm: function(term){
@@ -1388,7 +1387,7 @@ export default {
       this.DisordersPropsBackArr = e;
       this.showSummaryComponent = true
       this.diseases = e;
-      console.log("e in addDisease", e)
+      // console.log("e in addDisease", e)
       this.$emit("diseasesCB", e);
       if(e.length<= 0){
         this.geneProps = [];
@@ -1463,10 +1462,11 @@ export default {
     },
     selectedDiseasesIndividual: function(e){
       this.diseasesPropsIndividual = e;
+      console.log("this.diseasesPropsIndividual", this.diseasesPropsIndividual)
       this.checkForAssociatedGenesIndividual();
     },
     selectPanels: function(e){
-      console.log("e in selectPanels", e)
+      // console.log("e in selectPanels", e)
       if(this.chartComponent!=='GeneMembership'&& this.chartComponent!=='Vendors' && this.chartComponent!=='PanelFilters' && this.chartComponent!=='PanelsDefinition'){
           //set the items in the panels card
           this.multiSelectPanels = e;
@@ -1516,7 +1516,7 @@ export default {
       this.geneProps = temp; //Selected panels
     },
     selectedPanelsIndividual: function(e){
-      // console.log("selectedPanelsIndividual", e); //Save it as panels of individual terms--> all panels associated with a search term.
+      console.log("selectedPanelsIndividual", e); //Save it as panels of individual terms--> all panels associated with a search term.
       this.createSeparatePanelsObj(e);
     },
     createSeparatePanelsObj: function(panels){
@@ -1529,6 +1529,7 @@ export default {
       if(!this.panelsSearchTermObj[this.currentSearchedTerm].length){
         this.panelsSearchTermObj[this.currentSearchedTerm] = panels;
       }
+      console.log("this.panelsSearchTermObj", this.panelsSearchTermObj)
       this.$emit('individualPanelsSearchObj', this.panelsSearchTermObj)
     },
     selectPanelsEdgeCase: function(e){
