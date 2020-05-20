@@ -411,7 +411,7 @@ import GenesSelection from '../partials/GenesSelection.vue';
         phenotypeTermEntered: "",
         allPhenotypeTerms: [],
         phenolyzerStatus: null,
-        hpoLookupUrl:  "https://nv-prod.iobio.io/hpo/hot/lookup/?term=",
+        hpoLookupUrl:  "https://backend.iobio.io/hpo/hot/lookup/?term=",
         typeaheadLimit: parseInt(100),
         geneList: [],
         //DataTable
