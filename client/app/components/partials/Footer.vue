@@ -1,6 +1,6 @@
 <template>
   <v-footer color="blue-grey lighten-5" class="blue-grey--text" app>
-    <span style="padding-left:30px" class="subheading"> &copy; 2018 Iobio.io</span>
+    <span style="padding-left:30px" class="subheading"> &copy; 2020 Iobio.io</span>
     <v-spacer></v-spacer>
     <span>
       <a href="http://iobio.io/blog.html" target="_blank">
