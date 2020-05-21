@@ -73,6 +73,7 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile
+        v-if="!launchedFromClin"
         v-bind:class="[component==='ClinPhen' ? 'activeTab' : '']"
         @click="selectComponent('ClinPhen')">
         <v-list-tile-action v-bind:class="[component==='ClinPhen' ? 'margin_ActiveTab' : '']">
