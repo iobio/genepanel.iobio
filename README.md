@@ -20,10 +20,6 @@ npm run build:dev
 ```
 Now open [http://localhost:8080](http://localhost:8080).
 
-## Running Client-side Tests
-
-`npm test`
-
 ## Building dev
 
 `npm run build`
